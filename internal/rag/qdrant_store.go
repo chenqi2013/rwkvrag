@@ -133,7 +133,8 @@ func (q *QdrantStore) Upsert(ctx context.Context, chunks []Chunk) error {
 }
 
 func (q *QdrantStore) Search(ctx context.Context, embedder Embedder, query string, topK int, minScore float64) ([]SearchResult, error) {
-	vectors, err := embedder.Embed(ctx, []string{query})
+	retrievalQuery := normalizeRetrievalQuery(query)
+	vectors, err := embedder.Embed(ctx, []string{retrievalQuery})
 	if err != nil {
 		return nil, err
 	}
@@ -144,6 +145,11 @@ func (q *QdrantStore) Search(ctx context.Context, embedder Embedder, query strin
 	candidates := topK * 20
 	if candidates < 100 {
 		candidates = 100
+	}
+	capitalSubject, isCapitalQuestion := capitalQuestionSubject(query)
+	populationQuestion, isPopulationProvinceQuestion := parsePopulationProvinceQuestion(query)
+	if (isCapitalQuestion || isPopulationProvinceQuestion) && candidates < 500 {
+		candidates = 500
 	}
 	body := map[string]any{
 		"prefetch": []any{
@@ -157,7 +163,7 @@ func (q *QdrantStore) Search(ctx context.Context, embedder Embedder, query strin
 				},
 			},
 			map[string]any{
-				"query": qdrantSparse(query),
+				"query": qdrantSparse(retrievalQuery),
 				"using": "text",
 				"limit": candidates,
 			},
@@ -185,17 +191,42 @@ func (q *QdrantStore) Search(ctx context.Context, embedder Embedder, query strin
 		return nil, fmt.Errorf("Qdrant search returned HTTP %d", status)
 	}
 
-	querySet := TokenSet(query)
+	querySet := TokenSet(retrievalQuery)
 	results := make([]SearchResult, 0, len(response.Result.Points))
 	for _, result := range response.Result.Points {
 		chunk := result.Payload.chunk()
 		titleScore := LexicalScore(querySet, chunk.Title)
 		contentScore := LexicalScore(querySet, chunk.Title+"\n"+chunk.Content)
 		score := 0.7*result.Score + 0.2*titleScore + 0.1*contentScore
+		if isCapitalQuestion {
+			if _, ok := capitalAnswerInText(capitalSubjectAliases(capitalSubject), chunk.Content); ok {
+				score += 1
+			}
+		}
+		if isPopulationProvinceQuestion {
+			if _, ok := populationProvinceAnswerInText(populationQuestion.Direction, chunk.Content); ok {
+				score += 1
+			}
+		}
 		if minScore > 0 && score < minScore {
 			continue
 		}
 		results = append(results, SearchResult{Chunk: chunk, Score: score})
+	}
+	if isCapitalQuestion {
+		if evidence, ok := q.capitalEvidence(ctx, capitalSubject); ok {
+			replaced := false
+			for i := range results {
+				if results[i].Chunk.ID == evidence.Chunk.ID {
+					results[i] = evidence
+					replaced = true
+					break
+				}
+			}
+			if !replaced {
+				results = append(results, evidence)
+			}
+		}
 	}
 	sort.SliceStable(results, func(i, j int) bool {
 		return results[i].Score > results[j].Score
@@ -325,18 +356,63 @@ func (q *QdrantStore) ensurePayloadIndexes(ctx context.Context) error {
 	if q.indexesReady {
 		return nil
 	}
-	status, err := q.request(ctx, http.MethodPut, q.collectionPath("/index?wait=true"), map[string]any{
-		"field_name":   "source",
-		"field_schema": "keyword",
-	}, nil)
-	if err != nil {
-		return err
-	}
-	if status < 200 || status >= 300 {
-		return fmt.Errorf("create Qdrant payload index returned HTTP %d", status)
+	for _, field := range []string{"source", "title"} {
+		status, err := q.request(ctx, http.MethodPut, q.collectionPath("/index?wait=true"), map[string]any{
+			"field_name":   field,
+			"field_schema": "keyword",
+		}, nil)
+		if err != nil {
+			return err
+		}
+		if status < 200 || status >= 300 {
+			return fmt.Errorf("create Qdrant payload index for %s returned HTTP %d", field, status)
+		}
 	}
 	q.indexesReady = true
 	return nil
+}
+
+func (q *QdrantStore) capitalEvidence(ctx context.Context, subject string) (SearchResult, bool) {
+	aliases := capitalSubjectAliases(subject)
+	titles := []string{"首都"}
+	seen := map[string]struct{}{"首都": {}}
+	for _, alias := range aliases {
+		title := alias + "首都"
+		if _, ok := seen[title]; ok {
+			continue
+		}
+		seen[title] = struct{}{}
+		titles = append(titles, title)
+	}
+	for _, title := range titles {
+		var response struct {
+			Result struct {
+				Points []struct {
+					Payload qdrantPayload `json:"payload"`
+				} `json:"points"`
+			} `json:"result"`
+		}
+		status, err := q.request(ctx, http.MethodPost, q.collectionPath("/points/scroll"), map[string]any{
+			"filter": map[string]any{
+				"must": []any{
+					map[string]any{"key": "title", "match": map[string]string{"value": title}},
+				},
+			},
+			"limit":        256,
+			"with_payload": true,
+			"with_vector":  false,
+		}, &response)
+		if err != nil || status < 200 || status >= 300 {
+			continue
+		}
+		for _, point := range response.Result.Points {
+			chunk := point.Payload.chunk()
+			if _, ok := capitalAnswerInText(aliases, chunk.Content); ok {
+				return SearchResult{Chunk: chunk, Score: 2}, true
+			}
+		}
+	}
+	return SearchResult{}, false
 }
 
 func (q *QdrantStore) request(ctx context.Context, method, path string, body, target any) (int, error) {

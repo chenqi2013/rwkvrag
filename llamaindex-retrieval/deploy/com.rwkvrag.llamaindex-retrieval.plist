@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.rwkvrag.llamaindex-retrieval</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/chenqi/.local/share/rwkvrag-llamaindex/.venv/bin/python</string>
+    <string>-m</string>
+    <string>llamaindex_retrieval.cli</string>
+    <string>serve</string>
+    <string>--host</string>
+    <string>127.0.0.1</string>
+    <string>--port</string>
+    <string>8090</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>RWKVRAG_QDRANT_URL</key>
+    <string>http://127.0.0.1:6333</string>
+    <key>RWKVRAG_QDRANT_COLLECTION</key>
+    <string>rwkvrag-knowledge-current</string>
+    <key>RWKVRAG_EMBEDDING_BASE_URL</key>
+    <string>http://127.0.0.1:11434/v1</string>
+    <key>RWKVRAG_EMBEDDING_API_KEY</key>
+    <string>ollama</string>
+    <key>RWKVRAG_EMBEDDING_MODEL</key>
+    <string>qwen3-embedding:8b</string>
+    <key>RWKVRAG_EMBEDDING_DIMENSIONS</key>
+    <string>4096</string>
+    <key>RWKVRAG_QUERY_INSTRUCTION</key>
+    <string>为这个问题检索能够直接回答的百科资料。</string>
+    <key>RWKVRAG_CANDIDATE_K</key>
+    <string>40</string>
+    <key>RWKVRAG_DENSE_WEIGHT</key>
+    <string>0.8</string>
+    <key>RWKVRAG_DEFAULT_TOP_K</key>
+    <string>5</string>
+    <key>RWKVRAG_ENABLE_RERANKER</key>
+    <string>false</string>
+    <key>RWKVRAG_MONGO_URL</key>
+    <string>mongodb://127.0.0.1:27017</string>
+    <key>RWKVRAG_MONGO_DATABASE</key>
+    <string>rwkvrag_admin</string>
+    <key>RWKVRAG_UPLOAD_DIR</key>
+    <string>/Volumes/mark/rwkvrag/data/admin-uploads</string>
+    <key>RWKVRAG_MAX_UPLOAD_BYTES</key>
+    <string>104857600</string>
+    <key>RWKVRAG_TASK_WORKERS</key>
+    <string>2</string>
+    <key>PYTHONUNBUFFERED</key>
+    <string>1</string>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/chenqi/.local/share/rwkvrag-llamaindex</string>
+  <key>StandardOutPath</key>
+  <string>/Users/chenqi/.local/share/rwkvrag-llamaindex/server.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/chenqi/.local/share/rwkvrag-llamaindex/server.err.log</string>
+  <key>KeepAlive</key>
+  <true/>
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>
