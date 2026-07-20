@@ -96,6 +96,7 @@ http://127.0.0.1:8090/admin/
 后台支持：
 
 - Markdown、MDX、文本型 PDF、DOCX 上传、删除和重新索引；
+- 结构化问答 Markdown 自动按问题拆分，检索时返回完整答案并跳过待回答项；
 - 知识库 CRUD 和检索隔离；
 - FineWiki 异步导入、进度和错误记录；
 - 切片正文与 metadata 查看；

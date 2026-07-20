@@ -40,6 +40,7 @@ interface AliasForm {
 export default function CollectionsPage() {
   const [collections, setCollections] = useState<CollectionItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
   const [selectedCollection, setSelectedCollection] = useState<string>();
   const [snapshots, setSnapshots] = useState<SnapshotItem[]>([]);
   const [snapshotLoading, setSnapshotLoading] = useState(false);
@@ -49,8 +50,9 @@ export default function CollectionsPage() {
     setLoading(true);
     try {
       setCollections(await api.collections());
+      setLoadError("");
     } catch (error) {
-      void message.error(errorMessage(error));
+      setLoadError(errorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -201,6 +203,15 @@ export default function CollectionsPage() {
         showIcon
         message="恢复 Snapshot 会覆盖目标 collection；生产切换建议恢复到新 collection，验证后再切换 alias。"
       />
+      {loadError && (
+        <Alert
+          type="error"
+          showIcon
+          message="Qdrant 服务暂时不可用"
+          description={loadError}
+          action={<Button size="small" onClick={() => void load()}>重试</Button>}
+        />
+      )}
       <Row gutter={[8, 8]}>
         <Col xs={24} xl={17}>
           <Card title={<Space><DatabaseOutlined />Collections</Space>}>
@@ -216,7 +227,13 @@ export default function CollectionsPage() {
               <Form.Item label="目标 Collection" name="collection_name" rules={[{ required: true }]}>
                 <Select options={collections.map((item) => ({ value: item.name, label: item.name }))} />
               </Form.Item>
-              <Button type="primary" block icon={<LinkOutlined />} onClick={() => void switchAlias()}>
+              <Button
+                type="primary"
+                block
+                disabled={Boolean(loadError) || collections.length === 0}
+                icon={<LinkOutlined />}
+                onClick={() => void switchAlias()}
+              >
                 切换 Alias
               </Button>
             </Form>

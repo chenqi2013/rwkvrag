@@ -14,7 +14,7 @@ from .admin_service import (
 )
 from .components import create_index
 from .config import get_settings
-from .qdrant_admin import QdrantAdmin
+from .qdrant_admin import QdrantAdmin, QdrantUnavailableError
 from .repository import MongoRepository, RepositoryConflictError
 from .routers.admin import router as admin_router
 from .routers.public import router as public_router
@@ -78,6 +78,14 @@ async def conflict_handler(_: Request, error: Exception) -> JSONResponse:
 @app.exception_handler(AdminValidationError)
 async def validation_handler(_: Request, error: AdminValidationError) -> JSONResponse:
     return JSONResponse(status_code=422, content={"detail": str(error)})
+
+
+@app.exception_handler(QdrantUnavailableError)
+async def qdrant_unavailable_handler(
+    _: Request,
+    error: QdrantUnavailableError,
+) -> JSONResponse:
+    return JSONResponse(status_code=503, content={"detail": str(error)})
 
 
 @app.get("/", include_in_schema=False)

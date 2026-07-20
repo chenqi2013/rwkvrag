@@ -45,3 +45,26 @@ def test_query_instruction_uses_qwen3_retrieval_format() -> None:
     assert model._query_text("中国的首都是哪里？") == (
         "Instruct: 检索相关资料。\nQuery: 中国的首都是哪里？"
     )
+
+
+def test_source_item_returns_complete_qa_answer() -> None:
+    full_answer = "完整答案" * 500
+    item = SearchService._source_item(
+        NodeWithScore(
+            node=TextNode(
+                text="只命中了答案的一小部分",
+                metadata={
+                    "document_id": "qa-1",
+                    "source": "uploaded-document",
+                    "title": "问题标题",
+                    "full_answer": full_answer,
+                    "question_id": "1",
+                },
+            ),
+            score=0.9,
+        )
+    )
+
+    assert item.snippet == full_answer
+    assert item.metadata["question_id"] == "1"
+    assert "full_answer" not in item.metadata

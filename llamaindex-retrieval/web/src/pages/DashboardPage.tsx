@@ -21,23 +21,23 @@ export default function DashboardPage() {
   const [error, setError] = useState("");
 
   const load = useCallback(async () => {
-    try {
-      const [healthData, knowledgeBaseData, fileData, jobData, collectionData] = await Promise.all([
-        api.health(),
-        api.knowledgeBases(),
-        api.files(),
-        api.jobs(),
-        api.collections(),
-      ]);
-      setHealth(healthData);
-      setKnowledgeBases(knowledgeBaseData);
-      setFiles(fileData);
-      setJobs(jobData);
-      setCollections(collectionData);
-      setError("");
-    } catch (loadError) {
-      setError(errorMessage(loadError));
-    }
+    const results = await Promise.allSettled([
+      api.health(),
+      api.knowledgeBases(),
+      api.files(),
+      api.jobs(),
+      api.collections(),
+    ] as const);
+    const [healthResult, knowledgeBaseResult, fileResult, jobResult, collectionResult] = results;
+    if (healthResult.status === "fulfilled") setHealth(healthResult.value);
+    if (knowledgeBaseResult.status === "fulfilled") setKnowledgeBases(knowledgeBaseResult.value);
+    if (fileResult.status === "fulfilled") setFiles(fileResult.value);
+    if (jobResult.status === "fulfilled") setJobs(jobResult.value);
+    if (collectionResult.status === "fulfilled") setCollections(collectionResult.value);
+    const failures = results
+      .filter((result): result is PromiseRejectedResult => result.status === "rejected")
+      .map((result) => errorMessage(result.reason));
+    setError([...new Set(failures)].join("；"));
   }, []);
 
   useEffect(() => {

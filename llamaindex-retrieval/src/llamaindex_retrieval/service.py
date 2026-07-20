@@ -99,12 +99,15 @@ class SearchService:
     def _source_item(result: NodeWithScore) -> SourceItem:
         node = result.node
         metadata = dict(node.metadata)
+        full_answer = str(metadata.pop("full_answer", "")).strip()
         title = str(metadata.pop("title", ""))
         source = str(metadata.pop("source", ""))
         uri = metadata.pop("uri", None)
         document_id = str(metadata.pop("document_id", node.ref_doc_id or node.node_id))
         content = node.get_content().strip()
-        snippet = content if len(content) <= 900 else content[:900].rstrip() + "..."
+        snippet = full_answer or (
+            content if len(content) <= 900 else content[:900].rstrip() + "..."
+        )
         return SourceItem(
             id=node.node_id,
             document_id=document_id,
