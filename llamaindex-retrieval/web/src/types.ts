@@ -39,6 +39,20 @@ export interface JobItem {
   updated_at: string;
 }
 
+export interface FineWikiPathEntry {
+  name: string;
+  path: string;
+  type: "directory" | "parquet";
+  size?: number;
+}
+
+export interface FineWikiPathPage {
+  current: string;
+  parent?: string;
+  roots: string[];
+  entries: FineWikiPathEntry[];
+}
+
 export interface ChunkItem {
   id: string;
   document_id: string;

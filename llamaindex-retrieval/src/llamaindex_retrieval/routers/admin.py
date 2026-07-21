@@ -4,8 +4,10 @@ from pathlib import Path
 from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
 from fastapi.responses import FileResponse, StreamingResponse
 
-from ..admin_service import AdminNotFoundError, AdminService
+from ..admin_service import AdminNotFoundError, AdminService, AdminValidationError
+from ..config import get_settings
 from ..dependencies import admin_service, qdrant_admin, repository
+from ..finewiki_browser import FineWikiPathError, browse_finewiki_paths
 from ..qdrant_admin import QdrantAdmin
 from ..repository import MongoRepository
 from ..schemas import (
@@ -16,6 +18,7 @@ from ..schemas import (
     FileItem,
     FileUploadAccepted,
     FineWikiImportRequest,
+    FineWikiPathPage,
     JobAccepted,
     JobItem,
     KnowledgeBaseCreate,
@@ -192,6 +195,19 @@ async def import_finewiki(
 ) -> dict:
     job = await service.create_finewiki_job(payload)
     return {"job_id": job["id"], "status": job["status"]}
+
+
+@router.get("/imports/finewiki/paths", response_model=FineWikiPathPage)
+async def list_finewiki_paths(path: str | None = None) -> dict:
+    settings = get_settings()
+    try:
+        return await asyncio.to_thread(
+            browse_finewiki_paths,
+            settings.finewiki_root_paths,
+            path,
+        )
+    except FineWikiPathError as error:
+        raise AdminValidationError(str(error)) from error
 
 
 @router.get("/collections", response_model=list[CollectionItem])

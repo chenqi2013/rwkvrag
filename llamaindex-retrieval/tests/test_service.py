@@ -33,10 +33,10 @@ def test_select_results_deduplicates_documents_and_filters_low_scores() -> None:
     ]
 
 
-def test_qwen3_defaults_use_4096_dimensions() -> None:
+def test_qwen3_defaults_use_4b_model_and_2560_dimensions() -> None:
     settings = Settings()
-    assert settings.embedding_model == "qwen3-embedding:8b"
-    assert settings.embedding_dimensions == 4096
+    assert settings.embedding_model == "Qwen/Qwen3-Embedding-4B"
+    assert settings.embedding_dimensions == 2560
     assert settings.qdrant_collection == "rwkvrag-knowledge-current"
 
 

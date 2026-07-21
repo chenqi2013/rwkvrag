@@ -56,7 +56,7 @@ export default function App() {
             <Typography.Title level={4}>知识库管理后台</Typography.Title>
           </div>
           <Space>
-            <Tag color="cyan">Qwen3 4096D</Tag>
+            <Tag color="cyan">Qwen3 Embedding</Tag>
             <Tag color="green">Hybrid Search</Tag>
           </Space>
         </Header>

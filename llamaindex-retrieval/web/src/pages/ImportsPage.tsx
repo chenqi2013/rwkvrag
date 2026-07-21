@@ -1,4 +1,11 @@
-import { ImportOutlined, ReloadOutlined } from "@ant-design/icons";
+import {
+  ArrowUpOutlined,
+  FileOutlined,
+  FolderOpenOutlined,
+  FolderOutlined,
+  ImportOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import {
   Alert,
   Button,
@@ -9,6 +16,7 @@ import {
   Input,
   InputNumber,
   message,
+  Modal,
   Progress,
   Row,
   Select,
@@ -21,8 +29,8 @@ import type { ColumnsType } from "antd/es/table";
 import { useCallback, useEffect, useState } from "react";
 
 import { api } from "../api";
-import type { JobItem, KnowledgeBase } from "../types";
-import { errorMessage, formatDate, formatNumber } from "../utils";
+import type { FineWikiPathEntry, FineWikiPathPage, JobItem, KnowledgeBase } from "../types";
+import { errorMessage, formatBytes, formatDate, formatNumber } from "../utils";
 
 interface ImportForm {
   path: string;
@@ -45,6 +53,9 @@ export default function ImportsPage() {
   const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [jobs, setJobs] = useState<JobItem[]>([]);
   const [submitting, setSubmitting] = useState(false);
+  const [pathBrowserOpen, setPathBrowserOpen] = useState(false);
+  const [pathBrowserLoading, setPathBrowserLoading] = useState(false);
+  const [pathPage, setPathPage] = useState<FineWikiPathPage>();
   const [form] = Form.useForm<ImportForm>();
 
   const load = useCallback(async () => {
@@ -78,6 +89,35 @@ export default function ImportsPage() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const browsePath = async (path?: string) => {
+    setPathBrowserLoading(true);
+    try {
+      setPathPage(await api.fineWikiPaths(path));
+    } catch (error) {
+      void message.error(errorMessage(error));
+    } finally {
+      setPathBrowserLoading(false);
+    }
+  };
+
+  const openPathBrowser = async () => {
+    setPathBrowserOpen(true);
+    const currentPath = form.getFieldValue("path");
+    try {
+      setPathBrowserLoading(true);
+      setPathPage(await api.fineWikiPaths(currentPath));
+    } catch {
+      await browsePath();
+    } finally {
+      setPathBrowserLoading(false);
+    }
+  };
+
+  const selectPath = (path: string) => {
+    form.setFieldValue("path", path);
+    setPathBrowserOpen(false);
   };
 
   const columns: ColumnsType<JobItem> = [
@@ -135,6 +175,34 @@ export default function ImportsPage() {
     },
   ];
 
+  const pathColumns: ColumnsType<FineWikiPathEntry> = [
+    {
+      title: "名称",
+      dataIndex: "name",
+      render: (name: string, item) => (
+        <Button
+          type="link"
+          icon={item.type === "directory" ? <FolderOutlined /> : <FileOutlined />}
+          onClick={() => item.type === "directory" ? void browsePath(item.path) : selectPath(item.path)}
+        >
+          {name}
+        </Button>
+      ),
+    },
+    {
+      title: "类型",
+      dataIndex: "type",
+      width: 90,
+      render: (type: FineWikiPathEntry["type"]) => type === "directory" ? "目录" : "Parquet",
+    },
+    {
+      title: "大小",
+      dataIndex: "size",
+      width: 100,
+      render: (size?: number) => size == null ? "—" : formatBytes(size),
+    },
+  ];
+
   return (
     <div className="page-stack">
       <div className="page-heading">
@@ -163,8 +231,15 @@ export default function ImportsPage() {
                 recreate: false,
               }}
             >
-              <Form.Item label="Parquet 文件或目录" name="path" rules={[{ required: true }]}>
-                <Input />
+              <Form.Item label="Parquet 文件或目录" required>
+                <Space.Compact block>
+                  <Form.Item name="path" noStyle rules={[{ required: true }]}>
+                    <Input />
+                  </Form.Item>
+                  <Button icon={<FolderOpenOutlined />} onClick={() => void openPathBrowser()}>
+                    浏览
+                  </Button>
+                </Space.Compact>
               </Form.Item>
               <Form.Item label="知识库" name="knowledge_base_id" rules={[{ required: true }]}>
                 <Select options={knowledgeBases.map((item) => ({ value: item.id, label: item.name }))} />
@@ -208,6 +283,55 @@ export default function ImportsPage() {
           </Card>
         </Col>
       </Row>
+      <Modal
+        open={pathBrowserOpen}
+        title="选择服务器上的 Parquet 文件或目录"
+        width={760}
+        onCancel={() => setPathBrowserOpen(false)}
+        footer={[
+          <Button key="cancel" onClick={() => setPathBrowserOpen(false)}>取消</Button>,
+          <Button
+            key="directory"
+            type="primary"
+            icon={<FolderOpenOutlined />}
+            disabled={!pathPage}
+            onClick={() => pathPage && selectPath(pathPage.current)}
+          >
+            选择当前目录
+          </Button>,
+        ]}
+      >
+        <Alert
+          type="info"
+          showIcon
+          message="这里显示的是 8090 后端服务器允许访问的 FineWiki 目录。"
+          className="form-alert"
+        />
+        <Space wrap style={{ marginBottom: 8 }}>
+          <Button
+            icon={<ArrowUpOutlined />}
+            disabled={!pathPage?.parent}
+            onClick={() => pathPage?.parent && void browsePath(pathPage.parent)}
+          >
+            上一级
+          </Button>
+          {pathPage?.roots.map((root) => (
+            <Button key={root} onClick={() => void browsePath(root)}>{root}</Button>
+          ))}
+        </Space>
+        <Typography.Paragraph copyable={{ text: pathPage?.current || "" }} ellipsis>
+          {pathPage?.current || "正在读取目录..."}
+        </Typography.Paragraph>
+        <Table
+          rowKey="path"
+          size="small"
+          loading={pathBrowserLoading}
+          columns={pathColumns}
+          dataSource={pathPage?.entries || []}
+          pagination={false}
+          scroll={{ y: 420 }}
+        />
+      </Modal>
     </div>
   );
 }

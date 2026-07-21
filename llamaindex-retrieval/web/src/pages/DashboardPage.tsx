@@ -47,7 +47,7 @@ export default function DashboardPage() {
   }, [load]);
 
   const activeJobs = jobs.filter((job) => ["pending", "running"].includes(job.status)).length;
-  const activeCollection = collections.find((item) => item.dense_dimensions === 4096);
+  const activeCollection = collections.find((item) => item.aliases.includes("rwkvrag-knowledge-current"));
 
   if (!health && !error) return <Skeleton active />;
 
@@ -87,7 +87,7 @@ export default function DashboardPage() {
         <Col xs={24} md={12} xl={6}>
           <Card className="metric-card">
             <Statistic
-              title="Qwen3 向量节点"
+              title="当前向量节点"
               value={activeCollection?.points_count || 0}
               formatter={(value) => formatNumber(Number(value))}
               prefix={<CloudServerOutlined />}

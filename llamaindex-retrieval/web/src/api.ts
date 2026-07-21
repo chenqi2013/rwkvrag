@@ -3,6 +3,7 @@ import type {
   ChunkItem,
   CollectionItem,
   FileItem,
+  FineWikiPathPage,
   JobItem,
   KnowledgeBase,
   SearchResponse,
@@ -73,6 +74,10 @@ export const api = {
       headers: jsonHeaders,
       body: JSON.stringify(values),
     }),
+  fineWikiPaths: (path?: string) =>
+    request<FineWikiPathPage>(
+      `/v1/admin/imports/finewiki/paths${path ? `?path=${encodeURIComponent(path)}` : ""}`,
+    ),
   search: (values: object) =>
     request<SearchResponse>("/v1/search", {
       method: "POST",

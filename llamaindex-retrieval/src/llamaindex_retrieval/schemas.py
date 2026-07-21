@@ -126,6 +126,20 @@ class FineWikiImportRequest(BaseModel):
     recreate: bool = False
 
 
+class FineWikiPathEntry(BaseModel):
+    name: str
+    path: str
+    type: Literal["directory", "parquet"]
+    size: int | None = None
+
+
+class FineWikiPathPage(BaseModel):
+    current: str
+    parent: str | None = None
+    roots: list[str]
+    entries: list[FineWikiPathEntry]
+
+
 class ChunkItem(BaseModel):
     id: str
     document_id: str
