@@ -2,6 +2,7 @@ from fastapi import Request
 
 from .admin_service import AdminService
 from .qdrant_admin import QdrantAdmin
+from .lexical_index import LexicalIndex
 from .repository import MongoRepository
 from .service import SearchService
 from .tasks import TaskManager
@@ -21,6 +22,10 @@ def repository(request: Request) -> MongoRepository:
 
 def qdrant_admin(request: Request) -> QdrantAdmin:
     return request.app.state.qdrant_admin
+
+
+def lexical_index(request: Request) -> LexicalIndex:
+    return request.app.state.lexical_index
 
 
 def task_manager(request: Request) -> TaskManager:

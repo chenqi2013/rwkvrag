@@ -12,13 +12,13 @@ from .admin_service import (
     AdminService,
     AdminValidationError,
 )
-from .components import create_index
 from .config import get_settings
+from .lexical_index import LexicalIndex
 from .qdrant_admin import QdrantAdmin, QdrantUnavailableError
 from .repository import MongoRepository, RepositoryConflictError
 from .routers.admin import router as admin_router
 from .routers.public import router as public_router
-from .service import SearchService, create_reranker
+from .service import SearchService
 from .tasks import TaskManager
 
 
@@ -29,15 +29,16 @@ async def lifespan(app: FastAPI):
     repository = MongoRepository(settings.mongo_url, settings.mongo_database)
     await repository.connect()
     qdrant = QdrantAdmin(settings)
-    task_manager = TaskManager(settings, repository, qdrant)
+    lexical_index = LexicalIndex(settings.lexical_index_path)
+    task_manager = TaskManager(settings, repository, qdrant, lexical_index)
     search = SearchService(
         settings=settings,
-        index=create_index(settings),
-        reranker=create_reranker(settings),
+        index=lexical_index,
     )
-    admin = AdminService(settings, repository, qdrant, task_manager)
+    admin = AdminService(settings, repository, qdrant, task_manager, lexical_index)
     app.state.repository = repository
     app.state.qdrant_admin = qdrant
+    app.state.lexical_index = lexical_index
     app.state.task_manager = task_manager
     app.state.search_service = search
     app.state.admin_service = admin
@@ -62,6 +63,16 @@ app.add_middleware(
 )
 app.include_router(public_router)
 app.include_router(admin_router)
+
+
+@app.middleware("http")
+async def disable_admin_cache(request: Request, call_next):
+    response = await call_next(request)
+    if request.url.path.startswith("/admin"):
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
 
 
 @app.exception_handler(AdminNotFoundError)

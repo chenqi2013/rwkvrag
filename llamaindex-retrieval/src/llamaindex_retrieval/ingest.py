@@ -6,13 +6,9 @@ import pyarrow.parquet as parquet
 from llama_index.core import Document
 from llama_index.core.ingestion import IngestionPipeline
 
-from .components import (
-    create_embedding_model,
-    create_qdrant_clients,
-    create_splitter,
-    create_vector_store,
-)
+from .components import create_splitter
 from .config import Settings
+from .lexical_index import LexicalIndex
 
 TEXT_COLUMNS = ("text", "markdown", "content", "article", "plain_text", "body")
 
@@ -179,26 +175,20 @@ def ingest_documents(
     batch_size: int,
     recreate: bool,
     progress_callback: Callable[[int, int], None] | None = None,
+    lexical_index: LexicalIndex | None = None,
 ) -> dict[str, int]:
-    client, async_client = create_qdrant_clients(settings)
-    if recreate and client.collection_exists(settings.qdrant_collection):
-        aliases = {alias.alias_name for alias in client.get_aliases().aliases}
-        if settings.qdrant_collection in aliases:
-            raise ValueError(
-                "不能通过 alias 重建 collection；批量入库时请将 "
-                "RWKVRAG_QDRANT_COLLECTION 设置为新的物理 collection 名称"
-            )
-        client.delete_collection(settings.qdrant_collection)
-    vector_store = create_vector_store(settings, client, async_client)
+    index = lexical_index or LexicalIndex(settings.lexical_index_path)
+    if recreate:
+        index.recreate()
     pipeline = IngestionPipeline(
-        transformations=[create_splitter(settings), create_embedding_model(settings)],
-        vector_store=vector_store,
+        transformations=[create_splitter(settings)],
         disable_cache=True,
     )
     documents_count = 0
     nodes_count = 0
     for document_batch in batched(documents, batch_size):
         nodes = pipeline.run(documents=document_batch, show_progress=True)
+        index.upsert_nodes(nodes)
         documents_count += len(document_batch)
         nodes_count += len(nodes)
         if progress_callback is not None:
@@ -217,6 +207,7 @@ def ingest_finewiki(
     knowledge_base_id: str = "default",
     import_job_id: str | None = None,
     progress_callback: Callable[[int, int], None] | None = None,
+    lexical_index: LexicalIndex | None = None,
 ) -> dict[str, int]:
     documents = iter_finewiki_documents(
         path,
@@ -232,6 +223,7 @@ def ingest_finewiki(
         batch_size,
         recreate,
         progress_callback=progress_callback,
+        lexical_index=lexical_index,
     )
 
 
@@ -244,6 +236,7 @@ def ingest_markdown(
     recreate: bool,
     knowledge_base_id: str = "default",
     progress_callback: Callable[[int, int], None] | None = None,
+    lexical_index: LexicalIndex | None = None,
 ) -> dict[str, int]:
     documents = iter_markdown_documents(
         path,
@@ -257,6 +250,7 @@ def ingest_markdown(
         batch_size,
         recreate,
         progress_callback=progress_callback,
+        lexical_index=lexical_index,
     )
 
 
@@ -265,6 +259,7 @@ def ingest_uploaded_documents(
     documents: list[Document],
     batch_size: int = 8,
     progress_callback: Callable[[int, int], None] | None = None,
+    lexical_index: LexicalIndex | None = None,
 ) -> dict[str, int]:
     return ingest_documents(
         settings,
@@ -272,4 +267,5 @@ def ingest_uploaded_documents(
         batch_size,
         recreate=False,
         progress_callback=progress_callback,
+        lexical_index=lexical_index,
     )

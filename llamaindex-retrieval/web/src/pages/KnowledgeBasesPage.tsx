@@ -54,7 +54,7 @@ export default function KnowledgeBasesPage() {
     try {
       await api.deleteKnowledgeBase(id);
       await load();
-      void message.success("知识库及其向量已删除");
+      void message.success("知识库及其索引已删除");
     } catch (error) {
       void message.error(errorMessage(error));
     }
@@ -87,7 +87,7 @@ export default function KnowledgeBasesPage() {
                 <Popconfirm
                   key="delete"
                   title="删除知识库"
-                  description="将同时删除该知识库的文件记录和向量，且不可恢复。"
+                  description="将同时删除该知识库的文件记录和索引，且不可恢复。"
                   disabled={item.id === "default"}
                   onConfirm={() => void remove(item.id)}
                 >

@@ -7,6 +7,7 @@ import pyarrow.parquet as parquet
 
 from .config import Settings
 from .ingest import ingest_finewiki, ingest_uploaded_documents, parquet_files
+from .lexical_index import LexicalIndex
 from .parsers import parse_uploaded_file
 from .qdrant_admin import QdrantAdmin
 from .repository import MongoRepository, utc_now
@@ -20,10 +21,12 @@ class TaskManager:
         settings: Settings,
         repository: MongoRepository,
         qdrant: QdrantAdmin,
+        lexical_index: LexicalIndex,
     ) -> None:
         self.settings = settings
         self.repository = repository
         self.qdrant = qdrant
+        self.lexical_index = lexical_index
         self.semaphore = asyncio.Semaphore(settings.task_workers)
         self.tasks: set[asyncio.Task[None]] = set()
 
@@ -134,7 +137,7 @@ class TaskManager:
                 "nodes_processed": 0,
             },
         )
-        await asyncio.to_thread(self.qdrant.delete_points, "file_id", file_id)
+        await asyncio.to_thread(self.lexical_index.delete_by_field, "file_id", file_id)
         loop = asyncio.get_running_loop()
         total_documents = max(1, len(documents))
         progress_updates = []
@@ -147,8 +150,8 @@ class TaskManager:
                         job_id,
                         {
                             "progress": percentage,
-                            "stage": "embedding",
-                            "message": "正在切片并生成向量",
+                            "stage": "indexing",
+                            "message": "正在切片并建立 BM25 索引",
                             "documents_processed": documents_processed,
                             "nodes_processed": nodes_processed,
                         },
@@ -163,6 +166,7 @@ class TaskManager:
             documents,
             8,
             progress,
+            self.lexical_index,
         )
         if progress_updates:
             await asyncio.gather(*(asyncio.wrap_future(update) for update in progress_updates))
@@ -201,8 +205,8 @@ class TaskManager:
                         job_id,
                         {
                             "progress": percentage,
-                            "stage": "embedding",
-                            "message": "正在处理 FineWiki 文档",
+                            "stage": "indexing",
+                            "message": "正在切片并建立 BM25 索引",
                             "documents_processed": documents_processed,
                             "nodes_processed": nodes_processed,
                         },
@@ -223,6 +227,7 @@ class TaskManager:
             str(payload["knowledge_base_id"]),
             job_id,
             progress,
+            self.lexical_index,
         )
         if progress_updates:
             await asyncio.gather(*(asyncio.wrap_future(update) for update in progress_updates))

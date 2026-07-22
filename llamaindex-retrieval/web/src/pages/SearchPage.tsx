@@ -92,7 +92,7 @@ export default function SearchPage() {
             title="检索结果"
             extra={response && (
               <Space>
-                <Tag color="cyan">{String(response.retrieval.embedding_model)}</Tag>
+                <Tag color="cyan">{String(response.retrieval.algorithm)}</Tag>
                 <Tag>{String(response.retrieval.mode)}</Tag>
                 <Tag>{String(response.retrieval.returned)} 条</Tag>
               </Space>

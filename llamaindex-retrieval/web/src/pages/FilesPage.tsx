@@ -89,7 +89,7 @@ export default function FilesPage() {
     try {
       await api.deleteFile(id);
       await load();
-      void message.success("文件及对应向量已删除");
+      void message.success("文件及对应索引已删除");
     } catch (error) {
       void message.error(errorMessage(error));
     }
@@ -169,7 +169,7 @@ export default function FilesPage() {
           <Button type="text" icon={<ReloadOutlined />} disabled={item.status !== "ready" && item.status !== "failed"} onClick={() => void reindex(item.id)}>
             重建
           </Button>
-          <Popconfirm title="确认删除文件和全部向量？" onConfirm={() => void remove(item.id)}>
+          <Popconfirm title="确认删除文件和全部索引？" onConfirm={() => void remove(item.id)}>
             <Button danger type="text" icon={<DeleteOutlined />} disabled={["pending", "processing"].includes(item.status)}>
               删除
             </Button>
@@ -186,7 +186,7 @@ export default function FilesPage() {
           <Typography.Text className="eyebrow">DOCUMENT PIPELINE</Typography.Text>
           <Typography.Title level={2}>文档管理</Typography.Title>
           <Typography.Paragraph type="secondary">
-            上传 Markdown、PDF 或 DOCX，系统会自动解析、切片并生成 Qwen3 向量。
+            上传 Markdown、PDF 或 DOCX，系统会自动解析、切片并建立 BM25 索引。
           </Typography.Paragraph>
         </div>
         <Select

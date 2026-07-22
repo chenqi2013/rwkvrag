@@ -16,17 +16,8 @@ class Settings(BaseSettings):
     qdrant_url: str = "http://127.0.0.1:6333"
     qdrant_api_key: str | None = None
     qdrant_collection: str = "rwkvrag-knowledge-current"
-    embedding_base_url: str = "http://192.168.0.18:6453/v1"
-    embedding_api_key: str = "not-required"
-    embedding_model: str = "Qwen/Qwen3-Embedding-4B"
-    embedding_dimensions: int = Field(default=2560, ge=1)
-    query_instruction: str = "为这个问题检索能够直接回答的百科资料。"
-    embed_batch_size: int = Field(default=16, ge=1, le=256)
-    embedding_timeout_seconds: float = Field(default=300, gt=0)
-
     chunk_size: int = Field(default=512, ge=128, le=8192)
     chunk_overlap: int = Field(default=64, ge=0, le=1024)
-    dense_weight: float = Field(default=0.8, ge=0, le=1)
     candidate_k: int = Field(default=40, ge=5, le=200)
     default_top_k: int = Field(default=5, ge=1, le=50)
     max_top_k: int = Field(default=20, ge=1, le=100)
@@ -34,13 +25,9 @@ class Settings(BaseSettings):
     relative_score_threshold: float = Field(default=0.55, ge=0, le=1)
     min_relevance_score: float = 0
 
-    enable_reranker: bool = False
-    reranker_model: str = "BAAI/bge-reranker-v2-m3"
-    reranker_device: str | None = "mps"
-    reranker_top_n: int = Field(default=20, ge=1, le=100)
-
     mongo_url: str = "mongodb://127.0.0.1:27017"
     mongo_database: str = "rwkvrag_admin"
+    lexical_index_path: Path = Path("/Volumes/mark/rwkvrag/data/lexical/bm25.sqlite3")
     upload_dir: Path = Path("/Volumes/mark/rwkvrag/data/admin-uploads")
     finewiki_import_roots: str = "/Volumes/mark/rwkvrag/data/deploy-demo/finewiki-sample"
     max_upload_bytes: int = Field(default=100 * 1024 * 1024, ge=1024)

@@ -1,14 +1,14 @@
 [project]
 name = "rwkvrag-llamaindex-retrieval"
 version = "0.2.0"
-description = "Evidence retrieval API built with LlamaIndex, Qwen3 Embedding, and Qdrant"
+description = "Evidence retrieval API built with LlamaIndex and SQLite FTS5 BM25"
 requires-python = ">=3.11,<3.14"
 dependencies = [
   "fastapi>=0.115,<1",
   "httpx>=0.28,<1",
+  "jieba>=0.42,<1",
   "llama-index-core>=0.13,<0.15",
-  "llama-index-embeddings-openai>=0.5,<0.7",
-  "llama-index-vector-stores-qdrant>=0.9,<0.11",
+  "opencc-python-reimplemented>=0.1.7,<1",
   "pymongo>=4.12,<5",
   "pymupdf>=1.25,<2",
   "pyarrow>=18,<26",
@@ -20,10 +20,6 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-rerank = [
-  "llama-index-postprocessor-sbert-rerank>=0.4,<0.6",
-  "sentence-transformers>=5.1,<6",
-]
 dev = [
   "pytest>=8,<10",
   "pytest-asyncio>=0.25,<2",

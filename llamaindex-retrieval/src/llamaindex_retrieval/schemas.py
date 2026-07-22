@@ -177,4 +177,4 @@ class AdminHealth(BaseModel):
     status: Literal["ok", "degraded"]
     mongodb: dict[str, Any]
     qdrant: dict[str, Any]
-    embedding: dict[str, Any]
+    lexical: dict[str, Any]

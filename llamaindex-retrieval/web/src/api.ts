@@ -1,13 +1,11 @@
 import type {
   AdminHealth,
   ChunkItem,
-  CollectionItem,
   FileItem,
   FineWikiPathPage,
   JobItem,
   KnowledgeBase,
   SearchResponse,
-  SnapshotItem,
 } from "./types";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
@@ -83,31 +81,5 @@ export const api = {
       method: "POST",
       headers: jsonHeaders,
       body: JSON.stringify(values),
-    }),
-  collections: () => request<CollectionItem[]>("/v1/admin/collections"),
-  snapshots: (collection: string) =>
-    request<SnapshotItem[]>(`/v1/admin/collections/${encodeURIComponent(collection)}/snapshots`),
-  createSnapshot: (collection: string) =>
-    request<SnapshotItem>(`/v1/admin/collections/${encodeURIComponent(collection)}/snapshots`, {
-      method: "POST",
-    }),
-  deleteSnapshot: (collection: string, snapshot: string) =>
-    request<void>(
-      `/v1/admin/collections/${encodeURIComponent(collection)}/snapshots/${encodeURIComponent(snapshot)}`,
-      { method: "DELETE" },
-    ),
-  restoreSnapshot: (collection: string, file: File) => {
-    const form = new FormData();
-    form.append("snapshot", file);
-    return request<{ status: string }>(
-      `/v1/admin/collections/${encodeURIComponent(collection)}/snapshots/restore`,
-      { method: "POST", body: form },
-    );
-  },
-  switchAlias: (aliasName: string, collectionName: string) =>
-    request<{ alias_name: string; collection_name: string }>("/v1/admin/aliases/switch", {
-      method: "POST",
-      headers: jsonHeaders,
-      body: JSON.stringify({ alias_name: aliasName, collection_name: collectionName }),
     }),
 };

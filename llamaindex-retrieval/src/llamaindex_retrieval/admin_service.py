@@ -2,13 +2,12 @@ import asyncio
 import hashlib
 import shutil
 from pathlib import Path
-from time import perf_counter
 from uuid import uuid4
 
 from fastapi import UploadFile
 
-from .components import create_embedding_model
 from .config import Settings
+from .lexical_index import LexicalIndex
 from .parsers import SUPPORTED_EXTENSIONS
 from .qdrant_admin import QdrantAdmin
 from .repository import MongoRepository, RepositoryConflictError
@@ -35,11 +34,13 @@ class AdminService:
         repository: MongoRepository,
         qdrant: QdrantAdmin,
         tasks: TaskManager,
+        lexical_index: LexicalIndex,
     ) -> None:
         self.settings = settings
         self.repository = repository
         self.qdrant = qdrant
         self.tasks = tasks
+        self.lexical_index = lexical_index
 
     async def upload_file(
         self,
@@ -138,7 +139,7 @@ class AdminService:
         if file_item["status"] in {"pending", "processing"}:
             raise AdminConflictError("文件正在处理，完成后才能删除")
         await self.repository.update_file(file_id, {"status": "deleting"})
-        await asyncio.to_thread(self.qdrant.delete_points, "file_id", file_id)
+        await asyncio.to_thread(self.lexical_index.delete_by_field, "file_id", file_id)
         path = Path(file_item["path"])
         await asyncio.to_thread(shutil.rmtree, path.parent, True)
         await self.repository.delete_file(file_id)
@@ -149,14 +150,6 @@ class AdminService:
         path = Path(request.path).expanduser().resolve()
         if not path.exists():
             raise AdminValidationError(f"FineWiki 路径不存在：{path}")
-        if request.recreate and await asyncio.to_thread(
-            self.qdrant.is_alias,
-            self.settings.qdrant_collection,
-        ):
-            raise AdminValidationError(
-                "当前服务通过 collection alias 运行，不能在线重建。"
-                "请在批量入库服务器使用新的物理 collection 名称。"
-            )
         payload = request.model_dump()
         payload["path"] = str(path)
         job = await self.repository.create_job("finewiki_import", payload)
@@ -177,7 +170,7 @@ class AdminService:
         if running_jobs:
             raise AdminConflictError("知识库仍有运行中的任务")
         await asyncio.to_thread(
-            self.qdrant.delete_points,
+            self.lexical_index.delete_by_field,
             "knowledge_base_id",
             knowledge_base_id,
         )
@@ -188,35 +181,21 @@ class AdminService:
         await self.repository.delete_knowledge_base(knowledge_base_id)
 
     async def health(self) -> dict:
-        mongo_result, qdrant_result, embedding_result = await asyncio.gather(
+        mongo_result, qdrant_result, lexical_result = await asyncio.gather(
             self.repository.health(),
             asyncio.to_thread(self.qdrant.health),
-            self._embedding_health(),
+            asyncio.to_thread(self.lexical_index.health),
             return_exceptions=True,
         )
         mongodb = self._health_result(mongo_result)
         qdrant = self._health_result(qdrant_result)
-        embedding = self._health_result(embedding_result)
-        status = "ok" if all(item.get("ok") for item in [mongodb, qdrant, embedding]) else "degraded"
+        lexical = self._health_result(lexical_result)
+        status = "ok" if all(item.get("ok") for item in [mongodb, qdrant, lexical]) else "degraded"
         return {
             "status": status,
             "mongodb": mongodb,
             "qdrant": qdrant,
-            "embedding": embedding,
-        }
-
-    async def _embedding_health(self) -> dict:
-        model = create_embedding_model(self.settings)
-        started = perf_counter()
-        vector = await model.aget_text_embedding("Embedding 服务健康检查")
-        elapsed = (perf_counter() - started) * 1000
-        return {
-            "ok": len(vector) == self.settings.embedding_dimensions,
-            "model": self.settings.embedding_model,
-            "dimensions": len(vector),
-            "expected_dimensions": self.settings.embedding_dimensions,
-            "latency_ms": round(elapsed, 2),
-            "base_url": self.settings.embedding_base_url,
+            "lexical": lexical,
         }
 
     @staticmethod

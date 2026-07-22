@@ -1,6 +1,5 @@
 import {
   ApiOutlined,
-  CloudServerOutlined,
   DatabaseOutlined,
   FileTextOutlined,
   ImportOutlined,
@@ -9,7 +8,6 @@ import {
 import { Layout, Menu, Space, Tag, Typography } from "antd";
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
-import CollectionsPage from "./pages/CollectionsPage";
 import DashboardPage from "./pages/DashboardPage";
 import FilesPage from "./pages/FilesPage";
 import ImportsPage from "./pages/ImportsPage";
@@ -24,7 +22,6 @@ const menuItems = [
   { key: "/files", icon: <FileTextOutlined />, label: "文档管理" },
   { key: "/imports", icon: <ImportOutlined />, label: "导入任务" },
   { key: "/search", icon: <SearchOutlined />, label: "检索测试" },
-  { key: "/collections", icon: <CloudServerOutlined />, label: "向量数据库" },
 ];
 
 export default function App() {
@@ -56,8 +53,8 @@ export default function App() {
             <Typography.Title level={4}>知识库管理后台</Typography.Title>
           </div>
           <Space>
-            <Tag color="cyan">Qwen3 Embedding</Tag>
-            <Tag color="green">Hybrid Search</Tag>
+            <Tag color="cyan">BM25 + 关键词</Tag>
+            <Tag color="green">经典检索</Tag>
           </Space>
         </Header>
         <Content className="app-content">
@@ -67,7 +64,6 @@ export default function App() {
             <Route path="/files" element={<FilesPage />} />
             <Route path="/imports" element={<ImportsPage />} />
             <Route path="/search" element={<SearchPage />} />
-            <Route path="/collections" element={<CollectionsPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Content>

@@ -1,15 +1,15 @@
 import {
   CheckCircleFilled,
-  CloudServerOutlined,
   DatabaseOutlined,
   FileTextOutlined,
+  SearchOutlined,
   ThunderboltOutlined,
 } from "@ant-design/icons";
 import { Alert, Card, Col, Descriptions, Row, Skeleton, Statistic, Tag, Typography } from "antd";
 import { useCallback, useEffect, useState } from "react";
 
 import { api } from "../api";
-import type { AdminHealth, CollectionItem, FileItem, JobItem, KnowledgeBase } from "../types";
+import type { AdminHealth, FileItem, JobItem, KnowledgeBase } from "../types";
 import { errorMessage, formatNumber } from "../utils";
 
 export default function DashboardPage() {
@@ -17,7 +17,6 @@ export default function DashboardPage() {
   const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [files, setFiles] = useState<FileItem[]>([]);
   const [jobs, setJobs] = useState<JobItem[]>([]);
-  const [collections, setCollections] = useState<CollectionItem[]>([]);
   const [error, setError] = useState("");
 
   const load = useCallback(async () => {
@@ -26,14 +25,12 @@ export default function DashboardPage() {
       api.knowledgeBases(),
       api.files(),
       api.jobs(),
-      api.collections(),
     ] as const);
-    const [healthResult, knowledgeBaseResult, fileResult, jobResult, collectionResult] = results;
+    const [healthResult, knowledgeBaseResult, fileResult, jobResult] = results;
     if (healthResult.status === "fulfilled") setHealth(healthResult.value);
     if (knowledgeBaseResult.status === "fulfilled") setKnowledgeBases(knowledgeBaseResult.value);
     if (fileResult.status === "fulfilled") setFiles(fileResult.value);
     if (jobResult.status === "fulfilled") setJobs(jobResult.value);
-    if (collectionResult.status === "fulfilled") setCollections(collectionResult.value);
     const failures = results
       .filter((result): result is PromiseRejectedResult => result.status === "rejected")
       .map((result) => errorMessage(result.reason));
@@ -47,7 +44,7 @@ export default function DashboardPage() {
   }, [load]);
 
   const activeJobs = jobs.filter((job) => ["pending", "running"].includes(job.status)).length;
-  const activeCollection = collections.find((item) => item.aliases.includes("rwkvrag-knowledge-current"));
+  const coreServicesHealthy = Boolean(health?.mongodb.ok && health?.lexical.ok);
 
   if (!health && !error) return <Skeleton active />;
 
@@ -58,12 +55,12 @@ export default function DashboardPage() {
           <Typography.Text className="eyebrow">SYSTEM OVERVIEW</Typography.Text>
           <Typography.Title level={2}>运行概览</Typography.Title>
           <Typography.Paragraph type="secondary">
-            实时检查 MongoDB、Qdrant 和 Embedding 服务状态。
+            实时检查 MongoDB、BM25 索引和后台任务状态。
           </Typography.Paragraph>
         </div>
         {health && (
-          <Tag icon={<CheckCircleFilled />} color={health.status === "ok" ? "success" : "warning"}>
-            {health.status === "ok" ? "全部服务正常" : "服务降级"}
+          <Tag icon={<CheckCircleFilled />} color={coreServicesHealthy ? "success" : "warning"}>
+            {coreServicesHealthy ? "核心服务正常" : "核心服务异常"}
           </Tag>
         )}
       </div>
@@ -87,17 +84,17 @@ export default function DashboardPage() {
         <Col xs={24} md={12} xl={6}>
           <Card className="metric-card">
             <Statistic
-              title="当前向量节点"
-              value={activeCollection?.points_count || 0}
+              title="BM25 索引切片"
+              value={Number(health?.lexical?.documents ?? 0)}
               formatter={(value) => formatNumber(Number(value))}
-              prefix={<CloudServerOutlined />}
+              prefix={<SearchOutlined />}
             />
           </Card>
         </Col>
       </Row>
       {health && (
         <Row gutter={[8, 8]}>
-          <Col xs={24} xl={8}>
+          <Col xs={24} xl={12}>
             <Card title="MongoDB" className="service-card">
               <Descriptions column={1} size="small">
                 <Descriptions.Item label="状态">
@@ -111,31 +108,17 @@ export default function DashboardPage() {
               </Descriptions>
             </Card>
           </Col>
-          <Col xs={24} xl={8}>
-            <Card title="Qdrant" className="service-card">
+          <Col xs={24} xl={12}>
+            <Card title="BM25 索引" className="service-card">
               <Descriptions column={1} size="small">
-                <Descriptions.Item label="状态">
-                  <Tag color={health.qdrant.ok ? "success" : "error"}>
-                    {health.qdrant.ok ? "正常" : "异常"}
-                  </Tag>
+                <Descriptions.Item label="算法">
+                  {String(health.lexical.algorithm ?? "—")}
                 </Descriptions.Item>
-                <Descriptions.Item label="Collections">
-                  {String(health.qdrant.collections ?? "—")}
+                <Descriptions.Item label="索引文档">
+                  {formatNumber(Number(health.lexical.documents ?? 0))}
                 </Descriptions.Item>
-              </Descriptions>
-            </Card>
-          </Col>
-          <Col xs={24} xl={8}>
-            <Card title="Embedding" className="service-card">
-              <Descriptions column={1} size="small">
-                <Descriptions.Item label="模型">
-                  {String(health.embedding.model ?? "—")}
-                </Descriptions.Item>
-                <Descriptions.Item label="向量维度">
-                  {String(health.embedding.dimensions ?? "—")}
-                </Descriptions.Item>
-                <Descriptions.Item label="延迟">
-                  {String(health.embedding.latency_ms ?? "—")} ms
+                <Descriptions.Item label="索引文件">
+                  {String(health.lexical.path ?? "—")}
                 </Descriptions.Item>
               </Descriptions>
             </Card>

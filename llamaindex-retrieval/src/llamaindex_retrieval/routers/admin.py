@@ -6,9 +6,10 @@ from fastapi.responses import FileResponse, StreamingResponse
 
 from ..admin_service import AdminNotFoundError, AdminService, AdminValidationError
 from ..config import get_settings
-from ..dependencies import admin_service, qdrant_admin, repository
+from ..dependencies import admin_service, lexical_index, qdrant_admin, repository
 from ..finewiki_browser import FineWikiPathError, browse_finewiki_paths
 from ..qdrant_admin import QdrantAdmin
+from ..lexical_index import LexicalIndex
 from ..repository import MongoRepository
 from ..schemas import (
     AdminHealth,
@@ -140,10 +141,10 @@ async def file_chunks(
     file_id: str,
     limit: int = Query(default=50, ge=1, le=200),
     offset: str | None = None,
-    qdrant: QdrantAdmin = Depends(qdrant_admin),
+    index: LexicalIndex = Depends(lexical_index),
 ) -> dict:
     return await asyncio.to_thread(
-        qdrant.list_chunks,
+        index.list_chunks,
         knowledge_base_id=None,
         file_id=file_id,
         limit=limit,
@@ -157,10 +158,10 @@ async def list_chunks(
     file_id: str | None = None,
     limit: int = Query(default=50, ge=1, le=200),
     offset: str | None = None,
-    qdrant: QdrantAdmin = Depends(qdrant_admin),
+    index: LexicalIndex = Depends(lexical_index),
 ) -> dict:
     return await asyncio.to_thread(
-        qdrant.list_chunks,
+        index.list_chunks,
         knowledge_base_id=knowledge_base_id,
         file_id=file_id,
         limit=limit,

@@ -60,22 +60,6 @@ export interface ChunkItem {
   metadata: Record<string, unknown>;
 }
 
-export interface CollectionItem {
-  name: string;
-  status: string;
-  points_count: number;
-  indexed_vectors_count: number;
-  dense_dimensions?: number;
-  aliases: string[];
-}
-
-export interface SnapshotItem {
-  name: string;
-  size: number;
-  created_at?: string;
-  checksum?: string;
-}
-
 export interface SearchResult {
   id: string;
   document_id: string;
@@ -95,6 +79,5 @@ export interface SearchResponse {
 export interface AdminHealth {
   status: "ok" | "degraded";
   mongodb: Record<string, unknown>;
-  qdrant: Record<string, unknown>;
-  embedding: Record<string, unknown>;
+  lexical: Record<string, unknown>;
 }
