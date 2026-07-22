@@ -1,5 +1,6 @@
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import uvicorn
@@ -7,7 +8,7 @@ import uvicorn
 from .config import get_settings
 from .evaluate import evaluate
 from .ingest import ingest_finewiki, ingest_markdown
-from .rebuild_lexical import rebuild_from_qdrant
+from .migrate_sqlite import migrate_from_sqlite
 
 
 def parser() -> argparse.ArgumentParser:
@@ -38,9 +39,10 @@ def parser() -> argparse.ArgumentParser:
     evaluation.add_argument("--cases", type=Path, default=Path("eval/cases.jsonl"))
     evaluation.add_argument("--top-k", type=int, default=5)
 
-    rebuild = commands.add_parser("rebuild-lexical")
-    rebuild.add_argument("--collection", default=None)
-    rebuild.add_argument("--batch-size", type=int, default=256)
+    migration = commands.add_parser("migrate-sqlite")
+    migration.add_argument("--path", type=Path, default=None)
+    migration.add_argument("--batch-size", type=int, default=500)
+    migration.add_argument("--recreate", action="store_true")
     return root
 
 
@@ -81,11 +83,21 @@ def main() -> None:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         if report["passed"] != report["total"]:
             raise SystemExit(1)
-    if arguments.command == "rebuild-lexical":
-        stats = rebuild_from_qdrant(
+    if arguments.command == "migrate-sqlite":
+        last_reported = 0
+
+        def report_progress(processed: int) -> None:
+            nonlocal last_reported
+            if processed - last_reported >= 10_000:
+                print(f"已迁移 {processed} 个切片", file=sys.stderr, flush=True)
+                last_reported = processed
+
+        stats = migrate_from_sqlite(
             get_settings(),
-            collection=arguments.collection,
+            path=arguments.path,
             batch_size=arguments.batch_size,
+            recreate=arguments.recreate,
+            progress_callback=report_progress,
         )
         print(json.dumps(stats, ensure_ascii=False))
 

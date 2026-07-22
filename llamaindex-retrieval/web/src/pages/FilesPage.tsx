@@ -186,7 +186,7 @@ export default function FilesPage() {
           <Typography.Text className="eyebrow">DOCUMENT PIPELINE</Typography.Text>
           <Typography.Title level={2}>文档管理</Typography.Title>
           <Typography.Paragraph type="secondary">
-            上传 Markdown、PDF 或 DOCX，系统会自动解析、切片并建立 BM25 索引。
+            上传 Markdown、PDF 或 DOCX，系统会自动解析、切片并写入 OpenSearch BM25 索引。
           </Typography.Paragraph>
         </div>
         <Select

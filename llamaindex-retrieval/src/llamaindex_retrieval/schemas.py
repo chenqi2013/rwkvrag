@@ -152,29 +152,7 @@ class ChunkPage(BaseModel):
     next_offset: str | None = None
 
 
-class CollectionItem(BaseModel):
-    name: str
-    status: str
-    points_count: int
-    indexed_vectors_count: int
-    dense_dimensions: int | None = None
-    aliases: list[str] = Field(default_factory=list)
-
-
-class SnapshotItem(BaseModel):
-    name: str
-    size: int
-    created_at: datetime | None = None
-    checksum: str | None = None
-
-
-class AliasSwitchRequest(BaseModel):
-    alias_name: str = Field(min_length=1, max_length=255)
-    collection_name: str = Field(min_length=1, max_length=255)
-
-
 class AdminHealth(BaseModel):
     status: Literal["ok", "degraded"]
     mongodb: dict[str, Any]
-    qdrant: dict[str, Any]
     lexical: dict[str, Any]

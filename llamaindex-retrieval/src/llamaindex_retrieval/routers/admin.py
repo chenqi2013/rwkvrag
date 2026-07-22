@@ -2,20 +2,17 @@ import asyncio
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse
 
 from ..admin_service import AdminNotFoundError, AdminService, AdminValidationError
 from ..config import get_settings
-from ..dependencies import admin_service, lexical_index, qdrant_admin, repository
+from ..dependencies import admin_service, lexical_index, repository
 from ..finewiki_browser import FineWikiPathError, browse_finewiki_paths
-from ..qdrant_admin import QdrantAdmin
 from ..lexical_index import LexicalIndex
 from ..repository import MongoRepository
 from ..schemas import (
     AdminHealth,
-    AliasSwitchRequest,
     ChunkPage,
-    CollectionItem,
     FileItem,
     FileUploadAccepted,
     FineWikiImportRequest,
@@ -25,7 +22,6 @@ from ..schemas import (
     KnowledgeBaseCreate,
     KnowledgeBaseItem,
     KnowledgeBaseUpdate,
-    SnapshotItem,
 )
 
 router = APIRouter(prefix="/v1/admin", tags=["admin"])
@@ -209,83 +205,3 @@ async def list_finewiki_paths(path: str | None = None) -> dict:
         )
     except FineWikiPathError as error:
         raise AdminValidationError(str(error)) from error
-
-
-@router.get("/collections", response_model=list[CollectionItem])
-async def list_collections(
-    qdrant: QdrantAdmin = Depends(qdrant_admin),
-) -> list[dict]:
-    return await asyncio.to_thread(qdrant.list_collections)
-
-
-@router.get("/collections/{collection_name}/snapshots", response_model=list[SnapshotItem])
-async def list_snapshots(
-    collection_name: str,
-    qdrant: QdrantAdmin = Depends(qdrant_admin),
-) -> list[dict]:
-    return await asyncio.to_thread(qdrant.list_snapshots, collection_name)
-
-
-@router.post(
-    "/collections/{collection_name}/snapshots",
-    response_model=SnapshotItem,
-    status_code=201,
-)
-async def create_snapshot(
-    collection_name: str,
-    qdrant: QdrantAdmin = Depends(qdrant_admin),
-) -> dict:
-    return await asyncio.to_thread(qdrant.create_snapshot, collection_name)
-
-
-@router.delete(
-    "/collections/{collection_name}/snapshots/{snapshot_name}",
-    status_code=204,
-)
-async def delete_snapshot(
-    collection_name: str,
-    snapshot_name: str,
-    qdrant: QdrantAdmin = Depends(qdrant_admin),
-) -> None:
-    await asyncio.to_thread(qdrant.delete_snapshot, collection_name, snapshot_name)
-
-
-@router.get("/collections/{collection_name}/snapshots/{snapshot_name}/download")
-async def download_snapshot(
-    collection_name: str,
-    snapshot_name: str,
-    qdrant: QdrantAdmin = Depends(qdrant_admin),
-) -> StreamingResponse:
-    return StreamingResponse(
-        qdrant.stream_snapshot(collection_name, snapshot_name),
-        media_type="application/octet-stream",
-        headers={"Content-Disposition": f'attachment; filename="{snapshot_name}"'},
-    )
-
-
-@router.post("/collections/{collection_name}/snapshots/restore", status_code=202)
-async def restore_snapshot(
-    collection_name: str,
-    snapshot: UploadFile = File(...),
-    qdrant: QdrantAdmin = Depends(qdrant_admin),
-) -> dict[str, str]:
-    await qdrant.restore_snapshot(
-        collection_name,
-        snapshot.filename or "upload.snapshot",
-        snapshot.file,
-    )
-    await snapshot.close()
-    return {"status": "restored", "collection_name": collection_name}
-
-
-@router.post("/aliases/switch", status_code=200)
-async def switch_alias(
-    payload: AliasSwitchRequest,
-    qdrant: QdrantAdmin = Depends(qdrant_admin),
-) -> dict[str, str]:
-    await asyncio.to_thread(
-        qdrant.switch_alias,
-        payload.alias_name,
-        payload.collection_name,
-    )
-    return payload.model_dump()

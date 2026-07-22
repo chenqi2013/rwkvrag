@@ -17,11 +17,15 @@
   </array>
   <key>EnvironmentVariables</key>
   <dict>
-    <key>RWKVRAG_QDRANT_URL</key>
-    <string>http://127.0.0.1:6333</string>
-    <key>RWKVRAG_QDRANT_COLLECTION</key>
-    <string>rwkvrag-knowledge-current</string>
-    <key>RWKVRAG_LEXICAL_INDEX_PATH</key>
+    <key>RWKVRAG_OPENSEARCH_URL</key>
+    <string>http://127.0.0.1:9200</string>
+    <key>RWKVRAG_OPENSEARCH_INDEX</key>
+    <string>rwkvrag-knowledge-v1</string>
+    <key>RWKVRAG_OPENSEARCH_SHARDS</key>
+    <string>1</string>
+    <key>RWKVRAG_OPENSEARCH_REPLICAS</key>
+    <string>0</string>
+    <key>RWKVRAG_SQLITE_MIGRATION_PATH</key>
     <string>/Volumes/mark/rwkvrag/data/lexical/bm25.sqlite3</string>
     <key>RWKVRAG_CANDIDATE_K</key>
     <string>40</string>

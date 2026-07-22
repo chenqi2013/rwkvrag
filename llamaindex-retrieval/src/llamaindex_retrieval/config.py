@@ -13,9 +13,17 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    qdrant_url: str = "http://127.0.0.1:6333"
-    qdrant_api_key: str | None = None
-    qdrant_collection: str = "rwkvrag-knowledge-current"
+    opensearch_url: str = "http://127.0.0.1:9200"
+    opensearch_username: str | None = None
+    opensearch_password: str | None = None
+    opensearch_verify_certs: bool = False
+    opensearch_index: str = "rwkvrag-knowledge-v1"
+    opensearch_shards: int = Field(default=1, ge=1, le=32)
+    opensearch_replicas: int = Field(default=0, ge=0, le=8)
+    opensearch_refresh_interval: str = "1s"
+    opensearch_timeout: int = Field(default=30, ge=1, le=300)
+    opensearch_bulk_timeout: int = Field(default=120, ge=1, le=1800)
+    opensearch_bulk_size: int = Field(default=500, ge=50, le=5000)
     chunk_size: int = Field(default=512, ge=128, le=8192)
     chunk_overlap: int = Field(default=64, ge=0, le=1024)
     candidate_k: int = Field(default=40, ge=5, le=200)
@@ -27,7 +35,7 @@ class Settings(BaseSettings):
 
     mongo_url: str = "mongodb://127.0.0.1:27017"
     mongo_database: str = "rwkvrag_admin"
-    lexical_index_path: Path = Path("/Volumes/mark/rwkvrag/data/lexical/bm25.sqlite3")
+    sqlite_migration_path: Path = Path("/Volumes/mark/rwkvrag/data/lexical/bm25.sqlite3")
     upload_dir: Path = Path("/Volumes/mark/rwkvrag/data/admin-uploads")
     finewiki_import_roots: str = "/Volumes/mark/rwkvrag/data/deploy-demo/finewiki-sample"
     max_upload_bytes: int = Field(default=100 * 1024 * 1024, ge=1024)

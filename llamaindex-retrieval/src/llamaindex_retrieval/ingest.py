@@ -177,7 +177,7 @@ def ingest_documents(
     progress_callback: Callable[[int, int], None] | None = None,
     lexical_index: LexicalIndex | None = None,
 ) -> dict[str, int]:
-    index = lexical_index or LexicalIndex(settings.lexical_index_path)
+    index = lexical_index or LexicalIndex(settings)
     if recreate:
         index.recreate()
     pipeline = IngestionPipeline(

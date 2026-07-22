@@ -14,7 +14,6 @@ from .admin_service import (
 )
 from .config import get_settings
 from .lexical_index import LexicalIndex
-from .qdrant_admin import QdrantAdmin, QdrantUnavailableError
 from .repository import MongoRepository, RepositoryConflictError
 from .routers.admin import router as admin_router
 from .routers.public import router as public_router
@@ -28,16 +27,14 @@ async def lifespan(app: FastAPI):
     settings.upload_dir.mkdir(parents=True, exist_ok=True)
     repository = MongoRepository(settings.mongo_url, settings.mongo_database)
     await repository.connect()
-    qdrant = QdrantAdmin(settings)
-    lexical_index = LexicalIndex(settings.lexical_index_path)
-    task_manager = TaskManager(settings, repository, qdrant, lexical_index)
+    lexical_index = LexicalIndex(settings)
+    task_manager = TaskManager(settings, repository, lexical_index)
     search = SearchService(
         settings=settings,
         index=lexical_index,
     )
-    admin = AdminService(settings, repository, qdrant, task_manager, lexical_index)
+    admin = AdminService(settings, repository, task_manager, lexical_index)
     app.state.repository = repository
-    app.state.qdrant_admin = qdrant
     app.state.lexical_index = lexical_index
     app.state.task_manager = task_manager
     app.state.search_service = search
@@ -45,6 +42,7 @@ async def lifespan(app: FastAPI):
     await task_manager.start()
     yield
     await task_manager.shutdown()
+    lexical_index.close()
     await repository.close()
 
 
@@ -89,14 +87,6 @@ async def conflict_handler(_: Request, error: Exception) -> JSONResponse:
 @app.exception_handler(AdminValidationError)
 async def validation_handler(_: Request, error: AdminValidationError) -> JSONResponse:
     return JSONResponse(status_code=422, content={"detail": str(error)})
-
-
-@app.exception_handler(QdrantUnavailableError)
-async def qdrant_unavailable_handler(
-    _: Request,
-    error: QdrantUnavailableError,
-) -> JSONResponse:
-    return JSONResponse(status_code=503, content={"detail": str(error)})
 
 
 @app.get("/", include_in_schema=False)

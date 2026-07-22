@@ -28,7 +28,7 @@ class SearchService:
         return SearchResponse(
             results=[self._source_item(result) for result in filtered],
             retrieval={
-                "algorithm": "BM25",
+                "algorithm": "OpenSearch BM25",
                 "mode": "bm25+keyword",
                 "keyword_fields": ["body", "title", "tags"],
                 "candidate_k": candidate_k,

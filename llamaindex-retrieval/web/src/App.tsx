@@ -53,7 +53,7 @@ export default function App() {
             <Typography.Title level={4}>知识库管理后台</Typography.Title>
           </div>
           <Space>
-            <Tag color="cyan">BM25 + 关键词</Tag>
+            <Tag color="cyan">OpenSearch BM25</Tag>
             <Tag color="green">经典检索</Tag>
           </Space>
         </Header>

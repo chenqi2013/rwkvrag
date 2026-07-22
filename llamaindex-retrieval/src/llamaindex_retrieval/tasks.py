@@ -9,7 +9,6 @@ from .config import Settings
 from .ingest import ingest_finewiki, ingest_uploaded_documents, parquet_files
 from .lexical_index import LexicalIndex
 from .parsers import parse_uploaded_file
-from .qdrant_admin import QdrantAdmin
 from .repository import MongoRepository, utc_now
 
 logger = logging.getLogger(__name__)
@@ -20,12 +19,10 @@ class TaskManager:
         self,
         settings: Settings,
         repository: MongoRepository,
-        qdrant: QdrantAdmin,
         lexical_index: LexicalIndex,
     ) -> None:
         self.settings = settings
         self.repository = repository
-        self.qdrant = qdrant
         self.lexical_index = lexical_index
         self.semaphore = asyncio.Semaphore(settings.task_workers)
         self.tasks: set[asyncio.Task[None]] = set()

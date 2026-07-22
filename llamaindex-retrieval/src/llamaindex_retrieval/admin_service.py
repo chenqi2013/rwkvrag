@@ -9,7 +9,6 @@ from fastapi import UploadFile
 from .config import Settings
 from .lexical_index import LexicalIndex
 from .parsers import SUPPORTED_EXTENSIONS
-from .qdrant_admin import QdrantAdmin
 from .repository import MongoRepository, RepositoryConflictError
 from .schemas import FineWikiImportRequest
 from .tasks import TaskManager
@@ -32,13 +31,11 @@ class AdminService:
         self,
         settings: Settings,
         repository: MongoRepository,
-        qdrant: QdrantAdmin,
         tasks: TaskManager,
         lexical_index: LexicalIndex,
     ) -> None:
         self.settings = settings
         self.repository = repository
-        self.qdrant = qdrant
         self.tasks = tasks
         self.lexical_index = lexical_index
 
@@ -181,20 +178,17 @@ class AdminService:
         await self.repository.delete_knowledge_base(knowledge_base_id)
 
     async def health(self) -> dict:
-        mongo_result, qdrant_result, lexical_result = await asyncio.gather(
+        mongo_result, lexical_result = await asyncio.gather(
             self.repository.health(),
-            asyncio.to_thread(self.qdrant.health),
             asyncio.to_thread(self.lexical_index.health),
             return_exceptions=True,
         )
         mongodb = self._health_result(mongo_result)
-        qdrant = self._health_result(qdrant_result)
         lexical = self._health_result(lexical_result)
-        status = "ok" if all(item.get("ok") for item in [mongodb, qdrant, lexical]) else "degraded"
+        status = "ok" if all(item.get("ok") for item in [mongodb, lexical]) else "degraded"
         return {
             "status": status,
             "mongodb": mongodb,
-            "qdrant": qdrant,
             "lexical": lexical,
         }
 

@@ -1,16 +1,15 @@
-import json
 import logging
 import re
-import sqlite3
 from collections.abc import Iterable
 from dataclasses import dataclass
-from pathlib import Path
-from threading import RLock
 from typing import Any
 
 import jieba
 from llama_index.core.schema import BaseNode
 from opencc import OpenCC
+from opensearchpy import OpenSearch, helpers
+
+from .config import Settings
 
 
 _ASCII_TOKEN = re.compile(r"[a-zA-Z0-9_]+")
@@ -42,6 +41,11 @@ _QUERY_EXPANSIONS = {
     "试播": ("开始试播", "开播"),
 }
 _PROXIMITY_EXPANSIONS = {"中国": ("中华人民共和国",)}
+_RELATION_BOOSTS = (
+    ({"中国", "首都"}, "中华人民共和国 首都", 20.0),
+    ({"中国", "人口", "最多", "省"}, "第一 人口 大省", 4.0),
+    ({"中国", "人口", "最多", "省"}, "目前 人口", 5.0),
+)
 
 
 @dataclass(frozen=True)
@@ -54,7 +58,6 @@ class LexicalResult:
 
 
 def lexical_tokens(text: str) -> list[str]:
-    """Normalize Chinese and produce classic search-engine tokens."""
     normalized = _OPENCC.convert(text.lower())
     tokens: list[str] = _ASCII_TOKEN.findall(normalized)
     for run in _CJK_RUN.findall(normalized):
@@ -80,9 +83,13 @@ def proximity_token_sets(text: str) -> list[set[str]]:
     return variants
 
 
-def _fts_query(text: str) -> str:
-    tokens = query_tokens(text)
-    return " OR ".join(f'"{token.replace(chr(34), chr(34) * 2)}"' for token in tokens)
+def relation_boosts(text: str) -> list[tuple[str, float]]:
+    tokens = set(lexical_tokens(text))
+    return [
+        (phrase, boost)
+        for required, phrase, boost in _RELATION_BOOSTS
+        if required <= tokens
+    ]
 
 
 def _normalized_text(text: str) -> str:
@@ -102,7 +109,6 @@ def _metadata_tags(metadata: dict[str, Any]) -> str:
 
 
 def _proximity_bonus(text: str, tokens: set[str]) -> float:
-    """Reward chunks where the original query terms occur close together."""
     if len(tokens) < 2:
         return 0.0
     normalized = _OPENCC.convert(text.lower())
@@ -130,128 +136,120 @@ def _proximity_bonus(text: str, tokens: set[str]) -> float:
 
 
 class LexicalIndex:
-    """Local BM25 index backed by SQLite FTS5.
+    def __init__(self, settings: Settings, client: OpenSearch | None = None) -> None:
+        self.settings = settings
+        self.index_name = settings.opensearch_index
+        self.client = client or self._create_client()
+        self.ensure_index()
 
-    SQLite keeps the search index independent from Qdrant, so documents can be
-    searched without generating or storing embeddings.
-    """
-
-    def __init__(self, path: Path) -> None:
-        self.path = Path(path).expanduser()
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        self._lock = RLock()
-        self._initialize()
-
-    def _connection(self) -> sqlite3.Connection:
-        connection = sqlite3.connect(self.path, timeout=30)
-        connection.row_factory = sqlite3.Row
-        connection.execute("PRAGMA busy_timeout = 30000")
-        connection.execute("PRAGMA journal_mode = WAL")
-        return connection
-
-    def _initialize(self) -> None:
-        with self._lock, self._connection() as connection:
-            connection.executescript(
-                """
-                CREATE TABLE IF NOT EXISTS lexical_documents (
-                    row_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    node_id TEXT NOT NULL UNIQUE,
-                    document_id TEXT NOT NULL,
-                    file_id TEXT NOT NULL DEFAULT '',
-                    knowledge_base_id TEXT NOT NULL DEFAULT '',
-                    source TEXT NOT NULL DEFAULT '',
-                    title TEXT NOT NULL DEFAULT '',
-                    uri TEXT,
-                    text TEXT NOT NULL,
-                    metadata_json TEXT NOT NULL,
-                    full_answer TEXT NOT NULL DEFAULT ''
-                );
-                CREATE INDEX IF NOT EXISTS lexical_documents_kb_idx
-                    ON lexical_documents(knowledge_base_id);
-                CREATE INDEX IF NOT EXISTS lexical_documents_file_idx
-                    ON lexical_documents(file_id);
-                CREATE VIRTUAL TABLE IF NOT EXISTS lexical_fts USING fts5(
-                    node_id UNINDEXED,
-                    document_id UNINDEXED,
-                    knowledge_base_id UNINDEXED,
-                    body,
-                    title,
-                    tags,
-                    tokenize = 'unicode61 remove_diacritics 2'
-                );
-                """
+    def _create_client(self) -> OpenSearch:
+        authentication = None
+        if self.settings.opensearch_username:
+            authentication = (
+                self.settings.opensearch_username,
+                self.settings.opensearch_password or "",
             )
+        return OpenSearch(
+            hosts=[self.settings.opensearch_url],
+            http_auth=authentication,
+            verify_certs=self.settings.opensearch_verify_certs,
+            http_compress=True,
+            timeout=self.settings.opensearch_timeout,
+            max_retries=3,
+            retry_on_timeout=True,
+        )
+
+    def index_definition(self) -> dict[str, Any]:
+        return {
+            "settings": {
+                "index": {
+                    "number_of_shards": self.settings.opensearch_shards,
+                    "number_of_replicas": self.settings.opensearch_replicas,
+                    "refresh_interval": self.settings.opensearch_refresh_interval,
+                },
+                "analysis": {
+                    "analyzer": {
+                        "rwkvrag_tokens": {
+                            "type": "custom",
+                            "tokenizer": "whitespace",
+                            "filter": ["lowercase"],
+                        }
+                    }
+                },
+            },
+            "mappings": {
+                "dynamic": False,
+                "properties": {
+                    "node_id": {"type": "keyword"},
+                    "document_id": {"type": "keyword"},
+                    "file_id": {"type": "keyword"},
+                    "knowledge_base_id": {"type": "keyword"},
+                    "source": {"type": "keyword"},
+                    "title": {"type": "keyword", "ignore_above": 2048},
+                    "uri": {"type": "keyword", "index": False},
+                    "text": {"type": "text", "index": False},
+                    "full_answer": {"type": "text", "index": False},
+                    "metadata": {"type": "object", "enabled": False},
+                    "body_tokens": {"type": "text", "analyzer": "rwkvrag_tokens"},
+                    "title_tokens": {"type": "text", "analyzer": "rwkvrag_tokens"},
+                    "tags_tokens": {"type": "text", "analyzer": "rwkvrag_tokens"},
+                },
+            },
+        }
+
+    def ensure_index(self) -> None:
+        if not self.client.indices.exists(index=self.index_name):
+            self.client.indices.create(index=self.index_name, body=self.index_definition())
 
     def recreate(self) -> None:
-        with self._lock, self._connection() as connection:
-            connection.execute("DELETE FROM lexical_fts")
-            connection.execute("DELETE FROM lexical_documents")
+        if self.client.indices.exists(index=self.index_name):
+            self.client.indices.delete(index=self.index_name)
+        self.client.indices.create(index=self.index_name, body=self.index_definition())
+
+    def _record(self, node: BaseNode) -> dict[str, Any]:
+        metadata = dict(node.metadata)
+        text = node.get_content().strip()
+        full_answer = str(metadata.get("full_answer") or "").strip()
+        body = " ".join(part for part in (text, full_answer) if part)
+        return {
+            "node_id": str(node.node_id),
+            "document_id": str(metadata.get("document_id") or node.ref_doc_id or node.node_id),
+            "file_id": str(metadata.get("file_id") or ""),
+            "knowledge_base_id": str(metadata.get("knowledge_base_id") or ""),
+            "source": str(metadata.get("source") or ""),
+            "title": str(metadata.get("title") or ""),
+            "uri": str(metadata.get("uri")) if metadata.get("uri") else None,
+            "text": text,
+            "metadata": metadata,
+            "full_answer": full_answer,
+            "body_tokens": " ".join(lexical_tokens(body)),
+            "title_tokens": " ".join(lexical_tokens(str(metadata.get("title") or ""))),
+            "tags_tokens": " ".join(lexical_tokens(_metadata_tags(metadata))),
+        }
 
     def upsert_nodes(self, nodes: Iterable[BaseNode]) -> int:
-        records = []
+        actions = []
         for node in nodes:
-            metadata = dict(node.metadata)
-            text = node.get_content().strip()
-            full_answer = str(metadata.get("full_answer") or "").strip()
-            body = " ".join(part for part in (text, full_answer) if part)
-            records.append(
+            record = self._record(node)
+            actions.append(
                 {
-                    "node_id": str(node.node_id),
-                    "document_id": str(metadata.get("document_id") or node.ref_doc_id or node.node_id),
-                    "file_id": str(metadata.get("file_id") or ""),
-                    "knowledge_base_id": str(metadata.get("knowledge_base_id") or ""),
-                    "source": str(metadata.get("source") or ""),
-                    "title": str(metadata.get("title") or ""),
-                    "uri": str(metadata.get("uri")) if metadata.get("uri") else None,
-                    "text": text,
-                    "metadata_json": json.dumps(metadata, ensure_ascii=False, default=str),
-                    "full_answer": full_answer,
-                    "body_tokens": " ".join(lexical_tokens(body)),
-                    "title_tokens": " ".join(lexical_tokens(str(metadata.get("title") or ""))),
-                    "tags_tokens": " ".join(lexical_tokens(_metadata_tags(metadata))),
+                    "_op_type": "index",
+                    "_index": self.index_name,
+                    "_id": record["node_id"],
+                    "_source": record,
                 }
             )
-        if not records:
+        if not actions:
             return 0
-        with self._lock, self._connection() as connection:
-            for record in records:
-                old = connection.execute(
-                    "SELECT row_id FROM lexical_documents WHERE node_id = ?",
-                    (record["node_id"],),
-                ).fetchone()
-                if old is not None:
-                    connection.execute("DELETE FROM lexical_fts WHERE rowid = ?", (old["row_id"],))
-                    connection.execute("DELETE FROM lexical_documents WHERE row_id = ?", (old["row_id"],))
-                cursor = connection.execute(
-                    """
-                    INSERT INTO lexical_documents
-                        (node_id, document_id, file_id, knowledge_base_id, source, title,
-                         uri, text, metadata_json, full_answer)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """,
-                    tuple(record[key] for key in (
-                        "node_id", "document_id", "file_id", "knowledge_base_id", "source",
-                        "title", "uri", "text", "metadata_json", "full_answer",
-                    )),
-                )
-                row_id = cursor.lastrowid
-                connection.execute(
-                    """
-                    INSERT INTO lexical_fts(rowid, node_id, document_id, knowledge_base_id,
-                                            body, title, tags)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
-                    """,
-                    (
-                        row_id,
-                        record["node_id"],
-                        record["document_id"],
-                        record["knowledge_base_id"],
-                        record["body_tokens"],
-                        record["title_tokens"],
-                        record["tags_tokens"],
-                    ),
-                )
-        return len(records)
+        success, _ = helpers.bulk(
+            self.client,
+            actions,
+            chunk_size=self.settings.opensearch_bulk_size,
+            request_timeout=self.settings.opensearch_bulk_timeout,
+            raise_on_error=True,
+            stats_only=True,
+        )
+        return int(success)
 
     def search(
         self,
@@ -260,73 +258,86 @@ class LexicalIndex:
         candidate_k: int,
         knowledge_base_id: str | None = None,
     ) -> list[LexicalResult]:
-        query = _fts_query(question)
-        if not query:
+        tokens = query_tokens(question)
+        if not tokens:
             return []
-        clauses = ["lexical_fts MATCH ?"]
-        parameters: list[Any] = [query]
+        filters = []
         if knowledge_base_id:
-            clauses.append("d.knowledge_base_id = ?")
-            parameters.append(knowledge_base_id)
-        parameters.append(max(candidate_k, 1))
-        with self._lock, self._connection() as connection:
-            rows = connection.execute(
-                f"""
-                SELECT d.node_id, d.document_id, d.text, d.metadata_json,
-                       d.title, d.text, bm25(lexical_fts, 1.0, 4.0, 2.0) AS bm25_rank
-                FROM lexical_fts
-                JOIN lexical_documents AS d ON d.row_id = lexical_fts.rowid
-                WHERE {' AND '.join(clauses)}
-                ORDER BY bm25_rank ASC
-                LIMIT ?
-                """,
-                parameters,
-            ).fetchall()
-        if not rows:
-            return []
-        ranked: list[tuple[float, sqlite3.Row]] = []
+            filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
+        should = [
+            {
+                "match_phrase": {
+                    "body_tokens": {
+                        "query": phrase,
+                        "slop": 4,
+                        "boost": boost,
+                    }
+                }
+            }
+            for phrase, boost in relation_boosts(question)
+        ]
+        body = {
+            "size": max(candidate_k, 1),
+            "track_total_hits": False,
+            "_source": ["node_id", "document_id", "text", "metadata", "title"],
+            "query": {
+                "bool": {
+                    "must": [
+                        {
+                            "multi_match": {
+                                "query": " ".join(tokens),
+                                "fields": ["body_tokens", "title_tokens^2", "tags_tokens^1.5"],
+                                "type": "best_fields",
+                                "operator": "or",
+                            }
+                        }
+                    ],
+                    "should": should,
+                    "filter": filters,
+                }
+            },
+        }
+        response = self.client.search(index=self.index_name, body=body)
+        hits = response.get("hits", {}).get("hits", [])
+        ranked: list[tuple[float, dict[str, Any]]] = []
         normalized_question = _normalized_text(question)
-        question_token_set = set(query_tokens(question))
-        for row in rows:
-            title = _normalized_text(str(row["title"]))
-            raw = max(0.0, -float(row["bm25_rank"]))
-            if normalized_question and normalized_question in title:
+        question_token_set = set(tokens)
+        proximity_sets = proximity_token_sets(question)
+        for hit in hits:
+            source = dict(hit.get("_source") or {})
+            title = str(source.get("title") or "")
+            raw = max(0.0, float(hit.get("_score") or 0))
+            if normalized_question and normalized_question in _normalized_text(title):
                 raw += 1.5
-            title_tokens = set(lexical_tokens(str(row["title"])))
+            title_tokens = set(lexical_tokens(title))
             if title_tokens:
                 raw += 1.25 * len(question_token_set & title_tokens) / len(title_tokens)
-            raw += max(
-                _proximity_bonus(str(row["text"]), tokens)
-                for tokens in proximity_token_sets(question)
-            )
-            ranked.append((raw, row))
+            raw += max(_proximity_bonus(str(source.get("text") or ""), item) for item in proximity_sets)
+            ranked.append((raw, source))
         ranked.sort(key=lambda item: item[0], reverse=True)
-        top_raw = max(raw for raw, _ in ranked) or 1.0
-        results = []
-        for raw, row in ranked:
-            results.append(
-                LexicalResult(
-                    node_id=str(row["node_id"]),
-                    document_id=str(row["document_id"]),
-                    text=str(row["text"]),
-                    metadata=json.loads(row["metadata_json"]),
-                    score=min(1.0, max(0.0, raw / top_raw)),
-                )
+        top_raw = max((raw for raw, _ in ranked), default=1.0) or 1.0
+        return [
+            LexicalResult(
+                node_id=str(source.get("node_id") or ""),
+                document_id=str(source.get("document_id") or source.get("node_id") or ""),
+                text=str(source.get("text") or ""),
+                metadata=dict(source.get("metadata") or {}),
+                score=min(1.0, max(0.0, raw / top_raw)),
             )
-        return results
+            for raw, source in ranked
+        ]
 
     def delete_by_field(self, key: str, value: str) -> int:
         allowed = {"node_id", "document_id", "file_id", "knowledge_base_id", "source"}
         if key not in allowed:
             raise ValueError(f"不支持的索引字段：{key}")
-        with self._lock, self._connection() as connection:
-            rows = connection.execute(
-                f"SELECT row_id FROM lexical_documents WHERE {key} = ?", (value,)
-            ).fetchall()
-            for row in rows:
-                connection.execute("DELETE FROM lexical_fts WHERE rowid = ?", (row["row_id"],))
-            connection.execute(f"DELETE FROM lexical_documents WHERE {key} = ?", (value,))
-        return len(rows)
+        response = self.client.delete_by_query(
+            index=self.index_name,
+            body={"query": {"term": {key: value}}},
+            conflicts="proceed",
+            refresh=True,
+        )
+        return int(response.get("deleted") or 0)
 
     def list_chunks(
         self,
@@ -336,46 +347,55 @@ class LexicalIndex:
         limit: int,
         offset: str | None,
     ) -> dict[str, Any]:
-        clauses = []
-        parameters: list[Any] = []
+        filters = []
         if knowledge_base_id:
-            clauses.append("knowledge_base_id = ?")
-            parameters.append(knowledge_base_id)
+            filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
         if file_id:
-            clauses.append("file_id = ?")
-            parameters.append(file_id)
+            filters.append({"term": {"file_id": file_id}})
+        body: dict[str, Any] = {
+            "size": limit + 1,
+            "sort": [{"node_id": "asc"}],
+            "_source": ["node_id", "document_id", "text", "metadata"],
+            "query": {"bool": {"filter": filters}} if filters else {"match_all": {}},
+        }
         if offset:
-            clauses.append("row_id > ?")
-            parameters.append(int(offset))
-        where = f"WHERE {' AND '.join(clauses)}" if clauses else ""
-        parameters.append(limit + 1)
-        with self._lock, self._connection() as connection:
-            rows = connection.execute(
-                f"SELECT row_id, node_id, document_id, text, metadata_json FROM lexical_documents "
-                f"{where} ORDER BY row_id LIMIT ?",
-                parameters,
-            ).fetchall()
-        has_more = len(rows) > limit
-        rows = rows[:limit]
-        return {
-            "items": [
+            body["search_after"] = [offset]
+        response = self.client.search(index=self.index_name, body=body)
+        hits = response.get("hits", {}).get("hits", [])
+        has_more = len(hits) > limit
+        hits = hits[:limit]
+        items = []
+        for hit in hits:
+            source = dict(hit.get("_source") or {})
+            items.append(
                 {
-                    "id": str(row["node_id"]),
-                    "document_id": str(row["document_id"]),
-                    "text": str(row["text"]),
-                    "metadata": json.loads(row["metadata_json"]),
+                    "id": str(source.get("node_id") or ""),
+                    "document_id": str(source.get("document_id") or ""),
+                    "text": str(source.get("text") or ""),
+                    "metadata": dict(source.get("metadata") or {}),
                 }
-                for row in rows
-            ],
-            "next_offset": str(rows[-1]["row_id"]) if has_more and rows else None,
+            )
+        return {
+            "items": items,
+            "next_offset": items[-1]["id"] if has_more and items else None,
         }
 
+    def refresh(self) -> None:
+        self.client.indices.refresh(index=self.index_name)
+
     def health(self) -> dict[str, Any]:
-        with self._lock, self._connection() as connection:
-            count = int(connection.execute("SELECT COUNT(*) FROM lexical_documents").fetchone()[0])
+        info = self.client.info()
+        cluster = self.client.cluster.health(index=self.index_name)
+        count = int(self.client.count(index=self.index_name).get("count") or 0)
         return {
-            "ok": True,
-            "algorithm": "BM25",
+            "ok": cluster.get("status") in {"green", "yellow"},
+            "algorithm": "OpenSearch BM25",
             "documents": count,
-            "path": str(self.path),
+            "url": self.settings.opensearch_url,
+            "index": self.index_name,
+            "cluster_status": cluster.get("status"),
+            "version": (info.get("version") or {}).get("number"),
         }
+
+    def close(self) -> None:
+        self.client.close()

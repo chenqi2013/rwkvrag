@@ -55,7 +55,7 @@ export default function DashboardPage() {
           <Typography.Text className="eyebrow">SYSTEM OVERVIEW</Typography.Text>
           <Typography.Title level={2}>运行概览</Typography.Title>
           <Typography.Paragraph type="secondary">
-            实时检查 MongoDB、BM25 索引和后台任务状态。
+            实时检查 MongoDB、OpenSearch BM25 索引和后台任务状态。
           </Typography.Paragraph>
         </div>
         {health && (
@@ -109,16 +109,19 @@ export default function DashboardPage() {
             </Card>
           </Col>
           <Col xs={24} xl={12}>
-            <Card title="BM25 索引" className="service-card">
+            <Card title="OpenSearch BM25" className="service-card">
               <Descriptions column={1} size="small">
                 <Descriptions.Item label="算法">
                   {String(health.lexical.algorithm ?? "—")}
                 </Descriptions.Item>
-                <Descriptions.Item label="索引文档">
+                <Descriptions.Item label="索引切片">
                   {formatNumber(Number(health.lexical.documents ?? 0))}
                 </Descriptions.Item>
-                <Descriptions.Item label="索引文件">
-                  {String(health.lexical.path ?? "—")}
+                <Descriptions.Item label="索引">
+                  {String(health.lexical.index ?? "—")}
+                </Descriptions.Item>
+                <Descriptions.Item label="服务地址">
+                  {String(health.lexical.url ?? "—")}
                 </Descriptions.Item>
               </Descriptions>
             </Card>

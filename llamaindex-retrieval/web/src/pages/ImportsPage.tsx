@@ -263,12 +263,12 @@ export default function ImportsPage() {
                 </Col>
               </Row>
               <Form.Item name="recreate" valuePropName="checked">
-                <Checkbox>导入前重建 BM25 索引</Checkbox>
+                <Checkbox>导入前重建 OpenSearch 索引</Checkbox>
               </Form.Item>
               <Alert
                 type="warning"
                 showIcon
-                message="重建 BM25 索引会删除当前 Wiki 和上传文档索引，请谨慎使用。"
+                message="重建 OpenSearch 索引会删除当前 Wiki 和上传文档索引，请谨慎使用。"
                 className="form-alert"
               />
               <Button type="primary" icon={<ImportOutlined />} block loading={submitting} onClick={() => void submit()}>
