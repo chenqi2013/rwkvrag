@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     default_top_k: int = Field(default=5, ge=1, le=50)
     max_top_k: int = Field(default=20, ge=1, le=100)
     max_chunks_per_document: int = Field(default=1, ge=1, le=10)
+    list_query_max_chunks_per_document: int = Field(default=10, ge=1, le=20)
     relative_score_threshold: float = Field(default=0.55, ge=0, le=1)
     min_relevance_score: float = 0
 

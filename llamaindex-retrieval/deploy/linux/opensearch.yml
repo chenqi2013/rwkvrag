@@ -1,0 +1,9 @@
+cluster.name: rwkvrag
+node.name: rwkvrag-node-1
+path.data: /workspace/rwkvrag-data/opensearch
+path.logs: /workspace/rwkvrag-data/logs/opensearch
+network.host: 127.0.0.1
+http.port: 9200
+discovery.type: single-node
+plugins.security.disabled: true
+

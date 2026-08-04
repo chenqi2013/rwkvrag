@@ -4,11 +4,10 @@ from pathlib import Path
 
 import pyarrow.parquet as parquet
 from llama_index.core import Document
-from llama_index.core.ingestion import IngestionPipeline
-
 from .components import create_splitter
 from .config import Settings
 from .lexical_index import LexicalIndex
+from .structured_chunking import structure_aware_nodes
 
 TEXT_COLUMNS = ("text", "markdown", "content", "article", "plain_text", "body")
 
@@ -180,14 +179,15 @@ def ingest_documents(
     index = lexical_index or LexicalIndex(settings)
     if recreate:
         index.recreate()
-    pipeline = IngestionPipeline(
-        transformations=[create_splitter(settings)],
-        disable_cache=True,
-    )
+    splitter = create_splitter(settings)
     documents_count = 0
     nodes_count = 0
     for document_batch in batched(documents, batch_size):
-        nodes = pipeline.run(documents=document_batch, show_progress=True)
+        nodes = [
+            node
+            for document in document_batch
+            for node in structure_aware_nodes(document, splitter)
+        ]
         index.upsert_nodes(nodes)
         documents_count += len(document_batch)
         nodes_count += len(nodes)
