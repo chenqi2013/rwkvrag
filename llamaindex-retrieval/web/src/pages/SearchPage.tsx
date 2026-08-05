@@ -18,7 +18,7 @@ import {
 import { useEffect, useState } from "react";
 
 import { api } from "../api";
-import type { KnowledgeBase, SearchResponse } from "../types";
+import type { AskResponse, KnowledgeBase } from "../types";
 import { errorMessage } from "../utils";
 
 interface SearchForm {
@@ -29,7 +29,7 @@ interface SearchForm {
 
 export default function SearchPage() {
   const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBase[]>([]);
-  const [response, setResponse] = useState<SearchResponse>();
+  const [response, setResponse] = useState<AskResponse>();
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm<SearchForm>();
 
@@ -41,7 +41,7 @@ export default function SearchPage() {
     const values = await form.validateFields();
     setLoading(true);
     try {
-      setResponse(await api.search(values));
+      setResponse(await api.ask(values));
     } catch (error) {
       void message.error(errorMessage(error));
     } finally {
@@ -56,7 +56,7 @@ export default function SearchPage() {
           <Typography.Text className="eyebrow">RETRIEVAL LAB</Typography.Text>
           <Typography.Title level={2}>在线检索测试</Typography.Title>
           <Typography.Paragraph type="secondary">
-            直接调用生产 `/v1/search`，检查改写问题、来源和证据片段是否正确。
+            调用生产 `/v1/ask`：先用 BM25 检索证据，再由 RWKV 基于证据生成答案。
           </Typography.Paragraph>
         </div>
       </div>
@@ -82,53 +82,64 @@ export default function SearchPage() {
                 <InputNumber min={1} max={20} style={{ width: "100%" }} />
               </Form.Item>
               <Button type="primary" block icon={<SearchOutlined />} loading={loading} onClick={() => void search()}>
-                开始检索
+              检索并生成答案
               </Button>
             </Form>
           </Card>
         </Col>
         <Col xs={24} xl={16}>
           <Card
-            title="检索结果"
-            extra={response && (
-              <Space>
-                <Tag color="cyan">{String(response.retrieval.algorithm)}</Tag>
-                <Tag>{String(response.retrieval.mode)}</Tag>
-                <Tag>{String(response.retrieval.returned)} 条</Tag>
-              </Space>
-            )}
+            title="生成答案"
+            extra={response && <Tag color="green">RWKV · {String(response.generation.model)}</Tag>}
           >
             {!response ? (
-              <Empty description="提交问题后查看证据结果" />
+              <Empty description="提交问题后查看生成答案和证据" />
             ) : (
-              <List
-                dataSource={response.results}
-                locale={{ emptyText: <Empty description="没有达到相关性阈值的结果" /> }}
-                renderItem={(item, index) => (
-                  <List.Item>
-                    <Card size="small" className="result-card">
-                      <Space direction="vertical" size={10} style={{ width: "100%" }}>
-                        <div className="result-title-row">
-                          <Space>
-                            <span className="rank-badge">{index + 1}</span>
-                            <Typography.Title level={4}>{item.title}</Typography.Title>
+              <Space direction="vertical" size={12} style={{ width: "100%" }}>
+                <Typography.Paragraph className="result-snippet" copyable={{ text: response.answer }}>
+                  {response.answer}
+                </Typography.Paragraph>
+                <Card
+                  size="small"
+                  title="检索证据"
+                  extra={
+                    <Space>
+                      <Tag color="cyan">{String(response.retrieval.algorithm)}</Tag>
+                      <Tag>{String(response.retrieval.mode)}</Tag>
+                      <Tag>{String(response.retrieval.returned)} 条</Tag>
+                    </Space>
+                  }
+                >
+                  <List
+                    dataSource={response.sources}
+                    locale={{ emptyText: <Empty description="没有达到相关性阈值的结果" /> }}
+                    renderItem={(item, index) => (
+                      <List.Item>
+                        <Card size="small" className="result-card">
+                          <Space direction="vertical" size={10} style={{ width: "100%" }}>
+                            <div className="result-title-row">
+                              <Space>
+                                <span className="rank-badge">{index + 1}</span>
+                                <Typography.Title level={4}>{item.title}</Typography.Title>
+                              </Space>
+                              <Tag color="blue">{item.score.toFixed(4)}</Tag>
+                            </div>
+                            <Typography.Paragraph className="result-snippet">{item.snippet}</Typography.Paragraph>
+                            <Space wrap>
+                              <Tag>{item.source}</Tag>
+                              {item.uri && (
+                                <Typography.Link href={item.uri} target="_blank">
+                                  <LinkOutlined /> 查看来源
+                                </Typography.Link>
+                              )}
+                            </Space>
                           </Space>
-                          <Tag color="blue">{item.score.toFixed(4)}</Tag>
-                        </div>
-                        <Typography.Paragraph className="result-snippet">{item.snippet}</Typography.Paragraph>
-                        <Space wrap>
-                          <Tag>{item.source}</Tag>
-                          {item.uri && (
-                            <Typography.Link href={item.uri} target="_blank">
-                              <LinkOutlined /> 查看来源
-                            </Typography.Link>
-                          )}
-                        </Space>
-                      </Space>
-                    </Card>
-                  </List.Item>
-                )}
-              />
+                        </Card>
+                      </List.Item>
+                    )}
+                  />
+                </Card>
+              </Space>
             )}
           </Card>
         </Col>

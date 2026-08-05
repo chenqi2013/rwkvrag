@@ -1,13 +1,13 @@
 # RWKVRAG LlamaIndex Retrieval
 
-这是一个带 Web 管理后台的经典证据检索服务。LlamaIndex 负责文档解析和切片，OpenSearch 提供可分片的 BM25 全文检索，并结合标题、关键词和标签加权。MongoDB 保存知识库、文件和任务状态；服务只返回资料片段和来源，不生成最终答案。
+这是一个带 Web 管理后台的知识库问答服务。LlamaIndex 负责文档解析和切片，OpenSearch 提供可分片的 BM25 全文检索，并结合标题、关键词和标签加权。MongoDB 保存知识库、文件和任务状态；RWKV 可基于检索证据生成最终答案。
 
 ## 架构
 
 ```text
 管理后台 -> MongoDB 任务 -> Markdown / PDF / DOCX / FineWiki -> LlamaIndex SentenceSplitter
 文本切片 -> 中文规范化/Jieba 分词 -> OpenSearch BM25（正文、标题、标签）
-前端问题 -> OpenSearch BM25 + 关键词扩展 + 标题加权 -> /v1/search
+前端问题 -> OpenSearch BM25 + 关键词扩展 + 标题加权 -> 证据 -> RWKV -> /v1/ask
 ```
 
 ## 初始化
@@ -99,6 +99,9 @@ http://127.0.0.1:8090/admin/
 - MongoDB 和 OpenSearch BM25 索引健康检查；
 - 在线检索测试。
 
+答案生成使用 `RWKVRAG_GENERATION_*` 配置。请在实际运行环境中设置
+`RWKVRAG_GENERATION_PASSWORD`，不要将密码写入 Git。
+
 扫描版 PDF 需要先通过 OCR 生成文字层。旧 `.doc` 文件应先转换为 `.docx`。
 
 macOS 常驻运行：
@@ -118,6 +121,15 @@ launchctl bootstrap gui/$(id -u) \
 curl -sS -X POST http://127.0.0.1:8090/v1/search \
   -H 'Content-Type: application/json' \
   -d '{"question":"中国人口最多的省份是哪个省","knowledge_base_id":"default","top_k":5}'
+```
+
+需要最终答案时调用 `/v1/ask`。它先执行同一套检索，再将命中资料作为唯一证据传给
+RWKV；若资料不足，模型被要求返回“根据检索到的资料，无法确定。”：
+
+```bash
+curl -sS -X POST http://127.0.0.1:8090/v1/ask \
+  -H 'Content-Type: application/json' \
+  -d '{"question":"中国的首都是哪个城市","knowledge_base_id":"default","top_k":5}'
 ```
 
 返回结构：
@@ -157,9 +169,9 @@ uv run rwkvrag-retrieval eval --url http://127.0.0.1:8090 --top-k 5
 - OpenSearch BM25 对正文、标题和 metadata 中的 question/tags/keywords 等字段检索；标题匹配会额外加权。
 - 中文查询先进行繁简归一化、搜索引擎分词和停用词过滤，并对常见问法做有限关键词扩展。
 - 地铁线路等编号会统一中文数字和阿拉伯数字写法，例如“一号线”和“1号线”使用同一组检索词。
-- 检索服务只返回证据，不生成答案；前端生成模型可以基于返回的证据组织最终回答。
+- `/v1/search` 只返回证据；`/v1/ask` 返回 RWKV 基于证据生成的答案及同一批来源。
 - `top_k` 按文档返回，默认每篇文档只保留得分最高的一个证据块。
 - “有哪些、列表、全部、站点”等多证据问题默认允许同一文档返回最多 3 个高相关切片。
 - 低于最高分 55% 的候选默认不返回，避免为了凑满 `top_k` 混入弱相关资料。
-- 数据中没有明确数字时，API 返回最相关资料；前端生成模型负责判断资料是否足够。
+- 数据中没有明确数字时，`/v1/ask` 会要求模型明确说明资料不足，不能自行补全答案。
 - `eval/cases.jsonl` 保存必须持续通过的改写检索用例。

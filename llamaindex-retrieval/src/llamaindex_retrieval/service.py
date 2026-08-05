@@ -1,6 +1,7 @@
 import asyncio
 
 from .config import Settings
+from .generation import EvidenceAnswerGenerator
 from .lexical_index import (
     LexicalIndex,
     LexicalResult,
@@ -8,7 +9,7 @@ from .lexical_index import (
     lexical_tokens,
     query_tokens,
 )
-from .schemas import SearchRequest, SearchResponse, SourceItem
+from .schemas import AskResponse, SearchRequest, SearchResponse, SourceItem
 
 _MULTI_EVIDENCE_MARKERS = (
     "哪些",
@@ -23,9 +24,15 @@ _MULTI_EVIDENCE_MARKERS = (
 
 
 class SearchService:
-    def __init__(self, settings: Settings, index: LexicalIndex) -> None:
+    def __init__(
+        self,
+        settings: Settings,
+        index: LexicalIndex,
+        generator: EvidenceAnswerGenerator | None = None,
+    ) -> None:
         self.settings = settings
         self.index = index
+        self.generator = generator or EvidenceAnswerGenerator(settings)
 
     async def search(self, request: SearchRequest) -> SearchResponse:
         top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
@@ -67,6 +74,20 @@ class SearchService:
                 "multi_evidence": max_chunks_per_document > self.settings.max_chunks_per_document,
                 "structure_expanded": structure_expanded,
                 "knowledge_base_id": request.knowledge_base_id,
+            },
+        )
+
+    async def ask(self, request: SearchRequest) -> AskResponse:
+        response = await self.search(request)
+        answer = await self.generator.generate(request.question, response.results)
+        return AskResponse(
+            answer=answer,
+            sources=response.results,
+            retrieval=response.retrieval,
+            generation={
+                "model": self.settings.generation_model,
+                "endpoint": self.settings.generation_base_url,
+                "evidence_count": len(response.results),
             },
         )
 

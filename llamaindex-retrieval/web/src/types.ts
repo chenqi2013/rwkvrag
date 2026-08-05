@@ -76,6 +76,13 @@ export interface SearchResponse {
   retrieval: Record<string, unknown>;
 }
 
+export interface AskResponse {
+  answer: string;
+  sources: SearchResult[];
+  retrieval: Record<string, unknown>;
+  generation: Record<string, unknown>;
+}
+
 export interface AdminHealth {
   status: "ok" | "degraded";
   mongodb: Record<string, unknown>;

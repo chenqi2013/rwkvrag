@@ -5,6 +5,7 @@ import type {
   FineWikiPathPage,
   JobItem,
   KnowledgeBase,
+  AskResponse,
   SearchResponse,
 } from "./types";
 
@@ -78,6 +79,12 @@ export const api = {
     ),
   search: (values: object) =>
     request<SearchResponse>("/v1/search", {
+      method: "POST",
+      headers: jsonHeaders,
+      body: JSON.stringify(values),
+    }),
+  ask: (values: object) =>
+    request<AskResponse>("/v1/ask", {
       method: "POST",
       headers: jsonHeaders,
       body: JSON.stringify(values),

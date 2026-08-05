@@ -34,6 +34,13 @@ class Settings(BaseSettings):
     relative_score_threshold: float = Field(default=0.55, ge=0, le=1)
     min_relevance_score: float = 0
 
+    generation_base_url: str = "http://192.168.0.125:8001/v1"
+    generation_password: str = ""
+    generation_model: str = "rwkv7-g1i_preview3260-7.2b-20260716-ctx12288"
+    generation_timeout: int = Field(default=90, ge=5, le=300)
+    generation_max_tokens: int = Field(default=1024, ge=32, le=4096)
+    generation_max_evidence_characters: int = Field(default=12_000, ge=1_000, le=48_000)
+
     mongo_url: str = "mongodb://127.0.0.1:27017"
     mongo_database: str = "rwkvrag_admin"
     sqlite_migration_path: Path = Path("/Volumes/mark/rwkvrag/data/lexical/bm25.sqlite3")

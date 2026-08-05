@@ -36,6 +36,13 @@ class SearchResponse(BaseModel):
     retrieval: dict[str, Any]
 
 
+class AskResponse(BaseModel):
+    answer: str
+    sources: list[SourceItem]
+    retrieval: dict[str, Any]
+    generation: dict[str, Any]
+
+
 class MarkdownImportRequest(BaseModel):
     path: str
     source: str = "local-markdown"

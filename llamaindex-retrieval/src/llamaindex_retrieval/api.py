@@ -13,6 +13,7 @@ from .admin_service import (
     AdminValidationError,
 )
 from .config import get_settings
+from .generation import EvidenceAnswerGenerator
 from .lexical_index import LexicalIndex
 from .repository import MongoRepository, RepositoryConflictError
 from .routers.admin import router as admin_router
@@ -32,6 +33,7 @@ async def lifespan(app: FastAPI):
     search = SearchService(
         settings=settings,
         index=lexical_index,
+        generator=EvidenceAnswerGenerator(settings),
     )
     admin = AdminService(settings, repository, task_manager, lexical_index)
     app.state.repository = repository
