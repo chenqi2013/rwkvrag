@@ -102,6 +102,9 @@ http://127.0.0.1:8090/admin/
 答案生成使用 `RWKVRAG_GENERATION_*` 配置。请在实际运行环境中设置
 `RWKVRAG_GENERATION_PASSWORD`，不要将密码写入 Git。
 
+`RWKVRAG_GENERATION_TOTAL_TIMEOUT` 默认 `45` 秒，用于限制 SSE 生成流的总等待时间；
+达到时限时，服务返回已接收的内容，避免前端持续等待。
+
 扫描版 PDF 需要先通过 OCR 生成文字层。旧 `.doc` 文件应先转换为 `.docx`。
 
 macOS 常驻运行：

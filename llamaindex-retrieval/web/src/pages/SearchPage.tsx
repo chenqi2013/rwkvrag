@@ -49,6 +49,10 @@ export default function SearchPage() {
     }
   };
 
+  const evidenceGrounded = response?.generation.evidence_grounded === true;
+  const queryNormalized = response?.retrieval.query_normalized === true;
+  const normalizedQuestion = String(response?.retrieval.normalized_question || "");
+
   return (
     <div className="page-stack">
       <div className="page-heading">
@@ -90,12 +94,25 @@ export default function SearchPage() {
         <Col xs={24} xl={16}>
           <Card
             title="生成答案"
-            extra={response && <Tag color="green">RWKV · {String(response.generation.model)}</Tag>}
+            extra={
+              response && (
+                <Space size={4} wrap>
+                  <Tag color={evidenceGrounded ? "green" : "orange"}>
+                    {evidenceGrounded ? "证据校验通过" : "证据不足，未生成"}
+                  </Tag>
+                  <Tag color="green">RWKV · {String(response.generation.model)}</Tag>
+                </Space>
+              )
+            }
           >
             {!response ? (
               <Empty description="提交问题后查看生成答案和证据" />
             ) : (
               <Space direction="vertical" size={12} style={{ width: "100%" }}>
+                <Space wrap>
+                  {queryNormalized && <Tag color="blue">已纠正查询：{normalizedQuestion}</Tag>}
+                  <Tag>答案需标注资料编号</Tag>
+                </Space>
                 <Typography.Paragraph className="result-snippet" copyable={{ text: response.answer }}>
                   {response.answer}
                 </Typography.Paragraph>

@@ -35,7 +35,7 @@ async def test_generator_uses_evidence_and_truncates_rwkv_continuation() -> None
         return httpx.Response(
             200,
             content=(
-                'data: {"choices":[{"delta":{"content":"Assistant: <think>推理</think>北京。\\n用户："}}]}\n\n'
+                'data: {"choices":[{"delta":{"content":"Assistant: <think>推理</think>北京。[资料 1]\\n用户："}}]}\n\n'
                 'data: {"choices":[{"delta":{"content":"续写内容"}}]}\n\n'
                 "data: [DONE]\n\n"
             ),
@@ -46,7 +46,7 @@ async def test_generator_uses_evidence_and_truncates_rwkv_continuation() -> None
         transport=httpx.MockTransport(handler),
     )
 
-    assert await generator.generate("中国的首都是哪个城市？", [source()]) == "北京。"
+    assert await generator.generate("中国的首都是哪个城市？", [source()]) == "北京。[资料 1]"
 
 
 @pytest.mark.asyncio
@@ -54,3 +54,46 @@ async def test_generator_skips_model_call_without_sources() -> None:
     generator = EvidenceAnswerGenerator(Settings())
 
     assert await generator.generate("没有资料怎么办？", []) == "未检索到可用于回答该问题的资料。"
+
+
+@pytest.mark.asyncio
+async def test_generator_skips_model_call_when_evidence_does_not_cover_question() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        pytest.fail("the generation model must not be called for unrelated evidence")
+
+    generator = EvidenceAnswerGenerator(
+        Settings(generation_password="test-password"),
+        transport=httpx.MockTransport(handler),
+    )
+
+    answer = await generator.generate(
+        "中国有多少个民族，分别是哪些？",
+        [
+            SourceItem(
+                id="china-1",
+                document_id="china",
+                source="finewiki-zh",
+                title="中国",
+                score=1.0,
+                snippet="中华人民共和国是位于东亚的国家。",
+            )
+        ],
+    )
+
+    assert answer == "根据检索到的资料，无法确定。"
+
+
+@pytest.mark.asyncio
+async def test_generator_adds_a_citation_when_model_omits_one() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            content='data: {"choices":[{"delta":{"content":"北京。"}}]}\n\ndata: [DONE]\n\n',
+        )
+
+    generator = EvidenceAnswerGenerator(
+        Settings(generation_password="test-password"),
+        transport=httpx.MockTransport(handler),
+    )
+
+    assert await generator.generate("中国的首都是哪个城市？", [source()]) == "北京。 [资料 1]"

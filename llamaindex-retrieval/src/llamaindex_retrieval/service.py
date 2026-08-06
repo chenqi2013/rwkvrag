@@ -7,6 +7,7 @@ from .lexical_index import (
     LexicalResult,
     intent_content_types,
     lexical_tokens,
+    normalize_query_text,
     query_tokens,
 )
 from .schemas import AskResponse, SearchRequest, SearchResponse, SourceItem
@@ -37,6 +38,7 @@ class SearchService:
     async def search(self, request: SearchRequest) -> SearchResponse:
         top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
         candidate_k = max(request.candidate_k or self.settings.candidate_k, top_k)
+        normalized_question = normalize_query_text(request.question)
         results = await asyncio.to_thread(
             self.index.search,
             request.question,
@@ -74,12 +76,16 @@ class SearchService:
                 "multi_evidence": max_chunks_per_document > self.settings.max_chunks_per_document,
                 "structure_expanded": structure_expanded,
                 "knowledge_base_id": request.knowledge_base_id,
+                "normalized_question": normalized_question,
+                "query_normalized": normalized_question != request.question,
             },
         )
 
     async def ask(self, request: SearchRequest) -> AskResponse:
         response = await self.search(request)
-        answer = await self.generator.generate(request.question, response.results)
+        question = str(response.retrieval.get("normalized_question") or request.question)
+        assessment = self.generator.assess_evidence(question, response.results)
+        answer = await self.generator.generate(question, response.results)
         return AskResponse(
             answer=answer,
             sources=response.results,
@@ -88,6 +94,12 @@ class SearchService:
                 "model": self.settings.generation_model,
                 "endpoint": self.settings.generation_base_url,
                 "evidence_count": len(response.results),
+                "evidence_grounded": assessment.grounded,
+                "question_terms": sorted(assessment.question_terms),
+                "matched_evidence_terms": sorted(assessment.matched_terms),
+                "matched_specific_terms": sorted(assessment.matched_specific_terms),
+                "citation_required": True,
+                "blocked_reason": "insufficient_evidence" if not assessment.grounded else None,
             },
         )
 

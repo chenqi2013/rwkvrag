@@ -57,6 +57,9 @@ _QUERY_EXPANSIONS = {
     "站点": ("车站",),
     "车站": ("站点",),
 }
+_QUERY_CORRECTIONS = {
+    "名族": "民族",
+}
 _PROXIMITY_EXPANSIONS = {"中国": ("中华人民共和国",)}
 _TITLE_INTENT_TOKENS = {
     "全部",
@@ -132,6 +135,13 @@ def normalize_search_text(text: str) -> str:
     )
 
 
+def normalize_query_text(text: str) -> str:
+    normalized = normalize_search_text(text)
+    for incorrect, corrected in _QUERY_CORRECTIONS.items():
+        normalized = normalized.replace(incorrect, corrected)
+    return normalized
+
+
 def _tokens_from_normalized_text(normalized: str) -> list[str]:
     tokens: list[str] = _ASCII_TOKEN.findall(normalized)
     for run in _CJK_RUN.findall(normalized):
@@ -148,7 +158,15 @@ def _legacy_lexical_tokens(text: str) -> list[str]:
 
 
 def query_tokens(text: str) -> list[str]:
-    tokens = list(dict.fromkeys([*lexical_tokens(text), *_legacy_lexical_tokens(text)]))
+    normalized = normalize_query_text(text)
+    tokens = list(
+        dict.fromkeys(
+            [
+                *_tokens_from_normalized_text(normalized),
+                *_legacy_lexical_tokens(normalized),
+            ]
+        )
+    )
     expanded = list(tokens)
     for token in tokens:
         for synonym in _QUERY_EXPANSIONS.get(token, ()):
@@ -157,7 +175,7 @@ def query_tokens(text: str) -> list[str]:
 
 
 def title_entity_tokens(text: str) -> list[str]:
-    subject = _question_subject(text)
+    subject = _question_subject(normalize_query_text(text))
     return [token for token in lexical_tokens(subject) if token not in _TITLE_INTENT_TOKENS]
 
 
@@ -167,10 +185,15 @@ def _question_subject(text: str) -> str:
 
 
 def title_entity_token_variants(text: str) -> list[list[str]]:
-    subject = _question_subject(text)
+    normalized = normalize_query_text(text)
+    legacy_subject = _question_subject(text)
     variants = [
-        title_entity_tokens(text),
-        [token for token in _legacy_lexical_tokens(subject) if token not in _TITLE_INTENT_TOKENS],
+        title_entity_tokens(normalized),
+        [
+            token
+            for token in _legacy_lexical_tokens(legacy_subject)
+            if token not in _TITLE_INTENT_TOKENS
+        ],
     ]
     unique: list[list[str]] = []
     for variant in variants:
@@ -180,7 +203,7 @@ def title_entity_token_variants(text: str) -> list[list[str]]:
 
 
 def proximity_token_sets(text: str) -> list[set[str]]:
-    base = set(lexical_tokens(text))
+    base = set(query_tokens(text))
     variants = [base]
     for token in base:
         for synonym in _PROXIMITY_EXPANSIONS.get(token, ()):
@@ -189,7 +212,7 @@ def proximity_token_sets(text: str) -> list[set[str]]:
 
 
 def relation_boosts(text: str) -> list[tuple[str, float]]:
-    tokens = set(lexical_tokens(text))
+    tokens = set(query_tokens(text))
     return [
         (phrase, boost)
         for required, phrase, boost in _RELATION_BOOSTS

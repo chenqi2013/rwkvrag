@@ -9,7 +9,10 @@ from llamaindex_retrieval.lexical_index import (
     LexicalResult,
     _focus_bonus,
     lexical_tokens,
+    normalize_query_text,
+    query_tokens,
 )
+from llamaindex_retrieval.schemas import SearchRequest
 from llamaindex_retrieval.service import SearchService
 
 
@@ -98,6 +101,25 @@ def test_transit_line_numbers_are_normalized() -> None:
         "深圳地铁1号线有哪些站点"
     )
     assert lexical_tokens("广州地铁二十一号线") == lexical_tokens("广州地铁21号线")
+
+
+def test_query_normalization_corrects_common_chinese_typos() -> None:
+    assert normalize_query_text("中国有多少个名族") == "中国有多少个民族"
+    assert "民族" in query_tokens("中国有多少个名族")
+
+
+@pytest.mark.asyncio
+async def test_service_searches_with_normalized_question() -> None:
+    client = FakeOpenSearch()
+    service = SearchService(Settings(), LexicalIndex(Settings(), client=cast(Any, client)))
+
+    response = await service.search(SearchRequest(question="中国有多少个名族", top_k=1))
+
+    query = client.search_body["query"]["bool"]["must"][0]["multi_match"]["query"]
+    assert "民族" in query
+    assert "名族" not in query
+    assert response.retrieval["normalized_question"] == "中国有多少个民族"
+    assert response.retrieval["query_normalized"] is True
 
 
 def test_focus_bonus_reranks_chunks_by_non_title_query_terms() -> None:
