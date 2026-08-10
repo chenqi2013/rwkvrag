@@ -14,6 +14,7 @@ _DATE_PREFIX = re.compile(
     r"^\s*(?:\d{4}(?:[-/.年]\d{1,2})?(?:[-/.月]\d{1,2})?日?|\d{1,2}月\d{1,2}日)"
 )
 _TABLE_SEPARATOR = re.compile(r"^:?-{3,}:?$")
+_REFERENCE_MARK = re.compile(r"\[(?:\d{1,4}|來源請求|来源请求|需要来源)\]")
 _SPACE = re.compile(r"\s+")
 _TABLE_FOOTERS = {"注释", "备注", "说明", "参考资料", "参考文献", "来源", "论 编"}
 
@@ -31,7 +32,7 @@ def _stable_id(*parts: object, length: int = 32) -> str:
 
 
 def _clean(value: str) -> str:
-    return _SPACE.sub(" ", value).strip()
+    return _SPACE.sub(" ", _REFERENCE_MARK.sub("", value)).strip()
 
 
 def _is_table_line(line: str) -> bool:
@@ -150,7 +151,12 @@ def _group_lines(lines: list[str], max_chars: int) -> list[list[str]]:
     return groups
 
 
-def _table_texts(block: StructureBlock, max_chars: int) -> list[tuple[str, str]]:
+def _table_texts(
+    block: StructureBlock,
+    max_chars: int,
+    *,
+    document_context: str = "",
+) -> list[tuple[str, str]]:
     rows = [_table_cells(line) for line in block.lines]
     separator = next((index for index, row in enumerate(rows) if _is_separator_row(row)), None)
     if separator is None:
@@ -179,6 +185,7 @@ def _table_texts(block: StructureBlock, max_chars: int) -> list[tuple[str, str]]
             break
         if any(padded):
             normalized_rows.append(padded)
+    _repair_table_first_column(headers, normalized_rows, block, document_context)
 
     first_values = [row[0] for row in normalized_rows if row and row[0]]
     texts: list[tuple[str, str]] = []
@@ -201,9 +208,41 @@ def _table_texts(block: StructureBlock, max_chars: int) -> list[tuple[str, str]]
     return texts or [("table", "\n".join(block.lines))]
 
 
-def _structured_texts(block: StructureBlock, max_chars: int) -> list[tuple[str, str]]:
+def _repair_table_first_column(
+    headers: list[str],
+    rows: list[list[str]],
+    block: StructureBlock,
+    document_context: str,
+) -> None:
+    if not rows or not document_context:
+        return
+    first_header = headers[0] if headers else ""
+    table_context = f"{block.section} {first_header}"
+    if not any(marker in table_context for marker in ("站名", "车站", "車站", "站点")):
+        return
+    for row in rows:
+        if not row or len(row[0]) != 1:
+            continue
+        row[0] = _repair_station_name(row[0], document_context)
+
+
+def _repair_station_name(value: str, document_context: str) -> str:
+    pattern = re.compile(rf"([\u3400-\u4dbf\u4e00-\u9fff]{{1,8}}{re.escape(value)})站")
+    for match in pattern.finditer(document_context):
+        candidate = re.split(r"[、，,；;：:\s]|和|及|与|與|或", _clean(match.group(1)))[-1]
+        if candidate != value and len(candidate) <= 4 and not candidate.endswith(("地铁", "铁路")):
+            return candidate
+    return value
+
+
+def _structured_texts(
+    block: StructureBlock,
+    max_chars: int,
+    *,
+    document_context: str = "",
+) -> list[tuple[str, str]]:
     if block.content_type == "table":
-        return _table_texts(block, max_chars)
+        return _table_texts(block, max_chars, document_context=document_context)
     clean_lines = [_clean(line) for line in block.lines if _clean(line)]
     return [
         (block.content_type, f"{block.section}\n" + "\n".join(group))
@@ -243,7 +282,7 @@ def structure_aware_nodes(document: Document, splitter: SentenceSplitter) -> lis
         elif block.content_type == "qa":
             pieces = [("qa", "\n".join(block.lines))]
         else:
-            pieces = _structured_texts(block, max_chars)
+            pieces = _structured_texts(block, max_chars, document_context=document.text)
 
         structure_size = len(pieces)
         for chunk_order, (content_type, text) in enumerate(pieces):

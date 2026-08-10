@@ -26,6 +26,28 @@ def test_generator_removes_bracketed_chat_protocol_markers() -> None:
     )
 
 
+def test_generator_removes_bracketed_thinking_and_answer_markers() -> None:
+    raw = "[思考] 用户问首都，资料说北京。\n[回答] 中国的首都是北京。[资料 1]"
+
+    assert EvidenceAnswerGenerator._clean_answer(raw) == "中国的首都是北京。[资料 1]"
+
+
+def test_generator_extracts_answer_after_echoed_evidence_block() -> None:
+    raw = (
+        "[资料 1] 标题：中国首都\n"
+        "中国首都 > 古都列表 > 北京\n\n"
+        "北京为五朝帝都，中華民國北洋政府和中華人民共和國的首都。\n\n"
+        "Assistant: 根据资料，中国的首都是北京。[资料 1]"
+    )
+
+    assert EvidenceAnswerGenerator._clean_answer(raw) == "根据资料，中国的首都是北京。[资料 1]"
+
+
+def test_generator_rejects_protocol_payloads_and_evidence_echo() -> None:
+    assert EvidenceAnswerGenerator._clean_answer('{"status":"ok","evidence":[]}') == ""
+    assert EvidenceAnswerGenerator._clean_answer("[资料 1] 标题：中国首都\n北京") == ""
+
+
 @pytest.mark.asyncio
 async def test_generator_uses_evidence_and_truncates_rwkv_continuation() -> None:
     async def handler(request: httpx.Request) -> httpx.Response:
@@ -54,6 +76,25 @@ async def test_generator_uses_evidence_and_truncates_rwkv_continuation() -> None
     )
 
     assert await generator.generate("中国的首都是哪个城市？", [source()]) == "北京。[资料 1]"
+
+
+@pytest.mark.asyncio
+async def test_generator_cleans_echoed_evidence_from_model_output() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            content=(
+                'data: {"choices":[{"delta":{"content":"[资料 1] 标题：中国首都\\n北京为中华人民共和国的首都。\\n\\nAssistant: 中国的首都是北京。[资料 1]"}}]}\n\n'
+                "data: [DONE]\n\n"
+            ),
+        )
+
+    generator = EvidenceAnswerGenerator(
+        Settings(generation_base_url="http://rwkv.test/v1", generation_password="test-password"),
+        transport=httpx.MockTransport(handler),
+    )
+
+    assert await generator.generate("中国的首都是哪个城市？", [source()]) == "中国的首都是北京。[资料 1]"
 
 
 @pytest.mark.asyncio
@@ -91,11 +132,54 @@ async def test_generator_skips_model_call_when_evidence_does_not_cover_question(
 
 
 @pytest.mark.asyncio
+async def test_generator_skips_model_call_when_subject_anchor_is_absent() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        pytest.fail("the generation model must not be called for subject-mismatched evidence")
+
+    generator = EvidenceAnswerGenerator(
+        Settings(generation_password="test-password"),
+        transport=httpx.MockTransport(handler),
+    )
+
+    answer = await generator.generate(
+        "秦始皇有哪些丰功伟绩？",
+        [
+            SourceItem(
+                id="henan-1",
+                document_id="henan",
+                source="finewiki-zh",
+                title="河南省",
+                score=1.0,
+                snippet="河南省拥有龙门石窟、殷墟等历史文化遗产。",
+            )
+        ],
+    )
+
+    assert answer == "根据检索到的资料，无法确定。"
+
+
+@pytest.mark.asyncio
 async def test_generator_adds_a_citation_when_model_omits_one() -> None:
     async def handler(_: httpx.Request) -> httpx.Response:
         return httpx.Response(
             200,
             content='data: {"choices":[{"delta":{"content":"北京。"}}]}\n\ndata: [DONE]\n\n',
+        )
+
+    generator = EvidenceAnswerGenerator(
+        Settings(generation_password="test-password"),
+        transport=httpx.MockTransport(handler),
+    )
+
+    assert await generator.generate("中国的首都是哪个城市？", [source()]) == "北京。 [资料 1]"
+
+
+@pytest.mark.asyncio
+async def test_generator_removes_invalid_citation_and_adds_valid_one() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            content='data: {"choices":[{"delta":{"content":"北京。[资料 2]"}}]}\n\ndata: [DONE]\n\n',
         )
 
     generator = EvidenceAnswerGenerator(

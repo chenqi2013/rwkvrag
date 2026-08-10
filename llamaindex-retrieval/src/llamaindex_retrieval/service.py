@@ -3,6 +3,7 @@ from collections import OrderedDict
 from time import monotonic
 
 from .config import Settings
+from .evidence_utils import clean_evidence_text, direct_evidence_answer
 from .generation import EvidenceAnswerGenerator
 from .lexical_index import (
     LexicalIndex,
@@ -24,8 +25,46 @@ _MULTI_EVIDENCE_MARKERS = (
     "几个",
     "多少",
 )
+_STRUCTURE_QUESTION_WORDS = {
+    "什么",
+    "什么时候",
+    "时候",
+    "何时",
+    "哪里",
+    "哪儿",
+    "哪个",
+    "哪些",
+    "怎么",
+    "如何",
+    "多少",
+    "几个",
+}
+_STRUCTURE_TYPE_BONUS = {
+    "table_summary": 2.4,
+    "table": 1.8,
+    "list": 1.4,
+    "key_value": 0.8,
+    "timeline": 0.4,
+    "prose": 0.0,
+}
+_LIST_ANSWER_HINTS = (
+    "车站列表",
+    "站点列表",
+    "站名列表",
+    "站名/",
+    "列表",
+    "全部车站",
+    "全部站点",
+)
+_LIST_TOPIC_HINTS = ("车站", "站点", "站名", "站")
+_EXPLANATORY_SECTION_HINTS = ("问题", "問題", "歷史", "历史", "命名", "更名", "工程", "續建", "续建")
+_TRANSFER_HINTS = ("转乘", "轉乘", "换乘", "換乘", "线网转乘", "線網轉乘")
 _ANSWER_CACHE_TTL_SECONDS = 300.0
 _ANSWER_CACHE_MAX_ENTRIES = 128
+
+
+def _is_station_list_question(question: str) -> bool:
+    return any(marker in question for marker in ("有哪些站", "哪些站", "车站", "站点", "站名"))
 
 
 class SearchService:
@@ -93,8 +132,13 @@ class SearchService:
         cache_key = self._answer_cache_key(question, response)
         answer = self._get_cached_answer(cache_key)
         cache_hit = answer is not None
+        answer_strategy = "cache" if cache_hit else "model"
         if answer is None:
-            answer = await self.generator.generate(question, response.results)
+            answer = direct_evidence_answer(question, response.results) if assessment.grounded else None
+            if answer is not None:
+                answer_strategy = "direct_extract"
+            else:
+                answer = await self.generator.generate(question, response.results)
             if assessment.grounded and answer not in {
                 "未检索到可用于回答该问题的资料。",
                 "根据检索到的资料，无法确定。",
@@ -113,8 +157,11 @@ class SearchService:
                 "question_terms": sorted(assessment.question_terms),
                 "matched_evidence_terms": sorted(assessment.matched_terms),
                 "matched_specific_terms": sorted(assessment.matched_specific_terms),
+                "evidence_anchors": sorted(assessment.anchors),
+                "matched_evidence_anchors": sorted(assessment.matched_anchors),
                 "citation_required": True,
                 "cache_hit": cache_hit,
+                "answer_strategy": answer_strategy,
                 "blocked_reason": "insufficient_evidence" if not assessment.grounded else None,
             },
         )
@@ -163,6 +210,24 @@ class SearchService:
             and result.metadata.get("content_type") in content_types
         ]
         same_document = [result for result in candidates if result.document_id == top_document]
+        document_candidates = await self._document_structure_candidates(
+            question,
+            document_id=top_document,
+            content_types=content_types,
+            knowledge_base_id=knowledge_base_id,
+        )
+        seen_candidate_ids = {result.node_id for result in candidates}
+        if document_candidates:
+            same_document = [
+                *same_document,
+                *(
+                    result
+                    for result in document_candidates
+                    if result.node_id not in seen_candidate_ids
+                    and result.metadata.get("parent_id")
+                    and result.metadata.get("content_type") in content_types
+                ),
+            ]
         anchor_pool = same_document or candidates
         anchor = max(
             anchor_pool,
@@ -184,15 +249,67 @@ class SearchService:
         merged = [*expanded, *(result for result in results if result.node_id not in seen)]
         return merged, True
 
+    async def _document_structure_candidates(
+        self,
+        question: str,
+        *,
+        document_id: str,
+        content_types: set[str],
+        knowledge_base_id: str | None,
+    ) -> list[LexicalResult]:
+        lookup = getattr(self.index, "document_structure_candidates", None)
+        if lookup is None or not document_id:
+            return []
+        return await asyncio.to_thread(
+            lookup,
+            question,
+            document_id=document_id,
+            content_types=content_types,
+            knowledge_base_id=knowledge_base_id,
+            limit=max(self.settings.candidate_k, self.settings.list_query_max_chunks_per_document),
+        )
+
     @staticmethod
     def _structure_relevance(question: str, result: LexicalResult) -> tuple[float, float]:
-        title_tokens = set(lexical_tokens(str(result.metadata.get("title") or "")))
-        question_tokens = set(query_tokens(question)) - title_tokens
-        section_tokens = set(lexical_tokens(str(result.metadata.get("section") or "")))
-        section_specific = section_tokens - title_tokens
-        overlap = len(question_tokens & section_specific)
-        coverage = overlap / max(1, len(section_specific))
-        return coverage, result.score
+        metadata = result.metadata
+        title_tokens = set(lexical_tokens(str(metadata.get("title") or "")))
+        question_tokens = (
+            set(query_tokens(question)) - title_tokens - _STRUCTURE_QUESTION_WORDS
+        )
+        context = " ".join(
+            str(value or "")
+            for value in (
+                metadata.get("section"),
+                metadata.get("content_type"),
+                " ".join(str(item) for item in metadata.get("keywords") or []),
+                result.text[:800],
+            )
+        )
+        context_tokens = set(lexical_tokens(context)) - title_tokens
+        overlap = len(question_tokens & context_tokens)
+        coverage = overlap / max(1, len(question_tokens))
+        content_type = str(metadata.get("content_type") or "prose")
+        type_bonus = _STRUCTURE_TYPE_BONUS.get(content_type, 0.0)
+        normalized_context = context.replace(" ", "")
+        list_bonus = 0.0
+        if any(marker in question for marker in _MULTI_EVIDENCE_MARKERS):
+            if any(hint in normalized_context for hint in _LIST_ANSWER_HINTS):
+                list_bonus += 2.4
+            elif any(hint in normalized_context for hint in _LIST_TOPIC_HINTS):
+                list_bonus += 0.8
+            if _is_station_list_question(question):
+                if "站名" in normalized_context and "列表" in normalized_context:
+                    list_bonus += 3.0
+                elif "站名/" in normalized_context:
+                    list_bonus += 2.2
+                if any(hint in normalized_context for hint in _TRANSFER_HINTS) and not any(
+                    hint in question for hint in _TRANSFER_HINTS
+                ):
+                    list_bonus -= 2.6
+            if any(hint in normalized_context for hint in _EXPLANATORY_SECTION_HINTS):
+                list_bonus -= 1.0
+        score = coverage * 3.0 + type_bonus + list_bonus
+        return score, result.score
 
     def _select_results(
         self,
@@ -236,8 +353,11 @@ class SearchService:
         title = str(metadata.pop("title", ""))
         source = str(metadata.pop("source", ""))
         uri = metadata.pop("uri", None)
-        content = result.text.strip()
-        snippet = full_answer or (content if len(content) <= 900 else content[:900].rstrip() + "...")
+        content = clean_evidence_text(result.text)
+        if full_answer:
+            snippet = clean_evidence_text(full_answer)
+        else:
+            snippet = content if len(content) <= 900 else content[:900].rstrip() + "..."
         return SourceItem(
             id=result.node_id,
             document_id=result.document_id,

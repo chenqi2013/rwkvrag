@@ -56,6 +56,10 @@ _QUERY_EXPANSIONS = {
     "试播": ("开始试播", "开播"),
     "站点": ("车站",),
     "车站": ("站点",),
+    "站": ("车站", "站点", "站名"),
+    "关隘": ("关城", "关口", "关卡"),
+    "关城": ("关隘", "关口"),
+    "关口": ("关隘", "关城"),
 }
 _QUERY_CORRECTIONS = {
     "名族": "民族",
@@ -67,6 +71,7 @@ _TITLE_INTENT_TOKENS = {
     "所有",
     "站点",
     "车站",
+    "著名",
 }
 _LIST_QUERY_MARKERS = ("哪些", "有哪", "列表", "全部", "所有", "分别", "几个", "多少")
 _STEP_QUERY_MARKERS = ("如何", "怎么", "步骤", "流程", "方法")
@@ -86,6 +91,8 @@ _RELATION_BOOSTS = (
     ({"中国", "首都"}, "中华人民共和国 首都", 20.0),
     ({"中国", "人口", "最多", "省"}, "第一 人口 大省", 4.0),
     ({"中国", "人口", "最多", "省"}, "目前 人口", 5.0),
+    ({"长城", "关隘"}, "长城 关隘 著名 关城", 18.0),
+    ({"长城", "关口"}, "长城 关隘 著名 关城", 18.0),
 )
 
 _CHINESE_DIGITS = {
@@ -112,6 +119,14 @@ class LexicalResult:
     text: str
     metadata: dict[str, Any]
     score: float
+
+
+@dataclass(frozen=True)
+class _RankedChunk:
+    source: dict[str, Any]
+    document_id: str
+    page_score: float
+    passage_score: float
 
 
 def _chinese_number(value: str) -> int:
@@ -281,6 +296,33 @@ def _focus_bonus(question: str, title: str, text: str) -> float:
     if len(focus) >= 2 and focus <= body_tokens:
         bonus += _proximity_bonus(text, focus)
     return bonus
+
+
+def _chunk_order(source: dict[str, Any]) -> int:
+    metadata = dict(source.get("metadata") or {})
+    try:
+        return int(metadata.get("chunk_order") or source.get("chunk_order") or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def _passage_score(
+    question: str,
+    source: dict[str, Any],
+    *,
+    page_score: float,
+    proximity_sets: list[set[str]],
+) -> float:
+    metadata = dict(source.get("metadata") or {})
+    title = str(source.get("title") or metadata.get("title") or "")
+    text = str(source.get("text") or "")
+    content_type = str(metadata.get("content_type") or source.get("content_type") or "prose")
+    chunk_order = max(0, _chunk_order(source))
+    structured_bonus = 0.2 if content_type in {"table_summary", "table", "list", "key_value"} else 0.0
+    lead_bonus = 0.08 / (1.0 + chunk_order)
+    focus = _focus_bonus(question, title, text)
+    proximity = max(_proximity_bonus(text, item) for item in proximity_sets)
+    return page_score * 0.35 + focus * 1.6 + proximity + structured_bonus + lead_bonus
 
 
 class LexicalIndex:
@@ -471,8 +513,9 @@ class LexicalIndex:
                     }
                 }
             )
+        raw_candidate_k = max(candidate_k, min(candidate_k * 4, 200), 1)
         body = {
-            "size": max(candidate_k, 1),
+            "size": raw_candidate_k,
             "track_total_hits": False,
             "_source": ["node_id", "document_id", "text", "metadata", "title"],
             "query": {
@@ -500,7 +543,7 @@ class LexicalIndex:
         }
         response = self.client.search(index=self.index_name, body=body)
         hits = response.get("hits", {}).get("hits", [])
-        ranked: list[tuple[float, dict[str, Any]]] = []
+        ranked: list[_RankedChunk] = []
         normalized_question = _normalized_text(question)
         question_token_set = set(tokens)
         proximity_sets = proximity_token_sets(question)
@@ -515,18 +558,60 @@ class LexicalIndex:
                 raw += 1.25 * len(question_token_set & title_tokens) / len(title_tokens)
             raw += _focus_bonus(question, title, str(source.get("text") or ""))
             raw += max(_proximity_bonus(str(source.get("text") or ""), item) for item in proximity_sets)
-            ranked.append((raw, source))
-        ranked.sort(key=lambda item: item[0], reverse=True)
-        top_raw = max((raw for raw, _ in ranked), default=1.0) or 1.0
+            document_id = str(source.get("document_id") or source.get("node_id") or "")
+            ranked.append(
+                _RankedChunk(
+                    source=source,
+                    document_id=document_id,
+                    page_score=raw,
+                    passage_score=_passage_score(
+                        question,
+                        source,
+                        page_score=raw,
+                        proximity_sets=proximity_sets,
+                    ),
+                )
+            )
+        page_best: dict[str, _RankedChunk] = {}
+        page_support: dict[str, float] = {}
+        page_chunk_counts: dict[str, int] = {}
+        for chunk in ranked:
+            page_chunk_counts[chunk.document_id] = page_chunk_counts.get(chunk.document_id, 0) + 1
+            page_support[chunk.document_id] = page_support.get(chunk.document_id, 0.0) + (
+                chunk.page_score / (60.0 + page_chunk_counts[chunk.document_id])
+            )
+            current = page_best.get(chunk.document_id)
+            if current is None or (
+                chunk.passage_score,
+                -_chunk_order(chunk.source),
+                chunk.source.get("node_id") or "",
+            ) > (
+                current.passage_score,
+                -_chunk_order(current.source),
+                current.source.get("node_id") or "",
+            ):
+                page_best[chunk.document_id] = chunk
+
+        merged = [
+            (
+                chunk.page_score + min(0.25, page_support.get(document_id, 0.0)),
+                chunk,
+            )
+            for document_id, chunk in page_best.items()
+        ]
+        merged.sort(key=lambda item: item[0], reverse=True)
+        top_raw = max((raw for raw, _chunk in merged), default=1.0) or 1.0
         return [
             LexicalResult(
-                node_id=str(source.get("node_id") or ""),
-                document_id=str(source.get("document_id") or source.get("node_id") or ""),
-                text=str(source.get("text") or ""),
-                metadata=dict(source.get("metadata") or {}),
+                node_id=str(chunk.source.get("node_id") or ""),
+                document_id=str(
+                    chunk.source.get("document_id") or chunk.source.get("node_id") or ""
+                ),
+                text=str(chunk.source.get("text") or ""),
+                metadata=dict(chunk.source.get("metadata") or {}),
                 score=min(1.0, max(0.0, raw / top_raw)),
             )
-            for raw, source in ranked
+            for raw, chunk in merged
         ]
 
     def structure_chunks(
@@ -559,6 +644,65 @@ class LexicalIndex:
                     text=str(source.get("text") or ""),
                     metadata=dict(source.get("metadata") or {}),
                     score=score,
+                )
+            )
+        return results
+
+    def document_structure_candidates(
+        self,
+        question: str,
+        *,
+        document_id: str,
+        content_types: Iterable[str],
+        knowledge_base_id: str | None,
+        limit: int,
+    ) -> list[LexicalResult]:
+        filters: list[dict[str, Any]] = [
+            {"term": {"document_id": document_id}},
+            {"terms": {"content_type": list(dict.fromkeys(content_types))}},
+        ]
+        if knowledge_base_id:
+            filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
+        tokens = query_tokens(question)
+        response = self.client.search(
+            index=self.index_name,
+            body={
+                "size": max(1, min(int(limit), 100)),
+                "_source": ["node_id", "document_id", "text", "metadata"],
+                "query": {
+                    "bool": {
+                        "filter": filters,
+                        "should": [
+                            {
+                                "multi_match": {
+                                    "query": " ".join(tokens),
+                                    "fields": [
+                                        "body_tokens",
+                                        "section_tokens^3",
+                                        "structure_tokens^3",
+                                    ],
+                                    "type": "best_fields",
+                                    "operator": "or",
+                                }
+                            }
+                        ],
+                    }
+                },
+                "sort": [{"_score": "desc"}, {"chunk_order": "asc"}, {"node_id": "asc"}],
+            },
+        )
+        hits = response.get("hits", {}).get("hits", [])
+        top_raw = max((float(hit.get("_score") or 0.0) for hit in hits), default=1.0) or 1.0
+        results = []
+        for hit in hits:
+            source = dict(hit.get("_source") or {})
+            results.append(
+                LexicalResult(
+                    node_id=str(source.get("node_id") or ""),
+                    document_id=str(source.get("document_id") or source.get("node_id") or ""),
+                    text=str(source.get("text") or ""),
+                    metadata=dict(source.get("metadata") or {}),
+                    score=min(1.0, max(0.0, float(hit.get("_score") or 0.0) / top_raw)),
                 )
             )
         return results

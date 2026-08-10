@@ -52,6 +52,50 @@ def test_table_is_split_on_rows_and_has_complete_first_column_summary() -> None:
     assert all("站名：" in node.text for node in table_nodes[1:])
 
 
+def test_table_cells_drop_wiki_reference_marks() -> None:
+    source = """# 测试线路
+
+## 车站
+| 站名 | 所在地 |
+| --- | --- |
+| 后瑞[4] | 宝安 |
+| 机场东[12] | 宝安 |
+"""
+
+    nodes = structure_aware_nodes(
+        document(source),
+        SentenceSplitter(chunk_size=128, chunk_overlap=16),
+    )
+
+    combined = "\n".join(node.text for node in nodes)
+    assert "后瑞[4]" not in combined
+    assert "机场东[12]" not in combined
+    assert "站名列表：后瑞、机场东" in combined
+
+
+def test_table_summary_repairs_single_character_station_from_document_context() -> None:
+    source = """# 测试线路
+
+正文说明：除机场东站和后瑞站为高架车站。
+
+## 车站
+| 站名 | 所在地 |
+| --- | --- |
+| 固戍 | 宝安 |
+| 瑞 | 宝安 |
+| 机场东 | 宝安 |
+"""
+
+    nodes = structure_aware_nodes(
+        document(source),
+        SentenceSplitter(chunk_size=128, chunk_overlap=16),
+    )
+
+    combined = "\n".join(node.text for node in nodes)
+    assert "站名列表：固戍、后瑞、机场东" in combined
+    assert "站名：后瑞" in combined
+
+
 def test_lists_key_values_and_prose_get_generic_structure_metadata() -> None:
     source = """# 使用说明
 
