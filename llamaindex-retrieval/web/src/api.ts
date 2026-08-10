@@ -6,6 +6,9 @@ import type {
   JobItem,
   KnowledgeBase,
   AskResponse,
+  SearchTestDetail,
+  SearchTestItem,
+  SearchTestRun,
   SearchResponse,
 } from "./types";
 
@@ -89,4 +92,9 @@ export const api = {
       headers: jsonHeaders,
       body: JSON.stringify(values),
     }),
+  searchHistory: () => request<SearchTestItem[]>("/v1/admin/search-history"),
+  searchHistoryDetail: (id: string) =>
+    request<SearchTestDetail>(`/v1/admin/search-history/${id}`),
+  rerunSearchHistory: (id: string) =>
+    request<SearchTestRun>(`/v1/admin/search-history/${id}/rerun`, { method: "POST" }),
 };

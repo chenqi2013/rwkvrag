@@ -3,6 +3,7 @@ import {
   DatabaseOutlined,
   FileTextOutlined,
   ImportOutlined,
+  HistoryOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Space, Tag, Typography } from "antd";
@@ -13,6 +14,7 @@ import FilesPage from "./pages/FilesPage";
 import ImportsPage from "./pages/ImportsPage";
 import KnowledgeBasesPage from "./pages/KnowledgeBasesPage";
 import SearchPage from "./pages/SearchPage";
+import SearchHistoryPage from "./pages/SearchHistoryPage";
 
 const { Header, Sider, Content } = Layout;
 
@@ -22,6 +24,7 @@ const menuItems = [
   { key: "/files", icon: <FileTextOutlined />, label: "文档管理" },
   { key: "/imports", icon: <ImportOutlined />, label: "导入任务" },
   { key: "/search", icon: <SearchOutlined />, label: "检索测试" },
+  { key: "/search-history", icon: <HistoryOutlined />, label: "历史测试" },
 ];
 
 export default function App() {
@@ -64,6 +67,7 @@ export default function App() {
             <Route path="/files" element={<FilesPage />} />
             <Route path="/imports" element={<ImportsPage />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/search-history" element={<SearchHistoryPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Content>

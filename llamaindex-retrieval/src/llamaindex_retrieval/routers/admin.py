@@ -6,7 +6,7 @@ from fastapi.responses import FileResponse
 
 from ..admin_service import AdminNotFoundError, AdminService, AdminValidationError
 from ..config import get_settings
-from ..dependencies import admin_service, lexical_index, repository
+from ..dependencies import admin_service, lexical_index, repository, search_service
 from ..finewiki_browser import FineWikiPathError, browse_finewiki_paths
 from ..lexical_index import LexicalIndex
 from ..repository import MongoRepository
@@ -22,7 +22,12 @@ from ..schemas import (
     KnowledgeBaseCreate,
     KnowledgeBaseItem,
     KnowledgeBaseUpdate,
+    SearchRequest,
+    SearchTestDetail,
+    SearchTestItem,
+    SearchTestRun,
 )
+from ..service import SearchService
 
 router = APIRouter(prefix="/v1/admin", tags=["admin"])
 
@@ -172,6 +177,46 @@ async def list_jobs(
     repo: MongoRepository = Depends(repository),
 ) -> list[dict]:
     return await repo.list_jobs(status, limit)
+
+
+@router.get("/search-history", response_model=list[SearchTestItem])
+async def list_search_history(
+    limit: int = Query(default=100, ge=1, le=500),
+    repo: MongoRepository = Depends(repository),
+) -> list[dict]:
+    return await repo.list_search_tests(limit)
+
+
+@router.get("/search-history/{test_id}", response_model=SearchTestDetail)
+async def get_search_history(
+    test_id: str,
+    repo: MongoRepository = Depends(repository),
+) -> dict:
+    item = await repo.get_search_test(test_id)
+    if item is None:
+        raise AdminNotFoundError(f"历史测试不存在：{test_id}")
+    return item
+
+
+@router.post("/search-history/{test_id}/rerun", response_model=SearchTestRun)
+async def rerun_search_history(
+    test_id: str,
+    repo: MongoRepository = Depends(repository),
+    service: SearchService = Depends(search_service),
+) -> dict:
+    item = await repo.get_search_test(test_id)
+    if item is None:
+        raise AdminNotFoundError(f"历史测试不存在：{test_id}")
+    request = SearchRequest.model_validate(item["request"])
+    response = await service.ask(request)
+    run = await repo.record_search_test_run(
+        request.model_dump(mode="json"),
+        response.model_dump(mode="json"),
+        test_id=test_id,
+    )
+    if run is None:
+        raise AdminNotFoundError(f"历史测试不存在：{test_id}")
+    return run
 
 
 @router.get("/jobs/{job_id}", response_model=JobItem)

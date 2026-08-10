@@ -83,6 +83,31 @@ export interface AskResponse {
   generation: Record<string, unknown>;
 }
 
+export interface SearchTestRun {
+  id: string;
+  test_id: string;
+  run_number: number;
+  request: Record<string, unknown>;
+  response: AskResponse;
+  created_at: string;
+}
+
+export interface SearchTestItem {
+  id: string;
+  question: string;
+  knowledge_base_id?: string;
+  request: Record<string, unknown>;
+  run_count: number;
+  created_at: string;
+  updated_at: string;
+  latest_run_id?: string;
+  latest_run?: SearchTestRun;
+}
+
+export interface SearchTestDetail extends SearchTestItem {
+  runs: SearchTestRun[];
+}
+
 export interface AdminHealth {
   status: "ok" | "degraded";
   mongodb: Record<string, unknown>;

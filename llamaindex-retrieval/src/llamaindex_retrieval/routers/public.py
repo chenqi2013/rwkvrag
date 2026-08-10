@@ -4,10 +4,11 @@ from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException
 
 from ..config import get_settings
-from ..dependencies import search_service
+from ..dependencies import repository, search_service
 from ..ingest import ingest_markdown
 from ..generation import AnswerGenerationError
 from ..schemas import AskResponse, ImportResponse, MarkdownImportRequest, SearchRequest, SearchResponse
+from ..repository import MongoRepository
 from ..service import SearchService
 
 router = APIRouter()
@@ -30,11 +31,17 @@ async def search(
 async def ask(
     payload: SearchRequest,
     service: SearchService = Depends(search_service),
+    repo: MongoRepository = Depends(repository),
 ) -> AskResponse:
     try:
-        return await service.ask(payload)
+        response = await service.ask(payload)
     except AnswerGenerationError as error:
         raise HTTPException(status_code=502, detail=str(error)) from error
+    await repo.record_search_test_run(
+        payload.model_dump(mode="json"),
+        response.model_dump(mode="json"),
+    )
+    return response
 
 
 @router.post("/v1/import/markdown", response_model=ImportResponse)

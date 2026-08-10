@@ -17,10 +17,17 @@ _CONTINUATION_MARKERS = (
     "\n问题",
     "\nQuestion",
     "\n助手",
+    "\n[助手",
+    "\n[assistant",
     "\n[资料",
     "\n资料：",
+    "\n[用户",
+    "\n[User",
 )
 _THINKING_PATTERN = re.compile(r"<think>.*?</think>", re.IGNORECASE | re.DOTALL)
+_ASSISTANT_PREFIX_PATTERN = re.compile(
+    r"^(?:Assistant:|assistant:|助手：|\[助手(?:\s+\d+)?\]|\[assistant(?:\s+\d+)?\])\s*"
+)
 _CITATION_PATTERN = re.compile(r"\[资料\s*([1-9]\d*)\]")
 _GROUNDING_STOP_TOKENS = {"个", "分别", "相关", "内容", "资料", "问题", "请问", "一下"}
 _GROUNDING_CONTEXT_TERMS = {"中国", "中华人民共和国"}
@@ -102,6 +109,31 @@ class EvidenceAnswerGenerator:
             return answer
         return self._ensure_citation(answer, len(sources))
 
+    async def current_model(self) -> str | None:
+        try:
+            async with httpx.AsyncClient(
+                timeout=min(self.settings.generation_timeout, 5),
+                transport=self.transport,
+            ) as client:
+                response = await client.get(self.settings.generation_models_url)
+                response.raise_for_status()
+        except httpx.HTTPError:
+            return None
+
+        try:
+            models = response.json().get("data")
+        except (AttributeError, json.JSONDecodeError):
+            return None
+        if not isinstance(models, list):
+            return None
+        for model in models:
+            if not isinstance(model, dict):
+                continue
+            model_id = model.get("id")
+            if isinstance(model_id, str) and model_id.strip():
+                return model_id.strip()
+        return None
+
     @staticmethod
     def assess_evidence(question: str, sources: list[SourceItem]) -> EvidenceAssessment:
         question_terms = {
@@ -173,9 +205,7 @@ class EvidenceAnswerGenerator:
     @staticmethod
     def _clean_answer(answer: str) -> str:
         cleaned = _THINKING_PATTERN.sub("", answer).strip()
-        for prefix in ("Assistant:", "assistant:", "助手："):
-            if cleaned.startswith(prefix):
-                cleaned = cleaned.removeprefix(prefix).strip()
+        cleaned = _ASSISTANT_PREFIX_PATTERN.sub("", cleaned).strip()
         for marker in _CONTINUATION_MARKERS:
             position = cleaned.find(marker)
             if position >= 0:

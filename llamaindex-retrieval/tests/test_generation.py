@@ -19,6 +19,13 @@ def source() -> SourceItem:
     )
 
 
+def test_generator_removes_bracketed_chat_protocol_markers() -> None:
+    assert (
+        EvidenceAnswerGenerator._clean_answer("[助手 1] 北京。[资料 1]\n[用户] 中国首都是哪里？")
+        == "北京。[资料 1]"
+    )
+
+
 @pytest.mark.asyncio
 async def test_generator_uses_evidence_and_truncates_rwkv_continuation() -> None:
     async def handler(request: httpx.Request) -> httpx.Response:
@@ -97,3 +104,30 @@ async def test_generator_adds_a_citation_when_model_omits_one() -> None:
     )
 
     assert await generator.generate("中国的首都是哪个城市？", [source()]) == "北京。 [资料 1]"
+
+
+@pytest.mark.asyncio
+async def test_generator_reads_current_model_from_models_endpoint() -> None:
+    async def handler(request: httpx.Request) -> httpx.Response:
+        assert request.url == "http://models.test/v1/models"
+        return httpx.Response(200, json={"data": [{"id": "rwkv-current"}]})
+
+    generator = EvidenceAnswerGenerator(
+        Settings(generation_models_url="http://models.test/v1/models"),
+        transport=httpx.MockTransport(handler),
+    )
+
+    assert await generator.current_model() == "rwkv-current"
+
+
+@pytest.mark.asyncio
+async def test_generator_allows_model_list_failure() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return httpx.Response(500)
+
+    generator = EvidenceAnswerGenerator(
+        Settings(generation_models_url="http://models.test/v1/models"),
+        transport=httpx.MockTransport(handler),
+    )
+
+    assert await generator.current_model() is None

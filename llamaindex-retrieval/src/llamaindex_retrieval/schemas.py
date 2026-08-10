@@ -43,6 +43,31 @@ class AskResponse(BaseModel):
     generation: dict[str, Any]
 
 
+class SearchTestRun(BaseModel):
+    id: str
+    test_id: str
+    run_number: int
+    request: dict[str, Any]
+    response: AskResponse
+    created_at: datetime
+
+
+class SearchTestItem(BaseModel):
+    id: str
+    question: str
+    knowledge_base_id: str | None = None
+    request: dict[str, Any]
+    run_count: int = 0
+    created_at: datetime
+    updated_at: datetime
+    latest_run_id: str | None = None
+    latest_run: SearchTestRun | None = None
+
+
+class SearchTestDetail(SearchTestItem):
+    runs: list[SearchTestRun] = Field(default_factory=list)
+
+
 class MarkdownImportRequest(BaseModel):
     path: str
     source: str = "local-markdown"

@@ -1,4 +1,6 @@
 import asyncio
+from collections import OrderedDict
+from time import monotonic
 
 from .config import Settings
 from .generation import EvidenceAnswerGenerator
@@ -22,6 +24,8 @@ _MULTI_EVIDENCE_MARKERS = (
     "几个",
     "多少",
 )
+_ANSWER_CACHE_TTL_SECONDS = 300.0
+_ANSWER_CACHE_MAX_ENTRIES = 128
 
 
 class SearchService:
@@ -34,6 +38,7 @@ class SearchService:
         self.settings = settings
         self.index = index
         self.generator = generator or EvidenceAnswerGenerator(settings)
+        self._answer_cache: OrderedDict[tuple[object, ...], tuple[float, str]] = OrderedDict()
 
     async def search(self, request: SearchRequest) -> SearchResponse:
         top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
@@ -85,13 +90,23 @@ class SearchService:
         response = await self.search(request)
         question = str(response.retrieval.get("normalized_question") or request.question)
         assessment = self.generator.assess_evidence(question, response.results)
-        answer = await self.generator.generate(question, response.results)
+        cache_key = self._answer_cache_key(question, response)
+        answer = self._get_cached_answer(cache_key)
+        cache_hit = answer is not None
+        if answer is None:
+            answer = await self.generator.generate(question, response.results)
+            if assessment.grounded and answer not in {
+                "未检索到可用于回答该问题的资料。",
+                "根据检索到的资料，无法确定。",
+            }:
+                self._store_cached_answer(cache_key, answer)
+        model_name = await self.generator.current_model()
         return AskResponse(
             answer=answer,
             sources=response.results,
             retrieval=response.retrieval,
             generation={
-                "model": self.settings.generation_model,
+                "model": model_name,
                 "endpoint": self.settings.generation_base_url,
                 "evidence_count": len(response.results),
                 "evidence_grounded": assessment.grounded,
@@ -99,9 +114,35 @@ class SearchService:
                 "matched_evidence_terms": sorted(assessment.matched_terms),
                 "matched_specific_terms": sorted(assessment.matched_specific_terms),
                 "citation_required": True,
+                "cache_hit": cache_hit,
                 "blocked_reason": "insufficient_evidence" if not assessment.grounded else None,
             },
         )
+
+    @staticmethod
+    def _answer_cache_key(question: str, response: SearchResponse) -> tuple[object, ...]:
+        evidence = tuple(
+            (source.id, round(source.score, 6), source.snippet[:256])
+            for source in response.results
+        )
+        return question, response.retrieval.get("knowledge_base_id"), evidence
+
+    def _get_cached_answer(self, key: tuple[object, ...]) -> str | None:
+        cached = self._answer_cache.get(key)
+        if cached is None:
+            return None
+        created_at, answer = cached
+        if monotonic() - created_at > _ANSWER_CACHE_TTL_SECONDS:
+            self._answer_cache.pop(key, None)
+            return None
+        self._answer_cache.move_to_end(key)
+        return answer
+
+    def _store_cached_answer(self, key: tuple[object, ...], answer: str) -> None:
+        self._answer_cache[key] = (monotonic(), answer)
+        self._answer_cache.move_to_end(key)
+        while len(self._answer_cache) > _ANSWER_CACHE_MAX_ENTRIES:
+            self._answer_cache.popitem(last=False)
 
     async def _expand_structured_results(
         self,

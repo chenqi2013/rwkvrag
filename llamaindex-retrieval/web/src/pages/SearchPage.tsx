@@ -70,7 +70,7 @@ export default function SearchPage() {
             <Form
               form={form}
               layout="vertical"
-              initialValues={{ question: "中国人口最多的省份是哪个省", top_k: 5 }}
+              initialValues={{ top_k: 1 }}
             >
               <Form.Item label="问题" name="question" rules={[{ required: true, message: "请输入问题" }]}>
                 <Input.TextArea rows={6} placeholder="输入需要检索的问题" />
@@ -100,7 +100,9 @@ export default function SearchPage() {
                   <Tag color={evidenceGrounded ? "green" : "orange"}>
                     {evidenceGrounded ? "证据校验通过" : "证据不足，未生成"}
                   </Tag>
-                  <Tag color="green">RWKV · {String(response.generation.model)}</Tag>
+                  {response.generation.model ? (
+                    <Tag color="green">生成模型 · {String(response.generation.model)}</Tag>
+                  ) : null}
                 </Space>
               )
             }

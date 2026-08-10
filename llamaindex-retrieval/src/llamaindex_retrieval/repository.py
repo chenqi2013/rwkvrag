@@ -1,8 +1,10 @@
+import hashlib
+import json
 from datetime import UTC, datetime
 from typing import Any
 from uuid import uuid4
 
-from pymongo import ASCENDING, DESCENDING, AsyncMongoClient
+from pymongo import ASCENDING, DESCENDING, AsyncMongoClient, ReturnDocument
 from pymongo.errors import DuplicateKeyError
 
 
@@ -21,6 +23,8 @@ class MongoRepository:
         self.knowledge_bases = self.database["knowledge_bases"]
         self.files = self.database["files"]
         self.jobs = self.database["jobs"]
+        self.search_tests = self.database["search_tests"]
+        self.search_test_runs = self.database["search_test_runs"]
 
     async def connect(self) -> None:
         await self.client.admin.command("ping")
@@ -35,6 +39,16 @@ class MongoRepository:
         )
         await self.jobs.create_index("id", unique=True)
         await self.jobs.create_index([("status", ASCENDING), ("created_at", ASCENDING)])
+        await self.search_tests.create_index("id", unique=True)
+        await self.search_tests.create_index("key", unique=True)
+        await self.search_tests.create_index([("updated_at", DESCENDING)])
+        await self.search_test_runs.create_index("id", unique=True)
+        await self.search_test_runs.create_index(
+            [("test_id", ASCENDING), ("run_number", ASCENDING)], unique=True
+        )
+        await self.search_test_runs.create_index(
+            [("test_id", ASCENDING), ("created_at", DESCENDING)]
+        )
         now = utc_now()
         await self.knowledge_bases.update_one(
             {"id": "default"},
@@ -197,3 +211,89 @@ class MongoRepository:
 
     async def delete_jobs_for_knowledge_base(self, knowledge_base_id: str) -> None:
         await self.jobs.delete_many({"payload.knowledge_base_id": knowledge_base_id})
+
+    async def record_search_test_run(
+        self,
+        request: dict[str, Any],
+        response: dict[str, Any],
+        *,
+        test_id: str | None = None,
+    ) -> dict[str, Any] | None:
+        """Append an immutable execution result to a question's test history."""
+        now = utc_now()
+        if test_id:
+            test = await self.search_tests.find_one_and_update(
+                {"id": test_id},
+                {
+                    "$set": {"request": request, "updated_at": now},
+                    "$inc": {"run_count": 1},
+                },
+                return_document=ReturnDocument.AFTER,
+            )
+        else:
+            question = str(request.get("question") or "").strip()
+            knowledge_base_id = request.get("knowledge_base_id")
+            key = self._search_test_key(question, knowledge_base_id)
+            test = await self.search_tests.find_one_and_update(
+                {"key": key},
+                {
+	                    "$setOnInsert": {
+	                        "id": uuid4().hex,
+	                        "key": key,
+	                        "question": question,
+	                        "knowledge_base_id": knowledge_base_id,
+	                        "created_at": now,
+	                    },
+                    "$set": {"request": request, "updated_at": now},
+                    "$inc": {"run_count": 1},
+                },
+                upsert=True,
+                return_document=ReturnDocument.AFTER,
+            )
+        if test is None:
+            return None
+
+        run = {
+            "id": uuid4().hex,
+            "test_id": test["id"],
+            "run_number": int(test["run_count"]),
+            "request": request,
+            "response": response,
+            "created_at": now,
+        }
+        await self.search_test_runs.insert_one(run)
+        await self.search_tests.update_one(
+            {"id": test["id"]}, {"$set": {"latest_run_id": run["id"]}}
+        )
+        return run
+
+    async def list_search_tests(self, limit: int = 100) -> list[dict[str, Any]]:
+        cursor = self.search_tests.find({}, {"_id": 0}).sort("updated_at", DESCENDING).limit(limit)
+        tests = await cursor.to_list(length=limit)
+        for test in tests:
+            latest_run_id = test.get("latest_run_id")
+            test["latest_run"] = (
+                await self.search_test_runs.find_one({"id": latest_run_id}, {"_id": 0})
+                if latest_run_id
+                else None
+            )
+        return tests
+
+    async def get_search_test(self, test_id: str) -> dict[str, Any] | None:
+        test = await self.search_tests.find_one({"id": test_id}, {"_id": 0})
+        if test is None:
+            return None
+        cursor = self.search_test_runs.find({"test_id": test_id}, {"_id": 0}).sort(
+            "run_number", ASCENDING
+        )
+        test["runs"] = await cursor.to_list(length=None)
+        return test
+
+    @staticmethod
+    def _search_test_key(question: str, knowledge_base_id: object) -> str:
+        value = json.dumps(
+            {"question": question, "knowledge_base_id": knowledge_base_id},
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+        return hashlib.sha256(value.encode("utf-8")).hexdigest()
