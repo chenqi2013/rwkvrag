@@ -20,13 +20,42 @@ _TABLE_FIELD = re.compile(
 _BULLET_ITEM = re.compile(r"^\s*[-*•]\s*(?P<name>[^：:\n]{2,32})(?:[：:]\s*(?P<desc>[^\n]{0,500}))?\s*$")
 _ITEM_SPLIT = re.compile(r"[、,，;；]")
 _TRAILING_PUNCTUATION = "。.!！?？；;，,"
-_LIST_QUESTION_MARKERS = ("哪些", "有哪", "列表", "全部", "所有", "分别", "几个")
+_LIST_QUESTION_MARKERS = (
+    "哪些",
+    "有哪",
+    "列表",
+    "全部",
+    "所有",
+    "分别",
+    "几个",
+    "列一下",
+    "列出",
+    "列举",
+)
 _LIST_LABEL_NOISE = {"列表", "一览", "一覽", "全部"}
 _GENERIC_LIST_TOKENS = {"中国", "中华人民共和国", "著名", "哪些", "有哪", "列表", "全部", "所有", "分别", "几个"}
 _CAPITAL_QUESTION_MARKERS = ("首都", "国都", "首府")
 _CJK_NAME = r"[\u3400-\u4dbf\u4e00-\u9fff]{2,16}"
-_CAPITAL_SENTENCE = re.compile(rf"(?P<city>{_CJK_NAME})为[^。；\n]{{0,80}}首都")
-_CAPITAL_IS_SENTENCE = re.compile(rf"首都是(?P<city>{_CJK_NAME})")
+_CITY_NAME = r"[\u3400-\u4dbf\u4e00-\u9fff]{2,6}"
+_CAPITAL_DECISION_SENTENCE = re.compile(rf"(?:国都|首都)定于(?P<city>{_CITY_NAME})")
+_CAPITAL_IS_SENTENCE = re.compile(rf"(?:国都|首都)(?:是|为)(?P<city>{_CITY_NAME})(?:[，,。；;\n]|$)")
+_CITY_AS_CAPITAL_SENTENCE = re.compile(rf"(?P<city>{_CITY_NAME})(?:是|为)[^。；\n]{{0,20}}(?:国都|首都)")
+_CITY_AS_SUBJECT_CAPITAL_SENTENCE = re.compile(
+    rf"(?P<city>{_CITY_NAME})作为[^。；\n]{{0,20}}(?:国都|首都)"
+)
+_RENAMED_CAPITAL_SENTENCE = re.compile(rf"改名(?P<old>{_CITY_NAME})为(?P<city>{_CITY_NAME})")
+_INVALID_CITY_FRAGMENTS = {
+    "可能",
+    "成为",
+    "新中国",
+    "将来",
+    "已经",
+    "预料",
+    "历史",
+    "文化",
+    "未来",
+    "能成",
+}
 _SUBJECT_EQUIVALENTS = {
     "中国": {"中华人民共和国"},
     "中华人民共和国": {"中国"},
@@ -114,8 +143,15 @@ def _capital_subject(question: str) -> str:
     for marker in _CAPITAL_QUESTION_MARKERS:
         position = question.find(marker)
         if position > 0:
-            return question[:position].replace("的", "").strip()
+            return _clean_subject(question[:position])
     return ""
+
+
+def _clean_subject(value: str) -> str:
+    cleaned = value
+    for token in ("你知道", "请问", "现在", "当前", "目前", "的", "是", "在"):
+        cleaned = cleaned.replace(token, "")
+    return cleaned.strip(" ？?，,。；;")
 
 
 def _capital_from_hierarchy(text: str) -> str | None:
@@ -129,11 +165,24 @@ def _capital_from_hierarchy(text: str) -> str | None:
 
 
 def _capital_from_sentence(text: str) -> str | None:
-    match = _CAPITAL_IS_SENTENCE.search(text) or _CAPITAL_SENTENCE.search(text)
-    if not match:
-        return None
-    candidate = match.group("city").strip()
-    return candidate if re.fullmatch(_CJK_NAME, candidate) else None
+    for pattern in (
+        _RENAMED_CAPITAL_SENTENCE,
+        _CAPITAL_DECISION_SENTENCE,
+        _CAPITAL_IS_SENTENCE,
+        _CITY_AS_CAPITAL_SENTENCE,
+        _CITY_AS_SUBJECT_CAPITAL_SENTENCE,
+    ):
+        for match in pattern.finditer(text):
+            candidate = match.group("city").strip()
+            if _valid_city_name(candidate):
+                return candidate
+    return None
+
+
+def _valid_city_name(candidate: str) -> bool:
+    if not re.fullmatch(_CITY_NAME, candidate):
+        return False
+    return not any(fragment in candidate for fragment in _INVALID_CITY_FRAGMENTS)
 
 
 def _source_can_supply_list(source: SourceItem) -> bool:

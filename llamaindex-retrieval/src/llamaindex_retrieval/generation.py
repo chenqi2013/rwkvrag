@@ -346,6 +346,8 @@ def _looks_like_protocol_payload(answer: str) -> bool:
     value = answer.strip()
     if not value:
         return True
+    if "根据资料回答问题" in value or "只能使用资料内容" in value:
+        return True
     if _PROTOCOL_TAG_PATTERN.search(value):
         return True
     if _USER_ROLE_PATTERN.search(value) or _ROLE_HEADER_PATTERN.search(value):

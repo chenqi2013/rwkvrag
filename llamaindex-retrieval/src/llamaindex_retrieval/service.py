@@ -1,4 +1,5 @@
 import asyncio
+import re
 from collections import OrderedDict
 from time import monotonic
 
@@ -24,6 +25,9 @@ _MULTI_EVIDENCE_MARKERS = (
     "分别",
     "几个",
     "多少",
+    "列一下",
+    "列出",
+    "列举",
 )
 _STRUCTURE_QUESTION_WORDS = {
     "什么",
@@ -61,6 +65,8 @@ _EXPLANATORY_SECTION_HINTS = ("问题", "問題", "歷史", "历史", "命名", 
 _TRANSFER_HINTS = ("转乘", "轉乘", "换乘", "換乘", "线网转乘", "線網轉乘")
 _ANSWER_CACHE_TTL_SECONDS = 300.0
 _ANSWER_CACHE_MAX_ENTRIES = 128
+_ASK_MIN_EVIDENCE_TOP_K = 5
+_CITATION_INDEX_PATTERN = re.compile(r"\[资料\s*([1-9]\d*)\]")
 
 
 def _is_station_list_question(question: str) -> bool:
@@ -126,33 +132,51 @@ class SearchService:
         )
 
     async def ask(self, request: SearchRequest) -> AskResponse:
-        response = await self.search(request)
-        question = str(response.retrieval.get("normalized_question") or request.question)
-        assessment = self.generator.assess_evidence(question, response.results)
-        cache_key = self._answer_cache_key(question, response)
+        display_top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
+        evidence_request = request.model_copy(
+            update={"top_k": max(display_top_k, _ASK_MIN_EVIDENCE_TOP_K)}
+        )
+        evidence_response = await self.search(evidence_request)
+        retrieval = {
+            **evidence_response.retrieval,
+            "top_k": display_top_k,
+            "returned": min(len(evidence_response.results), display_top_k),
+            "answer_evidence_top_k": evidence_response.retrieval.get("top_k"),
+            "answer_evidence_count": len(evidence_response.results),
+        }
+        question = str(retrieval.get("normalized_question") or request.question)
+        assessment = self.generator.assess_evidence(question, evidence_response.results)
+        cache_key = self._answer_cache_key(question, evidence_response)
         answer = self._get_cached_answer(cache_key)
         cache_hit = answer is not None
         answer_strategy = "cache" if cache_hit else "model"
         if answer is None:
-            answer = direct_evidence_answer(question, response.results) if assessment.grounded else None
+            answer = direct_evidence_answer(question, evidence_response.results) if assessment.grounded else None
             if answer is not None:
                 answer_strategy = "direct_extract"
             else:
-                answer = await self.generator.generate(question, response.results)
+                answer = await self.generator.generate(question, evidence_response.results)
             if assessment.grounded and answer not in {
                 "未检索到可用于回答该问题的资料。",
                 "根据检索到的资料，无法确定。",
             }:
                 self._store_cached_answer(cache_key, answer)
+        response_results = self._display_sources(
+            evidence_response.results,
+            answer,
+            display_top_k=display_top_k,
+        )
+        retrieval["returned"] = len(response_results)
         model_name = await self.generator.current_model()
         return AskResponse(
             answer=answer,
-            sources=response.results,
-            retrieval=response.retrieval,
+            sources=response_results,
+            retrieval=retrieval,
             generation={
                 "model": model_name,
                 "endpoint": self.settings.generation_base_url,
-                "evidence_count": len(response.results),
+                "evidence_count": len(evidence_response.results),
+                "displayed_evidence_count": len(response_results),
                 "evidence_grounded": assessment.grounded,
                 "question_terms": sorted(assessment.question_terms),
                 "matched_evidence_terms": sorted(assessment.matched_terms),
@@ -165,6 +189,24 @@ class SearchService:
                 "blocked_reason": "insufficient_evidence" if not assessment.grounded else None,
             },
         )
+
+    @staticmethod
+    def _display_sources(
+        sources: list[SourceItem],
+        answer: str,
+        *,
+        display_top_k: int,
+    ) -> list[SourceItem]:
+        required_indexes = {
+            int(match.group(1)) - 1
+            for match in _CITATION_INDEX_PATTERN.finditer(answer)
+            if int(match.group(1)) >= 1
+        }
+        selected: list[SourceItem] = []
+        for index, source in enumerate(sources):
+            if index < display_top_k or index in required_indexes:
+                selected.append(source)
+        return selected
 
     @staticmethod
     def _answer_cache_key(question: str, response: SearchResponse) -> tuple[object, ...]:

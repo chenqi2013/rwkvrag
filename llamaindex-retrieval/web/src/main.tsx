@@ -2,15 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ConfigProvider, theme } from "antd";
 import zhCN from "antd/locale/zh_CN";
+import enUS from "antd/locale/en_US";
 import { HashRouter } from "react-router-dom";
 
 import App from "./App";
+import { LanguageProvider, useLanguage } from "./i18n";
 import "./styles.css";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+function Root() {
+  const { language } = useLanguage();
+  return (
     <ConfigProvider
-      locale={zhCN}
+      locale={language === "zh" ? zhCN : enUS}
       theme={{
         algorithm: theme.defaultAlgorithm,
         token: {
@@ -73,5 +76,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <App />
       </HashRouter>
     </ConfigProvider>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <LanguageProvider>
+      <Root />
+    </LanguageProvider>
   </React.StrictMode>,
 );

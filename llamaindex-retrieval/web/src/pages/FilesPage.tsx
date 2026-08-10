@@ -29,16 +29,17 @@ import { useCallback, useEffect, useState } from "react";
 import { api } from "../api";
 import type { ChunkItem, FileItem, KnowledgeBase } from "../types";
 import { errorMessage, formatBytes, formatDate } from "../utils";
-
-const statusMap: Record<FileItem["status"], { color: string; text: string }> = {
-  pending: { color: "default", text: "等待处理" },
-  processing: { color: "processing", text: "处理中" },
-  ready: { color: "success", text: "已就绪" },
-  failed: { color: "error", text: "失败" },
-  deleting: { color: "warning", text: "删除中" },
-};
+import { useLanguage } from "../i18n";
 
 export default function FilesPage() {
+  const { tr } = useLanguage();
+  const statusMap: Record<FileItem["status"], { color: string; text: string }> = {
+    pending: { color: "default", text: tr("等待处理", "Pending") },
+    processing: { color: "processing", text: tr("处理中", "Processing") },
+    ready: { color: "success", text: tr("已就绪", "Ready") },
+    failed: { color: "error", text: tr("失败", "Failed") },
+    deleting: { color: "warning", text: tr("删除中", "Deleting") },
+  };
   const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [knowledgeBaseId, setKnowledgeBaseId] = useState("default");
   const [files, setFiles] = useState<FileItem[]>([]);
@@ -76,7 +77,7 @@ export default function FilesPage() {
     setUploading(true);
     try {
       await api.uploadFile(file, knowledgeBaseId);
-      void message.success(`${file.name} 已进入处理队列`);
+      void message.success(tr(`${file.name} 已进入处理队列`, `${file.name} was added to the processing queue`));
       await load();
     } catch (error) {
       void message.error(errorMessage(error));
@@ -89,7 +90,7 @@ export default function FilesPage() {
     try {
       await api.deleteFile(id);
       await load();
-      void message.success("文件及对应索引已删除");
+      void message.success(tr("文件及对应索引已删除", "File and its index deleted"));
     } catch (error) {
       void message.error(errorMessage(error));
     }
@@ -99,7 +100,7 @@ export default function FilesPage() {
     try {
       await api.reindexFile(id);
       await load();
-      void message.success("重新索引任务已提交");
+      void message.success(tr("重新索引任务已提交", "Reindex job submitted"));
     } catch (error) {
       void message.error(errorMessage(error));
     }
@@ -119,7 +120,7 @@ export default function FilesPage() {
 
   const columns: ColumnsType<FileItem> = [
     {
-      title: "文件",
+      title: tr("文件", "File"),
       dataIndex: "filename",
       render: (value: string, item) => (
         <Space direction="vertical" size={0}>
@@ -131,7 +132,7 @@ export default function FilesPage() {
       ),
     },
     {
-      title: "状态",
+      title: tr("状态", "Status"),
       dataIndex: "status",
       width: 130,
       render: (status: FileItem["status"], item) => (
@@ -143,35 +144,35 @@ export default function FilesPage() {
       ),
     },
     {
-      title: "切片",
+      title: tr("切片", "Chunks"),
       dataIndex: "node_count",
       width: 100,
-      render: (value: number) => `${value} 个`,
+      render: (value: number) => tr(`${value} 个`, `${value}`),
     },
     {
-      title: "上传时间",
+      title: tr("上传时间", "Uploaded"),
       dataIndex: "created_at",
       width: 180,
       render: formatDate,
     },
     {
-      title: "操作",
+      title: tr("操作", "Actions"),
       key: "actions",
       width: 300,
       render: (_, item) => (
         <Space wrap>
           <Button type="text" icon={<EyeOutlined />} disabled={item.status !== "ready"} onClick={() => void showChunks(item)}>
-            切片
+            {tr("切片", "Chunks")}
           </Button>
           <Button type="text" icon={<DownloadOutlined />} href={`/v1/admin/files/${item.id}/download`}>
-            下载
+            {tr("下载", "Download")}
           </Button>
           <Button type="text" icon={<ReloadOutlined />} disabled={item.status !== "ready" && item.status !== "failed"} onClick={() => void reindex(item.id)}>
-            重建
+            {tr("重建", "Reindex")}
           </Button>
-          <Popconfirm title="确认删除文件和全部索引？" onConfirm={() => void remove(item.id)}>
+          <Popconfirm title={tr("确认删除文件和全部索引？", "Delete this file and all of its index data?")} onConfirm={() => void remove(item.id)}>
             <Button danger type="text" icon={<DeleteOutlined />} disabled={["pending", "processing"].includes(item.status)}>
-              删除
+              {tr("删除", "Delete")}
             </Button>
           </Popconfirm>
         </Space>
@@ -184,9 +185,9 @@ export default function FilesPage() {
       <div className="page-heading">
         <div>
           <Typography.Text className="eyebrow">DOCUMENT PIPELINE</Typography.Text>
-          <Typography.Title level={2}>文档管理</Typography.Title>
+          <Typography.Title level={2}>{tr("文档管理", "Document Management")}</Typography.Title>
           <Typography.Paragraph type="secondary">
-            上传 Markdown、PDF 或 DOCX，系统会自动解析、切片并写入 OpenSearch BM25 索引。
+            {tr("上传 Markdown、PDF 或 DOCX，系统会自动解析、切片并写入 OpenSearch BM25 索引。", "Upload Markdown, PDF, or DOCX files to parse, chunk, and index them automatically in OpenSearch BM25.")}
           </Typography.Paragraph>
         </div>
         <Select
@@ -199,8 +200,8 @@ export default function FilesPage() {
       <Alert
         showIcon
         type="info"
-        message="PDF 说明"
-        description="当前支持包含文字层的 PDF；扫描版 PDF 需要先完成 OCR。单文件最大 100MB。"
+        message={tr("PDF 说明", "PDF support")}
+        description={tr("当前支持包含文字层的 PDF；扫描版 PDF 需要先完成 OCR。单文件最大 100MB。", "Text-based PDFs are supported. Scanned PDFs require OCR first. Maximum file size is 100 MB.")}
       />
       <Card>
         <Upload.Dragger
@@ -214,8 +215,8 @@ export default function FilesPage() {
           }}
         >
           <p className="ant-upload-drag-icon"><InboxOutlined /></p>
-          <p className="ant-upload-text">点击或拖拽文件到这里上传</p>
-          <p className="ant-upload-hint">支持 Markdown、PDF 和 DOCX，可一次选择多个文件</p>
+          <p className="ant-upload-text">{tr("点击或拖拽文件到这里上传", "Click or drag files here to upload")}</p>
+          <p className="ant-upload-hint">{tr("支持 Markdown、PDF 和 DOCX，可一次选择多个文件", "Supports Markdown, PDF, and DOCX; multiple files may be selected")}</p>
         </Upload.Dragger>
       </Card>
       <Card>
@@ -225,7 +226,7 @@ export default function FilesPage() {
           dataSource={files}
           loading={loading}
           pagination={{ pageSize: 10 }}
-          locale={{ emptyText: <Empty description="当前知识库还没有上传文件" /> }}
+          locale={{ emptyText: <Empty description={tr("当前知识库还没有上传文件", "No files have been uploaded to this knowledge base")} /> }}
           scroll={{ x: 1000 }}
         />
       </Card>
@@ -233,14 +234,14 @@ export default function FilesPage() {
         open={Boolean(chunkFile)}
         onClose={() => setChunkFile(undefined)}
         width={620}
-        title={`${chunkFile?.filename || ""} · 切片内容`}
+        title={`${chunkFile?.filename || ""} · ${tr("切片内容", "Chunks")}`}
       >
         <List
           loading={chunksLoading}
           dataSource={chunks}
           renderItem={(item, index) => (
             <List.Item>
-              <Card size="small" title={`切片 ${index + 1}`} className="chunk-card">
+              <Card size="small" title={`${tr("切片", "Chunk")} ${index + 1}`} className="chunk-card">
                 <Typography.Paragraph className="chunk-text">{item.text}</Typography.Paragraph>
                 <Descriptions
                   size="small"

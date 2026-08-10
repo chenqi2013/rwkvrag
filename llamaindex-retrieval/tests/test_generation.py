@@ -46,6 +46,7 @@ def test_generator_extracts_answer_after_echoed_evidence_block() -> None:
 def test_generator_rejects_protocol_payloads_and_evidence_echo() -> None:
     assert EvidenceAnswerGenerator._clean_answer('{"status":"ok","evidence":[]}') == ""
     assert EvidenceAnswerGenerator._clean_answer("[资料 1] 标题：中国首都\n北京") == ""
+    assert EvidenceAnswerGenerator._clean_answer("根据资料回答问题，只回答答案。") == ""
 
 
 @pytest.mark.asyncio

@@ -33,6 +33,11 @@ _STOP_WORDS = {
     "怎么",
     "怎么样",
     "多少",
+    "你",
+    "知道",
+    "现在",
+    "在",
+    "地方",
 }
 _QUESTION_WORDS = {
     "什么",
@@ -47,10 +52,15 @@ _QUESTION_WORDS = {
     "如何",
     "吗",
     "呢",
+    "你",
+    "知道",
+    "现在",
+    "地方",
 }
 _QUERY_EXPANSIONS = {
     "最多": ("第一", "最大", "人口大省"),
     "首都": ("国都", "政治中心"),
+    "国都": ("首都", "政治中心"),
     "功绩": ("功业", "贡献", "成就"),
     "首播": ("播出", "上档"),
     "试播": ("开始试播", "开播"),
@@ -61,6 +71,7 @@ _QUERY_EXPANSIONS = {
     "关城": ("关隘", "关口"),
     "关口": ("关隘", "关城"),
 }
+_PRESERVED_PHRASES = ("国都", "首都", "关隘", "关城", "关口")
 _QUERY_CORRECTIONS = {
     "名族": "民族",
 }
@@ -72,12 +83,38 @@ _TITLE_INTENT_TOKENS = {
     "站点",
     "车站",
     "著名",
+    "首都",
+    "国都",
+    "城市",
+    "地方",
+    "现在",
+    "知道",
+    "你",
+    "列",
+    "一下",
+    "列出",
+    "列举",
 }
-_LIST_QUERY_MARKERS = ("哪些", "有哪", "列表", "全部", "所有", "分别", "几个", "多少")
+_LIST_QUERY_MARKERS = (
+    "哪些",
+    "有哪",
+    "列表",
+    "全部",
+    "所有",
+    "分别",
+    "几个",
+    "多少",
+    "列一下",
+    "列出",
+    "列举",
+)
 _STEP_QUERY_MARKERS = ("如何", "怎么", "步骤", "流程", "方法")
 _QUESTION_BOUNDARIES = (
     "有哪些",
     "有哪",
+    "在哪",
+    "是在哪",
+    "在哪里",
     "为什么",
     "什么时候",
     "如何",
@@ -86,6 +123,7 @@ _QUESTION_BOUNDARIES = (
     "几个",
     "是哪个",
     "是什么",
+    "是",
 )
 _RELATION_BOOSTS = (
     ({"中国", "首都"}, "中华人民共和国 首都", 20.0),
@@ -179,6 +217,7 @@ def query_tokens(text: str) -> list[str]:
             [
                 *_tokens_from_normalized_text(normalized),
                 *_legacy_lexical_tokens(normalized),
+                *(phrase for phrase in _PRESERVED_PHRASES if phrase in normalized),
             ]
         )
     )
@@ -191,7 +230,11 @@ def query_tokens(text: str) -> list[str]:
 
 def title_entity_tokens(text: str) -> list[str]:
     subject = _question_subject(normalize_query_text(text))
-    return [token for token in lexical_tokens(subject) if token not in _TITLE_INTENT_TOKENS]
+    tokens = [
+        *lexical_tokens(subject),
+        *(phrase for phrase in _PRESERVED_PHRASES if phrase in subject),
+    ]
+    return [token for token in tokens if token not in _TITLE_INTENT_TOKENS]
 
 
 def _question_subject(text: str) -> str:

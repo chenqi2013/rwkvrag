@@ -11,8 +11,10 @@ import { useCallback, useEffect, useState } from "react";
 import { api } from "../api";
 import type { AdminHealth, FileItem, JobItem, KnowledgeBase } from "../types";
 import { errorMessage, formatNumber } from "../utils";
+import { useLanguage } from "../i18n";
 
 export default function DashboardPage() {
+  const { tr } = useLanguage();
   const [health, setHealth] = useState<AdminHealth>();
   const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [files, setFiles] = useState<FileItem[]>([]);
@@ -53,14 +55,14 @@ export default function DashboardPage() {
       <div className="page-heading">
         <div>
           <Typography.Text className="eyebrow">SYSTEM OVERVIEW</Typography.Text>
-          <Typography.Title level={2}>运行概览</Typography.Title>
+          <Typography.Title level={2}>{tr("运行概览", "System Overview")}</Typography.Title>
           <Typography.Paragraph type="secondary">
-            实时检查 MongoDB、OpenSearch BM25 索引和后台任务状态。
+            {tr("实时检查 MongoDB、OpenSearch BM25 索引和后台任务状态。", "Monitor MongoDB, the OpenSearch BM25 index, and background jobs in real time.")}
           </Typography.Paragraph>
         </div>
         {health && (
           <Tag icon={<CheckCircleFilled />} color={coreServicesHealthy ? "success" : "warning"}>
-            {coreServicesHealthy ? "核心服务正常" : "核心服务异常"}
+            {coreServicesHealthy ? tr("核心服务正常", "Core services healthy") : tr("核心服务异常", "Core services degraded")}
           </Tag>
         )}
       </div>
@@ -68,23 +70,23 @@ export default function DashboardPage() {
       <Row gutter={[8, 8]}>
         <Col xs={24} md={12} xl={6}>
           <Card className="metric-card">
-            <Statistic title="知识库" value={knowledgeBases.length} prefix={<DatabaseOutlined />} />
+            <Statistic title={tr("知识库", "Knowledge bases")} value={knowledgeBases.length} prefix={<DatabaseOutlined />} />
           </Card>
         </Col>
         <Col xs={24} md={12} xl={6}>
           <Card className="metric-card">
-            <Statistic title="管理文档" value={files.length} prefix={<FileTextOutlined />} />
+            <Statistic title={tr("管理文档", "Documents")} value={files.length} prefix={<FileTextOutlined />} />
           </Card>
         </Col>
         <Col xs={24} md={12} xl={6}>
           <Card className="metric-card">
-            <Statistic title="进行中任务" value={activeJobs} prefix={<ThunderboltOutlined />} />
+            <Statistic title={tr("进行中任务", "Active jobs")} value={activeJobs} prefix={<ThunderboltOutlined />} />
           </Card>
         </Col>
         <Col xs={24} md={12} xl={6}>
           <Card className="metric-card">
             <Statistic
-              title="BM25 索引切片"
+              title={tr("BM25 索引切片", "BM25 indexed chunks")}
               value={Number(health?.lexical?.documents ?? 0)}
               formatter={(value) => formatNumber(Number(value))}
               prefix={<SearchOutlined />}
@@ -97,12 +99,12 @@ export default function DashboardPage() {
           <Col xs={24} xl={12}>
             <Card title="MongoDB" className="service-card">
               <Descriptions column={1} size="small">
-                <Descriptions.Item label="状态">
+                <Descriptions.Item label={tr("状态", "Status")}>
                   <Tag color={health.mongodb.ok ? "success" : "error"}>
-                    {health.mongodb.ok ? "正常" : "异常"}
+                    {health.mongodb.ok ? tr("正常", "Healthy") : tr("异常", "Error")}
                   </Tag>
                 </Descriptions.Item>
-                <Descriptions.Item label="延迟">
+                <Descriptions.Item label={tr("延迟", "Latency")}>
                   {String(health.mongodb.latency_ms ?? "—")} ms
                 </Descriptions.Item>
               </Descriptions>
@@ -111,16 +113,16 @@ export default function DashboardPage() {
           <Col xs={24} xl={12}>
             <Card title="OpenSearch BM25" className="service-card">
               <Descriptions column={1} size="small">
-                <Descriptions.Item label="算法">
+                <Descriptions.Item label={tr("算法", "Algorithm")}>
                   {String(health.lexical.algorithm ?? "—")}
                 </Descriptions.Item>
-                <Descriptions.Item label="索引切片">
+                <Descriptions.Item label={tr("索引切片", "Indexed chunks")}>
                   {formatNumber(Number(health.lexical.documents ?? 0))}
                 </Descriptions.Item>
-                <Descriptions.Item label="索引">
+                <Descriptions.Item label={tr("索引", "Index")}>
                   {String(health.lexical.index ?? "—")}
                 </Descriptions.Item>
-                <Descriptions.Item label="服务地址">
+                <Descriptions.Item label={tr("服务地址", "Service URL")}>
                   {String(health.lexical.url ?? "—")}
                 </Descriptions.Item>
               </Descriptions>

@@ -6,8 +6,10 @@ import { useCallback, useEffect, useState } from "react";
 import { api } from "../api";
 import type { SearchTestDetail, SearchTestItem, SearchTestRun } from "../types";
 import { errorMessage, formatDate } from "../utils";
+import { useLanguage } from "../i18n";
 
 function VersionResult({ run }: { run: SearchTestRun }) {
+  const { tr } = useLanguage();
   const { response } = run;
   const grounded = response.generation.evidence_grounded === true;
   const model = response.generation.model;
@@ -16,13 +18,13 @@ function VersionResult({ run }: { run: SearchTestRun }) {
     <Card size="small" className="history-run-card">
       <Space direction="vertical" size={5} style={{ width: "100%" }}>
         <Space wrap>
-          <Tag color="blue">第 {run.run_number} 次</Tag>
+          <Tag color="blue">{tr(`第 ${run.run_number} 次`, `Run ${run.run_number}`)}</Tag>
           <Tag color={grounded ? "green" : "orange"}>
-            {grounded ? "证据校验通过" : "证据不足"}
+            {grounded ? tr("证据校验通过", "Evidence verified") : tr("证据不足", "Insufficient evidence")}
           </Tag>
           <Typography.Text type="secondary">{formatDate(run.created_at)}</Typography.Text>
-          {model ? <Tag>模型 · {String(model)}</Tag> : null}
-          <Tag>证据 {response.sources.length} 条</Tag>
+          {model ? <Tag>{tr("模型", "Model")} · {String(model)}</Tag> : null}
+          <Tag>{tr("证据", "Evidence")} {response.sources.length} {tr("条", "items")}</Tag>
         </Space>
         <Typography.Paragraph className="result-snippet" copyable={{ text: response.answer }}>
           {response.answer}
@@ -30,10 +32,10 @@ function VersionResult({ run }: { run: SearchTestRun }) {
         <List
           size="small"
           dataSource={response.sources}
-          locale={{ emptyText: "没有检索到证据" }}
+          locale={{ emptyText: tr("没有检索到证据", "No evidence retrieved") }}
           renderItem={(source, index) => (
             <List.Item className="history-evidence-item">
-              <Typography.Text strong>[资料 {index + 1}] {source.title || "未命名资料"}</Typography.Text>
+              <Typography.Text strong>[{tr("资料", "Source")} {index + 1}] {source.title || tr("未命名资料", "Untitled source")}</Typography.Text>
               <Typography.Text type="secondary" className="history-evidence-snippet">
                 {source.snippet}
               </Typography.Text>
@@ -46,6 +48,7 @@ function VersionResult({ run }: { run: SearchTestRun }) {
 }
 
 export default function SearchHistoryPage() {
+  const { tr } = useLanguage();
   const [items, setItems] = useState<SearchTestItem[]>([]);
   const [details, setDetails] = useState<Record<string, SearchTestDetail>>({});
   const [expandedKeys, setExpandedKeys] = useState<readonly React.Key[]>([]);
@@ -81,7 +84,7 @@ export default function SearchHistoryPage() {
     try {
       await api.rerunSearchHistory(item.id);
       await Promise.all([load(), loadDetail(item.id)]);
-      void message.success("已追加一次重新检索生成结果");
+      void message.success(tr("已追加一次重新检索生成结果", "A new search run has been added"));
     } catch (error) {
       void message.error(errorMessage(error));
     } finally {
@@ -91,20 +94,20 @@ export default function SearchHistoryPage() {
 
   const columns: ColumnsType<SearchTestItem> = [
     {
-      title: "问题",
+      title: tr("问题", "Question"),
       dataIndex: "question",
       width: 240,
       render: (question: string, item) => (
         <Space direction="vertical" size={1}>
           <Typography.Text strong>{question}</Typography.Text>
           <Typography.Text type="secondary">
-            {item.knowledge_base_id ? `知识库：${item.knowledge_base_id}` : "全部知识库"}
+            {item.knowledge_base_id ? `${tr("知识库：", "Knowledge base: ")}${item.knowledge_base_id}` : tr("全部知识库", "All knowledge bases")}
           </Typography.Text>
         </Space>
       ),
     },
     {
-      title: "最新答案",
+      title: tr("最新答案", "Latest Answer"),
       key: "answer",
       render: (_, item) => {
         const run = item.latest_run;
@@ -117,19 +120,19 @@ export default function SearchHistoryPage() {
       },
     },
     {
-      title: "版本",
+      title: tr("版本", "Versions"),
       key: "version",
       width: 120,
-      render: (_, item) => <Tag color="blue">{item.run_count} 次运行</Tag>,
+      render: (_, item) => <Tag color="blue">{item.run_count} {tr("次运行", "runs")}</Tag>,
     },
     {
-      title: "最新运行",
+      title: tr("最新运行", "Latest Run"),
       dataIndex: "updated_at",
       width: 150,
       render: formatDate,
     },
     {
-      title: "操作",
+      title: tr("操作", "Actions"),
       key: "actions",
       width: 145,
       render: (_, item) => (
@@ -139,7 +142,7 @@ export default function SearchHistoryPage() {
           loading={rerunningId === item.id}
           onClick={() => void rerun(item)}
         >
-          重新检索生成
+          {tr("重新检索生成", "Run again")}
         </Button>
       ),
     },
@@ -150,26 +153,26 @@ export default function SearchHistoryPage() {
       <div className="page-heading">
         <div>
           <Typography.Text className="eyebrow">REGRESSION LAB</Typography.Text>
-          <Typography.Title level={2}>历史检索测试</Typography.Title>
+          <Typography.Title level={2}>{tr("历史检索测试", "Search History")}</Typography.Title>
           <Typography.Paragraph type="secondary">
-            自动保存 `/v1/ask` 的问题、答案、证据和模型信息；重新检索会新增版本，方便比较改动前后的效果。
+            {tr("自动保存 `/v1/ask` 的问题、答案、证据和模型信息；重新检索会新增版本，方便比较改动前后的效果。", "Automatically save `/v1/ask` questions, answers, evidence, and model details. Reruns create versions for before-and-after comparison.")}
           </Typography.Paragraph>
         </div>
-        <Button icon={<ReloadOutlined />} loading={loading} onClick={() => void load()}>刷新</Button>
+        <Button icon={<ReloadOutlined />} loading={loading} onClick={() => void load()}>{tr("刷新", "Refresh")}</Button>
       </div>
       <Alert
         type="info"
         showIcon
-        message="同一问题和知识库会归为同一测试项；展开一行即可按时间查看全部历史版本。"
+        message={tr("同一问题和知识库会归为同一测试项；展开一行即可按时间查看全部历史版本。", "The same question and knowledge base are grouped together. Expand a row to view all versions chronologically.")}
       />
-      <Card title="已记录问题">
+      <Card title={tr("已记录问题", "Recorded Questions")}>
         <Table
           rowKey="id"
           size="small"
           loading={loading}
           columns={columns}
           dataSource={items}
-          locale={{ emptyText: <Empty description="还没有检索记录。请先在“检索测试”页面提交问题。" /> }}
+          locale={{ emptyText: <Empty description={tr("还没有检索记录。请先在“检索测试”页面提交问题。", "No search history yet. Submit a question in Search Lab first.")} /> }}
           pagination={{ pageSize: 20, showSizeChanger: false }}
           expandable={{
             expandedRowKeys: expandedKeys,
@@ -189,7 +192,7 @@ export default function SearchHistoryPage() {
             },
             expandedRowRender: (item) => {
               const detail = details[item.id];
-              if (!detail) return <Typography.Text type="secondary">正在加载历史版本…</Typography.Text>;
+              if (!detail) return <Typography.Text type="secondary">{tr("正在加载历史版本…", "Loading versions…")}</Typography.Text>;
               return (
                 <List
                   dataSource={[...detail.runs].reverse()}

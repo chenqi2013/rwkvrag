@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { api } from "../api";
 import type { AskResponse, KnowledgeBase } from "../types";
 import { errorMessage } from "../utils";
+import { useLanguage } from "../i18n";
 
 interface SearchForm {
   question: string;
@@ -28,6 +29,7 @@ interface SearchForm {
 }
 
 export default function SearchPage() {
+  const { tr } = useLanguage();
   const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [response, setResponse] = useState<AskResponse>();
   const [loading, setLoading] = useState(false);
@@ -58,80 +60,80 @@ export default function SearchPage() {
       <div className="page-heading">
         <div>
           <Typography.Text className="eyebrow">RETRIEVAL LAB</Typography.Text>
-          <Typography.Title level={2}>在线检索测试</Typography.Title>
+          <Typography.Title level={2}>{tr("在线检索测试", "Online Search Lab")}</Typography.Title>
           <Typography.Paragraph type="secondary">
-            调用生产 `/v1/ask`：先用 BM25 检索证据，再由 RWKV 基于证据生成答案。
+            {tr("调用生产 `/v1/ask`：先用 BM25 检索证据，再由 RWKV 基于证据生成答案。", "Call the production `/v1/ask` endpoint: retrieve evidence with BM25, then let RWKV answer from that evidence.")}
           </Typography.Paragraph>
         </div>
       </div>
       <Row gutter={[8, 8]}>
         <Col xs={24} xl={8}>
-          <Card title="查询参数">
+          <Card title={tr("查询参数", "Query Parameters")}>
             <Form
               form={form}
               layout="vertical"
               initialValues={{ top_k: 1 }}
             >
-              <Form.Item label="问题" name="question" rules={[{ required: true, message: "请输入问题" }]}>
-                <Input.TextArea rows={6} placeholder="输入需要检索的问题" />
+              <Form.Item label={tr("问题", "Question")} name="question" rules={[{ required: true, message: tr("请输入问题", "Please enter a question") }]}>
+                <Input.TextArea rows={6} placeholder={tr("输入需要检索的问题", "Enter a question to search")} />
               </Form.Item>
-              <Form.Item label="知识库过滤" name="knowledge_base_id">
+              <Form.Item label={tr("知识库过滤", "Knowledge base filter")} name="knowledge_base_id">
                 <Select
                   allowClear
-                  placeholder="全部知识库"
+                  placeholder={tr("全部知识库", "All knowledge bases")}
                   options={knowledgeBases.map((item) => ({ value: item.id, label: item.name }))}
                 />
               </Form.Item>
-              <Form.Item label="返回数量" name="top_k">
+              <Form.Item label={tr("返回数量", "Result count")} name="top_k">
                 <InputNumber min={1} max={20} style={{ width: "100%" }} />
               </Form.Item>
               <Button type="primary" block icon={<SearchOutlined />} loading={loading} onClick={() => void search()}>
-              检索并生成答案
+              {tr("检索并生成答案", "Search and generate answer")}
               </Button>
             </Form>
           </Card>
         </Col>
         <Col xs={24} xl={16}>
           <Card
-            title="生成答案"
+            title={tr("生成答案", "Generated Answer")}
             extra={
               response && (
                 <Space size={4} wrap>
                   <Tag color={evidenceGrounded ? "green" : "orange"}>
-                    {evidenceGrounded ? "证据校验通过" : "证据不足，未生成"}
+                    {evidenceGrounded ? tr("证据校验通过", "Evidence verified") : tr("证据不足，未生成", "Insufficient evidence")}
                   </Tag>
                   {response.generation.model ? (
-                    <Tag color="green">生成模型 · {String(response.generation.model)}</Tag>
+                    <Tag color="green">{tr("生成模型", "Model")} · {String(response.generation.model)}</Tag>
                   ) : null}
                 </Space>
               )
             }
           >
             {!response ? (
-              <Empty description="提交问题后查看生成答案和证据" />
+              <Empty description={tr("提交问题后查看生成答案和证据", "Submit a question to view the answer and evidence")} />
             ) : (
               <Space direction="vertical" size={12} style={{ width: "100%" }}>
                 <Space wrap>
-                  {queryNormalized && <Tag color="blue">已纠正查询：{normalizedQuestion}</Tag>}
-                  <Tag>答案需标注资料编号</Tag>
+                  {queryNormalized && <Tag color="blue">{tr("已纠正查询：", "Normalized query: ")}{normalizedQuestion}</Tag>}
+                  <Tag>{tr("答案需标注资料编号", "Answer must cite source numbers")}</Tag>
                 </Space>
                 <Typography.Paragraph className="result-snippet" copyable={{ text: response.answer }}>
                   {response.answer}
                 </Typography.Paragraph>
                 <Card
                   size="small"
-                  title="检索证据"
+                  title={tr("检索证据", "Retrieved Evidence")}
                   extra={
                     <Space>
                       <Tag color="cyan">{String(response.retrieval.algorithm)}</Tag>
                       <Tag>{String(response.retrieval.mode)}</Tag>
-                      <Tag>{String(response.retrieval.returned)} 条</Tag>
+                      <Tag>{String(response.retrieval.returned)} {tr("条", "results")}</Tag>
                     </Space>
                   }
                 >
                   <List
                     dataSource={response.sources}
-                    locale={{ emptyText: <Empty description="没有达到相关性阈值的结果" /> }}
+                    locale={{ emptyText: <Empty description={tr("没有达到相关性阈值的结果", "No results met the relevance threshold")} /> }}
                     renderItem={(item, index) => (
                       <List.Item>
                         <Card size="small" className="result-card">
@@ -148,7 +150,7 @@ export default function SearchPage() {
                               <Tag>{item.source}</Tag>
                               {item.uri && (
                                 <Typography.Link href={item.uri} target="_blank">
-                                  <LinkOutlined /> 查看来源
+                                  <LinkOutlined /> {tr("查看来源", "View source")}
                                 </Typography.Link>
                               )}
                             </Space>

@@ -12,6 +12,7 @@ from llamaindex_retrieval.lexical_index import (
     lexical_tokens,
     normalize_query_text,
     query_tokens,
+    title_entity_tokens,
 )
 from llamaindex_retrieval.schemas import SearchRequest
 from llamaindex_retrieval.service import SearchService
@@ -269,6 +270,40 @@ class FakeCapitalIndex:
         ]
 
 
+class FakeCapitalDecisionIndex:
+    def search(
+        self,
+        question: str,
+        *,
+        candidate_k: int,
+        knowledge_base_id: str | None = None,
+    ) -> list[LexicalResult]:
+        return [
+            LexicalResult(
+                node_id="capital-history",
+                document_id="capital-history",
+                text="叶剑英已经预料到北平将有可能成为新中国的国都。",
+                metadata={
+                    "document_id": "capital-history",
+                    "title": "中华人民共和国首都",
+                    "source": "finewiki-zh",
+                },
+                score=1.0,
+            ),
+            LexicalResult(
+                node_id="capital-decision",
+                document_id="capital-decision",
+                text="文件记载：“中华人民共和国的国都定于北平。自即日起，改名北平为北京。”",
+                metadata={
+                    "document_id": "capital-decision",
+                    "title": "关于中华人民共和国国都、纪年、国歌、国旗的决议",
+                    "source": "finewiki-zh",
+                },
+                score=0.95,
+            ),
+        ]
+
+
 class FakeGreatWallPassIndex:
     def search(
         self,
@@ -359,6 +394,9 @@ def test_query_normalization_corrects_common_chinese_typos() -> None:
     assert normalize_query_text("中国有多少个名族") == "中国有多少个民族"
     assert "民族" in query_tokens("中国有多少个名族")
     assert {"关城", "关口"} <= set(query_tokens("中国有哪些著名的长城关隘"))
+    assert {"国都", "首都"} <= set(query_tokens("中华人民共和国的国都是哪个城市"))
+    assert "知道" not in query_tokens("你知道现在中国的首都是在哪个地方吗？")
+    assert "地方" not in title_entity_tokens("你知道现在中国的首都是在哪个地方吗？")
 
 
 @pytest.mark.asyncio
@@ -589,6 +627,66 @@ async def test_ask_extracts_capital_answer_without_model_call() -> None:
 
 
 @pytest.mark.asyncio
+async def test_ask_extracts_capital_answer_for_colloquial_wording() -> None:
+    service = SearchService(
+        Settings(),
+        cast(Any, FakeCapitalIndex()),
+        generator=cast(Any, FakeFailingGenerator()),
+    )
+
+    response = await service.ask(SearchRequest(question="你知道现在中国的首都是在哪个地方吗？", top_k=1))
+
+    assert response.answer == "中国的首都是北京。[资料 1]"
+    assert response.generation["answer_strategy"] == "direct_extract"
+
+
+@pytest.mark.asyncio
+async def test_ask_extracts_capital_answer_for_national_capital_wording() -> None:
+    service = SearchService(
+        Settings(),
+        cast(Any, FakeCapitalIndex()),
+        generator=cast(Any, FakeFailingGenerator()),
+    )
+
+    response = await service.ask(SearchRequest(question="中华人民共和国的国都是哪个城市？", top_k=1))
+
+    assert response.answer == "中华人民共和国的首都是北京。[资料 1]"
+    assert response.generation["answer_strategy"] == "direct_extract"
+
+
+@pytest.mark.asyncio
+async def test_ask_extracts_capital_decision_and_ignores_possible_future_capital() -> None:
+    service = SearchService(
+        Settings(),
+        cast(Any, FakeCapitalDecisionIndex()),
+        generator=cast(Any, FakeFailingGenerator()),
+    )
+
+    response = await service.ask(SearchRequest(question="中华人民共和国的国都是哪个城市？", top_k=2))
+
+    assert response.answer == "中华人民共和国的首都是北京。[资料 2]"
+    assert response.generation["answer_strategy"] == "direct_extract"
+
+
+@pytest.mark.asyncio
+async def test_ask_uses_more_internal_evidence_than_displayed_sources() -> None:
+    service = SearchService(
+        Settings(),
+        cast(Any, FakeCapitalDecisionIndex()),
+        generator=cast(Any, FakeFailingGenerator()),
+    )
+
+    response = await service.ask(SearchRequest(question="中华人民共和国的国都是哪个城市？", top_k=1))
+
+    assert response.answer == "中华人民共和国的首都是北京。[资料 2]"
+    assert len(response.sources) == 2
+    assert [source.id for source in response.sources] == ["capital-history", "capital-decision"]
+    assert response.generation["evidence_count"] == 2
+    assert response.generation["displayed_evidence_count"] == 2
+    assert response.retrieval["answer_evidence_count"] == 2
+
+
+@pytest.mark.asyncio
 async def test_ask_extracts_bullet_list_with_specific_context() -> None:
     service = SearchService(
         Settings(),
@@ -597,6 +695,20 @@ async def test_ask_extracts_bullet_list_with_specific_context() -> None:
     )
 
     response = await service.ask(SearchRequest(question="中国有哪些著名的长城关隘?", top_k=2))
+
+    assert response.answer == "长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 2]"
+    assert response.generation["answer_strategy"] == "direct_extract"
+
+
+@pytest.mark.asyncio
+async def test_ask_extracts_bullet_list_for_list_instruction_wording() -> None:
+    service = SearchService(
+        Settings(),
+        cast(Any, FakeGreatWallPassIndex()),
+        generator=cast(Any, FakeFailingGenerator()),
+    )
+
+    response = await service.ask(SearchRequest(question="列一下长城的著名关城", top_k=2))
 
     assert response.answer == "长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 2]"
     assert response.generation["answer_strategy"] == "direct_extract"
