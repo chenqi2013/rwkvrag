@@ -1,0 +1,2705 @@
+[
+  {
+    "question": "我不太了解斗笠棋，它指的是什么？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "斗笠棋",
+    "expected_document_id": "ba706f95be44991a942ab5fb",
+    "expected_terms": [
+      "斗笠棋",
+      "韓語",
+      "是流傳於韓國的兩人棋類"
+    ],
+    "reference": "斗笠棋（韓語：），是流傳於韓國的兩人棋類。",
+    "section": "斗笠棋"
+  },
+  {
+    "question": "关于貝克斯特河，用两三句话说明一下。",
+    "question_type": "definition",
+    "style": "colloquial",
+    "expected_title": "貝克斯特河",
+    "expected_document_id": "2ce865b9d75036f03b9a2293",
+    "expected_terms": [
+      "貝克斯特河",
+      "德語",
+      "是德國的河流",
+      "位於該國西部"
+    ],
+    "reference": "貝克斯特河（德語：），是德國的河流，位於該國西部，處於北萊茵-威斯特法倫州，屬於韋勒河的左支流，河道全長5.2公里，流域面積8.5平方公里。",
+    "section": "貝克斯特河"
+  },
+  {
+    "question": "2020年夏季奥林匹克运动会坦桑尼亚代表团在田径方面都包括什么？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "2020年夏季奥林匹克运动会坦桑尼亚代表团",
+    "expected_document_id": "7a3f7adafaf89725c79e6e19",
+    "expected_terms": [
+      "径赛运动员的预赛、1/4决赛和半决赛排名是该运动员所在小组的排名，而非总排名",
+      "Q = 直接晋级至下一轮",
+      "q = 径赛"
+    ],
+    "reference": "- 径赛运动员的预赛、1/4决赛和半决赛排名是该运动员所在小组的排名，而非总排名 - Q = 直接晋级至下一轮 - q = 径赛：因在所有未直接晋级选手中成绩靠前而获得剩下的晋级名额；田赛：未达到晋级标准成绩但总排名靠前",
+    "section": "2020年夏季奥林匹克运动会坦桑尼亚代表团 > 田径"
+  },
+  {
+    "question": "釋心道出生的具体时间是什么？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "釋心道",
+    "expected_document_id": "cd29bb0119973657d7d334f7",
+    "expected_terms": [
+      "1948年"
+    ],
+    "reference": "釋心道（1948年10月11日—），俗名楊小生，1948年出生於緬甸，祖籍雲南。",
+    "section": "釋心道"
+  },
+  {
+    "question": "请问馬南扎里河面積有多少？",
+    "question_type": "numeric",
+    "style": "instructional",
+    "expected_title": "馬南扎里河",
+    "expected_document_id": "823a0fc912265d39652d1c7d",
+    "expected_terms": [
+      "6,780平方公里"
+    ],
+    "reference": "馬南扎里河（Mananjary）是馬達加斯加的河流，位於該國南部，發源自凡德里亞納東南的海拔高度1,500米處，最終注入東面的印度洋，河道全長212公里，流域面積6,780平方公里。",
+    "section": "馬南扎里河"
+  },
+  {
+    "question": "说下瓦森人口的具体数字。",
+    "question_type": "numeric",
+    "style": "colloquial",
+    "expected_title": "瓦森",
+    "expected_document_id": "58aa8c7cad9f98ea7ab20d89",
+    "expected_terms": [
+      "398人"
+    ],
+    "reference": "瓦森（德語：）是瑞士乌里州的市镇，位於該州南部，面積96.88平方公里，海拔高度930米，2018年人口398人，人口密度每平方公里4.1人。",
+    "section": "瓦森"
+  },
+  {
+    "question": "一生交给党上映的具体时间是什么？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "一生交给党",
+    "expected_document_id": "0ea5ef733c5a599e4b2c69e3",
+    "expected_terms": [
+      "2024年"
+    ],
+    "reference": "《一生交给党》是2024年上映的中国大陆红色主旋律电影，由曾羽编剧，陶明喜执导，王超伟、鲜青洋、莫小奇、杨骏、何梓铭等主演，根据中国共产党党员、湘鄂西革命根据地和湘鄂西红军的创建者周逸群烈士故事改编。",
+    "section": "一生交给党"
+  },
+  {
+    "question": "我不太了解维尔德舍瑙，它指的是什么？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "维尔德舍瑙",
+    "expected_document_id": "9d28e2d27fdc0f0095aa13b4",
+    "expected_terms": [
+      "维尔德舍瑙",
+      "德语",
+      "是奥地利蒂罗尔州库夫施泰因县的一个市镇"
+    ],
+    "reference": "维尔德舍瑙（德语：）是奥地利蒂罗尔州库夫施泰因县的一个市镇。",
+    "section": "维尔德舍瑙"
+  },
+  {
+    "question": "导致万顺天国灭亡的原因有哪些？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "万顺天国",
+    "expected_document_id": "499dc086d1230136d182a482",
+    "expected_terms": [
+      "万顺天国极盛时期",
+      "除了李成福本人",
+      "只有",
+      "名成员"
+    ],
+    "reference": "万顺天国极盛时期，除了李成福本人，只有16名成员，其中包括4名共产党员。1991年8月16日，車村鄉派出所民警接到报告称在老曼场有“真命天子”，国号为“万顺天国”，于是派出所认定“万顺天国”为反革命组织，将一名代号为“708”的卧底打入万顺天国内部秘密侦查。情报收集完全后，1992年4月8日，嵩县公安局召开紧急会议，决定当夜消灭万顺天国。下午8时，洛阳市、嵩县警方开始搜捕工作。",
+    "section": "万顺天国 > 历史 > 灭亡"
+  },
+  {
+    "question": "请问半岛网什么时候成立？",
+    "question_type": "time",
+    "style": "instructional",
+    "expected_title": "半岛网",
+    "expected_document_id": "38136f2a979b9b6cbec0a09b",
+    "expected_terms": [
+      "2001年"
+    ],
+    "reference": "半岛网，一家互联网中文门户网站，成立于2001年，前身为半岛都市报电子版。",
+    "section": "半岛网"
+  },
+  {
+    "question": "请问谁发明了HTBasic？",
+    "question_type": "agent",
+    "style": "instructional",
+    "expected_title": "HTBasic",
+    "expected_document_id": "eb618c2f48a75be1c4e7fd5c",
+    "expected_terms": [
+      "惠普公司"
+    ],
+    "reference": "HTBasic（也称Rocky Mountain BASIC、 RMB、RM-BASIC），是BASIC程序设计语言的一种方言，由惠普公司发明。",
+    "section": "HTBasic"
+  },
+  {
+    "question": "你知道路德會梁鉅鏐小學是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "路德會梁鉅鏐小學",
+    "expected_document_id": "6b1d347d8a49d7f23f1712cb",
+    "expected_terms": [
+      "路德會梁鉅鏐小學",
+      "英語",
+      "是一所香港沙田區的津貼小學",
+      "鄰近濱景花園等私人屋苑"
+    ],
+    "reference": "路德會梁鉅鏐小學（英語：）是一所香港沙田區的津貼小學，鄰近濱景花園等私人屋苑。",
+    "section": "路德會梁鉅鏐小學"
+  },
+  {
+    "question": "导致东丹灭亡的原因有哪些？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "东丹",
+    "expected_document_id": "e618600d1a892dc802615f5d",
+    "expected_terms": [
+      "天显六年",
+      "辽按照渤海国的旧例",
+      "在南京设立中台省",
+      "会同元年"
+    ],
+    "reference": "天显六年（931年），辽按照渤海国的旧例，在南京设立中台省。会同元年（938年），将南京改名为东京。天禄元年（947年）耶律阮成为契丹皇帝，以耶律安端主东丹国。应历二年（952年）十二月，耶律安端死，其继任者史无记载。",
+    "section": "东丹 > 灭亡"
+  },
+  {
+    "question": "夢萊茵具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "夢萊茵",
+    "expected_document_id": "10d91ad4dbe5bf2ba953a923",
+    "expected_terms": [
+      "臺灣高雄市前金區的大樓",
+      "坐落於愛河旁"
+    ],
+    "reference": "夢萊茵，是一對位於臺灣高雄市前金區的大樓，坐落於愛河旁。",
+    "section": "夢萊茵"
+  },
+  {
+    "question": "莫罗佐夫村位于哪里？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "莫罗佐夫村",
+    "expected_document_id": "bfeaf6c923d09b72e37540de",
+    "expected_terms": [
+      "区行政中心弗谢沃洛日斯克东偏南方",
+      "在圣彼得堡东",
+      "加特契纳东北方"
+    ],
+    "reference": "莫罗佐夫村（俄语：，羅馬化：Posyolok imeni Morozova）是俄罗斯列宁格勒州的市级镇，属弗谢沃洛日斯克区，地处列宁格勒州中部，位于区行政中心弗谢沃洛日斯克东偏南方，在圣彼得堡东、加特契纳东北方。",
+    "section": "莫罗佐夫村"
+  },
+  {
+    "question": "波基普西镇具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "波基普西镇",
+    "expected_document_id": "ea3fd8ed56ce9178c1bafad0",
+    "expected_terms": [
+      "美国纽约州达奇斯县的一个镇",
+      "地处达奇斯县西部"
+    ],
+    "reference": "波基普西镇（英語：）是位于美国纽约州达奇斯县的一个镇，地处达奇斯县西部。",
+    "section": "波基普西镇"
+  },
+  {
+    "question": "请列出網球王子音樂劇第二季中关于比嘉二代演員陣容（青學：七代）的内容。",
+    "question_type": "list",
+    "style": "instructional",
+    "expected_title": "網球王子音樂劇第二季",
+    "expected_document_id": "0228d8450ff9d19c7736237b",
+    "expected_terms": [
+      "木手永四郎",
+      "知念寛",
+      "平古場凛",
+      "甲斐裕次郎"
+    ],
+    "reference": "- 木手永四郎：土井一海（日语：） - 知念寛：吉岡佑（日语：） - 平古場凛：染谷俊之 - 甲斐裕次郎：荒牧慶彦 - 田仁志慧：友常勇氣（日语：）",
+    "section": "網球王子音樂劇第二季 > 2nd歷代網舞演員出演陣容 > 比嘉二代演員陣容（青學：七代）"
+  },
+  {
+    "question": "抚琴站具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "抚琴站",
+    "expected_document_id": "ee84f763b1691ee81aeec938",
+    "expected_terms": [
+      "成都市金牛区北抚琴西路一环路口",
+      "是成都地铁",
+      "号线的一座地下车站"
+    ],
+    "reference": "抚琴站位于成都市金牛区北抚琴西路一环路口，是成都地铁5号线的一座地下车站，因地处抚琴社区而得名。",
+    "section": "抚琴站"
+  },
+  {
+    "question": "能通俗说说马塞杜上校镇吗？",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "马塞杜上校镇",
+    "expected_document_id": "9ac5c450b7ab7d8b9cdedbd0",
+    "expected_terms": [
+      "马塞杜上校镇",
+      "葡萄牙语",
+      "是巴西圣保罗州的一个市镇"
+    ],
+    "reference": "马塞杜上校镇（葡萄牙语：）是巴西圣保罗州的一个市镇。",
+    "section": "马塞杜上校镇"
+  },
+  {
+    "question": "请简要介绍一下登山杖。",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "登山杖",
+    "expected_document_id": "c0c3801acadcc285b7fe6bc7",
+    "expected_terms": [
+      "登山杖是一对拿在手上用来辅助登山的工具"
+    ],
+    "reference": "登山杖是一对拿在手上用来辅助登山的工具。",
+    "section": "登山杖"
+  },
+  {
+    "question": "斯利那加位于哪里？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "斯利那加",
+    "expected_document_id": "c1b2edec3221412fab214f2e",
+    "expected_terms": [
+      "印度河支流杰赫勒姆河畔",
+      "是印度查谟和克什米尔的夏季首府"
+    ],
+    "reference": "斯利那加（印地語：）位于印度河支流杰赫勒姆河畔，是印度查谟和克什米尔的夏季首府。",
+    "section": "斯利那加"
+  },
+  {
+    "question": "从资料看，基辅罗斯滅亡是哪些因素造成的？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "基辅罗斯",
+    "expected_document_id": "a2834f5235c4b33b14593c05",
+    "expected_terms": [
+      "蒙古人的入侵加速瓦解羅斯原有的政局",
+      "月蒙古帝国军队在成吉思汗手下两员大将哲别和速不台",
+      "从南高加索北向进入今南俄的一支",
+      "人的蒙古军队"
+    ],
+    "reference": "蒙古人的入侵加速瓦解羅斯原有的政局。1223年9月蒙古帝国军队在成吉思汗手下两员大将哲别和速不台从南高加索北向进入今南俄的一支25000人的蒙古军队（）的带领下侦查基辅罗斯，当时罗斯各大公与长期的仇敌钦察人组成联盟，在卡尔卡河岸与蒙古帝国侦查军队交锋。當年，呈現分裂局面的南部各諸侯在迦勒迦河遭遇蒙古突擊隊，結果被徹底擊敗。由于罗斯各公国大公对蒙古帝国不了解，再加上内部不合，联盟军队被蒙古军队包围后歼灭，5位大公阵亡。",
+    "section": "基辅罗斯 > 歷史 > 滅亡"
+  },
+  {
+    "question": "你知道社寮地區属于哪里吗？",
+    "question_type": "location",
+    "style": "conversational",
+    "expected_title": "社寮地區",
+    "expected_document_id": "18d3aa2da646ac2c1a7426e3",
+    "expected_terms": [
+      "竹山鎮內",
+      "是濁水溪南岸聚落",
+      "地處竹山市區東北"
+    ],
+    "reference": "社寮地區位於竹山鎮內，是濁水溪南岸聚落，地處竹山市區東北。",
+    "section": "社寮地區"
+  },
+  {
+    "question": "你知道年輕人們何时上映吗？",
+    "question_type": "time",
+    "style": "conversational",
+    "expected_title": "年輕人們",
+    "expected_document_id": "6ba6540ca3bd5e623aaec953",
+    "expected_terms": [
+      "1967年"
+    ],
+    "reference": "《年輕人們》（）1967年上映。",
+    "section": "年輕人們 > 電影 > 年輕人們"
+  },
+  {
+    "question": "李道增出生的具体时间是什么？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "李道增",
+    "expected_document_id": "e8774e910ece86fc7b5f7ae8",
+    "expected_terms": [
+      "1930年1月19日"
+    ],
+    "reference": "李道增（1930年1月19日—2020年3月19日），籍贯安徽合肥，出生在上海市，中国建筑学专家，清华大学建筑学院教授。",
+    "section": "李道增"
+  },
+  {
+    "question": "我想知道一夜狂奔有哪些演員。",
+    "question_type": "list",
+    "style": "conversational",
+    "expected_title": "一夜狂奔",
+    "expected_document_id": "56ba355908bf263963043822",
+    "expected_terms": [
+      "連恩·尼遜",
+      "喬爾·金納曼",
+      "凡夫俗子",
+      "艾德·哈里斯"
+    ],
+    "reference": "表格字段：演員、角色 演員列表：連恩·尼遜、喬爾·金納曼、凡夫俗子、艾德·哈里斯、珍妮西斯·羅德里格茲、文森·唐諾佛利歐、波伊德·霍布魯克、霍特·麥凱蘭尼、馬爾科姆·古德溫",
+    "section": "一夜狂奔 > 演員"
+  },
+  {
+    "question": "请问左菁華什么时候出生？",
+    "question_type": "time",
+    "style": "instructional",
+    "expected_title": "左菁華",
+    "expected_document_id": "1237b53f0bf4ad27ea7f8537",
+    "expected_terms": [
+      "1953年"
+    ],
+    "reference": "左菁華是台灣藝專影劇科畢業，1953年出生，2014年1月30日逝世，享壽61歲。",
+    "section": "左菁華 > 生平簡歷"
+  },
+  {
+    "question": "圣卡塔尔多具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "圣卡塔尔多",
+    "expected_document_id": "c789b63c1cf04dd87f70d757",
+    "expected_terms": [
+      "一个高原老矿区Solfifero",
+      "Siciliano内"
+    ],
+    "reference": "圣卡塔尔多坐落于丘陵地带之中，海拔高度625米，建成区向北拓展，地处塞拉迪法尔科、穆索梅利、卡尔塔尼塞塔三镇之间，位于一个高原老矿区Solfifero Siciliano内。",
+    "section": "圣卡塔尔多 > 地理"
+  },
+  {
+    "question": "你知道派克賓館麵包卷由谁發明吗？",
+    "question_type": "agent",
+    "style": "conversational",
+    "expected_title": "派克賓館麵包卷",
+    "expected_document_id": "e466d33e67836a298e2482a8",
+    "expected_terms": [
+      "波士顿歐尼帕克豪斯酒店"
+    ],
+    "reference": "派克賓館麵包卷（英語：）在1870年代由波士顿歐尼帕克豪斯酒店發明的圓麵包，其作法是以擀麵棍將麵團變成橢圓形並從中間折成兩半，它們是用牛奶製成，有黄油的、柔軟的、甜的和脆的。",
+    "section": "派克賓館麵包卷"
+  },
+  {
+    "question": "你知道下安特亞蒙的人口数据吗？",
+    "question_type": "numeric",
+    "style": "conversational",
+    "expected_title": "下安特亞蒙",
+    "expected_document_id": "6ad2a80e701a8d819fea41d1",
+    "expected_terms": [
+      "1,165人"
+    ],
+    "reference": "下安特亞蒙是瑞士的城鎮，位於該國西部，由弗里堡州負責管轄，面積33.31平方公里，海拔高度720米，2011年人口1,165，人口密度每平方公里35人。",
+    "section": "下安特亞蒙"
+  },
+  {
+    "question": "你知道辛醣是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "辛醣",
+    "expected_document_id": "19fcc13263790963318bcafc",
+    "expected_terms": [
+      "辛醣",
+      "英語",
+      "又稱為八碳醣",
+      "是由八個碳原子組成的單醣"
+    ],
+    "reference": "辛醣（英語：），又稱為八碳醣，是由八個碳原子組成的單醣，化學式為 C8H16O8。",
+    "section": "辛醣"
+  },
+  {
+    "question": "Toy (歌曲)在排行和銷量認證方面都包括什么？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "Toy (歌曲)",
+    "expected_document_id": "becc97d03379615b8294e910",
+    "expected_terms": [
+      "美國（《告示牌》Dance Club Songs）",
+      "美國（《告示牌》Hot Dance/Electronic Songs）",
+      "排行榜（2019年）",
+      "美國（《告示牌》Hot Dance/Electronic Songs）"
+    ],
+    "reference": "表格字段：排行榜（2018年）、排名 排行榜（2018年）列表：美國（《告示牌》Dance Club Songs）、美國（《告示牌》Hot Dance/Electronic Songs）、排行榜（2019年）、美國（《告示牌》Hot Dance/Electronic Songs）",
+    "section": "Toy (歌曲) > 排行和銷量認證"
+  },
+  {
+    "question": "请问汕尾市新城中學什么时候成立？",
+    "question_type": "time",
+    "style": "instructional",
+    "expected_title": "汕尾市新城中學",
+    "expected_document_id": "e8fb4ac44cd1bffdb78e1935",
+    "expected_terms": [
+      "1991年"
+    ],
+    "reference": "汕尾市新城中學創建於1991年，位於汕尾市城區海平路，是汕尾市成立之初第一所完全中學。",
+    "section": "汕尾市新城中學"
+  },
+  {
+    "question": "我想知道1555年有哪些大事记。",
+    "question_type": "list",
+    "style": "conversational",
+    "expected_title": "1555年",
+    "expected_document_id": "a11098b7c4731ad5a1ad75fe",
+    "expected_terms": [
+      "10月6日——嚴島之戰。",
+      "10月12日——防長經略，毛利元就進攻大內氏領土周防國和長門國。",
+      "10月25日——查理五世放棄尼德蘭王位給其子腓力二世。",
+      "俄羅斯沙皇伊凡四世為紀念征服喀山汗國，下令在克里姆林宮附近興建聖瓦西里主教座堂。"
+    ],
+    "reference": "- 長尾景虎出兵鎮壓暗通武田家的北條高廣，北條高廣以奉行身份再仕於長尾景虎，4月與武田家爆發第二次川中島之戰。 - 武田晴信平定南信濃木曾義康和木曾義昌兩父子，木曾義康入武田晴信麾下，晴信授信濃與美濃・飛驒的國境守備重要據點予以支配。 - 幾乎占領整個上總國西部的後北條氏於三浦三崎之戰敗於里見水軍，北條氏康在房總半島的擴張受挫。 - 武田晴信嫁給今川義元的姊姊定惠院病逝，為延續與今川的同盟，遂為嫡男義信迎娶了今川義元的女兒，並將女兒嫁給北條氏政，北條氏康也將女兒嫁給今川氏真，甲相駿同盟（日语：）於焉正式成立。 - 能登政治合議組織「畠山七人眾」中心人物溫井總貞被畠山義續・畠山義綱父子等人暗殺，遊佐續光回能登擔任重臣，溫井氏與和溫井氏相當親密的三宅氏聯合加賀一向一揆發動大規模的叛亂。 - 三木良賴趁飛驒國司姊小路氏的內紛，奪取並繼承姊小路古川家，透過政治工作使朝廷承認三木氏繼承姊小路氏，正式稱為姊小路良賴。 - 9月25日——神聖羅馬帝國皇帝查理五世與德意志新教諸侯在奧格斯堡的帝國會議簽訂《奧格斯堡和約》，提出「教隨國立」的原則，根據法律正式允許路德宗和天主教共存於德意志，暫停了內戰。 - 10月6日——嚴島之戰。 - 10月12日——防長經略，毛利元就進攻大內氏領土周防國和長門國。 - 10月25日——查理五世放棄尼德蘭王位給其子腓力二世。 - 俄羅斯沙皇伊凡四世為紀念征服喀山汗國，下令在克里姆林宮附近興建聖瓦西里主教座堂。 - 胡马雍率军从喀布尔出发，占领旁遮普、德里、阿格拉，恢复了莫卧儿王朝。 - 法王亨利二世下詔各地的官員應對那些被教會判為異端的人進行懲罰，無須審查也不允許上訴。 - 《阿马西亚和约》签订，伊拉克和格鲁吉亚、亚美尼亚、阿塞拜疆归奥斯曼帝国。 - 緬甸東吁王朝消滅阿瓦王朝。至是緬甸大部分地區統一，緬甸之戰國時代結束。",
+    "section": "1555年 > 大事记"
+  },
+  {
+    "question": "从资料看，明鄭滅亡是哪些因素造成的？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "明鄭",
+    "expected_document_id": "549fdbae24afdde7c48a9948",
+    "expected_terms": [
+      "鄭經死後",
+      "鄭克塽嗣延平王位",
+      "仍稱",
+      "招討大將軍世子"
+    ],
+    "reference": "鄭經死後，鄭克塽嗣延平王位，仍稱「招討大將軍世子」。1683年，康熙帝以明鄭降將施琅為統帥攻打明鄭，在澎湖海戰擊敗由劉國軒統帥的鄭軍主力，鄭克塽隨即宣布投降，明鄭滅亡。",
+    "section": "明鄭 > 歷史 > 滅亡"
+  },
+  {
+    "question": "你知道甘薇是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "甘薇",
+    "expected_document_id": "3b13dac9e5e79a328faaebf4",
+    "expected_terms": [
+      "甘薇的履行情况为全部未履行"
+    ],
+    "reference": "甘薇的履行情况为全部未履行。",
+    "section": "甘薇 > 失信"
+  },
+  {
+    "question": "洪堡圈成立的具体时间是什么？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "洪堡圈",
+    "expected_document_id": "652a148dca80600462a65518",
+    "expected_terms": [
+      "2009年9月24日"
+    ],
+    "reference": "洪堡圈（德語：）是德国数所自然科学研究所和自然类博物馆共同创建的科研联合体，成立于2009年9月24日。",
+    "section": "洪堡圈"
+  },
+  {
+    "question": "你知道派塔區是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "派塔區",
+    "expected_document_id": "e745876e7770dc875da806f3",
+    "expected_terms": [
+      "派塔區",
+      "西班牙語",
+      "是秘魯的一個區",
+      "位於該國西北部皮烏拉大區的派塔省"
+    ],
+    "reference": "派塔區（西班牙語：），是秘魯的一個區，位於該國西北部皮烏拉大區的派塔省，始建於1861年3月30日，面積763.68平方公里，海拔高度3米，2005年人口69,401，人口密度每平方公里91人。",
+    "section": "派塔區"
+  },
+  {
+    "question": "你知道臺東氣象站是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "臺東氣象站",
+    "expected_document_id": "1c176382d325d8255b3fe833",
+    "expected_terms": [
+      "臺東氣象站為一座位在臺灣臺東縣臺東市區內的氣象觀",
+      "測站",
+      "至今已成立"
+    ],
+    "reference": "臺東氣象站為一座位在臺灣臺東縣臺東市區內的氣象觀測站，至今已成立114年。",
+    "section": "臺東氣象站"
+  },
+  {
+    "question": "FNC娛樂在電視劇製作方面都包括什么？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "FNC娛樂",
+    "expected_document_id": "b64825db7ad880fda440659a",
+    "expected_terms": [
+      "謝謝你，兒子啊",
+      "Who Are You－學校2015",
+      "Click Your Heart",
+      "白熙回來了"
+    ],
+    "reference": "- 謝謝你，兒子啊 - Who Are You－學校2015 - Click Your Heart - 白熙回來了 - My Only Love Song - 姐姐風采依舊 - 甜蜜的冤家 - 婚禮大捷",
+    "section": "FNC娛樂 > 電視劇製作"
+  },
+  {
+    "question": "荷蘭皇家航空867號班機事故在與空管的對話方面都包括什么？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "荷蘭皇家航空867號班機事故",
+    "expected_document_id": "6953c0ed5cdf85429acc326a",
+    "expected_terms": [
+      "飞行员",
+      "空管中心",
+      "飞行员",
+      "飞行员"
+    ],
+    "reference": "- 飞行员：荷航867到达FL250（25,000英尺），航向140。 - 空管中心：收到，你们有沒有見到火山灰？ - 飞行员：是，我们见到了有可能是火山灰的厚云层，它们比普通的云更棕。 - 飞行员：我們需要左转，駕駛艙充滿了煙。 - 空管中心：荷航867，收到，允许你们适时左转。 - 飞行员：我们正在一片黑云中上升至FL390，航向130。 - 飞行员：我們失去了所有引擎，正在下降！ - 空管中心：荷航867，请重復？ - 飞行员：荷航867，我們正在掉高度！ - 飞行员：荷航867，我們需要你们（空管）的協助，我們要求雷達引导。",
+    "section": "荷蘭皇家航空867號班機事故 > 引擎失效 > 與空管的對話"
+  },
+  {
+    "question": "关于笔法，用两三句话说明一下。",
+    "question_type": "definition",
+    "style": "colloquial",
+    "expected_title": "笔法",
+    "expected_document_id": "97efb123b00ff186329a1197",
+    "expected_terms": [
+      "笔法是指书画中运用毛笔书写",
+      "描画线条的技法"
+    ],
+    "reference": "笔法是指书画中运用毛笔书写、描画线条的技法。",
+    "section": "笔法"
+  },
+  {
+    "question": "心理不应期是什么？",
+    "question_type": "definition",
+    "style": "direct",
+    "expected_title": "心理不应期",
+    "expected_document_id": "2494bef020ebe8b6f8928787",
+    "expected_terms": [
+      "心理不应期是指當连续出现两个刺激",
+      "且人們對每个刺激會有不同的反應",
+      "在这种情况下如果第二个刺激出现的时间越接近第一个",
+      "刺激"
+    ],
+    "reference": "心理不应期是指當连续出现两个刺激，且人們對每个刺激會有不同的反應，在这种情况下如果第二个刺激出现的时间越接近第一个刺激，那么人們对第二个刺激的反应速度會越慢，因為此時人們仍然被第一個刺激所影響。",
+    "section": "心理不应期"
+  },
+  {
+    "question": "約克大廈的設計者是谁？",
+    "question_type": "agent",
+    "style": "direct",
+    "expected_title": "約克大廈",
+    "expected_document_id": "d8ed0798ae4e35cc6fbb6f2a",
+    "expected_terms": [
+      "KPF及凱達環球有限公司"
+    ],
+    "reference": "約克大廈由KPF及凱達環球有限公司設計，獲2007年香港環保建築協會環保建築及建造獎白金級別。",
+    "section": "約克大廈 > 環保建築設計"
+  },
+  {
+    "question": "请问蒂亞瓦亞區人口有多少？",
+    "question_type": "numeric",
+    "style": "instructional",
+    "expected_title": "蒂亞瓦亞區",
+    "expected_document_id": "a98371002d6fe839446d7fa1",
+    "expected_terms": [
+      "15,043人"
+    ],
+    "reference": "蒂亞瓦亞區（西班牙語：），是秘魯的一個區，位於該國南部阿雷基帕大區的阿雷基帕省，面積31.62平方公里，海拔高度2,178米，2005年人口15,043，人口密度每平方公里480人。",
+    "section": "蒂亞瓦亞區"
+  },
+  {
+    "question": "关于魏璘，用两三句话说明一下。",
+    "question_type": "definition",
+    "style": "colloquial",
+    "expected_title": "魏璘",
+    "expected_document_id": "5706d64c7d85c247a38fbb8b",
+    "expected_terms": [
+      "魏璘初为后晋人",
+      "以善於占卜而著称于世"
+    ],
+    "reference": "魏璘初为后晋人，以善於占卜而著称于世。",
+    "section": "魏璘"
+  },
+  {
+    "question": "惠桥水库是什么？",
+    "question_type": "definition",
+    "style": "direct",
+    "expected_title": "惠桥水库",
+    "expected_document_id": "b64ec0fc4b62ce2bba173e40",
+    "expected_terms": [
+      "惠桥水库是中国陕西省榆林市靖边县境内的一座水库",
+      "位于芦河上",
+      "建于"
+    ],
+    "reference": "惠桥水库是中国陕西省榆林市靖边县境内的一座水库，位于芦河上，建于1972年。",
+    "section": "惠桥水库"
+  },
+  {
+    "question": "你知道阿德拉米狄翁属于哪里吗？",
+    "question_type": "location",
+    "style": "conversational",
+    "expected_title": "阿德拉米狄翁",
+    "expected_document_id": "80d6938f9292d528cc5c4aec",
+    "expected_terms": [
+      "伊奥利亚地区的一座古代城市与教区",
+      "位于今日的土耳其"
+    ],
+    "reference": "阿德拉米狄翁（希臘語：，羅馬化：Adramyttion）是位于伊奥利亚地区的一座古代城市与教区，位于今日的土耳其。",
+    "section": "阿德拉米狄翁"
+  },
+  {
+    "question": "中国人民解放军坦克博物馆位于哪里？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "中国人民解放军坦克博物馆",
+    "expected_document_id": "10c5c81b6ee4bebe05ad3baa",
+    "expected_terms": [
+      "中国北京昌平区阳坊镇",
+      "地处阳坊镇以北的温南路"
+    ],
+    "reference": "中国人民解放军坦克博物馆，位于中国北京昌平区阳坊镇，地处阳坊镇以北的温南路。",
+    "section": "中国人民解放军坦克博物馆"
+  },
+  {
+    "question": "哥倫比亞西部山脈的面積是多少？",
+    "question_type": "numeric",
+    "style": "direct",
+    "expected_title": "哥倫比亞西部山脈",
+    "expected_document_id": "c67c40f2badf077d55197715",
+    "expected_terms": [
+      "86,239平方公里"
+    ],
+    "reference": "哥倫比亞西部山脈（西班牙語：），是哥倫比亞的山脈，屬於安第斯山脈的一部分，全長1,200公里，面積86,239平方公里，平均海拔高度2,000米，最高點海拔高度4,250米。",
+    "section": "哥倫比亞西部山脈"
+  },
+  {
+    "question": "说下四月望雨背后的創作者。",
+    "question_type": "agent",
+    "style": "colloquial",
+    "expected_title": "四月望雨",
+    "expected_document_id": "6ab6e2a75c874ade77f81d07",
+    "expected_terms": [
+      "音樂時代劇場"
+    ],
+    "reference": "《四月望雨》由永齡教育慈善基金會委託音樂時代劇場創作，2007年6月15日到17日在台北市國父紀念館首演，使用華語、台語、日語與客語四種語言演出。",
+    "section": "四月望雨 > 製作"
+  },
+  {
+    "question": "瑪琳·黛德麗出生的具体时间是什么？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "瑪琳·黛德麗",
+    "expected_document_id": "664a5c6ac8271f9cbada0d90",
+    "expected_terms": [
+      "1901年"
+    ],
+    "reference": "瑪琳·黛德麗生于1901年的柏林，出生時名為瑪麗·瑪德蓮娜·迪特利希（Marie Magdalena Dietrich）。",
+    "section": "瑪琳·黛德麗 > 生平 > 出道"
+  },
+  {
+    "question": "美国电影学会成立的具体时间是什么？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "美国电影学会",
+    "expected_document_id": "e2410b14a75b97adaa4f93d4",
+    "expected_terms": [
+      "1967年"
+    ],
+    "reference": "美国电影学会（英語：，缩写为）成立于1967年，是美国国家艺术基金会创建的独立运作的非营利组织。",
+    "section": "美国电影学会"
+  },
+  {
+    "question": "你知道保羅·瓦勒里何时出生吗？",
+    "question_type": "time",
+    "style": "conversational",
+    "expected_title": "保羅·瓦勒里",
+    "expected_document_id": "ce42161d8de51ea2391f66be",
+    "expected_terms": [
+      "1945年7月20日"
+    ],
+    "reference": "保羅·瓦勒里（，1871年10月30日—1945年7月20日）在塞特出生，在巴黎逝世，法國作家、詩人，法兰西学术院院士。",
+    "section": "保羅·瓦勒里"
+  },
+  {
+    "question": "关于念珠芥属，用两三句话说明一下。",
+    "question_type": "definition",
+    "style": "colloquial",
+    "expected_title": "念珠芥属",
+    "expected_document_id": "329fa0a3838fd2a727add79d",
+    "expected_terms": [
+      "念珠芥属",
+      "学名",
+      "Torularia",
+      "是十字花科下的一个属"
+    ],
+    "reference": "念珠芥属（学名：Torularia）是十字花科下的一个属，为一年生、二年生或多年生草本植物。",
+    "section": "念珠芥属"
+  },
+  {
+    "question": "你知道純粹海花介是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "純粹海花介",
+    "expected_document_id": "b5a893ca5a497d62c2be4cdc",
+    "expected_terms": [
+      "純粹海花介",
+      "学名",
+      "为荊花介科海花介屬下的一个种"
+    ],
+    "reference": "純粹海花介（学名：）为荊花介科海花介屬下的一个种。",
+    "section": "純粹海花介"
+  },
+  {
+    "question": "大同鄉 (台灣)在宜蘭縣市區公車方面都包括什么？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "大同鄉 (台灣)",
+    "expected_document_id": "4f0a225ef0757026fd5e3ca5",
+    "expected_terms": [
+      "國光客運",
+      "綠12 宜蘭轉運站－松羅",
+      "1743 宜蘭轉運站－松羅",
+      "1744 宜蘭轉運站－南山村"
+    ],
+    "reference": "- 國光客運： - 綠12 宜蘭轉運站－松羅 - 1743 宜蘭轉運站－松羅 - 1744 宜蘭轉運站－南山村 - 1745 宜蘭轉運站－羅東轉運站－南山村 - 1750 宜蘭轉運站－太平山 - 1793 羅東轉運站－天送埤－牛鬥 - 1795 羅東轉運站－廣興－寒溪 - 1795A 羅東轉運站－國華國中－寒溪 - 1796 羅東轉運站－天送埤－松羅 - 1798 羅東轉運站－智腦",
+    "section": "大同鄉 (台灣) > 交通 > 公車資訊 > 宜蘭縣市區公車"
+  },
+  {
+    "question": "能整理一下擔子果的種類列表吗？",
+    "question_type": "list",
+    "style": "instructional",
+    "expected_title": "擔子果",
+    "expected_document_id": "456670590414f47df4f00716",
+    "expected_terms": [
+      "傘菌 Amanita muscaria的擔子果。",
+      "珊瑚菌Ramaria rugosa的擔子果。",
+      "雞油菌Craterellus tubaeformis的擔子果。"
+    ],
+    "reference": "- 傘菌 Amanita muscaria的擔子果。 - 珊瑚菌Ramaria rugosa的擔子果。 - 雞油菌Craterellus tubaeformis的擔子果。",
+    "section": "擔子果 > 種類"
+  },
+  {
+    "question": "抚远市具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "抚远市",
+    "expected_document_id": "a0aada0773ac96c7e7b7a608",
+    "expected_terms": [
+      "黑龙江省东北部",
+      "地处黑龙江",
+      "乌苏里江交汇的三江平原区域"
+    ],
+    "reference": "抚远市是中华人民共和国黑龙江省佳木斯市代管的一个县级市，位于黑龙江省东北部，地处黑龙江、乌苏里江交汇的三江平原区域，与双鸭山市接壤，与俄罗斯隔江相望。",
+    "section": "抚远市"
+  },
+  {
+    "question": "请简要介绍一下盘庚迁殷。",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "盘庚迁殷",
+    "expected_document_id": "d6e05c1ba5bcae555f427cbe",
+    "expected_terms": [
+      "盘庚迁殷為发生在公元前",
+      "年左右",
+      "是中国商朝的一个历史事件"
+    ],
+    "reference": "盘庚迁殷為发生在公元前1300年左右，是中国商朝的一个历史事件。",
+    "section": "盘庚迁殷"
+  },
+  {
+    "question": "李菁紀念基金成立的具体时间是什么？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "李菁紀念基金",
+    "expected_document_id": "f83dc5808d6f48b20b8635a0",
+    "expected_terms": [
+      "2008年"
+    ],
+    "reference": "李菁紀念基金是香港一個慈善基金，由香港嶺南大學資源拓展處於2008年成立。",
+    "section": "李菁紀念基金"
+  },
+  {
+    "question": "说下小贝流浪记背后的创作者。",
+    "question_type": "agent",
+    "style": "colloquial",
+    "expected_title": "小贝流浪记",
+    "expected_document_id": "2c5c0ce0cd1352f43f3cb062",
+    "expected_terms": [
+      "一代童话大师孙幼军"
+    ],
+    "reference": "《小贝流浪记》，有时也称《猫咪小贝》，是由一代童话大师孙幼军在1970年代创作的一部童话作品。",
+    "section": "小贝流浪记"
+  },
+  {
+    "question": "说下林階堂出生的年份。",
+    "question_type": "time",
+    "style": "colloquial",
+    "expected_title": "林階堂",
+    "expected_document_id": "ffeb32342cec2e018707d660",
+    "expected_terms": [
+      "1884年"
+    ],
+    "reference": "林階堂於光緒十年（1884年）農曆十一月七日出生，為頂厝林文欽之次子，林獻堂之弟。",
+    "section": "林階堂 > 生平"
+  },
+  {
+    "question": "墨尔本具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "墨尔本",
+    "expected_document_id": "29d47cd97f9215c2c358fbe6",
+    "expected_terms": [
+      "雅拉河的下游北岸",
+      "距离河口东北约",
+      "英里"
+    ],
+    "reference": "墨尔本坐落于大分水岭余脉——雅拉山脉（Yarra Ranges）西南，其主城区主要位于雅拉河的下游北岸，距离河口东北约5（3.1英里）。",
+    "section": "墨尔本 > 地理"
+  },
+  {
+    "question": "请问楊家埠街道在什么地方？",
+    "question_type": "location",
+    "style": "instructional",
+    "expected_title": "楊家埠街道",
+    "expected_document_id": "012b041665cf38b239ac87ed",
+    "expected_terms": [
+      "湖州市區西郊",
+      "地處湖州經濟技術開發區",
+      "屬半山區地帶"
+    ],
+    "reference": "楊家埠街道是中华人民共和国浙江省湖州市吴兴区下辖的一个街道办事处，位於湖州市區西郊，地處湖州經濟技術開發區，屬半山區地帶。",
+    "section": "楊家埠街道"
+  },
+  {
+    "question": "想去塔伊诺，它的位置在哪里？",
+    "question_type": "location",
+    "style": "conversational",
+    "expected_title": "塔伊诺",
+    "expected_document_id": "2b100b91753bec0d2f9f7b51",
+    "expected_terms": [
+      "意大利北部伦巴第大区瓦雷泽省的一个市镇",
+      "距离米兰市中心约",
+      "公里"
+    ],
+    "reference": "塔伊诺（義大利語：）是位于意大利北部伦巴第大区瓦雷泽省的一个市镇，距离米兰市中心约45公里，地处马焦雷湖西南方向。",
+    "section": "塔伊诺 > 地理位置"
+  },
+  {
+    "question": "关于庄桥街道，用两三句话说明一下。",
+    "question_type": "definition",
+    "style": "colloquial",
+    "expected_title": "庄桥街道",
+    "expected_document_id": "11fb8d9bf8832c578e49ad75",
+    "expected_terms": [
+      "庄桥街道共辖",
+      "个社区和",
+      "个行政村",
+      "分别是"
+    ],
+    "reference": "庄桥街道共辖13个社区和25个行政村，分别是：",
+    "section": "庄桥街道 > 行政区划"
+  },
+  {
+    "question": "能整理一下檜山修之的其他遊戲作品一覽列表吗？",
+    "question_type": "list",
+    "style": "instructional",
+    "expected_title": "檜山修之",
+    "expected_document_id": "2773f6985e2f3365425e8d7f",
+    "expected_terms": [
+      "チェインクロニクル（ヴァルガス)",
+      "艶が〜る プレミアム（高杉晋作)",
+      "七龍珠 Xenoverse (未來戰士<玩家>",
+      "NET HIGH（KING）"
+    ],
+    "reference": "- チェインクロニクル（ヴァルガス) - 艶が〜る プレミアム（高杉晋作) - 七龍珠 Xenoverse (未來戰士<玩家>: 男聲選項5) - NET HIGH（KING） - 勇氣默示錄2（ジャッカル) - PROJECT X ZONE 2:BRAVE NEW WORLD（戴米特里·馬克西莫夫、派隆、Stehoney） - LORD of VERMILION ARENA（アルカイザー)",
+    "section": "檜山修之 > 演出作品 > 電玩遊戲 > 其他遊戲作品一覽"
+  },
+  {
+    "question": "你知道薄叶南蛇藤是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "薄叶南蛇藤",
+    "expected_document_id": "e54442d8b2aa383b2a9965c2",
+    "expected_terms": [
+      "薄叶南蛇藤",
+      "学名",
+      "为卫矛科南蛇藤属的植物",
+      "为中国的特有植物"
+    ],
+    "reference": "薄叶南蛇藤（学名：）为卫矛科南蛇藤属的植物，为中国的特有植物。",
+    "section": "薄叶南蛇藤"
+  },
+  {
+    "question": "从资料看，胡朝灭亡是哪些因素造成的？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "胡朝",
+    "expected_document_id": "fd4d7b36fce089c0df568bc2",
+    "expected_terms": [
+      "明成祖派往广东五十万人的军队开始了先期的进攻",
+      "多邦",
+      "Da",
+      "Bang"
+    ],
+    "reference": "1406年，明成祖派往广东五十万人的军队开始了先期的进攻。1407年，多邦（Da Bang）城堡垒的沦陷，木凡江（Moc Pham Giang）及鹹子關的失败都促成了胡朝的覆灭。在鹹子關的战斗中，胡氏族人试图逃走，但却被抓获并送到中国。越南开始了第四次北属時期。",
+    "section": "胡朝 > 灭亡"
+  },
+  {
+    "question": "你知道蕭琮是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "蕭琮",
+    "expected_document_id": "322a922e929704445ea58154",
+    "expected_terms": [
+      "蕭琮最早封東陽王",
+      "後被立為皇太子"
+    ],
+    "reference": "蕭琮最早封東陽王，後被立為皇太子。",
+    "section": "蕭琮 > 生平"
+  },
+  {
+    "question": "你知道貝拉赫的人口数据吗？",
+    "question_type": "numeric",
+    "style": "conversational",
+    "expected_title": "貝拉赫",
+    "expected_document_id": "d72e26d203b774bbefc23c20",
+    "expected_terms": [
+      "5,134人"
+    ],
+    "reference": "貝拉赫是瑞士的城鎮，位於該國北部，由索洛圖恩州負責管轄，面積5.27平方公里，海拔高度450米，2012年人口5,134，四成人口信奉羅馬天主教，人口密度每平方公里974人。",
+    "section": "貝拉赫"
+  },
+  {
+    "question": "大中壩機場位于哪里？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "大中壩機場",
+    "expected_document_id": "c275ae2e4ef493d9f428c6db",
+    "expected_terms": [
+      "今重慶巴南區境內小壩鄉大中村",
+      "巴縣小南海附近",
+      "珞璜場東側"
+    ],
+    "reference": "大中壩機場是重慶市的一個機場，位於今重慶巴南區境內小壩鄉大中村(巴縣小南海附近，珞璜場東側)，地處重慶市中心207度方向，距離22公里處，坐落在長江中的小島上，海拔高度210公尺。",
+    "section": "大中壩機場"
+  },
+  {
+    "question": "杨振鸿逝世的具体时间是什么？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "杨振鸿",
+    "expected_document_id": "9acaef642e751b9232567220",
+    "expected_terms": [
+      "1909年1月2日"
+    ],
+    "reference": "杨振鸿于1909年1月2日因忧愤逝世，享年35岁。",
+    "section": "杨振鸿 > 生平"
+  },
+  {
+    "question": "请概括波密土王滅亡的主要原因和过程。",
+    "question_type": "cause",
+    "style": "instructional",
+    "expected_title": "波密土王",
+    "expected_document_id": "7d62c40da751d8a98e3cf4cf",
+    "expected_terms": [
+      "清末",
+      "波密部眾經常剽掠過往商旅",
+      "並與川軍發生衝突",
+      "同治年間及光緒五"
+    ],
+    "reference": "清末，波密部眾經常剽掠過往商旅，並與川軍發生衝突。“同治年間及光緒五、六年皆屢次投誠，屢次背叛。自恃地險民悍，不時出剿搶劫，焚殺重案，無歲無之。宣統二年（1910年），駐藏大臣聯豫派協統鍾穎率駐藏新軍征討波密。",
+    "section": "波密土王 > 滅亡"
+  },
+  {
+    "question": "能通俗说说马诺尔吗？",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "马诺尔",
+    "expected_document_id": "ed5537d64085e9cdb4a63f20",
+    "expected_terms": [
+      "马诺尔",
+      "Manor",
+      "是印度马哈拉施特拉邦Thane县的一个城镇"
+    ],
+    "reference": "马诺尔（Manor），是印度马哈拉施特拉邦Thane县的一个城镇。",
+    "section": "马诺尔"
+  },
+  {
+    "question": "导致周赧王灭亡的原因有哪些？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "周赧王",
+    "expected_document_id": "23cf0b85759a7b5476038b52",
+    "expected_terms": [
+      "周赧王五十六年",
+      "发生邯郸之战",
+      "秦军围攻邯郸",
+      "魏国和楚国都起兵相救"
+    ],
+    "reference": "周赧王五十六年（前259年），发生邯郸之战，秦军围攻邯郸，魏国和楚国都起兵相救，大破秦军。周赧王五十九年（前256年），秦国攻佔韓國的陽城負黍聚，西周文公害怕。而楚考烈王又決定组织各国合纵抗秦，同时派人到周赧王处，请求周赧王以天下共主名义下达组建联军的命令，赧王为此求助于西周文公，西周文公倾国力组建起一支五六千人的小军队，与诸侯商定在伊阙会师。但最後只有楚國和燕国軍隊到達，这么一点军队根本无法与秦国抗衡，周赧王无奈遣散了军队，楚国和燕国的军队也各归各国。",
+    "section": "周赧王 > 灭亡"
+  },
+  {
+    "question": "我不太了解股直肌，它指的是什么？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "股直肌",
+    "expected_document_id": "1749fb2f878e7f94710d9f54",
+    "expected_terms": [
+      "股直肌",
+      "缝匠肌和髂腰肌是大腿在臀部的屈肌"
+    ],
+    "reference": "股直肌，缝匠肌和髂腰肌是大腿在臀部的屈肌。",
+    "section": "股直肌 > 功能"
+  },
+  {
+    "question": "3000在3001至3999的整数方面都包括什么？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "3000",
+    "expected_document_id": "322050a6cfc248d991897099",
+    "expected_terms": [
+      "亏数，真因數和為913，虧度為2398",
+      "无平方数因数的数。",
+      "楔形数。",
+      "十进制的奢侈數。"
+    ],
+    "reference": "- 亏数，真因數和為913，虧度為2398 - 无平方数因数的数。 - 楔形数。 - 十进制的奢侈數。",
+    "section": "3000 > 3001至3999的整数"
+  },
+  {
+    "question": "五城目町具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "五城目町",
+    "expected_document_id": "3a109b995faccc6411b705b7",
+    "expected_terms": [
+      "秋田縣北部和中部的中間地帶",
+      "因此自古以來便作為八郎潟東邊的貨物集散地而繁榮"
+    ],
+    "reference": "五城目町因地處秋田縣北部和中部的中間地帶，因此自古以來便作為八郎潟東邊的貨物集散地而繁榮。",
+    "section": "五城目町"
+  },
+  {
+    "question": "庐阳区是什么？",
+    "question_type": "definition",
+    "style": "direct",
+    "expected_title": "庐阳区",
+    "expected_document_id": "0de6d7cfc94ae7c16c97d69c",
+    "expected_terms": [
+      "庐阳区为中國安徽省合肥市下辖的一个市辖区",
+      "位于合肥市北部"
+    ],
+    "reference": "庐阳区为中國安徽省合肥市下辖的一个市辖区，位于合肥市北部。",
+    "section": "庐阳区"
+  },
+  {
+    "question": "关于江西生产建设兵团，用两三句话说明一下。",
+    "question_type": "definition",
+    "style": "colloquial",
+    "expected_title": "江西生产建设兵团",
+    "expected_document_id": "c5cf6301806c34bc13c4023a",
+    "expected_terms": [
+      "江西生产建设兵团",
+      "年至",
+      "年设于中国江西省的由军队管理的农垦组织"
+    ],
+    "reference": "江西生产建设兵团，是1969年至1975年设于中国江西省的由军队管理的农垦组织。",
+    "section": "江西生产建设兵团"
+  },
+  {
+    "question": "高句丽究竟是怎么一步步灭亡的？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "高句丽",
+    "expected_document_id": "775a3d9bfb90904c351c4042",
+    "expected_terms": [
+      "高句丽经过了数个月的守城",
+      "渊男产被宝藏王委派投降",
+      "但渊男建拒绝投降",
+      "唐總章元年九月十二日"
+    ],
+    "reference": "高句丽经过了数个月的守城，渊男产被宝藏王委派投降，但渊男建拒绝投降。唐總章元年九月十二日（668年10月22日），高句丽僧人信诚打开平壤城门，唐军攻入平壤，渊男建被俘虏投降。与此同时，在南线由于金庾信的攻势，渊盖苏文的弟弟渊净土向新罗投降。就这样高句丽由于内部纷争，长年饥荒和唐与新罗南北联合夹击下最终灭亡。",
+    "section": "高句丽 > 历史 > 灭亡"
+  },
+  {
+    "question": "请问海因里希·克雷默什么时候出生？",
+    "question_type": "time",
+    "style": "instructional",
+    "expected_title": "海因里希·克雷默",
+    "expected_document_id": "d64074f51b5432c41f3d9b2f",
+    "expected_terms": [
+      "1430年"
+    ],
+    "reference": "海因里希·克雷默（，后拉丁化改为，约1430年出生于今法国阿爾薩斯塞莱斯塔，约1505年逝世于克罗梅日什）是《女巫之槌》的作者，作为宗教裁判官他是中世纪末期獵巫的发起人。",
+    "section": "海因里希·克雷默"
+  },
+  {
+    "question": "你知道河東碧梧桐何时出生吗？",
+    "question_type": "time",
+    "style": "conversational",
+    "expected_title": "河東碧梧桐",
+    "expected_document_id": "c85a7eb36bdad5543540dfe3",
+    "expected_terms": [
+      "1937年2月1日"
+    ],
+    "reference": "河東碧梧桐（日文：かわひがし へきごとう，1873年2月26日出生 - 1937年2月1日逝世），日本的俳人、隨筆作家。",
+    "section": "河東碧梧桐"
+  },
+  {
+    "question": "关于登楼库组，用两三句话说明一下。",
+    "question_type": "definition",
+    "style": "colloquial",
+    "expected_title": "登楼库组",
+    "expected_document_id": "8df553dea41a7f6a4a968e13",
+    "expected_terms": [
+      "登楼库组是位于中国吉林省",
+      "黑龙江松辽盆地一带的上白垩世地层",
+      "年由松辽石油综合普查大队命名"
+    ],
+    "reference": "登楼库组是位于中国吉林省、黑龙江松辽盆地一带的上白垩世地层，1959年由松辽石油综合普查大队命名。",
+    "section": "登楼库组"
+  },
+  {
+    "question": "潮龜为什么会走向衰落？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "潮龜",
+    "expected_document_id": "d5bebce06b4fe52b2d3f1773",
+    "expected_terms": [
+      "潮龜由於其藥用價值或作為食物而被廣泛貿易",
+      "導致現時的數量大幅下降",
+      "最初相信牠們已從柬埔寨消失",
+      "但於"
+    ],
+    "reference": "潮龜由於其藥用價值或作為食物而被廣泛貿易，導致現時的數量大幅下降。最初相信牠們已從柬埔寨消失，但於2001年卻重新在當地發現牠們。在馬來西亞吉打、霹靂州及登嘉樓的河流都是牠們主要的棲息地方，雖有保育計劃，但面積卻不斷減少。",
+    "section": "潮龜 > 衰落"
+  },
+  {
+    "question": "聚丙烯腈是什么？",
+    "question_type": "definition",
+    "style": "direct",
+    "expected_title": "聚丙烯腈",
+    "expected_document_id": "4c6b08adc87b98fd95b94b3e",
+    "expected_terms": [
+      "聚丙烯腈为白色粉末状",
+      "密度为",
+      "cm"
+    ],
+    "reference": "聚丙烯腈为白色粉末状，密度为1.14-1.15g/cm。",
+    "section": "聚丙烯腈"
+  },
+  {
+    "question": "导致昆沙衰落的原因有哪些？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "昆沙",
+    "expected_document_id": "b1162baa3668efd850da0d2f",
+    "expected_terms": [
+      "随着金三角地位被阿富汗逐渐取代以及国际社会的打击",
+      "昆沙的事业开始下坡",
+      "在政治上",
+      "缅甸开始走向内部统一"
+    ],
+    "reference": "随着金三角地位被阿富汗逐渐取代以及国际社会的打击，昆沙的事业开始下坡。在政治上，缅甸开始走向内部统一，1992年，缅甸军政府“恢复法律与秩序委员会”提出解决民族分裂武装的最后通牒，开始向佤族、掸族施加压力。1993年12月12日，坤沙公开宣布成立掸邦共和国，自任总统。但内部开始走向瓦解，后被迫卸下“总统”和“军队总司令”的头衔。",
+    "section": "昆沙 > 衰落"
+  },
+  {
+    "question": "你知道米那迪爾何时出生吗？",
+    "question_type": "time",
+    "style": "conversational",
+    "expected_title": "米那迪爾",
+    "expected_document_id": "b4429db370a3d52b5b780aac",
+    "expected_terms": [
+      "1454年"
+    ],
+    "reference": "米那迪爾生於第三紀元1454年，應該是在奧斯吉力亞斯（Osgiliath）出生。",
+    "section": "米那迪爾 > 生平 > 早年"
+  },
+  {
+    "question": "请问刘公岛在什么地方？",
+    "question_type": "location",
+    "style": "instructional",
+    "expected_title": "刘公岛",
+    "expected_document_id": "153063473da5a5dbb78d14bd",
+    "expected_terms": [
+      "中國山东省威海港附近的島嶼",
+      "地處华东地区山东半岛东端威海湾湾口",
+      "岛面积"
+    ],
+    "reference": "刘公岛是一個位于中國山东省威海港附近的島嶼，地處华东地区山东半岛东端威海湾湾口，岛面积3.15平方公里，岛岸线长14.95公里。",
+    "section": "刘公岛"
+  },
+  {
+    "question": "你知道文藝復興時期的柏拉圖主義是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "文藝復興時期的柏拉圖主義",
+    "expected_document_id": "a9686fb4de44266e5c2a85da",
+    "expected_terms": [
+      "文藝復興時期的柏拉圖主義",
+      "新柏拉图主义在文艺复兴时期经历了复兴",
+      "这是復興古典時代的一部分"
+    ],
+    "reference": "文藝復興時期的柏拉圖主義，新柏拉图主义在文艺复兴时期经历了复兴，这是復興古典時代的一部分。",
+    "section": "文藝復興時期的柏拉圖主義"
+  },
+  {
+    "question": "禁煙委員會的实施有哪些？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "禁煙委員會",
+    "expected_document_id": "0ee2659a32216f30c035205a",
+    "expected_terms": [
+      "主席",
+      "常委",
+      "委员",
+      "总务科"
+    ],
+    "reference": "- 主席：张之江 - 常委：薛笃弼、钟可托 - 委员：蒋介石、冯玉祥、阎锡山、李宗仁、李济深、何应钦、薛笃弼、钟可托、李登辉、张之江、李烈钧、陈绍宽等 - 总务科：科长王容 - 调查科：科长戴秉衡 - 宣传科：科长沈嗣庄",
+    "section": "禁煙委員會 > 实施"
+  },
+  {
+    "question": "能整理一下君主的自稱的稱謂列表吗？",
+    "question_type": "list",
+    "style": "instructional",
+    "expected_title": "君主",
+    "expected_document_id": "8462d0c95188fe6e58e15926",
+    "expected_terms": [
+      "寡人",
+      "不穀",
+      "本王",
+      "余、予（原為一般人的自稱。在日本，常是大名、顯貴自稱）"
+    ],
+    "reference": "- 朕 - 寡人 - 孤 - 不穀 - 本王 - 余、予（原為一般人的自稱。在日本，常是大名、顯貴自稱）",
+    "section": "君主 > 各種君主稱謂 > 自稱的稱謂"
+  },
+  {
+    "question": "请概括土邦滅亡的主要原因和过程。",
+    "question_type": "cause",
+    "style": "instructional",
+    "expected_title": "土邦",
+    "expected_document_id": "16c0ee55153081846334259f",
+    "expected_terms": [
+      "查谟和克什米尔选择独立",
+      "但在巴基斯坦军队入侵后决定加入印度",
+      "双方划定停火线",
+      "海得拉巴在"
+    ],
+    "reference": "- 查谟和克什米尔选择独立，但在巴基斯坦军队入侵后决定加入印度，双方划定停火线。- 海得拉巴在1947年选择独立，但一年后印度吞并了该国。- 朱纳格特决定加入了巴基斯坦，但被印度吞并。- 卡拉特在1947年宣布独立，但在1948年被巴基斯坦吞并。",
+    "section": "土邦 > 滅亡"
+  },
+  {
+    "question": "说下法兰西艺术院成立的年份。",
+    "question_type": "time",
+    "style": "colloquial",
+    "expected_title": "法兰西艺术院",
+    "expected_document_id": "8da22e5e72ebe19347c64daa",
+    "expected_terms": [
+      "1803年"
+    ],
+    "reference": "法兰西艺术院创建于1803年，是由三个院合并而成的，包括1648年创建的“法兰西绘画雕塑院”；1669年创建的“法兰西音乐院”和1671年创建的“法兰西建筑院”。",
+    "section": "法兰西艺术院"
+  },
+  {
+    "question": "能通俗说说載人火星任務吗？",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "載人火星任務",
+    "expected_document_id": "f0e203e2d0c903dcdc6e9e0f",
+    "expected_terms": [
+      "載人火星任務是",
+      "世紀的太空科學及工程學研究目標",
+      "也是科幻小說的主題之一"
+    ],
+    "reference": "載人火星任務是20至21世紀的太空科學及工程學研究目標，也是科幻小說的主題之一。",
+    "section": "載人火星任務"
+  },
+  {
+    "question": "潼南区具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "潼南区",
+    "expected_document_id": "06b2a6313eacf5c4337bff8a",
+    "expected_terms": [
+      "重庆市的西北角",
+      "因处于潼川府以南而得名"
+    ],
+    "reference": "潼南区是重庆市下辖的市辖区，位于重庆市的西北角，因处于潼川府以南而得名。",
+    "section": "潼南区"
+  },
+  {
+    "question": "请概括鄭國灭亡的主要原因和过程。",
+    "question_type": "cause",
+    "style": "instructional",
+    "expected_title": "鄭國",
+    "expected_document_id": "c6da442b0d979d1ac0623645",
+    "expected_terms": [
+      "进入战国",
+      "郑国仍然得以苟延残喘",
+      "此时郑国最大之敌人已经是新兴的韩国",
+      "然郑国仍内乱内斗不止"
+    ],
+    "reference": "进入战国，郑国仍然得以苟延残喘。此时郑国最大之敌人已经是新兴的韩国。然郑国仍内乱内斗不止。郑哀公为国人所杀，共公、幽公相继而立。",
+    "section": "鄭國 > 历史 > 灭亡"
+  },
+  {
+    "question": "关于驼背光尾鲨，用两三句话说明一下。",
+    "question_type": "definition",
+    "style": "colloquial",
+    "expected_title": "驼背光尾鲨",
+    "expected_document_id": "d2ced6a3c4b2d29f4ed2828e",
+    "expected_terms": [
+      "驼背光尾鲨",
+      "学名",
+      "为猫鲨科光尾鲨属的鱼类"
+    ],
+    "reference": "驼背光尾鲨（学名：）为猫鲨科光尾鲨属的鱼类。",
+    "section": "驼背光尾鲨"
+  },
+  {
+    "question": "你知道万维网由谁发明吗？",
+    "question_type": "agent",
+    "style": "conversational",
+    "expected_title": "万维网",
+    "expected_document_id": "a7dfc75528ba9bfc748b65c4",
+    "expected_terms": [
+      "蒂姆·伯纳斯-李"
+    ],
+    "reference": "英國科學家蒂姆·伯纳斯-李於1989年發明了萬維網。",
+    "section": "万维网"
+  },
+  {
+    "question": "缨绒花是什么？",
+    "question_type": "definition",
+    "style": "direct",
+    "expected_title": "缨绒花",
+    "expected_document_id": "e888a5f54a85f7be8ecbc318",
+    "expected_terms": [
+      "缨绒花",
+      "学名",
+      "为菊科一點紅属下的一个种"
+    ],
+    "reference": "缨绒花（学名：）为菊科一點紅属下的一个种。",
+    "section": "缨绒花"
+  },
+  {
+    "question": "野中卓也的電視動畫有哪些？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "野中卓也",
+    "expected_document_id": "3939f8edf055819a50912dff",
+    "expected_terms": [
+      "天地無用！（1995年，原畫、動畫檢察）",
+      "異次元的世界（1995年－1996年，原畫）",
+      "魔法少女砂沙美（1996年—1997年，原畫）",
+      "吸血姬美夕（1997年—1998年，原畫）"
+    ],
+    "reference": "- 天地無用！（1995年，原畫、動畫檢察） - 異次元的世界（1995年－1996年，原畫） - 魔法少女砂沙美（1996年—1997年，原畫） - 吸血姬美夕（1997年—1998年，原畫） - 大運動會（1997年—1998年，演出補佐、演出助手、原畫） - 羅德斯島戰記 -英雄騎士傳-（1998年，演出） - Night Walker -深夜徘徊者-（日语：）（1998年，演出、原畫） - 危險調查員（1998年—1999年，原畫） - 快傑蒸氣偵探團 TV ANIMATION SERIES（1998年—1999年，原畫） - 課長王子（1999年，演出） - 平行世界物語（日语：）（1999年，演出、原畫） - 麻煩巧克力（日语：）（1999年—2000年，原畫） - 臣士魔法劇場 死神☆天使（日语：）（1999年－2000年，原畫） - 幻影死神（2000年，原畫） - 銀河冒險戰記（2000年，原畫） - 破邪巨星G彈劾凰（2001年，演出） - 花右京女侍隊（2001年，分鏡、演出） - 棋魂（2001年—2003年，分鏡、演出） - 拜託了☆老師（2002年，分鏡、演出） - 拜託了☆雙子星（2003年，分鏡、演出） - 急救超人兵團（2003年，系列導演、分鏡、演出、原畫） - 花右京女侍隊 La Verite（2004年，導演、分鏡、演出、原畫） - 2×2忍傳（日语：）（2004年，演出、原畫） - DearS（2004年，原畫） - 雙戀 Alternative（2005年，分鏡、原畫） - 星際海盜（2006年，導演、分鏡、演出） - 校園烏托邦 學美向前衝！（2007年，原畫） - Fate/Zero（2011年—2012年，分鏡、演出、演出補佐） - Fate/stay night [Unlimited Blade Works]（2014年—2015年，分鏡、演出） - 噬神者（2015年，演出） - 熱情傳奇 The X（2016年，演出） - 活擊 刀劍亂舞（2017年，演出） - 衛宮家今天的餐桌風景（2017年—2018年，原畫） - 鬼滅之刃 竈門炭治郎 立志篇（2019年，分鏡、演出、原畫、第二原畫）",
+    "section": "野中卓也 > 參加作品 > 電視動畫"
+  },
+  {
+    "question": "你知道聚氧二甲苯是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "聚氧二甲苯",
+    "expected_document_id": "8b0a41c70805f3c0e96d1524",
+    "expected_terms": [
+      "聚氧二甲苯為非結晶性熱塑性高分子",
+      "由於它難以直接加工",
+      "故在工業上很少使用純的聚氧二甲苯",
+      "常將聚氧二甲苯和聚苯乙烯"
+    ],
+    "reference": "聚氧二甲苯為非結晶性熱塑性高分子，由於它難以直接加工，故在工業上很少使用純的聚氧二甲苯，常將聚氧二甲苯和聚苯乙烯、高衝擊苯乙烯-丁二烯共聚物或聚酰胺混合使用。",
+    "section": "聚氧二甲苯"
+  },
+  {
+    "question": "太阳能源是谁发明的？",
+    "question_type": "agent",
+    "style": "direct",
+    "expected_title": "太阳能源",
+    "expected_document_id": "bc56b373726d1c7e33b67e48",
+    "expected_terms": [
+      "斯坦福大学"
+    ],
+    "reference": "太阳能源（英語：，NASDAQ：SPWR）是美国一家设计及生产高效多晶硅太阳能电池、瓷砖和由斯坦福大学发明的多晶硅背触式光伏模組的企业。",
+    "section": "太阳能源"
+  },
+  {
+    "question": "能通俗说说流亡黯道吗？",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "流亡黯道",
+    "expected_document_id": "b7e179e72147cee0d5f98e86",
+    "expected_terms": [
+      "流亡黯道",
+      "英语",
+      "是一款由紐西蘭Grinding",
+      "Gear"
+    ],
+    "reference": "《流亡黯道》（英语：）是一款由紐西蘭Grinding Gear Games公司所開發的免費動作角色扮演遊戲，在2013年1月23日發布測試版，並在同年四月達到兩百萬位玩家的紀錄。",
+    "section": "流亡黯道"
+  },
+  {
+    "question": "韋維傑萊托的人口是多少？",
+    "question_type": "numeric",
+    "style": "direct",
+    "expected_title": "韋維傑萊托",
+    "expected_document_id": "2bf8283f6c778f47a48108f2",
+    "expected_terms": [
+      "57人"
+    ],
+    "reference": "韋維傑萊托是瑞士的城鎮，位於該國南部，由提契諾州負責管轄，面積40.79平方公里，海拔高度906米，2011年人口57，九成人口信奉羅馬天主教，人口密度每平方公里1人。",
+    "section": "韋維傑萊托"
+  },
+  {
+    "question": "廣島短距離交通瀨野線的車費有哪些？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "廣島短距離交通瀨野線",
+    "expected_document_id": "28b86108a287ec3fff883bbf",
+    "expected_terms": [
+      "1個月",
+      "3個月",
+      "6個月"
+    ],
+    "reference": "表格字段：字段1、通勤、通學 字段1列表：1個月、3個月、6個月",
+    "section": "廣島短距離交通瀨野線 > 車費"
+  },
+  {
+    "question": "说下發現者紀念碑背后的建造者。",
+    "question_type": "agent",
+    "style": "colloquial",
+    "expected_title": "發現者紀念碑",
+    "expected_document_id": "0efa4794b32966b7a810c7c4",
+    "expected_terms": [
+      "特姆及雕刻家里奧普度"
+    ],
+    "reference": "發現者紀念碑於1940年首次在葡萄牙世界博覽會上展示，由葡萄牙藝術建築師特姆及雕刻家里奧普度所建造。",
+    "section": "發現者紀念碑 > 建造"
+  },
+  {
+    "question": "请列出苏珊·卡伯特中关于电影的内容。",
+    "question_type": "list",
+    "style": "instructional",
+    "expected_title": "苏珊·卡伯特",
+    "expected_document_id": "5d477db5f36793fdea984f77",
+    "expected_terms": [
+      "1947年",
+      "1950年",
+      "1951年",
+      "1951年"
+    ],
+    "reference": "表格字段：年、标题、角色、笔记、Ref. 年列表：1947年、1950年、1951年、1951年、1951年、1951年、1952年、1952年、1952年、1953年、1954年、1957年、1957年、1957年、1958年、1958年、1958年、1959年、1959年",
+    "section": "苏珊·卡伯特 > 电影年表 > 电影"
+  },
+  {
+    "question": "你知道白水河电站是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "白水河电站",
+    "expected_document_id": "86e012c59e6356b4be61390f",
+    "expected_terms": [
+      "白水河电站是四川省雅安市石棉县境内的一座水电站",
+      "位于大渡河中游右岸的一级支流松林河的白水河支沟上"
+    ],
+    "reference": "白水河电站是四川省雅安市石棉县境内的一座水电站，位于大渡河中游右岸的一级支流松林河的白水河支沟上。",
+    "section": "白水河电站"
+  },
+  {
+    "question": "你知道斑條麗脂鯉是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "斑條麗脂鯉",
+    "expected_document_id": "6b246a2fdac3309c770f1702",
+    "expected_terms": [
+      "斑條麗脂鯉",
+      "為輻鰭魚綱脂鯉目脂鯉科的一個種"
+    ],
+    "reference": "斑條麗脂鯉，為輻鰭魚綱脂鯉目脂鯉科的一個種。",
+    "section": "斑條麗脂鯉"
+  },
+  {
+    "question": "定點突變的發明者是谁？",
+    "question_type": "agent",
+    "style": "direct",
+    "expected_title": "定點突變",
+    "expected_document_id": "77ba2ab9a87b48a2e3d3bf9f",
+    "expected_terms": [
+      "加拿大生化學家迈克尔·史密斯"
+    ],
+    "reference": "定點突變由加拿大生化學家迈克尔·史密斯發明，他與PCR發明者凯利·穆利斯在1993年共同獲得諾貝爾化學獎。",
+    "section": "定點突變"
+  },
+  {
+    "question": "能整理一下倒霉性爱，发狂黄片的演员列表吗？",
+    "question_type": "list",
+    "style": "instructional",
+    "expected_title": "倒霉性爱，发狂黄片",
+    "expected_document_id": "48ccc27cd4b9ae2e455d44ad",
+    "expected_terms": [
+      "凯蒂亚·帕斯卡留（Katia Pascariu）饰 艾米（Emi）",
+      "克劳迪娅·耶利米亚（Claudia Ieremia）饰 校长",
+      "亚历山德鲁·波托西安（Alexandru Potocean）",
+      "伊翁·狄奇塞努（英语"
+    ],
+    "reference": "- 凯蒂亚·帕斯卡留（Katia Pascariu）饰 艾米（Emi） - 克劳迪娅·耶利米亚（Claudia Ieremia）饰 校长 - 奥林匹亚·马莱（Olimpia Mălai）饰 露西亚夫人（Mrs. Lucia） - 尼科迪姆·温古里亚努（Nicodim Ungureanu）饰 格奥尔盖斯库先生（Mr. Gheorghescu） - 亚历山德鲁·波托西安（Alexandru Potocean） - 安迪·瓦斯卢亚努（Andi Vasluianu）饰 奥托佩努先生（Mr. Otopeanu） - 伊翁·狄奇塞努（英语：） 饰 自己",
+    "section": "倒霉性爱，发狂黄片 > 演员"
+  },
+  {
+    "question": "关于白沙撒字，用两三句话说明一下。",
+    "question_type": "definition",
+    "style": "colloquial",
+    "expected_title": "白沙撒字",
+    "expected_document_id": "c7f65ceae91001c65a4a9eb1",
+    "expected_terms": [
+      "白沙撒字是旧时相声演员演出时的开始时所表演节目",
+      "其作用主要是为了招徕观众",
+      "引人注意"
+    ],
+    "reference": "白沙撒字是旧时相声演员演出时的开始时所表演节目，其作用主要是为了招徕观众，引人注意。",
+    "section": "白沙撒字"
+  },
+  {
+    "question": "甲府市位于哪里？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "甲府市",
+    "expected_document_id": "20699b0a4fa972c36e55c100",
+    "expected_terms": [
+      "甲府盆地内"
+    ],
+    "reference": "甲府市的轄區成南北狹長狀並地處甲府盆地内。",
+    "section": "甲府市 > 地理"
+  },
+  {
+    "question": "荃灣公立何傳耀紀念中學的外部連結有哪些？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "荃灣公立何傳耀紀念中學",
+    "expected_document_id": "083121836fcd890e74dd551a",
+    "expected_terms": [
+      "家庭與學校合作事宜委員會 中學概覽 （页面存档备份，存于）",
+      "學校大全 （页面存档备份，存于）",
+      "官方網站 （页面存档备份，存于）"
+    ],
+    "reference": "- 家庭與學校合作事宜委員會 中學概覽 （页面存档备份，存于） - 學校大全 （页面存档备份，存于） - 官方網站 （页面存档备份，存于）",
+    "section": "荃灣公立何傳耀紀念中學 > 外部連結"
+  },
+  {
+    "question": "我们要洞房在演员方面都包括什么？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "我们要洞房",
+    "expected_document_id": "5360784fb6507585dc5cad35",
+    "expected_terms": [
+      "秦沛",
+      "欧阳莎菲",
+      "石天",
+      "邢慧"
+    ],
+    "reference": "- 秦沛 - 欧阳莎菲 - 石天 - 邢慧 - 张佩山 - 曾楚霖 - 李文洲",
+    "section": "我们要洞房 > 演员"
+  },
+  {
+    "question": "你知道浮梁镇是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "浮梁镇",
+    "expected_document_id": "de683a7b61bdf213f694d62e",
+    "expected_terms": [
+      "浮梁镇",
+      "是中华人民共和国江西省景德镇市浮梁县下辖的一个乡",
+      "镇级行政单位"
+    ],
+    "reference": "浮梁镇，是中华人民共和国江西省景德镇市浮梁县下辖的一个乡镇级行政单位。",
+    "section": "浮梁镇"
+  },
+  {
+    "question": "李村基督教堂的图集有哪些？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "李村基督教堂",
+    "expected_document_id": "fdd00f5a56a61a271fd8c29e",
+    "expected_terms": [
+      "叠涩与刻有十字架的瓦当与滴水瓦",
+      "内景，祭坛方向",
+      "内景，正门方向",
+      "天花板"
+    ],
+    "reference": "- 叠涩与刻有十字架的瓦当与滴水瓦 - 内景，祭坛方向 - 内景，正门方向 - 天花板",
+    "section": "李村基督教堂 > 图集"
+  },
+  {
+    "question": "寄葉二號B型是谁开发的？",
+    "question_type": "agent",
+    "style": "direct",
+    "expected_title": "寄葉二號B型",
+    "expected_document_id": "bf1bda2e097e8344e1bdb92d",
+    "expected_terms": [
+      "白金工作室"
+    ],
+    "reference": "寄葉二號B型（日语：，英语：），简称2B，是2017年由白金工作室开发、史克威尔艾尼克斯发行的《龙背上的骑兵系列》系列的衍生作品《尼爾：自動人形》电子游戏中的虚构人形機器人（作品內稱「人造人」）。",
+    "section": "寄葉二號B型"
+  },
+  {
+    "question": "丸龜市位于哪里？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "丸龜市",
+    "expected_document_id": "11e02166b87783950f31601e",
+    "expected_terms": [
+      "瀨戶內海上的鹽飽群島中的",
+      "個島嶼",
+      "包括本島"
+    ],
+    "reference": "丸龜市地處讚岐平原上，轄區包括位於瀨戶內海上的鹽飽群島中的11個島嶼，包括本島、廣島、手島、小手島、牛島等島嶼。",
+    "section": "丸龜市 > 地理"
+  },
+  {
+    "question": "请问俄罗斯国家爱乐乐团什么时候成立？",
+    "question_type": "time",
+    "style": "instructional",
+    "expected_title": "俄罗斯国家爱乐乐团",
+    "expected_document_id": "e6a2fa4f0ce182202c31a352",
+    "expected_terms": [
+      "2003年"
+    ],
+    "reference": "俄罗斯国家爱乐乐团（俄语：，英語：）成立于2003年，由俄罗斯总统弗拉基米尔·普京和俄罗斯联邦文化部提议创建。",
+    "section": "俄罗斯国家爱乐乐团"
+  },
+  {
+    "question": "香港航海學校是谁創建的？",
+    "question_type": "agent",
+    "style": "direct",
+    "expected_title": "香港航海學校",
+    "expected_document_id": "9f2862240ed79441d5920127",
+    "expected_terms": [
+      "御用大律師貝納祺 、簡悅強爵士、陳永安夫人、陳南昌先生及何明華會督等五位社會賢達"
+    ],
+    "reference": "香港航海學校（英語：，簡稱：赤航，HKSS），位於香港赤柱東頭灣道13-15號，於1946年，由御用大律師貝納祺 、簡悅強爵士、陳永安夫人、陳南昌先生及何明華會督等五位社會賢達創建。",
+    "section": "香港航海學校"
+  },
+  {
+    "question": "请简要介绍一下蔡炳瑞。",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "蔡炳瑞",
+    "expected_document_id": "45d06ed1b8a467b96ecd898b",
+    "expected_terms": [
+      "蔡炳瑞",
+      "聖名若瑟",
+      "是中國天主教福州總教區的主教",
+      "為教宗和中华人民共和国政府所承認"
+    ],
+    "reference": "蔡炳瑞（1966年9月15日—），聖名若瑟，是中國天主教福州總教區的主教，為教宗和中华人民共和国政府所承認。",
+    "section": "蔡炳瑞"
+  },
+  {
+    "question": "大藏寺具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "大藏寺",
+    "expected_document_id": "13e469f9acdb6205299c01c9",
+    "expected_terms": [
+      "曲科尔山腰",
+      "寺院群落以坡而建",
+      "又是顺山脊而落"
+    ],
+    "reference": "大藏寺地处曲科尔山腰，寺院群落以坡而建，又是顺山脊而落。",
+    "section": "大藏寺 > 周邊情況"
+  },
+  {
+    "question": "能通俗说说笑笑大搞作吗？",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "笑笑大搞作",
+    "expected_document_id": "073efe24f6fb925138e614e7",
+    "expected_terms": [
+      "笑笑大搞作",
+      "just",
+      "for",
+      "laughs"
+    ],
+    "reference": "《笑笑大搞作 just for laughs》是一個加拿大電視節目，著眼於一些在此節目裏最惹笑的片段，而通常於加拿大國營頻道、CTV Comedy Channel和TVA電視網播放。",
+    "section": "笑笑大搞作"
+  },
+  {
+    "question": "关于永康学派，用两三句话说明一下。",
+    "question_type": "definition",
+    "style": "colloquial",
+    "expected_title": "永康学派",
+    "expected_document_id": "997279be27a455848ef177db",
+    "expected_terms": [
+      "永康学派",
+      "或称",
+      "永康事功学派",
+      "是宋朝重要的一个儒家学派"
+    ],
+    "reference": "永康学派，或称“永康事功学派”，是宋朝重要的一个儒家学派，其代表人物是南宋哲学家、文学家陈亮。",
+    "section": "永康学派"
+  },
+  {
+    "question": "高潤生是什么？",
+    "question_type": "definition",
+    "style": "direct",
+    "expected_title": "高潤生",
+    "expected_document_id": "e3877a259e5a73730a919096",
+    "expected_terms": [
+      "高潤生生于咸豐八年",
+      "是贊皇縣教諭高瑞和之長孫",
+      "戶部主事高釗之子"
+    ],
+    "reference": "高潤生生于咸豐八年（1858年），是贊皇縣教諭高瑞和之長孫，戶部主事高釗之子。",
+    "section": "高潤生 > 生平"
+  },
+  {
+    "question": "苏黎世圣经译本是什么？",
+    "question_type": "definition",
+    "style": "direct",
+    "expected_title": "苏黎世圣经译本",
+    "expected_document_id": "46fae6261697c8ef3ce98032",
+    "expected_terms": [
+      "苏黎世圣经译本",
+      "也被称为慈運理聖經译本",
+      "是历史上的一个基于慈运理翻譯的聖經譯本"
+    ],
+    "reference": "苏黎世圣经译本（，也被称为慈運理聖經译本，）是历史上的一个基于慈运理翻譯的聖經譯本。",
+    "section": "苏黎世圣经译本"
+  },
+  {
+    "question": "中国航空博物馆具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "中国航空博物馆",
+    "expected_document_id": "3ec880a343b5788db941a53a",
+    "expected_terms": [
+      "北京市昌平区小汤山镇",
+      "坐落在昌平大汤山脚下的沙河机场"
+    ],
+    "reference": "中国航空博物馆（英語：）位于北京市昌平区小汤山镇，坐落在昌平大汤山脚下的沙河机场。",
+    "section": "中国航空博物馆"
+  },
+  {
+    "question": "说下泰坦殘骸背后的創作者。",
+    "question_type": "agent",
+    "style": "colloquial",
+    "expected_title": "泰坦殘骸",
+    "expected_document_id": "fbe8bdc565dc351c6c0ed44e",
+    "expected_terms": [
+      "摩根·羅伯森"
+    ],
+    "reference": "本書由摩根·羅伯森創作，原書名為《徒勞無功》（），出版於1898年，當時並未引起太大迴響。",
+    "section": "泰坦殘骸 > 與鐵達尼號的關聯"
+  },
+  {
+    "question": "我不太了解撒姆魯，它指的是什么？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "撒姆魯",
+    "expected_document_id": "28a05bab6c7d222b954b7ced",
+    "expected_terms": [
+      "撒姆魯是高士佛部落的族人"
+    ],
+    "reference": "撒姆魯是高士佛部落的族人。",
+    "section": "撒姆魯 > 傳說 > 偷竊"
+  },
+  {
+    "question": "请问Topcraft什么时候成立？",
+    "question_type": "time",
+    "style": "instructional",
+    "expected_title": "Topcraft",
+    "expected_document_id": "e8d33188cfc3763b75381020",
+    "expected_terms": [
+      "1972年"
+    ],
+    "reference": "Topcraft（日语：）是成立於1972年、由曾在東映動畫任職的原徹所創建之日本動畫工作室。",
+    "section": "Topcraft"
+  },
+  {
+    "question": "你知道生存技能是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "生存技能",
+    "expected_document_id": "fcf9a2900e9900f52da4f79b",
+    "expected_terms": [
+      "生存技能是指一个人为了在自然环境或建成环境中生存",
+      "而可能用到的技能"
+    ],
+    "reference": "生存技能是指一个人为了在自然环境或建成环境中生存而可能用到的技能。",
+    "section": "生存技能"
+  },
+  {
+    "question": "奥塞布尔具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "奥塞布尔",
+    "expected_document_id": "9eb96fc0f6a919032e7fc858",
+    "expected_terms": [
+      "美国纽约州克林顿县的一个镇",
+      "地处克林顿县东南角",
+      "普拉茨堡以南"
+    ],
+    "reference": "奥塞布尔（英語：）是位于美国纽约州克林顿县的一个镇，地处克林顿县东南角、普拉茨堡以南，建于1839年。",
+    "section": "奥塞布尔"
+  },
+  {
+    "question": "请问谁發明了菲涅耳透鏡？",
+    "question_type": "agent",
+    "style": "instructional",
+    "expected_title": "菲涅耳透鏡",
+    "expected_document_id": "fce4a0f29b7b931c0745f917",
+    "expected_terms": [
+      "法國物理學家奧古斯丁·菲涅耳"
+    ],
+    "reference": "菲涅耳透鏡（英語：），又譯菲涅尔透镜，別稱螺纹透镜，是由法國物理學家奧古斯丁·菲涅耳所發明的一種透鏡。",
+    "section": "菲涅耳透鏡"
+  },
+  {
+    "question": "王沃是哪一年逝世的？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "王沃",
+    "expected_document_id": "6dcabdd055f561e494b7b533",
+    "expected_terms": [
+      "1943年"
+    ],
+    "reference": "王沃於昭和18年（1943）8月25日逝世，葬於覆鼎金，其建於1937年之哈瑪星延平街宅邸仍存。",
+    "section": "王沃 > 生平"
+  },
+  {
+    "question": "Frog City Software成立的具体时间是什么？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "Frog City Software",
+    "expected_document_id": "f60ce48f724f9313f0910263",
+    "expected_terms": [
+      "1995年"
+    ],
+    "reference": "Frog City Software，是一个游戏开发商，于在1995年成立，该工作室侧重于战略游戏。",
+    "section": "Frog City Software"
+  },
+  {
+    "question": "10月30日的7世紀有哪些？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "10月30日",
+    "expected_document_id": "056c4fd93a233f8a89f66011",
+    "expected_terms": [
+      "637年",
+      "758年",
+      "1226年",
+      "1270年"
+    ],
+    "reference": "- 637年：阿拉伯帝国占领波斯薩珊王朝城市安条克。 - 758年：唐帝國貿易城市广州遭到阿拉伯和波斯海盗攻击。 - 1226年：越南李朝重要官員陳守度趁著李昭皇年幼，安排自己姪兒陳煚獲得禪讓並建立陳朝。 - 1270年：西西里和突尼斯哈夫斯王朝签订协议，十字军解除对突尼斯城的围攻，第八次十字军东征结束。 - 1485年：亨利七世加冕為英格蘭國王，成為都鐸王朝首位國王。 - 1644年：清世祖福临在紫禁城即皇帝位，年號順治。",
+    "section": "10月30日 > 大事记 > 7世紀"
+  },
+  {
+    "question": "蔡振南在錄音室專輯方面都包括什么？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "蔡振南",
+    "expected_document_id": "13e55462a1d2b2f754225bbf",
+    "expected_terms": [
+      "《生命的太陽》",
+      "《南歌》",
+      "《可愛可恨》",
+      "《南哥的台灣料理精選輯》"
+    ],
+    "reference": "表格字段：專輯名稱、發行日期、曲目 專輯名稱列表：《生命的太陽》、《南歌》、《可愛可恨》、《南哥的台灣料理精選輯》、《台灣南歌精選輯全員集合》",
+    "section": "蔡振南 > 影視/音樂作品 > 音樂作品 > 錄音室專輯"
+  },
+  {
+    "question": "请简要介绍一下慈雙冠麗魚。",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "慈雙冠麗魚",
+    "expected_document_id": "049e41258f7bdd9f29179639",
+    "expected_terms": [
+      "慈雙冠麗魚",
+      "為輻鰭魚綱鱸形目隆頭魚亞目慈鯛科的其中一種",
+      "分布於中美洲尼加拉瓜Apoyo湖流域",
+      "為特有種"
+    ],
+    "reference": "慈雙冠麗魚，為輻鰭魚綱鱸形目隆頭魚亞目慈鯛科的其中一種，分布於中美洲尼加拉瓜Apoyo湖流域，為特有種，體長可達16.8公分，棲息在湖泊的中底層水域，生活習性不明。",
+    "section": "慈雙冠麗魚"
+  },
+  {
+    "question": "你知道广州市第一巴士是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "广州市第一巴士",
+    "expected_document_id": "a81555bd303616850ea93291",
+    "expected_terms": [
+      "广州市第一巴士有限公司",
+      "简称第一巴士",
+      "是一间由广州市一汽巴士有限公司",
+      "廣州市電車公司和广州新穗巴士有限公司出资成立的公"
+    ],
+    "reference": "广州市第一巴士有限公司（简称第一巴士）是一间由广州市一汽巴士有限公司、廣州市電車公司和广州新穗巴士有限公司出资成立的公司，注册资金为1000万元人民币。",
+    "section": "广州市第一巴士"
+  },
+  {
+    "question": "想去關原加油站，它的位置在哪里？",
+    "question_type": "location",
+    "style": "conversational",
+    "expected_title": "關原加油站",
+    "expected_document_id": "d91a97c5f5ce130f4a1b20cf",
+    "expected_terms": [
+      "花蓮縣秀林鄉關原",
+      "由油品行銷事業部東區營業處負責管理營運"
+    ],
+    "reference": "關原加油站是台灣中油公司直營的加油站，位於花蓮縣秀林鄉關原，由油品行銷事業部東區營業處負責管理營運。",
+    "section": "關原加油站"
+  },
+  {
+    "question": "说下开平矿务局成立的年份。",
+    "question_type": "time",
+    "style": "colloquial",
+    "expected_title": "开平矿务局",
+    "expected_document_id": "33be17c8535e2655b7a99f4f",
+    "expected_terms": [
+      "1878年"
+    ],
+    "reference": "开平矿务局，成立于清光绪四年（1878年），由李鸿章委派轮船招商局总办唐廷枢在直隶开平镇（今河北省唐山市开平区）创建，是中国近代首批官督商办的股份制煤矿企业之一，被称为“中国第一佳矿”。",
+    "section": "开平矿务局"
+  },
+  {
+    "question": "我想知道池田1號墳有哪些墓室形態。",
+    "question_type": "list",
+    "style": "conversational",
+    "expected_title": "池田1號墳",
+    "expected_document_id": "80e7d222b7cc3f197b1fc6ab",
+    "expected_terms": [
+      "石室全長",
+      "奧室",
+      "前室"
+    ],
+    "reference": "- 石室全長：現在是9.9米（推測原本長12米） - 奧室：長3.2米，寬度最大2.4米 - 前室：長2.8米，寬2.2米",
+    "section": "池田1號墳 > 墓室形態"
+  },
+  {
+    "question": "你知道特效導演由谁導演吗？",
+    "question_type": "agent",
+    "style": "conversational",
+    "expected_title": "特效導演",
+    "expected_document_id": "1e64fcc243dad4d08f78441a",
+    "expected_terms": [
+      "一位熟練特效和模型操作技術"
+    ],
+    "reference": "特效導演，又可以稱之為「特攝導演」或者「特技導演」，一般是指日本人在拍攝特攝片的時候，由一位熟練特效和模型操作技術的導演，在日本稱為「特撮監督」、「特技監督」、「特殊技術」等稱呼。",
+    "section": "特效導演"
+  },
+  {
+    "question": "我不太了解马里奥豪洛姆，它指的是什么？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "马里奥豪洛姆",
+    "expected_document_id": "5b9d005b1b8d9a2102825711",
+    "expected_terms": [
+      "马里奥豪洛姆",
+      "匈牙利语",
+      "是匈牙利科马罗姆",
+      "埃斯泰尔戈姆州所辖的一个村"
+    ],
+    "reference": "马里奥豪洛姆（匈牙利语：），是匈牙利科马罗姆-埃斯泰尔戈姆州所辖的一个村。",
+    "section": "马里奥豪洛姆"
+  },
+  {
+    "question": "请列出九龍區專線小巴26線中关于八通達轉乘優惠的内容。",
+    "question_type": "list",
+    "style": "instructional",
+    "expected_title": "九龍區專線小巴26線",
+    "expected_document_id": "f563a00fedcf7872a44d682d",
+    "expected_terms": [
+      "26線、26A線、26X線轉乘26H線，第二程減收$3.80。",
+      "8線、8S線轉乘26H線，第二程減收$1.80。",
+      "26線轉乘26D線，第二程減收$2。"
+    ],
+    "reference": "- 26線、26A線、26X線轉乘26H線，第二程減收$3.80。 - 8線、8S線轉乘26H線，第二程減收$1.80。 - 26線轉乘26D線，第二程減收$2。 - 26線到紅磡站或黃埔站轉乘港鐵，或在上述兩站出閘後轉乘26線，第二程減收$1（成人）或$0.5（小童／長者）。",
+    "section": "九龍區專線小巴26線 > 八通達轉乘優惠"
+  },
+  {
+    "question": "你知道格克切貝伊的人口数据吗？",
+    "question_type": "numeric",
+    "style": "conversational",
+    "expected_title": "格克切貝伊",
+    "expected_document_id": "97324539c986ba29fe8c4845",
+    "expected_terms": [
+      "7,234人"
+    ],
+    "reference": "格克切貝伊是土耳其的城鎮，位於該國北部，由宗古爾達克省負責管轄，面積220平方公里，海拔高度61米，該地區約六成面積被森林覆蓋，2011年人口7,234。",
+    "section": "格克切貝伊"
+  },
+  {
+    "question": "Buildbox是谁创立的？",
+    "question_type": "agent",
+    "style": "direct",
+    "expected_title": "Buildbox",
+    "expected_document_id": "b510801ad011ec1de754224e",
+    "expected_terms": [
+      "Trey Smith"
+    ],
+    "reference": "Buildbox由Trey Smith于2014年8月创立，其目标是“使游戏开发民主化，为任何人创造一种无需编码即可创建视频游戏的方式”它是一个跨平台开发工具，可以在Windows操作系统和OSX上运行。",
+    "section": "Buildbox"
+  },
+  {
+    "question": "说下希腊火药与弹药公司成立的年份。",
+    "question_type": "time",
+    "style": "colloquial",
+    "expected_title": "希腊火药与弹药公司",
+    "expected_document_id": "d0224a84f7d24abdb4c16788",
+    "expected_terms": [
+      "1874年"
+    ],
+    "reference": "希腊火药与弹药公司，常省作皮尔卡尔（ΠΥΡΚΑΛ），为希腊最早的武器生产单位之一，成立于1874年，为希腊全国主要的军火及爆炸品生产者。",
+    "section": "希腊火药与弹药公司"
+  },
+  {
+    "question": "请问谁製作了個資風暴：劍橋分析事件？",
+    "question_type": "agent",
+    "style": "instructional",
+    "expected_title": "個資風暴：劍橋分析事件",
+    "expected_document_id": "959da54d5127382b01f614b4",
+    "expected_terms": [
+      "Jehane Noujaim和Karim Amer"
+    ],
+    "reference": "《個資風暴：劍橋分析事件》（英語：）是一部由Jehane Noujaim和Karim Amer製作和導演的有關Facebook-劍橋分析數據醜聞的2019年紀錄片。",
+    "section": "個資風暴：劍橋分析事件"
+  },
+  {
+    "question": "能通俗说说皮卡迪利劇院吗？",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "皮卡迪利劇院",
+    "expected_document_id": "7422479b82bcb605ac13c92a",
+    "expected_terms": [
+      "皮卡迪利劇院",
+      "piccadilly",
+      "theatre",
+      "是倫敦西區的劇院之一"
+    ],
+    "reference": "皮卡迪利劇院（piccadilly theatre）是倫敦西區的劇院之一，位於丹芒街16號。",
+    "section": "皮卡迪利劇院"
+  },
+  {
+    "question": "请问谁开发了Poly Bridge？",
+    "question_type": "agent",
+    "style": "instructional",
+    "expected_title": "Poly Bridge",
+    "expected_document_id": "be8c51479e2ae9bb89f0e8b0",
+    "expected_terms": [
+      "新西兰的独立工作室Dry Cactus"
+    ],
+    "reference": "《Poly Bridge》是一款模拟益智游戏，由新西兰的独立工作室Dry Cactus开发，音乐由加拿大作曲家Adrian Talens创作。",
+    "section": "Poly Bridge"
+  },
+  {
+    "question": "想去匈牙利農業博物館，它的位置在哪里？",
+    "question_type": "location",
+    "style": "conversational",
+    "expected_title": "匈牙利農業博物館",
+    "expected_document_id": "5cabfc79a676a94d2e6bca33",
+    "expected_terms": [
+      "匈牙利首都布達佩斯的一座博物館",
+      "地處城市公園之內"
+    ],
+    "reference": "匈牙利農業博物館（匈牙利語：）是位於匈牙利首都布達佩斯的一座博物館，地處城市公園之內。",
+    "section": "匈牙利農業博物館"
+  },
+  {
+    "question": "请问羅文錦什么时候出生？",
+    "question_type": "time",
+    "style": "instructional",
+    "expected_title": "羅文錦",
+    "expected_document_id": "7f85601953d8bdf9e0c9b3be",
+    "expected_terms": [
+      "1893年"
+    ],
+    "reference": "羅文錦於1893年在廣東番禺出生，是香港開埠初期富商羅長肇的長子。",
+    "section": "羅文錦 > 生平"
+  },
+  {
+    "question": "迈克尔·卢卡斯出生的具体时间是什么？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "迈克尔·卢卡斯",
+    "expected_document_id": "9fdea5e364ff34ab7c970293",
+    "expected_terms": [
+      "1972年3月10日"
+    ],
+    "reference": "迈克尔·卢卡斯（英語：，1972年3月10日-），出生時名為安德列·利沃维奇·特雷瓦斯（俄語：，羅馬化：Andrei Lvovich Treivas），是一名俄羅斯-以色列-美國GV男優、導演、社会活动家，纽约最大的男同性戀色情片公司盧卡斯娛樂的創建者和執行長。",
+    "section": "迈克尔·卢卡斯"
+  },
+  {
+    "question": "能通俗说说散兵镇吗？",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "散兵镇",
+    "expected_document_id": "d2ef12d4cc7c9c783091def7",
+    "expected_terms": [
+      "散兵镇",
+      "是中华人民共和国安徽省合肥市巢湖市下辖的一个乡镇",
+      "级行政单位"
+    ],
+    "reference": "散兵镇，是中华人民共和国安徽省合肥市巢湖市下辖的一个乡镇级行政单位。",
+    "section": "散兵镇"
+  },
+  {
+    "question": "斯洛博齊亞具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "斯洛博齊亞",
+    "expected_document_id": "44e8c6067f2f0cb5da976a8a",
+    "expected_terms": [
+      "罗马尼亚中部",
+      "地处雅洛米察河沿岸",
+      "西距布加勒斯特"
+    ],
+    "reference": "斯洛博齊亞位于罗马尼亚中部，地处雅洛米察河沿岸，西距布加勒斯特90多公里。",
+    "section": "斯洛博齊亞 > 地理"
+  },
+  {
+    "question": "请简要介绍一下英語完全征服。",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "英語完全征服",
+    "expected_document_id": "66439df1a9ba002f4b5b82ad",
+    "expected_terms": [
+      "英語完全征服",
+      "韓語",
+      "英語",
+      "年上映的韓國喜劇片"
+    ],
+    "reference": "《英語完全征服》（韓語：，英語：）是2003年上映的韓國喜劇片，由《日出城市》、《武士》的導演金性洙執導，李娜英、張赫主演。",
+    "section": "英語完全征服"
+  },
+  {
+    "question": "你知道念珠冷水花是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "念珠冷水花",
+    "expected_document_id": "fb8bad9500b4a92048dedaf7",
+    "expected_terms": [
+      "念珠冷水花",
+      "学名",
+      "是荨麻科冷水花属的植物",
+      "是中国的特有植物"
+    ],
+    "reference": "念珠冷水花（学名：）是荨麻科冷水花属的植物，是中国的特有植物。",
+    "section": "念珠冷水花"
+  },
+  {
+    "question": "MediaWorks在相關項目方面都包括什么？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "MediaWorks",
+    "expected_document_id": "69a4eaf80dd981cc20b34550",
+    "expected_terms": [
+      "角川控股集團",
+      "角川書店",
+      "ASCII",
+      "ASCII Media Works"
+    ],
+    "reference": "- 角川控股集團 - 角川書店 - ASCII - ASCII Media Works - Enterbrain",
+    "section": "MediaWorks > 相關項目"
+  },
+  {
+    "question": "一党优势制的非洲有哪些？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "一党优势制",
+    "expected_document_id": "1aa68bb30be9ffd55a4756e8",
+    "expected_terms": [
+      "阿尔及利亚",
+      "苏丹",
+      "埃及",
+      "突尼西亞"
+    ],
+    "reference": "- 阿尔及利亚：民族解放陣線自1962年从法国独立后执政至今，只在1992年1月14日－1992年6月29日和1994年1月31日－1999年4月27日短暂沦为在野党。 - 苏丹：1998年至2019年間的全國大會黨，曾是蘇丹的執政黨，簡稱全國大（NCP），前身為蘇丹全國伊斯蘭陣線（NIF），由穆斯林兄弟會演變而成。1989年巴希爾发动軍事政變上台，NIF成為執政黨，蘇丹開始實行伊斯蘭教法，1998年改組為全國大會黨，直到2019年在政变中被推翻為止。 - 埃及：1978年至2011年間的埃及民族民主黨，在2011年的阿拉伯之春中被推翻。2012年穆斯林兄弟會的自由與正義黨成為議會的第一大黨上台執政，但在隔年又遭塞西上將发动政變推翻。 - 突尼西亞：1957年至2011年間的突尼西亞憲政民主聯盟。2011年阿拉伯之春茉莉花革命被推翻下台。 - 南蘇丹：南苏丹自2011年独立建国之后，一直由苏丹人民解放运动执政。 - 奈及利亞：奈及利亞人民民主黨於1999年至2015年間皆為該國執政黨。 - 安哥拉：安哥拉人民解放運動自1975年安哥拉獨立以來一直為執政黨。 - 喀麦隆：總統保羅·比亞所領導的喀麥隆人民民主聯盟（英语：）（RDPC）仍舊絕對主導著國會（在2007年7月舉行的國會大選中，該黨獲得了總共163席中的153席），這為國會通過符合他意志的法律奠定了基礎。 - ：由軍事領袖伊德里斯·德比長期領導的愛國拯救運動在1992年查德取消黨禁前是查德的唯一合法政黨。 - 刚果共和国：剛果勞動黨1970年至1991年為剛果人民共和國唯一合法政黨。1992年在多黨選舉中首次失利，成為反對黨。1997年10月剛果（布）內戰結束後，重新成為執政黨。 - 刚果民主共和国：約瑟夫·卡比拉於2002年創立的重建與民主人民黨（PPRD），自創黨以來即執政迄今。 - ：2000年至2010年間洛朗·巴博領導下的象牙海岸人民陣線。 - 赤道几内亚：赤道幾內亞民主黨在特奧多羅·奧比昂·恩圭馬·姆巴索戈領導下從1979年一直執政至今。 - 加彭：自加彭獨立以來，加彭民主黨一直掌握著政權，其領袖萊昂·姆巴和哈吉·奧馬爾·邦戈相繼擔任加彭總統。1990年之前是加彭唯一的合法政黨。在最近的2006年選舉中，加彭民主黨獲得了全部120個議席中的80個，占據絕對優勢。 - ：甘比亞人民進步黨於1994年以前曾為甘比亞之萬年執政黨。後來葉海亞·賈梅發動政變並領導愛國調整和建設聯盟（英语：）自1996年一直執政至今，期間贏得了4次民主選舉。但在2016年的選舉中被反對黨聯盟的甘比亞聯合民主黨參選者阿達馬·巴羅擊敗，並將於2017年年初完成總統任期。 - 布吉納法索：1996年至2014年期間的布吉納法索爭取民主和進步大會（英语：）於龔保雷領導下長期執政直至被政變推翻為止。 - ：皮埃爾·恩庫倫齊扎領導的國家民主保衛委員會-保衛民主力量（CNDD-FDD）自2005年起執政迄今。 - 莫桑比克：莫三比克解放陣線黨成立於1962年，初名莫三比克解放陣線。1994年，該黨贏得了莫三比克首次多黨大選。此後多次大選，該黨均獲勝，使該黨一直保持著執政黨地位。 - 尚比亞：多黨民主運動於1991年到2001年間皆在國會中佔據絕對多數議席。創黨人弗雷德里克·奇盧巴於1991於民主選舉中勝出，終結了來自聯合民族獨立黨的肯尼思·卡翁達27年的統治。其後的兩任總統也都來自於該黨，於2011年在野。",
+    "section": "一党优势制 > 例子 > 非洲"
+  },
+  {
+    "question": "你知道宿毛市属于哪里吗？",
+    "question_type": "location",
+    "style": "conversational",
+    "expected_title": "宿毛市",
+    "expected_document_id": "393c1978b37842384da4f32e",
+    "expected_terms": [
+      "日本高知縣西南部的城市",
+      "地處足摺宇和海國立公園的範圍內"
+    ],
+    "reference": "宿毛市（日语：／ Sukumo shi）是位於日本高知縣西南部的城市，地處足摺宇和海國立公園的範圍內。",
+    "section": "宿毛市"
+  },
+  {
+    "question": "想去界首市，它的位置在哪里？",
+    "question_type": "location",
+    "style": "conversational",
+    "expected_title": "界首市",
+    "expected_document_id": "ef06b287b254dfa99880ca5c",
+    "expected_terms": [
+      "安徽省西北部边陲"
+    ],
+    "reference": "界首市位于安徽省西北部边陲。",
+    "section": "界首市 > 地理"
+  },
+  {
+    "question": "说下帕爾佩爾斯人口的具体数字。",
+    "question_type": "numeric",
+    "style": "colloquial",
+    "expected_title": "帕爾佩爾斯",
+    "expected_document_id": "0c59312badaf5fcdd8266bf9",
+    "expected_terms": [
+      "453人"
+    ],
+    "reference": "帕爾佩爾斯是瑞士的城鎮，位於該國東部，由格勞賓登州負責管轄，面積4.59平方公里，海拔高度778米，2011年人口453，人口密度每平方公里99人。",
+    "section": "帕爾佩爾斯"
+  },
+  {
+    "question": "说下回轉變流機背后的发明者。",
+    "question_type": "agent",
+    "style": "colloquial",
+    "expected_title": "回轉變流機",
+    "expected_document_id": "b910420dc279bff591a2e1d2",
+    "expected_terms": [
+      "Charles S.Bradley"
+    ],
+    "reference": "回轉變流機由Charles S.Bradley于1888年发明。",
+    "section": "回轉變流機 > 历史"
+  },
+  {
+    "question": "请问城南书院在什么地方？",
+    "question_type": "location",
+    "style": "instructional",
+    "expected_title": "城南书院",
+    "expected_document_id": "4c6004935601745e64679d58",
+    "expected_terms": [
+      "湖南省长沙市天心区境内",
+      "地处书院路中段"
+    ],
+    "reference": "城南书院位于湖南省长沙市天心区境内，地处书院路中段。",
+    "section": "城南书院"
+  },
+  {
+    "question": "从资料看，萨非王朝衰落是哪些因素造成的？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "萨非王朝",
+    "expected_document_id": "07733fb14c202eefb1f880ba",
+    "expected_terms": [
+      "虽然面临国库空虚和外患的境况",
+      "但是这些后来的沙阿生活非常奢侈",
+      "据说苏莱曼一世接连八年不出他的后宫",
+      "沙阿侯赛因是个酒鬼"
+    ],
+    "reference": "虽然面临国库空虚和外患的境况；但是这些后来的沙阿生活非常奢侈。据说苏莱曼一世接连八年不出他的后宫，沙阿侯赛因是个酒鬼。这些沙阿施加重税、打击投资、促进了官员的腐败。萨非王朝的边界多次受到劫掠：俾路支部落于1698年劫掠克尔曼，阿富汗人于1717年劫掠呼罗珊，美索不达米亚不断受到半岛阿拉伯人的洗劫。",
+    "section": "萨非王朝 > 衰落"
+  },
+  {
+    "question": "请简要介绍一下绣线菊族。",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "绣线菊族",
+    "expected_document_id": "44e91e26b79f63296e340061",
+    "expected_terms": [
+      "绣线菊族",
+      "Spiraeeae",
+      "是蔷薇科的一个族",
+      "属于桃亚科"
+    ],
+    "reference": "绣线菊族（Spiraeeae）是蔷薇科的一个族，属于桃亚科。",
+    "section": "绣线菊族"
+  },
+  {
+    "question": "说下松平賴恭出生的年份。",
+    "question_type": "time",
+    "style": "colloquial",
+    "expected_title": "松平賴恭",
+    "expected_document_id": "26e02cb2ba1c6e90142b8434",
+    "expected_terms": [
+      "1711年"
+    ],
+    "reference": "松平賴恭在正德元年（1711年）出生，是陸奧守山藩主松平賴貞第五子，高松藩第四代藩主松平賴桓的養子，元文四年（1739年）因賴桓逝世，29歲的他繼承家督位置。",
+    "section": "松平賴恭 > 生涯"
+  },
+  {
+    "question": "你知道高廷宇是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "高廷宇",
+    "expected_document_id": "3720fb5f2ac5e48f6e8e0915",
+    "expected_terms": [
+      "高廷宇",
+      "出生於新北市板橋區",
+      "是台灣的演員及模特兒",
+      "並在力士樂運動健身工坊擔任總教練"
+    ],
+    "reference": "高廷宇（7月15日—）出生於新北市板橋區，是台灣的演員及模特兒，並在力士樂運動健身工坊擔任總教練。",
+    "section": "高廷宇"
+  },
+  {
+    "question": "请列出混乱之子中关于演員的内容。",
+    "question_type": "list",
+    "style": "instructional",
+    "expected_title": "混乱之子",
+    "expected_document_id": "324e8cddf365ddde0683b7f5",
+    "expected_terms": [
+      "賈克斯·泰勒（英语",
+      "克雷·莫羅（英语",
+      "伽瑪·泰勒·莫羅（英语",
+      "鮑比·蒙森（英语"
+    ],
+    "reference": "- 賈克斯·泰勒（英语：）（查理·杭南飾演） — 「混亂之子」副會長，「混亂之子」創幫九人之一約翰·泰勒的兒子。 - 克雷·莫羅（英语：）（朗·帕爾曼飾演） — 「混亂之子」會長，也是創幫九人之一，賈克斯的繼父。 - 伽瑪·泰勒·莫羅（英语：）（卡特夫·薩加爾（英语：）飾演） — 賈克斯的母親，「混亂之子」創幫九人之一約翰·泰勒的遺孀，會長的妻子。 - 鮑比·蒙森（英语：）（馬克·伯恩·約尼爾（英语：）飾演） — 「混亂之子」秘書長兼財務長。 - 蒂格·崔格（英语：）（金·高斯飾演） — 「混亂之子」軍士長。 - 奇博斯·特爾福（英语：）（湯米·弗拉納根飾演） — 「混亂之子」軍士長。 - 〝半袋〞伊普斯（英语：）（強尼·路易斯（英语：）飾演） — 「混亂之子」見習成員。 - 奧佩·溫斯頓（英语：）（雷恩·赫斯（英语：）飾演） — 「混亂之子」成員，擁有殺人勳章。 - 派尼·溫斯頓（英语：）（威廉·勒金（英语：）飾演） — 「混亂之子」成員，也是創幫九人之一，奧佩的父親。 - 祖斯·歐提茲（英语：）（迪奧·羅西飾演） — 「混亂之子」成員，擁有殺人勳章。 - 塔拉·諾爾斯（英语：）（瑪姬·希芙（英语：）飾演） — 聖托馬斯醫院的外科主治醫師，賈克斯的初戀情人。 - 韋恩·昂瑟（英语：）（戴頓·考利（英语：）飾演） — 查敏警察局局長，「混亂之子」的夥伴。 - 大衛·海爾（英语：）（泰勒·謝里丹飾演） — 查敏警察局副局長。 - 溫迪·卡斯（英语：）（德芮·狄·馬提歐飾演） — 賈克斯的前妻。 - 哈皮·羅曼（英语：）（大衛·拉布拉瓦（英语：）飾演） — 「混亂之子」遊騎兵。 - 朱恩·斯塔爾（英语：）（艾利·沃克（英语：）飾演） — 美國菸酒槍炮及爆裂物管理局，ATF資深探員。 - 伊森·佐貝拉（英语：）（亞當·艾金（英语：）飾演） — 美國民族主義聯盟領導人，白人分離主義者。 - 波莉·佐貝拉（莎拉·瓊斯飾演） — 伊森·佐貝拉的女兒。 - AJ·溫斯頓（亨利·羅林斯飾演） — 美國民族主義聯盟中尉，白人至上主義者。 - 歐內斯特·達比（英语：）（米徹·佩勒吉飾演） — 「北歐幫」領導者，白人至上主義者，毒販。 - 馬庫斯·阿爾瓦雷斯（英语：）（艾米里歐·李維拉（英语：）飾演） — 「瑪雅幫」會長。 - 拉羅伊·韋恩（英语：）（托利·基特爾斯飾演） — 「九一幫」領導者。 - 唐娜·溫斯頓（英语：）（絲普蕾吉·格蕾登（英语：）飾演） — 奧佩的妻子。 - 羅森（湯姆·埃弗瑞特·斯科特飾演） — 「混亂之子」雇用的律師。 - 凱爾·霍巴特（布萊恩·范·霍特飾演） — 被驅逐的「混亂之子」前成員。 - 約書亞·科恩（英语：）（傑·卡內斯飾演） — 美國菸酒槍炮及爆裂物管理局，ATF探員，塔拉的變態前男友。 - 吉米·歐（泰托斯·韋利弗（英语：）飾演） — 愛爾蘭共和軍領導者。 - 卡梅隆·海斯（英语：）（傑米·麥沙尼（英语：）飾演） — 愛爾蘭共和軍與「混亂之子」之間的武器交易聯絡人。 - 奧托·德萊尼（英语：）（寇特·舒特飾演） — 「混亂之子」創幫九人之一，被監禁在史塔克頓州監獄。 - 羅恩·塔利（英语：）（瑪麗蓮·曼森客串飾演） — 被監禁在史塔克頓州監獄的「雅利安兄弟會（英语：）」會長，賈克斯和「混亂之子」的盟友。",
+    "section": "混乱之子 > 演員"
+  },
+  {
+    "question": "馬拉度納教成立的具体时间是什么？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "馬拉度納教",
+    "expected_document_id": "73e45f7159a8c3f30e550843",
+    "expected_terms": [
+      "1998年10月30日"
+    ],
+    "reference": "馬拉度納教創立於1998年10月30日（馬拉多納38歲生日），由三位球迷——赫克托·坎波馬爾（Héctor Campomar）、亞歷杭德羅·貝隆（Alejandro Verón）和埃爾南·阿梅茲（Hernán Amez），在羅薩里奧成立。",
+    "section": "馬拉度納教"
+  },
+  {
+    "question": "你知道蔡謨是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "蔡謨",
+    "expected_document_id": "b07611c46049a9ea10a826f0",
+    "expected_terms": [
+      "蔡謨則進言反對",
+      "認為庾亮不是石虎的對手",
+      "如此更不應放棄擅長水戰而與擅長陸戰的石氏爭戰",
+      "恐怕沒有取勝之機"
+    ],
+    "reference": "蔡謨則進言反對，認為庾亮不是石虎的對手，如此更不應放棄擅長水戰而與擅長陸戰的石氏爭戰，恐怕沒有取勝之機；建議還是堅守長江。",
+    "section": "蔡謨 > 生平 > 反對北伐"
+  },
+  {
+    "question": "反射望远镜座的创建者是谁？",
+    "question_type": "agent",
+    "style": "direct",
+    "expected_title": "反射望远镜座",
+    "expected_document_id": "5b2b35b9e5eea89dbc71eee6",
+    "expected_terms": [
+      "匈牙利天文学家马克西米利安·赫尔神父"
+    ],
+    "reference": "反射望远镜座（拉丁语：Telescopium Herschelii，赫歇尔的望远镜），是一个已经被废除的星座，由匈牙利天文学家马克西米利安·赫尔神父创建，以纪念利用反射望远镜发现天王星的英国天文学家威廉·赫歇尔。",
+    "section": "反射望远镜座"
+  },
+  {
+    "question": "字母主义国际是谁创建的？",
+    "question_type": "agent",
+    "style": "direct",
+    "expected_title": "字母主义国际",
+    "expected_document_id": "37b3b9bf59b09e364cc7b5ff",
+    "expected_terms": [
+      "居伊·德波和Gil J. Wolman"
+    ],
+    "reference": "字母主义国际由居伊·德波和Gil J. Wolman创建，成员包括由Isidore Isou的字母派团体分裂而出的Jean-Louis Brau和Serge Berna。",
+    "section": "字母主义国际"
+  },
+  {
+    "question": "关于臺南市立文賢國民中學，用两三句话说明一下。",
+    "question_type": "definition",
+    "style": "colloquial",
+    "expected_title": "臺南市立文賢國民中學",
+    "expected_document_id": "6ee9564bcaa9d1b8d8472b3b",
+    "expected_terms": [
+      "臺南市立文賢國民中學",
+      "簡稱文賢國中",
+      "為一所位於台灣台南市北區的市立國民中學",
+      "成立於"
+    ],
+    "reference": "臺南市立文賢國民中學（簡稱文賢國中）為一所位於台灣台南市北區的市立國民中學，成立於1987年。",
+    "section": "臺南市立文賢國民中學"
+  },
+  {
+    "question": "我不太了解派克海鯰，它指的是什么？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "派克海鯰",
+    "expected_document_id": "9e15a14e302442f0cce7e8c9",
+    "expected_terms": [
+      "派克海鯰為輻鰭魚綱鯰形目海鯰科的其中一種",
+      "分布於東大西洋區",
+      "從茅利塔尼亞至安哥拉海域",
+      "棲息深度"
+    ],
+    "reference": "派克海鯰為輻鰭魚綱鯰形目海鯰科的其中一種，分布於東大西洋區，從茅利塔尼亞至安哥拉海域，棲息深度50-80公尺，體長可達75公分，棲息在沿海、河口區，底棲性魚類，屬肉食性，背鰭和胸鰭的硬棘有毒，可作為食用魚。",
+    "section": "派克海鯰"
+  },
+  {
+    "question": "久我通誠是哪一年出生的？",
+    "question_type": "time",
+    "style": "direct",
+    "expected_title": "久我通誠",
+    "expected_document_id": "2951e6bfbee7c886f089af22",
+    "expected_terms": [
+      "1660年"
+    ],
+    "reference": "久我通誠在萬治三年（1660年）出生，是父母久我廣通及梅子女王（伏見宮貞清親王王女）的嫡次子。",
+    "section": "久我通誠 > 生涯"
+  },
+  {
+    "question": "能通俗说说西螺服務區吗？",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "西螺服務區",
+    "expected_document_id": "99a23742273c93fdcfcf6c17",
+    "expected_terms": [
+      "西螺服務區是臺灣的一處國道服務區",
+      "位於雲林縣西螺鎮",
+      "里程為中山高速公路",
+      "日成立"
+    ],
+    "reference": "西螺服務區是臺灣的一處國道服務區，位於雲林縣西螺鎮，里程為中山高速公路229.6k，於1978年10月31日成立，是中山高速公路自基隆端以來的第四個服務區，分為南下、北上兩站。",
+    "section": "西螺服務區"
+  },
+  {
+    "question": "请问谁创作了瑪麗娜·杜潘-程？",
+    "question_type": "agent",
+    "style": "instructional",
+    "expected_title": "瑪麗娜·杜潘-程",
+    "expected_document_id": "d5f67ed69d20dc8b3cbbc591",
+    "expected_terms": [
+      "Thomas Astruc"
+    ],
+    "reference": "瑪麗娜·杜潘-程（英語：）是虚构的超级女主角，也是由 Thomas Astruc 创作的动画电视连续剧《瓢蟲少女》的女主角。",
+    "section": "瑪麗娜·杜潘-程"
+  },
+  {
+    "question": "北品川站的使用情況有哪些？",
+    "question_type": "list",
+    "style": "direct",
+    "expected_title": "北品川站",
+    "expected_document_id": "ac74b9a4c90dbd144e8e994f",
+    "expected_terms": [
+      "1990年（平成02年）",
+      "1991年（平成03年）",
+      "1992年（平成04年）",
+      "1993年（平成05年）"
+    ],
+    "reference": "表格字段：年度、1日平均 上下車人次、1日平均 上車人次、來源 年度列表：1990年（平成02年）、1991年（平成03年）、1992年（平成04年）、1993年（平成05年）、1994年（平成06年）、1995年（平成07年）、1996年（平成08年）、1997年（平成09年）、1998年（平成10年）、1999年（平成11年）、2000年（平成12年）、2001年（平成13年）、2002年（平成14年）、2003年（平成15年）、2004年（平成16年）、2005年（平成17年）、2006年（平成18年）、2007年（平成19年）、2008年（平成20年）、2009年（平成21年）、2010年（平成22年）、2011年（平成23年）、2012年（平成24年）、2013年（平成25年）、2014年（平成26年）、2014年（平成26年）、2015年（平成27年）、2016年（平成28年）",
+    "section": "北品川站 > 使用情況"
+  },
+  {
+    "question": "我不太了解駱駝駱駝不要哭，它指的是什么？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "駱駝駱駝不要哭",
+    "expected_document_id": "3bde65d6d2945cabb3834546",
+    "expected_terms": [
+      "駱駝駱駝不要哭",
+      "英語",
+      "是一部",
+      "年德國紀錄電影"
+    ],
+    "reference": "《駱駝駱駝不要哭》（英語：）是一部2003年德國紀錄電影，由Byambasuren Davaa和Luigi Falorni執導及撰寫劇本。",
+    "section": "駱駝駱駝不要哭"
+  },
+  {
+    "question": "我想知道GONZO有哪些大事記。",
+    "question_type": "list",
+    "style": "conversational",
+    "expected_title": "GONZO",
+    "expected_document_id": "571140aa9a0530f42646e436",
+    "expected_terms": [
+      "2000年，GONZO推出第一套電視動畫作品《銀河冒險戰記》。",
+      "2005年9月，收購Warp Gate Online，首次涉足網絡遊戲市場。",
+      "2010年8月，由於之前經營不善、人員紛紛出走，GONZO開始重新招募製作團隊。",
+      "2011年2月，GONZO公佈20週年紀念作品《最後流亡-銀翼的飛夢-》。"
+    ],
+    "reference": "- 1992年，动画制片人村滨章司、动画导演前田真宏和樋口真嗣等人组建GONZO，其中村滨章司出资300万日元。当年他们接手的第一份工作是为MTV《ROCKET DIVE》制作一只3D的宇宙船。其後工作均以美術為主。 - 1996年，GONZO为SEGA的角色扮演遊戲《LUNAR》制作过场动画，公司名號因此為人知曉。 - 1998年，名作《青之6号》登场，為該公司第一部獨立製作。该动画是在日本动画史上第一次大量使用3DCG技术与2D绘画结合的作品。GONZO自此一举成名，成為創作派動畫的龍頭。 - 2000年，GONZO推出第一套電視動畫作品《銀河冒險戰記》。 - 2002年4月，GONZO与Digimation合併成立GONZO DIGIMATION。主要业务内容是动画作品制作，版权管理及销售管理，3DCG的企划制作，周边产品推广等，公司固定资产突破2亿。這亦促使母公司GDH於2004年成為上市公司。 - 2005年9月，收購Warp Gate Online，首次涉足網絡遊戲市場。 - 2006年，GDH無法達致預定盈利，收入大幅減少，製作亦被指不符合新一代動畫迷的口味。負責人村滨章司因管理不善被迫下台，由社长降为取缔役，接任人為藤田纯二。同年GONZO曾打算将电影《银发阿基德》打入中国市场，后因未获中国国内影视审批机构批注而放弃。 - 藤田社長上任後，於2006年至2008年製作更多的商業動畫作品。此外，GONZO亦嘗試開通中、歐美市場，讓作品邁向國際化，惟市場調查不夠透徹導致成效不足，財務狀況依然惡劣、多項企劃終止，尤其在2006年的15週年紀念作品《殼中少女》OVA也夭折。 - 2008年3月，GDH的年度结算中负债資產超过东证的规定，4月1日GDH的股票进入“犹豫期”；9月10日，投資公司「岩風資產管理」（）宣布對GDH進行股份公開收購，總增資金額日幣21億3000萬元。 - 2009年4月1日，創辦人村滨章司離去、另設公司Lambda Film；GDH宣佈与子公司GONZO合併，企業商號統合、承繼品牌為「GONZO」。但公司重整未見起色，終被东证公告於7月30日除牌。 - 2010年8月，由於之前經營不善、人員紛紛出走，GONZO開始重新招募製作團隊。 - 2011年2月，GONZO公佈20週年紀念作品《最後流亡-銀翼的飛夢-》。 - 2016年7月，旭通DK宣布收購GONZO；12月27日，旭通DK發布公告表示，GONZO在被收購前可能透過不正當的會計處理隱瞞10億2千5百萬日圓的資不抵債，旭通已成立特別調查委員會清查其財務狀況。 - 2017年2月20日，旭通DK調查隱瞞債務結果給予社長三年間減俸月薪30%、副社長去職處分。",
+    "section": "GONZO > 大事記"
+  },
+  {
+    "question": "请问谁设计了所罗门圣殿 (圣保罗)？",
+    "question_type": "agent",
+    "style": "instructional",
+    "expected_title": "所罗门圣殿 (圣保罗)",
+    "expected_document_id": "045621902dedff18f1198203",
+    "expected_terms": [
+      "罗格里奥·席尔瓦·德阿拉霍"
+    ],
+    "reference": "该建筑花了四年时间才建成，由建筑师罗格里奥·席尔瓦·德阿拉霍设计。",
+    "section": "所罗门圣殿 (圣保罗) > 建造"
+  },
+  {
+    "question": "想去秦皇岛市，它的位置在哪里？",
+    "question_type": "location",
+    "style": "conversational",
+    "expected_title": "秦皇岛市",
+    "expected_document_id": "18cb54093989706bc6a4f448",
+    "expected_terms": [
+      "河北省东北部",
+      "市境西南界唐山市",
+      "西北接承德市"
+    ],
+    "reference": "秦皇岛市，简称秦，旧称临榆，是中华人民共和国河北省下辖的地级市，位于河北省东北部，市境西南界唐山市，西北接承德市，东北临辽宁省朝阳市、葫芦岛市，东南滨渤海湾。",
+    "section": "秦皇岛市"
+  },
+  {
+    "question": "我想知道龍族戰神有哪些演員。",
+    "question_type": "list",
+    "style": "conversational",
+    "expected_title": "龍族戰神",
+    "expected_document_id": "ac5cfcb8b7bc0de30c204138",
+    "expected_terms": [
+      "李國豪 飾 艾瑞克·卓雷文／（英语",
+      "羅沙爾·戴維斯 飾 莎拉（Sarah）",
+      "厄尼·哈德森 飾 Sgt. Albrecht",
+      "麥可·溫考特 飾 Top Dollar"
+    ],
+    "reference": "- 李國豪 飾 艾瑞克·卓雷文／（英语：） - 羅沙爾·戴維斯 飾 莎拉（Sarah） - 厄尼·哈德森 飾 Sgt. Albrecht - 麥可·溫考特 飾 Top Dollar - 白靈 飾 Myca - 蘇菲亞·辛納斯 飾 雪莉·韋伯斯特（Shelly Webster） - 安娜·萊文 飾 Darla - 大衛·帕特里克·凱利 飾 T鳥（T-Bird） - 安傑爾·大衛 飾 賤胚（Skank） - 勞倫斯·梅森 飾 丁丁（Tin-Tin） - 麥可·麥斯 飾 Funboy - 東尼·陶德 飾 Grange - 喬恩·波利托 飾 Gideon - 比爾·雷蒙德 飾 Mickey - 馬可·羅德里格斯 飾 Torres",
+    "section": "龍族戰神 > 演員"
+  },
+  {
+    "question": "义渠究竟是怎么一步步灭亡的？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "义渠",
+    "expected_document_id": "07acedc894cbec8a73afb1b5",
+    "expected_terms": [
+      "今者義渠之事急",
+      "寡人日自请太后",
+      "今義渠之事已",
+      "寡人乃得以身受命"
+    ],
+    "reference": "今者義渠之事急，寡人日自请太后。今義渠之事已，寡人乃得以身受命。躬窃闵然不敏，敬执宾主之礼。」秦王当时很想攻击義渠。",
+    "section": "义渠 > 歷史 > 灭亡"
+  },
+  {
+    "question": "请问谁導演了戴列斯劇場？",
+    "question_type": "agent",
+    "style": "instructional",
+    "expected_title": "戴列斯劇場",
+    "expected_document_id": "c910628a707e41b02688558e",
+    "expected_terms": [
+      "拉脫維亞人"
+    ],
+    "reference": "戴列斯劇場（拉脫維亞語：）是拉脫維亞首都里加的一座劇場，由拉脫維亞人導演及演員Eduards Smiļģis創建於1920年11月19日。",
+    "section": "戴列斯劇場"
+  },
+  {
+    "question": "你知道救殭清道夫是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "救殭清道夫",
+    "expected_document_id": "b4c74549085ff96798b3c3ec",
+    "expected_terms": [
+      "救殭清道夫",
+      "英語",
+      "是一部",
+      "年的香港電影"
+    ],
+    "reference": "《救殭清道夫》（英語：）是一部2017年的香港電影，由甄栢榮與樂隊ToNick主音趙善恆合導，鄧瑞華任武術導演，錢小豪、蔡瀚億、林明禎、吳耀漢、羅莽、趙學而、袁祥仁、邵音音主演。",
+    "section": "救殭清道夫"
+  },
+  {
+    "question": "臺中市立豐東國民中學具体坐落在哪儿？",
+    "question_type": "location",
+    "style": "direct",
+    "expected_title": "臺中市立豐東國民中學",
+    "expected_document_id": "0589bdd2a898b5606998681e",
+    "expected_terms": [
+      "臺灣臺中市豐原區的市立國民中學"
+    ],
+    "reference": "臺中市立豐東國民中學，簡稱豐東國中，是一所位於臺灣臺中市豐原區的市立國民中學。",
+    "section": "臺中市立豐東國民中學"
+  },
+  {
+    "question": "请问桑·拉什么时候出生？",
+    "question_type": "time",
+    "style": "instructional",
+    "expected_title": "桑·拉",
+    "expected_document_id": "8f5d2680dba3971955ea5f0f",
+    "expected_terms": [
+      "1993年5月30日"
+    ],
+    "reference": "桑·拉（Sun Ra，1914年5月22日—1993年5月30日），出生名為赫爾曼·普爾·布朗特（Herman Poole Blount），依照美國法律登記的名字為“Le Sony'r Ra”，是一位爵士樂作曲家、樂隊領隊及詩人，是黑人未來派的先驅。",
+    "section": "桑·拉"
+  },
+  {
+    "question": "你知道伽利略传由谁创作吗？",
+    "question_type": "agent",
+    "style": "conversational",
+    "expected_title": "伽利略传",
+    "expected_document_id": "ef06e732d8a5cd8aa32b2bf2",
+    "expected_terms": [
+      "德国剧作家贝托尔特·布莱希特"
+    ],
+    "reference": "《伽利略传》（德語：）是由德国剧作家贝托尔特·布莱希特创作的一出戏剧，主要讲述伽利略因其天文发现触怒教廷，在真理与威权之间摇摆的故事。",
+    "section": "伽利略传"
+  },
+  {
+    "question": "TestNG是谁创建的？",
+    "question_type": "agent",
+    "style": "direct",
+    "expected_title": "TestNG",
+    "expected_document_id": "0cc906b98104ae660406b812",
+    "expected_terms": [
+      "Cédric Beust受到JUnit和NUnit的启发而"
+    ],
+    "reference": "TestNG是一个Java语言的测试框架，由Cédric Beust受到JUnit和NUnit的启发而创建。",
+    "section": "TestNG"
+  },
+  {
+    "question": "导致安然公司衰落的原因有哪些？",
+    "question_type": "cause",
+    "style": "direct",
+    "expected_title": "安然公司",
+    "expected_document_id": "bc30182d17082880c4d682fc",
+    "expected_terms": [
+      "随着公司行贿以及在拉丁美洲",
+      "非洲以及菲律宾等地遭受政治压力的谣言甚嚣尘上",
+      "安然公司的全球形象日益受损",
+      "特别是在与印度馬哈拉施特拉邦电力公司一笔"
+    ],
+    "reference": "随着公司行贿以及在拉丁美洲、非洲以及菲律宾等地遭受政治压力的谣言甚嚣尘上，安然公司的全球形象日益受损。特别是在与印度馬哈拉施特拉邦电力公司一笔30亿美元的合约中，安然被指通过前总统比尔·克林顿和乔治·赫伯特·沃克·布什向印度政府部门施压，2002年1月9日，美国司法部宣布对安然进行罪案调查，并于1月24日举行国会听证会。2001年11月中旬，在被卷入一系列会计欺诈丑闻之后，安然和其聘请的会计事务所“安达信”面临世上规模最大的破产深渊。一项由一家较小的能源类公司Dynegy发起的“白武士”拯救计划最终宣告失败。",
+    "section": "安然公司 > 衰落"
+  },
+  {
+    "question": "请问維利耶人口有多少？",
+    "question_type": "numeric",
+    "style": "instructional",
+    "expected_title": "維利耶",
+    "expected_document_id": "7256c88722ad3ebad9b4632f",
+    "expected_terms": [
+      "450人"
+    ],
+    "reference": "維利耶是瑞士的城鎮，位於該國西部，由納沙泰爾州負責管轄，面積10.59平方公里，海拔高度760米，2011年人口450，一半人口信奉基督教，人口密度每平方公里42人。",
+    "section": "維利耶"
+  },
+  {
+    "question": "请简要介绍一下駢文。",
+    "question_type": "definition",
+    "style": "instructional",
+    "expected_title": "駢文",
+    "expected_document_id": "c64fd900a97ab2e28f1a7b2e",
+    "expected_terms": [
+      "駢文在文学界上長期為廣泛研究",
+      "然其因为文章受限於追求藝術技巧之故",
+      "适于写景抒情作曲",
+      "而不适于正式敘事與紀錄事件"
+    ],
+    "reference": "駢文在文学界上長期為廣泛研究，然其因为文章受限於追求藝術技巧之故，适于写景抒情作曲，而不适于正式敘事與紀錄事件。",
+    "section": "駢文"
+  },
+  {
+    "question": "你知道怪樂的不得了是干什么的吗？",
+    "question_type": "definition",
+    "style": "conversational",
+    "expected_title": "怪樂的不得了",
+    "expected_document_id": "a4ac9d00a6b664d7b8e8c56e",
+    "expected_terms": [
+      "怪樂的不得了",
+      "是在菲尼亞斯位於洛杉磯住宅地下室的家庭錄音室錄製"
+    ],
+    "reference": "《怪樂的不得了》是在菲尼亞斯位於洛杉磯住宅地下室的家庭錄音室錄製的。",
+    "section": "怪樂的不得了 > 錄製"
+  }
+]

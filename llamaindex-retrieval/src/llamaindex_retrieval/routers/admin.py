@@ -25,6 +25,7 @@ from ..schemas import (
     SearchRequest,
     SearchTestDetail,
     SearchTestItem,
+    SearchTestPage,
     SearchTestRun,
 )
 from ..service import SearchService
@@ -179,12 +180,13 @@ async def list_jobs(
     return await repo.list_jobs(status, limit)
 
 
-@router.get("/search-history", response_model=list[SearchTestItem])
+@router.get("/search-history", response_model=SearchTestPage)
 async def list_search_history(
-    limit: int = Query(default=100, ge=1, le=500),
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=20, ge=1, le=100),
     repo: MongoRepository = Depends(repository),
-) -> list[dict]:
-    return await repo.list_search_tests(limit)
+) -> dict:
+    return await repo.list_search_tests(page=page, page_size=page_size)
 
 
 @router.get("/search-history/{test_id}", response_model=SearchTestDetail)

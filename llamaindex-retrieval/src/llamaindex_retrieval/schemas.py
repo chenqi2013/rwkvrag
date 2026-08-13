@@ -68,6 +68,13 @@ class SearchTestDetail(SearchTestItem):
     runs: list[SearchTestRun] = Field(default_factory=list)
 
 
+class SearchTestPage(BaseModel):
+    items: list[SearchTestItem]
+    total: int = Field(ge=0)
+    page: int = Field(ge=1)
+    page_size: int = Field(ge=1)
+
+
 class MarkdownImportRequest(BaseModel):
     path: str
     source: str = "local-markdown"

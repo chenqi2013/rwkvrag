@@ -1,0 +1,20 @@
+{"case_type":"definition","question":"CPUID是什么指令","expected_titles":["CPUID"]}
+{"case_type":"definition","question":"硝酸是什么","expected_titles":["硝酸"]}
+{"case_type":"person","question":"陆贽是谁","expected_titles":["陸贄","陆贽"]}
+{"case_type":"person","question":"センラ是谁","expected_titles":["センラ"]}
+{"case_type":"place","question":"格罗德诺城堡位于哪里","expected_titles":["格羅德諾城堡"]}
+{"case_type":"place","question":"成县位于哪个省","expected_titles":["成县"]}
+{"case_type":"time","question":"中国人权发展基金会是哪一年成立的","expected_titles":["中国人权发展基金会"]}
+{"case_type":"time","question":"蒙古航空是哪一年成立的","expected_titles":["蒙古航空"]}
+{"case_type":"time","question":"澳门是什么时候回归中国的","expected_titles":["澳門回歸","澳门回归"]}
+{"case_type":"time","question":"香港是哪一年回归的","expected_titles":["香港回歸","香港回归"]}
+{"case_type":"list","question":"深圳地铁一号线有哪些站点","expected_titles":["深圳地铁1号线","深圳地铁车站列表"]}
+{"case_type":"list","question":"中国有哪些著名的长城关隘","expected_titles":["长城"]}
+{"case_type":"cause","question":"高级长期威胁为什么难以被发现","expected_titles":["高级长期威胁"]}
+{"case_type":"cause","question":"阿波罗11号为什么具有历史意义","expected_titles":["阿波罗11号","阿波羅11號"]}
+{"case_type":"procedure","question":"宇航员如何进行舱外活动训练","expected_titles":["舱外活动","巴兹·奥尔德林"]}
+{"case_type":"procedure","question":"硝酸在工业上如何制备","expected_titles":["硝酸"]}
+{"case_type":"comparison","question":"尺八和长笛有什么区别","expected_titles":[],"expected_titles_all":["尺八","长笛"]}
+{"case_type":"comparison","question":"硝酸和硫酸有什么区别","expected_titles":[],"expected_titles_all":["硝酸","硫酸"]}
+{"case_type":"ambiguity","question":"马昂是谁","expected_titles":["馬昂","马昂","马昂 (演员)","马昂 (消歧义)"]}
+{"case_type":"ambiguity","question":"东平是谁","expected_titles":["东平 (消歧义)","丘东平"]}

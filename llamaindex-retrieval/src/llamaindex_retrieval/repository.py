@@ -267,17 +267,43 @@ class MongoRepository:
         )
         return run
 
-    async def list_search_tests(self, limit: int = 100) -> list[dict[str, Any]]:
-        cursor = self.search_tests.find({}, {"_id": 0}).sort("updated_at", DESCENDING).limit(limit)
-        tests = await cursor.to_list(length=limit)
+    async def list_search_tests(
+        self,
+        *,
+        page: int = 1,
+        page_size: int = 20,
+    ) -> dict[str, Any]:
+        total = await self.search_tests.count_documents({})
+        cursor = (
+            self.search_tests.find({}, {"_id": 0})
+            .sort("updated_at", DESCENDING)
+            .skip((page - 1) * page_size)
+            .limit(page_size)
+        )
+        tests = await cursor.to_list(length=page_size)
+        latest_run_ids = [
+            test["latest_run_id"]
+            for test in tests
+            if test.get("latest_run_id")
+        ]
+        latest_runs = (
+            await self.search_test_runs.find(
+                {"id": {"$in": latest_run_ids}},
+                {"_id": 0},
+            ).to_list(length=len(latest_run_ids))
+            if latest_run_ids
+            else []
+        )
+        runs_by_id = {run["id"]: run for run in latest_runs}
         for test in tests:
             latest_run_id = test.get("latest_run_id")
-            test["latest_run"] = (
-                await self.search_test_runs.find_one({"id": latest_run_id}, {"_id": 0})
-                if latest_run_id
-                else None
-            )
-        return tests
+            test["latest_run"] = runs_by_id.get(latest_run_id)
+        return {
+            "items": tests,
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+        }
 
     async def get_search_test(self, test_id: str) -> dict[str, Any] | None:
         test = await self.search_tests.find_one({"id": test_id}, {"_id": 0})

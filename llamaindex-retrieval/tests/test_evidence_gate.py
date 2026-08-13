@@ -1,0 +1,258 @@
+from llamaindex_retrieval.evidence_gate import (
+    evaluate_answer_support,
+    evaluate_evidence_gate,
+    repair_answer_citations,
+)
+from llamaindex_retrieval.qa_analysis import analyze_question
+from llamaindex_retrieval.schemas import SourceItem
+
+
+def source(title: str, snippet: str) -> SourceItem:
+    return SourceItem(
+        id=title,
+        document_id=title,
+        source="finewiki-zh",
+        title=title,
+        score=1.0,
+        snippet=snippet,
+    )
+
+
+def test_gate_requires_subject_and_explicit_ordinal_relation() -> None:
+    question = "中国历史上第一个皇帝是谁？"
+    analysis = analyze_question(question)
+
+    passed = evaluate_evidence_gate(
+        question,
+        analysis,
+        [source("皇帝", "在中国历史中，嬴政成为中原第一个皇帝。")],
+    )
+    failed = evaluate_evidence_gate(
+        question,
+        analysis,
+        [source("中国历史", "明光宗继承皇位，后来由天启帝继承皇位。")],
+    )
+
+    assert passed.passed is True
+    assert "第一个" in passed.matched_relation_terms
+    assert failed.passed is False
+    assert "relation_mismatch" in failed.issues
+
+
+def test_gate_rejects_partial_definition_entity_match() -> None:
+    question = "阿尔法泽是谁？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("阿尔法岛", "阿尔法岛是南极洲的岛屿。")],
+    )
+
+    assert result.passed is False
+    assert "subject_mismatch" in result.issues
+
+
+def test_gate_rejects_wrong_page_for_complete_list() -> None:
+    question = "深圳地铁1号线有哪些站点？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("深圳地铁17号线", "深圳地铁17号线设有多个车站。")],
+        subject="深圳地铁1号线",
+    )
+
+    assert result.passed is False
+    assert "subject_title_mismatch" in result.issues
+
+
+def test_gate_allows_partial_list_from_parent_topic_page() -> None:
+    question = "中国有哪些著名的长城关隘？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("长城", "著名关城包括山海关、嘉峪关、玉门关、萧关和阳关。")],
+        subject="中国",
+    )
+
+    assert result.passed is True
+
+
+def test_gate_rejects_partial_location_page_title() -> None:
+    question = "昌平区位于哪里？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("昌平区中西医结合医院", "医院位于北京市昌平区。")],
+        subject="昌平区",
+    )
+
+    assert result.passed is False
+    assert "subject_title_mismatch" in result.issues
+
+
+def test_gate_rejects_related_but_different_cause_page() -> None:
+    question = "明朝为什么灭亡？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("明朝经济", "明朝经济发展经历了不同阶段。")],
+        subject="明朝",
+    )
+
+    assert result.passed is False
+    assert "subject_title_mismatch" in result.issues
+
+
+def test_gate_accepts_subject_plus_event_cause_page() -> None:
+    question = "美国为什么会走向衰落？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("美国衰落", "美国衰落是一个讨论国家实力变化的主题。")],
+        subject="美国",
+    )
+
+    assert result.passed is True
+
+
+def test_gate_accepts_normalized_world_cup_title() -> None:
+    question = "2030年世界杯由哪些国家主办？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("2030年国际足协世界杯", "赛事由西班牙、葡萄牙和摩洛哥主办。")],
+        subject="2030年世界杯",
+    )
+
+    assert result.passed is True
+
+
+def test_gate_rejects_evidence_without_requested_year() -> None:
+    question = "2025年诺贝尔和平奖得主是谁？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("诺贝尔和平奖", "截至2024年，共有111位个人获奖。")],
+        subject="2025年诺贝尔和平奖",
+    )
+
+    assert result.passed is False
+    assert "temporal_mismatch" in result.issues
+
+
+def test_gate_accepts_agent_relation_synonym_on_exact_topic_page() -> None:
+    question = "中国历史上开启丝绸之路的是谁？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("丝绸之路", "汉武帝派张骞出使西域，史称凿空。")],
+        subject="丝绸之路",
+    )
+
+    assert result.passed is True
+    assert "出使" in result.matched_relation_terms
+
+
+def test_gate_accepts_creator_question_when_evidence_says_created() -> None:
+    question = "渭水春风的创作者是谁？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("渭水春风", "该音乐剧由音乐时代剧场创作，并由多人共同编剧。")],
+        subject="渭水春风",
+    )
+
+    assert result.passed is True
+    assert "创作" in result.matched_relation_terms
+
+
+def test_gate_accepts_current_office_on_exact_topic_page() -> None:
+    question = "现在美国总统是谁？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("美国总统", "现任美国总统于2025年1月20日上任。")],
+        subject="美国总统",
+    )
+
+    assert result.passed is True
+
+
+def test_answer_support_uses_only_cited_evidence() -> None:
+    sources = [
+        source("皇帝", "嬴政成为中原第一个皇帝，称始皇帝。"),
+        source("明朝", "李自成攻克北京，崇祯帝自缢。"),
+    ]
+
+    supported = evaluate_answer_support("第一个皇帝是嬴政。[资料 1]", sources)
+    unsupported = evaluate_answer_support("第一个皇帝是李自成。[资料 1]", sources)
+
+    assert supported.passed is True
+    assert unsupported.passed is False
+    assert "unsupported_entity_term" in unsupported.issues
+
+
+def test_refusal_answer_always_passes_support_gate() -> None:
+    result = evaluate_answer_support("根据检索到的资料，无法确定。", [])
+
+    assert result.passed is True
+
+
+def test_answer_support_includes_cited_document_sibling_chunks() -> None:
+    sources = [
+        source("明朝", "魏忠贤打击东林党，崇祯帝频繁更换内阁大学士。"),
+        source("明朝", "长期干旱、蝗灾造成粮食歉收和饥荒，随后爆发民变。"),
+    ]
+    sources[0].id = "ming-1"
+    sources[1].id = "ming-2"
+    sources[0].document_id = "ming"
+    sources[1].document_id = "ming"
+
+    result = evaluate_answer_support(
+        "长期干旱和蝗灾造成粮食歉收，朝政也受到魏忠贤专权影响。[资料 1]",
+        sources,
+    )
+
+    assert result.passed is True
+
+
+def test_answer_support_does_not_treat_descriptive_words_as_entities() -> None:
+    result = evaluate_answer_support(
+        "朝政长期腐败，党争十分激烈。[资料 1]",
+        [source("明朝", "朝廷党争不断，政治日益腐败。")],
+    )
+
+    assert "unsupported_entity_term" not in result.issues
+
+
+def test_repair_answer_citations_maps_comparison_clauses_to_sources() -> None:
+    sources = [
+        source("尺八", "尺八是竹制木管乐器，音色苍凉辽阔。"),
+        source("长笛", "长笛是高音旋律乐器，现代多使用金属材质。"),
+    ]
+
+    repaired = repair_answer_citations(
+        "尺八是竹制木管乐器，音色苍凉辽阔；长笛是高音旋律乐器，现代多使用金属材质。[资料 1]",
+        sources,
+    )
+
+    assert repaired == (
+        "尺八是竹制木管乐器，音色苍凉辽阔[资料 1]；"
+        "长笛是高音旋律乐器，现代多使用金属材质[资料 2]。"
+    )
+    assert evaluate_answer_support(repaired, sources).passed is True
+
+
+def test_repair_answer_citations_points_to_exact_sibling_chunk() -> None:
+    sources = [
+        source("明朝", "魏忠贤打击东林党，朝廷党争不断。"),
+        source("明朝", "长期干旱和蝗灾导致粮食歉收，爆发民变。"),
+    ]
+    sources[0].document_id = "ming"
+    sources[1].document_id = "ming"
+
+    repaired = repair_answer_citations(
+        "明朝长期干旱和蝗灾导致粮食歉收，爆发民变。[资料 1]",
+        sources,
+    )
+
+    assert repaired.endswith("[资料 2]。")

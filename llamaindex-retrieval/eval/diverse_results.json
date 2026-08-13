@@ -1,0 +1,315 @@
+{
+  "passed": 20,
+  "total": 20,
+  "recall_at_k": 1.0,
+  "by_type": {
+    "ambiguity": {
+      "passed": 2,
+      "total": 2,
+      "recall_at_k": 1.0
+    },
+    "cause": {
+      "passed": 2,
+      "total": 2,
+      "recall_at_k": 1.0
+    },
+    "comparison": {
+      "passed": 2,
+      "total": 2,
+      "recall_at_k": 1.0
+    },
+    "definition": {
+      "passed": 2,
+      "total": 2,
+      "recall_at_k": 1.0
+    },
+    "list": {
+      "passed": 2,
+      "total": 2,
+      "recall_at_k": 1.0
+    },
+    "person": {
+      "passed": 2,
+      "total": 2,
+      "recall_at_k": 1.0
+    },
+    "place": {
+      "passed": 2,
+      "total": 2,
+      "recall_at_k": 1.0
+    },
+    "procedure": {
+      "passed": 2,
+      "total": 2,
+      "recall_at_k": 1.0
+    },
+    "time": {
+      "passed": 4,
+      "total": 4,
+      "recall_at_k": 1.0
+    }
+  },
+  "details": [
+    {
+      "question": "CPUID是什么指令",
+      "passed": true,
+      "titles": [
+        "CPUID"
+      ],
+      "expected_titles": [
+        "CPUID"
+      ],
+      "case_type": "definition"
+    },
+    {
+      "question": "硝酸是什么",
+      "passed": true,
+      "titles": [
+        "硝酸"
+      ],
+      "expected_titles": [
+        "硝酸"
+      ],
+      "case_type": "definition"
+    },
+    {
+      "question": "陆贽是谁",
+      "passed": true,
+      "titles": [
+        "陸贄"
+      ],
+      "expected_titles": [
+        "陸贄",
+        "陆贽"
+      ],
+      "case_type": "person"
+    },
+    {
+      "question": "センラ是谁",
+      "passed": true,
+      "titles": [
+        "センラ"
+      ],
+      "expected_titles": [
+        "センラ"
+      ],
+      "case_type": "person"
+    },
+    {
+      "question": "格罗德诺城堡位于哪里",
+      "passed": true,
+      "titles": [
+        "格罗德诺",
+        "城堡",
+        "格羅德諾城堡",
+        "格罗德诺新城堡"
+      ],
+      "expected_titles": [
+        "格羅德諾城堡"
+      ],
+      "case_type": "place"
+    },
+    {
+      "question": "成县位于哪个省",
+      "passed": true,
+      "titles": [
+        "成县",
+        "成县"
+      ],
+      "expected_titles": [
+        "成县"
+      ],
+      "case_type": "place"
+    },
+    {
+      "question": "中国人权发展基金会是哪一年成立的",
+      "passed": true,
+      "titles": [
+        "中国人权发展基金会",
+        "基金会",
+        "基金",
+        "基金"
+      ],
+      "expected_titles": [
+        "中国人权发展基金会"
+      ],
+      "case_type": "time"
+    },
+    {
+      "question": "蒙古航空是哪一年成立的",
+      "passed": true,
+      "titles": [
+        "蒙古航空"
+      ],
+      "expected_titles": [
+        "蒙古航空"
+      ],
+      "case_type": "time"
+    },
+    {
+      "question": "澳门是什么时候回归中国的",
+      "passed": true,
+      "titles": [
+        "澳門",
+        "澳門",
+        "回归",
+        "澳門回歸",
+        "澳門脈搏",
+        "政权"
+      ],
+      "expected_titles": [
+        "澳門回歸",
+        "澳门回归"
+      ],
+      "case_type": "time"
+    },
+    {
+      "question": "香港是哪一年回归的",
+      "passed": true,
+      "titles": [
+        "香港",
+        "香港",
+        "香港回歸",
+        "香港回歸",
+        "香港回歸條例",
+        "香港回歸紀念塔",
+        "香港回歸盃足球賽"
+      ],
+      "expected_titles": [
+        "香港回歸",
+        "香港回归"
+      ],
+      "case_type": "time"
+    },
+    {
+      "question": "深圳地铁一号线有哪些站点",
+      "passed": true,
+      "titles": [
+        "深圳地铁1号线"
+      ],
+      "expected_titles": [
+        "深圳地铁1号线",
+        "深圳地铁车站列表"
+      ],
+      "case_type": "list"
+    },
+    {
+      "question": "中国有哪些著名的长城关隘",
+      "passed": true,
+      "titles": [
+        "长城",
+        "关城",
+        "关隘",
+        "紫荆关"
+      ],
+      "expected_titles": [
+        "长城"
+      ],
+      "case_type": "list"
+    },
+    {
+      "question": "高级长期威胁为什么难以被发现",
+      "passed": true,
+      "titles": [
+        "高级长期威胁"
+      ],
+      "expected_titles": [
+        "高级长期威胁"
+      ],
+      "case_type": "cause"
+    },
+    {
+      "question": "阿波罗11号为什么具有历史意义",
+      "passed": true,
+      "titles": [
+        "阿波罗11号"
+      ],
+      "expected_titles": [
+        "阿波罗11号",
+        "阿波羅11號"
+      ],
+      "case_type": "cause"
+    },
+    {
+      "question": "宇航员如何进行舱外活动训练",
+      "passed": true,
+      "titles": [
+        "宇航员",
+        "舱外活动"
+      ],
+      "expected_titles": [
+        "舱外活动",
+        "巴兹·奥尔德林"
+      ],
+      "case_type": "procedure"
+    },
+    {
+      "question": "硝酸在工业上如何制备",
+      "passed": true,
+      "titles": [
+        "硝酸",
+        "工业"
+      ],
+      "expected_titles": [
+        "硝酸"
+      ],
+      "case_type": "procedure"
+    },
+    {
+      "question": "尺八和长笛有什么区别",
+      "passed": true,
+      "titles": [
+        "尺八",
+        "长笛",
+        "尺八镇",
+        "低音長笛",
+        "中音長笛"
+      ],
+      "expected_titles": [],
+      "case_type": "comparison"
+    },
+    {
+      "question": "硝酸和硫酸有什么区别",
+      "passed": true,
+      "titles": [
+        "硝酸",
+        "硫酸",
+        "硫酸𨥙"
+      ],
+      "expected_titles": [],
+      "case_type": "comparison"
+    },
+    {
+      "question": "马昂是谁",
+      "passed": true,
+      "titles": [
+        "馬昂",
+        "马昂 (消歧义)",
+        "马昂 (演员)"
+      ],
+      "expected_titles": [
+        "馬昂",
+        "马昂",
+        "马昂 (演员)",
+        "马昂 (消歧义)"
+      ],
+      "case_type": "ambiguity"
+    },
+    {
+      "question": "东平是谁",
+      "passed": true,
+      "titles": [
+        "东平 (消歧义)",
+        "东平县",
+        "张东平",
+        "东平四杰",
+        "东平山站"
+      ],
+      "expected_titles": [
+        "东平 (消歧义)",
+        "丘东平"
+      ],
+      "case_type": "ambiguity"
+    }
+  ]
+}

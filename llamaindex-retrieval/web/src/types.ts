@@ -108,6 +108,13 @@ export interface SearchTestDetail extends SearchTestItem {
   runs: SearchTestRun[];
 }
 
+export interface SearchTestPage {
+  items: SearchTestItem[];
+  total: number;
+  page: number;
+  page_size: number;
+}
+
 export interface AdminHealth {
   status: "ok" | "degraded";
   mongodb: Record<string, unknown>;

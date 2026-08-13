@@ -7,7 +7,7 @@ import type {
   KnowledgeBase,
   AskResponse,
   SearchTestDetail,
-  SearchTestItem,
+  SearchTestPage,
   SearchTestRun,
   SearchResponse,
 } from "./types";
@@ -92,7 +92,10 @@ export const api = {
       headers: jsonHeaders,
       body: JSON.stringify(values),
     }),
-  searchHistory: () => request<SearchTestItem[]>("/v1/admin/search-history"),
+  searchHistory: (page = 1, pageSize = 20) =>
+    request<SearchTestPage>(
+      `/v1/admin/search-history?page=${page}&page_size=${pageSize}`,
+    ),
   searchHistoryDetail: (id: string) =>
     request<SearchTestDetail>(`/v1/admin/search-history/${id}`),
   rerunSearchHistory: (id: string) =>

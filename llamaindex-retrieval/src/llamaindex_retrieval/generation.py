@@ -8,7 +8,7 @@ import httpx
 
 from .config import Settings
 from .evidence_utils import clean_evidence_text
-from .lexical_index import lexical_tokens, query_tokens
+from .lexical_index import lexical_tokens, normalize_search_text, query_tokens
 from .schemas import SourceItem
 
 _NO_EVIDENCE_ANSWER = "未检索到可用于回答该问题的资料。"
@@ -41,7 +41,7 @@ _USER_ROLE_PATTERN = re.compile(
 _CITATION_PATTERN = re.compile(r"\[资料\s*([1-9]\d*)\]")
 _EVIDENCE_LABEL_PATTERN = re.compile(r"(?:^|\n)\s*\[资料\s*[1-9]\d*\]\s*标题：")
 _PROTOCOL_TAG_PATTERN = re.compile(
-    r"</?(?:answer|tool_call|tool_calls|tool_code|tool_result)\b",
+    r"</?(?:answer|think|no|tool_call|tool_calls|tool_code|tool_result)\b",
     re.IGNORECASE,
 )
 _GROUNDING_STOP_TOKENS = {"个", "分别", "相关", "内容", "资料", "问题", "请问", "一下"}
@@ -50,6 +50,10 @@ _ANCHOR_EQUIVALENTS = {
     "中国": {"中华人民共和国"},
     "中华人民共和国": {"中国"},
 }
+_DEFINITION_ENTITY_PATTERN = re.compile(
+    r"^(?P<subject>.+?)(?:是什么|是谁|指的是什么)[。？?]?$"
+)
+_ORDINAL_MARKERS = ("第一个", "第一位", "首位", "最早")
 _ANCHOR_NOISE = {
     *_GROUNDING_STOP_TOKENS,
     "哪个",
@@ -77,11 +81,28 @@ _ANCHOR_NOISE = {
     "功业",
     "贡献",
     "成就",
+    "原因",
+    "因为",
+    "是因为",
+    "为什么",
+    "为何",
+    "走上",
+    "第一个",
+    "第一位",
+    "首位",
+    "最早",
     "站点",
     "车站",
     "列表",
     "全部",
     "所有",
+    "从古至今",
+    "自古至今",
+    "至今",
+    "迄今为止",
+    "总共",
+    "一共",
+    "经历",
 }
 
 
@@ -140,7 +161,7 @@ class EvidenceAnswerGenerator:
         payload = {
             "contents": [self._prompt(question, sources)],
             "max_tokens": self.settings.generation_max_tokens,
-            "temperature": 0.8,
+            "temperature": 0.2,
             "top_k": 50,
             "top_p": 0.6,
             "alpha_presence": 1.0,
@@ -219,7 +240,34 @@ class EvidenceAnswerGenerator:
 
     def _prompt(self, question: str, sources: list[SourceItem]) -> str:
         evidence = self._evidence(sources)
+        cause_instruction = ""
+        if any(marker in question for marker in ("为什么", "原因", "为何")):
+            cause_instruction = (
+                "这是原因类问题：只归纳资料明确记载的成因、条件和直接导火事件；"
+                "不得使用模型常识补充资料未出现的原因，不得把事件发生后的结果当作原因。"
+                "资料包含多个阶段时，必须同时概括主要长期因素和直接导火事件，"
+                "不得只复述最后发生的事件或结局。"
+                "资料明确支持多项原因时，必须一次完整列出，不要只输出编号1或第一项；"
+                "使用分号并列各项，不使用可能中途停止的编号列表。"
+                "每项原因后必须紧跟实际支持它的资料编号。"
+            )
+        list_instruction = ""
+        if any(marker in question for marker in ("哪些", "有哪些", "分别", "全部", "所有")):
+            list_instruction = (
+                "这是多项答案问题：必须检查全部资料，合并不同资料明确出现的补充项；"
+                "不能只摘录第一段或第一个列表。若资料中的对象角色不同，应分别说明角色，"
+                "不能把主办、承办、参加等不同关系混为一谈。"
+            )
+        ordinal_instruction = ""
+        if any(marker in question for marker in ("第一个", "第一位", "首位", "最早")):
+            ordinal_instruction = (
+                "这是首位关系问题：只能依据资料中明确出现的“第一个、第一位、首位或最早”"
+                "关系作答，不得根据资料排列顺序猜测。"
+            )
         return f"""用户：根据资料回答问题，只回答答案，不要重复题目或资料。只能使用资料内容；资料不能明确答案时回答“{_INSUFFICIENT_EVIDENCE_ANSWER}”。每个结论句末尾必须标注支持它的资料编号，格式为“[资料 1]”。如果资料提供完整列表，必须保留列表中的每一项，不能省略、不能自行补充、不能改变顺序。回答应简洁，不超过500个中文字符。
+{cause_instruction}
+{list_instruction}
+{ordinal_instruction}
 资料：
 {evidence}
 问题：{question}
@@ -280,6 +328,9 @@ class EvidenceAnswerGenerator:
         if role_matches:
             cleaned = cleaned[role_matches[-1].end() :].strip()
         cleaned = _ASSISTANT_PREFIX_PATTERN.sub("", cleaned).strip()
+        cleaned = re.sub(r"^(?:\s*>\s*)+", "", cleaned).strip()
+        cleaned = re.sub(r"^[\]}>]+\s*", "", cleaned).strip()
+        cleaned = re.sub(r"(?:\n\s*>\s*)+$", "", cleaned).strip()
         user_match = _USER_ROLE_PATTERN.search(cleaned)
         if user_match:
             cleaned = cleaned[: user_match.start()].rstrip()
@@ -309,6 +360,12 @@ class EvidenceAnswerGenerator:
 
 
 def _entity_anchors(question: str) -> set[str]:
+    definition_match = _DEFINITION_ENTITY_PATTERN.match(question.strip())
+    if definition_match and not any(marker in question for marker in _ORDINAL_MARKERS):
+        subject = normalize_search_text(definition_match.group("subject")).replace(" ", "")
+        subject = subject.strip("《》“”\"'，,。；;？?")
+        if 2 <= len(subject) <= 40:
+            return {subject}
     tokens = [
         token
         for token in query_tokens(question)

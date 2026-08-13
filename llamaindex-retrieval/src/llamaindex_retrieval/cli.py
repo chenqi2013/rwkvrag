@@ -38,6 +38,7 @@ def parser() -> argparse.ArgumentParser:
     evaluation.add_argument("--url", default="http://127.0.0.1:8090")
     evaluation.add_argument("--cases", type=Path, default=Path("eval/cases.jsonl"))
     evaluation.add_argument("--top-k", type=int, default=5)
+    evaluation.add_argument("--output", type=Path, default=None)
 
     migration = commands.add_parser("migrate-sqlite")
     migration.add_argument("--path", type=Path, default=None)
@@ -80,6 +81,12 @@ def main() -> None:
         return
     if arguments.command == "eval":
         report = evaluate(arguments.url, arguments.cases, arguments.top_k)
+        if arguments.output:
+            arguments.output.parent.mkdir(parents=True, exist_ok=True)
+            arguments.output.write_text(
+                json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
         print(json.dumps(report, ensure_ascii=False, indent=2))
         if report["passed"] != report["total"]:
             raise SystemExit(1)

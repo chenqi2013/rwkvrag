@@ -54,11 +54,18 @@ export default function SearchHistoryPage() {
   const [expandedKeys, setExpandedKeys] = useState<readonly React.Key[]>([]);
   const [loading, setLoading] = useState(true);
   const [rerunningId, setRerunningId] = useState<string>();
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
+  const [total, setTotal] = useState(0);
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (nextPage: number, nextPageSize: number) => {
     setLoading(true);
     try {
-      setItems(await api.searchHistory());
+      const response = await api.searchHistory(nextPage, nextPageSize);
+      setItems(response.items);
+      setTotal(response.total);
+      setPage(response.page);
+      setPageSize(response.page_size);
     } catch (error) {
       void message.error(errorMessage(error));
     } finally {
@@ -76,14 +83,26 @@ export default function SearchHistoryPage() {
   }, []);
 
   useEffect(() => {
-    void load();
+    void load(1, 20);
   }, [load]);
 
   const rerun = async (item: SearchTestItem) => {
     setRerunningId(item.id);
     try {
-      await api.rerunSearchHistory(item.id);
-      await Promise.all([load(), loadDetail(item.id)]);
+      const run = await api.rerunSearchHistory(item.id);
+      // Update the row in place so rerunning does not move it to the top of
+      // the server's updated_at-sorted history list or reset the current page.
+      setItems((current) => current.map((currentItem) => currentItem.id === item.id
+        ? {
+            ...currentItem,
+            request: run.request,
+            run_count: run.run_number,
+            updated_at: run.created_at,
+            latest_run_id: run.id,
+            latest_run: run,
+          }
+        : currentItem));
+      await loadDetail(item.id);
       void message.success(tr("已追加一次重新检索生成结果", "A new search run has been added"));
     } catch (error) {
       void message.error(errorMessage(error));
@@ -158,7 +177,7 @@ export default function SearchHistoryPage() {
             {tr("自动保存 `/v1/ask` 的问题、答案、证据和模型信息；重新检索会新增版本，方便比较改动前后的效果。", "Automatically save `/v1/ask` questions, answers, evidence, and model details. Reruns create versions for before-and-after comparison.")}
           </Typography.Paragraph>
         </div>
-        <Button icon={<ReloadOutlined />} loading={loading} onClick={() => void load()}>{tr("刷新", "Refresh")}</Button>
+        <Button icon={<ReloadOutlined />} loading={loading} onClick={() => void load(page, pageSize)}>{tr("刷新", "Refresh")}</Button>
       </div>
       <Alert
         type="info"
@@ -173,7 +192,18 @@ export default function SearchHistoryPage() {
           columns={columns}
           dataSource={items}
           locale={{ emptyText: <Empty description={tr("还没有检索记录。请先在“检索测试”页面提交问题。", "No search history yet. Submit a question in Search Lab first.")} /> }}
-          pagination={{ pageSize: 20, showSizeChanger: false }}
+          pagination={{
+            current: page,
+            pageSize,
+            total,
+            showSizeChanger: true,
+            pageSizeOptions: [10, 20, 50, 100],
+            showTotal: (count) => tr(`共 ${count} 条`, `${count} items`),
+            onChange: (nextPage, nextPageSize) => {
+              setExpandedKeys([]);
+              void load(nextPageSize === pageSize ? nextPage : 1, nextPageSize);
+            },
+          }}
           expandable={{
             expandedRowKeys: expandedKeys,
             expandIcon: ({ expanded, onExpand, record }) => (

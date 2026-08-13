@@ -10,10 +10,13 @@ from opencc import OpenCC
 from opensearchpy import OpenSearch, helpers
 
 from .config import Settings
+from .evidence_quality import is_repetitive_garbage
+from .question_patterns import is_agent_relation_question
 
 
 _ASCII_TOKEN = re.compile(r"[a-zA-Z0-9_]+")
 _CJK_RUN = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]+")
+_KANA_RUN = re.compile(r"[\u3040-\u30ff]+")
 _TRANSIT_LINE_NUMBER = re.compile(r"(?:第)?([零〇一二两三四五六七八九十百]+)号线")
 _OPENCC = OpenCC("t2s")
 jieba.setLogLevel(logging.WARNING)
@@ -70,10 +73,20 @@ _QUERY_EXPANSIONS = {
     "关隘": ("关城", "关口", "关卡"),
     "关城": ("关隘", "关口"),
     "关口": ("关隘", "关城"),
+    "回归": ("主权移交", "政权移交", "恢复行使主权"),
+    "开启": ("开辟", "开通", "出使", "凿空"),
+    "开辟": ("开启", "开通", "出使", "凿空"),
+    "开通": ("开启", "开辟", "通达"),
+    "覆亡": ("灭亡", "衰亡", "崩溃"),
+    "现任": ("现在", "目前", "当前"),
+    "主办": ("举办", "承办", "举办地", "主办国"),
+    "球场": ("体育场", "比赛场馆", "决赛场地"),
 }
 _PRESERVED_PHRASES = ("国都", "首都", "关隘", "关城", "关口")
 _QUERY_CORRECTIONS = {
     "名族": "民族",
+    "覆亡": "灭亡",
+    "为何": "为什么",
 }
 _PROXIMITY_EXPANSIONS = {"中国": ("中华人民共和国",)}
 _TITLE_INTENT_TOKENS = {
@@ -95,6 +108,14 @@ _TITLE_INTENT_TOKENS = {
     "列出",
     "列举",
 }
+_TOPIC_TITLE_NOISE = _TITLE_INTENT_TOKENS | _QUESTION_WORDS | {
+    "中国",
+    "进行",
+    "活动",
+    "训练",
+    "区别",
+    "比较",
+}
 _LIST_QUERY_MARKERS = (
     "哪些",
     "有哪",
@@ -102,16 +123,20 @@ _LIST_QUERY_MARKERS = (
     "全部",
     "所有",
     "分别",
-    "几个",
-    "多少",
     "列一下",
     "列出",
     "列举",
 )
 _STEP_QUERY_MARKERS = ("如何", "怎么", "步骤", "流程", "方法")
 _QUESTION_BOUNDARIES = (
+    "指的是什么",
     "有哪些",
     "有哪",
+    "哪几个人",
+    "哪些人",
+    "哪几位",
+    "由谁",
+    "谁",
     "在哪",
     "是在哪",
     "在哪里",
@@ -197,6 +222,7 @@ def normalize_query_text(text: str) -> str:
 
 def _tokens_from_normalized_text(normalized: str) -> list[str]:
     tokens: list[str] = _ASCII_TOKEN.findall(normalized)
+    tokens.extend(_KANA_RUN.findall(normalized))
     for run in _CJK_RUN.findall(normalized):
         tokens.extend(token.strip() for token in jieba.cut_for_search(run))
     return [token for token in tokens if token and token not in _STOP_WORDS]
@@ -238,8 +264,12 @@ def title_entity_tokens(text: str) -> list[str]:
 
 
 def _question_subject(text: str) -> str:
+    for prefix in ("请简要介绍", "请介绍", "简要介绍"):
+        if text.startswith(prefix):
+            text = text[len(prefix) :]
     boundaries = [position for marker in _QUESTION_BOUNDARIES if (position := text.find(marker)) > 0]
-    return text[: min(boundaries)].strip() if boundaries else text
+    subject = (text[: min(boundaries)] if boundaries else text).strip(" ？?，,。；;")
+    return re.sub(r"(?:是?由|是)$", "", subject).strip()
 
 
 def title_entity_token_variants(text: str) -> list[list[str]]:
@@ -295,7 +325,9 @@ def _metadata_tags(metadata: dict[str, Any]) -> str:
 
 
 def intent_content_types(question: str) -> tuple[str, ...]:
-    if any(marker in question for marker in _LIST_QUERY_MARKERS):
+    if not is_agent_relation_question(question) and any(
+        marker in question for marker in _LIST_QUERY_MARKERS
+    ):
         return ("table_summary", "table", "list")
     if any(marker in question for marker in _STEP_QUERY_MARKERS):
         return ("list", "table", "prose")
@@ -361,7 +393,12 @@ def _passage_score(
     text = str(source.get("text") or "")
     content_type = str(metadata.get("content_type") or source.get("content_type") or "prose")
     chunk_order = max(0, _chunk_order(source))
-    structured_bonus = 0.2 if content_type in {"table_summary", "table", "list", "key_value"} else 0.0
+    structured_bonus = {
+        "table_summary": 0.8,
+        "table": 0.6,
+        "list": 0.2,
+        "key_value": 0.1,
+    }.get(content_type, 0.0)
     lead_bonus = 0.08 / (1.0 + chunk_order)
     focus = _focus_bonus(question, title, text)
     proximity = max(_proximity_bonus(text, item) for item in proximity_sets)
@@ -546,7 +583,39 @@ class LexicalIndex:
                     }
                 }
             )
+        exact_titles = list(dict.fromkeys((
+            _question_subject(question),
+            _question_subject(normalize_query_text(question)),
+        )))
+        phrase_tokens = [token for token in tokens if len(token) >= 2 and token not in _QUESTION_WORDS and token != "进行"]
+        topic_tokens = [token for token in phrase_tokens if token not in _TOPIC_TITLE_NOISE]
+        topic_titles = list(dict.fromkeys([
+            *topic_tokens,
+            *(f"{left}{right}" for left, right in zip(phrase_tokens, phrase_tokens[1:])),
+        ]))
         content_types = intent_content_types(question)
+        topic_title_boost = 80.0 if content_types else 10.0
+        def exact_title_boost(title: str) -> float:
+            normalized = normalize_search_text(title).replace(" ", "")
+            if content_types and len(normalized) >= 4 and normalized not in _TOPIC_TITLE_NOISE:
+                return 160.0
+            return 40.0
+
+        def topic_boost(title: str) -> float:
+            # Prefer meaningful multi-token phrases such as “舱外活动” over
+            # a broad subject token such as “宇航员”.
+            return topic_title_boost * (2.0 if title not in topic_tokens else 1.0)
+
+        for title in topic_titles:
+            # Topic overview pages are often short and otherwise lose to highly
+            # repetitive detail pages (for example an individual mountain pass).
+            should.append({"term": {"title": {"value": title, "boost": topic_boost(title)}}})
+        for title in exact_titles:
+            if title:
+                should.extend([
+                    {"term": {"title": {"value": f"{title} (消歧义)", "boost": 18.0}}},
+                    {"term": {"title": {"value": f"{title} (消歧義)", "boost": 18.0}}},
+                ])
         if content_types:
             should.append(
                 {
@@ -556,29 +625,46 @@ class LexicalIndex:
                     }
                 }
             )
-        raw_candidate_k = max(candidate_k, min(candidate_k * 4, 200), 1)
+        # A title match can cover many chunks from one page. Pull a wider raw
+        # window so those chunks cannot crowd every other relevant page out.
+        raw_candidate_k = max(candidate_k, min(candidate_k * 12, 200), 1)
         body = {
             "size": raw_candidate_k,
             "track_total_hits": False,
             "_source": ["node_id", "document_id", "text", "metadata", "title"],
             "query": {
                 "bool": {
-                    "must": [
-                        {
-                            "multi_match": {
-                                "query": " ".join(tokens),
-                                "fields": [
-                                    "body_tokens",
-                                    "title_tokens^2",
-                                    "tags_tokens^1.5",
-                                    "section_tokens^3",
-                                    "structure_tokens^2",
-                                ],
-                                "type": "best_fields",
-                                "operator": "or",
-                            }
+                    "must": [{
+                        "bool": {
+                            "should": [
+                                {
+                                    "multi_match": {
+                                        "query": " ".join(tokens),
+                                        "fields": [
+                                            "body_tokens",
+                                            "title_tokens^2",
+                                            "tags_tokens^1.5",
+                                            "section_tokens^3",
+                                            "structure_tokens^2",
+                                        ],
+                                        "type": "best_fields",
+                                        "operator": "or",
+                                    }
+                                },
+                                *(
+                                    {"term": {"title": {"value": title, "boost": exact_title_boost(title)}}}
+                                    for title in exact_titles
+                                    if title
+                                ),
+                                *(
+                                    {"term": {"title": {"value": title, "boost": topic_boost(title)}}}
+                                    for title in topic_titles
+                                    if title
+                                ),
+                            ],
+                            "minimum_should_match": 1,
                         }
-                    ],
+                    }],
                     "should": should,
                     "filter": filters,
                 }
@@ -590,9 +676,19 @@ class LexicalIndex:
         normalized_question = _normalized_text(question)
         question_token_set = set(tokens)
         proximity_sets = proximity_token_sets(question)
+        specific_exact_titles = {
+            normalize_search_text(exact).replace(" ", "")
+            for exact in exact_titles
+            if content_types
+            and exact
+            and len(normalize_search_text(exact).replace(" ", "")) >= 4
+            and normalize_search_text(exact).replace(" ", "") not in _TOPIC_TITLE_NOISE
+        }
         for hit in hits:
             source = dict(hit.get("_source") or {})
             title = str(source.get("title") or "")
+            if is_repetitive_garbage(str(source.get("text") or "")):
+                continue
             raw = max(0.0, float(hit.get("_score") or 0))
             if normalized_question and normalized_question in _normalized_text(title):
                 raw += 1.5
@@ -642,6 +738,17 @@ class LexicalIndex:
             )
             for document_id, chunk in page_best.items()
         ]
+        highest_page_score = max((raw for raw, _chunk in merged), default=0.0)
+        merged = [
+            (
+                raw + highest_page_score + 1.0
+                if normalize_search_text(str(chunk.source.get("title") or "")).replace(" ", "")
+                in specific_exact_titles
+                else raw,
+                chunk,
+            )
+            for raw, chunk in merged
+        ]
         merged.sort(key=lambda item: item[0], reverse=True)
         top_raw = max((raw for raw, _chunk in merged), default=1.0) or 1.0
         return [
@@ -690,6 +797,54 @@ class LexicalIndex:
                 )
             )
         return results
+
+    def document_lead_chunk(
+        self,
+        document_id: str,
+        *,
+        knowledge_base_id: str | None,
+        score: float,
+    ) -> LexicalResult | None:
+        """Return the earliest indexed chunk, which normally contains the article definition."""
+
+        filters: list[dict[str, Any]] = [{"term": {"document_id": document_id}}]
+        if knowledge_base_id:
+            filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
+        response = self.client.search(
+            index=self.index_name,
+            body={
+                "size": 100,
+                "sort": [{"chunk_order": "asc"}, {"_seq_no": "asc"}],
+                "_source": ["node_id", "document_id", "text", "metadata"],
+                "query": {"bool": {"filter": filters}},
+            },
+        )
+        hits = response.get("hits", {}).get("hits", [])
+        if not hits:
+            return None
+        candidates = [
+            dict(hit.get("_source") or {})
+            for hit in hits
+            if not is_repetitive_garbage(str((hit.get("_source") or {}).get("text") or ""))
+        ]
+        def lead_priority(candidate: dict[str, Any]) -> tuple[int, int, int]:
+            metadata = dict(candidate.get("metadata") or {})
+            title = normalize_search_text(str(metadata.get("title") or "")).replace(" ", "")
+            section = normalize_search_text(str(metadata.get("section") or "")).replace(" ", "")
+            exact_root = section == title or not section
+            section_depth = section.count(">")
+            return (0 if exact_root else 1, section_depth, int(metadata.get("chunk_order") or 0))
+
+        source = min(candidates, key=lead_priority, default=None)
+        if source is None:
+            return None
+        return LexicalResult(
+            node_id=str(source.get("node_id") or ""),
+            document_id=str(source.get("document_id") or source.get("node_id") or ""),
+            text=str(source.get("text") or ""),
+            metadata=dict(source.get("metadata") or {}),
+            score=score,
+        )
 
     def document_structure_candidates(
         self,
@@ -746,6 +901,264 @@ class LexicalIndex:
                     text=str(source.get("text") or ""),
                     metadata=dict(source.get("metadata") or {}),
                     score=min(1.0, max(0.0, float(hit.get("_score") or 0.0) / top_raw)),
+                )
+            )
+        return results
+
+    def document_relation_candidates(
+        self,
+        question: str,
+        *,
+        document_id: str,
+        relations: Iterable[str],
+        knowledge_base_id: str | None,
+        limit: int,
+    ) -> list[LexicalResult]:
+        """Find passages for a requested relation inside an already matched article."""
+
+        filters: list[dict[str, Any]] = [{"term": {"document_id": document_id}}]
+        if knowledge_base_id:
+            filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
+        relation_values = tuple(dict.fromkeys(value.strip() for value in relations if value.strip()))
+        relation_tokens = list(
+            dict.fromkeys(
+                token
+                for value in relation_values
+                for token in query_tokens(value)
+            )
+        )
+        if not relation_tokens:
+            return []
+        question_tokens = query_tokens(question)
+        response = self.client.search(
+            index=self.index_name,
+            body={
+                "size": max(1, min(int(limit), 50)),
+                "_source": ["node_id", "document_id", "text", "metadata", "title"],
+                "query": {
+                    "bool": {
+                        "filter": filters,
+                        "must": [
+                            {
+                                "multi_match": {
+                                    "query": " ".join(relation_tokens),
+                                    "fields": [
+                                        "section_tokens^6",
+                                        "body_tokens^3",
+                                        "structure_tokens^2",
+                                    ],
+                                    "type": "best_fields",
+                                    "operator": "or",
+                                    "minimum_should_match": 1,
+                                }
+                            }
+                        ],
+                        "should": [
+                            {
+                                "multi_match": {
+                                    "query": " ".join(question_tokens),
+                                    "fields": ["body_tokens", "section_tokens^3"],
+                                    "type": "best_fields",
+                                    "operator": "or",
+                                }
+                            },
+                            {
+                                "constant_score": {
+                                    "filter": {"term": {"content_type": "prose"}},
+                                    "boost": 1.5,
+                                }
+                            },
+                        ],
+                    }
+                },
+            },
+        )
+        hits = [
+            hit
+            for hit in response.get("hits", {}).get("hits", [])
+            if not is_repetitive_garbage(
+                str((hit.get("_source") or {}).get("text") or "")
+            )
+        ]
+        top_raw = max(
+            (float(hit.get("_score") or 0.0) for hit in hits),
+            default=1.0,
+        ) or 1.0
+        return [
+            LexicalResult(
+                node_id=str((hit.get("_source") or {}).get("node_id") or ""),
+                document_id=str(
+                    (hit.get("_source") or {}).get("document_id")
+                    or (hit.get("_source") or {}).get("node_id")
+                    or ""
+                ),
+                text=str((hit.get("_source") or {}).get("text") or ""),
+                metadata=dict((hit.get("_source") or {}).get("metadata") or {}),
+                score=min(
+                    1.0,
+                    max(0.0, float(hit.get("_score") or 0.0) / top_raw),
+                ),
+            )
+            for hit in hits
+        ]
+
+    def document_prose_candidates(
+        self,
+        question: str,
+        *,
+        document_id: str,
+        knowledge_base_id: str | None,
+        limit: int,
+    ) -> list[LexicalResult]:
+        """Find prose fallbacks when a chronological list structure is malformed."""
+
+        filters: list[dict[str, Any]] = [
+            {"term": {"document_id": document_id}},
+            {
+                "bool": {
+                    "should": [
+                        {"term": {"content_type": "prose"}},
+                        {"bool": {"must_not": [{"exists": {"field": "content_type"}}]}},
+                    ],
+                    "minimum_should_match": 1,
+                }
+            },
+        ]
+        if knowledge_base_id:
+            filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
+        response = self.client.search(
+            index=self.index_name,
+            body={
+                "size": max(1, min(int(limit), 20)),
+                "_source": ["node_id", "document_id", "text", "metadata", "title"],
+                "query": {
+                    "bool": {
+                        "filter": filters,
+                        "must": [{
+                            "multi_match": {
+                                "query": " ".join(query_tokens(question)),
+                                "fields": ["body_tokens", "section_tokens^2", "title_tokens^2"],
+                                "operator": "or",
+                            }
+                        }],
+                    }
+                },
+            },
+        )
+        hits = [
+            hit
+            for hit in response.get("hits", {}).get("hits", [])
+            if not is_repetitive_garbage(str((hit.get("_source") or {}).get("text") or ""))
+        ]
+        top_raw = max((float(hit.get("_score") or 0.0) for hit in hits), default=1.0) or 1.0
+        return [
+            LexicalResult(
+                node_id=str((hit.get("_source") or {}).get("node_id") or ""),
+                document_id=str(
+                    (hit.get("_source") or {}).get("document_id")
+                    or (hit.get("_source") or {}).get("node_id")
+                    or ""
+                ),
+                text=str((hit.get("_source") or {}).get("text") or ""),
+                metadata=dict((hit.get("_source") or {}).get("metadata") or {}),
+                score=min(1.0, max(0.0, float(hit.get("_score") or 0.0) / top_raw)),
+            )
+            for hit in hits
+        ]
+
+    def document_term_candidates(
+        self,
+        term: str,
+        *,
+        document_id: str,
+        knowledge_base_id: str | None,
+        limit: int = 3,
+    ) -> list[LexicalResult]:
+        """Find same-document prose that can repair a truncated structured entity."""
+
+        filters: list[dict[str, Any]] = [{"term": {"document_id": document_id}}]
+        if knowledge_base_id:
+            filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
+        response = self.client.search(
+            index=self.index_name,
+            body={
+                "size": max(1, min(int(limit), 100)),
+                "_source": ["node_id", "document_id", "text", "metadata"],
+                "query": {
+                    "bool": {
+                        "filter": filters,
+                        "must": [{
+                            "wildcard": {
+                                "body_tokens": {
+                                    "value": f"*{term}站*",
+                                }
+                            }
+                        }],
+                    }
+                },
+            },
+        )
+        results = []
+        for hit in response.get("hits", {}).get("hits", []):
+            source = dict(hit.get("_source") or {})
+            results.append(
+                LexicalResult(
+                    node_id=str(source.get("node_id") or ""),
+                    document_id=str(source.get("document_id") or source.get("node_id") or ""),
+                    text=str(source.get("text") or ""),
+                    metadata=dict(source.get("metadata") or {}),
+                    score=1.0,
+                )
+            )
+        return results
+
+    def station_title_candidates(
+        self,
+        suffix: str,
+        *,
+        question: str,
+        knowledge_base_id: str | None,
+        limit: int = 10,
+    ) -> list[LexicalResult]:
+        """Resolve a truncated station name from dedicated station articles."""
+
+        filters: list[dict[str, Any]] = []
+        if knowledge_base_id:
+            filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
+        response = self.client.search(
+            index=self.index_name,
+            body={
+                "size": max(1, min(int(limit), 50)),
+                "_source": ["node_id", "document_id", "text", "metadata", "title"],
+                "query": {
+                    "bool": {
+                        "must": [{"wildcard": {"title": {"value": f"*{suffix}站"}}}],
+                        "should": [{
+                            "multi_match": {
+                                "query": " ".join(query_tokens(question)),
+                                "fields": ["body_tokens", "title_tokens^2", "tags_tokens"],
+                                "operator": "or",
+                            }
+                        }],
+                        "filter": filters,
+                    }
+                },
+            },
+        )
+        results = []
+        for hit in response.get("hits", {}).get("hits", []):
+            source = dict(hit.get("_source") or {})
+            title = str(source.get("title") or "")
+            text = str(source.get("text") or "")
+            if not title.endswith(f"{suffix}站"):
+                continue
+            results.append(
+                LexicalResult(
+                    node_id=str(source.get("node_id") or ""),
+                    document_id=str(source.get("document_id") or source.get("node_id") or ""),
+                    text=f"{title}\n{text}",
+                    metadata=dict(source.get("metadata") or {}),
+                    score=1.0,
                 )
             )
         return results

@@ -14,8 +14,9 @@ from llamaindex_retrieval.lexical_index import (
     query_tokens,
     title_entity_tokens,
 )
-from llamaindex_retrieval.schemas import SearchRequest
+from llamaindex_retrieval.schemas import SearchRequest, SourceItem
 from llamaindex_retrieval.service import SearchService
+from llamaindex_retrieval.query_planning import build_query_plan
 
 
 def result(document_id: str, score: float) -> LexicalResult:
@@ -167,6 +168,171 @@ class FakeFailingGenerator:
         return "test-model"
 
 
+class FakeCauseGenerator:
+    assess_evidence = staticmethod(EvidenceAnswerGenerator.assess_evidence)
+
+    async def generate(self, question: str, sources: Any) -> str:
+        assert len(sources) == 3
+        return "明朝灭亡与政治失序、天灾饥荒和农民起义有关。[资料 1][资料 2][资料 3]"
+
+    async def current_model(self) -> str:
+        return "test-model"
+
+
+class FakeRefusingCauseGenerator(FakeCauseGenerator):
+    async def generate(self, question: str, sources: Any) -> str:
+        return "根据检索到的资料，无法确定。"
+
+
+class FakeEmptyCauseGenerator(FakeCauseGenerator):
+    async def generate(self, question: str, sources: Any) -> str:
+        return "根据资料，导致明朝灭亡的原因有：[资料 1]"
+
+
+class FakeCauseIndex:
+    def __init__(self) -> None:
+        self.structure_calls = 0
+
+    def search(
+        self,
+        question: str,
+        *,
+        candidate_k: int,
+        knowledge_base_id: str | None = None,
+    ) -> list[LexicalResult]:
+        return [
+            LexicalResult(
+                node_id="ming-fall-2",
+                document_id="ming",
+                text="李自成攻克北京，崇祯帝自缢，明亡。",
+                metadata={
+                    "document_id": "ming",
+                    "title": "明朝",
+                    "source": "finewiki-zh",
+                    "section": "明朝 > 历史 > 灭亡",
+                    "parent_id": "ming-fall",
+                    "structure_size": 3,
+                    "chunk_order": 2,
+                },
+                score=1.0,
+            )
+        ]
+
+    def structure_chunks(self, parent_id: str, **kwargs: Any) -> list[LexicalResult]:
+        self.structure_calls += 1
+        assert parent_id == "ming-fall"
+        texts = (
+            "明末党争不断，崇祯帝多疑躁刻，不善用人。",
+            "严寒、干旱、饥荒、蝗灾和鼠疫频繁出现，各地相继爆发农民起义。",
+            "明政府镇压失败，李自成攻克北京，崇祯帝自缢，明亡。",
+        )
+        return [
+            LexicalResult(
+                node_id=f"ming-fall-{index}",
+                document_id="ming",
+                text=text,
+                metadata={
+                    "document_id": "ming",
+                    "title": "明朝",
+                    "source": "finewiki-zh",
+                    "section": "明朝 > 历史 > 灭亡",
+                    "parent_id": "ming-fall",
+                    "structure_size": 3,
+                    "chunk_order": index,
+                },
+                score=1.0,
+            )
+            for index, text in enumerate(texts)
+        ]
+
+
+class FakeDocumentRelationIndex:
+    def __init__(self) -> None:
+        self.relation_calls: list[tuple[str, tuple[str, ...]]] = []
+
+    def search(
+        self,
+        question: str,
+        *,
+        candidate_k: int,
+        knowledge_base_id: str | None = None,
+    ) -> list[LexicalResult]:
+        return [
+            LexicalResult(
+                node_id="silk-lead",
+                document_id="silk-road",
+                text="班超后来再次打通了荒废已久的丝绸之路。",
+                metadata={"title": "丝绸之路", "source": "finewiki-zh"},
+                score=1.0,
+            )
+        ]
+
+    def document_relation_candidates(
+        self,
+        question: str,
+        *,
+        document_id: str,
+        relations: tuple[str, ...],
+        knowledge_base_id: str | None,
+        limit: int,
+    ) -> list[LexicalResult]:
+        self.relation_calls.append((document_id, relations))
+        return [
+            LexicalResult(
+                node_id="silk-zhang-qian",
+                document_id=document_id,
+                text="前139年，张骞带随从从长安出发，史书称其首次西行为凿空。",
+                metadata={
+                    "title": "丝绸之路",
+                    "source": "finewiki-zh",
+                    "section": "历史发展 > 张骞的西行",
+                },
+                score=1.0,
+            )
+        ]
+
+    def document_lead_chunk(self, *args: Any, **kwargs: Any) -> None:
+        return None
+
+
+class FakeOrdinalIndex:
+    def __init__(self) -> None:
+        self.queries: list[str] = []
+
+    def search(
+        self,
+        question: str,
+        *,
+        candidate_k: int,
+        knowledge_base_id: str | None = None,
+    ) -> list[LexicalResult]:
+        self.queries.append(question)
+        return [
+            LexicalResult(
+                node_id="first-emperor",
+                document_id="emperor",
+                text="在中国历史中，嬴政创建皇帝制度，成为中原第一个皇帝，称始皇帝。",
+                metadata={
+                    "document_id": "emperor",
+                    "title": "皇帝",
+                    "source": "finewiki-zh",
+                },
+                score=1.0,
+            )
+        ]
+
+
+class FakeOrdinalGenerator:
+    assess_evidence = staticmethod(EvidenceAnswerGenerator.assess_evidence)
+
+    async def generate(self, question: str, sources: Any) -> str:
+        assert sources[0].title == "皇帝"
+        return "中国历史上第一个皇帝是嬴政，即秦始皇。[资料 1]"
+
+    async def current_model(self) -> str:
+        return "test-model"
+
+
 class FakeStructuredListIndex:
     def search(
         self,
@@ -268,6 +434,45 @@ class FakeCapitalIndex:
                 score=1.0,
             )
         ]
+
+
+class FakeDefinitionIndex:
+    def search(self, question: str, *, candidate_k: int, knowledge_base_id: str | None = None) -> list[LexicalResult]:
+        return [LexicalResult(node_id="later", document_id="entity", text="Category:示例", metadata={"title": "示例"}, score=1.0)]
+
+    def document_lead_chunk(self, document_id: str, *, knowledge_base_id: str | None, score: float) -> LexicalResult:
+        return LexicalResult(node_id="lead", document_id=document_id, text="示例是用于测试的条目。", metadata={"title": "示例"}, score=score)
+
+
+class FakeComparisonIndex:
+    def search(self, question: str, *, candidate_k: int, knowledge_base_id: str | None = None) -> list[LexicalResult]:
+        return [
+            LexicalResult(
+                node_id=f"node-{question}",
+                document_id=question,
+                text=f"{question}是一种测试对象。",
+                metadata={"title": question, "source": "finewiki-zh"},
+                score=1.0,
+            )
+        ]
+
+
+@pytest.mark.asyncio
+async def test_definition_question_uses_document_lead_and_direct_answer() -> None:
+    service = SearchService(Settings(), cast(Any, FakeDefinitionIndex()), generator=cast(Any, FakeFailingGenerator()))
+    response = await service.ask(SearchRequest(question="示例是什么？", top_k=1))
+    assert response.answer == "示例是用于测试的条目。 [资料 1]"
+    assert response.generation["answer_strategy"] == "direct_extract"
+
+
+@pytest.mark.asyncio
+async def test_comparison_question_decomposes_and_merges_subject_searches() -> None:
+    service = SearchService(Settings(), cast(Any, FakeComparisonIndex()))
+    response = await service.search(SearchRequest(question="尺八和长笛有什么区别？", top_k=5))
+
+    assert [item.title for item in response.results] == ["尺八", "长笛"]
+    assert response.retrieval["intent"] == "comparison"
+    assert response.retrieval["query_decomposition"] == ["尺八", "长笛"]
 
 
 class FakeCapitalDecisionIndex:
@@ -372,7 +577,7 @@ def test_lexical_index_searches_chinese_and_titles() -> None:
     results = index.search("中国首都在哪里", candidate_k=5)
     assert results
     assert results[0].document_id == "capital"
-    fields = client.search_body["query"]["bool"]["must"][0]["multi_match"]["fields"]
+    fields = client.search_body["query"]["bool"]["must"][0]["bool"]["should"][0]["multi_match"]["fields"]
     assert fields == [
         "body_tokens",
         "title_tokens^2",
@@ -388,6 +593,8 @@ def test_transit_line_numbers_are_normalized() -> None:
     )
     assert lexical_tokens("广州地铁二十一号线") == lexical_tokens("广州地铁21号线")
     assert {"车站", "站点", "站名"} <= set(query_tokens("深圳地铁1号线有哪些站"))
+    assert "センラ" in query_tokens("センラ指的是什么？")
+    assert title_entity_tokens("創新方指的是什么？") == lexical_tokens("創新方")
 
 
 def test_query_normalization_corrects_common_chinese_typos() -> None:
@@ -397,6 +604,8 @@ def test_query_normalization_corrects_common_chinese_typos() -> None:
     assert {"国都", "首都"} <= set(query_tokens("中华人民共和国的国都是哪个城市"))
     assert "知道" not in query_tokens("你知道现在中国的首都是在哪个地方吗？")
     assert "地方" not in title_entity_tokens("你知道现在中国的首都是在哪个地方吗？")
+    assert title_entity_tokens("YouTube由哪些人共同创立？") == ["youtube"]
+    assert title_entity_tokens("YouTube是由哪几个人创立的？") == ["youtube"]
 
 
 @pytest.mark.asyncio
@@ -406,7 +615,7 @@ async def test_service_searches_with_normalized_question() -> None:
 
     response = await service.search(SearchRequest(question="中国有多少个名族", top_k=1))
 
-    query = client.search_bodies[0]["query"]["bool"]["must"][0]["multi_match"]["query"]
+    query = client.search_bodies[0]["query"]["bool"]["must"][0]["bool"]["should"][0]["multi_match"]["query"]
     assert "民族" in query
     assert "名族" not in query
     assert response.retrieval["normalized_question"] == "中国有多少个民族"
@@ -428,6 +637,157 @@ async def test_ask_reports_subject_anchor_mismatch() -> None:
     assert response.generation["blocked_reason"] == "insufficient_evidence"
     assert "秦始皇" in response.generation["evidence_anchors"]
     assert response.generation["matched_evidence_anchors"] == []
+
+
+@pytest.mark.asyncio
+async def test_cause_question_expands_sibling_chunks_from_same_section() -> None:
+    index = FakeCauseIndex()
+    service = SearchService(
+        Settings(max_chunks_per_document=1),
+        cast(Any, index),
+        generator=cast(Any, FakeCauseGenerator()),
+    )
+
+    response = await service.ask(
+        SearchRequest(question="明朝是因为什么原因走上了灭亡", top_k=1)
+    )
+
+    assert "政治失序、天灾饥荒和农民起义" in response.answer
+    assert index.structure_calls == 1
+    assert response.retrieval["cause_context_expanded"] is True
+    assert response.retrieval["multi_evidence"] is True
+    assert response.retrieval["answer_evidence_count"] == 3
+    assert response.generation["evidence_grounded"] is True
+    assert "明朝" in response.generation["evidence_anchors"]
+    assert "是因为" not in response.generation["evidence_anchors"]
+
+
+@pytest.mark.asyncio
+async def test_non_cause_question_does_not_expand_cause_context() -> None:
+    index = FakeCauseIndex()
+    service = SearchService(Settings(), cast(Any, index))
+
+    response = await service.search(SearchRequest(question="明朝灭亡于哪一年", top_k=5))
+
+    assert index.structure_calls == 0
+    assert response.retrieval["intent"] == "time"
+    assert response.retrieval["cause_context_expanded"] is False
+
+
+@pytest.mark.asyncio
+async def test_cause_question_falls_back_to_grounded_excerpts_when_model_refuses() -> None:
+    service = SearchService(
+        Settings(max_chunks_per_document=1),
+        cast(Any, FakeCauseIndex()),
+        generator=cast(Any, FakeRefusingCauseGenerator()),
+    )
+
+    response = await service.ask(
+        SearchRequest(question="明朝究竟为何一步步走向覆亡了?", top_k=1)
+    )
+
+    assert "党争" in response.answer
+    assert "无法确定" not in response.answer
+    assert response.generation["answer_strategy"] == "evidence_fallback"
+
+
+@pytest.mark.asyncio
+async def test_cause_question_repairs_empty_model_answer_before_caching() -> None:
+    service = SearchService(
+        Settings(max_chunks_per_document=1),
+        cast(Any, FakeCauseIndex()),
+        generator=cast(Any, FakeEmptyCauseGenerator()),
+    )
+
+    first = await service.ask(SearchRequest(question="明朝灭亡的原因有哪些？", top_k=1))
+    second = await service.ask(SearchRequest(question="明朝灭亡的原因有哪些？", top_k=1))
+
+    assert "党争" in first.answer
+    assert first.generation["answer_strategy"] == "evidence_fallback"
+    assert second.answer == first.answer
+    assert second.generation["cache_hit"] is True
+
+
+@pytest.mark.asyncio
+async def test_cause_question_repairs_legacy_empty_cached_answer() -> None:
+    service = SearchService(
+        Settings(max_chunks_per_document=1),
+        cast(Any, FakeCauseIndex()),
+        generator=cast(Any, FakeFailingGenerator()),
+    )
+    request = SearchRequest(question="明朝灭亡的原因有哪些？", top_k=1)
+    evidence = await service.search(request.model_copy(update={"top_k": 5}))
+    question = str(evidence.retrieval.get("normalized_question") or request.question)
+    key = service._answer_cache_key(question, evidence)
+    service._store_cached_answer(key, "根据资料，导致明朝灭亡的原因有：[资料 1]")
+
+    response = await service.ask(request)
+
+    assert "党争" in response.answer
+    assert response.generation["cache_hit"] is True
+    assert response.generation["answer_strategy"] == "evidence_fallback"
+    assert service._get_cached_answer(key) == response.answer
+
+
+@pytest.mark.asyncio
+async def test_relation_question_searches_inside_exact_subject_document() -> None:
+    index = FakeDocumentRelationIndex()
+    service = SearchService(
+        Settings(),
+        cast(Any, index),
+        generator=cast(Any, FakeFailingGenerator()),
+    )
+
+    response = await service.ask(
+        SearchRequest(question="中国历史上开启丝绸之路的是谁？", top_k=2)
+    )
+
+    assert "张骞" in response.answer
+    assert response.sources[0].id == "silk-zhang-qian"
+    assert response.retrieval["document_relation_expanded"] is True
+    assert index.relation_calls
+    assert {"开启", "开辟", "出使", "凿空"} <= set(index.relation_calls[0][1])
+
+
+@pytest.mark.asyncio
+async def test_ordinal_question_searches_equivalent_first_relation_phrases() -> None:
+    index = FakeOrdinalIndex()
+    service = SearchService(
+        Settings(),
+        cast(Any, index),
+        generator=cast(Any, FakeOrdinalGenerator()),
+    )
+
+    response = await service.ask(
+        SearchRequest(question="中国历史上第一个皇帝是谁？", top_k=1)
+    )
+
+    assert response.answer == (
+        "在中国历史中，嬴政创建皇帝制度，成为中原第一个皇帝，称始皇帝。 [资料 1]"
+    )
+    assert response.generation["answer_strategy"] == "direct_extract"
+    assert response.retrieval["intent"] == "ordinal"
+    assert set(index.queries) == {
+        "中国 第一个 皇帝",
+        "中国 第一位 皇帝",
+        "中国 首位 皇帝",
+        "中国历史上第一个皇帝是谁？",
+    }
+
+
+@pytest.mark.asyncio
+async def test_ungrounded_definition_does_not_extract_unrelated_heading() -> None:
+    service = SearchService(
+        Settings(),
+        cast(Any, FakeMismatchIndex()),
+        generator=cast(Any, FakeInsufficientGenerator()),
+    )
+
+    response = await service.ask(SearchRequest(question="秦始皇是谁？", top_k=1))
+
+    assert response.answer == "根据检索到的资料，无法确定。"
+    assert response.generation["answer_strategy"] == "model"
+    assert response.generation["evidence_grounded"] is False
 
 
 def test_focus_bonus_reranks_chunks_by_non_title_query_terms() -> None:
@@ -487,6 +847,10 @@ def test_list_queries_allow_multiple_chunks_from_one_document() -> None:
         cast(Any, None),
     )
     document_limit = service._max_chunks_per_document("深圳地铁一号线有哪些站点")
+    requested_limit = service._max_chunks_per_document(
+        "中国从古至今总共经历了哪些朝代？", top_k=10
+    )
+    assert requested_limit == 10
     selected = service._select_results(
         [
             result("metro", 1.0),
@@ -783,6 +1147,41 @@ async def test_list_query_expands_all_chunks_from_the_matching_structure() -> No
 
 
 @pytest.mark.asyncio
+async def test_search_uses_normalized_question_for_structured_list_expansion() -> None:
+    list_chunk = LexicalResult(
+        node_id="dialog-list",
+        document_id="flight",
+        text="事故 > 与空管的对话\n- 飞行员：失去所有引擎。\n- 空管：请重复。",
+        metadata={
+            "document_id": "flight",
+            "title": "测试班机事故",
+            "section": "测试班机事故 > 与空管的对话",
+            "parent_id": "dialog-parent",
+            "content_type": "list",
+            "chunk_order": 0,
+        },
+        score=1.0,
+    )
+
+    class FakeNormalizedListIndex:
+        def search(self, question: str, **kwargs: Any) -> list[LexicalResult]:
+            return [list_chunk]
+
+        def structure_chunks(self, parent_id: str, **kwargs: Any) -> list[LexicalResult]:
+            assert parent_id == "dialog-parent"
+            return [list_chunk]
+
+    service = SearchService(Settings(), cast(Any, FakeNormalizedListIndex()))
+    response = await service.search(
+        SearchRequest(question="测试班机事故在与空管的对话方面都包括什么？", top_k=5)
+    )
+
+    assert response.retrieval["normalized_question"] == "测试班机事故有哪些与空管的对话？"
+    assert response.retrieval["structure_expanded"] is True
+    assert response.retrieval["max_chunks_per_document"] >= 5
+
+
+@pytest.mark.asyncio
 async def test_list_query_prefers_station_list_over_station_name_issue() -> None:
     station_issue = LexicalResult(
         node_id="station-name-issue",
@@ -855,3 +1254,88 @@ async def test_list_query_prefers_station_list_over_station_name_issue() -> None
 
     assert did_expand is True
     assert expanded[0].node_id == "station-list-expanded"
+
+
+@pytest.mark.asyncio
+async def test_station_summary_without_parent_adds_repair_context() -> None:
+    summary = LexicalResult(
+        node_id="station-summary",
+        document_id="metro",
+        text="站名/1号线列表：罗湖、固戍、瑞、机场东。",
+        metadata={
+            "document_id": "metro",
+            "title": "深圳地铁1号线",
+            "content_type": "table_summary",
+        },
+        score=1.0,
+    )
+    context = LexicalResult(
+        node_id="station-context",
+        document_id="metro",
+        text="机场东站和后瑞站为高架车站。",
+        metadata={"document_id": "metro", "title": "深圳地铁1号线"},
+        score=1.0,
+    )
+
+    class FakeStationRepairIndex:
+        def document_term_candidates(self, term: str, **kwargs: Any) -> list[LexicalResult]:
+            assert term == "瑞"
+            return [summary, context]
+
+    service = SearchService(Settings(), cast(Any, FakeStationRepairIndex()))
+    expanded, did_expand = await service._expand_structured_results(
+        "深圳地铁1号线有哪些站点",
+        [summary],
+        knowledge_base_id=None,
+        top_k=5,
+    )
+
+    assert did_expand is True
+    assert [item.node_id for item in expanded] == ["station-summary", "station-context"]
+
+
+def test_cause_evidence_trims_content_after_target_event() -> None:
+    sources = [
+        SourceItem(
+            id="ming-1",
+            document_id="ming",
+            source="finewiki-zh",
+            title="明朝",
+            score=1.0,
+            snippet="李自成攻克北京，崇祯帝自缢，明亡。明朝灭亡后，南明内部分裂。",
+        )
+    ]
+
+    trimmed = SearchService._trim_post_event_evidence(
+        sources,
+        subject="明朝",
+        relations=("灭亡", "原因", "导致"),
+    )
+
+    assert trimmed[0].snippet == "李自成攻克北京，崇祯帝自缢，明亡"
+
+
+def test_focus_sources_keeps_only_exact_subject_document() -> None:
+    plan = build_query_plan("2030年世界杯由哪些国家主办？")
+    sources = [
+        SourceItem(
+            id="football",
+            document_id="football",
+            source="wiki",
+            title="2030年国际足协世界杯",
+            score=1.0,
+            snippet="赛事由多个国家共同主办。",
+        ),
+        SourceItem(
+            id="cricket",
+            document_id="cricket",
+            source="wiki",
+            title="男子T20世界杯",
+            score=0.9,
+            snippet="2030年赛事由多个国家共同主办。",
+        ),
+    ]
+
+    focused = SearchService._focus_sources_on_subject(plan, sources)
+
+    assert [source.document_id for source in focused] == ["football"]
