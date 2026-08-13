@@ -72,11 +72,16 @@ _FORWARD_ACTION_AGENT_QUERY = re.compile(
     r"领导|指挥|主演|导演|执导|撰写|创作|设计|建造|开发|制作|主持|组织|推动|负责)"
     r"(?:了)?(?P<object>[^，。？?]{1,48})"
 )
+_REVERSE_ACTION_OBJECT_QUERY = re.compile(
+    r"^(?P<subject>[^，。？?]{2,40}?)(?P<relation>发起|提出|创立|创建|建立|发明|发现|"
+    r"开启|开辟|开通|撰写|创作|设计|建造|开发|制作)"
+    r"(?:了|过)?(?:什么|哪些(?:东西|事物|作品)?|哪(?:个|些)(?:东西|事物|作品)?)[。？?]?$"
+)
 _ORDINAL_RELATION_QUERY = re.compile(
     r"^(?P<scope>.+?)(?:历史上|史上)?(?:的)?"
     r"(?P<ordinal>第一个|第一位|首位|最早的?)"
     r"(?P<relation>[^，。？?]{1,32}?)"
-    r"(?:是|为)?(?:谁|哪位|什么人)[。？?]?$"
+    r"(?:(?:是|为)?(?:谁|哪位|什么人))?[。？?]?$"
 )
 _REVERSE_ORDINAL_RELATION_QUERY = re.compile(
     r"^(?:谁|哪位|什么人)(?:是|为)"
@@ -127,7 +132,7 @@ def analyze_question(question: str) -> QuestionAnalysis:
     question = clean_question_shell(question)
     comparison = comparison_subjects(question)
     ordinal_queries = _ordinal_search_queries(question)
-    agent_question = is_agent_relation_question(question)
+    agent_question = bool(_REVERSE_ACTION_OBJECT_QUERY.match(question.strip())) or is_agent_relation_question(question)
     expects_list = not agent_question and any(
         marker in question
         for marker in ("哪些", "有哪些", "列出", "列举", "列一下", "全部", "所有", "分别")
@@ -197,6 +202,7 @@ def clean_question_shell(question: str) -> str:
         if value.startswith(prefix):
             value = value[len(prefix):].strip()
     value = re.sub(r"^(?:请)?(?:简要)?介绍一下", "请简要介绍", value)
+    value = re.sub(r"^(?:请)?介绍下(?:一下)?", "请简要介绍", value)
     value = re.sub(r"^能通俗说说", "请简要介绍", value)
     value = re.sub(r"^关于(.+?)[，,]用两三句话说明一下[。.]?$", r"请简要介绍\1", value)
     value = re.sub(r"^(.+?)[，,](?:它|他|她)指的是什么[？?]?$", r"\1是什么？", value)
@@ -271,12 +277,30 @@ def _list_search_queries(question: str) -> tuple[str, ...]:
         right = right.strip(" 的")
     if not left or not right:
         return ()
+    right_core = re.sub(
+        r"^(?:比较|较为|最为|最|很|非常)?(?:著名|主要|重要|典型|常见|知名|全部|所有)(?:的)?",
+        "",
+        right,
+    ).strip(" 的")
+    if right_core != right and len(right_core) >= 4:
+        return tuple(dict.fromkeys((
+            f"{right_core}列表",
+            right_core,
+            f"{left} {right_core}",
+            f"{left} {right}",
+        )))
     relation = f"{left} {right}"
     return (f"{relation}列表", relation)
 
 
 def _agent_search_queries(question: str) -> tuple[str, ...]:
     normalized = clean_question_shell(question).strip()
+    reverse_object_match = _REVERSE_ACTION_OBJECT_QUERY.match(normalized)
+    if reverse_object_match:
+        subject = reverse_object_match.group("subject").strip(" 的")
+        relation = reverse_object_match.group("relation")
+        if subject:
+            return (f"{subject} {relation}", subject)
     office_match = _CURRENT_OFFICE_QUERY.match(normalized)
     if office_match:
         office = office_match.group("office").strip(" 的")
@@ -304,9 +328,9 @@ def _agent_search_queries(question: str) -> tuple[str, ...]:
 
 
 def _ordinal_search_queries(question: str) -> tuple[str, ...]:
-    match = _ORDINAL_RELATION_QUERY.match(question.strip())
+    match = _REVERSE_ORDINAL_RELATION_QUERY.match(question.strip())
     if not match:
-        match = _REVERSE_ORDINAL_RELATION_QUERY.match(question.strip())
+        match = _ORDINAL_RELATION_QUERY.match(question.strip())
     if not match:
         return ()
     scope = re.sub(r"(?:历史上|史上)$", "", match.group("scope")).strip(" 的")

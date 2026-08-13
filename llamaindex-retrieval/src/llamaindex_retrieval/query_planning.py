@@ -96,7 +96,7 @@ def _subject_for(analysis: QuestionAnalysis, question: str) -> str:
         return analysis.subjects[0].rsplit(" ", 1)[0].strip()
     if analysis.intent == "list" and analysis.subjects:
         first = analysis.subjects[0]
-        return first.split(" ", 1)[0].strip()
+        return first.split(" ", 1)[0].removesuffix("列表").strip()
     quantitative = re.match(
         r"^(?P<subject>.+?)(?:的)?(?:人口|面积|面積|全长|全長|长度|長度|高度|海拔)"
         r"(?:数据|數據)?(?:(?:是|为|有)?(?:多少|什么|具体数字)|[。？?]|$)",
@@ -157,7 +157,11 @@ def _subject_for(analysis: QuestionAnalysis, question: str) -> str:
     else:
         value = match.group("subject")
     if analysis.intent == "cause":
-        value = re.sub(r"(?:走向|走上)?(?:灭亡|衰落|失败|解体)$", "", value).strip(" 的")
+        value = re.sub(
+            r"(?:走向|走上)?(?:灭亡|衰落|失败|解体)(?:发生|出现|产生)?$",
+            "",
+            value,
+        ).strip(" 的")
     return _clean_subject(value)
 
 

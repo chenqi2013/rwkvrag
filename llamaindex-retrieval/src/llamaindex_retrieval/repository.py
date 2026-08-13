@@ -1,10 +1,10 @@
 import hashlib
 import json
 from datetime import UTC, datetime
-from typing import Any
+from typing import Any, Literal
 from uuid import uuid4
 
-from pymongo import ASCENDING, DESCENDING, AsyncMongoClient, ReturnDocument
+from pymongo import ASCENDING, DESCENDING, AsyncMongoClient, ReturnDocument, UpdateOne
 from pymongo.errors import DuplicateKeyError
 
 
@@ -14,6 +14,15 @@ def utc_now() -> datetime:
 
 class RepositoryConflictError(RuntimeError):
     pass
+
+
+SearchAnswerStatus = Literal["answered", "refused"]
+REFUSAL_ANSWER = "根据检索到的资料，无法确定。"
+
+
+def search_answer_status(response: dict[str, Any]) -> SearchAnswerStatus:
+    answer = str(response.get("answer") or "").strip()
+    return "refused" if answer == REFUSAL_ANSWER else "answered"
 
 
 class MongoRepository:
@@ -42,6 +51,9 @@ class MongoRepository:
         await self.search_tests.create_index("id", unique=True)
         await self.search_tests.create_index("key", unique=True)
         await self.search_tests.create_index([("updated_at", DESCENDING)])
+        await self.search_tests.create_index(
+            [("latest_answer_status", ASCENDING), ("updated_at", DESCENDING)]
+        )
         await self.search_test_runs.create_index("id", unique=True)
         await self.search_test_runs.create_index(
             [("test_id", ASCENDING), ("run_number", ASCENDING)], unique=True
@@ -49,6 +61,7 @@ class MongoRepository:
         await self.search_test_runs.create_index(
             [("test_id", ASCENDING), ("created_at", DESCENDING)]
         )
+        await self._backfill_search_test_answer_statuses()
         now = utc_now()
         await self.knowledge_bases.update_one(
             {"id": "default"},
@@ -263,7 +276,13 @@ class MongoRepository:
         }
         await self.search_test_runs.insert_one(run)
         await self.search_tests.update_one(
-            {"id": test["id"]}, {"$set": {"latest_run_id": run["id"]}}
+            {"id": test["id"]},
+            {
+                "$set": {
+                    "latest_run_id": run["id"],
+                    "latest_answer_status": search_answer_status(response),
+                }
+            },
         )
         return run
 
@@ -272,10 +291,12 @@ class MongoRepository:
         *,
         page: int = 1,
         page_size: int = 20,
+        answer_status: SearchAnswerStatus | None = None,
     ) -> dict[str, Any]:
-        total = await self.search_tests.count_documents({})
+        query = {"latest_answer_status": answer_status} if answer_status else {}
+        total = await self.search_tests.count_documents(query)
         cursor = (
-            self.search_tests.find({}, {"_id": 0})
+            self.search_tests.find(query, {"_id": 0})
             .sort("updated_at", DESCENDING)
             .skip((page - 1) * page_size)
             .limit(page_size)
@@ -304,6 +325,36 @@ class MongoRepository:
             "page": page,
             "page_size": page_size,
         }
+
+    async def _backfill_search_test_answer_statuses(self) -> None:
+        tests = await self.search_tests.find(
+            {
+                "latest_run_id": {"$exists": True, "$ne": None},
+                "latest_answer_status": {"$exists": False},
+            },
+            {"_id": 0, "id": 1, "latest_run_id": 1},
+        ).to_list(length=None)
+        if not tests:
+            return
+        run_ids = [test["latest_run_id"] for test in tests]
+        runs = await self.search_test_runs.find(
+            {"id": {"$in": run_ids}},
+            {"_id": 0, "id": 1, "response.answer": 1},
+        ).to_list(length=len(run_ids))
+        statuses = {
+            run["id"]: search_answer_status(dict(run.get("response") or {}))
+            for run in runs
+        }
+        updates = [
+            UpdateOne(
+                {"id": test["id"]},
+                {"$set": {"latest_answer_status": statuses[test["latest_run_id"]]}},
+            )
+            for test in tests
+            if test["latest_run_id"] in statuses
+        ]
+        if updates:
+            await self.search_tests.bulk_write(updates, ordered=False)
 
     async def get_search_test(self, test_id: str) -> dict[str, Any] | None:
         test = await self.search_tests.find_one({"id": test_id}, {"_id": 0})

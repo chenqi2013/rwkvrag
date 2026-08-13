@@ -232,6 +232,9 @@ def list_evidence_answer(question: str, sources: list[SourceItem]) -> str | None
 
 
 def time_evidence_answer(question: str, sources: list[SourceItem]) -> str | None:
+    term_end = _fixed_term_end_answer(question, sources)
+    if term_end is not None:
+        return term_end
     lifespan = _lifespan_time_answer(question, sources)
     if lifespan is not None:
         return lifespan
@@ -246,6 +249,29 @@ def time_evidence_answer(question: str, sources: list[SourceItem]) -> str | None
         requires_time=True,
         prefer_explicit_subject=True,
     )
+
+
+def _fixed_term_end_answer(question: str, sources: list[SourceItem]) -> str | None:
+    normalized_question = normalize_search_text(question)
+    if "任期" not in normalized_question or "结束" not in normalized_question:
+        return None
+    for source_index, source in enumerate(sources, start=1):
+        text = clean_evidence_text(source.snippet)
+        match = re.search(
+            r"(?P<year>\d{4})年(?P<month>\d{1,2})月(?P<day>\d{1,2})日"
+            r"[^。！？\n]{0,80}?(?:获得|当选)?连任[^。！？\n]{0,40}?"
+            r"任期(?P<duration>\d{1,2})年",
+            text,
+        )
+        if not match:
+            continue
+        end_year = int(match.group("year")) + int(match.group("duration"))
+        return (
+            f"按资料所载连任日期和{match.group('duration')}年任期推算，"
+            f"该任期于{end_year}年{match.group('month')}月{match.group('day')}日结束。"
+            f"[资料 {source_index}]"
+        )
+    return None
 
 
 def _explicit_subject_origin_answer(
@@ -434,7 +460,8 @@ def cause_evidence_answer(sources: list[SourceItem]) -> str | None:
 
 def ordinal_evidence_answer(question: str, sources: list[SourceItem]) -> str | None:
     relation_match = re.search(
-        r"(?:第一个|第一位|首位|最早的?)(?P<relation>[^，。？?]{1,24}?)(?:是|为)?(?:谁|哪位|什么人)",
+        r"(?:第一个|第一位|首位|最早的?)(?P<relation>[^，。？?]{1,24}?)"
+        r"(?:(?:是|为)?(?:谁|哪位|什么人))?[。？?]?$",
         question,
     )
     if not relation_match:
@@ -704,6 +731,28 @@ def definition_evidence_answer(question: str, sources: list[SourceItem]) -> str 
                 if len(sentence) + len(following) <= 300:
                     sentence = f"{sentence}{following}"
         return f"{sentence.rstrip()} [资料 {index}]"
+    subject_match = re.match(
+        r"^(?:请简要介绍|请介绍|简要介绍|介绍)?"
+        r"(?P<subject>.+?)(?:是什么|是谁|指的是什么)?[。？?]?$",
+        normalized_question,
+    )
+    subject = subject_match.group("subject").strip() if subject_match else ""
+    normalized_subject = normalize_search_text(subject)
+    if len(normalized_subject) >= 2:
+        for index, source in enumerate(sources, start=1):
+            text = clean_evidence_text(source.snippet)
+            for match in _SENTENCE.finditer(text[:4000]):
+                sentence = match.group(0).strip()
+                normalized_sentence = normalize_search_text(sentence)
+                if normalized_subject not in normalized_sentence:
+                    continue
+                if not re.search(
+                    rf"{re.escape(normalized_subject)}(?:[（(][^）)\n]{{0,40}}[）)])?"
+                    r"(?:是|为|指|属于|由[^。！？\n]{1,40}(?:发展|放大|缩小|改造|研制|设计)而来)",
+                    normalized_sentence,
+                ):
+                    continue
+                return f"{sentence.rstrip()} [资料 {index}]"
     return None
 
 

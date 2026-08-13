@@ -83,7 +83,11 @@ def evaluate_evidence_gate(
         "\n".join(f"{source.title}\n{source.snippet}" for source in sources)
     )
     relation_terms = _relation_terms(question, analysis.intent)
-    matched = tuple(term for term in relation_terms if normalize_search_text(term) in evidence)
+    matched = tuple(
+        term for term in relation_terms
+        if normalize_search_text(term) in evidence
+        or (analysis.intent == "time" and re.search(r"(?:公元|西元)?\d{3,4}年", evidence))
+    )
     issues: list[str] = []
     if not sources:
         issues.append("no_evidence")
@@ -91,12 +95,32 @@ def evaluate_evidence_gate(
     exact_title_match = bool(normalized_subject) and any(
         title_matches_subject(source.title, normalized_subject)
         or (
-            analysis.intent == "cause"
+            analysis.intent in {"cause", "time", "list"}
             and title_matches_subject_event(source.title, normalized_subject, question)
         )
         for source in sources
     )
-    if not exact_title_match:
+    relation_topic_match = bool(normalized_subject and matched) and any(
+        title_matches_subject_topic(source.title, normalized_subject)
+        and all(
+            token in normalize_search_text(f"{source.title}\n{source.snippet}")
+            for token in lexical_tokens(subject)
+            if len(token) >= 2
+        )
+        for source in sources
+    )
+    embedded_definition_match = (
+        analysis.intent == "definition"
+        and bool(normalized_subject)
+        and any(
+            _contains_embedded_definition(source.snippet, normalized_subject)
+            for source in sources
+        )
+    )
+    acceptable_title_match = (
+        exact_title_match or relation_topic_match or embedded_definition_match
+    )
+    if not acceptable_title_match:
         if assessment.anchors and not assessment.matched_anchors:
             issues.append("subject_mismatch")
         elif not assessment.grounded:
@@ -105,7 +129,7 @@ def evaluate_evidence_gate(
         "definition", "location", "birthplace", "cause",
     } or (analysis.intent == "list" and analysis.expects_complete_list)
     if normalized_subject and requires_exact_title:
-        if not exact_title_match:
+        if not acceptable_title_match:
             issues.append("subject_title_mismatch")
     if (
         analysis.intent in _STRICT_RELATION_INTENTS
@@ -239,6 +263,7 @@ def title_matches_subject(title: str, normalized_subject: str) -> bool:
     def canonical(value: str) -> str:
         for qualifier in ("国际足协", "国际足总", "国际足球联合会"):
             value = value.replace(qualifier, "")
+        value = value.replace("反潜护卫艇", "猎潜艇")
         return value
 
     return canonical(normalized_title) == canonical(normalized_subject)
@@ -250,10 +275,31 @@ def title_matches_subject_event(title: str, normalized_subject: str, question: s
     if not normalized_title.startswith(normalized_subject):
         return False
     suffix = normalized_title[len(normalized_subject):]
-    return bool(suffix) and any(
-        marker in suffix and marker in normalized_question
-        for marker in ("灭亡", "覆亡", "衰亡", "衰落", "崩溃", "失败", "解体")
+    if not suffix:
+        return False
+    suffix_tokens = {
+        token for token in lexical_tokens(suffix)
+        if len(token) >= 2 and token not in {"发生", "出现", "进行", "相关"}
+    }
+    return bool(suffix_tokens) and any(token in normalized_question for token in suffix_tokens)
+
+
+def title_matches_subject_topic(title: str, normalized_subject: str) -> bool:
+    normalized_title = normalize_search_text(title).replace(" ", "")
+    return (
+        len(normalized_title) >= 2
+        and normalized_title != normalized_subject
+        and normalized_subject.endswith(normalized_title)
     )
+
+
+def _contains_embedded_definition(text: str, normalized_subject: str) -> bool:
+    normalized = normalize_search_text(text).replace(" ", "")
+    return bool(re.search(
+        rf"{re.escape(normalized_subject)}(?:[（(][^）)\n]{{0,40}}[）)])?"
+        r"(?:是|为|指|属于|由[^。！？\n]{1,40}(?:发展|放大|缩小|改造|研制|设计)而来)",
+        normalized,
+    ))
 
 
 def _relation_terms(question: str, intent: str) -> tuple[str, ...]:

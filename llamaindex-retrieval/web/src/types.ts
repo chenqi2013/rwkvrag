@@ -101,6 +101,7 @@ export interface SearchTestItem {
   created_at: string;
   updated_at: string;
   latest_run_id?: string;
+  latest_answer_status?: "answered" | "refused";
   latest_run?: SearchTestRun;
 }
 

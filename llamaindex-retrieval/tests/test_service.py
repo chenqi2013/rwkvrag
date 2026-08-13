@@ -1339,3 +1339,29 @@ def test_focus_sources_keeps_only_exact_subject_document() -> None:
     focused = SearchService._focus_sources_on_subject(plan, sources)
 
     assert [source.document_id for source in focused] == ["football"]
+
+
+def test_focus_sources_keeps_only_agent_relation_document() -> None:
+    plan = build_query_plan("安全电梯由谁发明？")
+    sources = [
+        SourceItem(
+            id="elevator",
+            document_id="elevator",
+            source="wiki",
+            title="电梯",
+            score=1.0,
+            snippet="安全电梯使用的安全钳由奥的斯发明。",
+        ),
+        SourceItem(
+            id="invention",
+            document_id="invention",
+            source="wiki",
+            title="发明",
+            score=0.8,
+            snippet="发明是创造新事物的过程。",
+        ),
+    ]
+
+    focused = SearchService._focus_sources_on_subject(plan, sources)
+
+    assert [source.document_id for source in focused] == ["elevator"]

@@ -1,0 +1,190 @@
+{
+  "total": 531,
+  "items": [
+    {
+      "id": "c00ed102320341509253fdc6653c1ac4",
+      "question": "东平是谁？",
+      "run_count": 5,
+      "titles": [
+        "东平县",
+        "东平大桥",
+        "东平战役",
+        "龙山 (东平)",
+        "東平陵縣"
+      ],
+      "gate_issues": [
+        "subject_title_mismatch"
+      ]
+    },
+    {
+      "id": "e9a12ddf07c347be9604c539330b6c64",
+      "question": "2025年诺贝尔和平奖得主是谁?",
+      "run_count": 9,
+      "titles": [
+        "诺贝尔和平奖",
+        "诺贝尔和平奖",
+        "诺贝尔和平奖",
+        "和平",
+        "和平"
+      ],
+      "gate_issues": [
+        "subject_mismatch",
+        "temporal_mismatch"
+      ]
+    },
+    {
+      "id": "8b0acf7af8ab4c5ba17c7f4b60a60f15",
+      "question": "2025年诺贝尔和平奖得主是谁？",
+      "run_count": 11,
+      "titles": [
+        "诺贝尔和平奖",
+        "诺贝尔和平奖",
+        "诺贝尔和平奖",
+        "和平",
+        "和平"
+      ],
+      "gate_issues": [
+        "subject_mismatch",
+        "temporal_mismatch"
+      ]
+    },
+    {
+      "id": "d2c7b618faba4cdcb0706e0e294fe945",
+      "question": "阿尔法泽是谁?",
+      "run_count": 14,
+      "titles": [
+        "阿爾法島",
+        "阿尔法·卡巴",
+        "阿尔法电视",
+        "阿尔法拉西",
+        "阿尔法伊昂"
+      ],
+      "gate_issues": [
+        "subject_mismatch",
+        "subject_title_mismatch"
+      ]
+    },
+    {
+      "id": "9e80c6aa25d143dda0a8dded379ea3ed",
+      "question": "CPUID指的是什么？",
+      "run_count": 6,
+      "titles": [
+        "Sandy Bridge微架構"
+      ],
+      "gate_issues": [
+        "subject_mismatch",
+        "subject_title_mismatch"
+      ]
+    },
+    {
+      "id": "19c689e9e95844fb8f49de7b7b5c87fe",
+      "question": "请简要介绍山科友里",
+      "run_count": 13,
+      "titles": [
+        "里巴",
+        "伊塔里里",
+        "里湖镇",
+        "定义",
+        "勒托"
+      ],
+      "gate_issues": [
+        "subject_mismatch",
+        "subject_title_mismatch"
+      ]
+    },
+    {
+      "id": "2c0adad629ad45daa2f37fe97c3bd645",
+      "question": "2026年世界杯决赛在哪个球场举行?",
+      "run_count": 9,
+      "titles": [
+        "2022年國際足協世界盃決賽",
+        "2022年國際足協世界盃決賽",
+        "2022年國際足協世界盃決賽",
+        "2014年國際足協世界盃決賽",
+        "2014年國際足協世界盃決賽"
+      ],
+      "gate_issues": [
+        "subject_title_mismatch",
+        "temporal_mismatch"
+      ]
+    },
+    {
+      "id": "8a91f0f364274e8482bb438bdbf14d35",
+      "question": "请简要介绍山科友里。",
+      "run_count": 7,
+      "titles": [
+        "里巴",
+        "伊塔里里",
+        "里湖镇",
+        "定义",
+        "勒托"
+      ],
+      "gate_issues": [
+        "subject_mismatch",
+        "subject_title_mismatch"
+      ]
+    },
+    {
+      "id": "aee025db15c3483a92b670ddd5c1762d",
+      "question": "rwkv模型是哪个公司开发",
+      "run_count": 6,
+      "titles": [
+        "公司",
+        "气候模型",
+        "V模型 (軟體開發)",
+        "致命公司",
+        "反叛公司"
+      ],
+      "gate_issues": [
+        "subject_mismatch"
+      ]
+    },
+    {
+      "id": "5032e6fd78a04dab9f6f473fb73ae755",
+      "question": "2026年世界杯决赛在哪个球场举行？",
+      "run_count": 10,
+      "titles": [
+        "2022年國際足協世界盃決賽",
+        "2022年國際足協世界盃決賽",
+        "2022年國際足協世界盃決賽",
+        "2014年國際足協世界盃決賽",
+        "2014年國際足協世界盃決賽"
+      ],
+      "gate_issues": [
+        "subject_title_mismatch",
+        "temporal_mismatch"
+      ]
+    },
+    {
+      "id": "86d172be8a0d4f78b8118f973ecd1088",
+      "question": "1811年精神病人婚姻法令指的是什么",
+      "run_count": 8,
+      "titles": [
+        "精神病人收容所",
+        "精神病人 (過時術語)",
+        "蔣麗芸",
+        "法令",
+        "婚姻"
+      ],
+      "gate_issues": [
+        "subject_mismatch",
+        "subject_title_mismatch"
+      ]
+    },
+    {
+      "id": "6775d0def65b4f598d114e416b5820d8",
+      "question": "东平是谁？",
+      "run_count": 2,
+      "titles": [
+        "东平县",
+        "东平大桥",
+        "东平战役",
+        "龙山 (东平)",
+        "東平陵縣"
+      ],
+      "gate_issues": [
+        "subject_title_mismatch"
+      ]
+    }
+  ]
+}

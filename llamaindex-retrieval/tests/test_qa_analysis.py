@@ -57,6 +57,9 @@ def test_analyzes_comparison_and_list_intents() -> None:
     reverse_first_emperor = analyze_question("谁是中国第一位皇帝？")
     assert reverse_first_emperor.intent == "ordinal"
     assert reverse_first_emperor.subjects == first_emperor.subjects
+    bare_first_emperor = analyze_question("中国历史上第一个皇帝")
+    assert bare_first_emperor.intent == "ordinal"
+    assert bare_first_emperor.subjects == first_emperor.subjects
     assert analyze_question("明朝走向灭亡的主要原因有哪些？").intent == "cause"
     assert intent_content_types("YouTube是由哪几个人创立的？") == ()
     assert intent_content_types("这座建筑由哪些人共同设计？") == ()
@@ -70,6 +73,11 @@ def test_analyzes_comparison_and_list_intents() -> None:
     assert analyze_question("普实克出生于哪里？").intent == "birthplace"
     assert analyze_question("深圳地铁1号线有哪些站点").expects_complete_list is True
     assert analyze_question("中国有哪些著名关隘").expects_complete_list is False
+    long_wall_passes = analyze_question("中国有哪些著名的长城关隘？")
+    assert long_wall_passes.subjects[:2] == ("长城关隘列表", "长城关隘")
+    reverse_object = analyze_question("奥的斯发明了什么？")
+    assert reverse_object.intent == "agent"
+    assert reverse_object.subjects == ("奥的斯 发明", "奥的斯")
     assert analyze_question("中国历史上开启丝绸之路的是谁？").intent == "agent"
     assert analyze_question("现在美国副总统是谁？").intent == "agent"
     assert analyze_question("2025年诺贝尔和平奖得主是谁？").intent == "agent"
@@ -91,6 +99,13 @@ def test_reverse_agent_relations_preserve_full_subject() -> None:
         assert plan.analysis.intent == "agent"
         assert plan.subject == expected_subject
     assert build_query_plan("说下W創作社背后的創辦者。").relations[0] == "创办"
+
+
+def test_cleans_colloquial_introduction_shell() -> None:
+    plan = build_query_plan("介绍下宇树科技")
+
+    assert plan.analysis.intent == "definition"
+    assert plan.subject == "宇树科技"
 
 
 def test_cause_plan_searches_exact_subject_event_title_first() -> None:

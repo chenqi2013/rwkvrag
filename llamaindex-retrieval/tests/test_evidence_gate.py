@@ -51,6 +51,42 @@ def test_gate_rejects_partial_definition_entity_match() -> None:
     assert "subject_mismatch" in result.issues
 
 
+def test_gate_accepts_embedded_definition_on_related_page() -> None:
+    question = "037型反潜护卫艇是什么？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("206型炮艇", "037型反潜护卫艇由6604型猎潜艇放大而来。")],
+        subject="037型反潜护卫艇",
+    )
+
+    assert result.passed is True
+
+
+def test_gate_rejects_bare_field_name_as_embedded_definition() -> None:
+    question = "CPUID指的是什么？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("处理器", "表格字段：核心代号、CPUID、步进、处理器插座。")],
+        subject="CPUID",
+    )
+
+    assert result.passed is False
+
+
+def test_gate_rejects_longer_entity_as_embedded_definition() -> None:
+    question = "东平是谁？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("东平县", "东平县是中国山东省泰安市下辖的一个县。")],
+        subject="东平",
+    )
+
+    assert result.passed is False
+
+
 def test_gate_rejects_wrong_page_for_complete_list() -> None:
     question = "深圳地铁1号线有哪些站点？"
     result = evaluate_evidence_gate(
@@ -114,6 +150,24 @@ def test_gate_accepts_subject_plus_event_cause_page() -> None:
     assert result.passed is True
 
 
+def test_gate_accepts_subject_plus_event_time_and_list_pages() -> None:
+    time_result = evaluate_evidence_gate(
+        "香港是哪一年回归的？",
+        analyze_question("香港是哪一年回归的？"),
+        [source("香港回归", "1997年7月1日，中国恢复对香港行使主权。")],
+        subject="香港",
+    )
+    list_result = evaluate_evidence_gate(
+        "中国从古至今总共经历了哪些朝代？",
+        analyze_question("中国从古至今总共经历了哪些朝代？"),
+        [source("中国朝代", "中国主要朝代包括夏、商、周、秦、汉。")],
+        subject="中国",
+    )
+
+    assert time_result.passed is True
+    assert list_result.passed is True
+
+
 def test_gate_accepts_normalized_world_cup_title() -> None:
     question = "2030年世界杯由哪些国家主办？"
     result = evaluate_evidence_gate(
@@ -139,6 +193,18 @@ def test_gate_rejects_evidence_without_requested_year() -> None:
     assert "temporal_mismatch" in result.issues
 
 
+def test_time_gate_accepts_explicit_date_for_end_question() -> None:
+    question = "谭德塞第二任期什么时候结束？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("谭德塞", "2022年5月24日获得连任，任期5年。")],
+        subject="谭德塞第二任期",
+    )
+
+    assert result.passed is True
+
+
 def test_gate_accepts_agent_relation_synonym_on_exact_topic_page() -> None:
     question = "中国历史上开启丝绸之路的是谁？"
     result = evaluate_evidence_gate(
@@ -150,6 +216,18 @@ def test_gate_accepts_agent_relation_synonym_on_exact_topic_page() -> None:
 
     assert result.passed is True
     assert "出使" in result.matched_relation_terms
+
+
+def test_gate_accepts_relation_evidence_on_parent_topic_page() -> None:
+    question = "现代主义建筑发展所依赖的安全电梯由谁发明？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("电梯", "安全电梯使用的安全钳由奥的斯发明。")],
+        subject="安全电梯",
+    )
+
+    assert result.passed is True
 
 
 def test_gate_accepts_creator_question_when_evidence_says_created() -> None:

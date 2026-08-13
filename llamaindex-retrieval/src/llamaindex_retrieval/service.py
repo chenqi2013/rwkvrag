@@ -297,7 +297,7 @@ class SearchService:
                 ):
                     document_scores[document_id] += 0.12
                 elif (
-                    plan.analysis.intent == "cause"
+                    plan.analysis.intent in {"cause", "time", "list"}
                     and title_matches_subject_event(
                         title,
                         normalized_subject,
@@ -441,7 +441,7 @@ class SearchService:
                 and (
                     title_matches_subject(title, normalized_subject)
                     or (
-                        plan.analysis.intent == "cause"
+                        plan.analysis.intent in {"cause", "time", "list"}
                         and title_matches_subject_event(
                             title,
                             normalized_subject,
@@ -1084,7 +1084,30 @@ class SearchService:
             for source in sources
             if normalize_search_text(source.title).replace(" ", "") == normalized_subject
         }
-        if plan.analysis.intent == "cause":
+        if plan.analysis.intent == "agent" and plan.relations:
+            subject_tokens = {
+                token for token in lexical_tokens(plan.subject)
+                if len(token) >= 2
+            }
+            relation_documents = {
+                source.document_id
+                for source in sources
+                if subject_tokens
+                and all(
+                    token in normalize_search_text(f"{source.title}\n{source.snippet}")
+                    for token in subject_tokens
+                )
+                and any(
+                    normalize_search_text(relation) in normalize_search_text(source.snippet)
+                    for relation in plan.relations
+                )
+            }
+            if relation_documents:
+                return [
+                    source for source in sources
+                    if source.document_id in relation_documents
+                ]
+        if plan.analysis.intent in {"cause", "time", "list"}:
             event_document_ids = {
                 source.document_id
                 for source in sources

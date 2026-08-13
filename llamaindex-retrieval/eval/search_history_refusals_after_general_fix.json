@@ -1,0 +1,326 @@
+[
+  {
+    "question": "导致俄羅斯解體发生的原因有哪些？",
+    "answer": "俄罗斯解体可能诱因：使用拉丁字母可能引致国家解体[资料 1]；普京离任后权力真空，各地方领袖展开权力争夺[资料 1]；2022年侵乌战争引发局势不稳及威望扫地[资料 1]。",
+    "error": null,
+    "titles": [
+      "俄羅斯解體"
+    ],
+    "gate_issues": [],
+    "strategy": "model",
+    "subject": "俄罗斯"
+  },
+  {
+    "question": "中国历史上第一个皇帝",
+    "answer": "中国历史上最早的正统朝代的标志之一是相傳為夏朝大禹制作的九鼎，传至周代，到秦朝末年失传；自秦朝開始，中國第一位皇帝贏政（始皇帝）创了皇帝称号，並改以传国玉玺以及金龍作為正统皇朝的标志，然而该玉玺几经失传、后世所谓重新发现者又多是伪作，故而玉璽自西晋以后已经基本丧失了其标志性地位。 [资料 2]",
+    "error": null,
+    "titles": [
+      "皇帝",
+      "中国皇帝"
+    ],
+    "gate_issues": [],
+    "strategy": "direct_extract",
+    "subject": "中国"
+  },
+  {
+    "question": "2026年世界杯决赛在哪个球场举行？",
+    "answer": "根据检索到的资料，无法确定。",
+    "error": null,
+    "titles": [
+      "2022年國際足協世界盃決賽",
+      "2022年國際足協世界盃決賽",
+      "2022年國際足協世界盃決賽",
+      "2014年國際足協世界盃決賽",
+      "2014年國際足協世界盃決賽"
+    ],
+    "gate_issues": [
+      "subject_title_mismatch",
+      "temporal_mismatch"
+    ],
+    "strategy": "model",
+    "subject": "2026年世界杯决赛"
+  },
+  {
+    "question": "1811年精神病人婚姻法令指的是什么",
+    "answer": "根据检索到的资料，无法确定。",
+    "error": null,
+    "titles": [
+      "精神病人收容所",
+      "精神病人 (過時術語)",
+      "蔣麗芸",
+      "法令",
+      "婚姻"
+    ],
+    "gate_issues": [
+      "subject_mismatch",
+      "subject_title_mismatch"
+    ],
+    "strategy": "model",
+    "subject": "1811年精神病人婚姻法令"
+  },
+  {
+    "question": "奥的斯发明了什么？",
+    "answer": "伊莱沙·格雷夫斯·奥的斯（英語：，1811年8月3日—1861年4月8日），美国企业家、发明家，奥的斯电梯公司创始人，佛蒙特州人，1852年发明了一种可防止电梯在提升电缆时发生故障而跌落的安全装置，被视为电梯的发明者。 [资料 3]",
+    "error": null,
+    "titles": [
+      "奧的斯電梯公司",
+      "奧的斯電梯公司",
+      "伊莱沙·格雷夫斯·奥的斯"
+    ],
+    "gate_issues": [],
+    "strategy": "direct_extract",
+    "subject": "奥的斯"
+  },
+  {
+    "question": "你知道现代主义建筑发展所依赖的安全电梯由谁發明吗？",
+    "answer": "安全鉗是一種機械安全裝置，由奧的斯發明，當電梯速度超過預定速度時，限速器會鎖緊限速器纜索後，啟動安全鉗夾緊導軌，把轎箱或對重剎停。 [资料 1]",
+    "error": null,
+    "titles": [
+      "電梯",
+      "電梯"
+    ],
+    "gate_issues": [],
+    "strategy": "direct_extract",
+    "subject": "安全电梯"
+  },
+  {
+    "question": "中国有哪些著名的长城关隘?",
+    "answer": "长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关、雁门关、水关、黄崖关、八达岭、居庸关、慕田峪长城、金山岭长城、司马台长城、大境门、宁夏古长城、贺兰山三关口、紫荆关、古北口。[资料 1]",
+    "error": null,
+    "titles": [
+      "长城",
+      "长城",
+      "长城",
+      "紫荆关",
+      "关隘"
+    ],
+    "gate_issues": [],
+    "strategy": "direct_extract",
+    "subject": "长城关隘"
+  },
+  {
+    "question": "rwkv模型是哪个公司开发",
+    "answer": "根据检索到的资料，无法确定。",
+    "error": null,
+    "titles": [
+      "公司",
+      "气候模型",
+      "V模型 (軟體開發)",
+      "致命公司",
+      "反叛公司"
+    ],
+    "gate_issues": [
+      "subject_mismatch"
+    ],
+    "strategy": "model",
+    "subject": ""
+  },
+  {
+    "question": "037型反潜护卫艇是什么？",
+    "answer": "206型炮艇由037型反潜护卫艇缩小，而037型反潜护卫艇由6604型猎潜艇（苏联Project 122bis型猎潜艇技术转让制造）放大而来，206型炮艇的船体规格又改回到与6604型猎潜艇接近且略小水平。 [资料 3]",
+    "error": null,
+    "titles": [
+      "6604型反潜护卫艇",
+      "62型护卫艇",
+      "206型炮艇",
+      "037II型导弹护卫艇",
+      "宁明号猎潜艇"
+    ],
+    "gate_issues": [],
+    "strategy": "direct_extract",
+    "subject": "037型反潜护卫艇"
+  },
+  {
+    "question": "请简要介绍山科友里。",
+    "answer": "根据检索到的资料，无法确定。",
+    "error": null,
+    "titles": [
+      "里巴",
+      "伊塔里里",
+      "里湖镇",
+      "定义",
+      "勒托"
+    ],
+    "gate_issues": [
+      "subject_mismatch",
+      "subject_title_mismatch"
+    ],
+    "strategy": "model",
+    "subject": "山科友里"
+  },
+  {
+    "question": "2025年诺贝尔和平奖得主是谁？",
+    "answer": "根据检索到的资料，无法确定。",
+    "error": null,
+    "titles": [
+      "诺贝尔和平奖",
+      "诺贝尔和平奖",
+      "诺贝尔和平奖",
+      "和平",
+      "和平"
+    ],
+    "gate_issues": [
+      "subject_mismatch",
+      "temporal_mismatch"
+    ],
+    "strategy": "model",
+    "subject": "2025年诺贝尔和平奖"
+  },
+  {
+    "question": "2026年世界杯决赛在哪个球场举行?",
+    "answer": "根据检索到的资料，无法确定。",
+    "error": null,
+    "titles": [
+      "2022年國際足協世界盃決賽",
+      "2022年國際足協世界盃決賽",
+      "2022年國際足協世界盃決賽",
+      "2014年國際足協世界盃決賽",
+      "2014年國際足協世界盃決賽"
+    ],
+    "gate_issues": [
+      "subject_title_mismatch",
+      "temporal_mismatch"
+    ],
+    "strategy": "model",
+    "subject": "2026年世界杯决赛"
+  },
+  {
+    "question": "2025年诺贝尔和平奖得主是谁?",
+    "answer": "根据检索到的资料，无法确定。",
+    "error": null,
+    "titles": [
+      "诺贝尔和平奖",
+      "诺贝尔和平奖",
+      "诺贝尔和平奖",
+      "和平",
+      "和平"
+    ],
+    "gate_issues": [
+      "subject_mismatch",
+      "temporal_mismatch"
+    ],
+    "strategy": "model",
+    "subject": "2025年诺贝尔和平奖"
+  },
+  {
+    "question": "请简要介绍山科友里",
+    "answer": "根据检索到的资料，无法确定。",
+    "error": null,
+    "titles": [
+      "里巴",
+      "伊塔里里",
+      "里湖镇",
+      "定义",
+      "勒托"
+    ],
+    "gate_issues": [
+      "subject_mismatch",
+      "subject_title_mismatch"
+    ],
+    "strategy": "model",
+    "subject": "山科友里"
+  },
+  {
+    "question": "东平是谁？",
+    "answer": "东平县是中国山东省泰安市下辖的一个县。 [资料 1]",
+    "error": null,
+    "titles": [
+      "东平县",
+      "东平大桥",
+      "东平战役",
+      "龙山 (东平)",
+      "東平陵縣"
+    ],
+    "gate_issues": [],
+    "strategy": "direct_extract",
+    "subject": "东平"
+  },
+  {
+    "question": "CPUID指的是什么？",
+    "answer": "根据检索到的资料，无法确定。",
+    "error": null,
+    "titles": [
+      "Sandy Bridge微架構"
+    ],
+    "gate_issues": [
+      "subject_mismatch",
+      "subject_title_mismatch"
+    ],
+    "strategy": "model",
+    "subject": "cpuid"
+  },
+  {
+    "question": "阿尔法泽是谁?",
+    "answer": "根据检索到的资料，无法确定。",
+    "error": null,
+    "titles": [
+      "阿爾法島",
+      "阿尔法·卡巴",
+      "阿尔法电视",
+      "阿尔法拉西",
+      "阿尔法伊昂"
+    ],
+    "gate_issues": [
+      "subject_mismatch",
+      "subject_title_mismatch"
+    ],
+    "strategy": "model",
+    "subject": "阿尔法泽"
+  },
+  {
+    "question": "香港是哪一年回归的？",
+    "answer": "1997年7月1日，香港由英国依據1984年《中英聯合聲明》交还中华人民共和国，香港特別行政區同時成立，史稱「香港回歸」，或稱「香港主权移交」、「香港移交」（英語：）等。 [资料 2]",
+    "error": null,
+    "titles": [
+      "香港回歸",
+      "香港回歸",
+      "香港回歸",
+      "香港回歸",
+      "香港回歸"
+    ],
+    "gate_issues": [],
+    "strategy": "direct_extract",
+    "subject": "香港"
+  },
+  {
+    "question": "中国从古至今总共经历了哪些朝代？",
+    "answer": "中国朝代的朝代包括：夏朝、商朝、周朝、西周、東周、秦朝、漢朝、西漢、新朝、東漢、三國、曹魏、蜀漢、東吳、晉朝、西晉、東晉、十六國、漢趙、成漢、後趙、前涼、前燕、前秦、後燕、後秦、西秦、後涼、南涼、北涼、南燕、西涼、胡夏、北燕、北朝、北魏、東魏、西魏、北齊、北周、南朝、劉宋、南齊、梁朝、陳朝、隋朝、唐朝、武周、五代、後梁、後唐、後晉、後漢、後周、十國、前蜀、楊吳、馬楚、吳越、閩、南漢。[资料 1]",
+    "error": null,
+    "titles": [
+      "中国朝代",
+      "中国朝代",
+      "中国朝代",
+      "中国朝代",
+      "中国朝代"
+    ],
+    "gate_issues": [],
+    "strategy": "direct_extract",
+    "subject": "中国"
+  },
+  {
+    "question": "世界卫生组织现任总干事谭德塞第二任期什么时候结束？",
+    "answer": "按资料所载连任日期和5年任期推算，该任期于2027年5月24日结束。[资料 3]",
+    "error": null,
+    "titles": [
+      "世界卫生组织",
+      "世界卫生组织",
+      "谭德塞",
+      "谭德塞",
+      "陳馮富珍"
+    ],
+    "gate_issues": [],
+    "strategy": "direct_extract",
+    "subject": "世界卫生组织现任总干事谭德塞第二任期"
+  },
+  {
+    "question": "介绍下宇树科技",
+    "answer": "杭州宇树科技有限公司，简称宇树科技，是中国一家研发与生产民用机器人的科技公司，总部位于浙江省杭州市滨江区。 [资料 1]",
+    "error": null,
+    "titles": [
+      "宇树科技"
+    ],
+    "gate_issues": [],
+    "strategy": "direct_extract",
+    "subject": "宇树科技"
+  }
+]

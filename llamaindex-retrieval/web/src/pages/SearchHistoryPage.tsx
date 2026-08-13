@@ -1,5 +1,5 @@
 import { DownOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Alert, Button, Card, Empty, List, message, Space, Table, Tag, Typography } from "antd";
+import { Alert, Button, Card, Empty, List, message, Select, Space, Table, Tag, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useCallback, useEffect, useState } from "react";
 
@@ -57,11 +57,20 @@ export default function SearchHistoryPage() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [total, setTotal] = useState(0);
+  const [answerStatus, setAnswerStatus] = useState<"all" | "answered" | "refused">("all");
 
-  const load = useCallback(async (nextPage: number, nextPageSize: number) => {
+  const load = useCallback(async (
+    nextPage: number,
+    nextPageSize: number,
+    nextAnswerStatus: "all" | "answered" | "refused",
+  ) => {
     setLoading(true);
     try {
-      const response = await api.searchHistory(nextPage, nextPageSize);
+      const response = await api.searchHistory(
+        nextPage,
+        nextPageSize,
+        nextAnswerStatus === "all" ? undefined : nextAnswerStatus,
+      );
       setItems(response.items);
       setTotal(response.total);
       setPage(response.page);
@@ -83,7 +92,7 @@ export default function SearchHistoryPage() {
   }, []);
 
   useEffect(() => {
-    void load(1, 20);
+    void load(1, 20, "all");
   }, [load]);
 
   const rerun = async (item: SearchTestItem) => {
@@ -103,6 +112,9 @@ export default function SearchHistoryPage() {
           }
         : currentItem));
       await loadDetail(item.id);
+      if (answerStatus !== "all") {
+        await load(page, pageSize, answerStatus);
+      }
       void message.success(tr("已追加一次重新检索生成结果", "A new search run has been added"));
     } catch (error) {
       void message.error(errorMessage(error));
@@ -177,7 +189,23 @@ export default function SearchHistoryPage() {
             {tr("自动保存 `/v1/ask` 的问题、答案、证据和模型信息；重新检索会新增版本，方便比较改动前后的效果。", "Automatically save `/v1/ask` questions, answers, evidence, and model details. Reruns create versions for before-and-after comparison.")}
           </Typography.Paragraph>
         </div>
-        <Button icon={<ReloadOutlined />} loading={loading} onClick={() => void load(page, pageSize)}>{tr("刷新", "Refresh")}</Button>
+        <Space>
+          <Select
+            value={answerStatus}
+            style={{ width: 150 }}
+            options={[
+              { value: "all", label: tr("全部状态", "All statuses") },
+              { value: "answered", label: tr("正常回答", "Answered") },
+              { value: "refused", label: tr("无法确定", "Unable to determine") },
+            ]}
+            onChange={(value) => {
+              setAnswerStatus(value);
+              setExpandedKeys([]);
+              void load(1, pageSize, value);
+            }}
+          />
+          <Button icon={<ReloadOutlined />} loading={loading} onClick={() => void load(page, pageSize, answerStatus)}>{tr("刷新", "Refresh")}</Button>
+        </Space>
       </div>
       <Alert
         type="info"
@@ -201,7 +229,7 @@ export default function SearchHistoryPage() {
             showTotal: (count) => tr(`共 ${count} 条`, `${count} items`),
             onChange: (nextPage, nextPageSize) => {
               setExpandedKeys([]);
-              void load(nextPageSize === pageSize ? nextPage : 1, nextPageSize);
+              void load(nextPageSize === pageSize ? nextPage : 1, nextPageSize, answerStatus);
             },
           }}
           expandable={{

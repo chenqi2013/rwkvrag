@@ -251,6 +251,8 @@ def query_tokens(text: str) -> list[str]:
     for token in tokens:
         for synonym in _QUERY_EXPANSIONS.get(token, ()):
             expanded.extend(lexical_tokens(synonym))
+    if "反潜护卫艇" in normalized:
+        expanded.extend(lexical_tokens("猎潜艇"))
     return list(dict.fromkeys(expanded))
 
 

@@ -85,6 +85,21 @@ def test_ordinal_answer_extracts_explicit_first_relation_sentence() -> None:
     )
 
 
+def test_time_answer_derives_fixed_term_end_from_grounded_dates() -> None:
+    evidence = SourceItem(
+        id="tedros",
+        document_id="tedros",
+        source="finewiki-zh",
+        title="谭德塞",
+        score=1.0,
+        snippet="2022年5月24日，在没有其他候选人的情况下获得连任，任期5年。",
+    )
+
+    assert time_evidence_answer("谭德塞第二任期什么时候结束？", [evidence]) == (
+        "按资料所载连任日期和5年任期推算，该任期于2027年5月24日结束。[资料 1]"
+    )
+
+
 def test_definition_grounding_requires_complete_entity_name() -> None:
     evidence = SourceItem(
         id="alpha-island",
@@ -100,6 +115,38 @@ def test_definition_grounding_requires_complete_entity_name() -> None:
     assert assessment.anchors == {"阿尔法泽"}
     assert assessment.matched_anchors == set()
     assert assessment.grounded is False
+
+
+def test_definition_answer_extracts_embedded_definition_sentence() -> None:
+    evidence = SourceItem(
+        id="boat",
+        document_id="boat",
+        source="finewiki-zh",
+        title="206型炮艇",
+        score=1.0,
+        snippet=(
+            "206型炮艇由037型反潜护卫艇缩小，"
+            "而037型反潜护卫艇由6604型猎潜艇放大而来。"
+        ),
+    )
+
+    assert definition_evidence_answer("037型反潜护卫艇是什么？", [evidence]) == (
+        "206型炮艇由037型反潜护卫艇缩小，而037型反潜护卫艇由6604型猎潜艇放大而来。 "
+        "[资料 1]"
+    )
+
+
+def test_definition_answer_does_not_use_longer_entity_name() -> None:
+    evidence = SourceItem(
+        id="dongping-county",
+        document_id="dongping-county",
+        source="finewiki-zh",
+        title="东平县",
+        score=1.0,
+        snippet="东平县是中国山东省泰安市下辖的一个县。",
+    )
+
+    assert definition_evidence_answer("东平是谁？", [evidence]) is None
 
 
 def test_definition_answer_prefers_earlier_identity_over_shorter_detail() -> None:

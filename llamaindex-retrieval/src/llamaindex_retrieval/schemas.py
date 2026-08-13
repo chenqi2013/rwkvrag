@@ -61,6 +61,7 @@ class SearchTestItem(BaseModel):
     created_at: datetime
     updated_at: datetime
     latest_run_id: str | None = None
+    latest_answer_status: Literal["answered", "refused"] | None = None
     latest_run: SearchTestRun | None = None
 
 

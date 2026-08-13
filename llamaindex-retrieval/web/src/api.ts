@@ -92,9 +92,9 @@ export const api = {
       headers: jsonHeaders,
       body: JSON.stringify(values),
     }),
-  searchHistory: (page = 1, pageSize = 20) =>
+  searchHistory: (page = 1, pageSize = 20, answerStatus?: "answered" | "refused") =>
     request<SearchTestPage>(
-      `/v1/admin/search-history?page=${page}&page_size=${pageSize}`,
+      `/v1/admin/search-history?page=${page}&page_size=${pageSize}${answerStatus ? `&answer_status=${answerStatus}` : ""}`,
     ),
   searchHistoryDetail: (id: string) =>
     request<SearchTestDetail>(`/v1/admin/search-history/${id}`),

@@ -1,5 +1,6 @@
 import asyncio
 from pathlib import Path
+from typing import Literal
 
 from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
 from fastapi.responses import FileResponse
@@ -184,9 +185,14 @@ async def list_jobs(
 async def list_search_history(
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=20, ge=1, le=100),
+    answer_status: Literal["answered", "refused"] | None = Query(default=None),
     repo: MongoRepository = Depends(repository),
 ) -> dict:
-    return await repo.list_search_tests(page=page, page_size=page_size)
+    return await repo.list_search_tests(
+        page=page,
+        page_size=page_size,
+        answer_status=answer_status,
+    )
 
 
 @router.get("/search-history/{test_id}", response_model=SearchTestDetail)

@@ -31,6 +31,11 @@ def test_builds_ordinal_plan_with_equivalent_queries() -> None:
     assert reverse.subject == "中国"
     assert reverse.queries[:3] == plan.queries[:3]
 
+    bare = build_query_plan("中国历史上第一个皇帝")
+    assert bare.analysis.intent == "ordinal"
+    assert bare.subject == "中国"
+    assert bare.queries[:3] == plan.queries[:3]
+
 
 def test_cause_question_with_list_wording_still_uses_cause_pipeline() -> None:
     plan = build_query_plan("明朝走向灭亡的主要原因有哪些？")
@@ -88,6 +93,11 @@ def test_agent_query_focuses_on_nearest_relational_object() -> None:
     assert plan.queries[:2] == ("安全电梯 发明", "安全电梯")
     assert plan.normalized_question in plan.queries
 
+    reverse_object = build_query_plan("奥的斯发明了什么？")
+    assert reverse_object.analysis.intent == "agent"
+    assert reverse_object.subject == "奥的斯"
+    assert reverse_object.queries[:2] == ("奥的斯 发明", "奥的斯")
+
 
 def test_builds_definition_subject_without_copula() -> None:
     plan = build_query_plan("请简要介绍山科友里")
@@ -110,6 +120,7 @@ def test_cleans_list_and_location_subjects() -> None:
 
     assert host.subject == "2030年世界杯"
     assert venue.subject == "2026年世界杯决赛"
+    assert build_query_plan("中国有哪些著名的长城关隘？").subject == "长城关隘"
 
 
 def test_cleans_common_conversational_question_shells() -> None:
