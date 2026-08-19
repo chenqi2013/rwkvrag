@@ -338,6 +338,35 @@ def test_station_list_repairs_name_after_conjunction() -> None:
     )
 
 
+def test_flattened_station_table_extracts_only_complete_station_rows() -> None:
+    overview = SourceItem(
+        id="line",
+        document_id="line",
+        source="finewiki-zh",
+        title="示例地铁1号线",
+        score=1.0,
+        snippet="示例地铁1号线前称示例线，共设3个车站。",
+    )
+    table = SourceItem(
+        id="station-list",
+        document_id="station-list",
+        source="finewiki-zh",
+        title="示例地铁车站列表",
+        score=0.9,
+        snippet=(
+            "1號線前稱示例線，沿途共設3個車站。\n"
+            "車站圖片所在區域轉乘路綫通車日期備註參考來源"
+            "甲城站Jiacheng150px福田區2020年1月1日"
+            "乙城站Yicheng150px-{后}-瑞站Hourui150px"
+        ),
+        metadata={"chunk_order": 1},
+    )
+
+    assert structured_list_answer(
+        "示例地铁1号线有哪些站点", [overview, table]
+    ) == "示例地铁1号线共有3个车站：甲城站、乙城站、后瑞站。[资料 2]"
+
+
 def test_dynasty_table_aggregates_dynasty_field_without_confusing_other_columns() -> None:
     first = SourceItem(
         id="dynasty-1",

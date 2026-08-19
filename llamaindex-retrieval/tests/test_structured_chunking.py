@@ -131,3 +131,22 @@ def test_prose_with_colons_is_not_misclassified_as_key_values() -> None:
         SentenceSplitter(chunk_size=128, chunk_overlap=16),
     )
     assert {node.metadata["content_type"] for node in nodes} == {"prose"}
+
+
+def test_document_aliases_are_attached_to_every_chunk() -> None:
+    source = """# 深圳地铁1号线
+
+深圳地铁1号线，简称罗宝线，是深圳地铁的一条线路。
+
+## 车站
+- 罗湖站
+- 世界之窗站
+"""
+
+    nodes = structure_aware_nodes(
+        document(source),
+        SentenceSplitter(chunk_size=128, chunk_overlap=16),
+    )
+
+    assert nodes
+    assert all("罗宝线" in node.metadata["aliases"] for node in nodes)

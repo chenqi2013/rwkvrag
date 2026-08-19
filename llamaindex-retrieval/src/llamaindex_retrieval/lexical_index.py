@@ -81,6 +81,11 @@ _QUERY_EXPANSIONS = {
     "现任": ("现在", "目前", "当前"),
     "主办": ("举办", "承办", "举办地", "主办国"),
     "球场": ("体育场", "比赛场馆", "决赛场地"),
+    "经过": ("途经", "沿途", "车站"),
+    "途经": ("经过", "沿途", "车站"),
+    "停靠": ("经过", "途经", "车站"),
+    "连接": ("起点", "终点", "由", "至"),
+    "首条": ("第一条", "最早"),
 }
 _PRESERVED_PHRASES = ("国都", "首都", "关隘", "关城", "关口")
 _QUERY_CORRECTIONS = {
@@ -232,6 +237,17 @@ def lexical_tokens(text: str) -> list[str]:
     return _tokens_from_normalized_text(normalize_search_text(text))
 
 
+def entity_bigram_tokens(text: str) -> list[str]:
+    normalized = normalize_search_text(text)
+    tokens = _ASCII_TOKEN.findall(normalized)
+    for run in _CJK_RUN.findall(normalized):
+        if len(run) == 1:
+            tokens.append(run)
+        else:
+            tokens.extend(run[index : index + 2] for index in range(len(run) - 1))
+    return list(dict.fromkeys(tokens))
+
+
 def _legacy_lexical_tokens(text: str) -> list[str]:
     return _tokens_from_normalized_text(_OPENCC.convert(text.lower()))
 
@@ -324,6 +340,15 @@ def _metadata_tags(metadata: dict[str, Any]) -> str:
         elif value is not None:
             values.append(str(value))
     return " ".join(values)
+
+
+def _metadata_aliases(metadata: dict[str, Any]) -> list[str]:
+    value = metadata.get("aliases")
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+    if value is None:
+        return []
+    return [str(value).strip()] if str(value).strip() else []
 
 
 def intent_content_types(question: str) -> tuple[str, ...]:
@@ -470,6 +495,8 @@ class LexicalIndex:
                     "tags_tokens": {"type": "text", "analyzer": "rwkvrag_tokens"},
                     "section_tokens": {"type": "text", "analyzer": "rwkvrag_tokens"},
                     "structure_tokens": {"type": "text", "analyzer": "rwkvrag_tokens"},
+                    "alias_tokens": {"type": "text", "analyzer": "rwkvrag_tokens"},
+                    "entity_bigram_tokens": {"type": "text", "analyzer": "rwkvrag_tokens"},
                 },
             },
         }
@@ -493,6 +520,8 @@ class LexicalIndex:
         text = node.get_content().strip()
         full_answer = str(metadata.get("full_answer") or "").strip()
         body = " ".join(part for part in (text, full_answer) if part)
+        aliases = _metadata_aliases(metadata)
+        entity_text = " ".join((str(metadata.get("title") or ""), *aliases))
         return {
             "node_id": str(node.node_id),
             "document_id": str(metadata.get("document_id") or node.ref_doc_id or node.node_id),
@@ -522,6 +551,8 @@ class LexicalIndex:
                     )
                 )
             ),
+            "alias_tokens": " ".join(lexical_tokens(" ".join(aliases))),
+            "entity_bigram_tokens": " ".join(entity_bigram_tokens(entity_text)),
         }
 
     def upsert_nodes(self, nodes: Iterable[BaseNode]) -> int:
@@ -590,6 +621,8 @@ class LexicalIndex:
             _question_subject(normalize_query_text(question)),
         )))
         phrase_tokens = [token for token in tokens if len(token) >= 2 and token not in _QUESTION_WORDS and token != "进行"]
+        significant_query = " ".join(phrase_tokens)
+        entity_bigram_query = " ".join(entity_bigram_tokens(_question_subject(question)))
         topic_tokens = [token for token in phrase_tokens if token not in _TOPIC_TITLE_NOISE]
         topic_titles = list(dict.fromkeys([
             *topic_tokens,
@@ -605,8 +638,14 @@ class LexicalIndex:
 
         def topic_boost(title: str) -> float:
             # Prefer meaningful multi-token phrases such as “舱外活动” over
-            # a broad subject token such as “宇航员”.
-            return topic_title_boost * (2.0 if title not in topic_tokens else 1.0)
+            # a broad subject token such as “深圳地铁”. A broad token must not
+            # overpower the more specific page merely because the question is
+            # asking for a list.
+            return (
+                min(4.0, topic_title_boost)
+                if title in topic_tokens
+                else topic_title_boost * 2.0
+            )
 
         for title in topic_titles:
             # Topic overview pages are often short and otherwise lose to highly
@@ -630,6 +669,68 @@ class LexicalIndex:
         # A title match can cover many chunks from one page. Pull a wider raw
         # window so those chunks cannot crowd every other relevant page out.
         raw_candidate_k = max(candidate_k, min(candidate_k * 12, 200), 1)
+        lexical_fields = [
+            "body_tokens",
+            "title_tokens^3",
+            "alias_tokens^4",
+            "tags_tokens^1.5",
+            "section_tokens^3",
+            "structure_tokens^2",
+            "entity_bigram_tokens^0.6",
+        ]
+        recall_queries: list[dict[str, Any]] = [
+            {
+                "multi_match": {
+                    "query": " ".join(tokens),
+                    "fields": lexical_fields,
+                    "type": "best_fields",
+                    "operator": "or",
+                }
+            }
+        ]
+        if significant_query:
+            recall_queries.extend([
+                {
+                    "multi_match": {
+                        "query": significant_query,
+                        "fields": [
+                            "title_tokens^8",
+                            "alias_tokens^7",
+                            "section_tokens^4",
+                            "body_tokens^2",
+                        ],
+                        "type": "phrase",
+                        "slop": 2,
+                        "boost": 2.0,
+                    }
+                },
+                {
+                    "multi_match": {
+                        "query": significant_query,
+                        "fields": [
+                            "title_tokens^5",
+                            "alias_tokens^5",
+                            "section_tokens^3",
+                            "body_tokens",
+                        ],
+                        "type": "cross_fields",
+                        "operator": "and",
+                        "boost": 1.5,
+                    }
+                },
+            ])
+        if entity_bigram_query:
+            recall_queries.append(
+                {
+                    "match": {
+                        "entity_bigram_tokens": {
+                            "query": entity_bigram_query,
+                            "operator": "and",
+                            "boost": 1.2,
+                        }
+                    }
+                }
+            )
         body = {
             "size": raw_candidate_k,
             "track_total_hits": False,
@@ -639,20 +740,7 @@ class LexicalIndex:
                     "must": [{
                         "bool": {
                             "should": [
-                                {
-                                    "multi_match": {
-                                        "query": " ".join(tokens),
-                                        "fields": [
-                                            "body_tokens",
-                                            "title_tokens^2",
-                                            "tags_tokens^1.5",
-                                            "section_tokens^3",
-                                            "structure_tokens^2",
-                                        ],
-                                        "type": "best_fields",
-                                        "operator": "or",
-                                    }
-                                },
+                                *recall_queries,
                                 *(
                                     {"term": {"title": {"value": title, "boost": exact_title_boost(title)}}}
                                     for title in exact_titles
@@ -689,6 +777,7 @@ class LexicalIndex:
         for hit in hits:
             source = dict(hit.get("_source") or {})
             title = str(source.get("title") or "")
+            metadata = dict(source.get("metadata") or {})
             if is_repetitive_garbage(str(source.get("text") or "")):
                 continue
             raw = max(0.0, float(hit.get("_score") or 0))
@@ -697,6 +786,9 @@ class LexicalIndex:
             title_tokens = set(lexical_tokens(title))
             if title_tokens:
                 raw += 1.25 * len(question_token_set & title_tokens) / len(title_tokens)
+            alias_tokens = set(lexical_tokens(" ".join(_metadata_aliases(metadata))))
+            if alias_tokens:
+                raw += 1.5 * len(question_token_set & alias_tokens) / len(alias_tokens)
             raw += _focus_bonus(question, title, str(source.get("text") or ""))
             raw += max(_proximity_bonus(str(source.get("text") or ""), item) for item in proximity_sets)
             document_id = str(source.get("document_id") or source.get("node_id") or "")
@@ -1066,6 +1158,62 @@ class LexicalIndex:
                 score=min(1.0, max(0.0, float(hit.get("_score") or 0.0) / top_raw)),
             )
             for hit in hits
+        ]
+
+    def document_line_section_chunks(
+        self,
+        line: str,
+        *,
+        document_id: str,
+        knowledge_base_id: str | None,
+        limit: int = 3,
+        score: float = 1.0,
+    ) -> list[LexicalResult]:
+        """Return consecutive chunks for a numbered line in a flattened list page."""
+
+        filters: list[dict[str, Any]] = [{"term": {"document_id": document_id}}]
+        if knowledge_base_id:
+            filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
+        response = self.client.search(
+            index=self.index_name,
+            body={
+                "size": 100,
+                "sort": [{"chunk_order": "asc"}, {"node_id": "asc"}],
+                "_source": ["node_id", "document_id", "text", "metadata"],
+                "query": {"bool": {"filter": filters}},
+            },
+        )
+        sources = [dict(hit.get("_source") or {}) for hit in response.get("hits", {}).get("hits", [])]
+        normalized_line = normalize_search_text(line).strip()
+        heading = re.compile(rf"^\s*{re.escape(normalized_line)}(?:\s|前称|曾称|在|沿途)")
+        other_heading = re.compile(r"^\s*\d+号线")
+        anchor_index = next(
+            (
+                index
+                for index, source in enumerate(sources)
+                if heading.search(normalize_search_text(str(source.get("text") or "")))
+            ),
+            None,
+        )
+        if anchor_index is None:
+            return []
+        selected = []
+        for source in sources[anchor_index:]:
+            normalized_text = normalize_search_text(str(source.get("text") or ""))
+            if selected and other_heading.search(normalized_text):
+                break
+            selected.append(source)
+            if len(selected) >= max(1, min(limit, 10)):
+                break
+        return [
+            LexicalResult(
+                node_id=str(source.get("node_id") or ""),
+                document_id=str(source.get("document_id") or source.get("node_id") or ""),
+                text=str(source.get("text") or ""),
+                metadata=dict(source.get("metadata") or {}),
+                score=score,
+            )
+            for source in selected
         ]
 
     def document_term_candidates(

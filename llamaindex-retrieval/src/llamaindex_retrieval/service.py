@@ -118,6 +118,10 @@ _LEAD_FACT_MARKERS = (
     "比较",
 )
 _CHRONOLOGICAL_LIST_MARKERS = ("从古至今", "自古至今", "历代", "歷代", "迄今为止")
+_ROUTE_ENDPOINT_PATTERN = re.compile(
+    r"连接(?P<start>[^，。？?和与]{1,20})(?:和|与)"
+    r"(?P<end>[^，。？?的]{1,20})的[^，。？?]{2,32}?(?:线路|路线)"
+)
 
 
 def _is_station_list_question(question: str) -> bool:
@@ -225,6 +229,7 @@ class SearchService:
                     "subject": plan.subject,
                     "relations": list(plan.relations),
                     "merge_strategy": plan.merge_strategy,
+                    "fusion": "weighted_rrf",
                     "context_policy": plan.context_policy,
                 },
             },
@@ -263,13 +268,15 @@ class SearchService:
         chunk_scores: dict[str, float] = {}
         first_seen: dict[str, int] = {}
         sequence = 0
-        for group in result_groups:
+        for group_index, group in enumerate(result_groups):
+            route_weight = max(0.85, 1.15 - group_index * 0.05)
             seen_documents: set[str] = set()
             for rank, result in enumerate(group, start=1):
                 document_id = result.document_id or result.node_id
                 if document_id not in seen_documents:
                     document_scores[document_id] = (
-                        document_scores.get(document_id, 0.0) + 1.0 / (20 + rank)
+                        document_scores.get(document_id, 0.0)
+                        + route_weight / (20 + rank)
                     )
                     seen_documents.add(document_id)
                 chunks.setdefault(document_id, {})[result.node_id] = result
@@ -281,6 +288,31 @@ class SearchService:
                     first_seen[document_id] = sequence
                     sequence += 1
         normalized_subject = normalize_search_text(plan.subject).replace(" ", "")
+        endpoint_match = _ROUTE_ENDPOINT_PATTERN.search(plan.normalized_question)
+        if endpoint_match:
+            start = normalize_search_text(endpoint_match.group("start")).replace(" ", "")
+            end = normalize_search_text(endpoint_match.group("end")).replace(" ", "")
+            for document_id, document_chunks in chunks.items():
+                title = normalize_search_text(
+                    next(
+                        (
+                            str(result.metadata.get("title") or "")
+                            for result in document_chunks.values()
+                            if result.metadata.get("title")
+                        ),
+                        "",
+                    )
+                ).replace(" ", "")
+                supports_route = any(
+                    start in (text := normalize_search_text(result.text).replace(" ", ""))
+                    and end in text
+                    and bool(re.search(r"(?:线路|路线|由.{0,16}至|起点|终点)", text))
+                    for result in document_chunks.values()
+                )
+                if supports_route:
+                    document_scores[document_id] += 0.18
+                    if re.search(r"\d+号线(?:[（(].+?[）)])?$", title):
+                        document_scores[document_id] += 0.12
         if normalized_subject:
             for document_id, document_chunks in chunks.items():
                 title = next(
@@ -292,10 +324,22 @@ class SearchService:
                     "",
                 )
                 normalized_title = normalize_search_text(title).replace(" ", "")
+                aliases = {
+                    normalize_search_text(str(alias)).replace(" ", "")
+                    for result in document_chunks.values()
+                    for alias in (
+                        result.metadata.get("aliases")
+                        if isinstance(result.metadata.get("aliases"), list)
+                        else []
+                    )
+                    if str(alias).strip()
+                }
                 if normalized_title == normalized_subject or normalized_title.startswith(
                     (f"{normalized_subject}(", f"{normalized_subject}（")
                 ):
                     document_scores[document_id] += 0.12
+                elif normalized_subject in aliases:
+                    document_scores[document_id] += 0.1
                 elif (
                     plan.analysis.intent in {"cause", "time", "list"}
                     and title_matches_subject_event(
@@ -305,6 +349,16 @@ class SearchService:
                     )
                 ):
                     document_scores[document_id] += 0.24
+                if plan.relations and any(
+                    normalized_subject in normalize_search_text(result.text).replace(" ", "")
+                    and any(
+                        normalize_search_text(relation).replace(" ", "")
+                        in normalize_search_text(result.text).replace(" ", "")
+                        for relation in plan.relations
+                    )
+                    for result in document_chunks.values()
+                ):
+                    document_scores[document_id] += 0.06
         ranked_documents = sorted(
             document_scores,
             key=lambda key: (document_scores[key], -first_seen[key]),
@@ -758,6 +812,26 @@ class SearchService:
         content_types = set(intent_content_types(question))
         if not content_types or not results:
             return results, False
+        flattened_station_context = await self._flattened_station_list_context(
+            question,
+            results,
+            knowledge_base_id=knowledge_base_id,
+        )
+        if flattened_station_context:
+            context_ids = {result.node_id for result in flattened_station_context}
+            context_document_ids = {
+                result.document_id for result in flattened_station_context
+            }
+            return [
+                results[0],
+                *flattened_station_context,
+                *(
+                    result
+                    for result in results[1:]
+                    if result.node_id not in context_ids
+                    and result.document_id not in context_document_ids
+                ),
+            ], True
         top_document = results[0].document_id
         candidates = [
             result
@@ -842,6 +916,80 @@ class SearchService:
             *(result for result in results if result.node_id not in seen),
         ]
         return merged, True
+
+    async def _flattened_station_list_context(
+        self,
+        question: str,
+        results: list[LexicalResult],
+        *,
+        knowledge_base_id: str | None,
+    ) -> list[LexicalResult]:
+        if not _is_station_list_question(question):
+            return []
+        line_match = re.search(r"\d+号线", normalize_search_text(question))
+        if line_match is None:
+            line_match = next(
+                (
+                    match
+                    for result in results
+                    if (match := re.search(r"\d+号线", normalize_search_text(str(result.metadata.get("title") or ""))))
+                ),
+                None,
+            )
+        if line_match is None:
+            return []
+        companion = next(
+            (
+                result
+                for result in results
+                if normalize_search_text(str(result.metadata.get("title") or "")).endswith("车站列表")
+            ),
+            None,
+        )
+        search_lookup = getattr(self.index, "search", None)
+        if companion is None and search_lookup is not None:
+            network = next(
+                (
+                    match.group("network")
+                    for result in results
+                    if (
+                        match := re.search(
+                            r"(?P<network>[\u3400-\u9fff]{2,20}?地铁)\d+号线",
+                            normalize_search_text(str(result.metadata.get("title") or "")),
+                        )
+                    )
+                ),
+                "",
+            )
+            if network:
+                candidates = await asyncio.to_thread(
+                    search_lookup,
+                    f"{network}车站列表 {line_match.group(0)}",
+                    candidate_k=20,
+                    knowledge_base_id=knowledge_base_id,
+                )
+                expected_title = normalize_search_text(f"{network}车站列表").replace(" ", "")
+                companion = next(
+                    (
+                        result
+                        for result in candidates
+                        if normalize_search_text(
+                            str(result.metadata.get("title") or "")
+                        ).replace(" ", "") == expected_title
+                    ),
+                    None,
+                )
+        lookup = getattr(self.index, "document_line_section_chunks", None)
+        if companion is None or lookup is None:
+            return []
+        return await asyncio.to_thread(
+            lookup,
+            line_match.group(0),
+            document_id=companion.document_id,
+            knowledge_base_id=knowledge_base_id,
+            limit=3,
+            score=max(companion.score, results[0].score),
+        )
 
     async def _document_prose_candidates(
         self,
@@ -1079,10 +1227,32 @@ class SearchService:
         if plan.analysis.intent == "time" and len(plan.analysis.subjects) > 2:
             return sources
         normalized_subject = normalize_search_text(plan.subject).replace(" ", "")
+        endpoint_match = _ROUTE_ENDPOINT_PATTERN.search(plan.normalized_question)
+        if endpoint_match and plan.analysis.intent == "list":
+            start = normalize_search_text(endpoint_match.group("start")).replace(" ", "")
+            end = normalize_search_text(endpoint_match.group("end")).replace(" ", "")
+            route_document_ids = {
+                source.document_id
+                for source in sources
+                if start in normalize_search_text(source.snippet).replace(" ", "")
+                and end in normalize_search_text(source.snippet).replace(" ", "")
+                and bool(re.search(
+                    r"(?:线路|路线|号线|由.{0,16}至|起点|终点)",
+                    normalize_search_text(f"{source.title}\n{source.snippet}"),
+                ))
+            }
+            if route_document_ids:
+                return SearchService._with_station_list_companions(
+                    sources,
+                    route_document_ids,
+                )
         exact_document_ids = {
             source.document_id
             for source in sources
-            if normalize_search_text(source.title).replace(" ", "") == normalized_subject
+            if (
+                normalize_search_text(source.title).replace(" ", "") == normalized_subject
+                or normalized_subject in SearchService._source_aliases(source)
+            )
         }
         if plan.analysis.intent == "agent" and plan.relations:
             subject_tokens = {
@@ -1118,6 +1288,11 @@ class SearchService:
                 )
             }
             if event_document_ids:
+                if plan.analysis.intent == "list":
+                    return SearchService._with_station_list_companions(
+                        sources,
+                        event_document_ids,
+                    )
                 return [source for source in sources if source.document_id in event_document_ids]
         document_ids = exact_document_ids or {
             source.document_id
@@ -1126,7 +1301,104 @@ class SearchService:
         }
         if not document_ids:
             return sources
+        if plan.analysis.intent == "list":
+            return SearchService._with_station_list_companions(sources, document_ids)
         return [source for source in sources if source.document_id in document_ids]
+
+    @staticmethod
+    def _source_aliases(source: SourceItem) -> set[str]:
+        aliases = source.metadata.get("aliases")
+        if not isinstance(aliases, list):
+            return set()
+        return {
+            normalize_search_text(str(alias)).replace(" ", "")
+            for alias in aliases
+            if str(alias).strip()
+        }
+
+    @staticmethod
+    def _with_station_list_companions(
+        sources: list[SourceItem],
+        primary_document_ids: set[str],
+    ) -> list[SourceItem]:
+        primary_sources = [
+            source for source in sources if source.document_id in primary_document_ids
+        ]
+        route_identifiers = {
+            identifier
+            for source in primary_sources
+            for identifier in (
+                re.findall(
+                    r"\d+号线",
+                    normalize_search_text(source.title),
+                )
+                + list(SearchService._source_aliases(source))
+            )
+            if identifier
+        }
+        route_networks = {
+            match.group("network")
+            for source in primary_sources
+            if (
+                match := re.search(
+                    r"(?P<network>[\u3400-\u9fff]{2,20}?地铁)\d+号线",
+                    normalize_search_text(source.title),
+                )
+            )
+        }
+        companion_document_ids = {
+            source.document_id
+            for source in sources
+            if normalize_search_text(source.title).replace(" ", "").endswith("车站列表")
+            and (
+                not route_networks
+                or any(
+                    normalize_search_text(source.title).replace(" ", "").startswith(network)
+                    for network in route_networks
+                )
+            )
+            and any(
+                identifier in normalize_search_text(source.snippet).replace(" ", "")
+                for identifier in route_identifiers
+            )
+        }
+        companion_source_ids: set[str] = set()
+        for document_id in companion_document_ids:
+            document_sources = sorted(
+                (source for source in sources if source.document_id == document_id),
+                key=lambda source: int(source.metadata.get("chunk_order") or 0),
+            )
+            anchor_order = next(
+                (
+                    int(source.metadata.get("chunk_order") or 0)
+                    for source in document_sources
+                    if any(
+                        identifier in normalize_search_text(source.snippet).replace(" ", "")
+                        for identifier in route_identifiers
+                    )
+                ),
+                None,
+            )
+            if anchor_order is None:
+                continue
+            for source in document_sources:
+                chunk_order = int(source.metadata.get("chunk_order") or 0)
+                normalized_snippet = normalize_search_text(source.snippet).replace(" ", "")
+                heading = re.match(r"(?P<line>\d+号线)", normalized_snippet)
+                if chunk_order < anchor_order:
+                    continue
+                if (
+                    chunk_order > anchor_order
+                    and heading is not None
+                    and heading.group("line") not in route_identifiers
+                ):
+                    break
+                companion_source_ids.add(source.id)
+        return [
+            source for source in sources
+            if source.document_id in primary_document_ids
+            or source.id in companion_source_ids
+        ]
 
     @staticmethod
     def _source_item(result: LexicalResult) -> SourceItem:

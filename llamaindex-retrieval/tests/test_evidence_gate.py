@@ -100,6 +100,35 @@ def test_gate_rejects_wrong_page_for_complete_list() -> None:
     assert "subject_title_mismatch" in result.issues
 
 
+def test_gate_accepts_complete_list_route_alias() -> None:
+    question = "罗宝线沿途停靠哪些站？"
+    aliased_source = source(
+        "深圳地铁1号线",
+        "深圳地铁1号线曾称罗宝线，沿途共设30个车站。",
+    ).model_copy(update={"metadata": {"aliases": ["罗宝线"]}})
+
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [aliased_source],
+        subject="罗宝线",
+    )
+
+    assert result.passed is True
+
+
+def test_gate_accepts_route_identified_by_endpoints() -> None:
+    question = "连接罗湖和机场东的深圳地铁线路有哪些车站？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("深圳地铁1号线", "深圳地铁1号线由罗湖站至机场东站，共设30个车站。")],
+        subject="罗湖",
+    )
+
+    assert result.passed is True
+
+
 def test_gate_allows_partial_list_from_parent_topic_page() -> None:
     question = "中国有哪些著名的长城关隘？"
     result = evaluate_evidence_gate(

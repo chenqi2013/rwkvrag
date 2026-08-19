@@ -123,6 +123,36 @@ def test_cleans_list_and_location_subjects() -> None:
     assert build_query_plan("中国有哪些著名的长城关隘？").subject == "长城关隘"
 
 
+def test_transit_list_plan_cleans_actions_and_adds_companion_page_query() -> None:
+    plan = build_query_plan("深圳地铁一号线都经过哪些车站？")
+
+    assert plan.analysis.intent == "list"
+    assert plan.subject == "深圳地铁1号线"
+    assert "深圳地铁1号线" in plan.queries
+    assert "深圳地铁车站列表" in plan.queries
+    assert "深圳地铁车站列表 1号线" in plan.queries
+
+    alias_plan = build_query_plan("罗宝线沿途停靠哪些站？")
+    assert alias_plan.subject == "罗宝线"
+    assert alias_plan.queries[0] == "罗宝线 站列表"
+
+
+def test_list_question_with_earliest_word_is_not_misclassified_as_ordinal() -> None:
+    plan = build_query_plan("深圳最早开通的地铁线路经过哪些站？")
+
+    assert plan.analysis.intent == "list"
+    assert plan.subject == "深圳最早开通的地铁线路"
+    assert "深圳地铁车站列表" in plan.queries
+
+
+def test_endpoint_description_adds_focused_route_query() -> None:
+    plan = build_query_plan("连接罗湖和机场东的深圳地铁线路有哪些车站？")
+
+    assert plan.queries[0] == "罗湖 机场东"
+    assert plan.queries[1] == "由罗湖站至机场东站"
+    assert "深圳地铁 罗湖 机场东 车站" in plan.queries
+
+
 def test_cleans_common_conversational_question_shells() -> None:
     assert build_query_plan("请简要介绍一下山西博物院。").subject == "山西博物院"
     assert build_query_plan("我不太了解古茗，它指的是什么？").subject == "古茗"

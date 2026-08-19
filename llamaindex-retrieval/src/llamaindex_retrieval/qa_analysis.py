@@ -38,6 +38,16 @@ _TIME_QUESTION_PATTERN = re.compile(
 )
 _LIST_RELATION_MARKER = re.compile(r"有哪些|有哪(?:些|几个|几种)|哪些|哪几个|哪几种")
 _LIST_SCOPE_SUFFIXES = (
+    "都经过",
+    "都經過",
+    "沿途停靠",
+    "沿途停靠于",
+    "沿途停靠於",
+    "途经",
+    "途經",
+    "经过",
+    "經過",
+    "停靠",
     "经历了",
     "经历",
     "包括了",
@@ -131,13 +141,13 @@ def comparison_subjects(question: str) -> tuple[str, str] | None:
 def analyze_question(question: str) -> QuestionAnalysis:
     question = clean_question_shell(question)
     comparison = comparison_subjects(question)
-    ordinal_queries = _ordinal_search_queries(question)
     agent_question = bool(_REVERSE_ACTION_OBJECT_QUERY.match(question.strip())) or is_agent_relation_question(question)
     expects_list = not agent_question and any(
         marker in question
         for marker in ("哪些", "有哪些", "列出", "列举", "列一下", "全部", "所有", "分别")
     )
     expects_complete = expects_list and not any(marker in question for marker in _PARTIAL_LIST_MARKERS)
+    ordinal_queries = () if expects_list else _ordinal_search_queries(question)
     if comparison:
         intent = "comparison"
         subjects = comparison
@@ -257,6 +267,20 @@ def _time_search_queries(question: str) -> tuple[str, ...]:
 
 def _list_search_queries(question: str) -> tuple[str, ...]:
     normalized = clean_question_shell(question).strip(" ？?，,。；;")
+    endpoints = re.search(
+        r"连接(?P<start>[^，。？?和与]{1,20})(?:和|与)"
+        r"(?P<end>[^，。？?的]{1,20})的(?P<network>[^，。？?]{2,24}?)(?:线路)?(?:有|经过|途经)",
+        normalized,
+    )
+    if endpoints:
+        network = endpoints.group("network")
+        start = endpoints.group("start")
+        end = endpoints.group("end")
+        return (
+            f"{start} {end}",
+            f"由{start}站至{end}站",
+            f"{network} {start} {end} 车站",
+        )
     match = _LIST_RELATION_MARKER.search(normalized)
     if not match:
         return ()
@@ -404,7 +428,7 @@ def validate_list_answer(question: str, answer: str, sources: list[SourceItem]) 
         int(value)
         for value in re.findall(r"(?:共|共有|总计|總計)\s*(?:设|設|有)?\s*(\d{1,3})\s*(?:个|個|名|项|項|座|站)", evidence)
     ]
-    expected_count = max(counts) if counts else None
+    expected_count = counts[0] if counts else None
     answer_body = _CITATION.sub("", answer)
     list_body = answer_body.split("：", 1)[-1]
     items = [value.strip(" 。；;，,") for value in re.split(r"[、；;\n]", list_body) if value.strip(" 。；;，,")]

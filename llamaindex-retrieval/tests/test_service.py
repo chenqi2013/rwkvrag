@@ -9,6 +9,7 @@ from llamaindex_retrieval.lexical_index import (
     LexicalIndex,
     LexicalResult,
     _focus_bonus,
+    entity_bigram_tokens,
     lexical_tokens,
     normalize_query_text,
     query_tokens,
@@ -571,6 +572,56 @@ def test_select_results_deduplicates_documents_and_filters_low_scores() -> None:
     assert [item.document_id for item in selected] == ["capital", "country"]
 
 
+def test_rank_fusion_prefers_an_exact_page_alias() -> None:
+    plan = build_query_plan("罗宝线有哪些站点？")
+    unrelated = LexicalResult(
+        node_id="other-node",
+        document_id="other",
+        text="其他地铁线路也设有多个车站。",
+        metadata={"title": "其他地铁线路"},
+        score=1.0,
+    )
+    aliased = LexicalResult(
+        node_id="line-1-node",
+        document_id="line-1",
+        text="深圳地铁1号线设有罗湖站等车站。",
+        metadata={"title": "深圳地铁1号线", "aliases": ["罗宝线"]},
+        score=0.8,
+    )
+
+    merged = SearchService._merge_rank_fusion(
+        ([unrelated, aliased], [unrelated, aliased]),
+        plan=plan,
+    )
+
+    assert merged[0].document_id == "line-1"
+
+
+def test_rank_fusion_prefers_route_page_for_endpoint_description() -> None:
+    plan = build_query_plan("连接罗湖和机场东的深圳地铁线路有哪些车站？")
+    station = LexicalResult(
+        node_id="station",
+        document_id="station",
+        text="罗湖站可以换乘多条线路，交通接驳包括机场站。",
+        metadata={"title": "罗湖站 (深圳地铁)"},
+        score=1.0,
+    )
+    route = LexicalResult(
+        node_id="route",
+        document_id="route",
+        text="深圳地铁1号线由罗湖站至机场东站，全线共设30座车站。",
+        metadata={"title": "深圳地铁1号线"},
+        score=0.8,
+    )
+
+    merged = SearchService._merge_rank_fusion(
+        ([station, route], [station, route]),
+        plan=plan,
+    )
+
+    assert merged[0].document_id == "route"
+
+
 def test_lexical_index_searches_chinese_and_titles() -> None:
     client = FakeOpenSearch()
     index = LexicalIndex(Settings(), client=cast(Any, client))
@@ -580,11 +631,34 @@ def test_lexical_index_searches_chinese_and_titles() -> None:
     fields = client.search_body["query"]["bool"]["must"][0]["bool"]["should"][0]["multi_match"]["fields"]
     assert fields == [
         "body_tokens",
-        "title_tokens^2",
+        "title_tokens^3",
+        "alias_tokens^4",
         "tags_tokens^1.5",
         "section_tokens^3",
         "structure_tokens^2",
+        "entity_bigram_tokens^0.6",
     ]
+    recall_queries = client.search_body["query"]["bool"]["must"][0]["bool"]["should"]
+    assert any(query.get("multi_match", {}).get("type") == "phrase" for query in recall_queries)
+    assert any("entity_bigram_tokens" in query.get("match", {}) for query in recall_queries)
+
+
+def test_entity_bigrams_preserve_chinese_entity_boundaries() -> None:
+    assert entity_bigram_tokens("深圳地铁1号线") == [
+        "1",
+        "深圳",
+        "圳地",
+        "地铁",
+        "号线",
+    ]
+
+
+def test_index_mapping_contains_alias_and_entity_fallback_fields() -> None:
+    index = LexicalIndex(Settings(), client=cast(Any, FakeOpenSearch()))
+    properties = index.index_definition()["mappings"]["properties"]
+
+    assert properties["alias_tokens"]["type"] == "text"
+    assert properties["entity_bigram_tokens"]["type"] == "text"
 
 
 def test_transit_line_numbers_are_normalized() -> None:
@@ -1365,3 +1439,76 @@ def test_focus_sources_keeps_only_agent_relation_document() -> None:
     focused = SearchService._focus_sources_on_subject(plan, sources)
 
     assert [source.document_id for source in focused] == ["elevator"]
+
+
+def test_focus_sources_keeps_alias_route_and_matching_list_chunks() -> None:
+    plan = build_query_plan("罗宝线沿途停靠哪些站？")
+    sources = [
+        SourceItem(
+            id="line-1",
+            document_id="line-1",
+            source="wiki",
+            title="深圳地铁1号线",
+            score=1.0,
+            snippet="深圳地铁1号线曾称罗宝线，由罗湖站至机场东站。",
+            metadata={"aliases": ["罗宝线"], "chunk_order": 0},
+        ),
+        SourceItem(
+            id="stations-1",
+            document_id="station-list",
+            source="wiki",
+            title="深圳地铁车站列表",
+            score=0.9,
+            snippet="1号线前称罗宝线，沿途共设30个车站。罗湖站、国贸站。",
+            metadata={"chunk_order": 1},
+        ),
+        SourceItem(
+            id="stations-2",
+            document_id="station-list",
+            source="wiki",
+            title="深圳地铁车站列表",
+            score=0.9,
+            snippet="香蜜湖站、车公庙站、机场东站。",
+            metadata={"chunk_order": 2},
+        ),
+        SourceItem(
+            id="line-2-stations",
+            document_id="station-list",
+            source="wiki",
+            title="深圳地铁车站列表",
+            score=0.8,
+            snippet="2号线前称蛇口线，沿途共设32个车站。",
+            metadata={"chunk_order": 3},
+        ),
+    ]
+
+    focused = SearchService._focus_sources_on_subject(plan, sources)
+
+    assert [source.id for source in focused] == ["line-1", "stations-1", "stations-2"]
+
+
+def test_focus_sources_uses_route_endpoints_instead_of_first_station() -> None:
+    plan = build_query_plan("连接罗湖和机场东的深圳地铁线路有哪些车站？")
+    sources = [
+        SourceItem(
+            id="route",
+            document_id="line-1",
+            source="wiki",
+            title="深圳地铁1号线",
+            score=1.0,
+            snippet="深圳地铁1号线由罗湖站至机场东站，全线共设30座车站。",
+            metadata={"aliases": ["罗宝线"], "chunk_order": 0},
+        ),
+        SourceItem(
+            id="station",
+            document_id="luohu",
+            source="wiki",
+            title="罗湖站 (深圳地铁)",
+            score=0.9,
+            snippet="罗湖站位于罗湖口岸附近。",
+        ),
+    ]
+
+    focused = SearchService._focus_sources_on_subject(plan, sources)
+
+    assert [source.id for source in focused] == ["route"]

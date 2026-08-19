@@ -138,6 +138,14 @@ _FACT_QUERY_NOISE = {
     "中国", "时候", "哪一年", "何时", "谁", "哪里", "什么", "事件", "时期",
 }
 _QUANTITATIVE_LABELS = ("人口", "面积", "全长", "长度", "高度", "海拔")
+_FLATTENED_STATION_NAME = re.compile(
+    r"(?P<name>[\u3400-\u4dbf\u4e00-\u9fff]{2,16}站)"
+    r"(?=[A-Z][A-Za-z' .&-]{1,48}(?:150x?150(?:像素)?|150px))"
+)
+_TRANSIT_REGION_PREFIX = re.compile(
+    r"(?:罗湖|羅湖|福田|南山|宝安|寶安|龙岗|龍崗|龙华|龍華|光明|盐田|鹽田|坪山)[区區]"
+)
+_FULL_CHINESE_DATE = re.compile(r"\d{4}年\d{1,2}月\d{1,2}日")
 
 
 def clean_evidence_text(text: str) -> str:
@@ -155,6 +163,9 @@ def structured_list_answer(question: str, sources: list[SourceItem]) -> str | No
 
     if not _looks_like_list_question(question):
         return None
+    flattened_station_answer = _flattened_station_table_answer(question, sources)
+    if flattened_station_answer is not None:
+        return flattened_station_answer
     question_tokens = set(query_tokens(question))
     context = "\n".join(clean_evidence_text(source.snippet) for source in sources)
     for index, source in enumerate(sources, start=1):
@@ -189,6 +200,59 @@ def structured_list_answer(question: str, sources: list[SourceItem]) -> str | No
         joined = "、".join(items)
         return f"{subject}的{_normalize_label(label)}包括：{joined}。[资料 {index}]"
     return None
+
+
+def _flattened_station_table_answer(
+    question: str,
+    sources: list[SourceItem],
+) -> str | None:
+    if not any(marker in question for marker in ("车站", "站点", "哪些站", "站名")):
+        return None
+    expected_count = next(
+        (
+            int(match.group(1))
+            for source in sources
+            if (match := re.search(
+                r"(?:共|共有|总计|總計|沿途共)\s*(?:设|設|有)?\s*(\d{1,3})\s*(?:个|個|座)?车站",
+                normalize_search_text(source.snippet),
+            ))
+        ),
+        None,
+    )
+    if expected_count is None:
+        return None
+    station_names: list[str] = []
+    citation_indexes: list[int] = []
+    for index, source in enumerate(sources, start=1):
+        if not normalize_search_text(source.title).replace(" ", "").endswith("车站列表"):
+            continue
+        text = clean_evidence_text(source.snippet)
+        text = re.sub(r"^.*?(?:参考来源|參考來源)", "", text, count=1, flags=re.DOTALL)
+        text = re.sub(r"-\{(?P<value>[\u3400-\u9fff]+)\}-", r"\g<value>", text)
+        text = _FULL_CHINESE_DATE.sub("", text)
+        text = _TRANSIT_REGION_PREFIX.sub("", text)
+        found = [
+            normalize_search_text(match.group("name")).replace(" ", "")
+            for match in _FLATTENED_STATION_NAME.finditer(text)
+        ]
+        if not found:
+            continue
+        citation_indexes.append(index)
+        for name in found:
+            if name not in station_names:
+                station_names.append(name)
+    if len(station_names) != expected_count:
+        return None
+    subject = next(
+        (
+            source.title
+            for source in sources
+            if re.search(r"地铁\d+号线", normalize_search_text(source.title))
+        ),
+        _answer_subject(question, sources[0]),
+    )
+    citations = "".join(f"[资料 {index}]" for index in citation_indexes)
+    return f"{subject}共有{expected_count}个车站：{'、'.join(station_names)}。{citations}"
 
 
 def direct_evidence_answer(question: str, sources: list[SourceItem]) -> str | None:

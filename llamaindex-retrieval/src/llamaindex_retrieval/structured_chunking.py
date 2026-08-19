@@ -6,6 +6,8 @@ from llama_index.core import Document
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.schema import TextNode
 
+from .lexical_features import extract_document_aliases
+
 
 _HEADING = re.compile(r"^(?P<marks>#{1,6})\s+(?P<title>.+?)\s*$")
 _LIST_ITEM = re.compile(r"^\s*(?:[-+*]|\d+[.)]|[（(]?[一二三四五六七八九十]+[）).、])\s+\S")
@@ -267,6 +269,9 @@ def structure_aware_nodes(document: Document, splitter: SentenceSplitter) -> lis
     document_id = str(metadata.get("document_id") or document.id_)
     fallback_section = str(metadata.get("title") or "正文")
     max_chars = max(600, splitter.chunk_size * 3)
+    aliases = extract_document_aliases(fallback_section, document.text, metadata)
+    if aliases:
+        metadata["aliases"] = aliases
 
     if metadata.get("kind") == "qa-markdown":
         blocks = [StructureBlock("qa", fallback_section, [document.text])]

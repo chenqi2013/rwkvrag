@@ -65,7 +65,19 @@ def _queries_for(
             *analysis.subjects,
             question,
         )
-    elif analysis.intent in {"list", "ordinal"} and analysis.subjects:
+    elif analysis.intent == "list" and analysis.subjects:
+        bare_subject = (
+            (subject,)
+            if len(subject.replace(" ", "")) >= 4 and " " not in subject
+            else ()
+        )
+        candidates = (
+            *analysis.subjects,
+            *bare_subject,
+            *_list_companion_queries(question),
+            question,
+        )
+    elif analysis.intent == "ordinal" and analysis.subjects:
         candidates = (*analysis.subjects, question)
     elif analysis.intent == "cause" and subject and relations:
         candidates = (
@@ -85,6 +97,41 @@ def _queries_for(
     else:
         candidates = (question,)
     return tuple(dict.fromkeys(value.strip() for value in candidates if value.strip()))
+
+
+def _list_companion_queries(question: str) -> tuple[str, ...]:
+    if not any(marker in question for marker in ("哪些", "有哪", "列表", "全部", "所有")):
+        return ()
+    candidates: list[str] = []
+    transit = re.search(
+        r"(?P<network>[\u3400-\u9fff]{2,20}?地铁)(?P<line>\d+号线)",
+        question,
+    )
+    if transit:
+        network = transit.group("network")
+        line = transit.group("line")
+        candidates.extend((f"{network}车站列表", f"{network}车站列表 {line}"))
+    earliest = re.search(
+        r"(?P<place>[\u3400-\u9fff]{2,12})(?:最早开通的地铁线路|地铁首条线路)",
+        question,
+    )
+    if earliest:
+        network = f"{earliest.group('place')}地铁"
+        candidates.extend((f"{network}车站列表", f"{network} 最早投入服务 车站"))
+    endpoints = re.search(
+        r"连接(?P<start>[^，。？?和与]{1,20})(?:和|与)"
+        r"(?P<end>[^，。？?的]{1,20})的(?P<network>[^，。？?]{2,24}?)(?:线路)?(?:有|经过|途经)",
+        question,
+    )
+    if endpoints:
+        network = endpoints.group("network")
+        candidates.append(
+            f"{network} {endpoints.group('start')} "
+            f"{endpoints.group('end')} 车站"
+        )
+        if network.endswith("地铁"):
+            candidates.append(f"{network}车站列表")
+    return tuple(dict.fromkeys(candidates))
 
 
 def _subject_for(analysis: QuestionAnalysis, question: str) -> str:

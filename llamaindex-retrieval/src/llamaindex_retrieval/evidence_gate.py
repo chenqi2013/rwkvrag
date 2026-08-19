@@ -94,12 +94,14 @@ def evaluate_evidence_gate(
     normalized_subject = normalize_search_text(subject).replace(" ", "")
     exact_title_match = bool(normalized_subject) and any(
         title_matches_subject(source.title, normalized_subject)
+        or normalized_subject in _source_aliases(source)
         or (
             analysis.intent in {"cause", "time", "list"}
             and title_matches_subject_event(source.title, normalized_subject, question)
         )
         for source in sources
     )
+    route_endpoint_match = _route_endpoint_evidence_match(question, sources)
     relation_topic_match = bool(normalized_subject and matched) and any(
         title_matches_subject_topic(source.title, normalized_subject)
         and all(
@@ -118,7 +120,10 @@ def evaluate_evidence_gate(
         )
     )
     acceptable_title_match = (
-        exact_title_match or relation_topic_match or embedded_definition_match
+        exact_title_match
+        or relation_topic_match
+        or embedded_definition_match
+        or route_endpoint_match
     )
     if not acceptable_title_match:
         if assessment.anchors and not assessment.matched_anchors:
@@ -147,6 +152,35 @@ def evaluate_evidence_gate(
         matched_relation_terms=matched,
         passed=not issues,
         issues=tuple(issues),
+    )
+
+
+def _source_aliases(source: SourceItem) -> set[str]:
+    aliases = source.metadata.get("aliases")
+    if not isinstance(aliases, list):
+        return set()
+    return {
+        normalize_search_text(str(alias)).replace(" ", "")
+        for alias in aliases
+        if str(alias).strip()
+    }
+
+
+def _route_endpoint_evidence_match(question: str, sources: list[SourceItem]) -> bool:
+    match = re.search(
+        r"连接(?P<start>[^，。？?和与]{1,20})(?:和|与)"
+        r"(?P<end>[^，。？?的]{1,20})的[^，。？?]{2,32}?(?:线路|路线)",
+        normalize_search_text(question),
+    )
+    if match is None:
+        return False
+    start = normalize_search_text(match.group("start")).replace(" ", "")
+    end = normalize_search_text(match.group("end")).replace(" ", "")
+    return any(
+        start in (text := normalize_search_text(source.snippet).replace(" ", ""))
+        and end in text
+        and bool(re.search(r"(?:线路|路线|号线|由.{0,16}至|起点|终点)", text))
+        for source in sources
     )
 
 

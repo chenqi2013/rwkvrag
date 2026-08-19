@@ -6,8 +6,8 @@
 
 ```text
 管理后台 -> MongoDB 任务 -> Markdown / PDF / DOCX / FineWiki -> LlamaIndex SentenceSplitter
-文本切片 -> 中文规范化/Jieba 分词 -> OpenSearch BM25（正文、标题、标签）
-前端问题 -> OpenSearch BM25 + 关键词扩展 + 标题加权 -> 证据 -> RWKV -> /v1/ask
+文本切片 -> 别名/结构提取 -> 中文规范化/Jieba 分词 -> OpenSearch BM25F 多字段索引
+前端问题 -> 多查询规划 -> 标题/别名/章节/正文召回 -> 页面级加权融合 -> 证据 -> RWKV -> /v1/ask
 ```
 
 ## 初始化
@@ -49,6 +49,9 @@ uv run rwkvrag-retrieval ingest-finewiki \
 ```
 
 `--recreate` 会删除并重建当前 OpenSearch 索引，请勿在并发导入时使用。
+
+标题、正文、章节、结构字段之外，新导入的数据还会建立页面别名和实体中文二元词字段。
+服务升级后旧索引仍可查询，但需要重新执行导入或重新索引，才能获得别名与二元词召回能力。
 
 从旧 SQLite BM25 索引迁移现有切片：
 
@@ -169,7 +172,10 @@ uv run rwkvrag-retrieval eval --url http://127.0.0.1:8090 --top-k 5
 
 ## 质量原则
 
-- OpenSearch BM25 对正文、标题和 metadata 中的 question/tags/keywords 等字段检索；标题匹配会额外加权。
+- OpenSearch BM25F 分别检索正文、标题、页面别名、章节和结构化标签，并按字段重要性加权。
+- 页面别名来自文档 metadata、带限定词的标题以及正文开头的“又称、简称、原名”等表达。
+- 查询同时执行宽松关键词、严格全词、短语和实体中文二元词召回，再使用加权 RRF 合并到页面级候选。
+- 页面重排同时检查标题/别名主体、关系词覆盖、关键词距离和列表/表格等内容类型。
 - 中文查询先进行繁简归一化、搜索引擎分词和停用词过滤，并对常见问法做有限关键词扩展。
 - 地铁线路等编号会统一中文数字和阿拉伯数字写法，例如“一号线”和“1号线”使用同一组检索词。
 - `/v1/search` 只返回证据；`/v1/ask` 返回 RWKV 基于证据生成的答案及同一批来源。
