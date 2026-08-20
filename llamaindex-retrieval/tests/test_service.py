@@ -5,6 +5,10 @@ import pytest
 from llama_index.core.schema import TextNode
 
 from llamaindex_retrieval.config import Settings
+from llamaindex_retrieval.active_retrieval import (
+    ActiveRetrievalDecision,
+    ActiveRetrievalResult,
+)
 from llamaindex_retrieval.generation import EvidenceAnswerGenerator
 from llamaindex_retrieval.lexical_index import (
     LexicalIndex,
@@ -1064,6 +1068,97 @@ async def test_ask_extracts_capital_answer_without_model_call() -> None:
 
     assert response.answer == "中国的首都是北京。[资料 1]"
     assert response.generation["answer_strategy"] == "direct_extract"
+
+
+@pytest.mark.asyncio
+async def test_ask_uses_active_bm25_search_when_initial_evidence_is_wrong() -> None:
+    class FakeRecoveryIndex:
+        def search(self, question: str, **kwargs: Any) -> list[LexicalResult]:
+            if "中华人民共和国 首都" in question:
+                return [
+                    LexicalResult(
+                        node_id="capital-node",
+                        document_id="capital",
+                        text="中华人民共和国的首都是北京。",
+                        metadata={
+                            "document_id": "capital",
+                            "title": "首都",
+                            "source": "finewiki-zh",
+                        },
+                        score=1.0,
+                    )
+                ]
+            return [
+                LexicalResult(
+                    node_id="henan-node",
+                    document_id="henan",
+                    text="河南省位于中国中部。",
+                    metadata={
+                        "document_id": "henan",
+                        "title": "河南省",
+                        "source": "finewiki-zh",
+                    },
+                    score=1.0,
+                )
+            ]
+
+    class FakeActiveAgent:
+        calls = 0
+
+        async def decide(
+            self,
+            question: str,
+            sources: Any,
+            **kwargs: Any,
+        ) -> ActiveRetrievalResult:
+            self.calls += 1
+            assert sources == []
+            return ActiveRetrievalResult(
+                ActiveRetrievalDecision(
+                    "bm25_search",
+                    ("中华人民共和国 首都 城市",),
+                    "当前证据对象错误",
+                )
+            )
+
+    agent = FakeActiveAgent()
+    service = SearchService(
+        Settings(),
+        cast(Any, FakeRecoveryIndex()),
+        generator=cast(Any, FakeFailingGenerator()),
+        retrieval_agent=cast(Any, agent),
+    )
+
+    response = await service.ask(SearchRequest(question="中国的首都是哪个城市？", top_k=1))
+
+    assert response.answer == "中国的首都是北京。[资料 1]"
+    assert response.sources[0].id == "capital-node"
+    assert response.retrieval["active_retrieval"]["tool_calls"] == 1
+    assert response.retrieval["active_retrieval"]["stop_reason"] == "max_rounds"
+    assert agent.calls == 1
+
+
+@pytest.mark.asyncio
+async def test_ask_skips_active_retrieval_when_initial_evidence_is_sufficient() -> None:
+    class UnexpectedActiveAgent:
+        async def decide(self, *args: Any, **kwargs: Any) -> ActiveRetrievalResult:
+            raise AssertionError("sufficient evidence must not add model latency")
+
+    service = SearchService(
+        Settings(),
+        cast(Any, FakeCapitalIndex()),
+        generator=cast(Any, FakeFailingGenerator()),
+        retrieval_agent=cast(Any, UnexpectedActiveAgent()),
+    )
+
+    response = await service.ask(SearchRequest(question="中国的首都是哪个城市？", top_k=1))
+
+    assert response.answer == "中国的首都是北京。[资料 1]"
+    assert (
+        response.retrieval["active_retrieval"]["stop_reason"]
+        == "initial_evidence_sufficient"
+    )
+    assert response.retrieval["active_retrieval"]["tool_calls"] == 0
 
 
 @pytest.mark.asyncio

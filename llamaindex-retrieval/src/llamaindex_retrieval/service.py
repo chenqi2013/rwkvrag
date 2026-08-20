@@ -1,8 +1,10 @@
 import asyncio
 import re
 from collections import OrderedDict
+from dataclasses import replace
 from time import monotonic
 
+from .active_retrieval import ActiveRetrievalAgent
 from .config import Settings
 from .evidence_utils import (
     agent_evidence_answer,
@@ -136,18 +138,40 @@ class SearchService:
         index: LexicalIndex,
         generator: EvidenceAnswerGenerator | None = None,
         query_planner: LanguageModelQueryPlanner | None = None,
+        retrieval_agent: ActiveRetrievalAgent | None = None,
     ) -> None:
         self.settings = settings
         self.index = index
         self.generator = generator or EvidenceAnswerGenerator(settings)
         self.query_planner = query_planner
+        self.retrieval_agent = retrieval_agent
         self._answer_cache: OrderedDict[tuple[object, ...], tuple[float, str]] = OrderedDict()
 
-    async def search(self, request: SearchRequest) -> SearchResponse:
+    async def search(
+        self,
+        request: SearchRequest,
+        *,
+        use_model_planner: bool = True,
+        query_override: tuple[str, ...] | None = None,
+    ) -> SearchResponse:
         top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
         candidate_k = max(request.candidate_k or self.settings.candidate_k, top_k)
         fallback_plan = build_query_plan(request.question)
-        planning = await self._plan_queries(request.question, fallback_plan)
+        if query_override:
+            planning = QueryPlanningResult(
+                replace(fallback_plan, queries=query_override),
+                "deterministic_fallback",
+                model_queries=query_override,
+                error="active_tool_query",
+            )
+        elif use_model_planner:
+            planning = await self._plan_queries(request.question, fallback_plan)
+        else:
+            planning = QueryPlanningResult(
+                fallback_plan,
+                "deterministic_fallback",
+                error="model_planner_disabled_for_request",
+            )
         plan = planning.plan
         analysis = plan.analysis
         results = await self._execute_query_plan(
@@ -589,6 +613,174 @@ class SearchService:
         ]
         return merged[:top_k], True
 
+    async def _run_active_retrieval(
+        self,
+        request: SearchRequest,
+        response: SearchResponse,
+        *,
+        evidence_top_k: int,
+    ) -> tuple[SearchResponse, dict[str, object]]:
+        trace: dict[str, object] = {
+            "enabled": bool(
+                self.retrieval_agent is not None
+                and self.settings.active_retrieval_enabled
+            ),
+            "rounds": [],
+            "tool_calls": 0,
+            "stop_reason": "agent_not_configured",
+        }
+        if self.retrieval_agent is None:
+            return response, trace
+        if not self.settings.active_retrieval_enabled:
+            trace["stop_reason"] = "disabled"
+            return response, trace
+
+        question = str(response.retrieval.get("normalized_question") or request.question)
+        analysis = analyze_question(question)
+        preliminary_plan = build_query_plan(question)
+        preliminary_sources = self._focus_sources_on_subject(
+            preliminary_plan,
+            response.results,
+        )
+        preliminary_gate = evaluate_evidence_gate(
+            question,
+            analysis,
+            preliminary_sources,
+            subject=preliminary_plan.subject,
+        )
+        missing_list_structure = bool(
+            analysis.expects_complete_list
+            and not response.retrieval.get("structure_expanded")
+        )
+        missing_relation_context = bool(
+            analysis.intent in {"cause", "procedure"}
+            and not (
+                response.retrieval.get("section_context_expanded")
+                or response.retrieval.get("document_relation_expanded")
+            )
+        )
+        triggers: list[str] = []
+        if not preliminary_gate.passed:
+            triggers.append("evidence_gate_failed")
+        if missing_list_structure:
+            triggers.append("list_structure_missing")
+        if missing_relation_context:
+            triggers.append("relation_context_missing")
+        trace["trigger"] = triggers
+        if not triggers:
+            trace["stop_reason"] = "initial_evidence_sufficient"
+            return response, trace
+
+        initial_queries = response.retrieval.get("query_plan", {}).get("queries", [])
+        used_queries = [
+            str(query).strip()
+            for query in initial_queries
+            if str(query).strip()
+        ]
+        used_normalized = {
+            normalize_search_text(query).replace(" ", "")
+            for query in used_queries
+        }
+        current = response
+        rounds = trace["rounds"]
+        assert isinstance(rounds, list)
+        for round_number in range(1, self.settings.active_retrieval_max_rounds + 1):
+            result = await self.retrieval_agent.decide(
+                request.question,
+                [] if not preliminary_gate.passed else current.results,
+                used_queries=tuple(used_queries),
+                round_number=round_number,
+            )
+            if result.decision is None:
+                rounds.append({"round": round_number, "error": result.error})
+                trace["stop_reason"] = result.error or "agent_error"
+                break
+            decision = result.decision
+            round_trace: dict[str, object] = {
+                "round": round_number,
+                "action": decision.action,
+                "queries": list(decision.queries),
+                "reason": decision.reason,
+            }
+            rounds.append(round_trace)
+            if decision.action == "finish":
+                trace["stop_reason"] = "model_finish"
+                break
+
+            queries: list[str] = []
+            for query in decision.queries:
+                normalized = normalize_search_text(query).replace(" ", "")
+                if not normalized or normalized in used_normalized:
+                    continue
+                used_normalized.add(normalized)
+                used_queries.append(query)
+                queries.append(query)
+            if not queries:
+                trace["stop_reason"] = "no_new_queries"
+                break
+
+            search_results = await asyncio.gather(*(
+                self.search(
+                    SearchRequest(
+                        question=request.question,
+                        top_k=evidence_top_k,
+                        candidate_k=request.candidate_k,
+                        min_score=request.min_score,
+                        knowledge_base_id=request.knowledge_base_id,
+                    ),
+                    use_model_planner=False,
+                    query_override=(query,),
+                )
+                for query in queries
+            ), return_exceptions=True)
+            supplemental: list[SearchResponse] = []
+            tool_results: list[dict[str, object]] = []
+            for query, search_result in zip(queries, search_results, strict=True):
+                if isinstance(search_result, BaseException):
+                    tool_results.append({"query": query, "error": str(search_result)})
+                    continue
+                supplemental.append(search_result)
+                tool_results.append({"query": query, "returned": len(search_result.results)})
+            round_trace["tool_results"] = tool_results
+            trace["tool_calls"] = int(trace["tool_calls"]) + len(queries)
+            if not supplemental or not any(item.results for item in supplemental):
+                trace["stop_reason"] = "no_results"
+                break
+            merged = self._merge_active_sources(
+                [item.results for item in supplemental],
+                current.results,
+                limit=self.settings.active_retrieval_max_results,
+            )
+            current = current.model_copy(update={"results": merged})
+            round_trace["evidence_count"] = len(merged)
+        else:
+            trace["stop_reason"] = "max_rounds"
+        return current, trace
+
+    @staticmethod
+    def _merge_active_sources(
+        supplemental_groups: list[list[SourceItem]],
+        original: list[SourceItem],
+        *,
+        limit: int,
+    ) -> list[SourceItem]:
+        groups = [*supplemental_groups, original]
+        depth = max((len(group) for group in groups), default=0)
+        merged: list[SourceItem] = []
+        seen: set[str] = set()
+        for index in range(depth):
+            for group in groups:
+                if index >= len(group):
+                    continue
+                source = group[index]
+                if source.id in seen:
+                    continue
+                seen.add(source.id)
+                merged.append(source)
+                if len(merged) >= limit:
+                    return merged
+        return merged
+
     async def ask(self, request: SearchRequest) -> AskResponse:
         display_top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
         request_plan = build_query_plan(request.question)
@@ -599,12 +791,18 @@ class SearchService:
             update={"top_k": evidence_top_k}
         )
         evidence_response = await self.search(evidence_request)
+        evidence_response, active_retrieval = await self._run_active_retrieval(
+            request,
+            evidence_response,
+            evidence_top_k=evidence_top_k,
+        )
         retrieval = {
             **evidence_response.retrieval,
             "top_k": display_top_k,
             "returned": min(len(evidence_response.results), display_top_k),
             "answer_evidence_top_k": evidence_response.retrieval.get("top_k"),
             "answer_evidence_count": len(evidence_response.results),
+            "active_retrieval": active_retrieval,
         }
         question = str(retrieval.get("normalized_question") or request.question)
         question_analysis = analyze_question(question)

@@ -12,6 +12,7 @@ from .admin_service import (
     AdminService,
     AdminValidationError,
 )
+from .active_retrieval import ActiveRetrievalAgent
 from .config import get_settings
 from .generation import EvidenceAnswerGenerator
 from .lexical_index import LexicalIndex
@@ -36,6 +37,7 @@ async def lifespan(app: FastAPI):
         index=lexical_index,
         generator=EvidenceAnswerGenerator(settings),
         query_planner=LanguageModelQueryPlanner(settings),
+        retrieval_agent=ActiveRetrievalAgent(settings),
     )
     admin = AdminService(settings, repository, task_manager, lexical_index)
     app.state.repository = repository

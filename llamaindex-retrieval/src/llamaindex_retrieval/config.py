@@ -46,6 +46,13 @@ class Settings(BaseSettings):
     model_query_planning_max_tokens: int = Field(default=256, ge=64, le=1024)
     model_query_planning_max_queries: int = Field(default=6, ge=3, le=10)
     model_query_planning_cache_ttl: int = Field(default=600, ge=0, le=86_400)
+    active_retrieval_enabled: bool = True
+    active_retrieval_max_rounds: int = Field(default=1, ge=1, le=4)
+    active_retrieval_max_queries: int = Field(default=3, ge=1, le=5)
+    active_retrieval_timeout: int = Field(default=20, ge=3, le=120)
+    active_retrieval_max_tokens: int = Field(default=192, ge=64, le=1024)
+    active_retrieval_max_evidence_characters: int = Field(default=1_500, ge=1_000, le=24_000)
+    active_retrieval_max_results: int = Field(default=20, ge=5, le=50)
 
     mongo_url: str = "mongodb://127.0.0.1:27017"
     mongo_database: str = "rwkvrag_admin"
