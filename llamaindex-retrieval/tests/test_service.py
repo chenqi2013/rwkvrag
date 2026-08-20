@@ -1,3 +1,4 @@
+from dataclasses import replace
 from typing import Any, cast
 
 import pytest
@@ -18,6 +19,7 @@ from llamaindex_retrieval.lexical_index import (
 from llamaindex_retrieval.schemas import SearchRequest, SourceItem
 from llamaindex_retrieval.service import SearchService
 from llamaindex_retrieval.query_planning import build_query_plan
+from llamaindex_retrieval.semantic_query_planning import QueryPlanningResult
 
 
 def result(document_id: str, score: float) -> LexicalResult:
@@ -1253,6 +1255,82 @@ async def test_search_uses_normalized_question_for_structured_list_expansion() -
     assert response.retrieval["normalized_question"] == "测试班机事故有哪些与空管的对话？"
     assert response.retrieval["structure_expanded"] is True
     assert response.retrieval["max_chunks_per_document"] >= 5
+
+
+@pytest.mark.asyncio
+async def test_model_list_relations_do_not_override_structured_evidence() -> None:
+    prose = LexicalResult(
+        node_id="line-prose",
+        document_id="line",
+        text="线路建设期间曾调整部分车站名称。",
+        metadata={
+            "document_id": "line",
+            "title": "某线路",
+            "content_type": "prose",
+        },
+        score=1.0,
+    )
+    structure_anchor = LexicalResult(
+        node_id="station-summary",
+        document_id="line",
+        text="车站列表：甲站、乙站、丙站。",
+        metadata={
+            "document_id": "line",
+            "title": "某线路",
+            "section": "某线路 > 车站列表",
+            "parent_id": "station-table",
+            "content_type": "table_summary",
+            "chunk_order": 0,
+        },
+        score=0.9,
+    )
+
+    class FakeListIndex:
+        relation_calls = 0
+
+        def search(self, question: str, **kwargs: Any) -> list[LexicalResult]:
+            return [prose]
+
+        def document_relation_candidates(self, *args: Any, **kwargs: Any) -> list[LexicalResult]:
+            self.relation_calls += 1
+            return [prose]
+
+        def document_structure_candidates(self, *args: Any, **kwargs: Any) -> list[LexicalResult]:
+            return [structure_anchor]
+
+        def structure_chunks(self, parent_id: str, **kwargs: Any) -> list[LexicalResult]:
+            assert parent_id == "station-table"
+            return [structure_anchor]
+
+        def document_lead_chunk(self, *args: Any, **kwargs: Any) -> None:
+            return None
+
+    class FakeModelPlanner:
+        async def plan(self, question: str, fallback: Any) -> QueryPlanningResult:
+            return QueryPlanningResult(
+                replace(
+                    fallback,
+                    queries=("某线路全部车站", "某线路站点列表", question),
+                    subject="某线路",
+                    relations=("所有站点",),
+                ),
+                "model",
+                model_queries=("某线路全部车站", "某线路站点列表"),
+            )
+
+    index = FakeListIndex()
+    service = SearchService(
+        Settings(),
+        cast(Any, index),
+        query_planner=cast(Any, FakeModelPlanner()),
+    )
+
+    response = await service.search(SearchRequest(question="某线路所有站点", top_k=1))
+
+    assert response.results[0].id == "station-summary"
+    assert response.retrieval["structure_expanded"] is True
+    assert response.retrieval["document_relation_expanded"] is False
+    assert index.relation_calls == 0
 
 
 @pytest.mark.asyncio

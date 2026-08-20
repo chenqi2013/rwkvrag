@@ -34,6 +34,7 @@ from .lexical_index import (
     query_tokens,
 )
 from .schemas import AskResponse, SearchRequest, SearchResponse, SourceItem
+from .semantic_query_planning import LanguageModelQueryPlanner, QueryPlanningResult
 from .qa_analysis import (
     ambiguity_candidates,
     analyze_question,
@@ -134,16 +135,20 @@ class SearchService:
         settings: Settings,
         index: LexicalIndex,
         generator: EvidenceAnswerGenerator | None = None,
+        query_planner: LanguageModelQueryPlanner | None = None,
     ) -> None:
         self.settings = settings
         self.index = index
         self.generator = generator or EvidenceAnswerGenerator(settings)
+        self.query_planner = query_planner
         self._answer_cache: OrderedDict[tuple[object, ...], tuple[float, str]] = OrderedDict()
 
     async def search(self, request: SearchRequest) -> SearchResponse:
         top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
         candidate_k = max(request.candidate_k or self.settings.candidate_k, top_k)
-        plan = build_query_plan(request.question)
+        fallback_plan = build_query_plan(request.question)
+        planning = await self._plan_queries(request.question, fallback_plan)
+        plan = planning.plan
         analysis = plan.analysis
         results = await self._execute_query_plan(
             plan,
@@ -151,7 +156,7 @@ class SearchService:
             knowledge_base_id=request.knowledge_base_id,
         )
         results, relation_context_expanded = await self._expand_document_relation_context(
-            plan,
+            fallback_plan,
             results,
             knowledge_base_id=request.knowledge_base_id,
             top_k=top_k,
@@ -162,9 +167,9 @@ class SearchService:
             knowledge_base_id=request.knowledge_base_id,
             top_k=top_k,
         )
-        if analysis.intent == "list" and plan.relations:
+        if analysis.intent == "list" and fallback_plan.relations and not structure_expanded:
             results, list_relation_expanded = await self._expand_document_relation_context(
-                plan,
+                fallback_plan,
                 results,
                 knowledge_base_id=request.knowledge_base_id,
                 top_k=top_k,
@@ -231,9 +236,25 @@ class SearchService:
                     "merge_strategy": plan.merge_strategy,
                     "fusion": "weighted_rrf",
                     "context_policy": plan.context_policy,
+                    "planner": planning.strategy,
+                    "model_queries": list(planning.model_queries),
+                    "fallback_reason": planning.error,
                 },
             },
         )
+
+    async def _plan_queries(
+        self,
+        question: str,
+        fallback_plan: QueryPlan,
+    ) -> QueryPlanningResult:
+        if self.query_planner is None:
+            return QueryPlanningResult(
+                fallback_plan,
+                "deterministic_fallback",
+                error="planner_not_configured",
+            )
+        return await self.query_planner.plan(question, fallback_plan)
 
     async def _execute_query_plan(
         self,
@@ -823,8 +844,8 @@ class SearchService:
                 result.document_id for result in flattened_station_context
             }
             return [
-                results[0],
                 *flattened_station_context,
+                results[0],
                 *(
                     result
                     for result in results[1:]

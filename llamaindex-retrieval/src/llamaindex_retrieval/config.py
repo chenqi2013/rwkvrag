@@ -41,6 +41,11 @@ class Settings(BaseSettings):
     generation_total_timeout: int = Field(default=45, ge=5, le=120)
     generation_max_tokens: int = Field(default=384, ge=32, le=4096)
     generation_max_evidence_characters: int = Field(default=12_000, ge=1_000, le=48_000)
+    model_query_planning_enabled: bool = True
+    model_query_planning_timeout: int = Field(default=25, ge=3, le=120)
+    model_query_planning_max_tokens: int = Field(default=256, ge=64, le=1024)
+    model_query_planning_max_queries: int = Field(default=6, ge=3, le=10)
+    model_query_planning_cache_ttl: int = Field(default=600, ge=0, le=86_400)
 
     mongo_url: str = "mongodb://127.0.0.1:27017"
     mongo_database: str = "rwkvrag_admin"

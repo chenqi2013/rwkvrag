@@ -19,6 +19,7 @@ from .repository import MongoRepository, RepositoryConflictError
 from .routers.admin import router as admin_router
 from .routers.public import router as public_router
 from .service import SearchService
+from .semantic_query_planning import LanguageModelQueryPlanner
 from .tasks import TaskManager
 
 
@@ -34,6 +35,7 @@ async def lifespan(app: FastAPI):
         settings=settings,
         index=lexical_index,
         generator=EvidenceAnswerGenerator(settings),
+        query_planner=LanguageModelQueryPlanner(settings),
     )
     admin = AdminService(settings, repository, task_manager, lexical_index)
     app.state.repository = repository

@@ -105,6 +105,11 @@ http://127.0.0.1:8090/admin/
 答案生成使用 `RWKVRAG_GENERATION_*` 配置。请在实际运行环境中设置
 `RWKVRAG_GENERATION_PASSWORD`，不要将密码写入 Git。
 
+检索查询默认由语言模型生成 3～6 组 BM25 关键词，并保留原问题作为独立检索路由；
+OpenSearch 并行执行后使用加权 RRF 融合。模型查询规划超时、不可用或 JSON 协议错误时，
+自动回退到确定性查询规划，不中断检索。可通过 `RWKVRAG_MODEL_QUERY_PLANNING_ENABLED`
+关闭该能力；规划结果默认缓存 600 秒。
+
 `RWKVRAG_GENERATION_TOTAL_TIMEOUT` 默认 `45` 秒，用于限制 SSE 生成流的总等待时间；
 达到时限时，服务返回已接收的内容，避免前端持续等待。
 
