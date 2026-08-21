@@ -34,28 +34,31 @@ class Settings(BaseSettings):
     relative_score_threshold: float = Field(default=0.55, ge=0, le=1)
     min_relevance_score: float = 0
 
-    generation_base_url: str = "http://192.168.0.125:8001/v1"
-    generation_models_url: str = "http://192.168.0.125:8001/v1/models"
+    generation_base_url: str = "http://192.168.0.125:8002/v1"
+    generation_models_url: str = "http://192.168.0.125:8002/v1/models"
     generation_password: str = ""
     generation_timeout: int = Field(default=90, ge=5, le=300)
-    generation_total_timeout: int = Field(default=45, ge=5, le=120)
+    generation_total_timeout: int = Field(default=20, ge=5, le=120)
     generation_max_tokens: int = Field(default=384, ge=32, le=4096)
     generation_max_evidence_characters: int = Field(default=12_000, ge=1_000, le=48_000)
+    ask_total_timeout: int = Field(default=45, ge=10, le=180)
+    ask_generation_reserve: int = Field(default=12, ge=3, le=60)
+    answer_verification_min_budget: int = Field(default=15, ge=3, le=60)
     model_query_planning_enabled: bool = True
-    model_query_planning_timeout: int = Field(default=25, ge=3, le=120)
+    model_query_planning_timeout: int = Field(default=10, ge=3, le=120)
     model_query_planning_max_tokens: int = Field(default=256, ge=64, le=1024)
     model_query_planning_max_queries: int = Field(default=6, ge=3, le=10)
     model_query_planning_cache_ttl: int = Field(default=600, ge=0, le=86_400)
     evidence_extraction_enabled: bool = True
-    evidence_extraction_timeout: int = Field(default=25, ge=3, le=120)
+    evidence_extraction_timeout: int = Field(default=15, ge=3, le=120)
     evidence_extraction_max_tokens: int = Field(default=384, ge=64, le=2048)
     evidence_extraction_max_sources: int = Field(default=5, ge=1, le=20)
     evidence_extraction_max_source_characters: int = Field(default=2_500, ge=500, le=24_000)
-    evidence_extraction_concurrency: int = Field(default=2, ge=1, le=10)
+    evidence_extraction_concurrency: int = Field(default=5, ge=1, le=10)
     active_retrieval_enabled: bool = True
     active_retrieval_max_rounds: int = Field(default=1, ge=1, le=4)
     active_retrieval_max_queries: int = Field(default=3, ge=1, le=5)
-    active_retrieval_timeout: int = Field(default=20, ge=3, le=120)
+    active_retrieval_timeout: int = Field(default=10, ge=3, le=120)
     active_retrieval_max_tokens: int = Field(default=192, ge=64, le=1024)
     active_retrieval_max_evidence_characters: int = Field(default=1_500, ge=1_000, le=24_000)
     active_retrieval_max_results: int = Field(default=20, ge=5, le=50)

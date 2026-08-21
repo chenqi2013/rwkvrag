@@ -168,6 +168,17 @@ def test_cleans_list_and_location_subjects() -> None:
     assert build_query_plan("中国有哪些著名的长城关隘？").subject == "长城关隘"
 
 
+def test_builds_counted_enumeration_as_complete_list() -> None:
+    plan = build_query_plan("中国四大名著是哪四个？")
+
+    assert plan.analysis.intent == "list"
+    assert plan.subject == "中国四大名著"
+    assert plan.answer_shape == "list"
+    assert plan.set_semantics == "all"
+    assert plan.relations == ("是指", "包括", "分别是", "分别为")
+    assert plan.queries[:2] == ("中国四大名著 列表", "中国四大名著")
+
+
 def test_transit_list_plan_cleans_actions_and_adds_companion_page_query() -> None:
     plan = build_query_plan("深圳地铁一号线都经过哪些车站？")
 

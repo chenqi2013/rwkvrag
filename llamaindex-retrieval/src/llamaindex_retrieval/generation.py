@@ -149,6 +149,7 @@ class EvidenceAnswerGenerator:
     ) -> None:
         self.settings = settings
         self.transport = transport
+        self._model_cache: tuple[float, str | None] | None = None
 
     async def generate(
         self,
@@ -209,6 +210,10 @@ class EvidenceAnswerGenerator:
         return self._ensure_citation(answer, len(sources))
 
     async def current_model(self) -> str | None:
+        if self._model_cache is not None:
+            cached_at, model_name = self._model_cache
+            if monotonic() - cached_at < 300:
+                return model_name
         try:
             async with httpx.AsyncClient(
                 timeout=min(self.settings.generation_timeout, 5),
@@ -217,20 +222,26 @@ class EvidenceAnswerGenerator:
                 response = await client.get(self.settings.generation_models_url)
                 response.raise_for_status()
         except httpx.HTTPError:
+            self._model_cache = (monotonic(), None)
             return None
 
         try:
             models = response.json().get("data")
         except (AttributeError, json.JSONDecodeError):
+            self._model_cache = (monotonic(), None)
             return None
         if not isinstance(models, list):
+            self._model_cache = (monotonic(), None)
             return None
         for model in models:
             if not isinstance(model, dict):
                 continue
             model_id = model.get("id")
             if isinstance(model_id, str) and model_id.strip():
-                return model_id.strip()
+                model_name = model_id.strip()
+                self._model_cache = (monotonic(), model_name)
+                return model_name
+        self._model_cache = (monotonic(), None)
         return None
 
     @staticmethod

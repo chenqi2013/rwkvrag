@@ -92,6 +92,137 @@ async def test_model_planner_uses_structured_queries_and_keeps_original_question
 
 
 @pytest.mark.asyncio
+async def test_model_planner_derives_missing_top_level_relations() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return stream_response(json.dumps({
+            "subject": "西游记",
+            "intent": "fact",
+            "answer_shape": "single_fact",
+            "set_semantics": "specific",
+            "fields": [{
+                "field_id": "f1",
+                "question": "西游记的作者是谁？",
+                "relations": ["作者", "作者姓名"],
+            }],
+            "queries": [
+                "西游记的作者是谁？",
+                "西游记的作者是哪位作家？",
+                "西游记的作者是谁？",
+            ],
+        }, ensure_ascii=False))
+
+    settings = Settings(
+        generation_password="secret",
+        generation_base_url="https://generation.example/v1",
+    )
+    planner = LanguageModelQueryPlanner(settings, transport=httpx.MockTransport(handler))
+    fallback = build_query_plan("西游记是哪个作者写的？")
+
+    result = await planner.plan("西游记是哪个作者写的？", fallback)
+
+    assert result.strategy == "model"
+    assert result.plan.subject == "西游记"
+    assert result.plan.relations == ("作者", "作者姓名")
+    assert result.plan.fields[0].relations == ("作者", "作者姓名")
+    assert result.model_queries == (
+        "西游记的作者是谁？",
+        "西游记的作者是哪位作家？",
+    )
+
+
+@pytest.mark.asyncio
+async def test_model_planner_repairs_answer_used_as_subject() -> None:
+    requests = 0
+
+    async def handler(_: httpx.Request) -> httpx.Response:
+        nonlocal requests
+        requests += 1
+        if requests == 1:
+            payload = {
+                "subject": "吴承恩",
+                "intent": "definition",
+                "answer_shape": "single_fact",
+                "set_semantics": "specific",
+                "fields": [{
+                    "field_id": "f1",
+                    "question": "《西游记》的作者是谁？",
+                    "relations": ["作者", "作者姓名"],
+                }],
+                "queries": ["《西游记》的作者是谁？"],
+            }
+        else:
+            payload = {
+                "subject": "西游记",
+                "intent": "agent",
+                "answer_shape": "single_fact",
+                "set_semantics": "specific",
+                "fields": [{
+                    "field_id": "f1",
+                    "question": "《西游记》的作者是谁？",
+                    "relations": ["作者", "创作者"],
+                }],
+                "relations": ["作者", "创作者"],
+                "queries": ["西游记 作者", "西游记 创作者"],
+            }
+        return stream_response(json.dumps(payload, ensure_ascii=False))
+
+    settings = Settings(
+        generation_password="secret",
+        generation_base_url="https://generation.example/v1",
+    )
+    planner = LanguageModelQueryPlanner(
+        settings,
+        transport=httpx.MockTransport(handler),
+    )
+
+    result = await planner.plan(
+        "《西游记》出自谁之手？",
+        build_query_plan("《西游记》出自谁之手？"),
+    )
+
+    assert requests == 1
+    assert result.strategy == "model"
+    assert result.plan.subject == "西游记"
+    assert result.plan.relations == ("作者", "作者姓名")
+    assert result.model_queries == ("《西游记》的作者是谁？",)
+
+
+@pytest.mark.asyncio
+async def test_model_planner_preserves_structural_list_constraint() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return stream_response(json.dumps({
+            "subject": "四大名著",
+            "intent": "definition",
+            "answer_shape": "single_fact",
+            "set_semantics": "specific",
+            "fields": [{
+                "field_id": "f1",
+                "question": "四大名著的具体名称",
+                "relations": ["四大名著的名称", "完整列表"],
+            }],
+            "queries": [
+                "中国四大名著的全称是什么",
+                "中国四大名著的完整列表是什么",
+                "中国四大名著的标准名称有哪些",
+            ],
+        }, ensure_ascii=False))
+
+    settings = Settings(
+        generation_password="secret",
+        generation_base_url="https://generation.example/v1",
+    )
+    planner = LanguageModelQueryPlanner(settings, transport=httpx.MockTransport(handler))
+    fallback = build_query_plan("中国四大名著是哪四个？")
+
+    result = await planner.plan("中国四大名著是哪四个？", fallback)
+
+    assert result.strategy == "model"
+    assert result.plan.analysis.intent == "list"
+    assert result.plan.answer_shape == "list"
+    assert result.plan.set_semantics == "all"
+
+
+@pytest.mark.asyncio
 async def test_model_planner_falls_back_when_response_is_not_valid_json() -> None:
     async def handler(_: httpx.Request) -> httpx.Response:
         return stream_response("我建议搜索深圳地铁和罗宝线。")

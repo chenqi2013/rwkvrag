@@ -6,7 +6,7 @@ import pytest
 
 from llamaindex_retrieval.config import Settings
 from llamaindex_retrieval.evidence_extraction import LanguageModelEvidenceExtractor
-from llamaindex_retrieval.query_planning import build_query_plan
+from llamaindex_retrieval.query_planning import TaskField, build_query_plan
 from llamaindex_retrieval.schemas import SourceItem
 
 
@@ -56,6 +56,34 @@ def test_subject_match_rejects_longer_unrelated_name_prefix() -> None:
     assert LanguageModelEvidenceExtractor._source_contains_subject(plan, place) is False
 
 
+def test_single_fact_rejects_title_only_unrelated_chunk() -> None:
+    plan = replace(
+        build_query_plan("西游记是谁写的？"),
+        subject="西游记",
+        relations=("作者", "作者姓名"),
+        fields=(TaskField("f1", "西游记的作者是谁？", ("作者", "作者姓名")),),
+    )
+    unrelated = SourceItem(
+        id="journey-west-theory",
+        document_id="journey-west",
+        source="finewiki-zh",
+        title="西游记",
+        score=1.0,
+        snippet="脱冕説",
+    )
+    direct = SourceItem(
+        id="journey-west-lead",
+        document_id="journey-west",
+        source="finewiki-zh",
+        title="西游记",
+        score=1.0,
+        snippet="成书于16世纪明朝中叶，一般认为作者是明朝的吴承恩。",
+    )
+
+    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, unrelated) is False
+    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, direct) is True
+
+
 @pytest.mark.asyncio
 async def test_extractor_keeps_only_verbatim_spans() -> None:
     snippet = "2016年，宇树科技创始人王兴兴开发了XDog，随后创办宇树科技。"
@@ -63,8 +91,8 @@ async def test_extractor_keeps_only_verbatim_spans() -> None:
     async def handler(_: httpx.Request) -> httpx.Response:
         return stream_response(json.dumps({
             "candidates": [
-                {"field_id": "f1", "span": "宇树科技创始人王兴兴"},
-                {"field_id": "f1", "span": "宇树科技老板是王兴兴"},
+                {"field_id": "f1", "sentence_id": "s1"},
+                {"field_id": "f1", "sentence_id": "s99"},
             ]
         }, ensure_ascii=False))
 
@@ -88,13 +116,24 @@ async def test_extractor_keeps_only_verbatim_spans() -> None:
 
     assert result.available is True
     assert [candidate.span for candidate in result.candidates] == [
-        "宇树科技创始人王兴兴",
         snippet,
     ]
     assert result.answer_sources([source(snippet)])[0].snippet == (
-        f"宇树科技创始人王兴兴\n{snippet}"
+        snippet
     )
     assert len(result.candidates[0].content_hash) == 64
+    unrelated = SourceItem(
+        id="other",
+        document_id="other",
+        source="finewiki-zh",
+        title="其他资料",
+        score=0.9,
+        snippet="这是一条无关资料。",
+    )
+    remapped = result.remap_sources([unrelated, source(snippet)])
+    assert remapped is not None
+    assert {candidate.source_index for candidate in remapped.candidates} == {1}
+    assert remapped.strategy == "model_remapped"
 
 
 @pytest.mark.asyncio
@@ -175,3 +214,63 @@ def test_narrative_event_extractor_rejects_value_without_relation_span() -> None
     assert LanguageModelEvidenceExtractor._parse(direct_fact, plan, 0, evidence)[0].span == (
         "武松在景阳冈打死老虎。"
     )
+
+
+def test_sentence_selection_does_not_require_literal_relation_alias() -> None:
+    sentence = "成书于16世纪明朝中叶，一般认为作者是明朝的吴承恩。"
+    evidence = SourceItem(
+        id="journey-west",
+        document_id="journey-west",
+        source="finewiki-zh",
+        title="西游记",
+        score=1.0,
+        snippet=sentence,
+    )
+    plan = replace(
+        build_query_plan("西游记是哪个作者写的？"),
+        subject="西游记",
+        relations=("作者", "作者姓名"),
+        fields=(TaskField("f1", "西游记的作者是谁？", ("作者", "作者姓名")),),
+    )
+    raw = json.dumps({
+        "candidates": [{"field_id": "f1", "sentence_id": "s1"}]
+    }, ensure_ascii=False)
+
+    result = LanguageModelEvidenceExtractor._parse(
+        raw,
+        plan,
+        0,
+        evidence,
+        sentence_units=(sentence,),
+    )
+
+    assert result[0].span == sentence
+
+
+def test_sentence_selection_rejects_relationless_heading() -> None:
+    snippet = "作者认为传统宗教经书已成为束缚。\n脱冕説"
+    evidence = SourceItem(
+        id="journey-west-theory",
+        document_id="journey-west",
+        source="finewiki-zh",
+        title="西游记",
+        score=1.0,
+        snippet=snippet,
+    )
+    plan = replace(
+        build_query_plan("西游记是谁写的？"),
+        subject="西游记",
+        relations=("作者", "作者姓名"),
+        fields=(TaskField("f1", "西游记的作者是谁？", ("作者", "作者姓名")),),
+    )
+    raw = json.dumps({
+        "candidates": [{"field_id": "f1", "sentence_id": "s2"}]
+    }, ensure_ascii=False)
+
+    assert LanguageModelEvidenceExtractor._parse(
+        raw,
+        plan,
+        0,
+        evidence,
+        sentence_units=("作者认为传统宗教经书已成为束缚。", "脱冕説"),
+    ) == ()

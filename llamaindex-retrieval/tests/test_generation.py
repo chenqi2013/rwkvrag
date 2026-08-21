@@ -69,6 +69,24 @@ def test_capital_answer_prefers_current_explicit_capital_sentence() -> None:
     )
 
 
+def test_counted_list_extracts_inline_encyclopedia_enumeration() -> None:
+    evidence = SourceItem(
+        id="four-classics",
+        document_id="four-classics",
+        source="finewiki-zh",
+        title="四大名著",
+        score=1.0,
+        snippet=(
+            "四大名著，即四大小说名著，是指《三国演义》《西游记》"
+            "《水浒传》《红楼梦》4部中国古典章回小说。"
+        ),
+    )
+
+    assert structured_list_answer("中国四大名著是哪四个？", [evidence]) == (
+        "四大名著包括：《三国演义》、《西游记》、《水浒传》、《红楼梦》。[资料 1]"
+    )
+
+
 def test_list_prompt_requires_all_evidence_and_role_distinction() -> None:
     generator = EvidenceAnswerGenerator(Settings())
 
@@ -1009,7 +1027,11 @@ async def test_generator_removes_invalid_citation_and_adds_valid_one() -> None:
 
 @pytest.mark.asyncio
 async def test_generator_reads_current_model_from_models_endpoint() -> None:
+    request_count = 0
+
     async def handler(request: httpx.Request) -> httpx.Response:
+        nonlocal request_count
+        request_count += 1
         assert request.url == "http://models.test/v1/models"
         return httpx.Response(200, json={"data": [{"id": "rwkv-current"}]})
 
@@ -1019,6 +1041,8 @@ async def test_generator_reads_current_model_from_models_endpoint() -> None:
     )
 
     assert await generator.current_model() == "rwkv-current"
+    assert await generator.current_model() == "rwkv-current"
+    assert request_count == 1
 
 
 @pytest.mark.asyncio

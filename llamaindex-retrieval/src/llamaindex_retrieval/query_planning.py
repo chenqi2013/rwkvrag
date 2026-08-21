@@ -5,7 +5,12 @@ from typing import Literal
 import jieba.posseg as posseg
 
 from .lexical_index import lexical_tokens, normalize_query_text
-from .qa_analysis import QuestionAnalysis, analyze_question, clean_question_shell
+from .qa_analysis import (
+    QuestionAnalysis,
+    analyze_question,
+    clean_question_shell,
+    counted_list_size,
+)
 
 
 MergeStrategy = Literal["rank_fusion", "document_interleave"]
@@ -241,7 +246,7 @@ def _narrative_relation_variants(field: str) -> tuple[str, ...]:
 
 
 def _answer_shape_for(analysis: QuestionAnalysis, question: str) -> AnswerShape:
-    if analysis.expects_list or re.search(r"哪几(?:家|个|位|种|条|项)", question):
+    if analysis.expects_list or counted_list_size(question) is not None:
         return "list"
     if any(marker in question for marker in ("故事", "经过", "来龙去脉")):
         return "narrative"
@@ -257,9 +262,9 @@ def _set_semantics_for(analysis: QuestionAnalysis, question: str) -> SetSemantic
         return "latest"
     if any(
         marker in question for marker in ("全部", "所有", "完整", "总共", "一共")
-    ):
+    ) or counted_list_size(question) is not None:
         return "all"
-    if analysis.expects_list or re.search(r"哪几(?:家|个|位|种|条|项)", question):
+    if analysis.expects_list:
         return "partial"
     return "specific"
 
@@ -468,6 +473,8 @@ def _relations_for(intent: str, question: str) -> tuple[str, ...]:
     if intent == "definition":
         return ("简介", "定义")
     if intent == "list":
+        if counted_list_size(question) is not None:
+            return ("是指", "包括", "分别是", "分别为")
         relation_groups = {
             "主办": ("主办", "举办", "承办", "主办国"),
             "举办": ("举办", "主办", "承办", "举办国"),

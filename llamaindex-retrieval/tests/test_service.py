@@ -1361,11 +1361,16 @@ async def test_ask_skips_active_retrieval_when_initial_evidence_is_sufficient() 
         async def decide(self, *args: Any, **kwargs: Any) -> ActiveRetrievalResult:
             raise AssertionError("sufficient evidence must not add model latency")
 
+    class UnexpectedEvidenceExtractor:
+        async def extract(self, *args: Any, **kwargs: Any) -> Any:
+            raise AssertionError("direct evidence must not add extraction latency")
+
     service = SearchService(
         Settings(),
         cast(Any, FakeCapitalIndex()),
         generator=cast(Any, FakeFailingGenerator()),
         retrieval_agent=cast(Any, UnexpectedActiveAgent()),
+        evidence_extractor=cast(Any, UnexpectedEvidenceExtractor()),
     )
 
     response = await service.ask(SearchRequest(question="中国的首都是哪个城市？", top_k=1))
@@ -1376,6 +1381,8 @@ async def test_ask_skips_active_retrieval_when_initial_evidence_is_sufficient() 
         == "initial_evidence_sufficient"
     )
     assert response.retrieval["active_retrieval"]["tool_calls"] == 0
+    assert response.retrieval["active_retrieval"]["deterministic_shortcut"] is True
+    assert response.retrieval["timings_ms"]["total"] >= 0
 
 
 @pytest.mark.asyncio

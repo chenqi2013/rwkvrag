@@ -46,6 +46,46 @@ class EvidenceExtractionResult:
         )
         return signatures == self.source_signatures
 
+    def remap_sources(
+        self,
+        sources: list[SourceItem],
+    ) -> "EvidenceExtractionResult | None":
+        if not self.candidates:
+            return None
+        current_signatures = tuple(
+            (source.id, sha256(source.snippet.encode("utf-8")).hexdigest())
+            for source in sources
+        )
+        current_indexes = {
+            signature: source_index
+            for source_index, signature in enumerate(current_signatures)
+        }
+        remapped: list[EvidenceSpan] = []
+        for candidate in self.candidates:
+            if candidate.source_index >= len(self.source_signatures):
+                continue
+            source_index = current_indexes.get(
+                self.source_signatures[candidate.source_index]
+            )
+            if source_index is None:
+                continue
+            remapped.append(EvidenceSpan(
+                field_id=candidate.field_id,
+                source_index=source_index,
+                span=candidate.span,
+                content_hash=candidate.content_hash,
+            ))
+        if not remapped:
+            return None
+        return EvidenceExtractionResult(
+            candidates=tuple(remapped),
+            attempted_sources=len(sources),
+            completed_sources=min(self.completed_sources, len(sources)),
+            errors=self.errors,
+            source_signatures=current_signatures,
+            strategy=f"{self.strategy}_remapped",
+        )
+
     def answer_sources(self, sources: list[SourceItem]) -> list[SourceItem]:
         grouped: dict[int, list[EvidenceSpan]] = {}
         for candidate in self.candidates:
@@ -129,20 +169,7 @@ class LanguageModelEvidenceExtractor:
                     continue
                 seen.add(key)
                 candidates.append(candidate)
-        strategy = "model"
-        if completed:
-            had_model_candidates = bool(candidates)
-            lexical_candidates = self._lexical_fallback(plan, selected)
-            for candidate in lexical_candidates:
-                key = (candidate.field_id, candidate.source_index, candidate.span)
-                if key in seen:
-                    continue
-                seen.add(key)
-                candidates.append(candidate)
-            if lexical_candidates:
-                strategy = "model+lexical" if had_model_candidates else "lexical_fallback"
-            elif not candidates:
-                strategy = "model_empty"
+        strategy = "model" if candidates else "model_empty"
         return EvidenceExtractionResult(
             tuple(candidates),
             attempted_sources=len(selected),
@@ -159,7 +186,13 @@ class LanguageModelEvidenceExtractor:
         source_index: int,
         source: SourceItem,
     ) -> tuple[EvidenceSpan, ...]:
-        prompt = self._prompt(question, plan, source)
+        sentence_units = self._attention_units(plan, source)
+        prompt = self._prompt(
+            question,
+            plan,
+            source,
+            sentence_units=sentence_units,
+        )
         payload = {
             "contents": [prompt],
             "max_tokens": self.settings.evidence_extraction_max_tokens,
@@ -183,9 +216,22 @@ class LanguageModelEvidenceExtractor:
                     response,
                     total_timeout=self.settings.evidence_extraction_timeout,
                 )
-        return self._parse(raw, plan, source_index, source)
+        return self._parse(
+            raw,
+            plan,
+            source_index,
+            source,
+            sentence_units=sentence_units,
+        )
 
-    def _prompt(self, question: str, plan: QueryPlan, source: SourceItem) -> str:
+    def _prompt(
+        self,
+        question: str,
+        plan: QueryPlan,
+        source: SourceItem,
+        *,
+        sentence_units: tuple[str, ...] | None = None,
+    ) -> str:
         fields = [
             {
                 "field_id": field.field_id,
@@ -194,30 +240,51 @@ class LanguageModelEvidenceExtractor:
             }
             for field in plan.fields
         ]
-        text = self._attention_window(plan, source)
+        units = sentence_units or self._attention_units(plan, source)
+        text = "\n".join(
+            f"[s{index}] {unit}"
+            for index, unit in enumerate(units, start=1)
+        )
         contract = {
             "subject": plan.subject,
             "answer_shape": plan.answer_shape,
             "set_semantics": plan.set_semantics,
             "fields": fields,
         }
+        field_targets = "；".join(
+            f"{field.field_id}：{field.question}"
+            for field in plan.fields
+        )
         return f"""你是证据抽取器，不回答问题，也不使用常识。只处理当前这一份资料。
 任务契约：{json.dumps(contract, ensure_ascii=False)}
-对每个字段查找能够直接支持“所求具体值”的最小事实单位。span 必须同时包含具体值及其关系，且逐字复制资料正文，不能只复制标题、字段名或问题中的文字，不能改写、概括或拼接不连续文本。
+对每个字段查找能够直接支持“所求具体值”的最小编号句子。先根据字段问题判断所求值的类型，例如人物、地点、时间、数量、名称或列表；所选句子必须实际给出该类型的具体值。只出现关系词、讨论该关系、表达某人的观点，但没有给出字段所求具体值时，必须拒绝。
 候选必须属于任务对象；同名异物、导航、分类、页眉页脚和仅仅提到关键词的背景文字都不要提取。
-没有直接证据时 candidates 输出空数组。只输出固定 JSON：
-{{"candidates":[{{"field_id":"f1","span":"资料中的逐字原文"}}]}}
+不要复制或改写正文，只输出句子编号。没有直接证据时 candidates 输出空数组。只输出固定 JSON：
+{{"candidates":[{{"field_id":"f1","sentence_id":"s2"}}]}}
 
 问题：{question}
 资料标题：{source.title}
-资料正文：
+编号句子：
 {text}
+当前唯一任务：为字段“{field_targets}”选择能直接填写具体答案的句子编号。选中的句子如果不能直接回答该字段，就必须输出空数组。
 JSON："""
 
     def _attention_window(self, plan: QueryPlan, source: SourceItem) -> str:
+        return "\n".join(self._attention_units(plan, source))
+
+    def _attention_units(
+        self,
+        plan: QueryPlan,
+        source: SourceItem,
+    ) -> tuple[str, ...]:
         limit = self.settings.evidence_extraction_max_source_characters
+        all_units = [
+            value.strip()
+            for value in re.split(r"(?<=[。！？!?；;])|\n+", source.snippet)
+            if value.strip()
+        ]
         if len(source.snippet) <= limit:
-            return source.snippet
+            return tuple(all_units)
         terms = {
             term
             for term in lexical_tokens(" ".join((
@@ -227,14 +294,9 @@ JSON："""
             )))
             if len(term.strip()) >= 2
         }
-        units = [
-            value.strip()
-            for value in re.split(r"(?<=[。！？!?；;])|\n+", source.snippet)
-            if value.strip()
-        ]
         ranked: list[tuple[float, int, str]] = []
         normalized_subject = normalize_search_text(plan.subject).replace(" ", "")
-        for index, unit in enumerate(units):
+        for index, unit in enumerate(all_units):
             normalized = normalize_search_text(unit).replace(" ", "")
             unit_terms = set(lexical_tokens(unit))
             score = float(len(terms & unit_terms))
@@ -259,82 +321,7 @@ JSON："""
             value = unit[:remaining]
             output.append(value)
             used += len(value) + 1
-        return "\n".join(output)
-
-    def _lexical_fallback(
-        self,
-        plan: QueryPlan,
-        sources: list[SourceItem],
-    ) -> tuple[EvidenceSpan, ...]:
-        field_id = plan.fields[0].field_id if plan.fields else "f1"
-        candidates: list[EvidenceSpan] = []
-        ranked_sources = sorted(
-            enumerate(sources),
-            key=lambda item: (
-                -self._source_relevance(plan, item[1]),
-                item[0],
-            ),
-        )
-        for source_index, source in ranked_sources:
-            if not self._source_contains_subject(plan, source):
-                continue
-            window = self._attention_window(plan, source)
-            units = [
-                value.strip()
-                for value in re.split(r"(?<=[。！？!?；;])|\n+", window)
-                if value.strip()
-            ]
-            source_candidate_count = 0
-            for unit in units[:8]:
-                normalized = normalize_search_text(unit).replace(" ", "")
-                normalized_title = normalize_search_text(source.title).replace(" ", "")
-                if (
-                    not normalized
-                    or normalized == normalized_title
-                    or normalized.startswith("category:")
-                    or normalized.startswith("thumb|")
-                ):
-                    continue
-                if plan.relations:
-                    normalized_relations = {
-                        normalize_search_text(relation).replace(" ", "")
-                        for relation in plan.relations
-                        if len(relation.strip()) >= 2
-                    }
-                    if normalized_relations and not any(
-                        relation in normalized
-                        for relation in normalized_relations
-                    ):
-                        continue
-                span = unit[:1_000]
-                candidates.append(EvidenceSpan(
-                    field_id=field_id,
-                    source_index=source_index,
-                    span=span,
-                    content_hash=sha256(span.encode("utf-8")).hexdigest(),
-                ))
-                source_candidate_count += 1
-                if len(candidates) >= 18:
-                    return tuple(candidates)
-                if source_candidate_count >= 6:
-                    break
-        return tuple(candidates)
-
-    @staticmethod
-    def _source_relevance(plan: QueryPlan, source: SourceItem) -> float:
-        title = normalize_search_text(source.title).replace(" ", "").replace("的", "")
-        snippet = normalize_search_text(source.snippet).replace(" ", "").replace("的", "")
-        subject = normalize_search_text(plan.subject).replace(" ", "").replace("的", "")
-        score = 3.0 if subject and subject in title else 0.0
-        for relation in plan.relations:
-            normalized = normalize_search_text(relation).replace(" ", "").replace("的", "")
-            if not normalized:
-                continue
-            if normalized in title:
-                score += 4.0
-            elif normalized in snippet:
-                score += 0.5
-        return score
+        return tuple(output)
 
     @staticmethod
     def _source_contains_subject(plan: QueryPlan, source: SourceItem) -> bool:
@@ -353,7 +340,7 @@ JSON："""
                 for alias in aliases
                 if str(alias).strip()
             )
-        evidence = normalize_search_text(f"{source.title}\n{source.snippet}").replace(" ", "").replace("的", "")
+        normalized_body = normalize_search_text(source.snippet).replace(" ", "").replace("的", "")
         title_match = any(
             normalized_subject == title
             or title.endswith(f"·{normalized_subject}")
@@ -369,11 +356,19 @@ JSON："""
             for title in title_values
             for relation in normalized_relations
         )
-        body_match = bool(
-            normalized_subject
-            and normalized_subject in evidence
-            and any(relation in evidence for relation in normalized_relations)
+        body_subject_match = bool(
+            normalized_subject and normalized_subject in normalized_body
         )
+        body_relation_match = any(
+            relation in normalized_body for relation in normalized_relations
+        )
+        body_match = body_subject_match and body_relation_match
+        if plan.answer_shape == "single_fact":
+            return len(normalized_subject) >= 2 and (
+                relation_title_match
+                or body_match
+                or (title_match and (body_subject_match or body_relation_match))
+            )
         return len(normalized_subject) >= 2 and (
             title_match or relation_title_match or body_match
         )
@@ -384,6 +379,8 @@ JSON："""
         plan: QueryPlan,
         source_index: int,
         source: SourceItem,
+        *,
+        sentence_units: tuple[str, ...] | None = None,
     ) -> tuple[EvidenceSpan, ...]:
         if not LanguageModelEvidenceExtractor._source_contains_subject(plan, source):
             return ()
@@ -408,6 +405,11 @@ JSON："""
             plan.subject,
             *(field.question for field in plan.fields),
         ))).replace(" ", "")
+        normalized_relations = {
+            normalize_search_text(relation).replace(" ", "")
+            for relation in plan.relations
+            if len(relation.replace(" ", "")) >= 2
+        }
         explicit_relations = {
             normalize_search_text(relation).replace(" ", "")
             for relation in plan.relations
@@ -415,10 +417,20 @@ JSON："""
         }
         candidates: list[EvidenceSpan] = []
         for item in values[:32]:
-            if not isinstance(item, dict) or set(item) != {"field_id", "span"}:
+            if not isinstance(item, dict) or "field_id" not in item:
                 continue
             field_id = str(item["field_id"]).strip()
-            span = str(item["span"]).strip()
+            span = ""
+            selected_by_id = False
+            if set(item) == {"field_id", "sentence_id"} and sentence_units is not None:
+                sentence_match = re.fullmatch(r"s([1-9]\d*)", str(item["sentence_id"]).strip())
+                if sentence_match:
+                    sentence_index = int(sentence_match.group(1)) - 1
+                    if sentence_index < len(sentence_units):
+                        span = sentence_units[sentence_index]
+                        selected_by_id = True
+            elif set(item) == {"field_id", "span"}:
+                span = str(item["span"]).strip()
             if field_id not in field_ids or not span:
                 continue
             if len(span) > 2_000 or span not in source.snippet:
@@ -428,7 +440,17 @@ JSON："""
                 len(normalized_span) >= 4 and normalized_span in contract_text
             ):
                 continue
-            if explicit_relations and not any(
+            if (
+                selected_by_id
+                and plan.answer_shape == "single_fact"
+                and normalized_relations
+                and not any(
+                    relation in normalized_span
+                    for relation in normalized_relations
+                )
+            ):
+                continue
+            if not selected_by_id and explicit_relations and not any(
                 relation in normalized_span
                 for relation in explicit_relations
             ):

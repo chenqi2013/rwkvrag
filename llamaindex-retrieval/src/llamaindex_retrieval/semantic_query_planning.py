@@ -72,6 +72,53 @@ class LanguageModelQueryPlanner:
                 error=f"{type(error).__name__}: {error}",
             )
 
+        if not self._contract_subject_is_grounded(question, fallback, subject):
+            grounded_subject = self._ground_subject_from_contract(
+                question,
+                fallback,
+                fields,
+                model_queries,
+            )
+            if grounded_subject:
+                invalid_subject = normalize_search_text(subject).replace(" ", "")
+                relations = tuple(
+                    relation
+                    for relation in relations
+                    if normalize_search_text(relation).replace(" ", "")
+                    != invalid_subject
+                )
+                fields = tuple(
+                    replace(
+                        field,
+                        relations=tuple(
+                            relation
+                            for relation in field.relations
+                            if normalize_search_text(relation).replace(" ", "")
+                            != invalid_subject
+                        ),
+                    )
+                    for field in fields
+                )
+                if relations and all(field.relations for field in fields):
+                    subject = grounded_subject
+
+        if not self._contract_subject_is_grounded(question, fallback, subject):
+            try:
+                repaired_raw = await self._request(
+                    self._repair_prompt(question, raw)
+                )
+                (
+                    subject,
+                    intent,
+                    answer_shape,
+                    set_semantics,
+                    fields,
+                    relations,
+                    model_queries,
+                ) = self._parse(repaired_raw)
+            except (httpx.HTTPError, TimeoutError, ValueError):
+                pass
+
         query_limit = self.settings.model_query_planning_max_queries
         model_prefix_size = max(1, query_limit // 2)
         queries = list(model_queries[:model_prefix_size])
@@ -85,19 +132,18 @@ class LanguageModelQueryPlanner:
                 queries[-1] = fallback.normalized_question
             else:
                 queries.append(fallback.normalized_question)
-        if (
-            not self._subject_is_supported(question, subject)
-            or (
-                fallback.analysis.intent == "agent"
-                and not self._subject_matches_fallback(fallback.subject, subject)
-            )
-        ):
+        if not self._contract_subject_is_grounded(question, fallback, subject):
             return QueryPlanningResult(
                 replace(fallback, queries=tuple(queries[:query_limit])),
                 "deterministic_fallback",
                 model_queries=model_queries,
                 error="model_subject_not_grounded_in_question",
             )
+        if fallback.analysis.expects_list:
+            intent = "list"
+            answer_shape = "list"
+            if fallback.set_semantics == "all":
+                set_semantics = "all"
         plan = replace(
             fallback,
             queries=tuple(queries[:query_limit]),
@@ -185,6 +231,18 @@ fields 固定至少一项；field_id 从 f1 开始，question 写该字段具体
 问题：{question}
 JSON："""
 
+    @staticmethod
+    def _repair_prompt(question: str, invalid_output: str) -> str:
+        return f"""你要修复一个知识库查询契约。上一次输出把待查询答案误写进了 subject，或改变了原问题中的对象。
+subject 必须逐字取自原问题中已经出现的待查对象；不能填写你猜测的人名、地点、时间或其他答案。
+relations 只写关系名称及同义表达，不能填写猜测的具体答案。
+保留原问题真实意图，重新输出完整 JSON；七个字段全部必填，不要解释：
+{{"subject":"原问题中的对象","intent":"fact","answer_shape":"single_fact","set_semantics":"specific","fields":[{{"field_id":"f1","question":"要取的具体值","relations":["关系","同义关系"]}}],"relations":["关系","同义关系"],"queries":["查询1","查询2","查询3"]}}
+
+原问题：{question}
+无效输出：{invalid_output[-2000:]}
+修复后的 JSON："""
+
     @classmethod
     def _parse(
         cls,
@@ -212,9 +270,9 @@ JSON："""
             raise ValueError("planner response must be a JSON object")
         required = {
             "subject", "intent", "answer_shape", "set_semantics",
-            "fields", "relations", "queries",
+            "fields", "queries",
         }
-        if set(payload) != required:
+        if not required.issubset(payload):
             raise ValueError("planner response does not match the task contract")
 
         subject = cls._clean_string(payload["subject"], max_length=80)
@@ -234,7 +292,17 @@ JSON："""
             {"latest", "all", "partial", "specific"},
         )
         fields = cls._clean_fields(payload["fields"])
-        relations = cls._clean_string_list(payload["relations"], max_items=8, max_length=32)
+        relations = cls._clean_string_list(
+            payload.get("relations"),
+            max_items=8,
+            max_length=32,
+        )
+        if not relations:
+            relations = tuple(dict.fromkeys(
+                relation
+                for field in fields
+                for relation in field.relations
+            ))
         queries = cls._clean_string_list(payload["queries"], max_items=6, max_length=100)
         if not subject:
             raise ValueError("planner subject must not be empty")
@@ -242,8 +310,8 @@ JSON："""
             raise ValueError("planner fields must not be empty")
         if not relations:
             raise ValueError("planner relations must not be empty")
-        if len(queries) < 3:
-            raise ValueError("planner must return at least three queries")
+        if not queries:
+            raise ValueError("planner must return at least one query")
         return subject, intent, answer_shape, set_semantics, fields, relations, queries
 
     @staticmethod
@@ -260,7 +328,9 @@ JSON："""
         fields: list[TaskField] = []
         seen_ids: set[str] = set()
         for item in value[:8]:
-            if not isinstance(item, dict) or set(item) != {"field_id", "question", "relations"}:
+            if not isinstance(item, dict) or not {
+                "field_id", "question", "relations",
+            }.issubset(item):
                 continue
             field_id = cls._clean_string(item["field_id"], max_length=24)
             question = cls._clean_string(item["question"], max_length=160)
@@ -303,6 +373,63 @@ JSON："""
             min(len(fallback), len(model)) >= 3
             and (fallback in model or model in fallback)
         )
+
+    @classmethod
+    def _contract_subject_is_grounded(
+        cls,
+        question: str,
+        fallback: QueryPlan,
+        model_subject: str,
+    ) -> bool:
+        return cls._subject_is_supported(question, model_subject) and not (
+            fallback.analysis.intent == "agent"
+            and not cls._subject_matches_fallback(fallback.subject, model_subject)
+        )
+
+    @classmethod
+    def _ground_subject_from_contract(
+        cls,
+        question: str,
+        fallback: QueryPlan,
+        fields: tuple[TaskField, ...],
+        model_queries: tuple[str, ...],
+    ) -> str:
+        if fallback.subject and cls._subject_is_supported(question, fallback.subject):
+            return fallback.subject
+        contract_text = " ".join((
+            *(field.question for field in fields),
+            *model_queries,
+        ))
+        quoted: list[str] = []
+        for match in re.finditer(
+            r"《([^》]{1,80})》|“([^”]{1,80})”|\"([^\"]{1,80})\"",
+            question,
+        ):
+            quoted.extend(
+                value.strip()
+                for value in match.groups()
+                if value and value.strip()
+            )
+        candidates = [
+            value
+            for value in quoted
+            if normalize_search_text(value).replace(" ", "")
+            in normalize_search_text(contract_text).replace(" ", "")
+        ]
+        if candidates:
+            return max(candidates, key=len)
+        question_terms = {
+            term.strip()
+            for term in lexical_tokens(question)
+            if len(term.strip()) >= 2
+        }
+        contract_terms = {
+            term.strip()
+            for term in lexical_tokens(contract_text)
+            if len(term.strip()) >= 2
+        }
+        shared = question_terms & contract_terms
+        return max(shared, key=len) if shared else ""
 
     @staticmethod
     def _fallback_contract_is_sufficient(plan: QueryPlan) -> bool:

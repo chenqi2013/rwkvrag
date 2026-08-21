@@ -2,6 +2,7 @@ import re
 
 from .evidence_quality import is_repetitive_garbage
 from .lexical_index import lexical_tokens, normalize_search_text, query_tokens
+from .qa_analysis import counted_list_size
 from .question_patterns import is_agent_relation_question
 from .schemas import SourceItem
 
@@ -169,6 +170,9 @@ def structured_list_answer(question: str, sources: list[SourceItem]) -> str | No
 
     if not _looks_like_list_question(question):
         return None
+    counted_answer = _counted_enumeration_answer(question, sources)
+    if counted_answer is not None:
+        return counted_answer
     flattened_station_answer = _flattened_station_table_answer(question, sources)
     if flattened_station_answer is not None:
         return flattened_station_answer
@@ -205,6 +209,57 @@ def structured_list_answer(question: str, sources: list[SourceItem]) -> str | No
         index, subject, label, items = bullet
         joined = "、".join(items)
         return f"{subject}的{_normalize_label(label)}包括：{joined}。[资料 {index}]"
+    return None
+
+
+def _counted_enumeration_answer(
+    question: str,
+    sources: list[SourceItem],
+) -> str | None:
+    expected_count = counted_list_size(question)
+    if expected_count is None:
+        return None
+    relation_pattern = re.compile(r"(?:是指|包括|包含|分别是|分別是|分别为|分別為|即为|即為|即)")
+    for source_index, source in enumerate(sources, start=1):
+        text = clean_evidence_text(source.snippet)
+        if source.title and source.title not in question:
+            title_terms = {
+                term for term in lexical_tokens(source.title) if len(term) >= 2
+            }
+            question_terms = set(query_tokens(question))
+            if title_terms and not (title_terms & question_terms):
+                continue
+        for sentence in re.split(r"[。！？!?；;\n]", text[:4000]):
+            if not relation_pattern.search(sentence):
+                continue
+            quoted_items = [
+                f"《{value.strip()}》"
+                for value in re.findall(r"《([^《》\n]{1,48})》", sentence)
+                if value.strip()
+            ]
+            quoted_items = list(dict.fromkeys(quoted_items))
+            if len(quoted_items) == expected_count:
+                subject = _answer_subject(question, source)
+                return (
+                    f"{subject}包括：{'、'.join(quoted_items)}。"
+                    f"[资料 {source_index}]"
+                )
+            relation_matches = list(relation_pattern.finditer(sentence))
+            if not relation_matches:
+                continue
+            tail = sentence[relation_matches[-1].end():].strip(" ：:，,")
+            tail = re.sub(r"(?:共)?\d{1,2}(?:个|部|本|种|位|家|条|项|篇|首|座|名).*$", "", tail)
+            items = [
+                value.strip(" 《》“”\"'（）()，,：:")
+                for value in re.split(r"[、，,]|(?:以及|及|和|与|跟)", tail)
+            ]
+            items = list(dict.fromkeys(
+                value for value in items if 1 < len(value) <= 24
+            ))
+            if len(items) != expected_count:
+                continue
+            subject = _answer_subject(question, source)
+            return f"{subject}包括：{'、'.join(items)}。[资料 {source_index}]"
     return None
 
 
@@ -827,8 +882,9 @@ def definition_evidence_answer(question: str, sources: list[SourceItem]) -> str 
 
 
 def _looks_like_list_question(question: str) -> bool:
-    return not is_agent_relation_question(question) and any(
-        marker in question for marker in _LIST_QUESTION_MARKERS
+    return not is_agent_relation_question(question) and (
+        counted_list_size(question) is not None
+        or any(marker in question for marker in _LIST_QUESTION_MARKERS)
     )
 
 

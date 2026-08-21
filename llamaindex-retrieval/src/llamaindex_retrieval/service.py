@@ -19,7 +19,7 @@ from .evidence_utils import (
     ordinal_evidence_answer,
     time_evidence_answer,
 )
-from .generation import EvidenceAnswerGenerator
+from .generation import AnswerGenerationError, EvidenceAnswerGenerator
 from .evidence_extraction import (
     EvidenceExtractionResult,
     LanguageModelEvidenceExtractor,
@@ -165,9 +165,11 @@ class SearchService:
         use_model_planner: bool = True,
         query_override: tuple[str, ...] | None = None,
     ) -> SearchResponse:
+        search_started = monotonic()
         top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
         candidate_k = max(request.candidate_k or self.settings.candidate_k, top_k)
         fallback_plan = build_query_plan(request.question)
+        planning_started = monotonic()
         if query_override:
             planning = QueryPlanningResult(
                 replace(fallback_plan, queries=query_override),
@@ -183,13 +185,17 @@ class SearchService:
                 "deterministic_fallback",
                 error="model_planner_disabled_for_request",
             )
+        planning_ms = self._elapsed_ms(planning_started)
         plan = planning.plan
         analysis = plan.analysis
+        bm25_started = monotonic()
         results = await self._execute_query_plan(
             plan,
             candidate_k=candidate_k,
             knowledge_base_id=request.knowledge_base_id,
         )
+        bm25_ms = self._elapsed_ms(bm25_started)
+        context_started = monotonic()
         results, structure_expanded = await self._expand_structured_results(
             plan.normalized_question,
             results,
@@ -233,6 +239,7 @@ class SearchService:
             knowledge_base_id=request.knowledge_base_id,
             intent=analysis.intent,
         )
+        context_ms = self._elapsed_ms(context_started)
         return SearchResponse(
             results=[self._source_item(result) for result in filtered],
             retrieval={
@@ -281,8 +288,22 @@ class SearchService:
                     "model_queries": list(planning.model_queries),
                     "fallback_reason": planning.error,
                 },
+                "timings_ms": {
+                    "query_planning": planning_ms,
+                    "bm25": bm25_ms,
+                    "context_expansion": context_ms,
+                    "total": self._elapsed_ms(search_started),
+                },
             },
         )
+
+    @staticmethod
+    def _elapsed_ms(started_at: float) -> int:
+        return max(0, round((monotonic() - started_at) * 1000))
+
+    @staticmethod
+    def _remaining_budget(deadline: float, *, reserve: float = 0) -> float:
+        return max(0.0, deadline - monotonic() - reserve)
 
     async def _plan_queries(
         self,
@@ -507,13 +528,13 @@ class SearchService:
         intent: str,
     ) -> list[LexicalResult]:
         if intent not in {
-            "definition", "comparison", "time", "agent", "location", "birthplace", "list",
+            "definition", "comparison", "fact", "time", "agent", "location", "birthplace", "list",
         } or not results:
             return results
         lookup = getattr(self.index, "document_lead_chunk", None)
         if lookup is None:
             return results
-        if intent in {"time", "agent", "location", "birthplace", "list"}:
+        if intent in {"fact", "time", "agent", "location", "birthplace", "list"}:
             augmented: list[LexicalResult] = []
             looked_up_documents: set[str] = set()
             for result in results:
@@ -655,7 +676,15 @@ class SearchService:
         response: SearchResponse,
         *,
         evidence_top_k: int,
+        deadline: float,
     ) -> tuple[SearchResponse, dict[str, object], EvidenceExtractionResult | None]:
+        active_started = monotonic()
+        timings: dict[str, int] = {
+            "initial_extraction": 0,
+            "planning": 0,
+            "search": 0,
+            "final_extraction": 0,
+        }
         trace: dict[str, object] = {
             "enabled": bool(
                 self.retrieval_agent is not None
@@ -664,6 +693,7 @@ class SearchService:
             "rounds": [],
             "tool_calls": 0,
             "stop_reason": "agent_not_configured",
+            "timings_ms": timings,
         }
         question = str(response.retrieval.get("normalized_question") or request.question)
         preliminary_plan = self._answer_plan(question, response.retrieval)
@@ -672,11 +702,39 @@ class SearchService:
             preliminary_plan,
             response.results,
         )
-        extraction = await self._extract_field_evidence(
+        lexical_gate = evaluate_evidence_gate(
+            question,
+            analysis,
+            preliminary_sources,
+            subject=preliminary_plan.subject,
+            relations=preliminary_plan.relations,
+            field_evidence_available=False,
+            field_candidate_count=0,
+        )
+        direct_answer = self._deterministic_answer(
             question,
             preliminary_plan,
             preliminary_sources,
         )
+        if lexical_gate.passed and direct_answer is not None:
+            trace["stop_reason"] = "initial_evidence_sufficient"
+            trace["deterministic_shortcut"] = True
+            timings["total"] = self._elapsed_ms(active_started)
+            return response, trace, None
+
+        extraction: EvidenceExtractionResult | None = None
+        if lexical_gate.passed:
+            extraction_started = monotonic()
+            extraction = await self._extract_field_evidence(
+                question,
+                preliminary_plan,
+                preliminary_sources,
+                timeout=self._remaining_budget(
+                    deadline,
+                    reserve=self.settings.ask_generation_reserve,
+                ),
+            )
+            timings["initial_extraction"] = self._elapsed_ms(extraction_started)
         preliminary_gate = evaluate_evidence_gate(
             question,
             analysis,
@@ -705,12 +763,15 @@ class SearchService:
             triggers.append("relation_context_missing")
         trace["trigger"] = triggers
         if self.retrieval_agent is None:
+            timings["total"] = self._elapsed_ms(active_started)
             return response, trace, extraction
         if not self.settings.active_retrieval_enabled:
             trace["stop_reason"] = "disabled"
+            timings["total"] = self._elapsed_ms(active_started)
             return response, trace, extraction
         if not triggers:
             trace["stop_reason"] = "initial_evidence_sufficient"
+            timings["total"] = self._elapsed_ms(active_started)
             return response, trace, extraction
 
         initial_queries = response.retrieval.get("query_plan", {}).get("queries", [])
@@ -727,12 +788,29 @@ class SearchService:
         rounds = trace["rounds"]
         assert isinstance(rounds, list)
         for round_number in range(1, self.settings.active_retrieval_max_rounds + 1):
-            result = await self.retrieval_agent.decide(
-                request.question,
-                [] if not preliminary_gate.passed else current.results,
-                used_queries=tuple(used_queries),
-                round_number=round_number,
+            remaining = self._remaining_budget(
+                deadline,
+                reserve=self.settings.ask_generation_reserve,
             )
+            if remaining <= 0:
+                trace["stop_reason"] = "request_budget_exhausted"
+                break
+            planning_started = monotonic()
+            try:
+                result = await asyncio.wait_for(
+                    self.retrieval_agent.decide(
+                        request.question,
+                        [] if not preliminary_gate.passed else current.results,
+                        used_queries=tuple(used_queries),
+                        round_number=round_number,
+                    ),
+                    timeout=remaining,
+                )
+            except TimeoutError:
+                trace["stop_reason"] = "request_budget_exhausted"
+                break
+            finally:
+                timings["planning"] += self._elapsed_ms(planning_started)
             if result.decision is None:
                 rounds.append({"round": round_number, "error": result.error})
                 trace["stop_reason"] = result.error or "agent_error"
@@ -761,6 +839,7 @@ class SearchService:
                 trace["stop_reason"] = "no_new_queries"
                 break
 
+            search_started = monotonic()
             search_results = await asyncio.gather(*(
                 self.search(
                     SearchRequest(
@@ -775,6 +854,7 @@ class SearchService:
                 )
                 for query in queries
             ), return_exceptions=True)
+            timings["search"] += self._elapsed_ms(search_started)
             supplemental: list[SearchResponse] = []
             tool_results: list[dict[str, object]] = []
             for query, search_result in zip(queries, search_results, strict=True):
@@ -798,16 +878,24 @@ class SearchService:
         else:
             trace["stop_reason"] = "max_rounds"
         if current is response:
+            timings["total"] = self._elapsed_ms(active_started)
             return current, trace, extraction
         final_sources = self._focus_sources_on_subject(
             preliminary_plan,
             current.results,
         )
+        final_extraction_started = monotonic()
         final_extraction = await self._extract_field_evidence(
             question,
             preliminary_plan,
             final_sources,
+            timeout=self._remaining_budget(
+                deadline,
+                reserve=self.settings.ask_generation_reserve,
+            ),
         )
+        timings["final_extraction"] = self._elapsed_ms(final_extraction_started)
+        timings["total"] = self._elapsed_ms(active_started)
         return current, trace, final_extraction
 
     @staticmethod
@@ -835,6 +923,9 @@ class SearchService:
         return merged
 
     async def ask(self, request: SearchRequest) -> AskResponse:
+        ask_started = monotonic()
+        deadline = ask_started + self.settings.ask_total_timeout
+        timings: dict[str, object] = {}
         display_top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
         evidence_top_k, evidence_policy = self._adaptive_evidence_top_k(
             request.question,
@@ -843,12 +934,18 @@ class SearchService:
         evidence_request = request.model_copy(
             update={"top_k": evidence_top_k}
         )
+        initial_search_started = monotonic()
         evidence_response = await self.search(evidence_request)
+        timings["initial_search"] = self._elapsed_ms(initial_search_started)
+        timings["initial_search_detail"] = evidence_response.retrieval.get("timings_ms", {})
+        active_started = monotonic()
         evidence_response, active_retrieval, field_extraction = await self._run_active_retrieval(
             request,
             evidence_response,
             evidence_top_k=evidence_top_k,
+            deadline=deadline,
         )
+        timings["evidence_and_active_retrieval"] = self._elapsed_ms(active_started)
         retrieval = {
             **evidence_response.retrieval,
             "top_k": display_top_k,
@@ -885,11 +982,25 @@ class SearchService:
             field_extraction is not None
             and not field_extraction.matches_sources(evidence_response.results)
         ):
-            field_extraction = await self._extract_field_evidence(
-                question,
-                answer_plan,
-                evidence_response.results,
+            remapped_extraction = field_extraction.remap_sources(
+                evidence_response.results
             )
+            if remapped_extraction is not None:
+                field_extraction = remapped_extraction
+                timings["post_filter_extraction"] = 0
+                timings["field_evidence_remapped"] = True
+            else:
+                extraction_started = monotonic()
+                field_extraction = await self._extract_field_evidence(
+                    question,
+                    answer_plan,
+                    evidence_response.results,
+                    timeout=self._remaining_budget(
+                        deadline,
+                        reserve=self.settings.ask_generation_reserve,
+                    ),
+                )
+                timings["post_filter_extraction"] = self._elapsed_ms(extraction_started)
         answer_sources = (
             field_extraction.answer_sources(evidence_response.results)
             if field_extraction is not None and field_extraction.has_candidates
@@ -924,46 +1035,46 @@ class SearchService:
                 )
                 answer = f"这个名称可能指：{labels}。请补充你想查询的具体对象。"
                 answer_strategy = "clarification"
-            elif gate.passed and question_analysis.intent == "definition":
-                answer = definition_evidence_answer(question, answer_sources)
-            elif (
-                gate.passed
-                and question_analysis.intent == "time"
-            ):
-                answer = coordinated_time_evidence_answer(
+            elif gate.passed:
+                answer = self._deterministic_answer(
+                    question,
+                    answer_plan,
                     answer_sources,
-                    question_analysis.subjects,
-                ) or time_evidence_answer(question, answer_sources)
-            elif gate.passed and question_analysis.intent == "agent":
-                answer = agent_evidence_answer(question, answer_sources)
-            elif gate.passed and question_analysis.intent == "ordinal":
-                answer = ordinal_evidence_answer(question, answer_sources)
-            elif gate.passed and question_analysis.intent == "location":
-                answer = location_evidence_answer(question, answer_sources)
-            elif gate.passed and question_analysis.intent == "birthplace":
-                answer = birthplace_evidence_answer(question, answer_sources)
-            if (
-                answer is None
-                and gate.passed
-                and question_analysis.intent in {"fact", "list"}
-                and not (
-                    question_analysis.intent == "fact"
-                    and field_extraction is not None
-                    and field_extraction.strategy in {"lexical_attention", "lexical_fallback"}
                 )
-            ):
-                answer = direct_evidence_answer(question, answer_sources)
             if answer is not None:
                 answer_strategy = "direct_extract"
             elif gate.passed:
-                answer = await self._generate_answer(
-                    question,
-                    answer_sources,
-                    subject=answer_plan.subject,
-                    relations=answer_plan.relations,
-                    trusted_evidence=bool(field_extraction and field_extraction.has_candidates),
-                )
-                raw_model_answer = answer
+                generation_started = monotonic()
+                try:
+                    answer = await self._generate_answer(
+                        question,
+                        answer_sources,
+                        subject=answer_plan.subject,
+                        relations=answer_plan.relations,
+                        trusted_evidence=bool(field_extraction and field_extraction.has_candidates),
+                        timeout=self._remaining_budget(deadline),
+                    )
+                    raw_model_answer = answer
+                except (AnswerGenerationError, TimeoutError) as error:
+                    fallback = (
+                        cause_evidence_answer(answer_sources)
+                        if question_analysis.intent == "cause"
+                        else None
+                    )
+                    if fallback is None and field_extraction and field_extraction.has_candidates:
+                        fallback = self._field_evidence_quote_answer(
+                            answer_sources,
+                            answer_plan.relations,
+                        )
+                    answer = fallback or "根据检索到的资料，无法确定。"
+                    answer_strategy = (
+                        "generation_timeout_fallback"
+                        if isinstance(error, TimeoutError)
+                        else "generation_error_fallback"
+                    )
+                    answer_block_reason = type(error).__name__
+                finally:
+                    timings["answer_generation"] = self._elapsed_ms(generation_started)
                 if (
                     any(
                         marker in answer
@@ -1021,7 +1132,10 @@ class SearchService:
             and answer_strategy == "model"
             and raw_model_answer
             and answer_support.unsupported_terms
+            and self._remaining_budget(deadline)
+            >= self.settings.answer_verification_min_budget
         ):
+            verification_started = monotonic()
             (
                 verified_sources,
                 verified_extraction,
@@ -1032,6 +1146,7 @@ class SearchService:
                 answer_support.unsupported_terms,
                 answer_sources,
                 evidence_top_k=evidence_top_k,
+                deadline=deadline,
             )
             if verified_sources and verified_extraction and verified_extraction.has_candidates:
                 candidate_answer = repair_answer_citations(
@@ -1052,6 +1167,7 @@ class SearchService:
                             subject=answer_plan.subject,
                             relations=answer_plan.relations,
                             trusted_evidence=True,
+                            timeout=self._remaining_budget(deadline),
                         )
                     except Exception:
                         candidate_answer = ""
@@ -1088,6 +1204,7 @@ class SearchService:
                     assessment = gate.assessment
                     answer_response = evidence_response.model_copy(update={"results": answer_sources})
                     cache_key = self._answer_cache_key(question, answer_response)
+            timings["answer_verification"] = self._elapsed_ms(verification_started)
         if not answer_support.passed and answer_strategy in {"model", "cache"}:
             blocked_answer = answer
             fallback = (
@@ -1122,7 +1239,19 @@ class SearchService:
             display_top_k=display_top_k,
         )
         retrieval["returned"] = len(response_results)
-        model_name = await self.generator.current_model()
+        model_lookup_started = monotonic()
+        try:
+            model_name = await asyncio.wait_for(
+                self.generator.current_model(),
+                timeout=1.0,
+            )
+        except TimeoutError:
+            model_name = None
+        timings["model_lookup"] = self._elapsed_ms(model_lookup_started)
+        timings["total"] = self._elapsed_ms(ask_started)
+        timings["budget_ms"] = self.settings.ask_total_timeout * 1000
+        retrieval["timings_ms"] = timings
+        retrieval["request_budget_exhausted"] = monotonic() >= deadline
         return AskResponse(
             answer=answer,
             sources=response_results,
@@ -1223,16 +1352,53 @@ class SearchService:
         subject: str,
         relations: tuple[str, ...] = (),
         trusted_evidence: bool = False,
+        timeout: float | None = None,
     ) -> str:
-        if isinstance(self.generator, EvidenceAnswerGenerator):
-            return await self.generator.generate(
-                question,
+        async def generate() -> str:
+            if isinstance(self.generator, EvidenceAnswerGenerator):
+                return await self.generator.generate(
+                    question,
+                    sources,
+                    subject=subject,
+                    relations=relations,
+                    trusted_evidence=trusted_evidence,
+                )
+            return await self.generator.generate(question, sources)
+
+        if timeout is not None:
+            if timeout <= 0:
+                raise TimeoutError("request answer-generation budget exhausted")
+            return await asyncio.wait_for(generate(), timeout=timeout)
+        return await generate()
+
+    @staticmethod
+    def _deterministic_answer(
+        question: str,
+        plan: QueryPlan,
+        sources: list[SourceItem],
+    ) -> str | None:
+        analysis = plan.analysis
+        answer: str | None = None
+        if analysis.intent == "definition":
+            answer = definition_evidence_answer(question, sources)
+        elif analysis.intent == "time":
+            answer = coordinated_time_evidence_answer(
                 sources,
-                subject=subject,
-                relations=relations,
-                trusted_evidence=trusted_evidence,
-            )
-        return await self.generator.generate(question, sources)
+                analysis.subjects,
+            ) or time_evidence_answer(question, sources)
+        elif analysis.intent == "agent":
+            answer = agent_evidence_answer(question, sources)
+        elif analysis.intent == "ordinal":
+            answer = ordinal_evidence_answer(question, sources)
+        elif analysis.intent == "location":
+            answer = location_evidence_answer(question, sources)
+        elif analysis.intent == "birthplace":
+            answer = birthplace_evidence_answer(question, sources)
+        if answer is not None:
+            return answer
+        if plan.answer_shape not in {"single_fact", "list"}:
+            return None
+        return direct_evidence_answer(question, sources)
 
     @staticmethod
     def _field_evidence_quote_answer(
@@ -1271,10 +1437,19 @@ class SearchService:
         question: str,
         plan: QueryPlan,
         sources: list[SourceItem],
+        *,
+        timeout: float | None = None,
     ) -> EvidenceExtractionResult | None:
         if self.evidence_extractor is None:
             return None
         try:
+            if timeout is not None:
+                if timeout <= 0:
+                    raise TimeoutError("request evidence-extraction budget exhausted")
+                return await asyncio.wait_for(
+                    self.evidence_extractor.extract(question, plan, sources),
+                    timeout=timeout,
+                )
             return await self.evidence_extractor.extract(question, plan, sources)
         except Exception as error:
             return EvidenceExtractionResult(
@@ -1289,6 +1464,7 @@ class SearchService:
         original_sources: list[SourceItem],
         *,
         evidence_top_k: int,
+        deadline: float,
     ) -> tuple[list[SourceItem], EvidenceExtractionResult | None, list[str]]:
         question_terms = set(lexical_tokens(request.question))
         hypotheses = [
@@ -1366,6 +1542,7 @@ class SearchService:
             request.question,
             verification_plan,
             merged,
+            timeout=self._remaining_budget(deadline),
         )
         if extraction is None or not extraction.has_candidates:
             return [], extraction, queries

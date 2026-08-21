@@ -37,6 +37,10 @@ _TIME_QUESTION_PATTERN = re.compile(
     r"(?P<event>.*?)(?:的)?[。？?]?$"
 )
 _LIST_RELATION_MARKER = re.compile(r"有哪些|有哪(?:些|几个|几种)|哪些|哪几个|哪几种")
+_COUNTED_LIST_PATTERN = re.compile(
+    r"哪(?P<count>\d{1,2}|[一二三四五六七八九十两]{1,3})"
+    r"(?:个|個|部|本|种|種|位|家|条|條|项|項|篇|首|座|名)"
+)
 _LIST_SCOPE_SUFFIXES = (
     "都经过",
     "都經過",
@@ -142,9 +146,12 @@ def analyze_question(question: str) -> QuestionAnalysis:
     question = clean_question_shell(question)
     comparison = comparison_subjects(question)
     agent_question = bool(_REVERSE_ACTION_OBJECT_QUERY.match(question.strip())) or is_agent_relation_question(question)
-    expects_list = not agent_question and any(
-        marker in question
-        for marker in ("哪些", "有哪些", "列出", "列举", "列一下", "全部", "所有", "分别")
+    expects_list = not agent_question and (
+        counted_list_size(question) is not None
+        or any(
+            marker in question
+            for marker in ("哪些", "有哪些", "列出", "列举", "列一下", "全部", "所有", "分别")
+        )
     )
     expects_complete = expects_list and not any(marker in question for marker in _PARTIAL_LIST_MARKERS)
     ordinal_queries = () if expects_list else _ordinal_search_queries(question)
@@ -195,6 +202,28 @@ def analyze_question(question: str) -> QuestionAnalysis:
     else:
         entity_type = "unknown"
     return QuestionAnalysis(intent, entity_type, tuple(subjects), expects_list, expects_complete)
+
+
+def counted_list_size(question: str) -> int | None:
+    match = _COUNTED_LIST_PATTERN.search(question)
+    if not match:
+        return None
+    value = match.group("count")
+    if value.isdigit():
+        count = int(value)
+    else:
+        digits = {
+            "一": 1, "二": 2, "两": 2, "三": 3, "四": 4, "五": 5,
+            "六": 6, "七": 7, "八": 8, "九": 9,
+        }
+        if value == "十":
+            count = 10
+        elif "十" in value:
+            tens, ones = value.split("十", 1)
+            count = digits.get(tens, 1) * 10 + digits.get(ones, 0)
+        else:
+            count = digits.get(value, 0)
+    return count if 2 <= count <= 50 else None
 
 
 def _is_pure_definition_question(question: str) -> bool:
@@ -281,6 +310,11 @@ def _list_search_queries(question: str) -> tuple[str, ...]:
             f"由{start}站至{end}站",
             f"{network} {start} {end} 车站",
         )
+    counted_match = _COUNTED_LIST_PATTERN.search(normalized)
+    if counted_match:
+        subject = normalized[:counted_match.start()].rstrip(" 的是为")
+        if subject:
+            return (f"{subject} 列表", subject)
     match = _LIST_RELATION_MARKER.search(normalized)
     if not match:
         return ()
