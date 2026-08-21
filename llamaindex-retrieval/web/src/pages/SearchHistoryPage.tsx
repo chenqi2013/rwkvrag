@@ -11,7 +11,8 @@ import { useLanguage } from "../i18n";
 function VersionResult({ run }: { run: SearchTestRun }) {
   const { tr } = useLanguage();
   const { response } = run;
-  const grounded = response.generation.evidence_grounded === true;
+  const grounded = response.generation.evidence_grounded === true
+    && response.generation.evidence_gate_passed === true;
   const model = response.generation.model;
 
   return (

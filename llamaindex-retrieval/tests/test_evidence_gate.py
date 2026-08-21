@@ -39,12 +39,78 @@ def test_gate_requires_subject_and_explicit_ordinal_relation() -> None:
     assert "relation_mismatch" in failed.issues
 
 
+def test_gate_accepts_explicit_person_role_relation() -> None:
+    question = "宇树科技创始人是谁？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("宇树科技", "2016年，宇树科技创始人王兴兴创办了宇树科技。")],
+        subject="宇树科技",
+    )
+
+    assert result.passed is True
+    assert "创始人" in result.matched_relation_terms
+
+
+def test_field_evidence_bypasses_brittle_title_string_matching() -> None:
+    question = "中国的首都在哪里"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("中国首都", "北京自1949年后定为中华人民共和国首都。")],
+        subject="中国",
+        relations=("首都",),
+        field_evidence_available=True,
+        field_candidate_count=1,
+    )
+
+    assert result.passed is True
+    assert result.issues == ()
+
+
+def test_gate_uses_dynamic_planner_relation_outside_builtin_vocabulary() -> None:
+    question = "火星计划由谁负责？"
+    evidence = [source("火星计划", "火星计划首席科学家张三承担总体研究工作。")]
+
+    without_dynamic_relation = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        evidence,
+        subject="火星计划",
+    )
+    with_dynamic_relation = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        evidence,
+        subject="火星计划",
+        relations=("首席科学家",),
+    )
+
+    assert without_dynamic_relation.passed is False
+    assert "relation_mismatch" in without_dynamic_relation.issues
+    assert with_dynamic_relation.passed is True
+    assert "首席科学家" in with_dynamic_relation.matched_relation_terms
+
+
 def test_gate_rejects_partial_definition_entity_match() -> None:
     question = "阿尔法泽是谁？"
     result = evaluate_evidence_gate(
         question,
         analyze_question(question),
         [source("阿尔法岛", "阿尔法岛是南极洲的岛屿。")],
+    )
+
+    assert result.passed is False
+    assert "subject_mismatch" in result.issues
+
+
+def test_gate_uses_structured_anchor_when_rule_subject_is_unavailable() -> None:
+    question = "这个对象是谁？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("阿尔法岛", "阿尔法岛是南极洲的岛屿。")],
+        anchor_subject="阿尔法泽",
     )
 
     assert result.passed is False
@@ -115,6 +181,24 @@ def test_gate_accepts_complete_list_route_alias() -> None:
     )
 
     assert result.passed is True
+
+
+def test_gate_ignores_parenthetical_title_base_as_an_alias() -> None:
+    question = "秦始皇有哪些伟大成就？"
+    qualified_source = source(
+        "秦始皇 (歌剧)",
+        "《秦始皇》是一部以秦始皇为原型的英语歌剧。",
+    ).model_copy(update={"metadata": {"aliases": ["秦始皇"]}})
+
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [qualified_source],
+        subject="秦始皇",
+    )
+
+    assert result.passed is False
+    assert "subject_title_mismatch" in result.issues
 
 
 def test_gate_accepts_route_identified_by_endpoints() -> None:
@@ -329,6 +413,17 @@ def test_answer_support_does_not_treat_descriptive_words_as_entities() -> None:
     )
 
     assert "unsupported_entity_term" not in result.issues
+
+
+def test_answer_support_checks_only_facts_added_beyond_the_question() -> None:
+    result = evaluate_answer_support(
+        "水浒传里赤手空拳打死老虎的是武松。[资料 1]",
+        [source("武松", "武松是《水浒传》人物，以景阳冈打虎而闻名。")],
+        question="水浒传里赤手空拳打死老虎的是谁？",
+    )
+
+    assert result.passed is True
+    assert result.unsupported_terms == ()
 
 
 def test_repair_answer_citations_maps_comparison_clauses_to_sources() -> None:

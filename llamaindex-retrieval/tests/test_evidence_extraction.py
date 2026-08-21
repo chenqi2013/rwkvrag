@@ -1,0 +1,177 @@
+import json
+from dataclasses import replace
+
+import httpx
+import pytest
+
+from llamaindex_retrieval.config import Settings
+from llamaindex_retrieval.evidence_extraction import LanguageModelEvidenceExtractor
+from llamaindex_retrieval.query_planning import build_query_plan
+from llamaindex_retrieval.schemas import SourceItem
+
+
+def stream_response(content: str) -> httpx.Response:
+    event = json.dumps(
+        {"choices": [{"delta": {"content": content}}]},
+        ensure_ascii=False,
+    )
+    return httpx.Response(
+        200,
+        text=f"data: {event}\n\ndata: [DONE]\n\n",
+        headers={"content-type": "text/event-stream"},
+    )
+
+
+def source(snippet: str) -> SourceItem:
+    return SourceItem(
+        id="unitree",
+        document_id="unitree",
+        source="finewiki-zh",
+        title="宇树科技",
+        score=1.0,
+        snippet=snippet,
+    )
+
+
+def test_subject_match_rejects_longer_unrelated_name_prefix() -> None:
+    plan = build_query_plan("马斯克创办了哪几家公司？")
+    elon = SourceItem(
+        id="elon",
+        document_id="elon",
+        source="finewiki-zh",
+        title="埃隆·马斯克",
+        score=1.0,
+        snippet="马斯克是SpaceX创始人。",
+    )
+    place = SourceItem(
+        id="muskadine",
+        document_id="muskadine",
+        source="finewiki-zh",
+        title="马斯克丁 (阿拉巴马州)",
+        score=0.9,
+        snippet="马斯克丁是美国的一处非建制地区。",
+    )
+
+    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, elon) is True
+    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, place) is False
+
+
+@pytest.mark.asyncio
+async def test_extractor_keeps_only_verbatim_spans() -> None:
+    snippet = "2016年，宇树科技创始人王兴兴开发了XDog，随后创办宇树科技。"
+
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return stream_response(json.dumps({
+            "candidates": [
+                {"field_id": "f1", "span": "宇树科技创始人王兴兴"},
+                {"field_id": "f1", "span": "宇树科技老板是王兴兴"},
+            ]
+        }, ensure_ascii=False))
+
+    settings = Settings(
+        generation_password="secret",
+        generation_base_url="https://generation.example/v1",
+    )
+    extractor = LanguageModelEvidenceExtractor(
+        settings,
+        transport=httpx.MockTransport(handler),
+    )
+    plan = replace(
+        build_query_plan("宇树科技创始人是谁？"),
+        answer_shape="summary",
+    )
+    result = await extractor.extract(
+        "宇树科技创始人是谁？",
+        plan,
+        [source(snippet)],
+    )
+
+    assert result.available is True
+    assert [candidate.span for candidate in result.candidates] == [
+        "宇树科技创始人王兴兴",
+        snippet,
+    ]
+    assert result.answer_sources([source(snippet)])[0].snippet == (
+        f"宇树科技创始人王兴兴\n{snippet}"
+    )
+    assert len(result.candidates[0].content_hash) == 64
+
+
+@pytest.mark.asyncio
+async def test_extractor_distinguishes_no_candidate_from_transport_failure() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return stream_response('{"candidates":[]}')
+
+    settings = Settings(
+        generation_password="secret",
+        generation_base_url="https://generation.example/v1",
+    )
+    extractor = LanguageModelEvidenceExtractor(
+        settings,
+        transport=httpx.MockTransport(handler),
+    )
+    result = await extractor.extract(
+        "阿尔法泽是谁？",
+        build_query_plan("阿尔法泽是谁？"),
+        [source("阿尔法岛是南极洲的一座岛屿。")],
+    )
+
+    assert result.available is True
+    assert result.has_candidates is False
+    assert result.errors == ()
+
+
+@pytest.mark.asyncio
+async def test_extractor_rejects_verbatim_value_from_unrelated_source() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return stream_response(json.dumps({
+            "candidates": [{"field_id": "f1", "span": "北京"}]
+        }, ensure_ascii=False))
+
+    settings = Settings(
+        generation_password="secret",
+        generation_base_url="https://generation.example/v1",
+    )
+    extractor = LanguageModelEvidenceExtractor(
+        settings,
+        transport=httpx.MockTransport(handler),
+    )
+    unrelated = SourceItem(
+        id="train",
+        document_id="train",
+        source="finewiki-zh",
+        title="京泰高速动车组列车",
+        score=1.0,
+        snippet="该列车往返北京至泰州。",
+    )
+    result = await extractor.extract(
+        "中国的首都在哪里",
+        build_query_plan("中国的首都在哪里"),
+        [unrelated],
+    )
+
+    assert result.available is True
+    assert result.has_candidates is False
+
+
+def test_narrative_event_extractor_rejects_value_without_relation_span() -> None:
+    plan = build_query_plan("水浒传里赤手空拳打死老虎的是谁？")
+    evidence = SourceItem(
+        id="water-margin",
+        document_id="water-margin",
+        source="finewiki-zh",
+        title="水浒传",
+        score=1.0,
+        snippet="宋江代表的动物是老虎；武松在景阳冈打死老虎。",
+    )
+    value_only = json.dumps({
+        "candidates": [{"field_id": "f1", "span": "宋江"}]
+    }, ensure_ascii=False)
+    direct_fact = json.dumps({
+        "candidates": [{"field_id": "f1", "span": "武松在景阳冈打死老虎。"}]
+    }, ensure_ascii=False)
+
+    assert LanguageModelEvidenceExtractor._parse(value_only, plan, 0, evidence) == ()
+    assert LanguageModelEvidenceExtractor._parse(direct_fact, plan, 0, evidence)[0].span == (
+        "武松在景阳冈打死老虎。"
+    )

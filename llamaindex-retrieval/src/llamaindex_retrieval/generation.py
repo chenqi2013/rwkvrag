@@ -45,8 +45,8 @@ _PROTOCOL_TAG_PATTERN = re.compile(
     re.IGNORECASE,
 )
 _GROUNDING_STOP_TOKENS = {"个", "分别", "相关", "内容", "资料", "问题", "请问", "一下"}
-_GROUNDING_CONTEXT_TERMS = {"中国", "中华人民共和国"}
-_ANCHOR_EQUIVALENTS = {
+_NON_DISTINCTIVE_SCOPE_TERMS = {"中国", "中华人民共和国"}
+_FALLBACK_ANCHOR_EQUIVALENTS = {
     "中国": {"中华人民共和国"},
     "中华人民共和国": {"中国"},
 }
@@ -54,7 +54,7 @@ _DEFINITION_ENTITY_PATTERN = re.compile(
     r"^(?P<subject>.+?)(?:是什么|是谁|指的是什么)[。？?]?$"
 )
 _ORDINAL_MARKERS = ("第一个", "第一位", "首位", "最早")
-_ANCHOR_NOISE = {
+_FALLBACK_ANCHOR_NOISE = {
     *_GROUNDING_STOP_TOKENS,
     "哪个",
     "哪些",
@@ -121,7 +121,7 @@ class EvidenceAssessment:
 
     @property
     def specific_terms(self) -> set[str]:
-        return self.question_terms - _GROUNDING_CONTEXT_TERMS
+        return self.question_terms - _NON_DISTINCTIVE_SCOPE_TERMS
 
     @property
     def matched_specific_terms(self) -> set[str]:
@@ -150,16 +150,32 @@ class EvidenceAnswerGenerator:
         self.settings = settings
         self.transport = transport
 
-    async def generate(self, question: str, sources: list[SourceItem]) -> str:
+    async def generate(
+        self,
+        question: str,
+        sources: list[SourceItem],
+        *,
+        subject: str = "",
+        relations: tuple[str, ...] = (),
+        trusted_evidence: bool = False,
+    ) -> str:
         if not sources:
             return _NO_EVIDENCE_ANSWER
-        if not self.assess_evidence(question, sources).grounded:
+        if (
+            not trusted_evidence
+            and not self.assess_evidence(question, sources, subject=subject).grounded
+        ):
             return _INSUFFICIENT_EVIDENCE_ANSWER
         if not self.settings.generation_password:
             raise AnswerGenerationError("RWKVRAG_GENERATION_PASSWORD is not configured")
 
         payload = {
-            "contents": [self._prompt(question, sources)],
+            "contents": [self._prompt(
+                question,
+                sources,
+                subject=subject,
+                relations=relations,
+            )],
             "max_tokens": self.settings.generation_max_tokens,
             "temperature": 0.2,
             "top_k": 50,
@@ -218,19 +234,31 @@ class EvidenceAnswerGenerator:
         return None
 
     @staticmethod
-    def assess_evidence(question: str, sources: list[SourceItem]) -> EvidenceAssessment:
+    def assess_evidence(
+        question: str,
+        sources: list[SourceItem],
+        *,
+        subject: str = "",
+    ) -> EvidenceAssessment:
         question_terms = {
             token
             for token in query_tokens(question)
             if token not in _GROUNDING_STOP_TOKENS
         }
+        evidence_text = normalize_search_text("\n".join(
+            "\n".join((source.title, source.snippet, *_source_alias_values(source)))
+            for source in sources
+        ))
         evidence_terms = {
             token
-            for source in sources
-            for token in lexical_tokens(f"{source.title}\n{source.snippet}")
+            for token in lexical_tokens(evidence_text)
         }
-        anchors = _entity_anchors(question)
-        matched_anchors = _matched_anchor_terms(anchors, evidence_terms)
+        anchors = _entity_anchors(question, subject=subject)
+        matched_anchors = _matched_anchor_terms(
+            anchors,
+            evidence_terms,
+            evidence_text=evidence_text,
+        )
         return EvidenceAssessment(
             question_terms,
             question_terms & evidence_terms,
@@ -238,8 +266,23 @@ class EvidenceAnswerGenerator:
             matched_anchors=matched_anchors,
         )
 
-    def _prompt(self, question: str, sources: list[SourceItem]) -> str:
+    def _prompt(
+        self,
+        question: str,
+        sources: list[SourceItem],
+        *,
+        subject: str = "",
+        relations: tuple[str, ...] = (),
+    ) -> str:
         evidence = self._evidence(sources)
+        task_contract = json.dumps(
+            {
+                "subject": subject or question,
+                "relations": list(relations),
+                "question": question,
+            },
+            ensure_ascii=False,
+        )
         cause_instruction = ""
         if any(marker in question for marker in ("为什么", "原因", "为何")):
             cause_instruction = (
@@ -257,6 +300,17 @@ class EvidenceAnswerGenerator:
                 "这是多项答案问题：必须检查全部资料，合并不同资料明确出现的补充项；"
                 "不能只摘录第一段或第一个列表。若资料中的对象角色不同，应分别说明角色，"
                 "不能把主办、承办、参加等不同关系混为一谈。"
+                "只有用户明确要求‘全部、所有、完整列表’时才需要证明列表完整；"
+                "其他多项问题应列出资料能够确认的项目，不得仅因无法证明已经穷尽而拒答。"
+            )
+        evaluative_instruction = ""
+        if any(
+            marker in question
+            for marker in ("伟大", "重要", "主要", "突出", "著名", "知名", "代表性")
+        ):
+            evaluative_instruction = (
+                "问题中的评价性修饰词只用于筛选相关事实，不要求资料逐字出现该评价词；"
+                "应依据资料明确记载的行为、成果和影响回答，但不要自行夸大评价。"
             )
         ordinal_instruction = ""
         if any(marker in question for marker in ("第一个", "第一位", "首位", "最早")):
@@ -265,8 +319,11 @@ class EvidenceAnswerGenerator:
                 "关系作答，不得根据资料排列顺序猜测。"
             )
         return f"""用户：根据资料回答问题，只回答答案，不要重复题目或资料。只能使用资料内容；资料不能明确答案时回答“{_INSUFFICIENT_EVIDENCE_ANSWER}”。每个结论句末尾必须标注支持它的资料编号，格式为“[资料 1]”。如果资料提供完整列表，必须保留列表中的每一项，不能省略、不能自行补充、不能改变顺序。回答应简洁，不超过500个中文字符。
+任务契约：{task_contract}
+答案中的每个“对象—关系—具体值”必须由同一条资料中的同一句或相邻句直接支持。不得因为对象、关系和值分别出现在资料不同位置就自行建立关系；不得把资料中的投资人、负责人、成员、收购方等其他角色改写成任务所问的关系。多项答案必须逐项执行这一约束，不能夹带仅凭常识知道但资料未直接支持的项目。
 {cause_instruction}
 {list_instruction}
+{evaluative_instruction}
 {ordinal_instruction}
 资料：
 {evidence}
@@ -359,7 +416,11 @@ class EvidenceAnswerGenerator:
         return f"{sanitized.rstrip()} [资料 1]"
 
 
-def _entity_anchors(question: str) -> set[str]:
+def _entity_anchors(question: str, *, subject: str = "") -> set[str]:
+    normalized_subject = normalize_search_text(subject).replace(" ", "")
+    normalized_subject = normalized_subject.strip("《》“”\"'，,。；;？?")
+    if 2 <= len(normalized_subject) <= 80:
+        return {normalized_subject}
     definition_match = _DEFINITION_ENTITY_PATTERN.match(question.strip())
     if definition_match and not any(marker in question for marker in _ORDINAL_MARKERS):
         subject = normalize_search_text(definition_match.group("subject")).replace(" ", "")
@@ -369,7 +430,7 @@ def _entity_anchors(question: str) -> set[str]:
     tokens = [
         token
         for token in query_tokens(question)
-        if token not in _ANCHOR_NOISE and len(token.strip()) >= 2
+        if token not in _FALLBACK_ANCHOR_NOISE and len(token.strip()) >= 2
     ]
     anchors = set(_identifier_like(tokens))
     if anchors:
@@ -391,12 +452,45 @@ def _identifier_like(tokens: Iterable[str]) -> list[str]:
     return output
 
 
-def _matched_anchor_terms(anchors: set[str], evidence_terms: set[str]) -> set[str]:
-    matched = anchors & evidence_terms
+def _matched_anchor_terms(
+    anchors: set[str],
+    evidence_terms: set[str],
+    *,
+    evidence_text: str = "",
+) -> set[str]:
+    normalized_evidence = evidence_text.replace(" ", "")
+    matched = {
+        anchor
+        for anchor in anchors
+        if _anchor_supported(anchor, evidence_terms, normalized_evidence)
+    }
     for anchor in anchors:
-        if _ANCHOR_EQUIVALENTS.get(anchor, set()) & evidence_terms:
+        equivalents = _FALLBACK_ANCHOR_EQUIVALENTS.get(anchor, set())
+        if any(
+            _anchor_supported(equivalent, evidence_terms, normalized_evidence)
+            for equivalent in equivalents
+        ):
             matched.add(anchor)
     return matched
+
+
+def _anchor_supported(
+    anchor: str,
+    evidence_terms: set[str],
+    normalized_evidence: str,
+) -> bool:
+    normalized_anchor = normalize_search_text(anchor).replace(" ", "")
+    if normalized_anchor and normalized_anchor in normalized_evidence:
+        return True
+    anchor_tokens = set(lexical_tokens(normalized_anchor))
+    return bool(anchor_tokens) and anchor_tokens <= evidence_terms
+
+
+def _source_alias_values(source: SourceItem) -> tuple[str, ...]:
+    aliases = source.metadata.get("aliases")
+    if not isinstance(aliases, list):
+        return ()
+    return tuple(str(alias).strip() for alias in aliases if str(alias).strip())
 
 
 def _looks_like_protocol_payload(answer: str) -> bool:

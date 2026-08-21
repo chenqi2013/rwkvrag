@@ -42,7 +42,13 @@ _CJK_NAME = r"[\u3400-\u4dbf\u4e00-\u9fff]{2,16}"
 _CITY_NAME = r"[\u3400-\u4dbf\u4e00-\u9fff]{2,6}"
 _CAPITAL_DECISION_SENTENCE = re.compile(rf"(?:国都|首都)定于(?P<city>{_CITY_NAME})")
 _CAPITAL_IS_SENTENCE = re.compile(rf"(?:国都|首都)(?:是|为)(?P<city>{_CITY_NAME})(?:[，,。；;\n]|$)")
-_CITY_AS_CAPITAL_SENTENCE = re.compile(rf"(?P<city>{_CITY_NAME})(?:是|为)[^。；\n]{{0,20}}(?:国都|首都)")
+_CITY_AS_CAPITAL_SENTENCE = re.compile(
+    rf"(?:^|[。！？!?；;\n])(?:现时|目前|当前|如今)?"
+    rf"(?P<city>{_CITY_NAME})(?:自[^，,。；;\n]{{0,24}})?"
+    rf"(?:是|为|定为|设为|確立為|确立为)"
+    rf"(?:中华人民共和国|中華人民共和國|中国|中國|该国|該國|其)?(?:的)?"
+    rf"(?:国都|國都|首都)"
+)
 _CITY_AS_SUBJECT_CAPITAL_SENTENCE = re.compile(
     rf"(?P<city>{_CITY_NAME})作为[^。；\n]{{0,20}}(?:国都|首都)"
 )

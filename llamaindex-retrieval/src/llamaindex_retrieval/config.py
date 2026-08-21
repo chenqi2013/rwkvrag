@@ -46,6 +46,12 @@ class Settings(BaseSettings):
     model_query_planning_max_tokens: int = Field(default=256, ge=64, le=1024)
     model_query_planning_max_queries: int = Field(default=6, ge=3, le=10)
     model_query_planning_cache_ttl: int = Field(default=600, ge=0, le=86_400)
+    evidence_extraction_enabled: bool = True
+    evidence_extraction_timeout: int = Field(default=25, ge=3, le=120)
+    evidence_extraction_max_tokens: int = Field(default=384, ge=64, le=2048)
+    evidence_extraction_max_sources: int = Field(default=5, ge=1, le=20)
+    evidence_extraction_max_source_characters: int = Field(default=2_500, ge=500, le=24_000)
+    evidence_extraction_concurrency: int = Field(default=2, ge=1, le=10)
     active_retrieval_enabled: bool = True
     active_retrieval_max_rounds: int = Field(default=1, ge=1, le=4)
     active_retrieval_max_queries: int = Field(default=3, ge=1, le=5)

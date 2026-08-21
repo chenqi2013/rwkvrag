@@ -1,13 +1,24 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import re
 from typing import Literal
 
-from .lexical_index import normalize_query_text
+import jieba.posseg as posseg
+
+from .lexical_index import lexical_tokens, normalize_query_text
 from .qa_analysis import QuestionAnalysis, analyze_question, clean_question_shell
 
 
 MergeStrategy = Literal["rank_fusion", "document_interleave"]
 ContextPolicy = Literal["none", "lead", "lead_append", "section", "structure"]
+AnswerShape = Literal["single_fact", "list", "summary", "narrative"]
+SetSemantics = Literal["latest", "all", "partial", "specific"]
+
+
+@dataclass(frozen=True)
+class TaskField:
+    field_id: str
+    question: str
+    relations: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -20,6 +31,9 @@ class QueryPlan:
     relations: tuple[str, ...]
     merge_strategy: MergeStrategy
     context_policy: ContextPolicy
+    fields: tuple[TaskField, ...] = ()
+    answer_shape: AnswerShape = "single_fact"
+    set_semantics: SetSemantics = "specific"
 
     @property
     def query_rewritten(self) -> bool:
@@ -29,8 +43,14 @@ class QueryPlan:
 def build_query_plan(question: str) -> QueryPlan:
     normalized = normalize_query_text(clean_question_shell(question))
     analysis = analyze_question(normalized)
-    subject = _subject_for(analysis, normalized)
-    relations = _relations_for(analysis.intent, normalized)
+    relational = _relational_contract(normalized, analysis)
+    if relational is None:
+        subject = _subject_for(analysis, normalized)
+        relations = _relations_for(analysis.intent, normalized)
+    else:
+        analysis, subject, relations = relational
+    answer_shape = _answer_shape_for(analysis, normalized)
+    set_semantics = _set_semantics_for(analysis, normalized)
     queries = _queries_for(analysis, normalized, subject, relations)
     merge_strategy: MergeStrategy = (
         "document_interleave"
@@ -46,7 +66,202 @@ def build_query_plan(question: str) -> QueryPlan:
         relations=relations,
         merge_strategy=merge_strategy,
         context_policy=_context_policy(analysis.intent),
+        fields=(TaskField("f1", normalized, relations),),
+        answer_shape=answer_shape,
+        set_semantics=set_semantics,
     )
+
+
+def _relational_contract(
+    question: str,
+    analysis: QuestionAnalysis,
+) -> tuple[QuestionAnalysis, str, tuple[str, ...]] | None:
+    contextual_agent = re.match(
+        r"^(?P<subject>.+?)(?:里|中)(?P<field>[^，。？?]{2,40}?)"
+        r"(?:的是|的人是)(?:谁|哪位|什么人)[。？?]?$",
+        question,
+    )
+    if contextual_agent:
+        return (
+            replace(
+                analysis,
+                intent="agent",
+                entity_type="person",
+                subjects=(),
+                expects_list=False,
+                expects_complete_list=False,
+            ),
+            _clean_subject(contextual_agent.group("subject")),
+            _narrative_relation_variants(contextual_agent.group("field")),
+        )
+    role = re.match(
+        r"^(?P<subject>.+?)的(?P<field>[^的是为，。？?][^的，。？?]{0,19}?)(?:是|为)?"
+        r"(?:谁|哪位|什么人)[。？?]?$",
+        question,
+    )
+    if role and analysis.intent not in {"agent", "ordinal"}:
+        return (
+            replace(
+                analysis,
+                intent="agent",
+                entity_type="person",
+                subjects=(),
+                expects_list=False,
+                expects_complete_list=False,
+            ),
+            _clean_subject(role.group("subject")),
+            (role.group("field").strip(),),
+        )
+    property_location = re.match(
+        r"^(?P<subject>.+?)的(?P<field>[^的，。？?]{1,20}?)"
+        r"(?:在哪里|在哪儿|位于哪里|位于哪)[。？?]?$",
+        question,
+    )
+    if property_location:
+        return (
+            replace(
+                analysis,
+                intent="location",
+                subjects=(),
+                expects_list=False,
+                expects_complete_list=False,
+            ),
+            _clean_subject(property_location.group("subject")),
+            (property_location.group("field").strip(),),
+        )
+    property_fact = re.match(
+        r"^(?P<subject>.+?)(?:最后)?的(?P<field>[^的，。？?]{1,20}?)"
+        r"(?:是什么|是怎样的|如何)[。？?]?$",
+        question,
+    )
+    if property_fact and analysis.intent in {"definition", "fact"}:
+        field = property_fact.group("field").strip()
+        return (
+            replace(
+                analysis,
+                intent="fact",
+                subjects=(),
+                expects_list=False,
+                expects_complete_list=False,
+            ),
+            _clean_subject(property_fact.group("subject")),
+            _field_relation_variants(field),
+        )
+    predicate_object = _predicate_object_contract(question, analysis)
+    if predicate_object is not None:
+        return predicate_object
+    return None
+
+
+def _predicate_object_contract(
+    question: str,
+    analysis: QuestionAnalysis,
+) -> tuple[QuestionAnalysis, str, tuple[str, ...]] | None:
+    if analysis.intent != "fact":
+        return None
+    tagged = [
+        (word.strip(), flag)
+        for word, flag in posseg.cut(question.strip("。？?！!"))
+        if word.strip()
+    ]
+    interrogative_index = next(
+        (
+            index
+            for index, (word, _) in enumerate(tagged)
+            if word in {"哪", "哪些", "什么"} or word.startswith("哪几")
+        ),
+        None,
+    )
+    if interrogative_index is None or interrogative_index < 2:
+        return None
+    prefix = tagged[:interrogative_index]
+    while prefix and prefix[-1][0] in {"了", "过", "着", "的"}:
+        prefix.pop()
+    predicate_index = next(
+        (
+            index
+            for index in range(len(prefix) - 1, 0, -1)
+            if (
+                prefix[index][1].startswith("v")
+                or prefix[index][1] in {"p"}
+            )
+            and prefix[index][0] not in {"有", "是", "为", "属于"}
+        ),
+        None,
+    )
+    if predicate_index is None:
+        return None
+    subject = _clean_subject("".join(word for word, _ in prefix[:predicate_index]))
+    predicate = prefix[predicate_index][0]
+    if len(subject) < 2 or not predicate:
+        return None
+    expanded = _agent_relations(question)
+    relations = tuple(dict.fromkeys((predicate, *expanded)))
+    expects_list = any(
+        marker in question
+        for marker in ("哪些", "哪几", "分别", "全部", "所有")
+    )
+    return (
+        replace(
+            analysis,
+            intent=(
+                "list"
+                if expects_list
+                else analysis.intent if analysis.intent in {"agent", "list"} else "fact"
+            ),
+            subjects=(),
+            expects_list=expects_list,
+            expects_complete_list=any(
+                marker in question for marker in ("全部", "所有", "完整")
+            ),
+        ),
+        subject,
+        relations,
+    )
+
+
+def _field_relation_variants(field: str) -> tuple[str, ...]:
+    normalized = field.strip()
+    if normalized in {"结局", "結局", "结尾", "結尾", "最终结果", "最終結果"}:
+        return (normalized, "终结", "结束", "最终", "统一", "归一统")
+    return (normalized,)
+
+
+def _narrative_relation_variants(field: str) -> tuple[str, ...]:
+    normalized = field.strip()
+    compact_terms = [
+        term
+        for term in lexical_tokens(normalized)
+        if len(term.replace(" ", "")) >= 3
+        and term != normalized
+        and term in normalized
+    ]
+    compact_terms.sort(key=lambda value: (-len(value), -normalized.rfind(value)))
+    return tuple(dict.fromkeys((normalized, *compact_terms[:4])))
+
+
+def _answer_shape_for(analysis: QuestionAnalysis, question: str) -> AnswerShape:
+    if analysis.expects_list or re.search(r"哪几(?:家|个|位|种|条|项)", question):
+        return "list"
+    if any(marker in question for marker in ("故事", "经过", "来龙去脉")):
+        return "narrative"
+    if analysis.intent in {"cause", "comparison", "procedure"} or any(
+        marker in question for marker in ("讲讲", "概括", "总结", "介绍")
+    ):
+        return "summary"
+    return "single_fact"
+
+
+def _set_semantics_for(analysis: QuestionAnalysis, question: str) -> SetSemantics:
+    if any(marker in question for marker in ("现在", "目前", "当前", "现任", "最新")):
+        return "latest"
+    if any(
+        marker in question for marker in ("全部", "所有", "完整", "总共", "一共")
+    ):
+        return "all"
+    if analysis.expects_list or re.search(r"哪几(?:家|个|位|种|条|项)", question):
+        return "partial"
+    return "specific"
 
 
 def _queries_for(
@@ -60,8 +275,15 @@ def _queries_for(
     elif analysis.intent == "time" and analysis.subjects:
         candidates = (*analysis.subjects, question)
     elif analysis.intent == "agent" and subject:
+        standalone_relations = tuple(
+            relation
+            for relation in relations[1:]
+            if len(relation.replace(" ", "")) >= 4
+        )
         candidates = (
-            *(f"{subject} {relation}" for relation in relations),
+            f"{subject} {relations[0]}",
+            *standalone_relations,
+            *(f"{subject} {relation}" for relation in relations[1:]),
             *analysis.subjects,
             question,
         )
@@ -87,10 +309,11 @@ def _queries_for(
             subject,
         )
     elif subject and relations:
+        bare_subject = (subject,) if relations == ("简介", "定义") else ()
         candidates = (
             f"{subject} {' '.join(relations)}",
             question,
-            subject,
+            *bare_subject,
         )
     elif subject:
         candidates = (subject, question)
@@ -256,6 +479,21 @@ def _relations_for(intent: str, question: str) -> tuple[str, ...]:
         for marker, values in relation_groups.items():
             if marker in question:
                 return values
+        relation_match = re.search(
+            r"(?:有哪些|有哪(?:些|几个)?|包括哪些|包含哪些|分别是哪些|列出)"
+            r"(?P<relation>[^？?。]+)",
+            question,
+        )
+        if relation_match:
+            relation = relation_match.group("relation").strip(" 的，,；;")
+            relation_core = re.sub(
+                r"^(?:伟大|主要|重要|著名|知名|典型|全部|所有|具体|相关)(?:的)?",
+                "",
+                relation,
+            ).strip(" 的")
+            return tuple(dict.fromkeys(
+                value for value in (relation, relation_core) if len(value) >= 2
+            ))
     return ()
 
 
@@ -263,7 +501,8 @@ def _agent_relations(question: str) -> tuple[str, ...]:
     if any(marker in question for marker in ("现在", "目前", "当前", "如今", "现任")):
         return ("现任", "目前", "当前")
     reverse_match = re.search(
-        r"(?:的|背后的)(创作者|创办者|设计者|执导者|作者|导演|主演)(?:是|为)?"
+        r"(?:的|背后的)?(创始人|创办人|创办者|建立者|创建者|发明者|发现者|"
+        r"创作者|设计者|建造者|执导者|负责人|作者|导演|主演)(?:是|为)?"
         r"(?:谁|哪位|什么人)[。？?]?$",
         question,
     )
@@ -273,7 +512,7 @@ def _agent_relations(question: str) -> tuple[str, ...]:
         match = re.search(
         r"(发起|提出|创立|创建|建立|发明|发现|开启|开辟|开通|领导|指挥|主演|导演|"
         r"撰写|创作者|创作|设计者|设计|建造|开发|制作|主持|组织|推动|负责|得主|获得者|创办者|执导者|执导|"
-        r"創作|設計|執導|創辦)",
+        r"创办|創作|設計|執導|創辦)",
         question,
         )
         if not match:
@@ -290,9 +529,18 @@ def _agent_relations(question: str) -> tuple[str, ...]:
         "執導": ("执导", "导演", "執導", "導演"),
         "执导": ("执导", "导演"),
         "創辦": ("创办", "创建", "創辦", "創建"),
+        "创办": ("创办", "创立", "创建", "成立", "创始人", "联合创始人"),
         "创作者": ("创作", "作者", "创作者"),
+        "创始人": ("创始人", "创办人", "创办者", "创立", "创建", "创办"),
+        "创办人": ("创办人", "创始人", "创办者", "创立", "创建", "创办"),
         "设计者": ("设计", "设计者"),
         "创办者": ("创办", "创建", "创办者"),
+        "建立者": ("建立者", "建立", "创立", "创建"),
+        "创建者": ("创建者", "创建", "创立", "建立"),
+        "发明者": ("发明者", "发明", "研制", "创造"),
+        "发现者": ("发现者", "发现", "首次发现"),
+        "建造者": ("建造者", "建造", "修建", "建设"),
+        "负责人": ("负责人", "负责", "领导", "主持"),
         "执导者": ("执导", "导演", "执导者"),
     }
     return equivalents.get(relation, (relation,))

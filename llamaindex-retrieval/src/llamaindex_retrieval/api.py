@@ -15,6 +15,7 @@ from .admin_service import (
 from .active_retrieval import ActiveRetrievalAgent
 from .config import get_settings
 from .generation import EvidenceAnswerGenerator
+from .evidence_extraction import LanguageModelEvidenceExtractor
 from .lexical_index import LexicalIndex
 from .repository import MongoRepository, RepositoryConflictError
 from .routers.admin import router as admin_router
@@ -36,6 +37,7 @@ async def lifespan(app: FastAPI):
         settings=settings,
         index=lexical_index,
         generator=EvidenceAnswerGenerator(settings),
+        evidence_extractor=LanguageModelEvidenceExtractor(settings),
         query_planner=LanguageModelQueryPlanner(settings),
         retrieval_agent=ActiveRetrievalAgent(settings),
     )

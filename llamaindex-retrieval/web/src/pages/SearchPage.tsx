@@ -51,7 +51,8 @@ export default function SearchPage() {
     }
   };
 
-  const evidenceGrounded = response?.generation.evidence_grounded === true;
+  const evidenceVerified = response?.generation.evidence_grounded === true
+    && response?.generation.evidence_gate_passed === true;
   const queryNormalized = response?.retrieval.query_normalized === true;
   const normalizedQuestion = String(response?.retrieval.normalized_question || "");
 
@@ -84,7 +85,14 @@ export default function SearchPage() {
                   options={knowledgeBases.map((item) => ({ value: item.id, label: item.name }))}
                 />
               </Form.Item>
-              <Form.Item label={tr("返回数量", "Result count")} name="top_k">
+              <Form.Item
+                label={tr("页面显示数量", "Displayed results")}
+                name="top_k"
+                extra={tr(
+                  "仅控制页面展示；系统会按问题类型自动使用 5～12 条证据生成答案。",
+                  "Controls display only; the system automatically uses 5–12 evidence items based on question type.",
+                )}
+              >
                 <InputNumber min={1} max={20} style={{ width: "100%" }} />
               </Form.Item>
               <Button type="primary" block icon={<SearchOutlined />} loading={loading} onClick={() => void search()}>
@@ -99,8 +107,8 @@ export default function SearchPage() {
             extra={
               response && (
                 <Space size={4} wrap>
-                  <Tag color={evidenceGrounded ? "green" : "orange"}>
-                    {evidenceGrounded ? tr("证据校验通过", "Evidence verified") : tr("证据不足，未生成", "Insufficient evidence")}
+                  <Tag color={evidenceVerified ? "green" : "orange"}>
+                    {evidenceVerified ? tr("证据校验通过", "Evidence verified") : tr("证据不足，未生成", "Insufficient evidence")}
                   </Tag>
                   {response.generation.model ? (
                     <Tag color="green">{tr("生成模型", "Model")} · {String(response.generation.model)}</Tag>
@@ -116,6 +124,11 @@ export default function SearchPage() {
                 <Space wrap>
                   {queryNormalized && <Tag color="blue">{tr("已纠正查询：", "Normalized query: ")}{normalizedQuestion}</Tag>}
                   <Tag>{tr("答案需标注资料编号", "Answer must cite source numbers")}</Tag>
+                  {response.retrieval.evidence_top_k_policy ? (
+                    <Tag color="purple">
+                      {tr("自适应证据", "Adaptive evidence")} · {String(response.retrieval.answer_evidence_top_k)}
+                    </Tag>
+                  ) : null}
                 </Space>
                 <Typography.Paragraph className="result-snippet" copyable={{ text: response.answer }}>
                   {response.answer}

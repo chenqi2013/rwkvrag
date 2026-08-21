@@ -36,6 +36,59 @@ def result(document_id: str, score: float) -> LexicalResult:
     )
 
 
+def test_verification_chunk_collapse_prefers_informative_document_chunk() -> None:
+    sources = [
+        SourceItem(
+            id="wusong-category",
+            document_id="wusong",
+            source="wiki",
+            title="武松",
+            score=1.0,
+            snippet="武松 Category:水浒一百单八将 Category:金瓶梅人物",
+        ),
+        SourceItem(
+            id="wusong-story",
+            document_id="wusong",
+            source="wiki",
+            title="武松",
+            score=0.9,
+            snippet="武松是《水浒传》人物，以景阳冈打虎而为人熟知。",
+        ),
+    ]
+
+    collapsed = SearchService._collapse_verification_chunks(
+        sources,
+        hypotheses=["武松"],
+        relations=["赤手空拳打死老虎"],
+    )
+
+    assert [source.id for source in collapsed] == ["wusong-story"]
+
+
+def test_field_evidence_quote_fallback_keeps_explicit_roles() -> None:
+    evidence = SourceItem(
+        id="elon",
+        document_id="elon",
+        source="wiki",
+        title="埃隆·马斯克",
+        score=1.0,
+        snippet=(
+            "他是SpaceX创始人、特斯拉投资人、无聊公司创始人，"
+            "也是Neuralink和OpenAI联合创始人。"
+        ),
+    )
+
+    answer = SearchService._field_evidence_quote_answer(
+        [evidence],
+        ("创办", "创始人", "联合创始人"),
+    )
+
+    assert answer is not None
+    assert "SpaceX创始人" in answer
+    assert "特斯拉投资人" in answer
+    assert answer.endswith("[资料 1]。")
+
+
 class FakeIndices:
     @staticmethod
     def exists(*, index: str) -> bool:
@@ -472,6 +525,36 @@ async def test_definition_question_uses_document_lead_and_direct_answer() -> Non
     assert response.generation["answer_strategy"] == "direct_extract"
 
 
+def test_adaptive_evidence_top_k_uses_question_complexity() -> None:
+    service = SearchService(Settings(max_top_k=20), cast(Any, None))
+
+    cases = {
+        "中国的首都是哪里？": (5, "simple_fact"),
+        "秦始皇有哪些伟大成就？": (8, "list"),
+        "明朝为什么灭亡？": (10, "cause"),
+        "尺八和长笛有什么区别？": (10, "comparison"),
+        "深圳地铁1号线全部站点有哪些？": (12, "complete_list"),
+    }
+    for question, (expected_top_k, expected_reason) in cases.items():
+        top_k, policy = service._adaptive_evidence_top_k(question, display_top_k=1)
+        assert top_k == expected_top_k
+        assert policy["reason"] == expected_reason
+        assert policy["effective_top_k"] == expected_top_k
+
+
+def test_adaptive_evidence_top_k_keeps_larger_display_request() -> None:
+    service = SearchService(Settings(max_top_k=20), cast(Any, None))
+
+    top_k, policy = service._adaptive_evidence_top_k(
+        "中国的首都是哪里？",
+        display_top_k=15,
+    )
+
+    assert top_k == 15
+    assert policy["target"] == 5
+    assert policy["display_top_k"] == 15
+
+
 @pytest.mark.asyncio
 async def test_comparison_question_decomposes_and_merges_subject_searches() -> None:
     service = SearchService(Settings(), cast(Any, FakeComparisonIndex()))
@@ -601,6 +684,140 @@ def test_rank_fusion_prefers_an_exact_page_alias() -> None:
     )
 
     assert merged[0].document_id == "line-1"
+
+
+def test_rank_fusion_prefers_exact_page_and_relation_chunk_over_qualified_pages() -> None:
+    plan = build_query_plan("秦始皇有哪些伟大成就？")
+    opera = LexicalResult(
+        node_id="opera",
+        document_id="opera",
+        text="《秦始皇》是一部英语歌剧。",
+        metadata={"title": "秦始皇 (歌剧)", "aliases": ["秦始皇"]},
+        score=1.0,
+    )
+    family = LexicalResult(
+        node_id="family",
+        document_id="emperor",
+        text="异母弟为长安君成蟜。",
+        metadata={"title": "秦始皇", "section": "家庭成员"},
+        score=1.0,
+    )
+    achievements = LexicalResult(
+        node_id="achievements",
+        document_id="emperor",
+        text="统一天下后推行书同文，并统一度量衡。",
+        metadata={"title": "秦始皇", "section": "政治成就"},
+        score=0.7,
+    )
+
+    merged = SearchService._merge_rank_fusion(
+        (
+            [opera, family, achievements],
+            [opera, family, achievements],
+        ),
+        plan=plan,
+    )
+
+    assert [item.node_id for item in merged[:2]] == ["achievements", "family"]
+
+
+def test_rank_fusion_prefers_direct_event_evidence_over_repeated_title_hits() -> None:
+    plan = build_query_plan("水浒传里赤手空拳打死老虎的是谁？")
+    title_hit = LexicalResult(
+        node_id="water-margin-overview",
+        document_id="water-margin",
+        text="《水浒传》讲述梁山好汉的故事，宋江代表的动物是老虎。",
+        metadata={"title": "水浒传"},
+        score=1.0,
+    )
+    direct_fact = LexicalResult(
+        node_id="yanggu-wusong",
+        document_id="yanggu",
+        text="武松是《水浒传》人物，在景阳冈打死老虎，为民除害。",
+        metadata={"title": "阳谷县"},
+        score=0.8,
+    )
+
+    merged = SearchService._merge_rank_fusion(
+        (
+            [title_hit],
+            [title_hit],
+            [title_hit],
+            [title_hit, direct_fact],
+        ),
+        plan=plan,
+    )
+
+    assert merged[0].document_id == "yanggu"
+
+
+@pytest.mark.asyncio
+async def test_model_relation_searches_inside_exact_page_before_top_k_cutoff() -> None:
+    opera = LexicalResult(
+        node_id="opera",
+        document_id="opera",
+        text="《秦始皇》是一部英语歌剧。",
+        metadata={"title": "秦始皇 (歌剧)", "aliases": ["秦始皇"]},
+        score=1.0,
+    )
+    family = LexicalResult(
+        node_id="family",
+        document_id="emperor",
+        text="异母弟为长安君成蟜。",
+        metadata={"title": "秦始皇", "section": "家庭成员"},
+        score=0.8,
+    )
+    achievement = LexicalResult(
+        node_id="achievement",
+        document_id="emperor",
+        text="秦始皇统一天下后推行书同文，并统一度量衡。",
+        metadata={"title": "秦始皇", "section": "统一制度"},
+        score=1.0,
+    )
+
+    class AchievementIndex:
+        relation_document_ids: list[str] = []
+
+        def search(self, question: str, **kwargs: Any) -> list[LexicalResult]:
+            return [opera, family]
+
+        def document_relation_candidates(
+            self,
+            question: str,
+            *,
+            document_id: str,
+            **kwargs: Any,
+        ) -> list[LexicalResult]:
+            self.relation_document_ids.append(document_id)
+            return [achievement]
+
+    class AchievementPlanner:
+        async def plan(self, question: str, fallback: Any) -> QueryPlanningResult:
+            return QueryPlanningResult(
+                replace(
+                    fallback,
+                    queries=("秦始皇 成就", "秦始皇 贡献", question),
+                    subject="秦始皇",
+                    relations=("成就", "贡献"),
+                ),
+                "model",
+                model_queries=("秦始皇 成就", "秦始皇 贡献"),
+            )
+
+    index = AchievementIndex()
+    service = SearchService(
+        Settings(),
+        cast(Any, index),
+        query_planner=cast(Any, AchievementPlanner()),
+    )
+
+    response = await service.search(
+        SearchRequest(question="秦始皇有哪些伟大成就？", top_k=2)
+    )
+
+    assert response.results[0].id == "achievement"
+    assert response.retrieval["document_relation_expanded"] is True
+    assert index.relation_document_ids == ["emperor"]
 
 
 def test_rank_fusion_prefers_route_page_for_endpoint_description() -> None:

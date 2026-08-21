@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import re
+from typing import Any
 
 import jieba.posseg as posseg
 
@@ -16,7 +17,8 @@ _RELATION_GROUPS = {
     "birthplace": ("出生于", "生于", "出生地"),
     "agent": (
         "由", "创立", "创建", "建立", "发明", "发现", "开启", "开辟", "开通", "出使",
-        "凿空", "作者", "导演", "主演", "领导", "现在", "目前", "当前", "现任", "得主", "获得", "授予",
+        "凿空", "创始人", "创办人", "创办者", "建立者", "创建者", "发明者", "发现者",
+        "负责人", "作者", "导演", "主演", "领导", "现在", "目前", "当前", "现任", "得主", "获得", "授予",
     ),
     "ordinal": ("第一个", "第一位", "首位", "最早"),
     "list": ("列表", "包括", "包含", "分别", "站名", "车站", "条目"),
@@ -40,6 +42,14 @@ _RELATION_EQUIVALENTS = {
     "得主": ("得主", "获得", "获奖", "授予"),
     "获得者": ("得主", "获得", "获奖", "授予"),
     "作者": ("作者", "创作", "编剧", "作曲", "作词", "导演", "设计"),
+    "创始人": ("创始人", "创办人", "创办者", "创立", "创建", "创办"),
+    "创办人": ("创办人", "创始人", "创办者", "创立", "创建", "创办"),
+    "创办者": ("创办者", "创办人", "创始人", "创立", "创建", "创办"),
+    "建立者": ("建立者", "建立", "创立", "创建"),
+    "创建者": ("创建者", "创建", "创立", "建立"),
+    "发明者": ("发明者", "发明", "研制", "创造"),
+    "发现者": ("发现者", "发现", "首次发现"),
+    "负责人": ("负责人", "负责", "领导", "主持"),
 }
 _STRICT_RELATION_INTENTS = {"ordinal", "time", "location", "birthplace", "agent"}
 
@@ -69,6 +79,7 @@ _ANSWER_NOISE = {
 }
 _REFUSAL_MARKERS = ("无法确定", "未检索到", "无法从资料")
 _CJK_TERM = re.compile(r"^[\u3400-\u4dbf\u4e00-\u9fff]+$")
+_QUALIFIED_TITLE = re.compile(r"^(?P<base>.+?)[（(](?P<qualifier>[^）)]+)[）)]$")
 
 
 def evaluate_evidence_gate(
@@ -77,12 +88,24 @@ def evaluate_evidence_gate(
     sources: list[SourceItem],
     *,
     subject: str = "",
+    anchor_subject: str = "",
+    relations: tuple[str, ...] = (),
+    field_evidence_available: bool = False,
+    field_candidate_count: int = 0,
 ) -> EvidenceGateResult:
-    assessment = EvidenceAnswerGenerator.assess_evidence(question, sources)
+    assessment = EvidenceAnswerGenerator.assess_evidence(
+        question,
+        sources,
+        subject=anchor_subject,
+    )
     evidence = normalize_search_text(
         "\n".join(f"{source.title}\n{source.snippet}" for source in sources)
     )
-    relation_terms = _relation_terms(question, analysis.intent)
+    relation_terms = _relation_terms(
+        question,
+        analysis.intent,
+        requested_relations=relations,
+    )
     matched = tuple(
         term for term in relation_terms
         if normalize_search_text(term) in evidence
@@ -91,10 +114,24 @@ def evaluate_evidence_gate(
     issues: list[str] = []
     if not sources:
         issues.append("no_evidence")
+    if field_evidence_available:
+        if field_candidate_count <= 0 and sources:
+            issues.append("field_evidence_missing")
+        question_years = set(re.findall(r"(?<!\d)(?:19|20)\d{2}(?!\d)", question))
+        evidence_years = set(re.findall(r"(?<!\d)(?:19|20)\d{2}(?!\d)", evidence))
+        if question_years and not question_years <= evidence_years:
+            issues.append("temporal_mismatch")
+        return EvidenceGateResult(
+            assessment=assessment,
+            relation_terms=relation_terms,
+            matched_relation_terms=matched,
+            passed=not issues,
+            issues=tuple(issues),
+        )
     normalized_subject = normalize_search_text(subject).replace(" ", "")
     exact_title_match = bool(normalized_subject) and any(
         title_matches_subject(source.title, normalized_subject)
-        or normalized_subject in _source_aliases(source)
+        or normalized_subject in source_aliases(source)
         or (
             analysis.intent in {"cause", "time", "list"}
             and title_matches_subject_event(source.title, normalized_subject, question)
@@ -155,15 +192,23 @@ def evaluate_evidence_gate(
     )
 
 
-def _source_aliases(source: SourceItem) -> set[str]:
-    aliases = source.metadata.get("aliases")
+def document_aliases(title: str, metadata: dict[str, Any]) -> set[str]:
+    aliases = metadata.get("aliases")
     if not isinstance(aliases, list):
         return set()
+    normalized_title = normalize_search_text(title).replace(" ", "")
+    qualified = _QUALIFIED_TITLE.fullmatch(normalized_title)
+    derived_base = qualified.group("base") if qualified else ""
     return {
         normalize_search_text(str(alias)).replace(" ", "")
         for alias in aliases
         if str(alias).strip()
+        and normalize_search_text(str(alias)).replace(" ", "") != derived_base
     }
+
+
+def source_aliases(source: SourceItem) -> set[str]:
+    return document_aliases(source.title, source.metadata)
 
 
 def _route_endpoint_evidence_match(question: str, sources: list[SourceItem]) -> bool:
@@ -187,6 +232,8 @@ def _route_endpoint_evidence_match(question: str, sources: list[SourceItem]) -> 
 def evaluate_answer_support(
     answer: str,
     sources: list[SourceItem],
+    *,
+    question: str = "",
 ) -> AnswerSupportResult:
     if any(marker in answer for marker in _REFUSAL_MARKERS):
         return AnswerSupportResult(True, 1.0, (), (), ())
@@ -218,9 +265,12 @@ def evaluate_answer_support(
         for term in lexical_tokens(answer_body)
         if term not in _ANSWER_NOISE and len(term.strip()) >= 2
     }
-    supported = answer_terms & evidence_terms
-    unsupported = answer_terms - evidence_terms
-    coverage = len(supported) / max(1, len(answer_terms))
+    question_terms = set(lexical_tokens(question)) if question else set()
+    claim_terms = answer_terms - question_terms
+    terms_to_verify = claim_terms or answer_terms
+    supported = terms_to_verify & evidence_terms
+    unsupported = terms_to_verify - evidence_terms
+    coverage = len(supported) / max(1, len(terms_to_verify))
     unsupported_entity_terms = {
         term
         for term in unsupported
@@ -290,9 +340,7 @@ def _is_potential_entity_term(term: str) -> bool:
 
 def title_matches_subject(title: str, normalized_subject: str) -> bool:
     normalized_title = normalize_search_text(title).replace(" ", "")
-    if normalized_title == normalized_subject or normalized_title.startswith(
-        (f"{normalized_subject}(", f"{normalized_subject}（")
-    ):
+    if normalized_title == normalized_subject:
         return True
     def canonical(value: str) -> str:
         for qualifier in ("国际足协", "国际足总", "国际足球联合会"):
@@ -336,14 +384,25 @@ def _contains_embedded_definition(text: str, normalized_subject: str) -> bool:
     ))
 
 
-def _relation_terms(question: str, intent: str) -> tuple[str, ...]:
+def _relation_terms(
+    question: str,
+    intent: str,
+    *,
+    requested_relations: tuple[str, ...] = (),
+) -> tuple[str, ...]:
     candidates = _RELATION_GROUPS.get(intent, ())
     normalized_question = normalize_search_text(question)
     explicit = tuple(term for term in candidates if normalize_search_text(term) in normalized_question)
-    if explicit:
+    requested = tuple(
+        relation.strip()
+        for relation in requested_relations
+        if relation.strip()
+    )
+    seeds = tuple(dict.fromkeys((*requested, *explicit)))
+    if seeds:
         expanded = [
             equivalent
-            for term in explicit
+            for term in seeds
             for equivalent in _RELATION_EQUIVALENTS.get(term, (term,))
         ]
         if intent == "ordinal":

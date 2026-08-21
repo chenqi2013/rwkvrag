@@ -9,6 +9,7 @@ from llamaindex_retrieval.evidence_utils import (
     birthplace_evidence_answer,
     coordinated_time_evidence_answer,
     definition_evidence_answer,
+    direct_evidence_answer,
     structured_list_answer,
     time_evidence_answer,
     location_evidence_answer,
@@ -50,6 +51,24 @@ def test_fact_prompt_does_not_add_cause_only_instruction() -> None:
     assert "不得把事件发生后的结果当作原因" not in prompt
 
 
+def test_capital_answer_prefers_current_explicit_capital_sentence() -> None:
+    evidence = SourceItem(
+        id="china-capital",
+        document_id="china-capital",
+        source="finewiki-zh",
+        title="中国首都",
+        score=1.0,
+        snippet=(
+            "清朝入主中原后将北京定为国都。\n"
+            "现时北京自1949年後定为中华人民共和国首都。"
+        ),
+    )
+
+    assert direct_evidence_answer("中国的首都是哪个城市？", [evidence]) == (
+        "中国的首都是北京。[资料 1]"
+    )
+
+
 def test_list_prompt_requires_all_evidence_and_role_distinction() -> None:
     generator = EvidenceAnswerGenerator(Settings())
 
@@ -57,6 +76,38 @@ def test_list_prompt_requires_all_evidence_and_role_distinction() -> None:
 
     assert "必须检查全部资料" in prompt
     assert "不能把主办、承办、参加等不同关系混为一谈" in prompt
+    assert "不得仅因无法证明已经穷尽而拒答" in prompt
+
+
+def test_prompt_includes_structured_relation_contract() -> None:
+    generator = EvidenceAnswerGenerator(Settings())
+
+    prompt = generator._prompt(
+        "马斯克创办了哪几家公司？",
+        [source()],
+        subject="马斯克",
+        relations=("创办", "创立"),
+    )
+
+    assert '"subject": "马斯克"' in prompt
+    assert '"relations": ["创办", "创立"]' in prompt
+    assert "每个“对象—关系—具体值”必须由同一条资料中的同一句或相邻句直接支持" in prompt
+    assert "不得把资料中的投资人、负责人、成员、收购方等其他角色改写成任务所问的关系" in prompt
+
+
+def test_prompt_treats_evaluative_words_as_selection_not_required_quotes() -> None:
+    generator = EvidenceAnswerGenerator(Settings())
+    evidence = source().model_copy(
+        update={
+            "title": "秦始皇",
+            "snippet": "秦始皇统一六国，并推行书同文。",
+        }
+    )
+
+    prompt = generator._prompt("秦始皇有哪些伟大成就？", [evidence])
+
+    assert "不要求资料逐字出现该评价词" in prompt
+    assert "不要自行夸大评价" in prompt
 
 
 def test_ordinal_prompt_requires_explicit_first_relation() -> None:
@@ -65,6 +116,21 @@ def test_ordinal_prompt_requires_explicit_first_relation() -> None:
     prompt = generator._prompt("中国历史上第一个皇帝是谁？", [source()])
 
     assert "只能依据资料中明确出现的“第一个、第一位、首位或最早”关系作答" in prompt
+
+
+def test_agent_answer_extracts_explicit_founder_role() -> None:
+    evidence = source().model_copy(
+        update={
+            "title": "宇树科技",
+            "snippet": "2016年，宇树科技创始人王兴兴开发了四足机器人，随后创办了宇树科技。",
+        }
+    )
+
+    answer = agent_evidence_answer("宇树科技创始人是谁？", [evidence])
+
+    assert answer is not None
+    assert "创始人王兴兴" in answer
+    assert answer.endswith("[资料 1]")
 
 
 def test_ordinal_answer_extracts_explicit_first_relation_sentence() -> None:
@@ -115,6 +181,55 @@ def test_definition_grounding_requires_complete_entity_name() -> None:
     assert assessment.anchors == {"阿尔法泽"}
     assert assessment.matched_anchors == set()
     assert assessment.grounded is False
+
+
+def test_structured_subject_rejects_partial_entity_overlap() -> None:
+    evidence = SourceItem(
+        id="alpha-island",
+        document_id="alpha-island",
+        source="finewiki-zh",
+        title="阿尔法岛",
+        score=1.0,
+        snippet="阿尔法岛是南极洲的岛屿。",
+    )
+
+    assessment = EvidenceAnswerGenerator.assess_evidence(
+        "这个对象是谁？",
+        [evidence],
+        subject="阿尔法泽",
+    )
+
+    assert assessment.anchors == {"阿尔法泽"}
+    assert assessment.matched_anchors == set()
+    assert assessment.grounded is False
+
+
+def test_structured_subject_matches_tokenized_entity_and_metadata_alias() -> None:
+    evidence = SourceItem(
+        id="metro-line",
+        document_id="metro-line",
+        source="finewiki-zh",
+        title="深圳地铁1号线",
+        score=1.0,
+        snippet="该线路由罗湖站至机场东站，共设30个车站。",
+        metadata={"aliases": ["罗宝线"]},
+    )
+
+    canonical = EvidenceAnswerGenerator.assess_evidence(
+        "这条线路有哪些站？",
+        [evidence],
+        subject="深圳地铁1号线",
+    )
+    aliased = EvidenceAnswerGenerator.assess_evidence(
+        "这条线路有哪些站？",
+        [evidence],
+        subject="罗宝线",
+    )
+
+    assert canonical.matched_anchors == {"深圳地铁1号线"}
+    assert aliased.matched_anchors == {"罗宝线"}
+    assert canonical.grounded is True
+    assert aliased.grounded is True
 
 
 def test_definition_answer_extracts_embedded_definition_sentence() -> None:

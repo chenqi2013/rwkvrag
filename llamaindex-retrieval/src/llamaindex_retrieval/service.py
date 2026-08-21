@@ -20,7 +20,12 @@ from .evidence_utils import (
     time_evidence_answer,
 )
 from .generation import EvidenceAnswerGenerator
+from .evidence_extraction import (
+    EvidenceExtractionResult,
+    LanguageModelEvidenceExtractor,
+)
 from .evidence_gate import (
+    document_aliases,
     evaluate_answer_support,
     evaluate_evidence_gate,
     repair_answer_citations,
@@ -44,7 +49,7 @@ from .qa_analysis import (
     validate_grounding,
     validate_list_answer,
 )
-from .query_planning import QueryPlan, build_query_plan
+from .query_planning import QueryPlan, TaskField, build_query_plan
 
 _MULTI_EVIDENCE_MARKERS = (
     "哪些",
@@ -121,6 +126,10 @@ _LEAD_FACT_MARKERS = (
     "比较",
 )
 _CHRONOLOGICAL_LIST_MARKERS = ("从古至今", "自古至今", "历代", "歷代", "迄今为止")
+_EXHAUSTIVE_LIST_MARKERS = (
+    "全部", "所有", "完整", "总共", "總共", "一共",
+    "从古至今", "自古至今", "迄今为止", "逐一", "每一个", "每一個",
+)
 _ROUTE_ENDPOINT_PATTERN = re.compile(
     r"连接(?P<start>[^，。？?和与]{1,20})(?:和|与)"
     r"(?P<end>[^，。？?的]{1,20})的[^，。？?]{2,32}?(?:线路|路线)"
@@ -139,12 +148,14 @@ class SearchService:
         generator: EvidenceAnswerGenerator | None = None,
         query_planner: LanguageModelQueryPlanner | None = None,
         retrieval_agent: ActiveRetrievalAgent | None = None,
+        evidence_extractor: LanguageModelEvidenceExtractor | None = None,
     ) -> None:
         self.settings = settings
         self.index = index
         self.generator = generator or EvidenceAnswerGenerator(settings)
         self.query_planner = query_planner
         self.retrieval_agent = retrieval_agent
+        self.evidence_extractor = evidence_extractor
         self._answer_cache: OrderedDict[tuple[object, ...], tuple[float, str]] = OrderedDict()
 
     async def search(
@@ -179,26 +190,21 @@ class SearchService:
             candidate_k=candidate_k,
             knowledge_base_id=request.knowledge_base_id,
         )
-        results, relation_context_expanded = await self._expand_document_relation_context(
-            fallback_plan,
-            results,
-            knowledge_base_id=request.knowledge_base_id,
-            top_k=top_k,
-        )
         results, structure_expanded = await self._expand_structured_results(
             plan.normalized_question,
             results,
             knowledge_base_id=request.knowledge_base_id,
             top_k=top_k,
         )
-        if analysis.intent == "list" and fallback_plan.relations and not structure_expanded:
-            results, list_relation_expanded = await self._expand_document_relation_context(
-                fallback_plan,
+        relation_context_expanded = False
+        if not structure_expanded:
+            relation_plan = plan if plan.relations else fallback_plan
+            results, relation_context_expanded = await self._expand_document_relation_context(
+                relation_plan,
                 results,
                 knowledge_base_id=request.knowledge_base_id,
                 top_k=top_k,
             )
-            relation_context_expanded = relation_context_expanded or list_relation_expanded
         min_score = (
             request.min_score
             if request.min_score is not None
@@ -257,6 +263,17 @@ class SearchService:
                     "queries": list(plan.queries),
                     "subject": plan.subject,
                     "relations": list(plan.relations),
+                    "intent": plan.analysis.intent,
+                    "answer_shape": plan.answer_shape,
+                    "set_semantics": plan.set_semantics,
+                    "fields": [
+                        {
+                            "field_id": field.field_id,
+                            "question": field.question,
+                            "relations": list(field.relations),
+                        }
+                        for field in plan.fields
+                    ],
                     "merge_strategy": plan.merge_strategy,
                     "fusion": "weighted_rrf",
                     "context_policy": plan.context_policy,
@@ -311,6 +328,7 @@ class SearchService:
         document_scores: dict[str, float] = {}
         chunks: dict[str, dict[str, LexicalResult]] = {}
         chunk_scores: dict[str, float] = {}
+        chunk_rank_scores: dict[str, float] = {}
         first_seen: dict[str, int] = {}
         sequence = 0
         for group_index, group in enumerate(result_groups):
@@ -328,6 +346,10 @@ class SearchService:
                 chunk_scores[result.node_id] = max(
                     chunk_scores.get(result.node_id, 0.0),
                     float(result.score or 0.0),
+                )
+                chunk_rank_scores[result.node_id] = (
+                    chunk_rank_scores.get(result.node_id, 0.0)
+                    + route_weight / (20 + rank)
                 )
                 if document_id not in first_seen:
                     first_seen[document_id] = sequence
@@ -359,6 +381,10 @@ class SearchService:
                     if re.search(r"\d+号线(?:[（(].+?[）)])?$", title):
                         document_scores[document_id] += 0.12
         if normalized_subject:
+            narrative_relation = any(
+                len(relation.replace(" ", "")) >= 4
+                for relation in plan.relations
+            )
             for document_id, document_chunks in chunks.items():
                 title = next(
                     (
@@ -369,32 +395,9 @@ class SearchService:
                     "",
                 )
                 normalized_title = normalize_search_text(title).replace(" ", "")
-                aliases = {
-                    normalize_search_text(str(alias)).replace(" ", "")
-                    for result in document_chunks.values()
-                    for alias in (
-                        result.metadata.get("aliases")
-                        if isinstance(result.metadata.get("aliases"), list)
-                        else []
-                    )
-                    if str(alias).strip()
-                }
-                if normalized_title == normalized_subject or normalized_title.startswith(
-                    (f"{normalized_subject}(", f"{normalized_subject}（")
-                ):
-                    document_scores[document_id] += 0.12
-                elif normalized_subject in aliases:
-                    document_scores[document_id] += 0.1
-                elif (
-                    plan.analysis.intent in {"cause", "time", "list"}
-                    and title_matches_subject_event(
-                        title,
-                        normalized_subject,
-                        plan.normalized_question,
-                    )
-                ):
-                    document_scores[document_id] += 0.24
-                if plan.relations and any(
+                metadata = next(iter(document_chunks.values())).metadata
+                aliases = document_aliases(title, metadata)
+                has_relation_context = bool(plan.relations and any(
                     normalized_subject in normalize_search_text(result.text).replace(" ", "")
                     and any(
                         normalize_search_text(relation).replace(" ", "")
@@ -402,8 +405,29 @@ class SearchService:
                         for relation in plan.relations
                     )
                     for result in document_chunks.values()
+                ))
+                if title_matches_subject(title, normalized_subject):
+                    document_scores[document_id] += (
+                        0.3 if not narrative_relation or has_relation_context else 0.02
+                    )
+                elif normalized_subject in aliases:
+                    document_scores[document_id] += (
+                        0.2 if not narrative_relation or has_relation_context else 0.02
+                    )
+                elif (
+                    title_matches_subject_event(
+                        title,
+                        normalized_subject,
+                        plan.normalized_question,
+                    )
                 ):
-                    document_scores[document_id] += 0.06
+                    document_scores[document_id] += 0.24
+                elif normalized_title.startswith(
+                    (f"{normalized_subject}(", f"{normalized_subject}（")
+                ):
+                    document_scores[document_id] -= 0.08
+                if has_relation_context:
+                    document_scores[document_id] += 0.28 if narrative_relation else 0.06
         ranked_documents = sorted(
             document_scores,
             key=lambda key: (document_scores[key], -first_seen[key]),
@@ -414,10 +438,20 @@ class SearchService:
             default=1.0,
         ) or 1.0
         merged: list[LexicalResult] = []
+        relation_tokens = set(query_tokens(" ".join(plan.relations)))
         for document_id in ranked_documents:
             ranked_chunks = sorted(
                 chunks[document_id].values(),
-                key=lambda result: chunk_scores[result.node_id],
+                key=lambda result: (
+                    len(
+                        relation_tokens
+                        & set(lexical_tokens(
+                            f"{result.metadata.get('section') or ''}\n{result.text}"
+                        ))
+                    ),
+                    chunk_rank_scores[result.node_id],
+                    chunk_scores[result.node_id],
+                ),
                 reverse=True,
             )
             merged.extend(
@@ -526,6 +560,7 @@ class SearchService:
             "birthplace",
             "ordinal",
             "list",
+            "fact",
         }:
             return results, False
         lookup = getattr(self.index, "document_relation_candidates", None)
@@ -539,6 +574,7 @@ class SearchService:
                 result.document_id not in document_ids
                 and (
                     title_matches_subject(title, normalized_subject)
+                    or normalized_subject in document_aliases(title, result.metadata)
                     or (
                         plan.analysis.intent in {"cause", "time", "list"}
                         and title_matches_subject_event(
@@ -619,7 +655,7 @@ class SearchService:
         response: SearchResponse,
         *,
         evidence_top_k: int,
-    ) -> tuple[SearchResponse, dict[str, object]]:
+    ) -> tuple[SearchResponse, dict[str, object], EvidenceExtractionResult | None]:
         trace: dict[str, object] = {
             "enabled": bool(
                 self.retrieval_agent is not None
@@ -629,31 +665,30 @@ class SearchService:
             "tool_calls": 0,
             "stop_reason": "agent_not_configured",
         }
-        if self.retrieval_agent is None:
-            return response, trace
-        if not self.settings.active_retrieval_enabled:
-            trace["stop_reason"] = "disabled"
-            return response, trace
-
         question = str(response.retrieval.get("normalized_question") or request.question)
-        analysis = analyze_question(question)
-        preliminary_plan = build_query_plan(question)
+        preliminary_plan = self._answer_plan(question, response.retrieval)
+        analysis = preliminary_plan.analysis
         preliminary_sources = self._focus_sources_on_subject(
             preliminary_plan,
             response.results,
+        )
+        extraction = await self._extract_field_evidence(
+            question,
+            preliminary_plan,
+            preliminary_sources,
         )
         preliminary_gate = evaluate_evidence_gate(
             question,
             analysis,
             preliminary_sources,
             subject=preliminary_plan.subject,
-        )
-        missing_list_structure = bool(
-            analysis.expects_complete_list
-            and not response.retrieval.get("structure_expanded")
+            relations=preliminary_plan.relations,
+            field_evidence_available=bool(extraction and extraction.available),
+            field_candidate_count=len(extraction.candidates) if extraction else 0,
         )
         missing_relation_context = bool(
             analysis.intent in {"cause", "procedure"}
+            and not (extraction and extraction.has_candidates)
             and not (
                 response.retrieval.get("section_context_expanded")
                 or response.retrieval.get("document_relation_expanded")
@@ -661,15 +696,22 @@ class SearchService:
         )
         triggers: list[str] = []
         if not preliminary_gate.passed:
-            triggers.append("evidence_gate_failed")
-        if missing_list_structure:
-            triggers.append("list_structure_missing")
+            triggers.append(
+                "field_evidence_missing"
+                if extraction and extraction.available
+                else "evidence_gate_failed"
+            )
         if missing_relation_context:
             triggers.append("relation_context_missing")
         trace["trigger"] = triggers
+        if self.retrieval_agent is None:
+            return response, trace, extraction
+        if not self.settings.active_retrieval_enabled:
+            trace["stop_reason"] = "disabled"
+            return response, trace, extraction
         if not triggers:
             trace["stop_reason"] = "initial_evidence_sufficient"
-            return response, trace
+            return response, trace, extraction
 
         initial_queries = response.retrieval.get("query_plan", {}).get("queries", [])
         used_queries = [
@@ -755,7 +797,18 @@ class SearchService:
             round_trace["evidence_count"] = len(merged)
         else:
             trace["stop_reason"] = "max_rounds"
-        return current, trace
+        if current is response:
+            return current, trace, extraction
+        final_sources = self._focus_sources_on_subject(
+            preliminary_plan,
+            current.results,
+        )
+        final_extraction = await self._extract_field_evidence(
+            question,
+            preliminary_plan,
+            final_sources,
+        )
+        return current, trace, final_extraction
 
     @staticmethod
     def _merge_active_sources(
@@ -783,15 +836,15 @@ class SearchService:
 
     async def ask(self, request: SearchRequest) -> AskResponse:
         display_top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
-        request_plan = build_query_plan(request.question)
-        evidence_top_k = max(display_top_k, _ASK_MIN_EVIDENCE_TOP_K)
-        if request_plan.analysis.intent == "time" and len(request_plan.analysis.subjects) > 2:
-            evidence_top_k = max(evidence_top_k, 10)
+        evidence_top_k, evidence_policy = self._adaptive_evidence_top_k(
+            request.question,
+            display_top_k=display_top_k,
+        )
         evidence_request = request.model_copy(
             update={"top_k": evidence_top_k}
         )
         evidence_response = await self.search(evidence_request)
-        evidence_response, active_retrieval = await self._run_active_retrieval(
+        evidence_response, active_retrieval, field_extraction = await self._run_active_retrieval(
             request,
             evidence_response,
             evidence_top_k=evidence_top_k,
@@ -802,11 +855,14 @@ class SearchService:
             "returned": min(len(evidence_response.results), display_top_k),
             "answer_evidence_top_k": evidence_response.retrieval.get("top_k"),
             "answer_evidence_count": len(evidence_response.results),
+            "evidence_top_k_policy": evidence_policy,
             "active_retrieval": active_retrieval,
         }
         question = str(retrieval.get("normalized_question") or request.question)
-        question_analysis = analyze_question(question)
-        answer_plan = build_query_plan(question)
+        answer_plan = self._answer_plan(question, retrieval)
+        question_analysis = answer_plan.analysis
+        retrieval["evidence_subject"] = answer_plan.subject
+        retrieval["evidence_relations"] = list(answer_plan.relations)
         if question_analysis.intent == "cause":
             evidence_response = evidence_response.model_copy(
                 update={
@@ -825,54 +881,89 @@ class SearchService:
                 )
             }
         )
+        if (
+            field_extraction is not None
+            and not field_extraction.matches_sources(evidence_response.results)
+        ):
+            field_extraction = await self._extract_field_evidence(
+                question,
+                answer_plan,
+                evidence_response.results,
+            )
+        answer_sources = (
+            field_extraction.answer_sources(evidence_response.results)
+            if field_extraction is not None and field_extraction.has_candidates
+            else evidence_response.results
+        )
         gate = evaluate_evidence_gate(
             question,
             question_analysis,
-            evidence_response.results,
+            answer_sources,
             subject=answer_plan.subject,
+            relations=answer_plan.relations,
+            field_evidence_available=bool(field_extraction and field_extraction.available),
+            field_candidate_count=len(field_extraction.candidates) if field_extraction else 0,
         )
         assessment = gate.assessment
-        cache_key = self._answer_cache_key(question, evidence_response)
+        answer_response = evidence_response.model_copy(update={"results": answer_sources})
+        cache_key = self._answer_cache_key(question, answer_response)
         answer = self._get_cached_answer(cache_key)
         cache_hit = answer is not None
         answer_strategy = "cache" if cache_hit else "model"
-        ambiguity = ambiguity_candidates(question, evidence_response.results)
+        ambiguity = ambiguity_candidates(question, answer_sources)
+        raw_model_answer: str | None = None
+        verification_model_answer: str | None = None
+        verification_queries: list[str] = []
+        blocked_answer: str | None = None
+        answer_block_reason: str | None = None
         if answer is None:
             if ambiguity and gate.passed:
                 labels = "、".join(
-                    f"{title}[资料 {next(index for index, source in enumerate(evidence_response.results, start=1) if source.title == title)}]"
+                    f"{title}[资料 {next(index for index, source in enumerate(answer_sources, start=1) if source.title == title)}]"
                     for title in ambiguity
                 )
                 answer = f"这个名称可能指：{labels}。请补充你想查询的具体对象。"
                 answer_strategy = "clarification"
             elif gate.passed and question_analysis.intent == "definition":
-                answer = definition_evidence_answer(question, evidence_response.results)
+                answer = definition_evidence_answer(question, answer_sources)
             elif (
                 gate.passed
                 and question_analysis.intent == "time"
             ):
                 answer = coordinated_time_evidence_answer(
-                    evidence_response.results,
+                    answer_sources,
                     question_analysis.subjects,
-                ) or time_evidence_answer(question, evidence_response.results)
+                ) or time_evidence_answer(question, answer_sources)
             elif gate.passed and question_analysis.intent == "agent":
-                answer = agent_evidence_answer(question, evidence_response.results)
+                answer = agent_evidence_answer(question, answer_sources)
             elif gate.passed and question_analysis.intent == "ordinal":
-                answer = ordinal_evidence_answer(question, evidence_response.results)
+                answer = ordinal_evidence_answer(question, answer_sources)
             elif gate.passed and question_analysis.intent == "location":
-                answer = location_evidence_answer(question, evidence_response.results)
+                answer = location_evidence_answer(question, answer_sources)
             elif gate.passed and question_analysis.intent == "birthplace":
-                answer = birthplace_evidence_answer(question, evidence_response.results)
+                answer = birthplace_evidence_answer(question, answer_sources)
             if (
                 answer is None
                 and gate.passed
                 and question_analysis.intent in {"fact", "list"}
+                and not (
+                    question_analysis.intent == "fact"
+                    and field_extraction is not None
+                    and field_extraction.strategy in {"lexical_attention", "lexical_fallback"}
+                )
             ):
-                answer = direct_evidence_answer(question, evidence_response.results)
+                answer = direct_evidence_answer(question, answer_sources)
             if answer is not None:
                 answer_strategy = "direct_extract"
             elif gate.passed:
-                answer = await self.generator.generate(question, evidence_response.results)
+                answer = await self._generate_answer(
+                    question,
+                    answer_sources,
+                    subject=answer_plan.subject,
+                    relations=answer_plan.relations,
+                    trusted_evidence=bool(field_extraction and field_extraction.has_candidates),
+                )
+                raw_model_answer = answer
                 if (
                     any(
                         marker in answer
@@ -880,41 +971,140 @@ class SearchService:
                     )
                     and question_analysis.intent == "cause"
                 ):
-                    fallback = cause_evidence_answer(evidence_response.results)
+                    fallback = cause_evidence_answer(answer_sources)
+                    if fallback is not None:
+                        answer = fallback
+                        answer_strategy = "evidence_fallback"
+                if (
+                    any(
+                        marker in answer
+                        for marker in ("无法确定", "无法从资料", "资料不足", "不能确定")
+                    )
+                    and field_extraction
+                    and field_extraction.has_candidates
+                ):
+                    fallback = self._field_evidence_quote_answer(
+                        answer_sources,
+                        answer_plan.relations,
+                    )
                     if fallback is not None:
                         answer = fallback
                         answer_strategy = "evidence_fallback"
             else:
                 answer = "根据检索到的资料，无法确定。"
+                answer_block_reason = "field_evidence_missing" if (
+                    field_extraction and field_extraction.available
+                ) else "insufficient_evidence"
         if question_analysis.intent == "cause" and self._is_empty_answer_shell(answer):
-            fallback = cause_evidence_answer(evidence_response.results)
+            fallback = cause_evidence_answer(answer_sources)
             if fallback is not None:
                 answer = fallback
                 answer_strategy = "evidence_fallback"
-        validation = validate_grounding(answer, evidence_response.results)
+        validation = validate_grounding(answer, answer_sources)
         if "unsupported_number" in validation.issues and answer_strategy in {"model", "cache"}:
             cleaned_answer = remove_unsupported_number_sentences(answer, validation.unsupported_numbers)
             answer = cleaned_answer or "根据检索到的资料，无法确定。"
-            validation = validate_grounding(answer, evidence_response.results)
-        list_validation = validate_list_answer(question, answer, evidence_response.results)
+            validation = validate_grounding(answer, answer_sources)
+        list_validation = validate_list_answer(question, answer, answer_sources)
         if list_validation.complete is False:
-            fallback = list_evidence_answer(question, evidence_response.results)
+            fallback = list_evidence_answer(question, answer_sources)
+            blocked_answer = answer
             answer = fallback or "根据检索到的资料，无法确定完整列表。[资料 1]"
             answer_strategy = "evidence_fallback" if fallback else "incomplete_list_blocked"
-            validation = validate_grounding(answer, evidence_response.results)
+            answer_block_reason = "incomplete_list"
+            validation = validate_grounding(answer, answer_sources)
         if answer_strategy == "model":
-            answer = repair_answer_citations(answer, evidence_response.results)
-        answer_support = evaluate_answer_support(answer, evidence_response.results)
+            answer = repair_answer_citations(answer, answer_sources)
+        answer_support = evaluate_answer_support(answer, answer_sources, question=question)
+        if (
+            not answer_support.passed
+            and answer_strategy == "model"
+            and raw_model_answer
+            and answer_support.unsupported_terms
+        ):
+            (
+                verified_sources,
+                verified_extraction,
+                verification_queries,
+            ) = await self._answer_guided_verification(
+                request,
+                answer_plan,
+                answer_support.unsupported_terms,
+                answer_sources,
+                evidence_top_k=evidence_top_k,
+            )
+            if verified_sources and verified_extraction and verified_extraction.has_candidates:
+                candidate_answer = repair_answer_citations(
+                    raw_model_answer,
+                    verified_sources,
+                )
+                candidate_validation = validate_grounding(candidate_answer, verified_sources)
+                candidate_support = evaluate_answer_support(
+                    candidate_answer,
+                    verified_sources,
+                    question=question,
+                )
+                if not (candidate_validation.valid and candidate_support.passed):
+                    try:
+                        candidate_answer = await self._generate_answer(
+                            question,
+                            verified_sources,
+                            subject=answer_plan.subject,
+                            relations=answer_plan.relations,
+                            trusted_evidence=True,
+                        )
+                    except Exception:
+                        candidate_answer = ""
+                    verification_model_answer = candidate_answer
+                    candidate_answer = repair_answer_citations(
+                        candidate_answer,
+                        verified_sources,
+                    )
+                    candidate_validation = validate_grounding(
+                        candidate_answer,
+                        verified_sources,
+                    )
+                    candidate_support = evaluate_answer_support(
+                        candidate_answer,
+                        verified_sources,
+                        question=question,
+                    )
+                if candidate_validation.valid and candidate_support.passed:
+                    answer = candidate_answer
+                    answer_sources = verified_sources
+                    field_extraction = verified_extraction
+                    answer_strategy = "model_verified_retrieval"
+                    validation = candidate_validation
+                    answer_support = candidate_support
+                    gate = evaluate_evidence_gate(
+                        question,
+                        question_analysis,
+                        answer_sources,
+                        subject=answer_plan.subject,
+                        relations=answer_plan.relations,
+                        field_evidence_available=True,
+                        field_candidate_count=len(field_extraction.candidates),
+                    )
+                    assessment = gate.assessment
+                    answer_response = evidence_response.model_copy(update={"results": answer_sources})
+                    cache_key = self._answer_cache_key(question, answer_response)
         if not answer_support.passed and answer_strategy in {"model", "cache"}:
+            blocked_answer = answer
             fallback = (
-                cause_evidence_answer(evidence_response.results)
+                cause_evidence_answer(answer_sources)
                 if question_analysis.intent == "cause"
                 else None
             )
+            if fallback is None and field_extraction and field_extraction.has_candidates:
+                fallback = self._field_evidence_quote_answer(
+                    answer_sources,
+                    answer_plan.relations,
+                )
             answer = fallback or "根据检索到的资料，无法确定。"
             answer_strategy = "evidence_fallback" if fallback else "answer_grounding_blocked"
-            validation = validate_grounding(answer, evidence_response.results)
-            answer_support = evaluate_answer_support(answer, evidence_response.results)
+            answer_block_reason = None if fallback else "answer_support_failed"
+            validation = validate_grounding(answer, answer_sources)
+            answer_support = evaluate_answer_support(answer, answer_sources, question=question)
         if (
             gate.passed
             and assessment.grounded
@@ -927,7 +1117,7 @@ class SearchService:
         elif cache_hit:
             self._answer_cache.pop(cache_key, None)
         response_results = self._display_sources(
-            evidence_response.results,
+            answer_sources,
             answer,
             display_top_k=display_top_k,
         )
@@ -940,7 +1130,7 @@ class SearchService:
             generation={
                 "model": model_name,
                 "endpoint": self.settings.generation_base_url,
-                "evidence_count": len(evidence_response.results),
+                "evidence_count": len(answer_sources),
                 "displayed_evidence_count": len(response_results),
                 "evidence_grounded": assessment.grounded,
                 "question_terms": sorted(assessment.question_terms),
@@ -970,8 +1160,328 @@ class SearchService:
                 "list_answer_count": list_validation.answer_count,
                 "list_issues": list(list_validation.issues),
                 "blocked_reason": "insufficient_evidence" if not gate.passed else None,
+                "raw_model_answer": raw_model_answer,
+                "verification_model_answer": verification_model_answer,
+                "verification_queries": verification_queries,
+                "blocked_answer": blocked_answer,
+                "answer_block_reason": answer_block_reason,
+                "field_evidence_available": bool(field_extraction and field_extraction.available),
+                "field_evidence": [
+                    {
+                        "field_id": candidate.field_id,
+                        "source_index": candidate.source_index + 1,
+                        "span": candidate.span,
+                        "sha256": candidate.content_hash,
+                    }
+                    for candidate in (field_extraction.candidates if field_extraction else ())
+                ],
+                "field_evidence_errors": list(field_extraction.errors) if field_extraction else [],
+                "field_evidence_strategy": field_extraction.strategy if field_extraction else None,
             },
         )
+
+    def _adaptive_evidence_top_k(
+        self,
+        question: str,
+        *,
+        display_top_k: int,
+    ) -> tuple[int, dict[str, object]]:
+        plan = build_query_plan(question)
+        analysis = plan.analysis
+        target = _ASK_MIN_EVIDENCE_TOP_K
+        reason = "simple_fact"
+        if plan.answer_shape == "list" and plan.set_semantics == "all":
+            target = 12
+            reason = "complete_list"
+        elif analysis.intent in {"cause", "comparison"}:
+            target = 10
+            reason = analysis.intent
+        elif analysis.intent == "time" and len(analysis.subjects) > 2:
+            target = 10
+            reason = "multi_subject_time"
+        elif plan.answer_shape == "list" or analysis.intent == "procedure":
+            target = 8
+            reason = "list" if plan.answer_shape == "list" else analysis.intent
+        evidence_top_k = min(
+            self.settings.max_top_k,
+            max(display_top_k, target),
+        )
+        return evidence_top_k, {
+            "mode": "adaptive",
+            "intent": analysis.intent,
+            "reason": reason,
+            "target": min(target, self.settings.max_top_k),
+            "display_top_k": display_top_k,
+            "effective_top_k": evidence_top_k,
+        }
+
+    async def _generate_answer(
+        self,
+        question: str,
+        sources: list[SourceItem],
+        *,
+        subject: str,
+        relations: tuple[str, ...] = (),
+        trusted_evidence: bool = False,
+    ) -> str:
+        if isinstance(self.generator, EvidenceAnswerGenerator):
+            return await self.generator.generate(
+                question,
+                sources,
+                subject=subject,
+                relations=relations,
+                trusted_evidence=trusted_evidence,
+            )
+        return await self.generator.generate(question, sources)
+
+    @staticmethod
+    def _field_evidence_quote_answer(
+        sources: list[SourceItem],
+        relations: tuple[str, ...],
+    ) -> str | None:
+        normalized_relations = {
+            normalize_search_text(relation).replace(" ", "")
+            for relation in relations
+            if len(relation.strip()) >= 2
+        }
+        if not normalized_relations:
+            return None
+        quotes: list[str] = []
+        for source_index, source in enumerate(sources, start=1):
+            units = [
+                unit.strip()
+                for unit in re.split(r"(?<=[。！？!?；;])|\n+", clean_evidence_text(source.snippet))
+                if unit.strip()
+            ]
+            for unit in units:
+                normalized = normalize_search_text(unit).replace(" ", "")
+                if not any(relation in normalized for relation in normalized_relations):
+                    continue
+                quote = unit.rstrip("。！？!?；;")
+                quotes.append(f"{quote}[资料 {source_index}]")
+                break
+            if len(quotes) >= 4:
+                break
+        if not quotes:
+            return None
+        return "根据检索资料，可确认：" + "；".join(quotes) + "。"
+
+    async def _extract_field_evidence(
+        self,
+        question: str,
+        plan: QueryPlan,
+        sources: list[SourceItem],
+    ) -> EvidenceExtractionResult | None:
+        if self.evidence_extractor is None:
+            return None
+        try:
+            return await self.evidence_extractor.extract(question, plan, sources)
+        except Exception as error:
+            return EvidenceExtractionResult(
+                (), 0, 0, (f"{type(error).__name__}: {error}",)
+            )
+
+    async def _answer_guided_verification(
+        self,
+        request: SearchRequest,
+        plan: QueryPlan,
+        unsupported_terms: tuple[str, ...],
+        original_sources: list[SourceItem],
+        *,
+        evidence_top_k: int,
+    ) -> tuple[list[SourceItem], EvidenceExtractionResult | None, list[str]]:
+        question_terms = set(lexical_tokens(request.question))
+        hypotheses = [
+            term.strip()
+            for term in sorted(
+                unsupported_terms,
+                key=lambda value: (value in question_terms, -len(value)),
+            )
+            if len(term.strip()) >= 2
+            and term.strip() not in {"根据资料", "无法确定", "问题", "答案"}
+        ][:3]
+        if not hypotheses:
+            return [], None, []
+        relation_hints = [
+            relation.strip()
+            for relation in plan.relations
+            if len(relation.strip()) >= 2
+            and relation.strip() not in hypotheses
+            and relation.strip() not in plan.subject
+        ][:3]
+        queries = list(dict.fromkeys(
+            query
+            for hypothesis in hypotheses
+            for query in (
+                f"{plan.subject} {hypothesis}".strip(),
+                *(
+                    f"{hypothesis} {relation}".strip()
+                    for relation in relation_hints
+                ),
+            )
+            if query
+        ))
+        responses = await asyncio.gather(*(
+            self.search(
+                SearchRequest(
+                    question=request.question,
+                    top_k=evidence_top_k,
+                    candidate_k=request.candidate_k,
+                    min_score=request.min_score,
+                    knowledge_base_id=request.knowledge_base_id,
+                ),
+                use_model_planner=False,
+                query_override=(query,),
+            )
+            for query in queries
+        ), return_exceptions=True)
+        groups = [
+            self._collapse_verification_chunks(
+                response.results,
+                hypotheses=hypotheses,
+                relations=relation_hints,
+            )
+            for response in responses
+            if isinstance(response, SearchResponse)
+        ]
+        if not groups:
+            return [], None, queries
+        merged = self._merge_active_sources(
+            groups,
+            original_sources,
+            limit=self.settings.active_retrieval_max_results,
+        )
+        verification_plan = replace(
+            plan,
+            relations=tuple(dict.fromkeys((*hypotheses, *plan.relations))),
+            fields=tuple(
+                replace(
+                    field,
+                    relations=tuple(dict.fromkeys((*hypotheses, *field.relations))),
+                )
+                for field in plan.fields
+            ),
+        )
+        extraction = await self._extract_field_evidence(
+            request.question,
+            verification_plan,
+            merged,
+        )
+        if extraction is None or not extraction.has_candidates:
+            return [], extraction, queries
+        return extraction.answer_sources(merged), extraction, queries
+
+    @staticmethod
+    def _collapse_verification_chunks(
+        sources: list[SourceItem],
+        *,
+        hypotheses: list[str],
+        relations: list[str],
+    ) -> list[SourceItem]:
+        verification_terms = set(lexical_tokens(" ".join((*hypotheses, *relations))))
+        grouped: OrderedDict[str, list[tuple[int, SourceItem]]] = OrderedDict()
+        for index, source in enumerate(sources):
+            grouped.setdefault(source.document_id, []).append((index, source))
+
+        output: list[SourceItem] = []
+        for candidates in grouped.values():
+            _, best = max(
+                candidates,
+                key=lambda item: (
+                    len(verification_terms & set(lexical_tokens(item[1].snippet))),
+                    int(bool(re.search(r"[。！？；，,.!?;]", item[1].snippet))),
+                    int("category:" not in item[1].snippet.lower()),
+                    int(len(item[1].snippet.strip()) >= 80),
+                    min(len(item[1].snippet), 1_000),
+                    -item[0],
+                ),
+            )
+            output.append(best)
+        return output
+
+    @staticmethod
+    def _answer_plan(
+        question: str,
+        retrieval: dict[str, object],
+    ) -> QueryPlan:
+        fallback = build_query_plan(question)
+        query_plan = retrieval.get("query_plan")
+        if not isinstance(query_plan, dict) or query_plan.get("planner") != "model":
+            return fallback
+        subject = query_plan.get("subject")
+        intent = query_plan.get("intent")
+        answer_shape = query_plan.get("answer_shape")
+        set_semantics = query_plan.get("set_semantics")
+        relations = query_plan.get("relations")
+        raw_fields = query_plan.get("fields")
+        if not all(isinstance(value, str) and value.strip() for value in (
+            subject, intent, answer_shape, set_semantics,
+        )):
+            return fallback
+        if not isinstance(relations, list) or not isinstance(raw_fields, list):
+            return fallback
+        fields: list[TaskField] = []
+        for item in raw_fields:
+            if not isinstance(item, dict):
+                continue
+            field_id = item.get("field_id")
+            field_question = item.get("question")
+            field_relations = item.get("relations")
+            if not isinstance(field_id, str) or not isinstance(field_question, str):
+                continue
+            if not isinstance(field_relations, list):
+                continue
+            fields.append(TaskField(
+                field_id.strip(),
+                field_question.strip(),
+                tuple(str(value).strip() for value in field_relations if str(value).strip()),
+            ))
+        if not fields:
+            return fallback
+        model_relations = tuple(
+            str(value).strip() for value in relations if str(value).strip()
+        )
+        merged_relations = tuple(dict.fromkeys((*model_relations, *fallback.relations)))
+        return replace(
+            fallback,
+            subject=subject.strip(),
+            relations=merged_relations,
+            fields=tuple(fields),
+            answer_shape=answer_shape.strip(),
+            set_semantics=set_semantics.strip(),
+            analysis=replace(
+                fallback.analysis,
+                intent=intent.strip(),
+                expects_list=answer_shape == "list",
+                expects_complete_list=answer_shape == "list" and set_semantics == "all",
+            ),
+        )
+
+    @staticmethod
+    def _planned_subject(
+        retrieval: dict[str, object],
+    ) -> str:
+        query_plan = retrieval.get("query_plan")
+        if not isinstance(query_plan, dict) or query_plan.get("planner") != "model":
+            return ""
+        subject = query_plan.get("subject")
+        return str(subject).strip() if isinstance(subject, str) else ""
+
+    @staticmethod
+    def _planned_relations(
+        retrieval: dict[str, object],
+    ) -> tuple[str, ...]:
+        query_plan = retrieval.get("query_plan")
+        if not isinstance(query_plan, dict):
+            return ()
+        relations = query_plan.get("relations")
+        if not isinstance(relations, list):
+            return ()
+        return tuple(dict.fromkeys(
+            str(relation).strip()
+            for relation in relations
+            if str(relation).strip()
+        ))
 
     @staticmethod
     def _display_sources(
@@ -1469,7 +1979,7 @@ class SearchService:
             source.document_id
             for source in sources
             if (
-                normalize_search_text(source.title).replace(" ", "") == normalized_subject
+                title_matches_subject(source.title, normalized_subject)
                 or normalized_subject in SearchService._source_aliases(source)
             )
         }
@@ -1526,14 +2036,7 @@ class SearchService:
 
     @staticmethod
     def _source_aliases(source: SourceItem) -> set[str]:
-        aliases = source.metadata.get("aliases")
-        if not isinstance(aliases, list):
-            return set()
-        return {
-            normalize_search_text(str(alias)).replace(" ", "")
-            for alias in aliases
-            if str(alias).strip()
-        }
+        return document_aliases(source.title, source.metadata)
 
     @staticmethod
     def _with_station_list_companions(

@@ -45,6 +45,43 @@ def test_cause_question_with_list_wording_still_uses_cause_pipeline() -> None:
     assert plan.context_policy == "section"
 
 
+def test_list_plan_extracts_general_requested_relation() -> None:
+    plan = build_query_plan("秦始皇有哪些伟大成就？")
+
+    assert plan.analysis.intent == "list"
+    assert plan.subject == "秦始皇"
+    assert plan.relations == ("伟大成就", "成就")
+
+
+def test_query_plan_recognizes_colloquial_multi_item_answer_shape() -> None:
+    plan = build_query_plan("马斯克创办了哪几家公司")
+
+    assert plan.analysis.intent == "list"
+    assert plan.subject == "马斯克"
+    assert plan.relations[:4] == ("创办", "创立", "创建", "成立")
+    assert plan.answer_shape == "list"
+    assert plan.set_semantics == "partial"
+
+
+def test_generic_possessive_question_becomes_subject_and_field() -> None:
+    owner = build_query_plan("宇树科技的老板是谁")
+    capital = build_query_plan("中国的首都在哪里")
+    ending = build_query_plan("三国演义最后的结局是什么？")
+
+    assert (owner.subject, owner.relations, owner.analysis.intent) == (
+        "宇树科技", ("老板",), "agent",
+    )
+    assert (capital.subject, capital.relations) == ("中国", ("首都",))
+    assert ending.subject == "三国演义"
+    assert {"结局", "终结", "统一", "归一统"} <= set(ending.relations)
+
+    story_agent = build_query_plan("水浒传里赤手空拳打死老虎的是谁？")
+    assert story_agent.subject == "水浒传"
+    assert story_agent.analysis.intent == "agent"
+    assert {"赤手空拳打死老虎", "打死老虎"} <= set(story_agent.relations)
+    assert "打死老虎" in story_agent.queries
+
+
 def test_builds_definition_and_procedure_plans_without_specific_entities() -> None:
     definition = build_query_plan("硝酸是什么？")
     procedure = build_query_plan("宇航员如何进行舱外活动训练？")
@@ -83,6 +120,14 @@ def test_builds_action_agent_and_current_office_queries() -> None:
         "美国副总统 目前",
         "美国副总统 当前",
     )
+
+
+def test_builds_role_agent_plan_with_role_equivalents() -> None:
+    plan = build_query_plan("宇树科技创始人是谁？")
+
+    assert plan.analysis.intent == "agent"
+    assert plan.subject == "宇树科技"
+    assert plan.relations[:3] == ("创始人", "创办人", "创办者")
 
 
 def test_agent_query_focuses_on_nearest_relational_object() -> None:
