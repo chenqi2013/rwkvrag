@@ -82,6 +82,22 @@ def test_generic_possessive_question_becomes_subject_and_field() -> None:
     assert "打死老虎" in story_agent.queries
 
 
+def test_compact_role_question_preserves_company_subject() -> None:
+    plan = build_query_plan("宇树科技老板是谁？")
+
+    assert plan.subject == "宇树科技"
+    assert plan.relations == ("老板",)
+    assert plan.analysis.intent == "agent"
+
+
+def test_nominal_question_without_interrogative_keeps_search_anchor() -> None:
+    plan = build_query_plan("中国四大名著？")
+
+    assert plan.subject == "中国四大名著"
+    assert plan.answer_shape == "list"
+    assert plan.set_semantics == "all"
+
+
 def test_builds_definition_and_procedure_plans_without_specific_entities() -> None:
     definition = build_query_plan("硝酸是什么？")
     procedure = build_query_plan("宇航员如何进行舱外活动训练？")
@@ -177,6 +193,13 @@ def test_builds_counted_enumeration_as_complete_list() -> None:
     assert plan.set_semantics == "all"
     assert plan.relations == ("是指", "包括", "分别是", "分别为")
     assert plan.queries[:2] == ("中国四大名著 列表", "中国四大名著")
+
+    generic_plan = build_query_plan("中国四大名著是哪几个？")
+    assert generic_plan.analysis.intent == "list"
+    assert generic_plan.answer_shape == "list"
+    assert generic_plan.set_semantics == "all"
+    assert generic_plan.relations == ("是指", "包括", "分别是", "分别为")
+    assert generic_plan.queries[:2] == ("中国四大名著 列表", "中国四大名著")
 
 
 def test_transit_list_plan_cleans_actions_and_adds_companion_page_query() -> None:

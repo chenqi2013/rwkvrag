@@ -45,11 +45,13 @@ _RELATION_EQUIVALENTS = {
     "创始人": ("创始人", "创办人", "创办者", "创立", "创建", "创办"),
     "创办人": ("创办人", "创始人", "创办者", "创立", "创建", "创办"),
     "创办者": ("创办者", "创办人", "创始人", "创立", "创建", "创办"),
+    "老板": ("老板", "创始人", "创办人", "创办者", "负责人", "首席执行官", "CEO"),
+    "负责人": ("负责人", "老板", "创始人", "创办人", "创办者", "负责"),
+    "首席执行官": ("首席执行官", "CEO", "负责人", "老板"),
     "建立者": ("建立者", "建立", "创立", "创建"),
     "创建者": ("创建者", "创建", "创立", "建立"),
     "发明者": ("发明者", "发明", "研制", "创造"),
     "发现者": ("发现者", "发现", "首次发现"),
-    "负责人": ("负责人", "负责", "领导", "主持"),
 }
 _STRICT_RELATION_INTENTS = {"ordinal", "time", "location", "birthplace", "agent"}
 
@@ -348,7 +350,18 @@ def title_matches_subject(title: str, normalized_subject: str) -> bool:
         value = value.replace("反潜护卫艇", "猎潜艇")
         return value
 
-    return canonical(normalized_title) == canonical(normalized_subject)
+    canonical_title = canonical(normalized_title)
+    canonical_subject = canonical(normalized_subject)
+    if canonical_title == canonical_subject:
+        return True
+    # Questions often add a broad scope marker to an otherwise exact entity,
+    # e.g. "中国四大名著" for the page "四大名著".  Only allow this for a
+    # small, explicit set of scope markers so similarly named pages do not pass
+    # the identity gate accidentally.
+    for prefix in ("中国", "中华人民共和国", "我国", "世界"):
+        if canonical_subject.startswith(prefix) and canonical_subject[len(prefix):] == canonical_title:
+            return True
+    return False
 
 
 def title_matches_subject_event(title: str, normalized_subject: str, question: str) -> bool:

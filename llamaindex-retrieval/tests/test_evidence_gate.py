@@ -331,6 +331,32 @@ def test_gate_accepts_agent_relation_synonym_on_exact_topic_page() -> None:
     assert "出使" in result.matched_relation_terms
 
 
+def test_gate_maps_colloquial_owner_to_creator_relation() -> None:
+    question = "宇树科技老板是谁？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("宇树科技", "宇树科技创始人王兴兴在2016年创办了宇树科技。")],
+        subject="宇树科技",
+        relations=("老板",),
+    )
+
+    assert result.passed is True
+    assert "创始人" in result.matched_relation_terms
+
+
+def test_gate_allows_broad_scope_prefix_for_exact_page() -> None:
+    question = "中国四大名著？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("四大名著", "四大名著是指《三国演义》《西游记》《水浒传》《红楼梦》。")],
+        subject="中国四大名著",
+    )
+
+    assert result.passed is True
+
+
 def test_gate_accepts_relation_evidence_on_parent_topic_page() -> None:
     question = "现代主义建筑发展所依赖的安全电梯由谁发明？"
     result = evaluate_evidence_gate(

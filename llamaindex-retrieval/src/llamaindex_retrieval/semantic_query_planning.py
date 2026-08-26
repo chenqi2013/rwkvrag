@@ -11,6 +11,7 @@ from .config import Settings
 from .generation import EvidenceAnswerGenerator
 from .lexical_index import lexical_tokens, normalize_search_text
 from .query_planning import QueryPlan, TaskField
+from .qa_analysis import counted_list_size
 
 
 PlannerStrategy = Literal["model", "deterministic_fallback"]
@@ -120,9 +121,17 @@ class LanguageModelQueryPlanner:
                 pass
 
         query_limit = self.settings.model_query_planning_max_queries
-        model_prefix_size = max(1, query_limit // 2)
-        queries = list(model_queries[:model_prefix_size])
-        for query in (*fallback.queries, *model_queries[model_prefix_size:]):
+        if self._preserve_explicit_list_contract(fallback):
+            query_candidates = (*fallback.queries, *model_queries)
+        else:
+            model_prefix_size = max(1, query_limit // 2)
+            query_candidates = (
+                *model_queries[:model_prefix_size],
+                *fallback.queries,
+                *model_queries[model_prefix_size:],
+            )
+        queries: list[str] = []
+        for query in query_candidates:
             if query not in queries:
                 queries.append(query)
             if len(queries) >= query_limit:
@@ -144,6 +153,16 @@ class LanguageModelQueryPlanner:
             answer_shape = "list"
             if fallback.set_semantics == "all":
                 set_semantics = "all"
+        if fallback.answer_shape in {"summary", "narrative"}:
+            answer_shape = fallback.answer_shape
+            set_semantics = fallback.set_semantics
+        if self._preserve_explicit_list_contract(fallback):
+            subject = fallback.subject
+            relations = fallback.relations
+            fields = fallback.fields
+            intent = "list"
+            answer_shape = "list"
+            set_semantics = "all"
         plan = replace(
             fallback,
             queries=tuple(queries[:query_limit]),
@@ -385,6 +404,17 @@ relations 只写关系名称及同义表达，不能填写猜测的具体答案�
             fallback.analysis.intent == "agent"
             and not cls._subject_matches_fallback(fallback.subject, model_subject)
         )
+
+    @staticmethod
+    def _preserve_explicit_list_contract(plan: QueryPlan) -> bool:
+        if not plan.analysis.expects_complete_list:
+            return False
+        if counted_list_size(plan.normalized_question) is not None:
+            return True
+        return bool(re.search(
+            r"(?:是|为)(?:哪几个|哪几种|哪几类|哪几项|哪几篇|哪几部|哪几本)",
+            plan.normalized_question,
+        ))
 
     @classmethod
     def _ground_subject_from_contract(

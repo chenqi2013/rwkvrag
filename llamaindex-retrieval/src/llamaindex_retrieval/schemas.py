@@ -62,6 +62,13 @@ class SearchTestItem(BaseModel):
     updated_at: datetime
     latest_run_id: str | None = None
     latest_answer_status: Literal["answered", "refused"] | None = None
+    latest_failure_category: Literal[
+        "data_missing",
+        "retrieval_failed",
+        "evidence_extraction_failed",
+        "generation_failed",
+    ] | None = None
+    latest_failure_reason: str | None = None
     latest_run: SearchTestRun | None = None
 
 

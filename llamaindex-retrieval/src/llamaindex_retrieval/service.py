@@ -2,6 +2,7 @@ import asyncio
 import re
 from collections import OrderedDict
 from dataclasses import replace
+from hashlib import sha256
 from time import monotonic
 
 from .active_retrieval import ActiveRetrievalAgent
@@ -21,9 +22,11 @@ from .evidence_utils import (
 )
 from .generation import AnswerGenerationError, EvidenceAnswerGenerator
 from .evidence_extraction import (
+    EvidenceSpan,
     EvidenceExtractionResult,
     LanguageModelEvidenceExtractor,
 )
+from .failure_diagnosis import diagnose_failure
 from .evidence_gate import (
     document_aliases,
     evaluate_answer_support,
@@ -935,7 +938,45 @@ class SearchService:
             update={"top_k": evidence_top_k}
         )
         initial_search_started = monotonic()
-        evidence_response = await self.search(evidence_request)
+        try:
+            evidence_response = await self.search(evidence_request)
+        except Exception as error:
+            elapsed = self._elapsed_ms(initial_search_started)
+            retrieval = {
+                "algorithm": "OpenSearch BM25",
+                "mode": "bm25+keyword",
+                "top_k": display_top_k,
+                "returned": 0,
+                "retrieval_error": str(error),
+                "retrieval_error_type": type(error).__name__,
+                "timings_ms": {
+                    "initial_search": elapsed,
+                    "total": self._elapsed_ms(ask_started),
+                },
+            }
+            generation = {
+                "evidence_count": 0,
+                "displayed_evidence_count": 0,
+                "evidence_gate_passed": False,
+                "answer_strategy": "retrieval_error",
+            }
+            diagnosis = diagnose_failure(
+                answer="根据检索到的资料，无法确定。",
+                sources=[],
+                retrieval=retrieval,
+                generation=generation,
+            )
+            generation.update({
+                "failure_category": diagnosis.category,
+                "failure_reason": diagnosis.reason,
+                "failure_stage": diagnosis.stage,
+            })
+            return AskResponse(
+                answer="根据检索到的资料，无法确定。",
+                sources=[],
+                retrieval=retrieval,
+                generation=generation,
+            )
         timings["initial_search"] = self._elapsed_ms(initial_search_started)
         timings["initial_search_detail"] = evidence_response.retrieval.get("timings_ms", {})
         active_started = monotonic()
@@ -1252,61 +1293,74 @@ class SearchService:
         timings["budget_ms"] = self.settings.ask_total_timeout * 1000
         retrieval["timings_ms"] = timings
         retrieval["request_budget_exhausted"] = monotonic() >= deadline
+        generation = {
+            "model": model_name,
+            "endpoint": self.settings.generation_base_url,
+            "evidence_count": len(answer_sources),
+            "displayed_evidence_count": len(response_results),
+            "evidence_grounded": assessment.grounded,
+            "question_terms": sorted(assessment.question_terms),
+            "matched_evidence_terms": sorted(assessment.matched_terms),
+            "matched_specific_terms": sorted(assessment.matched_specific_terms),
+            "evidence_anchors": sorted(assessment.anchors),
+            "matched_evidence_anchors": sorted(assessment.matched_anchors),
+            "evidence_gate_passed": gate.passed,
+            "evidence_gate_issues": list(gate.issues),
+            "relation_terms": list(gate.relation_terms),
+            "matched_relation_terms": list(gate.matched_relation_terms),
+            "citation_required": True,
+            "cache_hit": cache_hit,
+            "answer_strategy": answer_strategy,
+            "answer_shape": answer_plan.answer_shape,
+            "intent": question_analysis.intent,
+            "entity_type": question_analysis.entity_type,
+            "ambiguity_candidates": ambiguity,
+            "grounding_valid": validation.valid,
+            "grounding_issues": list(validation.issues),
+            "answer_support_passed": answer_support.passed,
+            "answer_support_coverage": round(answer_support.coverage, 4),
+            "answer_support_issues": list(answer_support.issues),
+            "unsupported_answer_terms": list(answer_support.unsupported_terms),
+            "unsupported_numbers": list(validation.unsupported_numbers),
+            "list_complete": list_validation.complete,
+            "list_expected_count": list_validation.expected_count,
+            "list_answer_count": list_validation.answer_count,
+            "list_issues": list(list_validation.issues),
+            "blocked_reason": "insufficient_evidence" if not gate.passed else None,
+            "raw_model_answer": raw_model_answer,
+            "verification_model_answer": verification_model_answer,
+            "verification_queries": verification_queries,
+            "blocked_answer": blocked_answer,
+            "answer_block_reason": answer_block_reason,
+            "field_evidence_available": bool(field_extraction and field_extraction.available),
+            "field_evidence": [
+                {
+                    "field_id": candidate.field_id,
+                    "source_index": candidate.source_index + 1,
+                    "span": candidate.span,
+                    "sha256": candidate.content_hash,
+                }
+                for candidate in (field_extraction.candidates if field_extraction else ())
+            ],
+            "field_evidence_errors": list(field_extraction.errors) if field_extraction else [],
+            "field_evidence_strategy": field_extraction.strategy if field_extraction else None,
+        }
+        diagnosis = diagnose_failure(
+            answer=answer,
+            sources=response_results,
+            retrieval=retrieval,
+            generation=generation,
+        )
+        generation.update({
+            "failure_category": diagnosis.category,
+            "failure_reason": diagnosis.reason,
+            "failure_stage": diagnosis.stage,
+        })
         return AskResponse(
             answer=answer,
             sources=response_results,
             retrieval=retrieval,
-            generation={
-                "model": model_name,
-                "endpoint": self.settings.generation_base_url,
-                "evidence_count": len(answer_sources),
-                "displayed_evidence_count": len(response_results),
-                "evidence_grounded": assessment.grounded,
-                "question_terms": sorted(assessment.question_terms),
-                "matched_evidence_terms": sorted(assessment.matched_terms),
-                "matched_specific_terms": sorted(assessment.matched_specific_terms),
-                "evidence_anchors": sorted(assessment.anchors),
-                "matched_evidence_anchors": sorted(assessment.matched_anchors),
-                "evidence_gate_passed": gate.passed,
-                "evidence_gate_issues": list(gate.issues),
-                "relation_terms": list(gate.relation_terms),
-                "matched_relation_terms": list(gate.matched_relation_terms),
-                "citation_required": True,
-                "cache_hit": cache_hit,
-                "answer_strategy": answer_strategy,
-                "intent": question_analysis.intent,
-                "entity_type": question_analysis.entity_type,
-                "ambiguity_candidates": ambiguity,
-                "grounding_valid": validation.valid,
-                "grounding_issues": list(validation.issues),
-                "answer_support_passed": answer_support.passed,
-                "answer_support_coverage": round(answer_support.coverage, 4),
-                "answer_support_issues": list(answer_support.issues),
-                "unsupported_answer_terms": list(answer_support.unsupported_terms),
-                "unsupported_numbers": list(validation.unsupported_numbers),
-                "list_complete": list_validation.complete,
-                "list_expected_count": list_validation.expected_count,
-                "list_answer_count": list_validation.answer_count,
-                "list_issues": list(list_validation.issues),
-                "blocked_reason": "insufficient_evidence" if not gate.passed else None,
-                "raw_model_answer": raw_model_answer,
-                "verification_model_answer": verification_model_answer,
-                "verification_queries": verification_queries,
-                "blocked_answer": blocked_answer,
-                "answer_block_reason": answer_block_reason,
-                "field_evidence_available": bool(field_extraction and field_extraction.available),
-                "field_evidence": [
-                    {
-                        "field_id": candidate.field_id,
-                        "source_index": candidate.source_index + 1,
-                        "span": candidate.span,
-                        "sha256": candidate.content_hash,
-                    }
-                    for candidate in (field_extraction.candidates if field_extraction else ())
-                ],
-                "field_evidence_errors": list(field_extraction.errors) if field_extraction else [],
-                "field_evidence_strategy": field_extraction.strategy if field_extraction else None,
-            },
+            generation=generation,
         )
 
     def _adaptive_evidence_top_k(
@@ -1446,15 +1500,83 @@ class SearchService:
             if timeout is not None:
                 if timeout <= 0:
                     raise TimeoutError("request evidence-extraction budget exhausted")
-                return await asyncio.wait_for(
+                result = await asyncio.wait_for(
                     self.evidence_extractor.extract(question, plan, sources),
                     timeout=timeout,
                 )
-            return await self.evidence_extractor.extract(question, plan, sources)
+            else:
+                result = await self.evidence_extractor.extract(question, plan, sources)
+            if result is not None and not result.has_candidates and plan.answer_shape in {
+                "list", "single_fact"
+            }:
+                result = self._deterministic_structured_evidence(result, plan, sources)
+            return result
         except Exception as error:
             return EvidenceExtractionResult(
                 (), 0, 0, (f"{type(error).__name__}: {error}",)
             )
+
+    @staticmethod
+    def _deterministic_structured_evidence(
+        result: EvidenceExtractionResult,
+        plan: QueryPlan,
+        sources: list[SourceItem],
+    ) -> EvidenceExtractionResult:
+        subject_terms = {
+            normalize_search_text(value).replace(" ", "")
+            for value in (plan.subject,)
+            if value.strip()
+        }
+        relation_terms = {
+            normalize_search_text(value).replace(" ", "")
+            for value in plan.relations
+            if len(value.strip()) >= 2
+        }
+        definition_markers = ("是指", "即", "包括", "包含", "分别是", "分别为")
+        for source_index, source in enumerate(sources):
+            normalized_title = normalize_search_text(source.title).replace(" ", "")
+            if not any(
+                term in normalized_title or normalized_title in term
+                for term in subject_terms
+            ):
+                continue
+            units = [
+                unit.strip()
+                for unit in re.split(r"(?<=[。！？!?；;])|\n+", source.snippet)
+                if unit.strip()
+            ]
+            for unit in units:
+                normalized = normalize_search_text(unit).replace(" ", "")
+                has_requested_relation = any(term in normalized for term in relation_terms)
+                has_definition_relation = (
+                    plan.analysis.intent == "definition"
+                    and any(marker in normalized for marker in definition_markers)
+                )
+                if not has_requested_relation and not has_definition_relation:
+                    continue
+                candidate = EvidenceSpan(
+                    field_id=plan.fields[0].field_id,
+                    source_index=source_index,
+                    span=unit,
+                    content_hash=sha256(unit.encode("utf-8")).hexdigest(),
+                )
+                signatures = tuple(
+                    (item.id, sha256(item.snippet.encode("utf-8")).hexdigest())
+                    for item in sources
+                )
+                return EvidenceExtractionResult(
+                    candidates=(candidate,),
+                    attempted_sources=len(sources),
+                    completed_sources=result.completed_sources,
+                    errors=result.errors,
+                    source_signatures=signatures,
+                    strategy=(
+                        "deterministic_definition_fallback"
+                        if plan.analysis.intent == "definition"
+                        else "deterministic_list_fallback"
+                    ),
+                )
+        return result
 
     async def _answer_guided_verification(
         self,

@@ -25,7 +25,6 @@ from ..schemas import (
     KnowledgeBaseUpdate,
     SearchRequest,
     SearchTestDetail,
-    SearchTestItem,
     SearchTestPage,
     SearchTestRun,
 )
@@ -186,13 +185,22 @@ async def list_search_history(
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=20, ge=1, le=100),
     answer_status: Literal["answered", "refused"] | None = Query(default=None),
+    failure_category: Literal[
+        "data_missing",
+        "retrieval_failed",
+        "evidence_extraction_failed",
+        "generation_failed",
+    ] | None = Query(default=None),
     repo: MongoRepository = Depends(repository),
 ) -> dict:
-    return await repo.list_search_tests(
-        page=page,
-        page_size=page_size,
-        answer_status=answer_status,
-    )
+    values = {
+        "page": page,
+        "page_size": page_size,
+        "answer_status": answer_status,
+    }
+    if isinstance(failure_category, str):
+        values["failure_category"] = failure_category
+    return await repo.list_search_tests(**values)
 
 
 @router.get("/search-history/{test_id}", response_model=SearchTestDetail)

@@ -18,7 +18,7 @@ import {
 import { useEffect, useState } from "react";
 
 import { api } from "../api";
-import type { AskResponse, KnowledgeBase } from "../types";
+import type { AskResponse, FailureCategory, KnowledgeBase } from "../types";
 import { errorMessage } from "../utils";
 import { useLanguage } from "../i18n";
 
@@ -55,6 +55,13 @@ export default function SearchPage() {
     && response?.generation.evidence_gate_passed === true;
   const queryNormalized = response?.retrieval.query_normalized === true;
   const normalizedQuestion = String(response?.retrieval.normalized_question || "");
+  const failureCategory = response?.generation.failure_category as FailureCategory | undefined;
+  const failureLabels: Record<FailureCategory, [string, string]> = {
+    data_missing: ["数据缺失", "Data missing"],
+    retrieval_failed: ["检索失败", "Retrieval failed"],
+    evidence_extraction_failed: ["证据抽取失败", "Evidence extraction failed"],
+    generation_failed: ["生成失败", "Generation failed"],
+  };
 
   return (
     <div className="page-stack">
@@ -113,6 +120,9 @@ export default function SearchPage() {
                   {response.generation.model ? (
                     <Tag color="green">{tr("生成模型", "Model")} · {String(response.generation.model)}</Tag>
                   ) : null}
+                  {failureCategory ? (
+                    <Tag color="red">{tr(failureLabels[failureCategory][0], failureLabels[failureCategory][1])}</Tag>
+                  ) : null}
                 </Space>
               )
             }
@@ -128,6 +138,11 @@ export default function SearchPage() {
                     <Tag color="purple">
                       {tr("自适应证据", "Adaptive evidence")} · {String(response.retrieval.answer_evidence_top_k)}
                     </Tag>
+                  ) : null}
+                  {failureCategory && response.generation.failure_reason ? (
+                    <Typography.Text type="danger">
+                      {tr("失败原因：", "Failure reason: ")}{String(response.generation.failure_reason)}
+                    </Typography.Text>
                   ) : null}
                 </Space>
                 <Typography.Paragraph className="result-snippet" copyable={{ text: response.answer }}>

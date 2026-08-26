@@ -4,7 +4,7 @@ import type { ColumnsType } from "antd/es/table";
 import { useCallback, useEffect, useState } from "react";
 
 import { api } from "../api";
-import type { SearchTestDetail, SearchTestItem, SearchTestRun } from "../types";
+import type { FailureCategory, SearchTestDetail, SearchTestItem, SearchTestRun } from "../types";
 import { errorMessage, formatDate } from "../utils";
 import { useLanguage } from "../i18n";
 
@@ -14,6 +14,14 @@ function VersionResult({ run }: { run: SearchTestRun }) {
   const grounded = response.generation.evidence_grounded === true
     && response.generation.evidence_gate_passed === true;
   const model = response.generation.model;
+  const failureCategory = response.generation.failure_category as FailureCategory | undefined;
+  const failureReason = response.generation.failure_reason as string | undefined;
+  const failureLabels: Record<FailureCategory, [string, string]> = {
+    data_missing: ["数据缺失", "Data missing"],
+    retrieval_failed: ["检索失败", "Retrieval failed"],
+    evidence_extraction_failed: ["证据抽取失败", "Evidence extraction failed"],
+    generation_failed: ["生成失败", "Generation failed"],
+  };
 
   return (
     <Card size="small" className="history-run-card">
@@ -26,7 +34,17 @@ function VersionResult({ run }: { run: SearchTestRun }) {
           <Typography.Text type="secondary">{formatDate(run.created_at)}</Typography.Text>
           {model ? <Tag>{tr("模型", "Model")} · {String(model)}</Tag> : null}
           <Tag>{tr("证据", "Evidence")} {response.sources.length} {tr("条", "items")}</Tag>
+          {failureCategory ? (
+            <Tag color="red">
+              {tr(failureLabels[failureCategory]?.[0] || failureCategory, failureLabels[failureCategory]?.[1] || failureCategory)}
+            </Tag>
+          ) : null}
         </Space>
+        {failureCategory && failureReason ? (
+          <Typography.Text type="danger">
+            {tr("失败原因：", "Failure reason: ")}{failureReason}
+          </Typography.Text>
+        ) : null}
         <Typography.Paragraph className="result-snippet" copyable={{ text: response.answer }}>
           {response.answer}
         </Typography.Paragraph>
@@ -59,11 +77,13 @@ export default function SearchHistoryPage() {
   const [pageSize, setPageSize] = useState(20);
   const [total, setTotal] = useState(0);
   const [answerStatus, setAnswerStatus] = useState<"all" | "answered" | "refused">("all");
+  const [failureCategory, setFailureCategory] = useState<"all" | FailureCategory>("all");
 
   const load = useCallback(async (
     nextPage: number,
     nextPageSize: number,
     nextAnswerStatus: "all" | "answered" | "refused",
+    nextFailureCategory: "all" | FailureCategory,
   ) => {
     setLoading(true);
     try {
@@ -71,6 +91,7 @@ export default function SearchHistoryPage() {
         nextPage,
         nextPageSize,
         nextAnswerStatus === "all" ? undefined : nextAnswerStatus,
+        nextFailureCategory === "all" ? undefined : nextFailureCategory,
       );
       setItems(response.items);
       setTotal(response.total);
@@ -93,7 +114,7 @@ export default function SearchHistoryPage() {
   }, []);
 
   useEffect(() => {
-    void load(1, 20, "all");
+    void load(1, 20, "all", "all");
   }, [load]);
 
   const rerun = async (item: SearchTestItem) => {
@@ -110,11 +131,14 @@ export default function SearchHistoryPage() {
             updated_at: run.created_at,
             latest_run_id: run.id,
             latest_run: run,
+            latest_answer_status: run.response.answer === "根据检索到的资料，无法确定。" ? "refused" : "answered",
+            latest_failure_category: run.response.generation.failure_category as FailureCategory | undefined,
+            latest_failure_reason: run.response.generation.failure_reason as string | undefined,
           }
         : currentItem));
       await loadDetail(item.id);
       if (answerStatus !== "all") {
-        await load(page, pageSize, answerStatus);
+        await load(page, pageSize, answerStatus, failureCategory);
       }
       void message.success(tr("已追加一次重新检索生成结果", "A new search run has been added"));
     } catch (error) {
@@ -148,6 +172,27 @@ export default function SearchHistoryPage() {
           <Typography.Paragraph className="history-answer" ellipsis={{ rows: 2, tooltip: run.response.answer }}>
             {run.response.answer}
           </Typography.Paragraph>
+        );
+      },
+    },
+    {
+      title: tr("失败诊断", "Failure Diagnosis"),
+      key: "failure",
+      width: 180,
+      render: (_, item) => {
+        if (!item.latest_failure_category) return <Tag color="green">{tr("无", "None")}</Tag>;
+        const labels: Record<FailureCategory, [string, string]> = {
+          data_missing: ["数据缺失", "Data missing"],
+          retrieval_failed: ["检索失败", "Retrieval failed"],
+          evidence_extraction_failed: ["证据抽取失败", "Evidence extraction failed"],
+          generation_failed: ["生成失败", "Generation failed"],
+        };
+        const label = labels[item.latest_failure_category];
+        return (
+          <Space direction="vertical" size={0}>
+            <Tag color="red">{tr(label[0], label[1])}</Tag>
+            {item.latest_failure_reason ? <Typography.Text type="secondary">{item.latest_failure_reason}</Typography.Text> : null}
+          </Space>
         );
       },
     },
@@ -202,10 +247,26 @@ export default function SearchHistoryPage() {
             onChange={(value) => {
               setAnswerStatus(value);
               setExpandedKeys([]);
-              void load(1, pageSize, value);
-            }}
-          />
-          <Button icon={<ReloadOutlined />} loading={loading} onClick={() => void load(page, pageSize, answerStatus)}>{tr("刷新", "Refresh")}</Button>
+            void load(1, pageSize, value, failureCategory);
+          }}
+        />
+        <Select
+          value={failureCategory}
+          style={{ width: 180 }}
+          options={[
+            { value: "all", label: tr("全部失败类型", "All failure types") },
+            { value: "data_missing", label: tr("数据缺失", "Data missing") },
+            { value: "retrieval_failed", label: tr("检索失败", "Retrieval failed") },
+            { value: "evidence_extraction_failed", label: tr("证据抽取失败", "Evidence extraction failed") },
+            { value: "generation_failed", label: tr("生成失败", "Generation failed") },
+          ]}
+          onChange={(value) => {
+            setFailureCategory(value);
+            setExpandedKeys([]);
+            void load(1, pageSize, answerStatus, value);
+          }}
+        />
+          <Button icon={<ReloadOutlined />} loading={loading} onClick={() => void load(page, pageSize, answerStatus, failureCategory)}>{tr("刷新", "Refresh")}</Button>
         </Space>
       </div>
       <Alert
@@ -230,7 +291,7 @@ export default function SearchHistoryPage() {
             showTotal: (count) => tr(`共 ${count} 条`, `${count} items`),
             onChange: (nextPage, nextPageSize) => {
               setExpandedKeys([]);
-              void load(nextPageSize === pageSize ? nextPage : 1, nextPageSize, answerStatus);
+              void load(nextPageSize === pageSize ? nextPage : 1, nextPageSize, answerStatus, failureCategory);
             },
           }}
           expandable={{

@@ -117,6 +117,24 @@ def _relational_contract(
             _clean_subject(role.group("subject")),
             (role.group("field").strip(),),
         )
+    compact_role = re.match(
+        r"^(?P<subject>.+?)(?P<field>创始人|创办人|创办者|建立者|创建者|负责人|老板|首席执行官|CEO|作者|导演|编剧|设计师)"
+        r"(?:是|为)?(?:谁|哪位|什么人)[。？?]?$",
+        question,
+    )
+    if compact_role and analysis.intent not in {"agent", "ordinal"}:
+        return (
+            replace(
+                analysis,
+                intent="agent",
+                entity_type="person",
+                subjects=(),
+                expects_list=False,
+                expects_complete_list=False,
+            ),
+            _clean_subject(compact_role.group("subject")),
+            (compact_role.group("field"),),
+        )
     property_location = re.match(
         r"^(?P<subject>.+?)的(?P<field>[^的，。？?]{1,20}?)"
         r"(?:在哪里|在哪儿|位于哪里|位于哪)[。？?]?$",
@@ -262,7 +280,10 @@ def _set_semantics_for(analysis: QuestionAnalysis, question: str) -> SetSemantic
         return "latest"
     if any(
         marker in question for marker in ("全部", "所有", "完整", "总共", "一共")
-    ) or counted_list_size(question) is not None:
+    ) or counted_list_size(question) is not None or any(
+        marker in question
+        for marker in ("哪几个", "哪几种", "哪几类", "哪几项", "哪几篇", "哪几部", "哪几本")
+    ):
         return "all"
     if analysis.expects_list:
         return "partial"
@@ -372,6 +393,10 @@ def _subject_for(analysis: QuestionAnalysis, question: str) -> str:
     if analysis.intent == "list" and analysis.subjects:
         first = analysis.subjects[0]
         return first.split(" ", 1)[0].removesuffix("列表").strip()
+    if analysis.intent == "list" and counted_list_size(question) is not None:
+        nominal = question.strip(" 的是请，,。；;？?")
+        if not any(marker in nominal for marker in ("哪", "哪些", "什么", "谁")):
+            return _clean_subject(nominal)
     quantitative = re.match(
         r"^(?P<subject>.+?)(?:的)?(?:人口|面积|面積|全长|全長|长度|長度|高度|海拔)"
         r"(?:数据|數據)?(?:(?:是|为|有)?(?:多少|什么|具体数字)|[。？?]|$)",
@@ -379,11 +404,18 @@ def _subject_for(analysis: QuestionAnalysis, question: str) -> str:
     )
     if quantitative:
         return _clean_subject(quantitative.group("subject"))
+    if analysis.intent == "fact" and not any(
+        marker in question
+        for marker in ("什么", "哪个", "哪些", "多少", "谁", "哪里", "如何", "怎么", "吗")
+    ):
+        nominal = question.strip(" 的是请，,。；;？?")
+        if len(nominal) >= 2:
+            return _clean_subject(nominal)
     patterns = {
         "definition": r"^(?:请简要介绍|请介绍|简要介绍|介绍)?(?P<subject>.+?)(?:是什么|是谁|指的是什么)[。？?]?$",
         "cause": r"^(?:导致)?(?P<subject>.+?)(?:是)?(?:因为什么原因|为什么|为何|的原因|是哪些因素造成)",
         "procedure": r"^(?P<left>.+?)(?:如何|怎么)(?P<right>.+?)[。？?]?$",
-        "time": r"^(?P<subject>.+?)(?:是什么时候|是在什么时候|是哪一年|在哪一年|什么时候|哪一年|何时)",
+        "time": r"^(?P<subject>.+?)(?:是什么时候|是在什么时候|是哪一年|在哪一年|什么时候|多久|哪一年|何时)",
         "location": r"^(?P<subject>.+?)(?:位于哪里|位于哪|在哪里|在哪儿|在哪个球场|在哪座球场|在哪个场馆)",
         "birthplace": r"^(?P<subject>.+?)(?:出生于哪里|出生在哪里|哪里出生)",
     }
@@ -475,6 +507,8 @@ def _relations_for(intent: str, question: str) -> tuple[str, ...]:
     if intent == "list":
         if counted_list_size(question) is not None:
             return ("是指", "包括", "分别是", "分别为")
+        if any(marker in question for marker in ("哪几个", "哪几种", "哪几类", "哪几项", "哪几篇", "哪几部", "哪几本")):
+            return ("是指", "包括", "分别是", "分别为")
         relation_groups = {
             "主办": ("主办", "举办", "承办", "主办国"),
             "举办": ("举办", "主办", "承办", "举办国"),
@@ -508,7 +542,7 @@ def _agent_relations(question: str) -> tuple[str, ...]:
     if any(marker in question for marker in ("现在", "目前", "当前", "如今", "现任")):
         return ("现任", "目前", "当前")
     reverse_match = re.search(
-        r"(?:的|背后的)?(创始人|创办人|创办者|建立者|创建者|发明者|发现者|"
+        r"(?:的|背后的)?(创始人|创办人|创办者|建立者|创建者|负责人|老板|首席执行官|CEO|发明者|发现者|"
         r"创作者|设计者|建造者|执导者|负责人|作者|导演|主演)(?:是|为)?"
         r"(?:谁|哪位|什么人)[。？?]?$",
         question,
@@ -542,12 +576,14 @@ def _agent_relations(question: str) -> tuple[str, ...]:
         "创办人": ("创办人", "创始人", "创办者", "创立", "创建", "创办"),
         "设计者": ("设计", "设计者"),
         "创办者": ("创办", "创建", "创办者"),
+        "老板": ("老板", "创始人", "创办人", "创办者", "负责人", "首席执行官", "CEO"),
+        "负责人": ("负责人", "老板", "创始人", "创办人", "创办者", "负责"),
+        "首席执行官": ("首席执行官", "CEO", "负责人", "老板"),
         "建立者": ("建立者", "建立", "创立", "创建"),
         "创建者": ("创建者", "创建", "创立", "建立"),
         "发明者": ("发明者", "发明", "研制", "创造"),
         "发现者": ("发现者", "发现", "首次发现"),
         "建造者": ("建造者", "建造", "修建", "建设"),
-        "负责人": ("负责人", "负责", "领导", "主持"),
         "执导者": ("执导", "导演", "执导者"),
     }
     return equivalents.get(relation, (relation,))

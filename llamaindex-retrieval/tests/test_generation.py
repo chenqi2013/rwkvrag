@@ -545,6 +545,11 @@ def test_time_and_agent_answers_select_relevant_evidence_sentences() -> None:
         "1921年7月23日正式组建为中国共产党。 [资料 1]"
     )
 
+    duration = time_evidence_answer("中国共产党成立多久了？", [time_source])
+    assert duration is not None
+    assert "成立于1921年7月23日" in duration
+    assert "已成立" in duration
+
 
 def test_birth_year_prefers_lead_lifespan_over_later_activity_year() -> None:
     sources = [

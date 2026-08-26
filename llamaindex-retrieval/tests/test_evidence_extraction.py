@@ -247,6 +247,38 @@ def test_sentence_selection_does_not_require_literal_relation_alias() -> None:
     assert result[0].span == sentence
 
 
+def test_extractor_accepts_metadata_fields_alongside_candidates() -> None:
+    sentence = "宇树科技创始人王兴兴在2016年创办了宇树科技。"
+    evidence = SourceItem(
+        id="unitree",
+        document_id="unitree",
+        source="finewiki-zh",
+        title="宇树科技",
+        score=1.0,
+        snippet=sentence,
+    )
+    plan = replace(
+        build_query_plan("宇树科技老板是谁？"),
+        subject="宇树科技",
+        relations=("老板",),
+        fields=(TaskField("f1", "宇树科技的老板是谁？", ("老板",)),),
+    )
+    raw = json.dumps({
+        "candidates": [{"field_id": "f1", "sentence_id": "s1"}],
+        "confidence": 0.98,
+    }, ensure_ascii=False)
+
+    result = LanguageModelEvidenceExtractor._parse(
+        raw,
+        plan,
+        0,
+        evidence,
+        sentence_units=(sentence,),
+    )
+
+    assert result[0].span == sentence
+
+
 def test_sentence_selection_rejects_relationless_heading() -> None:
     snippet = "作者认为传统宗教经书已成为束缚。\n脱冕説"
     evidence = SourceItem(
@@ -274,3 +306,33 @@ def test_sentence_selection_rejects_relationless_heading() -> None:
         evidence,
         sentence_units=("作者认为传统宗教经书已成为束缚。", "脱冕説"),
     ) == ()
+
+
+def test_list_evidence_falls_back_to_direct_relation_sentence() -> None:
+    sentence = "四大名著，即四大小说名著，是指《三国演义》《西游记》《水浒传》《红楼梦》4部小说。"
+    evidence = SourceItem(
+        id="four-classics",
+        document_id="four-classics",
+        source="finewiki-zh",
+        title="四大名著",
+        score=1.0,
+        snippet=sentence,
+    )
+    plan = replace(
+        build_query_plan("中国四大名著是哪几个？"),
+        subject="中国四大名著",
+        relations=("是指", "包括", "分别是", "分别为"),
+        fields=(TaskField("f1", "中国四大名著是哪几个？", ("是指", "包括")),),
+        answer_shape="list",
+        set_semantics="all",
+    )
+
+    result = LanguageModelEvidenceExtractor._parse(
+        '{"candidates":[]}',
+        plan,
+        0,
+        evidence,
+        sentence_units=(sentence,),
+    )
+
+    assert [candidate.span for candidate in result] == [sentence]

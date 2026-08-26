@@ -83,6 +83,12 @@ export interface AskResponse {
   generation: Record<string, unknown>;
 }
 
+export type FailureCategory =
+  | "data_missing"
+  | "retrieval_failed"
+  | "evidence_extraction_failed"
+  | "generation_failed";
+
 export interface SearchTestRun {
   id: string;
   test_id: string;
@@ -102,6 +108,8 @@ export interface SearchTestItem {
   updated_at: string;
   latest_run_id?: string;
   latest_answer_status?: "answered" | "refused";
+  latest_failure_category?: FailureCategory | null;
+  latest_failure_reason?: string | null;
   latest_run?: SearchTestRun;
 }
 

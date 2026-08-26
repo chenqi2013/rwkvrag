@@ -13,6 +13,21 @@ from .query_planning import QueryPlan
 from .schemas import SourceItem
 
 
+_RELATION_EQUIVALENTS = {
+    "老板": ("老板", "创始人", "创办人", "创办者", "负责人", "首席执行官", "CEO"),
+    "负责人": ("负责人", "老板", "创始人", "创办人", "创办者", "负责"),
+    "首席执行官": ("首席执行官", "CEO", "负责人", "老板"),
+}
+
+
+def _relation_variants(relations: tuple[str, ...]) -> tuple[str, ...]:
+    return tuple(dict.fromkeys(
+        variant
+        for relation in relations
+        for variant in _RELATION_EQUIVALENTS.get(relation, (relation,))
+    ))
+
+
 @dataclass(frozen=True)
 class EvidenceSpan:
     field_id: str
@@ -329,7 +344,7 @@ JSON："""
         normalized_title = normalize_search_text(source.title).replace(" ", "").replace("的", "")
         normalized_relations = {
             normalize_search_text(relation).replace(" ", "").replace("的", "")
-            for relation in plan.relations
+            for relation in _relation_variants(plan.relations)
             if len(relation.strip()) >= 2
         }
         aliases = source.metadata.get("aliases")
@@ -343,6 +358,7 @@ JSON："""
         normalized_body = normalize_search_text(source.snippet).replace(" ", "").replace("的", "")
         title_match = any(
             normalized_subject == title
+            or (len(title) >= 3 and normalized_subject.endswith(title))
             or title.endswith(f"·{normalized_subject}")
             or any(
                 title == relation
@@ -365,8 +381,7 @@ JSON："""
         body_match = body_subject_match and body_relation_match
         if plan.answer_shape == "single_fact":
             return len(normalized_subject) >= 2 and (
-                relation_title_match
-                or body_match
+                body_match
                 or (title_match and (body_subject_match or body_relation_match))
             )
         return len(normalized_subject) >= 2 and (
@@ -394,8 +409,8 @@ JSON："""
             payload = json.loads(cleaned[start : end + 1])
         except json.JSONDecodeError as error:
             raise ValueError("extractor response contains invalid JSON") from error
-        if not isinstance(payload, dict) or set(payload) != {"candidates"}:
-            raise ValueError("extractor response must contain only candidates")
+        if not isinstance(payload, dict) or "candidates" not in payload:
+            raise ValueError("extractor response must contain candidates")
         values = payload["candidates"]
         if not isinstance(values, list):
             raise ValueError("extractor candidates must be a list")
@@ -407,12 +422,12 @@ JSON："""
         ))).replace(" ", "")
         normalized_relations = {
             normalize_search_text(relation).replace(" ", "")
-            for relation in plan.relations
+            for relation in _relation_variants(plan.relations)
             if len(relation.replace(" ", "")) >= 2
         }
         explicit_relations = {
             normalize_search_text(relation).replace(" ", "")
-            for relation in plan.relations
+            for relation in _relation_variants(plan.relations)
             if len(relation.replace(" ", "")) >= 4
         }
         candidates: list[EvidenceSpan] = []
@@ -461,4 +476,28 @@ JSON："""
                 span=span,
                 content_hash=sha256(span.encode("utf-8")).hexdigest(),
             ))
+        if not candidates and plan.answer_shape == "list" and sentence_units:
+            subject_terms = {
+                normalize_search_text(value).replace(" ", "")
+                for value in (plan.subject, source.title)
+                if value.strip()
+            }
+            relation_terms = {
+                relation
+                for relation in normalized_relations
+                if len(relation) >= 2
+            }
+            for unit in sentence_units:
+                normalized_unit = normalize_search_text(unit).replace(" ", "")
+                if not any(term in normalized_unit for term in subject_terms):
+                    continue
+                if not any(relation in normalized_unit for relation in relation_terms):
+                    continue
+                candidates.append(EvidenceSpan(
+                    field_id=next(iter(field_ids)),
+                    source_index=source_index,
+                    span=unit,
+                    content_hash=sha256(unit.encode("utf-8")).hexdigest(),
+                ))
+                break
         return tuple(candidates)

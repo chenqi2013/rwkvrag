@@ -220,6 +220,38 @@ async def test_model_planner_preserves_structural_list_constraint() -> None:
     assert result.plan.analysis.intent == "list"
     assert result.plan.answer_shape == "list"
     assert result.plan.set_semantics == "all"
+    assert result.plan.subject == fallback.subject
+    assert result.plan.relations == fallback.relations
+    assert result.plan.queries[:2] == fallback.queries[:2]
+
+
+@pytest.mark.asyncio
+async def test_model_planner_cannot_downgrade_narrative_request() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return stream_response(json.dumps({
+            "subject": "草船借箭",
+            "intent": "fact",
+            "answer_shape": "single_fact",
+            "set_semantics": "specific",
+            "fields": [{
+                "field_id": "f1",
+                "question": "草船借箭的经过",
+                "relations": ["经过", "过程"],
+            }],
+            "relations": ["经过", "过程"],
+            "queries": ["草船借箭 经过", "草船借箭 过程"],
+        }, ensure_ascii=False))
+
+    settings = Settings(
+        generation_password="secret",
+        generation_base_url="https://generation.example/v1",
+    )
+    planner = LanguageModelQueryPlanner(settings, transport=httpx.MockTransport(handler))
+    fallback = build_query_plan("讲讲草船借箭的故事")
+
+    result = await planner.plan("讲讲草船借箭的故事", fallback)
+
+    assert result.plan.answer_shape == "narrative"
 
 
 @pytest.mark.asyncio

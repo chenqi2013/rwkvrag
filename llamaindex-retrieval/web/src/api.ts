@@ -10,6 +10,7 @@ import type {
   SearchTestPage,
   SearchTestRun,
   SearchResponse,
+  FailureCategory,
 } from "./types";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
@@ -92,9 +93,14 @@ export const api = {
       headers: jsonHeaders,
       body: JSON.stringify(values),
     }),
-  searchHistory: (page = 1, pageSize = 20, answerStatus?: "answered" | "refused") =>
+  searchHistory: (
+    page = 1,
+    pageSize = 20,
+    answerStatus?: "answered" | "refused",
+    failureCategory?: FailureCategory,
+  ) =>
     request<SearchTestPage>(
-      `/v1/admin/search-history?page=${page}&page_size=${pageSize}${answerStatus ? `&answer_status=${answerStatus}` : ""}`,
+      `/v1/admin/search-history?page=${page}&page_size=${pageSize}${answerStatus ? `&answer_status=${answerStatus}` : ""}${failureCategory ? `&failure_category=${failureCategory}` : ""}`,
     ),
   searchHistoryDetail: (id: string) =>
     request<SearchTestDetail>(`/v1/admin/search-history/${id}`),

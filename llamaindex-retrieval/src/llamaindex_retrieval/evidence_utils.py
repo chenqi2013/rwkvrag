@@ -1,4 +1,5 @@
 import re
+from datetime import date
 
 from .evidence_quality import is_repetitive_garbage
 from .lexical_index import lexical_tokens, normalize_search_text, query_tokens
@@ -122,6 +123,8 @@ _AGENT_ACTION_GROUPS = {
     "负责": ("负责", "负责人"),
     "开国皇帝": ("开国皇帝", "高祖", "太祖", "称帝", "登基"),
     "创始人": ("创始人", "创立", "创建", "创办"),
+    "老板": ("老板", "创始人", "创办人", "创办者", "负责人", "首席执行官", "CEO"),
+    "负责人": ("负责人", "老板", "创始人", "创办人", "创办者", "负责"),
     "创办人": ("创办人", "创立", "创建", "创办"),
     "创办者": ("创办者", "创办人", "创立", "创建", "创办"),
     "建立者": ("建立者", "建立", "创立", "创建"),
@@ -357,6 +360,9 @@ def list_evidence_answer(question: str, sources: list[SourceItem]) -> str | None
 
 
 def time_evidence_answer(question: str, sources: list[SourceItem]) -> str | None:
+    elapsed = _elapsed_duration_answer(question, sources)
+    if elapsed is not None:
+        return elapsed
     term_end = _fixed_term_end_answer(question, sources)
     if term_end is not None:
         return term_end
@@ -374,6 +380,45 @@ def time_evidence_answer(question: str, sources: list[SourceItem]) -> str | None
         requires_time=True,
         prefer_explicit_subject=True,
     )
+
+
+def _elapsed_duration_answer(question: str, sources: list[SourceItem]) -> str | None:
+    normalized_question = normalize_search_text(question)
+    if "多久" not in normalized_question:
+        return None
+    event_pattern = re.compile(
+        r"(?P<year>\d{4})年(?:\s*(?P<month>\d{1,2})月)?(?:\s*(?P<day>\d{1,2})日)?"
+        r"[^。！？\n]{0,100}?(?:成立|创立|创建|建立|组建)"
+    )
+    reverse_event_pattern = re.compile(
+        r"(?:成立|创立|创建|建立|组建)(?:于|於)?\s*"
+        r"(?P<year>\d{4})年(?:\s*(?P<month>\d{1,2})月)?(?:\s*(?P<day>\d{1,2})日)?"
+    )
+    today = date.today()
+    for source_index, source in enumerate(sources, start=1):
+        normalized_title = normalize_search_text(source.title)
+        if normalized_title and normalized_title not in normalized_question:
+            continue
+        text = clean_evidence_text(source.snippet)
+        match = event_pattern.search(text) or reverse_event_pattern.search(text)
+        if match is None:
+            continue
+        year = int(match.group("year"))
+        month = int(match.group("month") or 1)
+        day = int(match.group("day") or 1)
+        elapsed_years = today.year - year - ((today.month, today.day) < (month, day))
+        if elapsed_years < 0:
+            continue
+        date_text = f"{year}年"
+        if match.group("month"):
+            date_text += f"{month}月"
+        if match.group("day"):
+            date_text += f"{day}日"
+        return (
+            f"{source.title}成立于{date_text}；截至{today.year}年{today.month}月{today.day}日，"
+            f"已成立{elapsed_years}年。[资料 {source_index}]"
+        )
+    return None
 
 
 def _fixed_term_end_answer(question: str, sources: list[SourceItem]) -> str | None:

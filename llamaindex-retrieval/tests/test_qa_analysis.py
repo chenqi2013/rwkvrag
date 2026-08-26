@@ -38,6 +38,11 @@ def test_analyzes_comparison_and_list_intents() -> None:
     assert counted_listing.expects_list is True
     assert counted_listing.expects_complete_list is True
 
+    generic_counted_listing = analyze_question("中国四大名著是哪几个？")
+    assert generic_counted_listing.intent == "list"
+    assert generic_counted_listing.expects_list is True
+    assert generic_counted_listing.expects_complete_list is True
+
     time_question = analyze_question("中国共产党是什么时候成立的")
     assert time_question.intent == "time"
     assert time_question.subjects == ("中国共产党", "中国共产党成立")

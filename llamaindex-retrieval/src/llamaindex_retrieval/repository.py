@@ -7,6 +7,8 @@ from uuid import uuid4
 from pymongo import ASCENDING, DESCENDING, AsyncMongoClient, ReturnDocument, UpdateOne
 from pymongo.errors import DuplicateKeyError
 
+from .failure_diagnosis import FailureCategory
+
 
 def utc_now() -> datetime:
     return datetime.now(UTC)
@@ -23,6 +25,27 @@ REFUSAL_ANSWER = "根据检索到的资料，无法确定。"
 def search_answer_status(response: dict[str, Any]) -> SearchAnswerStatus:
     answer = str(response.get("answer") or "").strip()
     return "refused" if answer == REFUSAL_ANSWER else "answered"
+
+
+def search_failure_category(response: dict[str, Any]) -> FailureCategory | None:
+    generation = response.get("generation")
+    if not isinstance(generation, dict):
+        return None
+    category = generation.get("failure_category")
+    return category if category in {
+        "data_missing",
+        "retrieval_failed",
+        "evidence_extraction_failed",
+        "generation_failed",
+    } else None
+
+
+def search_failure_reason(response: dict[str, Any]) -> str | None:
+    generation = response.get("generation")
+    if not isinstance(generation, dict):
+        return None
+    reason = generation.get("failure_reason")
+    return str(reason) if reason else None
 
 
 class MongoRepository:
@@ -54,6 +77,9 @@ class MongoRepository:
         await self.search_tests.create_index(
             [("latest_answer_status", ASCENDING), ("updated_at", DESCENDING)]
         )
+        await self.search_tests.create_index(
+            [("latest_failure_category", ASCENDING), ("updated_at", DESCENDING)]
+        )
         await self.search_test_runs.create_index("id", unique=True)
         await self.search_test_runs.create_index(
             [("test_id", ASCENDING), ("run_number", ASCENDING)], unique=True
@@ -61,7 +87,7 @@ class MongoRepository:
         await self.search_test_runs.create_index(
             [("test_id", ASCENDING), ("created_at", DESCENDING)]
         )
-        await self._backfill_search_test_answer_statuses()
+        await self._backfill_search_test_statuses()
         now = utc_now()
         await self.knowledge_bases.update_one(
             {"id": "default"},
@@ -281,6 +307,8 @@ class MongoRepository:
                 "$set": {
                     "latest_run_id": run["id"],
                     "latest_answer_status": search_answer_status(response),
+                    "latest_failure_category": search_failure_category(response),
+                    "latest_failure_reason": search_failure_reason(response),
                 }
             },
         )
@@ -292,8 +320,13 @@ class MongoRepository:
         page: int = 1,
         page_size: int = 20,
         answer_status: SearchAnswerStatus | None = None,
+        failure_category: FailureCategory | None = None,
     ) -> dict[str, Any]:
-        query = {"latest_answer_status": answer_status} if answer_status else {}
+        query: dict[str, Any] = {}
+        if answer_status:
+            query["latest_answer_status"] = answer_status
+        if failure_category:
+            query["latest_failure_category"] = failure_category
         total = await self.search_tests.count_documents(query)
         cursor = (
             self.search_tests.find(query, {"_id": 0})
@@ -326,11 +359,14 @@ class MongoRepository:
             "page_size": page_size,
         }
 
-    async def _backfill_search_test_answer_statuses(self) -> None:
+    async def _backfill_search_test_statuses(self) -> None:
         tests = await self.search_tests.find(
             {
                 "latest_run_id": {"$exists": True, "$ne": None},
-                "latest_answer_status": {"$exists": False},
+                "$or": [
+                    {"latest_answer_status": {"$exists": False}},
+                    {"latest_failure_category": {"$exists": False}},
+                ],
             },
             {"_id": 0, "id": 1, "latest_run_id": 1},
         ).to_list(length=None)
@@ -339,22 +375,34 @@ class MongoRepository:
         run_ids = [test["latest_run_id"] for test in tests]
         runs = await self.search_test_runs.find(
             {"id": {"$in": run_ids}},
-            {"_id": 0, "id": 1, "response.answer": 1},
+            {"_id": 0, "id": 1, "response.answer": 1, "response.generation": 1},
         ).to_list(length=len(run_ids))
-        statuses = {
-            run["id"]: search_answer_status(dict(run.get("response") or {}))
-            for run in runs
-        }
+        statuses = {}
+        for run in runs:
+            response = dict(run.get("response") or {})
+            statuses[run["id"]] = {
+                "answer": search_answer_status(response),
+                "category": search_failure_category(response),
+                "reason": search_failure_reason(response),
+            }
         updates = [
             UpdateOne(
                 {"id": test["id"]},
-                {"$set": {"latest_answer_status": statuses[test["latest_run_id"]]}},
+                {"$set": {
+                    "latest_answer_status": statuses[test["latest_run_id"]]["answer"],
+                    "latest_failure_category": statuses[test["latest_run_id"]]["category"],
+                    "latest_failure_reason": statuses[test["latest_run_id"]]["reason"],
+                }},
             )
             for test in tests
             if test["latest_run_id"] in statuses
         ]
         if updates:
             await self.search_tests.bulk_write(updates, ordered=False)
+
+    async def _backfill_search_test_answer_statuses(self) -> None:
+        """Backward-compatible alias for older startup callers."""
+        await self._backfill_search_test_statuses()
 
     async def get_search_test(self, test_id: str) -> dict[str, Any] | None:
         test = await self.search_tests.find_one({"id": test_id}, {"_id": 0})

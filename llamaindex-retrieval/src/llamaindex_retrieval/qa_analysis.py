@@ -37,9 +37,14 @@ _TIME_QUESTION_PATTERN = re.compile(
     r"(?P<event>.*?)(?:的)?[。？?]?$"
 )
 _LIST_RELATION_MARKER = re.compile(r"有哪些|有哪(?:些|几个|几种)|哪些|哪几个|哪几种")
+_GENERIC_LIST_MARKERS = ("哪几个", "哪几种", "哪几类", "哪几项", "哪几篇", "哪几部", "哪几本")
 _COUNTED_LIST_PATTERN = re.compile(
     r"哪(?P<count>\d{1,2}|[一二三四五六七八九十两]{1,3})"
     r"(?:个|個|部|本|种|種|位|家|条|條|项|項|篇|首|座|名)"
+)
+_NAMED_LIST_PATTERN = re.compile(
+    r"(?P<count>\d{1,2}|[二三四五六七八九十两]{1,3})大"
+    r"[^，,。；;？?谁哪什么]{1,16}[。？?]?$"
 )
 _LIST_SCOPE_SUFFIXES = (
     "都经过",
@@ -150,7 +155,10 @@ def analyze_question(question: str) -> QuestionAnalysis:
         counted_list_size(question) is not None
         or any(
             marker in question
-            for marker in ("哪些", "有哪些", "列出", "列举", "列一下", "全部", "所有", "分别")
+            for marker in (
+                "哪些", "有哪些", "列出", "列举", "列一下", "全部", "所有", "分别",
+                *_GENERIC_LIST_MARKERS,
+            )
         )
     )
     expects_complete = expects_list and not any(marker in question for marker in _PARTIAL_LIST_MARKERS)
@@ -167,7 +175,7 @@ def analyze_question(question: str) -> QuestionAnalysis:
     elif any(marker in question for marker in ("为什么", "原因", "为何", "哪些因素造成", "怎么一步步")):
         intent = "cause"
         subjects = ()
-    elif any(marker in question for marker in ("什么时候", "哪一年", "何时")):
+    elif any(marker in question for marker in ("什么时候", "多久", "哪一年", "何时")):
         intent = "time"
         subjects = _time_search_queries(question)
     elif any(marker in question for marker in ("出生于哪里", "出生在哪里", "哪里出生")):
@@ -205,7 +213,7 @@ def analyze_question(question: str) -> QuestionAnalysis:
 
 
 def counted_list_size(question: str) -> int | None:
-    match = _COUNTED_LIST_PATTERN.search(question)
+    match = _COUNTED_LIST_PATTERN.search(question) or _NAMED_LIST_PATTERN.search(question)
     if not match:
         return None
     value = match.group("count")
@@ -296,6 +304,14 @@ def _time_search_queries(question: str) -> tuple[str, ...]:
 
 def _list_search_queries(question: str) -> tuple[str, ...]:
     normalized = clean_question_shell(question).strip(" ？?，,。；;")
+    generic_count_match = re.search(
+        r"^(?P<subject>.+?)(?:是|为)(?:哪几个|哪几种|哪几类|哪几项|哪几篇|哪几部|哪几本)$",
+        normalized,
+    )
+    if generic_count_match:
+        subject = generic_count_match.group("subject").strip(" 的")
+        if subject:
+            return (f"{subject} 列表", subject)
     endpoints = re.search(
         r"连接(?P<start>[^，。？?和与]{1,20})(?:和|与)"
         r"(?P<end>[^，。？?的]{1,20})的(?P<network>[^，。？?]{2,24}?)(?:线路)?(?:有|经过|途经)",
