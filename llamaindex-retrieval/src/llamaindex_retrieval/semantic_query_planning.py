@@ -46,20 +46,10 @@ class LanguageModelQueryPlanner:
                 "deterministic_fallback",
                 error="generation_password_not_configured",
             )
-        # Preserve deterministic semantic contracts for intents where changing
-        # the object or relation is more damaging than missing a model query.
-        # The model may still provide extra queries, but it must not turn a
-        # cause/comparison/structured explanation into a generic fact lookup.
-        if fallback.analysis.intent in {"cause", "comparison", "procedure"} or (
-            fallback.analysis.intent == "definition"
-            and fallback.answer_shape == "summary"
+        if (
+            not self.settings.semantic_pipeline_enabled
+            and self._fallback_contract_is_sufficient(fallback)
         ):
-            return QueryPlanningResult(
-                fallback,
-                "deterministic_fallback",
-                error="deterministic_semantic_contract",
-            )
-        if self._fallback_contract_is_sufficient(fallback):
             return QueryPlanningResult(
                 fallback,
                 "deterministic_fallback",
@@ -164,36 +154,30 @@ class LanguageModelQueryPlanner:
         if fallback.analysis.expects_list:
             intent = "list"
             answer_shape = "list"
-            if fallback.set_semantics == "all":
-                set_semantics = "all"
-        if fallback.answer_shape in {"summary", "narrative"}:
+            set_semantics = (
+                "all"
+                if fallback.analysis.expects_complete_list
+                else fallback.set_semantics
+            )
+        elif fallback.answer_shape in {"summary", "narrative"}:
             answer_shape = fallback.answer_shape
             set_semantics = fallback.set_semantics
-        if fallback.analysis.intent == "agent" and fallback.subject:
-            subject = fallback.subject
-            relations = fallback.relations
-            fields = fallback.fields
-            intent = "agent"
-            answer_shape = "single_fact"
-            set_semantics = fallback.set_semantics
-        if (
-            fallback.analysis.intent == "definition"
-            and fallback.answer_shape == "summary"
-        ):
-            subject = fallback.subject
-            relations = fallback.relations
-            fields = fallback.fields
-            intent = "definition"
-            answer_shape = "summary"
-            set_semantics = fallback.set_semantics
-        if fallback.analysis.expects_list:
-            intent = "list"
-            answer_shape = "list"
-            set_semantics = fallback.set_semantics
-            if self._subject_matches_fallback(fallback.subject, subject):
+        if not self.settings.semantic_pipeline_enabled:
+            if fallback.analysis.intent == "agent" and fallback.subject:
                 subject = fallback.subject
                 relations = fallback.relations
                 fields = fallback.fields
+                intent = "agent"
+                answer_shape = "single_fact"
+                set_semantics = fallback.set_semantics
+            if fallback.analysis.expects_list:
+                intent = "list"
+                answer_shape = "list"
+                set_semantics = fallback.set_semantics
+                if self._subject_matches_fallback(fallback.subject, subject):
+                    subject = fallback.subject
+                    relations = fallback.relations
+                    fields = fallback.fields
         plan = replace(
             fallback,
             queries=tuple(queries[:query_limit]),
@@ -202,9 +186,22 @@ class LanguageModelQueryPlanner:
             analysis=replace(
                 fallback.analysis,
                 intent=intent,
+                subjects=(),
                 expects_list=answer_shape == "list",
                 expects_complete_list=answer_shape == "list" and set_semantics == "all",
             ),
+            merge_strategy=(
+                "document_interleave"
+                if intent in {"comparison", "time"}
+                else "rank_fusion"
+            ),
+            context_policy={
+                "cause": "section",
+                "procedure": "section",
+                "list": "structure",
+                "definition": "lead",
+                "comparison": "lead_append",
+            }.get(intent, "none"),
             fields=fields,
             answer_shape=answer_shape,
             set_semantics=set_semantics,
@@ -267,7 +264,7 @@ class LanguageModelQueryPlanner:
         return f"""你是中文知识库的 BM25 查询规划器。你的任务不是回答问题，而是生成多组搜索关键词。
 请先把问题拆成一个可追踪的任务契约，再生成不同检索角度的关键词组合。
 查询应适合百科全文检索：保留专名，使用原问题可能对应的百科标题、关系词和常见同义表达。可以把可能的人物、事件结果或标准术语作为多种“检索假设”写入 queries，但不能把这些假设写进 subject；后端会用原文验证假设。
-subject 必须是问题中已经出现的待查对象，不能填写你猜测的答案。例如“赤手空拳打死老虎的是谁”不能把人物姓名填入 subject。
+subject 必须是问题中已经出现的待查实体对象，不能填写你猜测的答案，也不能把“创始人、作者、原因、时间、地点、站点”等所求字段并入对象。例如“某公司创始人是谁”的 subject 只能是“某公司”；“赤手空拳打死老虎的是谁”不能把人物姓名填入 subject。
 如果问题询问“是谁”且描述的是一个事件，queries 中至少一条必须包含你推测的具体人物姓名及其典型事件关键词；不能全部只重复“人物、英雄、主角、人名”等抽象词。该人物只作为待验证的检索假设。
 intent 只能是 definition、fact、list、cause、time、location、birthplace、agent、ordinal、comparison、procedure。
 answer_shape 只能是 single_fact、list、summary、narrative；set_semantics 只能是 latest、all、partial、specific。
@@ -431,10 +428,7 @@ relations 只写关系名称及同义表达，不能填写猜测的具体答案�
         fallback: QueryPlan,
         model_subject: str,
     ) -> bool:
-        return cls._subject_is_supported(question, model_subject) and not (
-            fallback.analysis.intent == "agent"
-            and not cls._subject_matches_fallback(fallback.subject, model_subject)
-        )
+        return cls._subject_is_supported(question, model_subject)
 
     @staticmethod
     def _preserve_explicit_list_contract(plan: QueryPlan) -> bool:

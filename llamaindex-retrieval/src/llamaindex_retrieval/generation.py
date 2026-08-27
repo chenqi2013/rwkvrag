@@ -159,6 +159,9 @@ class EvidenceAnswerGenerator:
         subject: str = "",
         relations: tuple[str, ...] = (),
         trusted_evidence: bool = False,
+        answer_shape: str = "single_fact",
+        set_semantics: str = "specific",
+        fields: tuple[tuple[str, str, tuple[str, ...]], ...] = (),
     ) -> str:
         if not sources:
             return _NO_EVIDENCE_ANSWER
@@ -176,6 +179,9 @@ class EvidenceAnswerGenerator:
                 sources,
                 subject=subject,
                 relations=relations,
+                answer_shape=answer_shape,
+                set_semantics=set_semantics,
+                fields=fields,
             )],
             "max_tokens": self.settings.generation_max_tokens,
             "temperature": 0.2,
@@ -206,6 +212,8 @@ class EvidenceAnswerGenerator:
         if not answer:
             return _INSUFFICIENT_EVIDENCE_ANSWER
         if answer == _INSUFFICIENT_EVIDENCE_ANSWER:
+            return answer
+        if self.settings.semantic_pipeline_enabled:
             return answer
         return self._ensure_citation(answer, len(sources))
 
@@ -284,16 +292,48 @@ class EvidenceAnswerGenerator:
         *,
         subject: str = "",
         relations: tuple[str, ...] = (),
+        answer_shape: str = "single_fact",
+        set_semantics: str = "specific",
+        fields: tuple[tuple[str, str, tuple[str, ...]], ...] = (),
     ) -> str:
         evidence = self._evidence(sources)
+        normalized_fields = [
+            {
+                "field_id": field_id,
+                "question": field_question,
+                "relations": list(field_relations),
+            }
+            for field_id, field_question, field_relations in fields
+        ] or [{
+            "field_id": "f1",
+            "question": question,
+            "relations": list(relations),
+        }]
         task_contract = json.dumps(
             {
                 "subject": subject or question,
                 "relations": list(relations),
                 "question": question,
+                "answer_shape": answer_shape,
+                "set_semantics": set_semantics,
+                "fields": normalized_fields,
             },
             ensure_ascii=False,
         )
+        if self.settings.semantic_pipeline_enabled:
+            return f"""用户：严格依据证据包完成任务契约，只输出最终答案，不解释检索过程。
+任务契约中的 subject 是待处理对象，fields 是必须回答的字段，answer_shape 决定答案形态，set_semantics 决定集合范围。不要自行重新解释或改变契约。
+答案中的每个具体值必须逐字来自下方证据原文；可以为通顺而连接原文事实，但不得补充证据中没有的实体、数字、时间、原因或关系。
+API 会单独返回证据列表，引用编号可选；必须优先输出完整答案正文，绝不能只输出“[资料 N]”。
+如果 answer_shape 为 list，合并证据明确支持的项目并去重；set_semantics 为 all 时必须覆盖证据中的完整集合，其他值只回答证据能够确认的项目。
+如果当前字段询问原因、成因或“为什么”，只能依据证据中明确出现的因果关系回答；不要把发生时间、转折点或结果事件重新解释成原因，也不要补充证据没有的推断。
+如果证据不能直接支持任何字段，回答“{_INSUFFICIENT_EVIDENCE_ANSWER}”。回答不超过500个中文字符。
+
+任务契约：{task_contract}
+证据包：
+{evidence}
+当前任务：对象“{subject or question}”的字段“{'；'.join(field['question'] for field in normalized_fields)}”；具体值必须来自证据原文。
+助手："""
         cause_instruction = ""
         if any(marker in question for marker in ("为什么", "原因", "为何")):
             cause_instruction = (

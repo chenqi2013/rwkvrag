@@ -193,6 +193,29 @@ def test_ordinal_prompt_requires_explicit_first_relation() -> None:
     assert "只能依据资料中明确出现的“第一个、第一位、首位或最早”关系作答" in prompt
 
 
+def test_semantic_prompt_uses_task_contract_without_question_word_rules() -> None:
+    generator = EvidenceAnswerGenerator(Settings(semantic_pipeline_enabled=True))
+
+    prompt = generator._prompt(
+        "换一种说法也要找到这条事实",
+        [source()],
+        subject="中华人民共和国",
+        relations=("首都", "国都"),
+        answer_shape="single_fact",
+        set_semantics="specific",
+        fields=(("f1", "首都城市", ("首都", "国都")),),
+    )
+
+    assert '"answer_shape": "single_fact"' in prompt
+    assert '"field_id": "f1"' in prompt
+    assert '"question": "首都城市"' in prompt
+    assert "任务契约中的 subject 是待处理对象" in prompt
+    assert "引用编号可选" in prompt
+    assert "绝不能只输出“[资料 N]”" in prompt
+    assert "不得把事件发生后的结果当作原因" not in prompt
+    assert "只能依据资料中明确出现的“第一个" not in prompt
+
+
 def test_agent_answer_extracts_explicit_founder_role() -> None:
     evidence = source().model_copy(
         update={
@@ -992,6 +1015,35 @@ async def test_generator_cleans_echoed_evidence_from_model_output() -> None:
     )
 
     assert await generator.generate("中国的首都是哪个城市？", [source()]) == "中国的首都是北京。[资料 1]"
+
+
+@pytest.mark.asyncio
+async def test_semantic_generator_does_not_rewrite_model_answer() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            content=(
+                'data: {"choices":[{"delta":{"content":"北京。"}}]}\n\n'
+                "data: [DONE]\n\n"
+            ),
+        )
+
+    generator = EvidenceAnswerGenerator(
+        Settings(
+            generation_base_url="http://rwkv.test/v1",
+            generation_password="test-password",
+            semantic_pipeline_enabled=True,
+        ),
+        transport=httpx.MockTransport(handler),
+    )
+
+    answer = await generator.generate(
+        "中国的首都是哪个城市？",
+        [source()],
+        trusted_evidence=True,
+    )
+
+    assert answer == "北京。"
 
 
 @pytest.mark.asyncio

@@ -7,6 +7,10 @@ from time import monotonic
 
 from .active_retrieval import ActiveRetrievalAgent
 from .config import Settings
+from .document_reranking import (
+    DocumentRerankResult,
+    LanguageModelDocumentReranker,
+)
 from .evidence_utils import (
     agent_evidence_answer,
     birthplace_evidence_answer,
@@ -18,6 +22,7 @@ from .evidence_utils import (
     location_evidence_answer,
     list_evidence_answer,
     ordinal_evidence_answer,
+    structured_list_answer,
     time_evidence_answer,
 )
 from .generation import AnswerGenerationError, EvidenceAnswerGenerator
@@ -26,6 +31,7 @@ from .evidence_extraction import (
     EvidenceExtractionResult,
     LanguageModelEvidenceExtractor,
 )
+from .evidence_quality import is_repetitive_garbage
 from .failure_diagnosis import diagnose_failure
 from .evidence_gate import (
     document_aliases,
@@ -198,6 +204,7 @@ class SearchService:
         query_planner: LanguageModelQueryPlanner | None = None,
         retrieval_agent: ActiveRetrievalAgent | None = None,
         evidence_extractor: LanguageModelEvidenceExtractor | None = None,
+        document_reranker: LanguageModelDocumentReranker | None = None,
     ) -> None:
         self.settings = settings
         self.index = index
@@ -205,6 +212,7 @@ class SearchService:
         self.query_planner = query_planner
         self.retrieval_agent = retrieval_agent
         self.evidence_extractor = evidence_extractor
+        self.document_reranker = document_reranker
         self._answer_cache: OrderedDict[tuple[object, ...], tuple[float, str]] = OrderedDict()
 
     async def search(
@@ -358,6 +366,48 @@ class SearchService:
     @staticmethod
     def _remaining_budget(deadline: float, *, reserve: float = 0) -> float:
         return max(0.0, deadline - monotonic() - reserve)
+
+    async def _rerank_documents(
+        self,
+        question: str,
+        plan: QueryPlan,
+        sources: list[SourceItem],
+        *,
+        deadline: float,
+    ) -> DocumentRerankResult:
+        if (
+            not self.settings.semantic_pipeline_enabled
+            or self.document_reranker is None
+            or not sources
+        ):
+            return DocumentRerankResult(
+                tuple(sources),
+                (),
+                strategy="disabled",
+            )
+        remaining = self._remaining_budget(
+            deadline,
+            reserve=self.settings.ask_generation_reserve,
+        )
+        if remaining <= 0:
+            return DocumentRerankResult(
+                tuple(sources),
+                (),
+                errors=("request_budget_exhausted",),
+                strategy="budget_fallback",
+            )
+        try:
+            return await asyncio.wait_for(
+                self.document_reranker.rerank(question, plan, sources),
+                timeout=remaining,
+            )
+        except Exception as error:
+            return DocumentRerankResult(
+                tuple(sources),
+                (),
+                errors=(f"{type(error).__name__}: {error}",),
+                strategy="model_error_fallback",
+            )
 
     async def _plan_queries(
         self,
@@ -893,10 +943,36 @@ class SearchService:
         question = str(response.retrieval.get("normalized_question") or request.question)
         preliminary_plan = self._answer_plan(question, response.retrieval)
         analysis = preliminary_plan.analysis
-        preliminary_sources = self._focus_sources_on_subject(
+        document_rerank = await self._rerank_documents(
+            question,
             preliminary_plan,
             response.results,
+            deadline=deadline,
         )
+        trace["document_reranking"] = {
+            "strategy": document_rerank.strategy,
+            "selected_document_ids": list(dict.fromkeys(
+                source.document_id for source in document_rerank.sources
+            )),
+            "decisions": [
+                {
+                    "document_id": decision.document_id,
+                    "relevant": decision.relevant,
+                    "score": decision.score,
+                    "reason": decision.reason,
+                }
+                for decision in document_rerank.decisions
+            ],
+            "errors": list(document_rerank.errors),
+        }
+        if self.settings.semantic_pipeline_enabled:
+            preliminary_sources = list(document_rerank.sources)
+            response = response.model_copy(update={"results": preliminary_sources})
+        else:
+            preliminary_sources = self._focus_sources_on_subject(
+                preliminary_plan,
+                response.results,
+            )
         lexical_gate = evaluate_evidence_gate(
             question,
             analysis,
@@ -911,14 +987,20 @@ class SearchService:
             preliminary_plan,
             preliminary_sources,
         )
-        if lexical_gate.passed and direct_answer is not None:
+        if (
+            not self.settings.semantic_pipeline_enabled
+            and lexical_gate.passed
+            and direct_answer is not None
+        ):
             trace["stop_reason"] = "initial_evidence_sufficient"
             trace["deterministic_shortcut"] = True
             timings["total"] = self._elapsed_ms(active_started)
             return response, trace, None
 
         extraction: EvidenceExtractionResult | None = None
-        if lexical_gate.passed:
+        if lexical_gate.passed or (
+            self.settings.semantic_pipeline_enabled and preliminary_sources
+        ):
             extraction_started = monotonic()
             extraction = await self._extract_field_evidence(
                 question,
@@ -948,12 +1030,19 @@ class SearchService:
             )
         )
         triggers: list[str] = []
+        if (
+            self.settings.semantic_pipeline_enabled
+            and not (extraction and extraction.has_candidates)
+        ):
+            triggers.append("field_evidence_missing")
         if not preliminary_gate.passed:
-            triggers.append(
+            trigger = (
                 "field_evidence_missing"
                 if extraction and extraction.available
                 else "evidence_gate_failed"
             )
+            if trigger not in triggers:
+                triggers.append(trigger)
         if missing_relation_context:
             triggers.append("relation_context_missing")
         trace["trigger"] = triggers
@@ -1075,10 +1164,26 @@ class SearchService:
         if current is response:
             timings["total"] = self._elapsed_ms(active_started)
             return current, trace, extraction
-        final_sources = self._focus_sources_on_subject(
-            preliminary_plan,
-            current.results,
-        )
+        if self.settings.semantic_pipeline_enabled:
+            final_rerank = await self._rerank_documents(
+                question,
+                preliminary_plan,
+                current.results,
+                deadline=deadline,
+            )
+            final_sources = list(final_rerank.sources)
+            trace["final_document_reranking"] = {
+                "strategy": final_rerank.strategy,
+                "selected_document_ids": list(dict.fromkeys(
+                    source.document_id for source in final_rerank.sources
+                )),
+                "errors": list(final_rerank.errors),
+            }
+        else:
+            final_sources = self._focus_sources_on_subject(
+                preliminary_plan,
+                current.results,
+            )
         final_extraction_started = monotonic()
         final_extraction = await self._extract_field_evidence(
             question,
@@ -1091,7 +1196,7 @@ class SearchService:
         )
         timings["final_extraction"] = self._elapsed_ms(final_extraction_started)
         timings["total"] = self._elapsed_ms(active_started)
-        return current, trace, final_extraction
+        return current.model_copy(update={"results": final_sources}), trace, final_extraction
 
     @staticmethod
     def _merge_active_sources(
@@ -1193,7 +1298,10 @@ class SearchService:
         question_analysis = answer_plan.analysis
         retrieval["evidence_subject"] = answer_plan.subject
         retrieval["evidence_relations"] = list(answer_plan.relations)
-        if question_analysis.intent == "cause":
+        if (
+            not self.settings.semantic_pipeline_enabled
+            and question_analysis.intent == "cause"
+        ):
             evidence_response = evidence_response.model_copy(
                 update={
                     "results": self._trim_post_event_evidence(
@@ -1203,14 +1311,15 @@ class SearchService:
                     )
                 }
             )
-        evidence_response = evidence_response.model_copy(
-            update={
-                "results": self._focus_sources_on_subject(
-                    answer_plan,
-                    evidence_response.results,
-                )
-            }
-        )
+        if not self.settings.semantic_pipeline_enabled:
+            evidence_response = evidence_response.model_copy(
+                update={
+                    "results": self._focus_sources_on_subject(
+                        answer_plan,
+                        evidence_response.results,
+                    )
+                }
+            )
         if (
             field_extraction is not None
             and not field_extraction.matches_sources(evidence_response.results)
@@ -1235,15 +1344,68 @@ class SearchService:
                 )
                 timings["post_filter_extraction"] = self._elapsed_ms(extraction_started)
         answer_sources = (
-            evidence_response.results
-            if answer_plan.answer_shape == "list"
-            else (
-                field_extraction.answer_sources(evidence_response.results)
-                if field_extraction is not None and field_extraction.has_candidates
-                else evidence_response.results
-            )
+            field_extraction.answer_sources(evidence_response.results)
+            if field_extraction is not None and field_extraction.has_candidates
+            else evidence_response.results
         )
-        if answer_plan.analysis.intent == "agent":
+        if (
+            self.settings.semantic_pipeline_enabled
+            and field_extraction is not None
+            and field_extraction.has_candidates
+            and len({source.document_id for source in answer_sources}) > 1
+        ):
+            evidence_document_rerank = await self._rerank_documents(
+                question,
+                answer_plan,
+                answer_sources,
+                deadline=deadline,
+            )
+            answer_sources = list(evidence_document_rerank.sources)
+            active_retrieval["evidence_document_reranking"] = {
+                "strategy": evidence_document_rerank.strategy,
+                "selected_document_ids": list(dict.fromkeys(
+                    source.document_id for source in evidence_document_rerank.sources
+                )),
+                "decisions": [
+                    {
+                        "document_id": decision.document_id,
+                        "relevant": decision.relevant,
+                        "score": decision.score,
+                        "reason": decision.reason,
+                    }
+                    for decision in evidence_document_rerank.decisions
+                ],
+                "errors": list(evidence_document_rerank.errors),
+            }
+        if (
+            self.settings.semantic_pipeline_enabled
+            and answer_plan.answer_shape == "list"
+            and answer_plan.set_semantics == "all"
+        ):
+            focused_answer_sources = self._focus_complete_list_evidence(answer_sources)
+            if len(focused_answer_sources) < len(answer_sources):
+                active_retrieval["evidence_density_focus"] = {
+                    "before": len(answer_sources),
+                    "after": len(focused_answer_sources),
+                    "selected_document_ids": list(dict.fromkeys(
+                        source.document_id for source in focused_answer_sources
+                    )),
+                }
+                answer_sources = focused_answer_sources
+        verified_structured_answer = None
+        if self.settings.semantic_pipeline_enabled:
+            verified_structured_answer = self._verified_structured_render(
+                question,
+                answer_plan,
+                evidence_response.results,
+            )
+            if verified_structured_answer is not None:
+                answer_sources = evidence_response.results
+                active_retrieval["verified_structured_render"] = True
+        if (
+            not self.settings.semantic_pipeline_enabled
+            and answer_plan.analysis.intent == "agent"
+        ):
             answer_sources = self._sort_relation_sources(
                 answer_sources,
                 subject=answer_plan.subject,
@@ -1258,27 +1420,45 @@ class SearchService:
             field_evidence_available=bool(field_extraction and field_extraction.available),
             field_candidate_count=len(field_extraction.candidates) if field_extraction else 0,
         )
+        if (
+            self.settings.semantic_pipeline_enabled
+            and not (field_extraction and field_extraction.has_candidates)
+        ):
+            gate = replace(
+                gate,
+                passed=False,
+                issues=tuple(dict.fromkeys((*gate.issues, "field_evidence_missing"))),
+            )
         assessment = gate.assessment
         answer_response = evidence_response.model_copy(update={"results": answer_sources})
         cache_key = self._answer_cache_key(question, answer_response, answer_plan)
         answer = self._get_cached_answer(cache_key)
         cache_hit = answer is not None
         answer_strategy = "cache" if cache_hit else "model"
+        if answer is None and verified_structured_answer is not None:
+            answer = verified_structured_answer
+            if answer is not None:
+                answer_strategy = "verified_structured_render"
         ambiguity = ambiguity_candidates(question, answer_sources)
         raw_model_answer: str | None = None
+        retry_model_answer: str | None = None
         verification_model_answer: str | None = None
         verification_queries: list[str] = []
         blocked_answer: str | None = None
         answer_block_reason: str | None = None
         if answer is None:
-            if ambiguity and gate.passed:
+            if (
+                not self.settings.semantic_pipeline_enabled
+                and ambiguity
+                and gate.passed
+            ):
                 labels = "、".join(
                     f"{title}[资料 {next(index for index, source in enumerate(answer_sources, start=1) if source.title == title)}]"
                     for title in ambiguity
                 )
                 answer = f"这个名称可能指：{labels}。请补充你想查询的具体对象。"
                 answer_strategy = "clarification"
-            elif gate.passed:
+            elif gate.passed and not self.settings.semantic_pipeline_enabled:
                 answer = self._deterministic_answer(
                     question,
                     answer_plan,
@@ -1292,23 +1472,46 @@ class SearchService:
                     answer = await self._generate_answer(
                         question,
                         answer_sources,
+                        plan=answer_plan,
                         subject=answer_plan.subject,
                         relations=answer_plan.relations,
                         trusted_evidence=bool(field_extraction and field_extraction.has_candidates),
                         timeout=self._remaining_budget(deadline),
                     )
                     raw_model_answer = answer
-                except (AnswerGenerationError, TimeoutError) as error:
-                    fallback = (
-                        cause_evidence_answer(answer_sources)
-                        if question_analysis.intent == "cause"
-                        else None
-                    )
-                    if fallback is None and field_extraction and field_extraction.has_candidates:
-                        fallback = self._field_evidence_quote_answer(
+                    if (
+                        self.settings.semantic_pipeline_enabled
+                        and self._answer_contract_failed(question, answer)
+                        and self._remaining_budget(deadline) > 0
+                    ):
+                        retry_model_answer = await self._generate_answer(
+                            question,
                             answer_sources,
-                            answer_plan.relations,
+                            plan=answer_plan,
+                            subject=answer_plan.subject,
+                            relations=answer_plan.relations,
+                            trusted_evidence=True,
+                            timeout=self._remaining_budget(deadline),
                         )
+                        answer = retry_model_answer
+                        answer_strategy = "model_retry"
+                except (AnswerGenerationError, TimeoutError) as error:
+                    fallback = None
+                    if not self.settings.semantic_pipeline_enabled:
+                        fallback = (
+                            cause_evidence_answer(answer_sources)
+                            if question_analysis.intent == "cause"
+                            else None
+                        )
+                        if (
+                            fallback is None
+                            and field_extraction
+                            and field_extraction.has_candidates
+                        ):
+                            fallback = self._field_evidence_quote_answer(
+                                answer_sources,
+                                answer_plan.relations,
+                            )
                     answer = fallback or "根据检索到的资料，无法确定。"
                     answer_strategy = (
                         "generation_timeout_fallback"
@@ -1319,6 +1522,8 @@ class SearchService:
                 finally:
                     timings["answer_generation"] = self._elapsed_ms(generation_started)
                 if (
+                    not self.settings.semantic_pipeline_enabled
+                    and
                     any(
                         marker in answer
                         for marker in ("无法确定", "无法从资料", "资料不足", "不能确定")
@@ -1330,6 +1535,8 @@ class SearchService:
                         answer = fallback
                         answer_strategy = "evidence_fallback"
                 if (
+                    not self.settings.semantic_pipeline_enabled
+                    and
                     any(
                         marker in answer
                         for marker in ("无法确定", "无法从资料", "资料不足", "不能确定")
@@ -1346,32 +1553,46 @@ class SearchService:
                         answer_strategy = "evidence_fallback"
             else:
                 answer = "根据检索到的资料，无法确定。"
+                if self.settings.semantic_pipeline_enabled:
+                    answer_strategy = "evidence_blocked"
                 answer_block_reason = "field_evidence_missing" if (
                     field_extraction and field_extraction.available
                 ) else "insufficient_evidence"
-        if question_analysis.intent == "cause" and self._is_empty_answer_shell(answer):
+        if (
+            not self.settings.semantic_pipeline_enabled
+            and question_analysis.intent == "cause"
+            and self._is_empty_answer_shell(answer)
+        ):
             fallback = cause_evidence_answer(answer_sources)
             if fallback is not None:
                 answer = fallback
                 answer_strategy = "evidence_fallback"
         validation = validate_grounding(answer, answer_sources)
-        if "unsupported_number" in validation.issues and answer_strategy in {"model", "cache"}:
+        if (
+            not self.settings.semantic_pipeline_enabled
+            and "unsupported_number" in validation.issues
+            and answer_strategy in {"model", "cache"}
+        ):
             cleaned_answer = remove_unsupported_number_sentences(answer, validation.unsupported_numbers)
             answer = cleaned_answer or "根据检索到的资料，无法确定。"
             validation = validate_grounding(answer, answer_sources)
         list_validation = validate_list_answer(question, answer, answer_sources)
-        if list_validation.complete is False:
+        if (
+            not self.settings.semantic_pipeline_enabled
+            and list_validation.complete is False
+        ):
             fallback = list_evidence_answer(question, answer_sources)
             blocked_answer = answer
             answer = fallback or "根据检索到的资料，无法确定完整列表。[资料 1]"
             answer_strategy = "evidence_fallback" if fallback else "incomplete_list_blocked"
             answer_block_reason = "incomplete_list"
             validation = validate_grounding(answer, answer_sources)
-        if answer_strategy == "model":
+        if answer_strategy == "model" and not self.settings.semantic_pipeline_enabled:
             answer = repair_answer_citations(answer, answer_sources)
         answer_support = evaluate_answer_support(answer, answer_sources, question=question)
         if (
-            answer_plan.answer_shape in {"summary", "narrative"}
+            not self.settings.semantic_pipeline_enabled
+            and answer_plan.answer_shape in {"summary", "narrative"}
             and answer_plan.relations
             and any(
                 marker in normalize_search_text(" ".join(answer_plan.relations))
@@ -1396,7 +1617,8 @@ class SearchService:
                 issues=(*answer_support.issues, "summary_relation_mismatch"),
             )
         if (
-            not answer_support.passed
+            not self.settings.semantic_pipeline_enabled
+            and not answer_support.passed
             and answer_strategy == "model"
             and raw_model_answer
             and answer_support.unsupported_terms
@@ -1432,6 +1654,7 @@ class SearchService:
                         candidate_answer = await self._generate_answer(
                             question,
                             verified_sources,
+                            plan=answer_plan,
                             subject=answer_plan.subject,
                             relations=answer_plan.relations,
                             trusted_evidence=True,
@@ -1477,7 +1700,11 @@ class SearchService:
                         answer_plan,
                     )
             timings["answer_verification"] = self._elapsed_ms(verification_started)
-        if not answer_support.passed and answer_strategy in {"model", "cache"}:
+        if (
+            not self.settings.semantic_pipeline_enabled
+            and not answer_support.passed
+            and answer_strategy in {"model", "cache"}
+        ):
             blocked_answer = answer
             fallback = (
                 cause_evidence_answer(answer_sources)
@@ -1539,7 +1766,7 @@ class SearchService:
             "evidence_gate_issues": list(gate.issues),
             "relation_terms": list(gate.relation_terms),
             "matched_relation_terms": list(gate.matched_relation_terms),
-            "citation_required": True,
+            "citation_required": not self.settings.semantic_pipeline_enabled,
             "cache_hit": cache_hit,
             "answer_strategy": answer_strategy,
             "answer_shape": answer_plan.answer_shape,
@@ -1559,6 +1786,7 @@ class SearchService:
             "list_issues": list(list_validation.issues),
             "blocked_reason": "insufficient_evidence" if not gate.passed else None,
             "raw_model_answer": raw_model_answer,
+            "retry_model_answer": retry_model_answer,
             "verification_model_answer": verification_model_answer,
             "verification_queries": verification_queries,
             "blocked_answer": blocked_answer,
@@ -1593,6 +1821,49 @@ class SearchService:
             retrieval=retrieval,
             generation=generation,
         )
+
+    @staticmethod
+    def _focus_complete_list_evidence(
+        sources: list[SourceItem],
+    ) -> list[SourceItem]:
+        document_counts: dict[str, int] = {}
+        for source in sources:
+            hashes = source.metadata.get("evidence_span_hashes")
+            evidence_count = len(hashes) if isinstance(hashes, list) else 0
+            document_counts[source.document_id] = (
+                document_counts.get(source.document_id, 0) + evidence_count
+            )
+        maximum = max(document_counts.values(), default=0)
+        if maximum < 2:
+            return sources
+        minimum = maximum // 2 + 1
+        selected_ids = {
+            document_id
+            for document_id, count in document_counts.items()
+            if count >= minimum
+        }
+        focused = [
+            source for source in sources
+            if source.document_id in selected_ids
+        ]
+        return focused or sources
+
+    @staticmethod
+    def _verified_structured_render(
+        question: str,
+        plan: QueryPlan,
+        sources: list[SourceItem],
+    ) -> str | None:
+        if plan.answer_shape != "list" or plan.set_semantics != "all":
+            return None
+        answer = structured_list_answer(question, sources)
+        if answer is None:
+            return None
+        list_validation = validate_list_answer(question, answer, sources)
+        grounding = validate_grounding(answer, sources)
+        if list_validation.complete is not True or not grounding.valid:
+            return None
+        return answer
 
     def _adaptive_evidence_top_k(
         self,
@@ -1634,6 +1905,7 @@ class SearchService:
         question: str,
         sources: list[SourceItem],
         *,
+        plan: QueryPlan,
         subject: str,
         relations: tuple[str, ...] = (),
         trusted_evidence: bool = False,
@@ -1647,6 +1919,12 @@ class SearchService:
                     subject=subject,
                     relations=relations,
                     trusted_evidence=trusted_evidence,
+                    answer_shape=plan.answer_shape,
+                    set_semantics=plan.set_semantics,
+                    fields=tuple(
+                        (field.field_id, field.question, field.relations)
+                        for field in plan.fields
+                    ),
                 )
             return await self.generator.generate(question, sources)
 
@@ -1771,16 +2049,22 @@ class SearchService:
                 )
             else:
                 result = await self.evidence_extractor.extract(question, plan, sources)
-            if result is not None and not result.has_candidates and plan.answer_shape in {
-                "list", "single_fact", "summary", "narrative"
-            }:
+            if (
+                not self.settings.semantic_pipeline_enabled
+                and result is not None
+                and not result.has_candidates
+                and plan.answer_shape in {"list", "single_fact", "summary", "narrative"}
+            ):
                 result = self._deterministic_structured_evidence(result, plan, sources)
             return result
         except Exception as error:
             failed = EvidenceExtractionResult(
                 (), 0, 0, (f"{type(error).__name__}: {error}",)
             )
-            if plan.answer_shape in {"list", "single_fact", "summary", "narrative"}:
+            if (
+                not self.settings.semantic_pipeline_enabled
+                and plan.answer_shape in {"list", "single_fact", "summary", "narrative"}
+            ):
                 return self._deterministic_structured_evidence(
                     failed,
                     plan,
@@ -2070,8 +2354,8 @@ class SearchService:
             output.append(best)
         return output
 
-    @staticmethod
     def _answer_plan(
+        self,
         question: str,
         retrieval: dict[str, object],
     ) -> QueryPlan:
@@ -2112,7 +2396,11 @@ class SearchService:
         model_relations = tuple(
             str(value).strip() for value in relations if str(value).strip()
         )
-        merged_relations = tuple(dict.fromkeys((*model_relations, *fallback.relations)))
+        merged_relations = (
+            model_relations
+            if self.settings.semantic_pipeline_enabled
+            else tuple(dict.fromkeys((*model_relations, *fallback.relations)))
+        )
         planned = replace(
             fallback,
             subject=subject.strip(),
@@ -2127,7 +2415,10 @@ class SearchService:
                 expects_complete_list=answer_shape == "list" and set_semantics == "all",
             ),
         )
-        if fallback.analysis.intent in {"comparison", "cause"}:
+        if (
+            not self.settings.semantic_pipeline_enabled
+            and fallback.analysis.intent in {"comparison", "cause"}
+        ):
             return replace(
                 planned,
                 subject=fallback.subject,
@@ -2227,6 +2518,23 @@ class SearchService:
     @staticmethod
     def _is_empty_answer_shell(answer: str) -> bool:
         return bool(_EMPTY_ANSWER_SHELL.search(answer.strip()))
+
+    @staticmethod
+    def _answer_contract_failed(question: str, answer: str) -> bool:
+        answer_without_citations = re.sub(r"\[资料\s*\d+\]", "", answer).strip()
+        normalized_answer = normalize_search_text(answer_without_citations).replace(" ", "")
+        normalized_question = normalize_search_text(question).replace(" ", "")
+        if not normalized_answer or normalized_answer == normalized_question:
+            return True
+        if is_repetitive_garbage(answer_without_citations):
+            return True
+        list_body = answer_without_citations.split("：", 1)[-1]
+        items = [
+            normalize_search_text(item).replace(" ", "")
+            for item in re.split(r"[、，,；;\n]+", list_body)
+            if normalize_search_text(item).replace(" ", "")
+        ]
+        return len(items) >= 8 and len(set(items)) / len(items) < 0.7
 
     async def _expand_structured_results(
         self,

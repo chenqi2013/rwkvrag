@@ -84,6 +84,164 @@ def test_single_fact_rejects_title_only_unrelated_chunk() -> None:
     assert LanguageModelEvidenceExtractor._source_contains_subject(plan, direct) is True
 
 
+def test_semantic_parser_accepts_compact_sentence_selection() -> None:
+    evidence = SourceItem(
+        id="capital",
+        document_id="capital",
+        source="finewiki-zh",
+        title="中国首都",
+        score=1.0,
+        snippet=(
+            "清朝入主中原后将北京定为国都。\n"
+            "现时北京自1949年後定为中华人民共和国首都。"
+        ),
+    )
+    plan = replace(
+        build_query_plan("中国的首都是哪个城市？"),
+        subject="中国",
+        relations=("首都", "城市"),
+        fields=(TaskField("f1", "中国的首都是哪个城市？", ("首都", "城市")),),
+    )
+    units = (
+        "清朝入主中原后将北京定为国都。",
+        "现时北京自1949年後定为中华人民共和国首都。",
+    )
+
+    candidates = LanguageModelEvidenceExtractor._parse(
+        ">\n[s2]",
+        plan,
+        0,
+        evidence,
+        sentence_units=units,
+        semantic_mode=True,
+    )
+
+    assert [candidate.span for candidate in candidates] == [units[1]]
+
+
+def test_compact_sentence_selection_rejects_explanatory_prose() -> None:
+    with pytest.raises(ValueError, match="supported output contract"):
+        LanguageModelEvidenceExtractor._parse_compact_candidates(
+            "我认为应该选择 s2",
+            {"f1"},
+        )
+
+
+def test_compact_sentence_selection_accepts_shared_field_prefix() -> None:
+    assert LanguageModelEvidenceExtractor._parse_compact_candidates(
+        "f1: [s1, s2, s3]\n无需解释",
+        {"f1"},
+    ) == [
+        {"field_id": "f1", "sentence_id": "s1"},
+        {"field_id": "f1", "sentence_id": "s2"},
+        {"field_id": "f1", "sentence_id": "s3"},
+    ]
+
+
+def test_adjudication_parser_accepts_compact_field_evidence_pairs() -> None:
+    assert LanguageModelEvidenceExtractor._parse_adjudication(
+        ">\nf1:e3,f1:e7\n不参与协议的解释",
+        {"f1"},
+        8,
+    ) == (("f1", 3), ("f1", 7))
+
+    assert LanguageModelEvidenceExtractor._parse_adjudication(
+        "e2,e1",
+        {"f1"},
+        2,
+    ) == (("f1", 2), ("f1", 1))
+
+
+def test_adjudication_parser_ignores_explanatory_prose() -> None:
+    assert LanguageModelEvidenceExtractor._parse_adjudication(
+        "应该选择 f1:e2",
+        {"f1"},
+        3,
+    ) == (("f1", 2),)
+
+
+@pytest.mark.asyncio
+async def test_semantic_extractor_adjudicates_candidates_across_chunks() -> None:
+    calls = 0
+
+    async def handler(request: httpx.Request) -> httpx.Response:
+        nonlocal calls
+        calls += 1
+        prompt = json.loads(request.content)["contents"][0]
+        if "你是证据裁决器" in prompt:
+            assert "政治腐败导致国力衰退" in prompt
+            evidence_id = next(
+                line.split("]", 1)[0].removeprefix("[")
+                for line in prompt.splitlines()
+                if "政治腐败导致国力衰退" in line
+            )
+            return stream_response(f"f1:{evidence_id}")
+        return stream_response("f1:s1")
+
+    settings = Settings(
+        generation_password="secret",
+        semantic_pipeline_enabled=True,
+        evidence_extraction_concurrency=2,
+    )
+    extractor = LanguageModelEvidenceExtractor(
+        settings,
+        transport=httpx.MockTransport(handler),
+    )
+    plan = replace(
+        build_query_plan("明朝灭亡的原因是什么？"),
+        subject="明朝",
+        relations=("原因", "灭亡"),
+        fields=(TaskField("f1", "明朝灭亡的原因是什么？", ("原因", "灭亡")),),
+        answer_shape="summary",
+    )
+    sources = [
+        SourceItem(
+            id="early",
+            document_id="ming",
+            source="finewiki-zh",
+            title="明朝",
+            score=1.0,
+            snippet="靖难之役后朱棣即位。",
+        ),
+        SourceItem(
+            id="late",
+            document_id="ming",
+            source="finewiki-zh",
+            title="明朝",
+            score=1.0,
+            snippet="政治腐败导致国力衰退，最终爆发大规模民变，明朝灭亡。",
+        ),
+    ]
+
+    result = await extractor.extract(plan.original_question, plan, sources)
+
+    assert calls == 3
+    assert result.strategy == "model_map_reduce"
+    assert [candidate.span for candidate in result.candidates] == [sources[1].snippet]
+
+
+def test_adjudication_prioritizes_causal_relation_over_event_only_sentence() -> None:
+    extractor = LanguageModelEvidenceExtractor(Settings(semantic_pipeline_enabled=True))
+    plan = replace(
+        build_query_plan("某王朝灭亡的原因是什么？"),
+        subject="某王朝",
+        relations=("原因", "灭亡"),
+        fields=(TaskField("f1", "某王朝灭亡的原因是什么？", ("原因", "灭亡")),),
+        answer_shape="summary",
+    )
+    source_item = SourceItem(
+        id="dynasty",
+        document_id="dynasty",
+        source="wiki",
+        title="某王朝",
+        score=1.0,
+        snippet="某王朝灭亡。政治腐败导致国力衰退，最终爆发民变。",
+    )
+    units = extractor._adjudication_units(plan, [source_item], [])
+
+    assert "导致国力衰退" in units[0].span
+
+
 @pytest.mark.asyncio
 async def test_extractor_keeps_only_verbatim_spans() -> None:
     snippet = "2016年，宇树科技创始人王兴兴开发了XDog，随后创办宇树科技。"

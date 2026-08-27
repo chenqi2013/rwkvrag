@@ -1,16 +1,24 @@
 from dataclasses import replace
+from hashlib import sha256
 from typing import Any, cast
 
 import pytest
 from llama_index.core.schema import TextNode
 
 from llamaindex_retrieval.config import Settings
+from llamaindex_retrieval.document_reranking import (
+    DocumentDecision,
+    DocumentRerankResult,
+)
 from llamaindex_retrieval.active_retrieval import (
     ActiveRetrievalDecision,
     ActiveRetrievalResult,
 )
 from llamaindex_retrieval.generation import EvidenceAnswerGenerator
-from llamaindex_retrieval.evidence_extraction import EvidenceExtractionResult
+from llamaindex_retrieval.evidence_extraction import (
+    EvidenceExtractionResult,
+    EvidenceSpan,
+)
 from llamaindex_retrieval.lexical_index import (
     LexicalIndex,
     LexicalResult,
@@ -2142,3 +2150,299 @@ def test_focus_sources_uses_route_endpoints_instead_of_first_station() -> None:
     focused = SearchService._focus_sources_on_subject(plan, sources)
 
     assert [source.id for source in focused] == ["route"]
+
+
+def test_complete_list_evidence_focus_keeps_comparable_documents() -> None:
+    sources = [
+        SourceItem(
+            id="history",
+            document_id="history",
+            source="wiki",
+            title="线路历史",
+            score=1.0,
+            snippet="两个旧站名",
+            metadata={"evidence_span_hashes": ["h1", "h2"]},
+        ),
+        SourceItem(
+            id="list-1",
+            document_id="stations",
+            source="wiki",
+            title="车站列表",
+            score=0.9,
+            snippet="第一段站名",
+            metadata={"evidence_span_hashes": ["s1", "s2", "s3"]},
+        ),
+        SourceItem(
+            id="list-2",
+            document_id="stations",
+            source="wiki",
+            title="车站列表",
+            score=0.8,
+            snippet="第二段站名",
+            metadata={"evidence_span_hashes": ["s4", "s5"]},
+        ),
+    ]
+
+    focused = SearchService._focus_complete_list_evidence(sources)
+
+    assert [source.document_id for source in focused] == ["stations", "stations"]
+
+
+def test_verified_structured_render_requires_proven_complete_list() -> None:
+    overview = SourceItem(
+        id="line",
+        document_id="line",
+        source="wiki",
+        title="示例地铁1号线",
+        score=1.0,
+        snippet="示例地铁1号线前称示例线，共设3个车站。",
+    )
+    table = SourceItem(
+        id="station-list",
+        document_id="station-list",
+        source="wiki",
+        title="示例地铁车站列表",
+        score=0.9,
+        snippet=(
+            "1號線前稱示例線，沿途共設3個車站。\n"
+            "甲城站Jiacheng150px乙城站Yicheng150px后瑞站Hourui150px"
+        ),
+    )
+    plan = replace(
+        build_query_plan("示例地铁1号线有哪些站点？"),
+        answer_shape="list",
+        set_semantics="all",
+    )
+
+    answer = SearchService._verified_structured_render(
+        "示例地铁1号线有哪些站点？",
+        plan,
+        [overview, table],
+    )
+
+    assert answer == (
+        "示例地铁1号线共有3个车站：甲城站、乙城站、后瑞站。[资料 2]"
+    )
+
+
+def test_answer_contract_rejects_echo_citation_shell_and_repetition() -> None:
+    assert SearchService._answer_contract_failed(
+        "宇树科技创始人是谁？",
+        "宇树科技创始人是谁？",
+    ) is True
+    assert SearchService._answer_contract_failed(
+        "深圳地铁1号线有哪些站点？",
+        "[资料 1]",
+    ) is True
+    assert SearchService._answer_contract_failed(
+        "有哪些项目？",
+        "项目包括：甲、乙、甲、乙、甲、乙、甲、乙。",
+    ) is True
+    assert SearchService._answer_contract_failed(
+        "中国的首都是哪个城市？",
+        "北京",
+    ) is False
+
+
+@pytest.mark.asyncio
+async def test_semantic_pipeline_reranks_then_extracts_immutable_evidence() -> None:
+    question = "中国的首都是哪个城市？"
+    evidence_span = "中华人民共和国的首都是北京。"
+
+    class SemanticIndex:
+        def search(self, query: str, **kwargs: Any) -> list[LexicalResult]:
+            return [
+                LexicalResult(
+                    node_id="henan-node",
+                    document_id="henan",
+                    text="河南省位于中国中部。",
+                    metadata={
+                        "document_id": "henan",
+                        "title": "河南省",
+                        "source": "finewiki-zh",
+                    },
+                    score=1.0,
+                ),
+                LexicalResult(
+                    node_id="capital-node",
+                    document_id="capital",
+                    text=evidence_span,
+                    metadata={
+                        "document_id": "capital",
+                        "title": "首都",
+                        "source": "finewiki-zh",
+                    },
+                    score=0.8,
+                ),
+            ]
+
+    class ModelPlanner:
+        async def plan(self, value: str, fallback: Any) -> QueryPlanningResult:
+            assert value == question
+            plan = replace(
+                fallback,
+                queries=("中华人民共和国 首都 城市",),
+                subject="中国",
+                relations=("首都", "国都"),
+                fields=(replace(fallback.fields[0], relations=("首都", "国都")),),
+            )
+            return QueryPlanningResult(
+                plan,
+                "model",
+                model_queries=plan.queries,
+            )
+
+    class ModelReranker:
+        async def rerank(
+            self,
+            value: str,
+            plan: Any,
+            sources: list[SourceItem],
+        ) -> DocumentRerankResult:
+            assert value == question
+            assert [source.document_id for source in sources] == ["capital", "henan"]
+            relevant = next(
+                source for source in sources if source.document_id == "capital"
+            )
+            return DocumentRerankResult(
+                (relevant,),
+                (
+                    DocumentDecision("henan", False, 0, "对象不匹配"),
+                    DocumentDecision("capital", True, 3, "直接回答首都"),
+                ),
+            )
+
+    class ModelExtractor:
+        calls = 0
+
+        async def extract(
+            self,
+            value: str,
+            plan: Any,
+            sources: list[SourceItem],
+        ) -> EvidenceExtractionResult:
+            self.calls += 1
+            assert value == question
+            assert [source.document_id for source in sources] == ["capital"]
+            source = sources[0]
+            return EvidenceExtractionResult(
+                candidates=(
+                    EvidenceSpan(
+                        field_id="f1",
+                        source_index=0,
+                        span=evidence_span,
+                        content_hash=sha256(evidence_span.encode("utf-8")).hexdigest(),
+                    ),
+                ),
+                attempted_sources=1,
+                completed_sources=1,
+                source_signatures=((
+                    source.id,
+                    sha256(source.snippet.encode("utf-8")).hexdigest(),
+                ),),
+            )
+
+    class ModelGenerator:
+        calls = 0
+        source_batches: list[list[str]] = []
+
+        async def generate(self, value: str, sources: list[SourceItem]) -> str:
+            self.calls += 1
+            self.source_batches.append([source.document_id for source in sources])
+            assert value == question
+            return "中华人民共和国的首都是北京。[资料 1]"
+
+        async def current_model(self) -> str:
+            return "test-model"
+
+    extractor = ModelExtractor()
+    generator = ModelGenerator()
+    service = SearchService(
+        Settings(
+            semantic_pipeline_enabled=True,
+            document_reranking_enabled=True,
+        ),
+        cast(Any, SemanticIndex()),
+        generator=cast(Any, generator),
+        query_planner=cast(Any, ModelPlanner()),
+        evidence_extractor=cast(Any, extractor),
+        document_reranker=cast(Any, ModelReranker()),
+    )
+
+    response = await service.ask(SearchRequest(question=question, top_k=1))
+
+    assert response.answer == "中华人民共和国的首都是北京。[资料 1]"
+    assert [source.document_id for source in response.sources] == ["capital"]
+    assert response.retrieval["query_plan"]["planner"] == "model"
+    assert response.retrieval["active_retrieval"]["document_reranking"] == {
+        "strategy": "model",
+        "selected_document_ids": ["capital"],
+        "decisions": [
+            {
+                "document_id": "henan",
+                "relevant": False,
+                "score": 0,
+                "reason": "对象不匹配",
+            },
+            {
+                "document_id": "capital",
+                "relevant": True,
+                "score": 3,
+                "reason": "直接回答首都",
+            },
+        ],
+        "errors": [],
+    }
+    assert "deterministic_shortcut" not in response.retrieval["active_retrieval"]
+    assert response.generation["field_evidence_strategy"] == "model"
+    assert response.generation["answer_strategy"] == "model"
+    assert response.generation["raw_model_answer"] == response.answer
+    assert generator.source_batches == [["capital"]]
+    assert response.sources[0].snippet == evidence_span
+    assert extractor.calls == 1
+    assert generator.calls == 1
+
+
+@pytest.mark.asyncio
+async def test_semantic_pipeline_never_generates_without_field_evidence() -> None:
+    class EmptyExtractor:
+        calls = 0
+
+        async def extract(
+            self,
+            question: str,
+            plan: Any,
+            sources: list[SourceItem],
+        ) -> EvidenceExtractionResult:
+            self.calls += 1
+            return EvidenceExtractionResult(
+                candidates=(),
+                attempted_sources=len(sources),
+                completed_sources=len(sources),
+                source_signatures=tuple(
+                    (
+                        source.id,
+                        sha256(source.snippet.encode("utf-8")).hexdigest(),
+                    )
+                    for source in sources
+                ),
+                strategy="model_empty",
+            )
+
+    extractor = EmptyExtractor()
+    service = SearchService(
+        Settings(semantic_pipeline_enabled=True),
+        cast(Any, FakeCapitalIndex()),
+        generator=cast(Any, FakeFailingGenerator()),
+        evidence_extractor=cast(Any, extractor),
+    )
+
+    response = await service.ask(
+        SearchRequest(question="中国的首都是哪个城市？", top_k=1)
+    )
+
+    assert response.answer == "根据检索到的资料，无法确定。"
+    assert response.generation["answer_strategy"] == "evidence_blocked"
+    assert response.generation["answer_block_reason"] == "field_evidence_missing"
+    assert "field_evidence_missing" in response.generation["evidence_gate_issues"]
+    assert extractor.calls == 1

@@ -1,7 +1,9 @@
 import asyncio
+from collections import Counter
 from dataclasses import dataclass
 from hashlib import sha256
 import json
+from math import log
 import re
 
 import httpx
@@ -18,6 +20,20 @@ _RELATION_EQUIVALENTS = {
     "负责人": ("负责人", "老板", "创始人", "创办人", "创办者", "负责"),
     "首席执行官": ("首席执行官", "CEO", "负责人", "老板"),
 }
+_EVIDENCE_RELATION_MARKERS = (
+    "是", "为", "即", "成为", "定为", "位于", "来自", "创立", "创建",
+    "创办", "撰写", "著", "导演", "主演", "导致", "因为", "由于", "造成",
+    "引发", "包括", "包含", "分别", "设有", "共有",
+)
+_BROAD_CONTEXT_MARKERS = (
+    "很多", "更多", "各地", "各个", "历代", "歷代", "曾经", "曾經", "一般而言",
+    "七朝", "古称", "古稱", "历史上", "歷史上", "多个", "多個", "若干",
+)
+_CAUSE_PROGRESSION_MARKERS = (
+    "最终", "最終", "后期", "後期", "衰退", "衰亡", "灭亡", "滅亡", "危机", "危機",
+    "崩溃", "崩潰", "民变", "民變", "动荡", "動盪", "失去", "国力", "國力",
+)
+_CAUSE_EVENT_MARKERS = ("起兵", "即位", "推翻", "建立", "称帝", "稱帝", "迁都", "遷都")
 
 
 def _relation_variants(relations: tuple[str, ...]) -> tuple[str, ...]:
@@ -34,6 +50,14 @@ class EvidenceSpan:
     source_index: int
     span: str
     content_hash: str
+
+
+@dataclass(frozen=True)
+class _EvidenceUnit:
+    source_index: int
+    span: str
+    content_hash: str
+    score: float
 
 
 @dataclass(frozen=True)
@@ -154,7 +178,16 @@ class LanguageModelEvidenceExtractor:
             if plan.answer_shape in {"list", "summary", "narrative"}
             else min(3, self.settings.evidence_extraction_max_sources)
         )
-        selected = sources[:source_limit]
+        selected: list[SourceItem] = []
+        document_counts: Counter[str] = Counter()
+        max_chunks_per_document = 4 if plan.answer_shape in {"list", "summary", "narrative"} else 3
+        for source in sources:
+            if len(selected) >= source_limit:
+                break
+            if document_counts[source.document_id] >= max_chunks_per_document:
+                continue
+            selected.append(source)
+            document_counts[source.document_id] += 1
         signatures = tuple(
             (source.id, sha256(source.snippet.encode("utf-8")).hexdigest())
             for source in selected
@@ -185,6 +218,18 @@ class LanguageModelEvidenceExtractor:
                 seen.add(key)
                 candidates.append(candidate)
         strategy = "model" if candidates else "model_empty"
+        if self.settings.semantic_pipeline_enabled and completed:
+            try:
+                candidates = list(await self._adjudicate(
+                    question,
+                    plan,
+                    selected,
+                    candidates,
+                ))
+                strategy = "model_map_reduce" if candidates else "model_map_reduce_empty"
+            except Exception as error:
+                errors.append(f"adjudication: {type(error).__name__}: {error}")
+                strategy = "model_map_reduce_error_fallback" if candidates else "model_map_reduce_error"
         return EvidenceExtractionResult(
             tuple(candidates),
             attempted_sources=len(selected),
@@ -193,6 +238,343 @@ class LanguageModelEvidenceExtractor:
             source_signatures=signatures,
             strategy=strategy,
         )
+
+    async def _adjudicate(
+        self,
+        question: str,
+        plan: QueryPlan,
+        sources: list[SourceItem],
+        map_candidates: list[EvidenceSpan],
+    ) -> tuple[EvidenceSpan, ...]:
+        units = self._adjudication_units(plan, sources, map_candidates)
+        if not units:
+            return ()
+        payload = {
+            "contents": [self._adjudication_prompt(question, plan, sources, units)],
+            "max_tokens": min(self.settings.evidence_extraction_max_tokens, 192),
+            "temperature": 0.1,
+            "top_k": 20,
+            "top_p": 0.4,
+            "alpha_presence": 0.0,
+            "alpha_frequency": 0.0,
+            "alpha_decay": 0.99,
+            "stream": True,
+            "password": self.settings.generation_password,
+        }
+        endpoint = f"{self.settings.generation_base_url.rstrip('/')}/chat/completions"
+        async with httpx.AsyncClient(
+            timeout=self.settings.evidence_extraction_timeout,
+            transport=self.transport,
+        ) as client:
+            async with client.stream("POST", endpoint, json=payload) as response:
+                response.raise_for_status()
+                raw = await EvidenceAnswerGenerator._read_stream(
+                    response,
+                    total_timeout=self.settings.evidence_extraction_timeout,
+                )
+        selections = self._parse_adjudication(
+            raw,
+            {field.field_id for field in plan.fields},
+            len(units),
+        )
+        if plan.analysis.intent == "cause" and units:
+            strongest_index = max(
+                range(1, len(units) + 1),
+                key=lambda index: units[index - 1].score,
+            )
+            strongest_selection = (plan.fields[0].field_id, strongest_index)
+            if strongest_selection not in selections:
+                selections = (strongest_selection, *selections)
+            selections = tuple(sorted(
+                selections,
+                key=lambda item: units[item[1] - 1].score,
+                reverse=True,
+            ))
+        selection_limit = (
+            4
+            if plan.analysis.intent == "cause"
+            else 6 if plan.answer_shape in {"list", "summary", "narrative"} else 3
+        )
+        selections = selections[:selection_limit]
+        output: list[EvidenceSpan] = []
+        seen: set[tuple[str, int, str]] = set()
+        for field_id, unit_index in selections:
+            unit = units[unit_index - 1]
+            if sha256(unit.span.encode("utf-8")).hexdigest() != unit.content_hash:
+                continue
+            if unit.source_index >= len(sources):
+                continue
+            if unit.span not in sources[unit.source_index].snippet:
+                continue
+            key = (field_id, unit.source_index, unit.span)
+            if key in seen:
+                continue
+            seen.add(key)
+            output.append(EvidenceSpan(
+                field_id=field_id,
+                source_index=unit.source_index,
+                span=unit.span,
+                content_hash=unit.content_hash,
+            ))
+        return tuple(output)
+
+    def _adjudication_units(
+        self,
+        plan: QueryPlan,
+        sources: list[SourceItem],
+        map_candidates: list[EvidenceSpan],
+    ) -> tuple[_EvidenceUnit, ...]:
+        raw_units: list[tuple[int, str, bool]] = []
+        seen: set[tuple[int, str]] = set()
+        for candidate in map_candidates:
+            key = (candidate.source_index, candidate.span)
+            if key in seen or candidate.source_index >= len(sources):
+                continue
+            if self._is_structural_noise(candidate.span, sources[candidate.source_index]):
+                continue
+            seen.add(key)
+            raw_units.append((candidate.source_index, candidate.span, True))
+        for source_index, source in enumerate(sources):
+            for span in self._attention_units(plan, source):
+                key = (source_index, span)
+                if key in seen:
+                    continue
+                if self._is_structural_noise(span, source):
+                    continue
+                seen.add(key)
+                raw_units.append((source_index, span, False))
+        if not raw_units:
+            return ()
+
+        tokenized = [tuple(lexical_tokens(span)) for _, span, _ in raw_units]
+        document_frequency = Counter(
+            token for tokens in tokenized for token in set(tokens)
+        )
+        query_terms = tuple(dict.fromkeys(lexical_tokens(" ".join((
+            plan.subject,
+            *(field.question for field in plan.fields),
+            *plan.relations,
+            *plan.queries,
+        )))))
+        average_length = sum(map(len, tokenized)) / max(1, len(tokenized))
+        corpus_size = len(tokenized)
+        ranked: list[_EvidenceUnit] = []
+        for (source_index, span, selected_by_map), tokens in zip(
+            raw_units,
+            tokenized,
+            strict=True,
+        ):
+            frequencies = Counter(tokens)
+            length_normalizer = 0.25 + 0.75 * (
+                len(tokens) / max(1.0, average_length)
+            )
+            score = 0.0
+            for term in query_terms:
+                frequency = frequencies.get(term, 0)
+                if not frequency:
+                    continue
+                document_count = document_frequency.get(term, 0)
+                inverse_frequency = log(
+                    1.0 + (corpus_size - document_count + 0.5) / (document_count + 0.5)
+                )
+                score += inverse_frequency * (
+                    frequency * 2.2 / (frequency + 1.2 * length_normalizer)
+                )
+            if selected_by_map:
+                score += 0.5
+            normalized_span = normalize_search_text(span).replace(" ", "")
+            normalized_subject = normalize_search_text(plan.subject).replace(" ", "")
+            source_title = normalize_search_text(
+                sources[source_index].title
+            ).replace(" ", "")
+            relation_terms = tuple(
+                normalize_search_text(relation).replace(" ", "")
+                for field in plan.fields
+                for relation in field.relations
+                if relation.strip()
+            )
+            if normalized_subject and normalized_subject in source_title:
+                score += 2.5
+            if plan.answer_shape == "single_fact" and relation_terms and not any(
+                relation in normalized_span for relation in relation_terms
+            ):
+                score -= 2.0
+            if any(marker in normalized_span for marker in _EVIDENCE_RELATION_MARKERS):
+                score += 1.0
+            if plan.analysis.intent == "cause" and any(
+                marker in normalized_span
+                for marker in ("因为", "由于", "导致", "造成", "引发", "促成", "因素", "原因")
+            ):
+                score += 5.0
+            if plan.analysis.intent == "cause" and any(
+                marker in normalized_span for marker in _CAUSE_PROGRESSION_MARKERS
+            ):
+                score += 2.0
+            if plan.analysis.intent == "cause" and any(
+                marker in normalized_span for marker in _CAUSE_EVENT_MARKERS
+            ) and not any(
+                marker in normalized_span for marker in _CAUSE_PROGRESSION_MARKERS
+            ):
+                score -= 2.0
+            if plan.analysis.intent == "cause" and any(
+                marker in normalized_span
+                for marker in ("转折点", "轉折點", "时间", "時間")
+            ):
+                score -= 2.0
+            if plan.answer_shape == "single_fact" and any(
+                marker in normalized_span for marker in _BROAD_CONTEXT_MARKERS
+            ):
+                score -= 4.0
+            ranked.append(_EvidenceUnit(
+                source_index=source_index,
+                span=span,
+                content_hash=sha256(span.encode("utf-8")).hexdigest(),
+                score=score,
+            ))
+
+        selected: list[_EvidenceUnit] = []
+        used_characters = 0
+        per_source: Counter[int] = Counter()
+        if plan.analysis.intent == "cause":
+            causal_units = [
+                unit for unit in ranked
+                if any(
+                    marker in normalize_search_text(unit.span).replace(" ", "")
+                    for marker in (
+                        "因为", "由于", "导致", "造成", "引发", "促成", "因素", "原因",
+                    )
+                )
+            ]
+            if causal_units:
+                ranked = causal_units
+        unit_limit = 8 if plan.answer_shape == "single_fact" else 16
+        for unit in sorted(ranked, key=lambda item: (-item.score, item.source_index)):
+            if len(selected) >= unit_limit:
+                break
+            if per_source[unit.source_index] >= 6:
+                continue
+            if selected and used_characters + len(unit.span) > 6_000:
+                continue
+            selected.append(unit)
+            per_source[unit.source_index] += 1
+            used_characters += len(unit.span)
+        return tuple(selected)
+
+    @staticmethod
+    def _is_structural_noise(span: str, source: SourceItem) -> bool:
+        normalized = normalize_search_text(span).replace(" ", "")
+        if not normalized:
+            return True
+        title = normalize_search_text(source.title).replace(" ", "")
+        if normalized == title and len(normalized) <= 80:
+            return True
+        keywords = source.metadata.get("keywords")
+        if isinstance(keywords, list) and any(
+            normalized == normalize_search_text(str(keyword)).replace(" ", "")
+            for keyword in keywords
+            if str(keyword).strip()
+        ):
+            return True
+        return normalized in {"历史", "歷史", "目录", "目錄"}
+
+    @staticmethod
+    def _adjudication_prompt(
+        question: str,
+        plan: QueryPlan,
+        sources: list[SourceItem],
+        units: tuple[_EvidenceUnit, ...],
+    ) -> str:
+        contract = {
+            "subject": plan.subject,
+            "answer_shape": plan.answer_shape,
+            "set_semantics": plan.set_semantics,
+            "fields": [
+                {
+                    "field_id": field.field_id,
+                    "question": field.question,
+                    "relations": list(field.relations),
+                }
+                for field in plan.fields
+            ],
+        }
+        evidence = "\n".join(
+            f"[e{index}] 标题：{sources[unit.source_index].title or '未命名'}｜{unit.span}"
+            for index, unit in enumerate(units, start=1)
+        )
+        return f"""你是证据裁决器，不回答问题。候选均来自知识库原文，代码会按编号取回原文。
+严格按任务契约逐字段选择能够直接填写所求具体值的证据。模型负责判断对象身份、关系含义、答案值类型和事件结果是否与字段完全一致。
+仅仅提到对象、关系词相同、属于同一篇长文、描述其他事件，或只给出背景和时间，都不是直接证据。询问原因时，候选中的因果结果必须就是字段所问事件；询问人物、地点、时间、数量、名称或列表时，候选必须实际给出对应类型的具体值。
+每个字段最多选择 6 条。按支持强度从高到低，只输出“字段编号:证据编号”，例如 f1:e3,f1:e7；只有一个字段时也可简写为 e3,e7。没有任何直接证据只输出 NONE。不要解释，不要改写原文。
+
+任务契约：{json.dumps(contract, ensure_ascii=False)}
+问题：{question}
+候选证据：
+{evidence}
+当前唯一决定：为任务契约中的每个字段选择直接证据编号。
+选择："""
+
+    @staticmethod
+    def _parse_adjudication(
+        raw: str,
+        field_ids: set[str],
+        unit_count: int,
+    ) -> tuple[tuple[str, int], ...]:
+        cleaned = re.sub(r"<think>.*?</think>", "", raw, flags=re.IGNORECASE | re.DOTALL)
+        cleaned = re.sub(r"```(?:json)?", "", cleaned, flags=re.IGNORECASE).replace("```", "")
+        first_line = next(
+            (
+                line.strip().lstrip(">").strip()
+                for line in cleaned.splitlines()
+                if line.strip() and line.strip() != ">"
+            ),
+            "",
+        )
+        if first_line.upper() in {"NONE", "[]"}:
+            return ()
+        if len(field_ids) == 1 and re.fullmatch(
+            r"e[1-9]\d*(?:\s*[,，;；]\s*e[1-9]\d*)*",
+            first_line,
+            flags=re.IGNORECASE,
+        ):
+            field_id = next(iter(field_ids))
+            return tuple(
+                (field_id, int(unit_id))
+                for unit_id in re.findall(
+                    r"e([1-9]\d*)",
+                    first_line,
+                    flags=re.IGNORECASE,
+                )
+                if int(unit_id) <= unit_count
+            )
+        contract = r"(?:f[1-9]\d*\s*[:：]\s*e[1-9]\d*(?:\s*[,，;；]\s*)?)+"
+        if not re.fullmatch(contract, first_line, flags=re.IGNORECASE):
+            compact = re.search(
+                r"((?:f[1-9]\d*\s*[:：]\s*e[1-9]\d*"
+                r"|e[1-9]\d*)(?:\s*[,，;；]\s*(?:f[1-9]\d*\s*[:：]\s*)?e[1-9]\d*)*)",
+                first_line,
+                flags=re.IGNORECASE,
+            )
+            if compact is None:
+                raise ValueError("adjudicator response does not match the contract")
+            first_line = compact.group(1)
+        output: list[tuple[str, int]] = []
+        for field_id, unit_id in re.findall(
+            r"(f[1-9]\d*)\s*[:：]\s*e([1-9]\d*)",
+            first_line,
+            flags=re.IGNORECASE,
+        ):
+            normalized_field_id = field_id.lower()
+            unit_index = int(unit_id)
+            if (
+                normalized_field_id not in field_ids
+                or unit_index > unit_count
+                or (normalized_field_id, unit_index) in output
+            ):
+                continue
+            output.append((normalized_field_id, unit_index))
+        if not output:
+            raise ValueError("adjudicator selected no valid evidence ids")
+        return tuple(output)
 
     async def _extract_source(
         self,
@@ -208,9 +590,13 @@ class LanguageModelEvidenceExtractor:
             source,
             sentence_units=sentence_units,
         )
+        max_tokens = min(
+            self.settings.evidence_extraction_max_tokens,
+            160 if self.settings.semantic_pipeline_enabled else self.settings.evidence_extraction_max_tokens,
+        )
         payload = {
             "contents": [prompt],
-            "max_tokens": self.settings.evidence_extraction_max_tokens,
+            "max_tokens": max_tokens,
             "temperature": 0.1,
             "top_k": 20,
             "top_p": 0.4,
@@ -237,6 +623,7 @@ class LanguageModelEvidenceExtractor:
             source_index,
             source,
             sentence_units=sentence_units,
+            semantic_mode=self.settings.semantic_pipeline_enabled,
         )
 
     def _prompt(
@@ -274,15 +661,16 @@ class LanguageModelEvidenceExtractor:
 任务契约：{json.dumps(contract, ensure_ascii=False)}
 对每个字段查找能够直接支持“所求具体值”的最小编号句子。先根据字段问题判断所求值的类型，例如人物、地点、时间、数量、名称或列表；所选句子必须实际给出该类型的具体值。只出现关系词、讨论该关系、表达某人的观点，但没有给出字段所求具体值时，必须拒绝。
 候选必须属于任务对象；同名异物、导航、分类、页眉页脚和仅仅提到关键词的背景文字都不要提取。
-不要复制或改写正文，只输出句子编号。没有直接证据时 candidates 输出空数组。只输出固定 JSON：
-{{"candidates":[{{"field_id":"f1","sentence_id":"s2"}}]}}
+当 answer_shape=list 且 set_semantics=all 时，只选择明确构成所求集合的列表、表格行或连续枚举行；不要选择路线/过程叙述、历史讨论、举例、图片说明、分类文字，也不要把叙述中偶然出现的名称当成完整列表。列表跨多个连续编号句子时，选择该结构内所有直接承载项目的句子。
+当字段询问原因、成因或为何发生时，只选择明确表达因果关系、成因条件或直接导火事件的句子；因果结果必须就是字段中询问的那个事件或结局，同一对象文档内其他事件的因果关系也必须拒绝。仅说明某事件是“转折点”、列出结局或给出发生时间，不能直接回答原因。
+不要复制或改写正文，只输出“字段编号:句子编号”，例如 f1:s2。多条证据用逗号分隔，例如 f1:s2,f1:s3；没有直接证据只输出 NONE。不要解释。
 
 问题：{question}
 资料标题：{source.title}
 编号句子：
 {text}
 当前唯一任务：为字段“{field_targets}”选择能直接填写具体答案的句子编号。选中的句子如果不能直接回答该字段，就必须输出空数组。
-JSON："""
+选择："""
 
     def _attention_window(self, plan: QueryPlan, source: SourceItem) -> str:
         return "\n".join(self._attention_units(plan, source))
@@ -298,7 +686,7 @@ JSON："""
             for value in re.split(r"(?<=[。！？!?；;])|\n+", source.snippet)
             if value.strip()
         ]
-        if len(source.snippet) <= limit:
+        if len(source.snippet) <= limit and len(all_units) <= 6:
             return tuple(all_units)
         terms = {
             term
@@ -406,25 +794,33 @@ JSON："""
         source: SourceItem,
         *,
         sentence_units: tuple[str, ...] | None = None,
+        semantic_mode: bool = False,
     ) -> tuple[EvidenceSpan, ...]:
-        if not LanguageModelEvidenceExtractor._source_contains_subject(plan, source):
+        if (
+            not semantic_mode
+            and not LanguageModelEvidenceExtractor._source_contains_subject(plan, source)
+        ):
             return ()
         cleaned = re.sub(r"<think>.*?</think>", "", raw, flags=re.IGNORECASE | re.DOTALL)
         cleaned = re.sub(r"```(?:json)?", "", cleaned, flags=re.IGNORECASE).replace("```", "")
         start = cleaned.find("{")
         end = cleaned.rfind("}")
-        if start < 0 or end <= start:
-            raise ValueError("extractor response does not contain a JSON object")
-        try:
-            payload = json.loads(cleaned[start : end + 1])
-        except json.JSONDecodeError as error:
-            raise ValueError("extractor response contains invalid JSON") from error
-        if not isinstance(payload, dict) or "candidates" not in payload:
-            raise ValueError("extractor response must contain candidates")
-        values = payload["candidates"]
-        if not isinstance(values, list):
-            raise ValueError("extractor candidates must be a list")
         field_ids = {field.field_id for field in plan.fields}
+        if start >= 0 and end > start:
+            try:
+                payload = json.loads(cleaned[start : end + 1])
+            except json.JSONDecodeError as error:
+                raise ValueError("extractor response contains invalid JSON") from error
+            if not isinstance(payload, dict) or "candidates" not in payload:
+                raise ValueError("extractor response must contain candidates")
+            values = payload["candidates"]
+            if not isinstance(values, list):
+                raise ValueError("extractor candidates must be a list")
+        else:
+            values = LanguageModelEvidenceExtractor._parse_compact_candidates(
+                cleaned,
+                field_ids,
+            )
         normalized_title = normalize_search_text(source.title).replace(" ", "")
         contract_text = normalize_search_text(" ".join((
             plan.subject,
@@ -469,6 +865,16 @@ JSON："""
             if field_id not in field_ids or not span:
                 continue
             if len(span) > 2_000 or span not in source.snippet:
+                continue
+            if semantic_mode:
+                if LanguageModelEvidenceExtractor._is_structural_noise(span, source):
+                    continue
+                candidates.append(EvidenceSpan(
+                    field_id=field_id,
+                    source_index=source_index,
+                    span=span,
+                    content_hash=sha256(span.encode("utf-8")).hexdigest(),
+                ))
                 continue
             normalized_span = normalize_search_text(span).replace(" ", "")
             if normalized_span == normalized_title or (
@@ -515,7 +921,12 @@ JSON："""
                 span=span,
                 content_hash=sha256(span.encode("utf-8")).hexdigest(),
             ))
-        if not candidates and plan.answer_shape == "list" and sentence_units:
+        if (
+            not semantic_mode
+            and not candidates
+            and plan.answer_shape == "list"
+            and sentence_units
+        ):
             subject_terms = {
                 normalize_search_text(value).replace(" ", "")
                 for value in (plan.subject, source.title)
@@ -540,3 +951,66 @@ JSON："""
                 ))
                 break
         return tuple(candidates)
+
+    @staticmethod
+    def _parse_compact_candidates(
+        raw: str,
+        field_ids: set[str],
+    ) -> list[dict[str, str]]:
+        cleaned = raw.strip().lstrip(">").strip()
+        cleaned = next(
+            (line.strip() for line in cleaned.splitlines() if line.strip()),
+            "",
+        )
+        if cleaned.upper() in {"NONE", "[]"}:
+            return []
+        shared_field = re.fullmatch(
+            r"(f[1-9]\d*)\s*[:：]\s*\[?\s*"
+            r"(s[1-9]\d*(?:\s*[,，]\s*s[1-9]\d*)*)\s*\]?",
+            cleaned,
+            flags=re.IGNORECASE,
+        )
+        if shared_field is not None:
+            field_id = shared_field.group(1).lower()
+            if field_id not in field_ids:
+                return []
+            return [
+                {"field_id": field_id, "sentence_id": sentence_id.lower()}
+                for sentence_id in re.findall(
+                    r"s[1-9]\d*",
+                    shared_field.group(2),
+                    flags=re.IGNORECASE,
+                )
+            ]
+        explicit_contract = (
+            r"(?:f[1-9]\d*\s*[:：]\s*\[?s[1-9]\d*\]?\s*[,，;；]?\s*)+"
+        )
+        explicit = (
+            re.findall(
+                r"\b(f[1-9]\d*)\s*[:：]\s*\[?(s[1-9]\d*)\]?",
+                cleaned,
+                flags=re.IGNORECASE,
+            )
+            if re.fullmatch(explicit_contract, cleaned, flags=re.IGNORECASE)
+            else []
+        )
+        if explicit:
+            return [
+                {
+                    "field_id": field_id.lower(),
+                    "sentence_id": sentence_id.lower(),
+                }
+                for field_id, sentence_id in explicit
+                if field_id.lower() in field_ids
+            ]
+        if len(field_ids) == 1 and re.fullmatch(
+            r"(?:\[?s[1-9]\d*\]?\s*[,，;；]?\s*)+",
+            cleaned,
+            flags=re.IGNORECASE,
+        ):
+            field_id = next(iter(field_ids))
+            return [
+                {"field_id": field_id, "sentence_id": sentence_id.lower()}
+                for sentence_id in re.findall(r"s[1-9]\d*", cleaned, flags=re.IGNORECASE)
+            ]
+        raise ValueError("extractor response does not match a supported output contract")

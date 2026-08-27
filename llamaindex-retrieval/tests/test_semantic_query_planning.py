@@ -128,6 +128,39 @@ async def test_deterministic_planner_handles_role_attribution_without_model() ->
 
 
 @pytest.mark.asyncio
+async def test_semantic_pipeline_uses_model_for_structured_role_question() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return stream_response(json.dumps({
+            "subject": "西游记",
+            "intent": "agent",
+            "answer_shape": "single_fact",
+            "set_semantics": "specific",
+            "fields": [{
+                "field_id": "f1",
+                "question": "西游记的作者是谁",
+                "relations": ["作者", "创作者"],
+            }],
+            "relations": ["作者", "创作者"],
+            "queries": ["西游记 作者", "西游记 创作者"],
+        }, ensure_ascii=False))
+
+    planner = LanguageModelQueryPlanner(
+        Settings(
+            generation_password="secret",
+            semantic_pipeline_enabled=True,
+        ),
+        transport=httpx.MockTransport(handler),
+    )
+    fallback = build_query_plan("西游记是哪个作者写的？")
+
+    result = await planner.plan(fallback.original_question, fallback)
+
+    assert result.strategy == "model"
+    assert result.plan.relations == ("作者", "创作者")
+    assert result.plan.analysis.intent == "agent"
+
+
+@pytest.mark.asyncio
 async def test_model_planner_repairs_answer_used_as_subject() -> None:
     requests = 0
 
