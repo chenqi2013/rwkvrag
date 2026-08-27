@@ -87,6 +87,63 @@ def test_counted_list_extracts_inline_encyclopedia_enumeration() -> None:
     )
 
 
+def test_author_answer_does_not_treat_mingzhu_as_authorship_relation() -> None:
+    commentary = SourceItem(
+        id="journey-west-commentary",
+        document_id="journey-west",
+        source="finewiki-zh",
+        title="西游记",
+        score=1.0,
+        snippet=(
+            "有研究者认为作者在书中对道士多有贬斥，"
+            "可见作者不是站在空门的立场上来写《西游记》的。"
+        ),
+    )
+    evidence = SourceItem(
+        id="journey-west",
+        document_id="journey-west",
+        source="finewiki-zh",
+        title="西游记",
+        score=1.0,
+        snippet=(
+            "《西游记》是中国四大名著之一。"
+            "成书于16世纪明朝中叶，一般认为作者是明朝的吴承恩。"
+        ),
+    )
+
+    assert agent_evidence_answer("西游记是哪个作者写的？", [commentary, evidence]) == (
+        "成书于16世纪明朝中叶，一般认为作者是明朝的吴承恩。 [资料 2]"
+    )
+
+
+def test_author_answer_prefers_attribution_over_bibliography() -> None:
+    bibliography = SourceItem(
+        id="bibliography",
+        document_id="journey-west",
+        source="finewiki-zh",
+        title="西游记",
+        score=1.0,
+        snippet="《〈西游记〉作者之谜》，《社会科学报》，1996年12月12日。",
+    )
+    attribution = SourceItem(
+        id="attribution",
+        document_id="journey-west",
+        source="finewiki-zh",
+        title="西游记",
+        score=1.0,
+        snippet="成书于16世纪明朝中叶，一般认为作者是明朝的吴承恩。",
+    )
+
+    answer = agent_evidence_answer(
+        "西游记是谁写的？",
+        [bibliography, attribution],
+        ("作者", "撰写", "创作", "著"),
+    )
+
+    assert "吴承恩" in answer
+    assert "社会科学报" not in answer
+
+
 def test_list_prompt_requires_all_evidence_and_role_distinction() -> None:
     generator = EvidenceAnswerGenerator(Settings())
 
@@ -1061,3 +1118,45 @@ async def test_generator_allows_model_list_failure() -> None:
     )
 
     assert await generator.current_model() is None
+
+
+def test_list_evidence_extracts_heading_rows_and_enumerated_sentence() -> None:
+    from llamaindex_retrieval.evidence_utils import list_evidence_answer
+
+    passes = SourceItem(
+        id="passes",
+        document_id="passes",
+        source="wiki",
+        title="关隘",
+        score=1.0,
+        snippet="历史上著名关卡\n函谷关\n潼关\n大散关\n山海关\n嘉峪关\n",
+    )
+    assert "函谷关" in list_evidence_answer("中国有哪些著名的长城关隘？", [passes])
+
+    achievements = SourceItem(
+        id="qin",
+        document_id="qin",
+        source="wiki",
+        title="秦始皇",
+        score=1.0,
+        snippet="秦始皇一生并天下、称皇帝、废分封、置郡县、征百越、逐匈奴。",
+    )
+    assert "并天下" in list_evidence_answer("秦始皇有哪些丰功伟绩？", [achievements])
+
+    historical_context = SourceItem(
+        id="qin-context",
+        document_id="qin",
+        source="wiki",
+        title="秦始皇",
+        score=1.0,
+        snippet=(
+            "嬴政的功业已经超越三皇五帝，因此向嬴政献上泰皇的尊号。"
+        ),
+    )
+    answer = list_evidence_answer(
+        "秦始皇有哪些丰功伟绩？",
+        [historical_context, achievements],
+    )
+    assert answer is not None
+    assert "并天下" in answer
+    assert "功业已经超越三皇五帝" not in answer

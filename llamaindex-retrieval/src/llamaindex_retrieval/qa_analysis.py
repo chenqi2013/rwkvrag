@@ -46,6 +46,10 @@ _NAMED_LIST_PATTERN = re.compile(
     r"(?P<count>\d{1,2}|[二三四五六七八九十两]{1,3})大"
     r"[^，,。；;？?谁哪什么]{1,16}[。？?]?$"
 )
+_SUBJECT_SCOPE_PREFIX = re.compile(
+    r"^(?:(?:在)?[\u3400-\u4dbf\u4e00-\u9fff]{0,16}(?:历史上|史上)的|"
+    r"(?:从古至今|自古以来|有史以来)的)"
+)
 _LIST_SCOPE_SUFFIXES = (
     "都经过",
     "都經過",
@@ -309,7 +313,7 @@ def _list_search_queries(question: str) -> tuple[str, ...]:
         normalized,
     )
     if generic_count_match:
-        subject = generic_count_match.group("subject").strip(" 的")
+        subject = clean_subject_scope(generic_count_match.group("subject"))
         if subject:
             return (f"{subject} 列表", subject)
     endpoints = re.search(
@@ -328,7 +332,9 @@ def _list_search_queries(question: str) -> tuple[str, ...]:
         )
     counted_match = _COUNTED_LIST_PATTERN.search(normalized)
     if counted_match:
-        subject = normalized[:counted_match.start()].rstrip(" 的是为")
+        subject = clean_subject_scope(
+            normalized[:counted_match.start()].rstrip(" 的是为")
+        )
         if subject:
             return (f"{subject} 列表", subject)
     match = _LIST_RELATION_MARKER.search(normalized)
@@ -365,6 +371,14 @@ def _list_search_queries(question: str) -> tuple[str, ...]:
         )))
     relation = f"{left} {right}"
     return (f"{relation}列表", relation)
+
+
+def clean_subject_scope(value: str) -> str:
+    """Remove grammatical scope framing that is not part of an entity name."""
+    cleaned = value.strip(" 的是请，,。；;？?")
+    while match := _SUBJECT_SCOPE_PREFIX.match(cleaned):
+        cleaned = cleaned[match.end():].strip(" 的")
+    return cleaned
 
 
 def _agent_search_queries(question: str) -> tuple[str, ...]:

@@ -379,13 +379,23 @@ JSON："""
             relation in normalized_body for relation in normalized_relations
         )
         body_match = body_subject_match and body_relation_match
+        transit_match = re.fullmatch(
+            r"(?P<network>[\u3400-\u9fff]{2,20}?地铁)(?P<line>\d+号线)",
+            normalized_subject,
+        )
+        transit_companion_match = bool(
+            plan.answer_shape == "list"
+            and transit_match
+            and normalized_title == f"{transit_match.group('network')}车站列表"
+            and transit_match.group("line") in normalized_body
+        )
         if plan.answer_shape == "single_fact":
             return len(normalized_subject) >= 2 and (
                 body_match
                 or (title_match and (body_subject_match or body_relation_match))
             )
         return len(normalized_subject) >= 2 and (
-            title_match or relation_title_match or body_match
+            title_match or relation_title_match or body_match or transit_companion_match
         )
 
     @staticmethod
@@ -430,6 +440,16 @@ JSON："""
             for relation in _relation_variants(plan.relations)
             if len(relation.replace(" ", "")) >= 4
         }
+        requested_relations = {
+            normalize_search_text(relation).replace(" ", "")
+            for relation in _relation_variants(plan.relations)
+            if len(relation.replace(" ", "")) >= 2
+        }
+        summary_markers = (
+            "结局", "結局", "结尾", "結尾", "终结", "終結", "结束", "結束",
+            "最终", "最終", "最后", "最後", "结果", "結果", "归一", "歸一",
+            "一统", "一統", "统一", "統一", "灭亡", "滅亡", "完成",
+        )
         candidates: list[EvidenceSpan] = []
         for item in values[:32]:
             if not isinstance(item, dict) or "field_id" not in item:
@@ -456,6 +476,16 @@ JSON："""
             ):
                 continue
             if (
+                plan.analysis.intent == "agent"
+                and len(normalized_span) <= 16
+                and not any(marker in normalized_span for marker in (
+                    "是", "为", "由", "被", "害死", "杀害", "打死", "处死", "发起",
+                ))
+                and normalize_search_text(plan.subject).replace(" ", "")
+                not in normalized_span
+            ):
+                continue
+            if (
                 selected_by_id
                 and plan.answer_shape == "single_fact"
                 and normalized_relations
@@ -468,6 +498,15 @@ JSON："""
             if not selected_by_id and explicit_relations and not any(
                 relation in normalized_span
                 for relation in explicit_relations
+            ):
+                continue
+            if (
+                plan.answer_shape in {"summary", "narrative"}
+                and not any(
+                    relation in normalized_span
+                    for relation in requested_relations
+                )
+                and not any(marker in normalized_span for marker in summary_markers)
             ):
                 continue
             candidates.append(EvidenceSpan(

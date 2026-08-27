@@ -212,6 +212,9 @@ def structured_list_answer(question: str, sources: list[SourceItem]) -> str | No
         index, subject, label, items = bullet
         joined = "、".join(items)
         return f"{subject}的{_normalize_label(label)}包括：{joined}。[资料 {index}]"
+    structured_sentence = _structured_sentence_list_answer(question, sources)
+    if structured_sentence is not None:
+        return structured_sentence
     return None
 
 
@@ -270,7 +273,7 @@ def _flattened_station_table_answer(
     question: str,
     sources: list[SourceItem],
 ) -> str | None:
-    if not any(marker in question for marker in ("车站", "站点", "哪些站", "站名")):
+    if not any(marker in question for marker in ("车站", "站点", "哪些站", "哪几个站", "站名")):
         return None
     expected_count = next(
         (
@@ -333,6 +336,9 @@ def list_evidence_answer(question: str, sources: list[SourceItem]) -> str | None
 
     if not _looks_like_list_question(question):
         return None
+    structured = _structured_sentence_list_answer(question, sources)
+    if structured is not None:
+        return structured
     question_tokens = set(query_tokens(question))
     best: tuple[float, int, SourceItem, list[str]] | None = None
     for source_index, source in enumerate(sources, start=1):
@@ -357,6 +363,121 @@ def list_evidence_answer(question: str, sources: list[SourceItem]) -> str | None
     source_index = -negative_index
     subject = _answer_subject(question, source)
     return f"根据检索资料，{subject}可确认的内容包括：" + "；".join(rows) + f"。[资料 {source_index}]"
+
+
+def _structured_sentence_list_answer(
+    question: str,
+    sources: list[SourceItem],
+) -> str | None:
+    question_tokens = set(query_tokens(question))
+    achievement_markers = (
+        "功绩",
+        "功业",
+        "丰功",
+        "伟绩",
+        "成就",
+        "贡献",
+        "评价",
+    )
+    best_sentence: tuple[float, int, str] | None = None
+    best_labeled: tuple[int, int, list[str]] | None = None
+    for source_index, source in enumerate(sources, start=1):
+        text = clean_evidence_text(source.snippet)
+        title_tokens = set(query_tokens(source.title))
+        if title_tokens and not (question_tokens & title_tokens):
+            continue
+        lines = [line.strip() for line in text.splitlines()]
+        labeled_items = list(dict.fromkeys(
+            match.group("label").strip(" -*•")
+            for line in lines
+            if (
+                match := re.match(
+                    r"^(?:[-*•]\s*)?(?P<label>[^：:\n]{2,24})[：:]\s*\S+",
+                    line,
+                )
+            )
+        ))
+        if len(labeled_items) >= 4 and (
+            best_labeled is None or len(labeled_items) > best_labeled[0]
+        ):
+            best_labeled = (len(labeled_items), source_index, labeled_items)
+        for line_index, line in enumerate(lines):
+            normalized_line = normalize_search_text(line).replace(" ", "")
+            if not (
+                len(line) <= 40
+                and any(marker in normalized_line for marker in (
+                    "著名", "主要", "列表", "关卡", "关隘", "关城",
+                ))
+                and not re.search(r"[：:]", line)
+            ):
+                continue
+            items: list[str] = []
+            for item in lines[line_index + 1:]:
+                if not item:
+                    if items:
+                        break
+                    continue
+                if len(item) > 32 or re.search(r"[：:]", item):
+                    break
+                if not re.search(r"[\u3400-\u4dbf\u4e00-\u9fff]", item):
+                    break
+                items.append(item)
+            items = list(dict.fromkeys(items))
+            if len(items) >= 4:
+                subject = _answer_subject(question, source)
+                candidate = f"{subject}的相关条目包括：{'、'.join(items)}。[资料 {source_index}]"
+                return candidate
+        search_offset = 0
+        for sentence in re.split(r"[。！？!?\n]", text[:8000]):
+            sentence = sentence.strip()
+            if (
+                len(sentence) < 20
+                or sentence.count("、") < 3
+                or re.search(r"[：:]", sentence)
+            ):
+                continue
+            sentence_tokens = set(query_tokens(sentence))
+            overlap = len(question_tokens & sentence_tokens)
+            section = normalize_search_text(str(source.metadata.get("section") or ""))
+            sentence_start = text.find(sentence, search_offset)
+            if sentence_start >= 0:
+                search_offset = sentence_start + len(sentence)
+                preceding_lines = text[:sentence_start].splitlines()
+            else:
+                preceding_lines = []
+            context_heading = next(
+                (
+                    normalize_search_text(line).replace(" ", "")
+                    for line in reversed(preceding_lines[-4:])
+                    if line and len(line) <= 40 and not re.search(r"[。！？!?]", line)
+                ),
+                "",
+            )
+            context = f"{section} {context_heading}"
+            relation_context = any(marker in context for marker in achievement_markers)
+            enumeration_density = min(sentence.count("、"), 30) * 0.25
+            continuity_bonus = 1.5 if any(
+                marker in sentence for marker in ("一生", "主要", "包括", "涵盖", "推行", "统一")
+            ) else 0.0
+            section_bonus = 5.0 if relation_context else 0.0
+            if not overlap and not relation_context and not continuity_bonus:
+                continue
+            score = overlap + enumeration_density + continuity_bonus + section_bonus
+            candidate = (score, -source_index, sentence)
+            if best_sentence is None or candidate[:2] > best_sentence[:2]:
+                best_sentence = candidate
+    if best_labeled is not None:
+        _count, source_index, labels = best_labeled
+        source = sources[source_index - 1]
+        subject = _answer_subject(question, source)
+        return (
+            f"{subject}的相关条目包括：{'、'.join(labels[:32])}。"
+            f"[资料 {source_index}]"
+        )
+    if best_sentence is None:
+        return None
+    _score, negative_index, sentence = best_sentence
+    return f"根据检索资料，可确认：{sentence}。[资料 {-negative_index}]"
 
 
 def time_evidence_answer(question: str, sources: list[SourceItem]) -> str | None:
@@ -542,10 +663,28 @@ def coordinated_time_evidence_answer(
     return "；".join(answers)
 
 
-def agent_evidence_answer(question: str, sources: list[SourceItem]) -> str | None:
-    actions = _matched_action_terms(question, _AGENT_ACTION_GROUPS)
+def agent_evidence_answer(
+    question: str,
+    sources: list[SourceItem],
+    relations: tuple[str, ...] = (),
+) -> str | None:
+    actions = _matched_action_terms(question, _AGENT_ACTION_GROUPS) or relations
     if not actions:
         return None
+    normalized_question = normalize_search_text(question).replace(" ", "")
+    subject_match = re.match(r"^(.*?)是谁", normalized_question)
+    if subject_match:
+        requested_subject = subject_match.group(1).replace("事变", "之变").replace("政变", "之变")
+        for source_index, source in enumerate(sources, start=1):
+            title = normalize_search_text(source.title).replace(" ", "")
+            title = title.replace("事变", "之变").replace("政变", "之变")
+            if not requested_subject or requested_subject not in title:
+                continue
+            for match in _SENTENCE.finditer(clean_evidence_text(source.snippet)[:4000]):
+                sentence = match.group(0).strip()
+                normalized = normalize_search_text(sentence).replace(" ", "")
+                if re.search(r"由[^，,。；;（）()\n]{1,40}(?:为首|為首|主导|主導)", normalized):
+                    return f"{sentence.rstrip()} [资料 {source_index}]"
     answer = _best_fact_sentence(
         question,
         sources,
@@ -605,6 +744,7 @@ def cause_evidence_answer(sources: list[SourceItem]) -> str | None:
             "争议", "腐化", "天灾", "严寒", "干旱", "饥荒", "鼠疫", "起义",
             "失败", "攻克", "失守", "财政", "党争", "专权", "导致", "造成",
             "分权", "依附", "失去民心", "衰弱", "矛盾", "殖民", "吞并", "入侵",
+            "顾全大局", "顧全大局", "言过其实", "言過其實", "违令", "違令", "失街亭",
         )
         sentence = max(
             sentences[:8],
@@ -795,7 +935,11 @@ def _best_fact_sentence(
             relative_time = bool(_RELATIVE_TIME.search(sentence))
             if requires_time and not (explicit_time or relative_time):
                 continue
-            action_hits = sum(normalize_search_text(term) in normalized_sentence for term in actions)
+            sentence_tokens = set(lexical_tokens(normalized_sentence))
+            action_hits = sum(
+                _relation_term_occurs(term, normalized_sentence, sentence_tokens)
+                for term in actions
+            )
             if actions and not action_hits:
                 continue
             asks_year_only = any(marker in normalized_question for marker in ("哪一年", "年份"))
@@ -810,12 +954,26 @@ def _best_fact_sentence(
             score = action_hits * 4.0 + time_score
             if prefer_explicit_agent and any(
                 re.search(
+                    rf"{re.escape(normalize_search_text(action))}(?:是|为|為)"
+                    r"[^，,。；;（）()\n]{1,40}",
+                    normalized_sentence,
+                )
+                for action in actions
+            ):
+                score += 24.0
+            if prefer_explicit_agent and any(
+                re.search(
                     rf"由[^，,。；;（）()\n]{{1,40}}{re.escape(normalize_search_text(action))}",
                     normalized_sentence,
                 )
                 for action in actions
             ):
                 score += 10.0
+            if prefer_explicit_agent and re.search(
+                r"由[^，,。；;（）()\n]{1,40}(?:为首|為首|主导|主導)",
+                normalized_sentence,
+            ):
+                score += 30.0
             sentence_anchor_hits = sum(
                 normalize_search_text(anchor) in normalized_sentence
                 for anchor in anchors
@@ -843,6 +1001,11 @@ def _best_fact_sentence(
                 score += 12.0 if normalized_title in normalized_sentence else -3.0
             if any(marker in normalized_sentence for marker in ("计划", "拟", "准备", "预计", "预定")):
                 score -= 8.0
+            if prefer_explicit_agent and any(
+                marker in normalized_sentence
+                for marker in ("参考资料", "参考文献", "社会科学报", "出版社", "出版有限公司")
+            ):
+                score -= 18.0
             if ">" in sentence or "＞" in sentence:
                 score -= 8.0
             if len(sentence) < 20:
@@ -855,6 +1018,17 @@ def _best_fact_sentence(
         return None
     _score, source_index, sentence = best
     return f"{sentence.rstrip()} [资料 {source_index}]"
+
+
+def _relation_term_occurs(
+    term: str,
+    normalized_text: str,
+    text_tokens: set[str],
+) -> bool:
+    normalized_term = normalize_search_text(term)
+    if len(normalized_term) == 1:
+        return normalized_term in text_tokens
+    return normalized_term in normalized_text
 
 
 def definition_evidence_answer(question: str, sources: list[SourceItem]) -> str | None:

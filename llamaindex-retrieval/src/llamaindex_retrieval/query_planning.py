@@ -4,10 +4,11 @@ from typing import Literal
 
 import jieba.posseg as posseg
 
-from .lexical_index import lexical_tokens, normalize_query_text
+from .lexical_index import lexical_tokens, normalize_query_text, normalize_search_text
 from .qa_analysis import (
     QuestionAnalysis,
     analyze_question,
+    clean_subject_scope,
     clean_question_shell,
     counted_list_size,
 )
@@ -54,6 +55,10 @@ def build_query_plan(question: str) -> QueryPlan:
         relations = _relations_for(analysis.intent, normalized)
     else:
         analysis, subject, relations = relational
+    if analysis.intent == "cause":
+        event_relation = _cause_event_relation(normalized, subject)
+        if event_relation:
+            relations = tuple(dict.fromkeys((event_relation, *relations)))
     answer_shape = _answer_shape_for(analysis, normalized)
     set_semantics = _set_semantics_for(analysis, normalized)
     queries = _queries_for(analysis, normalized, subject, relations)
@@ -81,6 +86,90 @@ def _relational_contract(
     question: str,
     analysis: QuestionAnalysis,
 ) -> tuple[QuestionAnalysis, str, tuple[str, ...]] | None:
+    role_attribution = _role_attribution_contract(question, analysis)
+    if role_attribution is not None:
+        return role_attribution
+    terminal_agent = re.match(
+        r"^(?P<subject>.+?)(?:的由来[，,]?)?(?:是)?(?:为了|為了)?"
+        r"(?P<action>纪念|紀念|杀害|殺害|害死|处死|處死|发起|發起|创立|創立|创建|創建|建立|发明|發明|发现|發現)"
+        r"(?:的是|的人是)?(?:谁|誰|哪位|什么人)[。？?]?$",
+        question,
+    )
+    if terminal_agent:
+        action = normalize_search_text(terminal_agent.group("action"))
+        return (
+            replace(
+                analysis,
+                intent="agent",
+                entity_type="person",
+                subjects=(),
+                expects_list=False,
+                expects_complete_list=False,
+            ),
+            _clean_subject(terminal_agent.group("subject")),
+            _agent_relation_equivalents(action),
+        )
+    passive_agent = re.match(
+        r"^(?P<subject>.+?)(?:是)?被(?:谁|誰|哪位|什么人)"
+        r"(?P<action>杀害|殺害|害死|处死|處死|发起|發起|创建|創建|建立)的?[。？?]?$",
+        question,
+    )
+    if passive_agent:
+        action = normalize_search_text(passive_agent.group("action"))
+        return (
+            replace(
+                analysis,
+                intent="agent",
+                entity_type="person",
+                subjects=(),
+                expects_list=False,
+                expects_complete_list=False,
+            ),
+            _clean_subject(passive_agent.group("subject")).removesuffix("最后"),
+            _agent_relation_equivalents(action),
+        )
+    reverse_action_agent = re.match(
+        r"^(?P<subject>.+?)(?:是|由)?(?:谁|哪位|什么人)"
+        r"(?P<action>发起|發起|提出|创立|創立|创建|創建|建立|导演|導演|负责|負責)的?[。？?]?$",
+        question,
+    )
+    if reverse_action_agent:
+        action = normalize_search_text(reverse_action_agent.group("action"))
+        return (
+            replace(
+                analysis,
+                intent="agent",
+                entity_type="person",
+                subjects=(),
+                expects_list=False,
+                expects_complete_list=False,
+            ),
+            _clean_subject(reverse_action_agent.group("subject")),
+            _agent_relation_equivalents(action),
+        )
+    action_attribution = re.match(
+        r"^(?P<subject>.+?)(?:是|由)?(?:谁|哪位|什么人)"
+        r"(?P<action>写|拍|创作|设计|发明|发现|建立|创建|开发|制作)的[。？?]?$",
+        question,
+    )
+    if action_attribution:
+        action = action_attribution.group("action")
+        relation_variants = {
+            "写": ("作者", "撰写", "创作", "著"),
+            "拍": ("导演", "执导", "拍摄"),
+        }
+        return (
+            replace(
+                analysis,
+                intent="agent",
+                entity_type="person",
+                subjects=(),
+                expects_list=False,
+                expects_complete_list=False,
+            ),
+            _clean_subject(action_attribution.group("subject")),
+            relation_variants.get(action, (action,)),
+        )
     contextual_agent = re.match(
         r"^(?P<subject>.+?)(?:里|中)(?P<field>[^，。？?]{2,40}?)"
         r"(?:的是|的人是)(?:谁|哪位|什么人)[。？?]?$",
@@ -176,6 +265,46 @@ def _relational_contract(
     return None
 
 
+def _role_attribution_contract(
+    question: str,
+    analysis: QuestionAnalysis,
+) -> tuple[QuestionAnalysis, str, tuple[str, ...]] | None:
+    match = re.match(
+        r"^(?P<subject>.+?)(?:是|为)(?P<interrogative>哪个|哪位|什么)"
+        r"(?P<predicate>[^，。？?]{2,20})的[。？?]?$",
+        question,
+    )
+    if match is None:
+        return None
+    tagged = [
+        (word.strip(), flag)
+        for word, flag in posseg.cut(match.group("predicate"))
+        if word.strip() and word.strip() != "所"
+    ]
+    if len(tagged) < 2 or not tagged[-1][1].startswith("v"):
+        return None
+    role = "".join(word for word, _ in tagged[:-1]).strip(" 的")
+    action = tagged[-1][0].strip(" 的")
+    subject = _clean_subject(match.group("subject"))
+    if len(subject) < 2 or not role or not action:
+        return None
+    person_role = match.group("interrogative") == "哪位" or role.endswith(
+        ("人", "者", "家", "师", "员", "手", "官", "帝", "王", "长")
+    )
+    return (
+        replace(
+            analysis,
+            intent="agent",
+            entity_type="person" if person_role else analysis.entity_type,
+            subjects=(),
+            expects_list=False,
+            expects_complete_list=False,
+        ),
+        subject,
+        tuple(dict.fromkeys((role, action))),
+    )
+
+
 def _predicate_object_contract(
     question: str,
     analysis: QuestionAnalysis,
@@ -268,6 +397,8 @@ def _answer_shape_for(analysis: QuestionAnalysis, question: str) -> AnswerShape:
         return "list"
     if any(marker in question for marker in ("故事", "经过", "来龙去脉")):
         return "narrative"
+    if any(marker in question for marker in ("结局", "结尾", "最终结果")):
+        return "summary"
     if analysis.intent in {"cause", "comparison", "procedure"} or any(
         marker in question for marker in ("讲讲", "概括", "总结", "介绍")
     ):
@@ -306,8 +437,9 @@ def _queries_for(
             for relation in relations[1:]
             if len(relation.replace(" ", "")) >= 4
         )
+        primary_relation = relations[0] if relations else "人物"
         candidates = (
-            f"{subject} {relations[0]}",
+            f"{subject} {primary_relation}",
             *standalone_relations,
             *(f"{subject} {relation}" for relation in relations[1:]),
             *analysis.subjects,
@@ -328,8 +460,17 @@ def _queries_for(
     elif analysis.intent == "ordinal" and analysis.subjects:
         candidates = (*analysis.subjects, question)
     elif analysis.intent == "cause" and subject and relations:
+        event_relation = next(
+            (
+                relation
+                for relation in relations
+                if relation not in {"原因", "因由", "缘由", "导致", "因素"}
+            ),
+            relations[0],
+        )
         candidates = (
-            f"{subject}{relations[0]}",
+            f"{subject}{event_relation}",
+            f"{subject} {event_relation} 原因",
             f"{subject} {' '.join(relations)}",
             question,
             subject,
@@ -346,6 +487,35 @@ def _queries_for(
     else:
         candidates = (question,)
     return tuple(dict.fromkeys(value.strip() for value in candidates if value.strip()))
+
+
+def _cause_event_relation(question: str, subject: str) -> str:
+    """Keep a concrete event in cause queries, rather than only ``原因``."""
+
+    if not subject:
+        return ""
+    match = re.search(
+        r"(?:因为什么原因|为什么|为何)(?:要|会|会去|而)?(?P<event>[^？?。；;，,]{2,32})",
+        question,
+    )
+    if match is None:
+        return ""
+    event = match.group("event").strip(" 的了过着")
+    if any(
+        marker in event
+        for marker in ("灭亡", "衰亡", "衰落", "失败", "崩溃", "解体", "成功")
+    ):
+        return ""
+    return event
+
+
+def _clean_definition_subject(value: str) -> str:
+    value = re.split(
+        r"(?:这个|這個|的由来|的由來|得由来|得由來|由来|由來|并|並|以及|同时|同時)",
+        value,
+        maxsplit=1,
+    )[0]
+    return _clean_subject(value)
 
 
 def _list_companion_queries(question: str) -> tuple[str, ...]:
@@ -389,10 +559,17 @@ def _subject_for(analysis: QuestionAnalysis, question: str) -> str:
     if analysis.intent == "ordinal" and analysis.subjects:
         return analysis.subjects[0].split(" 第一个 ", 1)[0].strip()
     if analysis.intent == "agent" and analysis.subjects:
-        return analysis.subjects[0].rsplit(" ", 1)[0].strip()
+        subject = analysis.subjects[0].rsplit(" ", 1)[0].strip()
+        office = re.match(
+            r"^(?P<scope>.+?)的(?:副总统|总统|总理|首相|主席)$",
+            subject,
+        )
+        return office.group("scope").strip() if office else subject
     if analysis.intent == "list" and analysis.subjects:
         first = analysis.subjects[0]
-        return first.split(" ", 1)[0].removesuffix("列表").strip()
+        return _clean_subject(
+            first.split(" ", 1)[0].removesuffix("列表").strip()
+        )
     if analysis.intent == "list" and counted_list_size(question) is not None:
         nominal = question.strip(" 的是请，,。；;？?")
         if not any(marker in nominal for marker in ("哪", "哪些", "什么", "谁")):
@@ -424,14 +601,14 @@ def _subject_for(analysis: QuestionAnalysis, question: str) -> str:
         if analysis.intent == "definition":
             for prefix in ("请简要介绍", "请介绍", "简要介绍", "介绍"):
                 if question.startswith(prefix):
-                    return question[len(prefix):].strip(" 的是请，,。；;？?")
+                    return _clean_definition_subject(question[len(prefix):])
         return ""
     match = re.search(pattern, question.strip())
     if not match:
         if analysis.intent == "definition":
             for prefix in ("请简要介绍", "请介绍", "简要介绍", "介绍"):
                 if question.startswith(prefix):
-                    return _clean_subject(question[len(prefix):])
+                    return _clean_definition_subject(question[len(prefix):])
         if analysis.intent == "cause":
             colloquial = re.match(
                 r"^(?P<subject>.+?)(?:究竟)?(?:是)?怎么(?:一步步)?(?:走向)?"
@@ -542,7 +719,7 @@ def _agent_relations(question: str) -> tuple[str, ...]:
     if any(marker in question for marker in ("现在", "目前", "当前", "如今", "现任")):
         return ("现任", "目前", "当前")
     reverse_match = re.search(
-        r"(?:的|背后的)?(创始人|创办人|创办者|建立者|创建者|负责人|老板|首席执行官|CEO|发明者|发现者|"
+        r"(?:的|背后的)?(开国皇帝|总统|副总统|总理|首相|主席|创始人|创办人|创办者|建立者|创建者|负责人|老板|首席执行官|CEO|发明者|发现者|"
         r"创作者|设计者|建造者|执导者|负责人|作者|导演|主演)(?:是|为)?"
         r"(?:谁|哪位|什么人)[。？?]?$",
         question,
@@ -559,7 +736,17 @@ def _agent_relations(question: str) -> tuple[str, ...]:
         if not match:
             return ()
         relation = match.group(1)
+    return _agent_relation_equivalents(relation)
+
+
+def _agent_relation_equivalents(relation: str) -> tuple[str, ...]:
     equivalents = {
+        "开国皇帝": ("开国皇帝", "高祖", "太祖", "称帝", "登基"),
+        "总统": ("总统", "国家元首", "现任总统"),
+        "副总统": ("副总统", "副總統"),
+        "总理": ("总理", "首相"),
+        "首相": ("首相", "总理"),
+        "主席": ("主席", "现任主席"),
         "开启": ("开启", "开辟", "出使", "凿空"),
         "开辟": ("开辟", "开启", "出使", "凿空"),
         "开通": ("开通", "开启", "开辟", "通达"),
@@ -585,15 +772,20 @@ def _agent_relations(question: str) -> tuple[str, ...]:
         "发现者": ("发现者", "发现", "首次发现"),
         "建造者": ("建造者", "建造", "修建", "建设"),
         "执导者": ("执导", "导演", "执导者"),
+        "纪念": ("纪念", "纪念人物", "起源", "由来"),
+        "发起": ("发起", "发动", "组织", "策划", "领导"),
+        "提出": ("提出", "发起", "倡议", "主张"),
+        "杀害": ("杀害", "害死", "处死", "遇害"),
+        "害死": ("害死", "杀害", "处死", "遇害"),
+        "处死": ("处死", "杀害", "害死", "遇害"),
     }
     return equivalents.get(relation, (relation,))
 
 
 def _clean_subject(value: str) -> str:
-    cleaned = value.strip(" 的是请，,。；;？?")
+    cleaned = clean_subject_scope(value)
     cleaned = re.sub(r"^(?:现在|目前|当前|如今)", "", cleaned)
     cleaned = re.sub(r"(?:究竟|到底)$", "", cleaned)
-    cleaned = re.sub(r"^(?:中国历史上|历史上)", "", cleaned)
     cleaned = re.sub(r"^(?:请概括|请说明|概括)", "", cleaned)
     return cleaned.strip(" 的是请，,。；;？?")
 

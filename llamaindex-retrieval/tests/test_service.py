@@ -10,6 +10,7 @@ from llamaindex_retrieval.active_retrieval import (
     ActiveRetrievalResult,
 )
 from llamaindex_retrieval.generation import EvidenceAnswerGenerator
+from llamaindex_retrieval.evidence_extraction import EvidenceExtractionResult
 from llamaindex_retrieval.lexical_index import (
     LexicalIndex,
     LexicalResult,
@@ -20,7 +21,7 @@ from llamaindex_retrieval.lexical_index import (
     query_tokens,
     title_entity_tokens,
 )
-from llamaindex_retrieval.schemas import SearchRequest, SourceItem
+from llamaindex_retrieval.schemas import SearchRequest, SearchResponse, SourceItem
 from llamaindex_retrieval.service import SearchService
 from llamaindex_retrieval.query_planning import build_query_plan
 from llamaindex_retrieval.semantic_query_planning import QueryPlanningResult
@@ -87,6 +88,26 @@ def test_field_evidence_quote_fallback_keeps_explicit_roles() -> None:
     assert "SpaceX创始人" in answer
     assert "特斯拉投资人" in answer
     assert answer.endswith("[资料 1]。")
+
+
+def test_field_evidence_quote_fallback_uses_terminal_outcome_markers() -> None:
+    evidence = SourceItem(
+        id="ending",
+        document_id="ending",
+        source="wiki",
+        title="三国演义",
+        score=1.0,
+        snippet="姜维拔剑自刎。三国时代终结，司马氏三分归一，建立西晋统一天下。",
+    )
+
+    answer = SearchService._field_evidence_quote_answer(
+        [evidence],
+        ("最终结局", "结局"),
+    )
+
+    assert answer is not None
+    assert "三国时代终结" in answer
+    assert "姜维拔剑自刎" not in answer
 
 
 class FakeIndices:
@@ -751,6 +772,70 @@ def test_rank_fusion_prefers_direct_event_evidence_over_repeated_title_hits() ->
     assert merged[0].document_id == "yanggu"
 
 
+def test_rank_fusion_prefers_list_subject_over_broad_scope_page() -> None:
+    plan = build_query_plan("中国有哪些著名的长城关隘？")
+    china = LexicalResult(
+        node_id="china-overview",
+        document_id="china",
+        text="中国历史悠久，疆域辽阔。",
+        metadata={"title": "中国"},
+        score=1.0,
+    )
+    passes = LexicalResult(
+        node_id="great-wall-passes",
+        document_id="great-wall",
+        text="长城著名关隘包括山海关、嘉峪关、居庸关。",
+        metadata={"title": "长城", "section": "关隘 > 著名关城"},
+        score=0.7,
+    )
+
+    merged = SearchService._merge_rank_fusion(
+        ([china, passes], [china, passes], [china, passes]),
+        plan=plan,
+    )
+
+    assert merged[0].document_id == "great-wall"
+
+
+def test_summary_evidence_fallback_prefers_terminal_outcome() -> None:
+    plan = build_query_plan("三国演义最后的结局是什么？")
+    middle = SourceItem(
+        id="middle",
+        document_id="romance",
+        source="wiki",
+        title="三国演义",
+        score=1.0,
+        snippet="最终，诸葛亮三气周瑜，周瑜呕血而死。",
+        metadata={"chunk_order": 24},
+    )
+    ending = SourceItem(
+        id="ending",
+        document_id="romance",
+        source="wiki",
+        title="三国演义",
+        score=0.9,
+        snippet="经过近百年战乱，三国时代终结。司马氏三分归一，建立西晋统一天下。",
+        metadata={"chunk_order": 32},
+    )
+    failed = EvidenceExtractionResult(
+        (),
+        attempted_sources=2,
+        completed_sources=0,
+        errors=("extractor response does not contain a JSON object",),
+    )
+
+    extracted = SearchService._deterministic_structured_evidence(
+        failed,
+        plan,
+        [middle, ending],
+    )
+
+    assert extracted.has_candidates is True
+    assert extracted.available is True
+    assert extracted.strategy == "deterministic_structured_fallback"
+    assert "统一天下" in extracted.candidates[0].span
+
+
 @pytest.mark.asyncio
 async def test_model_relation_searches_inside_exact_page_before_top_k_cutoff() -> None:
     opera = LexicalResult(
@@ -1015,7 +1100,8 @@ async def test_cause_question_repairs_legacy_empty_cached_answer() -> None:
     request = SearchRequest(question="明朝灭亡的原因有哪些？", top_k=1)
     evidence = await service.search(request.model_copy(update={"top_k": 5}))
     question = str(evidence.retrieval.get("normalized_question") or request.question)
-    key = service._answer_cache_key(question, evidence)
+    plan = service._answer_plan(question, evidence.retrieval)
+    key = service._answer_cache_key(question, evidence, plan)
     service._store_cached_answer(key, "根据资料，导致明朝灭亡的原因有：[资料 1]")
 
     response = await service.ask(request)
@@ -1024,6 +1110,79 @@ async def test_cause_question_repairs_legacy_empty_cached_answer() -> None:
     assert response.generation["cache_hit"] is True
     assert response.generation["answer_strategy"] == "evidence_fallback"
     assert service._get_cached_answer(key) == response.answer
+
+
+def test_answer_cache_key_includes_task_contract() -> None:
+    service = SearchService(Settings(), cast(Any, FakeCauseIndex()))
+    response = SearchResponse(
+        results=[SourceItem(
+            id="journey-west",
+            document_id="journey-west",
+            source="wiki",
+            title="西游记",
+            score=1.0,
+            snippet="一般认为作者是明朝的吴承恩。",
+        )],
+        retrieval={"knowledge_base_id": "default"},
+    )
+    author_plan = build_query_plan("西游记是哪个作者写的？")
+    summary_plan = replace(
+        author_plan,
+        relations=("故事",),
+        answer_shape="summary",
+    )
+
+    assert service._answer_cache_key("西游记", response, author_plan) != (
+        service._answer_cache_key("西游记", response, summary_plan)
+    )
+
+
+def test_deterministic_evidence_rejects_title_only_span() -> None:
+    plan = build_query_plan("三国时期，赤壁之战是谁发起的")
+    original = EvidenceExtractionResult((), 1, 1, ())
+    sources = [SourceItem(
+        id="battle",
+        document_id="battle",
+        source="wiki",
+        title="赤壁之战",
+        score=1.0,
+        snippet="赤壁之战",
+    )]
+
+    result = SearchService._deterministic_structured_evidence(
+        original,
+        plan,
+        sources,
+    )
+
+    assert result.has_candidates is False
+
+
+def test_deterministic_evidence_uses_relation_synonyms_and_section_context() -> None:
+    plan = build_query_plan("秦始皇有哪些丰功伟绩")
+    original = EvidenceExtractionResult((), 1, 0, ("invalid JSON",))
+    sources = [SourceItem(
+        id="qin-achievements",
+        document_id="qin",
+        source="wiki",
+        title="秦始皇",
+        score=1.0,
+        snippet=(
+            "评价\n秦始皇一生并天下、称皇帝、废分封、置郡县、征百越、"
+            "逐匈奴、修长城、书同文、统一度量衡。"
+        ),
+        metadata={"section": "秦始皇 > 评价", "content_type": "prose"},
+    )]
+
+    result = SearchService._deterministic_structured_evidence(
+        original,
+        plan,
+        sources,
+    )
+
+    assert result.has_candidates is True
+    assert "并天下" in result.candidates[0].span
+    assert result.strategy == "deterministic_structured_fallback"
 
 
 @pytest.mark.asyncio
@@ -1455,7 +1614,7 @@ async def test_ask_extracts_bullet_list_with_specific_context() -> None:
 
     response = await service.ask(SearchRequest(question="中国有哪些著名的长城关隘?", top_k=2))
 
-    assert response.answer == "长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 2]"
+    assert response.answer == "长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 1]"
     assert response.generation["answer_strategy"] == "direct_extract"
 
 
@@ -1728,6 +1887,54 @@ async def test_list_query_prefers_station_list_over_station_name_issue() -> None
 
 
 @pytest.mark.asyncio
+async def test_station_wording_with_count_expands_companion_list_page() -> None:
+    route = LexicalResult(
+        node_id="route",
+        document_id="route",
+        text="深圳地铁1号线由罗湖站至机场东站。",
+        metadata={"title": "深圳地铁1号线"},
+        score=1.0,
+    )
+    companion = LexicalResult(
+        node_id="companion",
+        document_id="station-list",
+        text="深圳地铁车站列表",
+        metadata={"title": "深圳地铁车站列表"},
+        score=0.6,
+    )
+    chunks = [
+        LexicalResult(
+            node_id=f"line-{index}",
+            document_id="station-list",
+            text=text,
+            metadata={"title": "深圳地铁车站列表", "chunk_order": index},
+            score=1.0,
+        )
+        for index, text in enumerate((
+            "1号线沿途共设30个车站：罗湖站、国贸站、老街站。",
+            "大剧院站、科学馆站、机场东站。",
+        ), start=1)
+    ]
+
+    class FakeCompanionIndex:
+        def document_line_section_chunks(self, line: str, **kwargs: Any) -> list[LexicalResult]:
+            assert line == "1号线"
+            assert kwargs["document_id"] == "station-list"
+            return chunks
+
+    service = SearchService(Settings(), cast(Any, FakeCompanionIndex()))
+    expanded, did_expand = await service._expand_structured_results(
+        "深圳地铁1号线有哪几个站",
+        [route, companion],
+        knowledge_base_id=None,
+        top_k=5,
+    )
+
+    assert did_expand is True
+    assert [item.node_id for item in expanded[:2]] == ["line-1", "line-2"]
+
+
+@pytest.mark.asyncio
 async def test_station_summary_without_parent_adds_repair_context() -> None:
     summary = LexicalResult(
         node_id="station-summary",
@@ -1810,6 +2017,32 @@ def test_focus_sources_keeps_only_exact_subject_document() -> None:
     focused = SearchService._focus_sources_on_subject(plan, sources)
 
     assert [source.document_id for source in focused] == ["football"]
+
+
+def test_focus_sources_prefers_compound_topic_page_over_suffix_page() -> None:
+    plan = build_query_plan("中国有哪些著名的长城关隘？")
+    sources = [
+        SourceItem(
+            id="broad",
+            document_id="broad",
+            source="wiki",
+            title="关隘",
+            score=1.0,
+            snippet="历史上著名关卡包括函谷关、潼关、嘉峪关。",
+        ),
+        SourceItem(
+            id="wall",
+            document_id="wall",
+            source="wiki",
+            title="长城",
+            score=0.9,
+            snippet="著名长城关隘包括山海关、嘉峪关、居庸关。",
+        ),
+    ]
+
+    focused = SearchService._focus_sources_on_subject(plan, sources)
+
+    assert {source.document_id for source in focused} == {"wall"}
 
 
 def test_focus_sources_keeps_only_agent_relation_document() -> None:

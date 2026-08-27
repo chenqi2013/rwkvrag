@@ -65,6 +65,8 @@ _QUERY_EXPANSIONS = {
     "首都": ("国都", "政治中心"),
     "国都": ("首都", "政治中心"),
     "功绩": ("功业", "贡献", "成就"),
+    "丰功伟绩": ("功绩", "功业", "贡献", "成就", "评价"),
+    "伟绩": ("功绩", "功业", "贡献", "成就", "评价"),
     "成就": ("功绩", "功业", "贡献"),
     "贡献": ("成就", "功绩", "功业"),
     "首播": ("播出", "上档"),
@@ -88,6 +90,7 @@ _QUERY_EXPANSIONS = {
     "停靠": ("经过", "途经", "车站"),
     "连接": ("起点", "终点", "由", "至"),
     "首条": ("第一条", "最早"),
+    "事变": ("政变", "之变"),
 }
 _PRESERVED_PHRASES = ("国都", "首都", "关隘", "关城", "关口")
 _QUERY_CORRECTIONS = {
@@ -1076,6 +1079,22 @@ class LexicalIndex:
                 str((hit.get("_source") or {}).get("text") or "")
             )
         ]
+        relation_token_set = set(relation_tokens)
+
+        def relation_priority(hit: dict[str, Any]) -> tuple[float, float, int]:
+            source = dict(hit.get("_source") or {})
+            metadata = dict(source.get("metadata") or {})
+            section_tokens = set(query_tokens(str(metadata.get("section") or "")))
+            body_tokens = set(query_tokens(str(source.get("text") or "")))
+            section_overlap = len(relation_token_set & section_tokens)
+            body_overlap = len(relation_token_set & body_tokens)
+            return (
+                section_overlap * 4.0 + body_overlap,
+                float(hit.get("_score") or 0.0),
+                -_chunk_order(source),
+            )
+
+        hits.sort(key=relation_priority, reverse=True)
         top_raw = max(
             (float(hit.get("_score") or 0.0) for hit in hits),
             default=1.0,

@@ -45,6 +45,14 @@ def test_cause_question_with_list_wording_still_uses_cause_pipeline() -> None:
     assert plan.context_policy == "section"
 
 
+def test_cause_query_keeps_concrete_event_phrase() -> None:
+    plan = build_query_plan("诸葛亮为什么要挥泪斩马谡")
+
+    assert plan.subject == "诸葛亮"
+    assert "挥泪斩马谡" in plan.relations
+    assert "诸葛亮挥泪斩马谡" in plan.queries
+
+
 def test_list_plan_extracts_general_requested_relation() -> None:
     plan = build_query_plan("秦始皇有哪些伟大成就？")
 
@@ -138,6 +146,19 @@ def test_builds_action_agent_and_current_office_queries() -> None:
     )
 
 
+def test_builds_non_current_office_and_founder_queries_without_crashing() -> None:
+    vice_president = build_query_plan("美国的副总统是谁？")
+    founder = build_query_plan("唐朝的开国皇帝是谁")
+    president = build_query_plan("美国的总统是谁")
+
+    assert vice_president.subject == "美国"
+    assert vice_president.relations == ("副总统", "副總統")
+    assert founder.subject == "唐朝"
+    assert founder.relations[0] == "开国皇帝"
+    assert president.subject == "美国"
+    assert president.relations[0] == "总统"
+
+
 def test_builds_role_agent_plan_with_role_equivalents() -> None:
     plan = build_query_plan("宇树科技创始人是谁？")
 
@@ -200,6 +221,41 @@ def test_builds_counted_enumeration_as_complete_list() -> None:
     assert generic_plan.set_semantics == "all"
     assert generic_plan.relations == ("是指", "包括", "分别是", "分别为")
     assert generic_plan.queries[:2] == ("中国四大名著 列表", "中国四大名著")
+
+    historical_plan = build_query_plan("中国历史上的四大名著是哪四个？")
+    assert historical_plan.subject == "四大名著"
+    assert historical_plan.queries[:2] == ("四大名著 列表", "四大名著")
+
+
+def test_builds_role_attribution_from_question_grammar() -> None:
+    author = build_query_plan("西游记是哪个作者写的？")
+    director = build_query_plan("流浪地球是哪位导演拍的？")
+
+    assert author.analysis.intent == "agent"
+    assert author.analysis.entity_type == "person"
+    assert author.subject == "西游记"
+    assert author.relations == ("作者", "写")
+    assert author.context_policy == "lead_append"
+    assert director.subject == "流浪地球"
+    assert director.relations == ("导演", "拍")
+
+
+def test_outcome_question_requires_summary_answer() -> None:
+    plan = build_query_plan("三国演义最后的结局是什么？")
+
+    assert plan.answer_shape == "summary"
+
+
+def test_terminal_and_passive_agent_questions_build_relation_contracts() -> None:
+    memorial = build_query_plan("端午节的由来，是为了纪念谁？")
+    victim = build_query_plan("岳飞是被谁害死的")
+
+    assert memorial.analysis.intent == "agent"
+    assert memorial.subject == "端午节"
+    assert {"纪念", "由来"} <= set(memorial.relations)
+    assert victim.analysis.intent == "agent"
+    assert victim.subject == "岳飞"
+    assert {"害死", "杀害"} <= set(victim.relations)
 
 
 def test_transit_list_plan_cleans_actions_and_adds_companion_page_query() -> None:

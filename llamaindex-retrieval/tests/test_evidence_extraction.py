@@ -308,6 +308,35 @@ def test_sentence_selection_rejects_relationless_heading() -> None:
     ) == ()
 
 
+def test_summary_selection_rejects_unrelated_subject_mention() -> None:
+    evidence = SourceItem(
+        id="author",
+        document_id="author",
+        source="finewiki-zh",
+        title="罗贯中",
+        score=1.0,
+        snippet="罗贯中是《三国演义》的编作者。",
+    )
+    plan = replace(
+        build_query_plan("三国演义最后的结局是什么？"),
+        subject="三国演义",
+        relations=("最终结局", "结局"),
+        fields=(TaskField("f1", "最后的结局", ("最终结局", "结局")),),
+        answer_shape="summary",
+    )
+    raw = json.dumps({
+        "candidates": [{"field_id": "f1", "sentence_id": "s1"}],
+    }, ensure_ascii=False)
+
+    assert LanguageModelEvidenceExtractor._parse(
+        raw,
+        plan,
+        0,
+        evidence,
+        sentence_units=("罗贯中是《三国演义》的编作者。",),
+    ) == ()
+
+
 def test_list_evidence_falls_back_to_direct_relation_sentence() -> None:
     sentence = "四大名著，即四大小说名著，是指《三国演义》《西游记》《水浒传》《红楼梦》4部小说。"
     evidence = SourceItem(
@@ -336,3 +365,17 @@ def test_list_evidence_falls_back_to_direct_relation_sentence() -> None:
     )
 
     assert [candidate.span for candidate in result] == [sentence]
+
+
+def test_station_companion_page_is_valid_subject_evidence() -> None:
+    plan = build_query_plan("深圳地铁1号线有哪几个站")
+    evidence = SourceItem(
+        id="station-list",
+        document_id="station-list",
+        source="finewiki-zh",
+        title="深圳地铁车站列表",
+        score=1.0,
+        snippet="1号线沿途共设30个车站：罗湖站、国贸站、老街站。",
+    )
+
+    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, evidence) is True

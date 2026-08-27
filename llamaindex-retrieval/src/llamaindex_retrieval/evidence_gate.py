@@ -42,6 +42,8 @@ _RELATION_EQUIVALENTS = {
     "得主": ("得主", "获得", "获奖", "授予"),
     "获得者": ("得主", "获得", "获奖", "授予"),
     "作者": ("作者", "创作", "编剧", "作曲", "作词", "导演", "设计"),
+    "发起": ("发起", "发动", "组织", "策划", "领导"),
+    "提出": ("提出", "发起", "倡议", "主张"),
     "创始人": ("创始人", "创办人", "创办者", "创立", "创建", "创办"),
     "创办人": ("创办人", "创始人", "创办者", "创立", "创建", "创办"),
     "创办者": ("创办者", "创办人", "创始人", "创立", "创建", "创办"),
@@ -342,12 +344,15 @@ def _is_potential_entity_term(term: str) -> bool:
 
 def title_matches_subject(title: str, normalized_subject: str) -> bool:
     normalized_title = normalize_search_text(title).replace(" ", "")
+    normalized_title = _normalize_title_numbers(normalized_title)
+    normalized_subject = _normalize_title_numbers(normalized_subject)
     if normalized_title == normalized_subject:
         return True
     def canonical(value: str) -> str:
         for qualifier in ("国际足协", "国际足总", "国际足球联合会"):
             value = value.replace(qualifier, "")
         value = value.replace("反潜护卫艇", "猎潜艇")
+        value = value.replace("事变", "之变").replace("政变", "之变")
         return value
 
     canonical_title = canonical(normalized_title)
@@ -358,10 +363,20 @@ def title_matches_subject(title: str, normalized_subject: str) -> bool:
     # e.g. "中国四大名著" for the page "四大名著".  Only allow this for a
     # small, explicit set of scope markers so similarly named pages do not pass
     # the identity gate accidentally.
-    for prefix in ("中国", "中华人民共和国", "我国", "世界"):
+    for prefix in (
+        "中国", "中华人民共和国", "我国", "世界",
+        "中国历史", "中国历史上", "中国历史上的",
+        "历史", "历史上", "历史上的",
+    ):
         if canonical_subject.startswith(prefix) and canonical_subject[len(prefix):] == canonical_title:
             return True
     return False
+
+
+def _normalize_title_numbers(value: str) -> str:
+    """Make Arabic and common Chinese numerals comparable in titles."""
+
+    return value.translate(str.maketrans({"〇": "0", "一": "1", "二": "2", "两": "2", "三": "3", "四": "4", "五": "5", "六": "6", "七": "7", "八": "8", "九": "9", "十": "10"}))
 
 
 def title_matches_subject_event(title: str, normalized_subject: str, question: str) -> bool:

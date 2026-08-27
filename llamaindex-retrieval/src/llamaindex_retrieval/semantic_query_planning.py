@@ -46,6 +46,19 @@ class LanguageModelQueryPlanner:
                 "deterministic_fallback",
                 error="generation_password_not_configured",
             )
+        # Preserve deterministic semantic contracts for intents where changing
+        # the object or relation is more damaging than missing a model query.
+        # The model may still provide extra queries, but it must not turn a
+        # cause/comparison/structured explanation into a generic fact lookup.
+        if fallback.analysis.intent in {"cause", "comparison", "procedure"} or (
+            fallback.analysis.intent == "definition"
+            and fallback.answer_shape == "summary"
+        ):
+            return QueryPlanningResult(
+                fallback,
+                "deterministic_fallback",
+                error="deterministic_semantic_contract",
+            )
         if self._fallback_contract_is_sufficient(fallback):
             return QueryPlanningResult(
                 fallback,
@@ -156,13 +169,31 @@ class LanguageModelQueryPlanner:
         if fallback.answer_shape in {"summary", "narrative"}:
             answer_shape = fallback.answer_shape
             set_semantics = fallback.set_semantics
-        if self._preserve_explicit_list_contract(fallback):
+        if fallback.analysis.intent == "agent" and fallback.subject:
             subject = fallback.subject
             relations = fallback.relations
             fields = fallback.fields
+            intent = "agent"
+            answer_shape = "single_fact"
+            set_semantics = fallback.set_semantics
+        if (
+            fallback.analysis.intent == "definition"
+            and fallback.answer_shape == "summary"
+        ):
+            subject = fallback.subject
+            relations = fallback.relations
+            fields = fallback.fields
+            intent = "definition"
+            answer_shape = "summary"
+            set_semantics = fallback.set_semantics
+        if fallback.analysis.expects_list:
             intent = "list"
             answer_shape = "list"
-            set_semantics = "all"
+            set_semantics = fallback.set_semantics
+            if self._subject_matches_fallback(fallback.subject, subject):
+                subject = fallback.subject
+                relations = fallback.relations
+                fields = fallback.fields
         plan = replace(
             fallback,
             queries=tuple(queries[:query_limit]),

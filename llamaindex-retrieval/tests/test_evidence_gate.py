@@ -4,6 +4,7 @@ from llamaindex_retrieval.evidence_gate import (
     repair_answer_citations,
 )
 from llamaindex_retrieval.qa_analysis import analyze_question
+from llamaindex_retrieval.query_planning import build_query_plan
 from llamaindex_retrieval.schemas import SourceItem
 
 
@@ -352,6 +353,18 @@ def test_gate_allows_broad_scope_prefix_for_exact_page() -> None:
         analyze_question(question),
         [source("四大名著", "四大名著是指《三国演义》《西游记》《水浒传》《红楼梦》。")],
         subject="中国四大名著",
+    )
+
+    assert result.passed is True
+
+
+def test_gate_allows_historical_scope_question_for_exact_page() -> None:
+    question = "中国历史上的四大名著是哪四个？"
+    result = evaluate_evidence_gate(
+        question,
+        analyze_question(question),
+        [source("四大名著", "四大名著是指《三国演义》《西游记》《水浒传》《红楼梦》。")],
+        subject=build_query_plan(question).subject,
     )
 
     assert result.passed is True

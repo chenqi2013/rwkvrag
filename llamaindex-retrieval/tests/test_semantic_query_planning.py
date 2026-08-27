@@ -92,7 +92,7 @@ async def test_model_planner_uses_structured_queries_and_keeps_original_question
 
 
 @pytest.mark.asyncio
-async def test_model_planner_derives_missing_top_level_relations() -> None:
+async def test_deterministic_planner_handles_role_attribution_without_model() -> None:
     async def handler(_: httpx.Request) -> httpx.Response:
         return stream_response(json.dumps({
             "subject": "西游记",
@@ -120,14 +120,11 @@ async def test_model_planner_derives_missing_top_level_relations() -> None:
 
     result = await planner.plan("西游记是哪个作者写的？", fallback)
 
-    assert result.strategy == "model"
+    assert result.strategy == "deterministic_fallback"
     assert result.plan.subject == "西游记"
-    assert result.plan.relations == ("作者", "作者姓名")
-    assert result.plan.fields[0].relations == ("作者", "作者姓名")
-    assert result.model_queries == (
-        "西游记的作者是谁？",
-        "西游记的作者是哪位作家？",
-    )
+    assert result.plan.relations == ("作者", "写")
+    assert result.plan.fields[0].relations == ("作者", "写")
+    assert result.model_queries == ()
 
 
 @pytest.mark.asyncio
@@ -187,8 +184,15 @@ async def test_model_planner_repairs_answer_used_as_subject() -> None:
     assert result.model_queries == ("《西游记》的作者是谁？",)
 
 
+@pytest.mark.parametrize(
+    "question",
+    (
+        "中国四大名著是哪四个？",
+        "中国历史上的四大名著是哪四个？",
+    ),
+)
 @pytest.mark.asyncio
-async def test_model_planner_preserves_structural_list_constraint() -> None:
+async def test_model_planner_preserves_structural_list_constraint(question: str) -> None:
     async def handler(_: httpx.Request) -> httpx.Response:
         return stream_response(json.dumps({
             "subject": "四大名著",
@@ -212,9 +216,9 @@ async def test_model_planner_preserves_structural_list_constraint() -> None:
         generation_base_url="https://generation.example/v1",
     )
     planner = LanguageModelQueryPlanner(settings, transport=httpx.MockTransport(handler))
-    fallback = build_query_plan("中国四大名著是哪四个？")
+    fallback = build_query_plan(question)
 
-    result = await planner.plan("中国四大名著是哪四个？", fallback)
+    result = await planner.plan(question, fallback)
 
     assert result.strategy == "model"
     assert result.plan.analysis.intent == "list"
@@ -223,6 +227,37 @@ async def test_model_planner_preserves_structural_list_constraint() -> None:
     assert result.plan.subject == fallback.subject
     assert result.plan.relations == fallback.relations
     assert result.plan.queries[:2] == fallback.queries[:2]
+
+
+@pytest.mark.asyncio
+async def test_model_planner_cannot_change_list_question_into_single_fact() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return stream_response(json.dumps({
+            "subject": "秦始皇",
+            "intent": "fact",
+            "answer_shape": "single_fact",
+            "set_semantics": "specific",
+            "fields": [{
+                "field_id": "f1",
+                "question": "秦始皇的主要功绩是什么",
+                "relations": ["功绩"],
+            }],
+            "relations": ["功绩"],
+            "queries": ["秦始皇的主要功绩是什么"],
+        }, ensure_ascii=False))
+
+    planner = LanguageModelQueryPlanner(
+        Settings(generation_password="secret"),
+        transport=httpx.MockTransport(handler),
+    )
+    fallback = build_query_plan("秦始皇有哪些丰功伟绩")
+
+    result = await planner.plan(fallback.original_question, fallback)
+
+    assert result.plan.analysis.intent == "list"
+    assert result.plan.answer_shape == "list"
+    assert result.plan.subject == fallback.subject
+    assert result.plan.relations == fallback.relations
 
 
 @pytest.mark.asyncio

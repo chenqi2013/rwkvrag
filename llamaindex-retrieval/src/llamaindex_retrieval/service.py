@@ -34,6 +34,7 @@ from .evidence_gate import (
     repair_answer_citations,
     title_matches_subject,
     title_matches_subject_event,
+    title_matches_subject_topic,
 )
 from .lexical_index import (
     LexicalIndex,
@@ -78,6 +79,24 @@ _STRUCTURE_QUESTION_WORDS = {
     "如何",
     "多少",
     "几个",
+}
+_SCOPE_TOKENS = {
+    "中国",
+    "中华人民共和国",
+    "我国",
+    "国内",
+    "全国",
+    "世界",
+    "全球",
+    "亚洲",
+    "欧洲",
+    "历史",
+    "历史上",
+    "古代",
+    "现代",
+    "当代",
+    "本国",
+    "当地",
 }
 _STRUCTURE_TYPE_BONUS = {
     "table_summary": 2.4,
@@ -140,7 +159,34 @@ _ROUTE_ENDPOINT_PATTERN = re.compile(
 
 
 def _is_station_list_question(question: str) -> bool:
-    return any(marker in question for marker in ("有哪些站", "哪些站", "车站", "站点", "站名"))
+    normalized = normalize_search_text(question)
+    return bool(
+        any(marker in normalized for marker in ("车站", "站点", "站名"))
+        or re.search(r"(?:有)?哪(?:些|几个)?站|几个站", normalized)
+    )
+
+
+def _core_subject_tokens(subject: str) -> tuple[str, ...]:
+    return tuple(
+        token
+        for token in lexical_tokens(subject)
+        if token not in _SCOPE_TOKENS and len(token) >= 2
+    )
+
+
+def _answer_covers_subject_topics(answer: str, subject: str) -> bool:
+    normalized_answer = normalize_search_text(answer).replace(" ", "")
+    core_tokens = _core_subject_tokens(subject)
+    if len(core_tokens) < 2:
+        return True
+    return all(
+        any(
+            normalize_search_text(variant).replace(" ", "") in normalized_answer
+            for variant in query_tokens(token)
+            if len(variant) >= 2
+        )
+        for token in core_tokens
+    )
 
 
 class SearchService:
@@ -197,6 +243,7 @@ class SearchService:
             candidate_k=candidate_k,
             knowledge_base_id=request.knowledge_base_id,
         )
+        results = self._prioritize_topic_document(plan, results)
         bm25_ms = self._elapsed_ms(bm25_started)
         context_started = monotonic()
         results, structure_expanded = await self._expand_structured_results(
@@ -214,6 +261,10 @@ class SearchService:
                 knowledge_base_id=request.knowledge_base_id,
                 top_k=top_k,
             )
+        # Context expansion can add a more specific topic document after the
+        # initial fusion. Reapply the same whole-document ordering before the
+        # top-k cut so supplemental chunks cannot put a broad page back first.
+        results = self._prioritize_topic_document(plan, results)
         min_score = (
             request.min_score
             if request.min_score is not None
@@ -409,6 +460,19 @@ class SearchService:
                 len(relation.replace(" ", "")) >= 4
                 for relation in plan.relations
             )
+            list_topic_tokens: set[str] = set()
+            if plan.analysis.intent in {"list", "fact"} and endpoint_match is None:
+                subject_tokens = set(query_tokens(plan.subject))
+                list_topic_tokens = {
+                    token
+                    for token in query_tokens(plan.normalized_question)
+                    if token not in subject_tokens
+                    and token not in {
+                        "哪些", "哪几个", "全部", "所有", "总共", "一共",
+                        "从古至今", "至今",
+                    }
+                    and len(token) >= 2
+                }
             for document_id, document_chunks in chunks.items():
                 title = next(
                     (
@@ -419,6 +483,20 @@ class SearchService:
                     "",
                 )
                 normalized_title = normalize_search_text(title).replace(" ", "")
+                title_tokens = set(lexical_tokens(title))
+                subject_tokens = set(lexical_tokens(plan.subject))
+                subject_overlap = len(subject_tokens & title_tokens)
+                core_tokens = _core_subject_tokens(plan.subject)
+                if plan.answer_shape == "list" and subject_tokens and endpoint_match is None:
+                    if subject_overlap:
+                        document_scores[document_id] += min(
+                            9.0,
+                            subject_overlap * 3.0,
+                        )
+                        if core_tokens and core_tokens[0] in title_tokens:
+                            document_scores[document_id] += 6.0
+                    elif endpoint_match is None:
+                        document_scores[document_id] -= 6.0
                 metadata = next(iter(document_chunks.values())).metadata
                 aliases = document_aliases(title, metadata)
                 has_relation_context = bool(plan.relations and any(
@@ -432,8 +510,23 @@ class SearchService:
                 ))
                 if title_matches_subject(title, normalized_subject):
                     document_scores[document_id] += (
-                        0.3 if not narrative_relation or has_relation_context else 0.02
+                        1.5
+                        if plan.answer_shape in {"summary", "narrative"}
+                        else 0.3 if not narrative_relation or has_relation_context else 0.02
                     )
+                elif (
+                    list_topic_tokens
+                    and normalized_title.startswith(normalized_subject)
+                    and normalized_title != normalized_subject
+                ):
+                    base_title = re.split(r"[（(]", normalized_title, maxsplit=1)[0]
+                    suffix_tokens = set(query_tokens(base_title[len(normalized_subject):]))
+                    if list_topic_tokens & suffix_tokens:
+                        document_scores[document_id] += (
+                            8.0 if plan.analysis.intent == "list" else 5.0
+                        )
+                        if any(marker in base_title for marker in ("列表", "清单", "目录")):
+                            document_scores[document_id] += 0.8
                 elif normalized_subject in aliases:
                     document_scores[document_id] += (
                         0.2 if not narrative_relation or has_relation_context else 0.02
@@ -451,7 +544,21 @@ class SearchService:
                 ):
                     document_scores[document_id] -= 0.08
                 if has_relation_context:
-                    document_scores[document_id] += 0.28 if narrative_relation else 0.06
+                    document_scores[document_id] += 0.6 if narrative_relation else 0.06
+                if plan.analysis.intent == "cause":
+                    event_terms = tuple(
+                        normalize_search_text(relation).replace(" ", "")
+                        for relation in plan.relations
+                        if len(normalize_search_text(relation).replace(" ", "")) >= 4
+                        and relation not in {"原因", "因素", "导致", "因由", "缘由"}
+                    )
+                    if event_terms and any(
+                        term in normalize_search_text(
+                            f"{title}\n" + "\n".join(result.text for result in document_chunks.values())
+                        ).replace(" ", "")
+                        for term in event_terms
+                    ):
+                        document_scores[document_id] += 2.0
         ranked_documents = sorted(
             document_scores,
             key=lambda key: (document_scores[key], -first_seen[key]),
@@ -591,27 +698,56 @@ class SearchService:
         if lookup is None:
             return results, False
         normalized_subject = normalize_search_text(plan.subject).replace(" ", "")
-        document_ids: list[str] = []
-        for result in results:
-            title = str(result.metadata.get("title") or "")
-            if (
-                result.document_id not in document_ids
-                and (
-                    title_matches_subject(title, normalized_subject)
-                    or normalized_subject in document_aliases(title, result.metadata)
-                    or (
-                        plan.analysis.intent in {"cause", "time", "list"}
-                        and title_matches_subject_event(
-                            title,
-                            normalized_subject,
-                            plan.normalized_question,
+        relation_terms = self._document_relation_search_terms(plan)
+        topic_tokens = self._topic_tokens(plan.normalized_question, plan.subject)
+        first_title = normalize_search_text(
+            str(results[0].metadata.get("title") or "")
+        ).replace(" ", "")
+        topic_document_selected = bool(
+            topic_tokens
+            and any(token in first_title for token in topic_tokens)
+        )
+        document_ids: list[str] = (
+            [results[0].document_id]
+            if topic_document_selected
+            else []
+        )
+        if not topic_document_selected:
+            for result in results:
+                title = str(result.metadata.get("title") or "")
+                if (
+                    result.document_id not in document_ids
+                    and (
+                        title_matches_subject(title, normalized_subject)
+                        or normalized_subject in document_aliases(title, result.metadata)
+                        or (
+                            plan.analysis.intent == "list"
+                            and (
+                                title_matches_subject_topic(title, normalized_subject)
+                                or self._title_contains_core_topic(title, plan.subject)
+                            )
+                        )
+                        or (
+                            plan.analysis.intent in {"cause", "time", "list"}
+                            and title_matches_subject_event(
+                                title,
+                                normalized_subject,
+                                plan.normalized_question,
+                            )
                         )
                     )
+                ):
+                    document_ids.append(result.document_id)
+                if len(document_ids) >= 2:
+                    break
+        if plan.analysis.intent == "list" and document_ids:
+            document_ids = [
+                self._primary_topic_document_id(
+                    results,
+                    set(document_ids),
+                    plan.subject,
                 )
-            ):
-                document_ids.append(result.document_id)
-            if len(document_ids) >= 2:
-                break
+            ]
         if not document_ids:
             return results, False
         candidate_groups = await asyncio.gather(*(
@@ -619,7 +755,7 @@ class SearchService:
                 lookup,
                 plan.normalized_question,
                 document_id=document_id,
-                relations=plan.relations,
+                relations=relation_terms,
                 knowledge_base_id=knowledge_base_id,
                 limit=max(top_k, 6),
             )
@@ -630,6 +766,28 @@ class SearchService:
             for group in candidate_groups
             for candidate in group
         ]
+        if plan.answer_shape in {"summary", "narrative"}:
+            terminal_markers = (
+                "结局", "結局", "结尾", "結尾", "终结", "終結", "结束", "結束",
+                "归一", "歸一", "一统", "一統", "统一天下", "統一天下",
+                "最终结果", "最終結果", "最后结果", "最後結果", "灭亡", "滅亡",
+            )
+            relation_candidates.sort(
+                key=lambda candidate: (
+                    sum(
+                        5.0
+                        for marker in terminal_markers
+                        if marker in normalize_search_text(candidate.text).replace(" ", "")
+                    ),
+                    sum(
+                        normalize_search_text(relation).replace(" ", "")
+                        in normalize_search_text(candidate.text).replace(" ", "")
+                        for relation in relation_terms
+                    ),
+                    -int(candidate.metadata.get("chunk_order") or 0),
+                ),
+                reverse=True,
+            )
         if not relation_candidates:
             return results, False
         seen: set[str] = set()
@@ -640,6 +798,40 @@ class SearchService:
             seen.add(result.node_id)
             merged.append(result)
         return merged, True
+
+    @staticmethod
+    def _document_relation_search_terms(plan: QueryPlan) -> tuple[str, ...]:
+        subject_tokens = set(lexical_tokens(plan.subject))
+        ignored = subject_tokens | {
+            "什么", "哪些", "哪个", "哪几个", "怎么", "如何", "多少",
+            "主要", "历史", "著名", "伟大", "列表", "全部", "所有",
+        }
+        query_relations = [
+            token
+            for token in query_tokens(" ".join(plan.queries))
+            if len(token.strip()) >= 2 and token not in ignored
+        ]
+        summary_terms = (
+            "结局", "结尾", "终结", "结束", "最终", "最后", "结果",
+            "归一", "一统", "统一", "灭亡", "完成",
+        ) if plan.answer_shape in {"summary", "narrative"} else ()
+        return tuple(dict.fromkeys((*plan.relations, *query_relations, *summary_terms)))
+
+    @staticmethod
+    def _topic_tokens(question: str, subject: str) -> set[str]:
+        subject_tokens = set(query_tokens(subject))
+        return {
+            token
+            for token in query_tokens(question)
+            if token not in subject_tokens
+            and token not in _STRUCTURE_QUESTION_WORDS
+            and token not in _SCOPE_TOKENS
+            and token not in {
+                "个", "总共", "一共", "哪些", "哪几个", "全部", "所有",
+                "列表", "主要", "著名", "伟大", "分别", "从古至今", "至今",
+            }
+            and len(token) >= 2
+        }
 
     async def _expand_section_context(
         self,
@@ -1043,10 +1235,20 @@ class SearchService:
                 )
                 timings["post_filter_extraction"] = self._elapsed_ms(extraction_started)
         answer_sources = (
-            field_extraction.answer_sources(evidence_response.results)
-            if field_extraction is not None and field_extraction.has_candidates
-            else evidence_response.results
+            evidence_response.results
+            if answer_plan.answer_shape == "list"
+            else (
+                field_extraction.answer_sources(evidence_response.results)
+                if field_extraction is not None and field_extraction.has_candidates
+                else evidence_response.results
+            )
         )
+        if answer_plan.analysis.intent == "agent":
+            answer_sources = self._sort_relation_sources(
+                answer_sources,
+                subject=answer_plan.subject,
+                relations=answer_plan.relations,
+            )
         gate = evaluate_evidence_gate(
             question,
             question_analysis,
@@ -1058,7 +1260,7 @@ class SearchService:
         )
         assessment = gate.assessment
         answer_response = evidence_response.model_copy(update={"results": answer_sources})
-        cache_key = self._answer_cache_key(question, answer_response)
+        cache_key = self._answer_cache_key(question, answer_response, answer_plan)
         answer = self._get_cached_answer(cache_key)
         cache_hit = answer is not None
         answer_strategy = "cache" if cache_hit else "model"
@@ -1169,6 +1371,31 @@ class SearchService:
             answer = repair_answer_citations(answer, answer_sources)
         answer_support = evaluate_answer_support(answer, answer_sources, question=question)
         if (
+            answer_plan.answer_shape in {"summary", "narrative"}
+            and answer_plan.relations
+            and any(
+                marker in normalize_search_text(" ".join(answer_plan.relations))
+                for marker in (
+                    "结局", "結局", "结尾", "結尾", "终结", "終結", "结束", "結束",
+                    "最终", "最終", "最后", "最後", "结果", "結果", "归一", "歸一",
+                    "一统", "一統", "统一", "統一", "灭亡", "滅亡",
+                )
+            )
+            and not any(
+                marker in normalize_search_text(answer)
+                for marker in (
+                    "结局", "結局", "结尾", "結尾", "终结", "終結", "结束", "結束",
+                    "最终", "最終", "最后", "最後", "结果", "結果", "归一", "歸一",
+                    "一统", "一統", "统一", "統一", "灭亡", "滅亡",
+                )
+            )
+        ):
+            answer_support = replace(
+                answer_support,
+                passed=False,
+                issues=(*answer_support.issues, "summary_relation_mismatch"),
+            )
+        if (
             not answer_support.passed
             and answer_strategy == "model"
             and raw_model_answer
@@ -1244,7 +1471,11 @@ class SearchService:
                     )
                     assessment = gate.assessment
                     answer_response = evidence_response.model_copy(update={"results": answer_sources})
-                    cache_key = self._answer_cache_key(question, answer_response)
+                    cache_key = self._answer_cache_key(
+                        question,
+                        answer_response,
+                        answer_plan,
+                    )
             timings["answer_verification"] = self._elapsed_ms(verification_started)
         if not answer_support.passed and answer_strategy in {"model", "cache"}:
             blocked_answer = answer
@@ -1433,7 +1664,15 @@ class SearchService:
     ) -> str | None:
         analysis = plan.analysis
         answer: str | None = None
-        if analysis.intent == "definition":
+        if plan.answer_shape == "list":
+            answer = direct_evidence_answer(question, sources)
+            structured_answer = list_evidence_answer(question, sources)
+            if answer is None or (
+                structured_answer is not None
+                and not _answer_covers_subject_topics(answer, plan.subject)
+            ):
+                answer = structured_answer
+        elif analysis.intent == "definition":
             answer = definition_evidence_answer(question, sources)
         elif analysis.intent == "time":
             answer = coordinated_time_evidence_answer(
@@ -1441,7 +1680,7 @@ class SearchService:
                 analysis.subjects,
             ) or time_evidence_answer(question, sources)
         elif analysis.intent == "agent":
-            answer = agent_evidence_answer(question, sources)
+            answer = agent_evidence_answer(question, sources, plan.relations)
         elif analysis.intent == "ordinal":
             answer = ordinal_evidence_answer(question, sources)
         elif analysis.intent == "location":
@@ -1483,6 +1722,32 @@ class SearchService:
             if len(quotes) >= 4:
                 break
         if not quotes:
+            outcome_markers = (
+                "结局", "結局", "结尾", "結尾", "终结", "終結", "结束", "結束",
+                "最终", "最終", "最后", "最後", "结果", "結果", "归一", "歸一",
+                "一统", "一統", "统一", "統一", "灭亡", "滅亡",
+            )
+            if not any(
+                marker in normalize_search_text(" ".join(relations))
+                for marker in outcome_markers
+            ):
+                return None
+            for source_index, source in enumerate(sources, start=1):
+                units = [
+                    unit.strip()
+                    for unit in re.split(r"(?<=[。！？!?；;])|\n+", clean_evidence_text(source.snippet))
+                    if unit.strip()
+                ]
+                for unit in units:
+                    normalized = normalize_search_text(unit)
+                    if not any(marker in normalized for marker in outcome_markers):
+                        continue
+                    quotes.append(f"{unit.rstrip('。！？!?；;')}[资料 {source_index}]")
+                    if len(quotes) >= 3:
+                        break
+                if len(quotes) >= 3:
+                    break
+        if not quotes:
             return None
         return "根据检索资料，可确认：" + "；".join(quotes) + "。"
 
@@ -1507,14 +1772,21 @@ class SearchService:
             else:
                 result = await self.evidence_extractor.extract(question, plan, sources)
             if result is not None and not result.has_candidates and plan.answer_shape in {
-                "list", "single_fact"
+                "list", "single_fact", "summary", "narrative"
             }:
                 result = self._deterministic_structured_evidence(result, plan, sources)
             return result
         except Exception as error:
-            return EvidenceExtractionResult(
+            failed = EvidenceExtractionResult(
                 (), 0, 0, (f"{type(error).__name__}: {error}",)
             )
+            if plan.answer_shape in {"list", "single_fact", "summary", "narrative"}:
+                return self._deterministic_structured_evidence(
+                    failed,
+                    plan,
+                    sources,
+                )
+            return failed
 
     @staticmethod
     def _deterministic_structured_evidence(
@@ -1528,18 +1800,55 @@ class SearchService:
             if value.strip()
         }
         relation_terms = {
-            normalize_search_text(value).replace(" ", "")
-            for value in plan.relations
-            if len(value.strip()) >= 2
+            token
+            for token in query_tokens(" ".join((
+                *plan.relations,
+                *(field.question for field in plan.fields),
+            )))
+            if len(token.strip()) >= 2
+        }
+        relation_terms -= {
+            token
+            for token in query_tokens(plan.subject)
+        }
+        relation_terms -= {
+            "什么", "哪些", "哪个", "哪几个", "怎么", "如何", "多少",
+            "主要", "著名", "伟大", "全部", "所有", "列表",
         }
         definition_markers = ("是指", "即", "包括", "包含", "分别是", "分别为")
+        summary_terminal_markers = (
+            "结局", "結局", "结尾", "結尾", "终结", "終結", "结束", "結束",
+            "归一", "歸一", "统一天下", "統一天下", "最终结果", "最終結果",
+            "最后结果", "最後結果", "灭亡", "滅亡", "完成",
+        )
+        scored_candidates: list[tuple[float, int, EvidenceSpan]] = []
         for source_index, source in enumerate(sources):
             normalized_title = normalize_search_text(source.title).replace(" ", "")
-            if not any(
-                term in normalized_title or normalized_title in term
+            title_matches = any(
+                title_matches_subject(source.title, term)
+                or title_matches_subject_topic(source.title, term)
+                or term in document_aliases(source.title, source.metadata)
                 for term in subject_terms
-            ):
+            )
+            normalized_body = normalize_search_text(source.snippet).replace(" ", "")
+            body_matches = any(term in normalized_body for term in subject_terms)
+            transit_match = re.fullmatch(
+                r"(?P<network>[\u3400-\u9fff]{2,20}?地铁)(?P<line>\d+号线)",
+                next(iter(subject_terms), ""),
+            )
+            transit_companion_matches = bool(
+                plan.answer_shape == "list"
+                and transit_match
+                and normalized_title == f"{transit_match.group('network')}车站列表"
+                and transit_match.group("line") in normalized_body
+            )
+            if not title_matches and not body_matches and not transit_companion_matches:
                 continue
+            source_context = " ".join((
+                str(source.metadata.get("section") or ""),
+                source.title,
+            ))
+            source_relation_tokens = set(query_tokens(source_context)) & relation_terms
             units = [
                 unit.strip()
                 for unit in re.split(r"(?<=[。！？!?；;])|\n+", source.snippet)
@@ -1547,36 +1856,99 @@ class SearchService:
             ]
             for unit in units:
                 normalized = normalize_search_text(unit).replace(" ", "")
-                has_requested_relation = any(term in normalized for term in relation_terms)
+                if normalized in subject_terms or normalized == normalized_title:
+                    continue
+                unit_tokens = set(query_tokens(unit))
+                if unit_tokens and unit_tokens <= relation_terms:
+                    continue
+                if (
+                    plan.analysis.intent == "agent"
+                    and len(normalized) <= 16
+                    and not any(marker in normalized for marker in (
+                        "是", "为", "由", "被", "害死", "杀害", "打死", "处死", "发起",
+                    ))
+                    and not any(term in normalized for term in subject_terms)
+                ):
+                    continue
+                has_requested_relation = bool(unit_tokens & relation_terms)
                 has_definition_relation = (
                     plan.analysis.intent == "definition"
                     and any(marker in normalized for marker in definition_markers)
                 )
-                if not has_requested_relation and not has_definition_relation:
+                list_like = bool(
+                    source.metadata.get("content_type") in {"table_summary", "table", "list"}
+                    or len(re.findall(r"[、，,；;]", unit)) >= 2
+                    or re.match(r"^[-*•]\s*", unit)
+                    or re.match(r"^[^：:\n]{1,24}[：:]", unit)
+                )
+                supported_by_structure = bool(
+                    plan.answer_shape == "list"
+                    and list_like
+                    and (source_relation_tokens or has_requested_relation)
+                )
+                if not (
+                    has_requested_relation
+                    or has_definition_relation
+                    or supported_by_structure
+                ):
                     continue
-                candidate = EvidenceSpan(
+                evidence = EvidenceSpan(
                     field_id=plan.fields[0].field_id,
                     source_index=source_index,
                     span=unit,
                     content_hash=sha256(unit.encode("utf-8")).hexdigest(),
                 )
-                signatures = tuple(
-                    (item.id, sha256(item.snippet.encode("utf-8")).hexdigest())
-                    for item in sources
-                )
-                return EvidenceExtractionResult(
-                    candidates=(candidate,),
-                    attempted_sources=len(sources),
-                    completed_sources=result.completed_sources,
-                    errors=result.errors,
-                    source_signatures=signatures,
-                    strategy=(
-                        "deterministic_definition_fallback"
-                        if plan.analysis.intent == "definition"
-                        else "deterministic_list_fallback"
-                    ),
-                )
-        return result
+                score = float(has_requested_relation or has_definition_relation)
+                if plan.answer_shape in {"summary", "narrative"}:
+                    score += sum(
+                        5.0
+                        for marker in summary_terminal_markers
+                        if marker in normalized
+                    )
+                    score += min(3.0, sum(
+                        normalized.count(relation)
+                        for relation in relation_terms
+                        if len(relation) >= 2
+                    ))
+                    try:
+                        score += min(
+                            2.0,
+                            int(source.metadata.get("chunk_order") or 0) / 20.0,
+                        )
+                    except (TypeError, ValueError):
+                        pass
+                scored_candidates.append((score, source_index, evidence))
+                if (
+                    plan.answer_shape not in {"summary", "narrative"}
+                    and len(scored_candidates) >= 12
+                ):
+                    break
+            if (
+                plan.answer_shape not in {"summary", "narrative"}
+                and len(scored_candidates) >= 12
+            ):
+                break
+        if plan.answer_shape in {"summary", "narrative"}:
+            scored_candidates.sort(key=lambda item: (-item[0], item[1]))
+        candidates = [item[2] for item in scored_candidates[:12]]
+        if not candidates:
+            return result
+        signatures = tuple(
+            (item.id, sha256(item.snippet.encode("utf-8")).hexdigest())
+            for item in sources
+        )
+        return EvidenceExtractionResult(
+            candidates=tuple(candidates),
+            attempted_sources=len(sources),
+            completed_sources=max(result.completed_sources, len(sources)),
+            errors=result.errors,
+            source_signatures=signatures,
+            strategy=(
+                "deterministic_definition_fallback"
+                if plan.analysis.intent == "definition"
+                else "deterministic_structured_fallback"
+            ),
+        )
 
     async def _answer_guided_verification(
         self,
@@ -1741,7 +2113,7 @@ class SearchService:
             str(value).strip() for value in relations if str(value).strip()
         )
         merged_relations = tuple(dict.fromkeys((*model_relations, *fallback.relations)))
-        return replace(
+        planned = replace(
             fallback,
             subject=subject.strip(),
             relations=merged_relations,
@@ -1755,6 +2127,17 @@ class SearchService:
                 expects_complete_list=answer_shape == "list" and set_semantics == "all",
             ),
         )
+        if fallback.analysis.intent in {"comparison", "cause"}:
+            return replace(
+                planned,
+                subject=fallback.subject,
+                relations=fallback.relations,
+                fields=fallback.fields,
+                answer_shape=fallback.answer_shape,
+                set_semantics=fallback.set_semantics,
+                analysis=fallback.analysis,
+            )
+        return planned
 
     @staticmethod
     def _planned_subject(
@@ -1801,12 +2184,28 @@ class SearchService:
         return selected
 
     @staticmethod
-    def _answer_cache_key(question: str, response: SearchResponse) -> tuple[object, ...]:
+    def _answer_cache_key(
+        question: str,
+        response: SearchResponse,
+        plan: QueryPlan,
+    ) -> tuple[object, ...]:
         evidence = tuple(
             (source.id, round(source.score, 6), source.snippet[:256])
             for source in response.results
         )
-        return question, response.retrieval.get("knowledge_base_id"), evidence
+        contract = (
+            plan.subject,
+            plan.relations,
+            plan.analysis.intent,
+            plan.answer_shape,
+            plan.set_semantics,
+        )
+        return (
+            question,
+            response.retrieval.get("knowledge_base_id"),
+            contract,
+            evidence,
+        )
 
     def _get_cached_answer(self, key: tuple[object, ...]) -> str | None:
         cached = self._answer_cache.get(key)
@@ -1860,12 +2259,100 @@ class SearchService:
                     and result.document_id not in context_document_ids
                 ),
             ], True
-        top_document = results[0].document_id
+        deterministic_plan = build_query_plan(question)
+        normalized_subject = normalize_search_text(
+            deterministic_plan.subject
+        ).replace(" ", "")
+        subject_document_ids = {
+            result.document_id
+            for result in results
+            if normalized_subject
+            and (
+                title_matches_subject(
+                    str(result.metadata.get("title") or ""),
+                    normalized_subject,
+                )
+                or title_matches_subject_topic(
+                    str(result.metadata.get("title") or ""),
+                    normalized_subject,
+                )
+                or normalized_subject in document_aliases(
+                    str(result.metadata.get("title") or ""),
+                    result.metadata,
+                )
+            )
+        }
+        # Structured expansion needs a document that represents the requested
+        # topic.  The first BM25 hit can be a broad scope page (for example
+        # ``中国``) even when a more specific ``中国朝代``/``中国民族列表``
+        # page is present later in the fused candidates.  Pick the best
+        # document deterministically before loading its structure; this keeps
+        # the behavior independent of query wording and does not alter the
+        # normal non-structured ranking path.
+        preferred_document_id: str | None = None
+        if content_types:
+            topic_tokens = self._topic_tokens(
+                question,
+                deterministic_plan.subject,
+            )
+            document_order: dict[str, int] = {}
+            document_results: dict[str, list[LexicalResult]] = {}
+            for index, result in enumerate(results):
+                document_id = result.document_id or result.node_id
+                document_order.setdefault(document_id, index)
+                document_results.setdefault(document_id, []).append(result)
+
+            def topic_priority(document_id: str) -> tuple[float, int]:
+                candidates = document_results[document_id]
+                title = str(candidates[0].metadata.get("title") or "")
+                normalized_title = normalize_search_text(title).replace(" ", "")
+                exact_subject = title_matches_subject(title, normalized_subject)
+                title_subject_overlap = len(
+                    set(lexical_tokens(deterministic_plan.subject))
+                    & set(lexical_tokens(title))
+                )
+                core_tokens = _core_subject_tokens(deterministic_plan.subject)
+                title_topic_hits = sum(
+                    token in normalized_title
+                    for token in topic_tokens
+                )
+                body_topic_hits = sum(
+                    token in normalize_search_text(
+                        "\n".join(result.text for result in candidates[:3])
+                    )
+                    for token in topic_tokens
+                )
+                return (
+                    (8.0 if exact_subject else 0.0)
+                    + title_subject_overlap * 4.0
+                    + (6.0 if core_tokens and core_tokens[0] in set(lexical_tokens(title)) else 0.0)
+                    + title_topic_hits * 10.0
+                    + min(body_topic_hits, 3) * 0.25,
+                    -document_order[document_id],
+                )
+
+            if document_results:
+                best_document = max(document_results, key=topic_priority)
+                if topic_priority(best_document)[0] > 0:
+                    subject_document_ids.add(best_document)
+                    preferred_document_id = best_document
+        top_document = preferred_document_id or next(
+            (
+                result.document_id
+                for result in results
+                if result.document_id in subject_document_ids
+            ),
+            results[0].document_id,
+        )
         candidates = [
             result
             for result in results
             if result.metadata.get("parent_id")
             and result.metadata.get("content_type") in content_types
+            and (
+                not subject_document_ids
+                or result.document_id in subject_document_ids
+            )
         ]
         same_document = [result for result in candidates if result.document_id == top_document]
         document_candidates = await self._document_structure_candidates(
@@ -1886,7 +2373,15 @@ class SearchService:
                     and result.metadata.get("content_type") in content_types
                 ),
             ]
-        anchor_pool = list({result.node_id: result for result in (*same_document, *candidates)}.values())
+        anchor_candidates = (
+            same_document
+            if preferred_document_id is not None
+            else [*same_document, *candidates]
+        )
+        anchor_pool = list({
+            result.node_id: result
+            for result in anchor_candidates
+        }.values())
         anchor = max(
             anchor_pool,
             key=lambda result: self._structure_relevance(question, result),
@@ -1944,6 +2439,66 @@ class SearchService:
             *(result for result in results if result.node_id not in seen),
         ]
         return merged, True
+
+    @staticmethod
+    def _prioritize_topic_document(
+        plan: QueryPlan,
+        results: list[LexicalResult],
+    ) -> list[LexicalResult]:
+        """Move a specific topic page ahead of broad scope pages.
+
+        BM25/RRF can legitimately rank a broad page such as ``中国`` above a
+        page titled ``中国民族列表`` because the broad page repeats the scope
+        term many times.  When the query contains a distinct topic token, a
+        title hit is stronger evidence of the requested object than body
+        frequency.  Only whole-document ordering changes; chunk order inside a
+        document remains untouched.
+        """
+
+        if not results or not plan.subject:
+            return results
+        subject_tokens = set(lexical_tokens(plan.subject))
+        topic_tokens = SearchService._topic_tokens(
+            plan.normalized_question,
+            plan.subject,
+        )
+        documents: dict[str, list[LexicalResult]] = {}
+        order: dict[str, int] = {}
+        for index, result in enumerate(results):
+            document_id = result.document_id or result.node_id
+            documents.setdefault(document_id, []).append(result)
+            order.setdefault(document_id, index)
+
+        def priority(document_id: str) -> tuple[float, int]:
+            chunks = documents[document_id]
+            title = str(chunks[0].metadata.get("title") or "")
+            normalized_title = normalize_search_text(title).replace(" ", "")
+            exact_subject = title_matches_subject(title, normalize_search_text(plan.subject).replace(" ", ""))
+            title_hits = sum(token in normalized_title for token in topic_tokens)
+            subject_title_hits = len(
+                subject_tokens & set(lexical_tokens(title))
+            )
+            core_tokens = _core_subject_tokens(plan.subject)
+            body_hits = sum(
+                token in normalize_search_text("\n".join(chunk.text for chunk in chunks[:3]))
+                for token in topic_tokens
+            )
+            score = (
+                (8.0 if exact_subject else 0.0)
+                + subject_title_hits * 4.0
+                + (6.0 if core_tokens and core_tokens[0] in set(lexical_tokens(title)) else 0.0)
+                + title_hits * 10.0
+                + min(body_hits, 3) * 0.25
+            )
+            return score, -order[document_id]
+
+        best_document = max(documents, key=priority)
+        if priority(best_document)[0] <= 0 or best_document == next(iter(documents)):
+            return results
+        return [
+            *documents[best_document],
+            *(result for result in results if result.document_id != best_document),
+        ]
 
     async def _flattened_station_list_context(
         self,
@@ -2195,7 +2750,8 @@ class SearchService:
     def _max_chunks_per_document(self, question: str, *, top_k: int | None = None) -> int:
         intent = analyze_question(question).intent
         if intent == "list" and any(
-            marker in question for marker in _MULTI_EVIDENCE_MARKERS
+            marker in question
+            for marker in (*_MULTI_EVIDENCE_MARKERS, "哪几个", "有哪几个")
         ):
             return max(
                 self.settings.max_chunks_per_document,
@@ -2279,7 +2835,17 @@ class SearchService:
             for source in sources
             if (
                 title_matches_subject(source.title, normalized_subject)
-                or normalized_subject in SearchService._source_aliases(source)
+                        or normalized_subject in SearchService._source_aliases(source)
+                        or (
+                            plan.analysis.intent == "list"
+                            and (
+                                title_matches_subject_topic(source.title, normalized_subject)
+                                or SearchService._title_contains_core_topic(
+                                    source.title,
+                                    plan.subject,
+                                )
+                            )
+                        )
             )
         }
         if plan.analysis.intent == "agent" and plan.relations:
@@ -2301,9 +2867,51 @@ class SearchService:
                 )
             }
             if relation_documents:
-                return [
+                focused = [
                     source for source in sources
                     if source.document_id in relation_documents
+                ]
+                return SearchService._sort_relation_sources(
+                    focused,
+                    subject=plan.subject,
+                    relations=plan.relations,
+                )
+        if plan.analysis.intent == "cause":
+            event_terms = tuple(
+                normalize_search_text(relation).replace(" ", "")
+                for relation in plan.relations
+                if len(normalize_search_text(relation).replace(" ", "")) >= 4
+                and relation not in {"原因", "因素", "导致", "因由", "缘由"}
+            )
+            event_document_ids = {
+                source.document_id
+                for source in sources
+                if event_terms
+                and any(
+                    term in normalize_search_text(
+                        f"{source.title}\n{source.snippet}"
+                    ).replace(" ", "")
+                    for term in event_terms
+                )
+            }
+            if event_document_ids:
+                subject_document_ids = {
+                    source.document_id
+                    for source in sources
+                    if title_matches_subject(source.title, normalized_subject)
+                }
+                return [
+                    *(
+                        source
+                        for source in sources
+                        if source.document_id in event_document_ids
+                    ),
+                    *(
+                        source
+                        for source in sources
+                        if source.document_id in subject_document_ids
+                        and source.document_id not in event_document_ids
+                    ),
                 ]
         if plan.analysis.intent in {"cause", "time", "list"}:
             event_document_ids = {
@@ -2317,9 +2925,14 @@ class SearchService:
             }
             if event_document_ids:
                 if plan.analysis.intent == "list":
-                    return SearchService._with_station_list_companions(
+                    primary_document_id = SearchService._primary_topic_document_id(
                         sources,
                         event_document_ids,
+                        plan.subject,
+                    )
+                    return SearchService._with_station_list_companions(
+                        sources,
+                        {primary_document_id},
                     )
                 return [source for source in sources if source.document_id in event_document_ids]
         document_ids = exact_document_ids or {
@@ -2330,8 +2943,125 @@ class SearchService:
         if not document_ids:
             return sources
         if plan.analysis.intent == "list":
-            return SearchService._with_station_list_companions(sources, document_ids)
-        return [source for source in sources if source.document_id in document_ids]
+            primary_document_id = SearchService._primary_topic_document_id(
+                sources,
+                document_ids,
+                plan.subject,
+            )
+            return SearchService._with_station_list_companions(
+                sources,
+                {primary_document_id},
+            )
+        focused = [source for source in sources if source.document_id in document_ids]
+        if plan.analysis.intent == "agent":
+            return SearchService._sort_relation_sources(
+                focused,
+                subject=plan.subject,
+                relations=plan.relations,
+            )
+        return focused
+
+    @staticmethod
+    def _primary_topic_document_id(
+        sources: list[SourceItem],
+        document_ids: set[str],
+        subject: str,
+    ) -> str:
+        """Choose the most specific topic page among compound-title matches."""
+
+        core_tokens = _core_subject_tokens(subject)
+        first_seen: dict[str, int] = {}
+        titles: dict[str, str] = {}
+        for index, source in enumerate(sources):
+            if source.document_id not in document_ids:
+                continue
+            first_seen.setdefault(source.document_id, index)
+            titles.setdefault(
+                source.document_id,
+                SearchService._result_title(source),
+            )
+
+        def priority(document_id: str) -> tuple[int, int, int, int]:
+            normalized_title = normalize_search_text(
+                titles[document_id]
+            ).replace(" ", "")
+            title_tokens = set(lexical_tokens(titles[document_id]))
+            core_hits = sum(token in title_tokens for token in core_tokens)
+            prefix_match = bool(
+                core_tokens and normalized_title.startswith(
+                    normalize_search_text(core_tokens[0]).replace(" ", "")
+                )
+            )
+            return (
+                int(prefix_match),
+                core_hits,
+                -len(normalized_title),
+                -first_seen[document_id],
+            )
+
+        return max(document_ids, key=priority)
+
+    @staticmethod
+    def _title_contains_core_topic(title: str, subject: str) -> bool:
+        core_tokens = _core_subject_tokens(subject)
+        if len(core_tokens) < 2:
+            return False
+        title_tokens = set(lexical_tokens(title))
+        return core_tokens[0] in title_tokens
+
+    @staticmethod
+    def _result_title(result: object) -> str:
+        title = getattr(result, "title", None)
+        if title:
+            return str(title)
+        metadata = getattr(result, "metadata", None)
+        if isinstance(metadata, dict):
+            return str(metadata.get("title") or "")
+        return ""
+
+    @staticmethod
+    def _sort_relation_sources(
+        sources: list[SourceItem],
+        *,
+        subject: str,
+        relations: tuple[str, ...],
+    ) -> list[SourceItem]:
+        """Put explicit subject-attribution sentences before loose mentions."""
+
+        normalized_subject = normalize_search_text(subject).replace(" ", "")
+        normalized_subject_variants = {
+            normalized_subject,
+            normalized_subject.replace("事变", "之变").replace("政变", "之变"),
+        }
+        relation_terms = tuple(
+            normalize_search_text(term).replace(" ", "")
+            for term in relations
+            if term.strip()
+        )
+
+        def priority(source: SourceItem) -> tuple[float, float]:
+            text = normalize_search_text(source.snippet).replace(" ", "")
+            relation_hits = sum(text.count(term) for term in relation_terms)
+            explicit_hits = sum(
+                bool(re.search(
+                    rf"(?:由[^，,。；;（）()\n]{{1,40}}{re.escape(term)}|"
+                    rf"{re.escape(term)}(?:是|为|為)[^，,。；;（）()\n]{{1,40}})",
+                    text,
+                ))
+                for term in relation_terms
+            )
+            if any(
+                marker in text
+                for marker in ("由", "为首", "為首", "主导", "主導")
+            ) and any(term in text for term in relation_terms):
+                explicit_hits += 1
+            subject_hits = sum(text.count(variant) for variant in normalized_subject_variants if variant)
+            return (
+                relation_hits * 3.0 + explicit_hits * 8.0 + subject_hits * 0.2,
+                -float(source.metadata.get("chunk_order") or 0),
+            )
+
+        return sorted(sources, key=priority, reverse=True)
 
     @staticmethod
     def _source_aliases(source: SourceItem) -> set[str]:
