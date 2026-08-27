@@ -1030,11 +1030,14 @@ class SearchService:
             )
         )
         triggers: list[str] = []
-        if (
-            self.settings.semantic_pipeline_enabled
-            and not (extraction and extraction.has_candidates)
+        if self.settings.semantic_pipeline_enabled and not (
+            extraction and extraction.has_candidates
         ):
-            triggers.append("field_evidence_missing")
+            triggers.append(
+                "field_evidence_extraction_failed"
+                if self._field_extraction_failed(extraction)
+                else "field_evidence_missing"
+            )
         if not preliminary_gate.passed:
             trigger = (
                 "field_evidence_missing"
@@ -1403,8 +1406,7 @@ class SearchService:
                 answer_sources = evidence_response.results
                 active_retrieval["verified_structured_render"] = True
         if (
-            not self.settings.semantic_pipeline_enabled
-            and answer_plan.analysis.intent == "agent"
+            answer_plan.analysis.intent == "agent"
         ):
             answer_sources = self._sort_relation_sources(
                 answer_sources,
@@ -1420,9 +1422,19 @@ class SearchService:
             field_evidence_available=bool(field_extraction and field_extraction.available),
             field_candidate_count=len(field_extraction.candidates) if field_extraction else 0,
         )
+        field_extraction_failed = self._field_extraction_failed(field_extraction)
+        fallback_sources = (
+            evidence_response.results
+            if (
+                answer_plan.answer_shape in {"summary", "narrative"}
+                or field_extraction is not None and field_extraction.errors
+            )
+            else answer_sources
+        )
         if (
             self.settings.semantic_pipeline_enabled
             and not (field_extraction and field_extraction.has_candidates)
+            and not field_extraction_failed
         ):
             gate = replace(
                 gate,
@@ -1432,7 +1444,11 @@ class SearchService:
         assessment = gate.assessment
         answer_response = evidence_response.model_copy(update={"results": answer_sources})
         cache_key = self._answer_cache_key(question, answer_response, answer_plan)
-        answer = self._get_cached_answer(cache_key)
+        cache_allowed = not (
+            self.settings.semantic_pipeline_enabled
+            and answer_plan.answer_shape in {"list", "summary", "narrative"}
+        )
+        answer = self._get_cached_answer(cache_key) if cache_allowed else None
         cache_hit = answer is not None
         answer_strategy = "cache" if cache_hit else "model"
         if answer is None and verified_structured_answer is not None:
@@ -1512,6 +1528,14 @@ class SearchService:
                                 answer_sources,
                                 answer_plan.relations,
                             )
+                    if fallback is None and field_extraction_failed:
+                        fallback = self._evidence_fallback_answer(
+                            question,
+                            answer_plan,
+                            fallback_sources,
+                        )
+                        if fallback is not None:
+                            answer_sources = list(fallback_sources)
                     answer = fallback or "根据检索到的资料，无法确定。"
                     answer_strategy = (
                         "generation_timeout_fallback"
@@ -1532,6 +1556,23 @@ class SearchService:
                 ):
                     fallback = cause_evidence_answer(answer_sources)
                     if fallback is not None:
+                        answer = fallback
+                        answer_strategy = "evidence_fallback"
+                if (
+                    self.settings.semantic_pipeline_enabled
+                    and (
+                        field_extraction_failed
+                        or bool(field_extraction and field_extraction.has_candidates)
+                    )
+                    and answer in _REFUSAL_ANSWERS
+                ):
+                    fallback = self._evidence_fallback_answer(
+                        question,
+                        answer_plan,
+                        fallback_sources,
+                    )
+                    if fallback is not None:
+                        answer_sources = list(fallback_sources)
                         answer = fallback
                         answer_strategy = "evidence_fallback"
                 if (
@@ -1590,6 +1631,89 @@ class SearchService:
         if answer_strategy == "model" and not self.settings.semantic_pipeline_enabled:
             answer = repair_answer_citations(answer, answer_sources)
         answer_support = evaluate_answer_support(answer, answer_sources, question=question)
+        if (
+            self.settings.semantic_pipeline_enabled
+            and answer_strategy in {"model", "model_retry"}
+            and any(
+                issue in answer_support.issues
+                for issue in {"weak_answer_evidence_overlap", "unsupported_entity_term"}
+            )
+            or (
+                self.settings.semantic_pipeline_enabled
+                and answer_strategy in {"model", "model_retry"}
+                and self._answer_contract_failed(question, answer)
+            )
+            or (
+                self.settings.semantic_pipeline_enabled
+                and answer_strategy in {"model", "model_retry"}
+                and answer_plan.answer_shape in {"summary", "narrative"}
+                and answer_support.coverage < 0.8
+            )
+        ):
+            fallback = self._evidence_fallback_answer(
+                question,
+                answer_plan,
+                fallback_sources,
+            )
+            if fallback is not None:
+                blocked_answer = answer
+                answer_sources = list(fallback_sources)
+                answer = fallback
+                answer_strategy = "evidence_fallback"
+                validation = validate_grounding(answer, answer_sources)
+                answer_support = evaluate_answer_support(
+                    answer,
+                    answer_sources,
+                    question=question,
+                )
+        if (
+            self.settings.semantic_pipeline_enabled
+            and field_extraction_failed
+            and answer_strategy in {"model", "model_retry"}
+            and answer_support.unsupported_terms
+        ):
+            fallback = self._evidence_fallback_answer(
+                question,
+                answer_plan,
+                fallback_sources,
+            )
+            if fallback is not None:
+                blocked_answer = answer
+                answer_sources = list(fallback_sources)
+                answer = fallback
+                answer_strategy = "evidence_fallback"
+                validation = validate_grounding(answer, answer_sources)
+                answer_support = evaluate_answer_support(
+                    answer,
+                    answer_sources,
+                    question=question,
+                )
+        if (
+            self.settings.semantic_pipeline_enabled
+            and answer_strategy in {"model", "model_retry"}
+            and answer_plan.answer_shape in {"summary", "narrative"}
+            and field_extraction
+            and field_extraction.has_candidates
+        ):
+            fallback = self._evidence_fallback_answer(
+                question,
+                answer_plan,
+                fallback_sources,
+            )
+            if (
+                fallback is not None
+                and not self._extraction_covers_fallback(field_extraction, fallback)
+            ):
+                blocked_answer = answer
+                answer_sources = list(fallback_sources)
+                answer = fallback
+                answer_strategy = "evidence_fallback"
+                validation = validate_grounding(answer, answer_sources)
+                answer_support = evaluate_answer_support(
+                    answer,
+                    answer_sources,
+                    question=question,
+                )
         if (
             not self.settings.semantic_pipeline_enabled
             and answer_plan.answer_shape in {"summary", "narrative"}
@@ -1721,8 +1845,11 @@ class SearchService:
             answer_block_reason = None if fallback else "answer_support_failed"
             validation = validate_grounding(answer, answer_sources)
             answer_support = evaluate_answer_support(answer, answer_sources, question=question)
+        answer_response = evidence_response.model_copy(update={"results": answer_sources})
+        cache_key = self._answer_cache_key(question, answer_response, answer_plan)
         if (
-            gate.passed
+            cache_allowed
+            and gate.passed
             and assessment.grounded
             and validation.valid
             and answer_support.passed
@@ -1803,6 +1930,9 @@ class SearchService:
             ],
             "field_evidence_errors": list(field_extraction.errors) if field_extraction else [],
             "field_evidence_strategy": field_extraction.strategy if field_extraction else None,
+            "field_evidence_fallback": (
+                "raw_retrieval" if field_extraction_failed else None
+            ),
         }
         diagnosis = diagnose_failure(
             answer=answer,
@@ -1854,14 +1984,14 @@ class SearchService:
         plan: QueryPlan,
         sources: list[SourceItem],
     ) -> str | None:
-        if plan.answer_shape != "list" or plan.set_semantics != "all":
+        if plan.answer_shape != "list":
             return None
         answer = structured_list_answer(question, sources)
         if answer is None:
             return None
         list_validation = validate_list_answer(question, answer, sources)
         grounding = validate_grounding(answer, sources)
-        if list_validation.complete is not True or not grounding.valid:
+        if list_validation.complete is False or not grounding.valid:
             return None
         return answer
 
@@ -1875,7 +2005,9 @@ class SearchService:
         analysis = plan.analysis
         target = _ASK_MIN_EVIDENCE_TOP_K
         reason = "simple_fact"
-        if plan.answer_shape == "list" and plan.set_semantics == "all":
+        if plan.answer_shape == "list" and (
+            plan.set_semantics == "all" or analysis.expects_complete_list
+        ):
             target = 12
             reason = "complete_list"
         elif analysis.intent in {"cause", "comparison"}:
@@ -2029,6 +2161,35 @@ class SearchService:
             return None
         return "根据检索资料，可确认：" + "；".join(quotes) + "。"
 
+    @staticmethod
+    def _evidence_fallback_answer(
+        question: str,
+        plan: QueryPlan,
+        sources: list[SourceItem],
+    ) -> str | None:
+        """Render a bounded extractive answer when a model stage fails."""
+
+        if plan.answer_shape == "list":
+            structured = structured_list_answer(question, sources)
+            if structured is not None:
+                return structured
+        return SearchService._field_evidence_quote_answer(
+            sources,
+            plan.relations,
+        )
+
+    @staticmethod
+    def _extraction_covers_fallback(
+        extraction: EvidenceExtractionResult,
+        fallback: str,
+    ) -> bool:
+        candidate_terms = set(query_tokens(
+            " ".join(candidate.span for candidate in extraction.candidates)
+        ))
+        fallback_terms = set(query_tokens(fallback))
+        fallback_terms -= {"根据", "检索", "资料", "确认", "可确认"}
+        return len(candidate_terms & fallback_terms) >= 3
+
     async def _extract_field_evidence(
         self,
         question: str,
@@ -2071,6 +2232,18 @@ class SearchService:
                     sources,
                 )
             return failed
+
+    @staticmethod
+    def _field_extraction_failed(
+        extraction: EvidenceExtractionResult | None,
+    ) -> bool:
+        """Return true only for an extractor error, not a valid empty result."""
+
+        return bool(
+            extraction is not None
+            and extraction.errors
+            and not extraction.has_candidates
+        )
 
     @staticmethod
     def _deterministic_structured_evidence(
@@ -2525,6 +2698,13 @@ class SearchService:
         normalized_answer = normalize_search_text(answer_without_citations).replace(" ", "")
         normalized_question = normalize_search_text(question).replace(" ", "")
         if not normalized_answer or normalized_answer == normalized_question:
+            return True
+        if re.search(
+            r"(?:结局|結局|结尾|結尾|终局|終局|结果|結果|原因|作者|首都|国都)"
+            r"(?:是|为|為|：|:)"
+            r"(?:最终|最終|结局|結局|结尾|結尾|终局|終局|结果|結果|原因|作者|首都|国都)",
+            normalized_answer,
+        ):
             return True
         if is_repetitive_garbage(answer_without_citations):
             return True

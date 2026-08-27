@@ -29,6 +29,8 @@ _TRAILING_PUNCTUATION = "。.!！?？；;，,"
 _LIST_QUESTION_MARKERS = (
     "哪些",
     "有哪",
+    "哪几个",
+    "哪几",
     "列表",
     "全部",
     "所有",
@@ -223,8 +225,6 @@ def _counted_enumeration_answer(
     sources: list[SourceItem],
 ) -> str | None:
     expected_count = counted_list_size(question)
-    if expected_count is None:
-        return None
     relation_pattern = re.compile(r"(?:是指|包括|包含|分别是|分別是|分别为|分別為|即为|即為|即)")
     for source_index, source in enumerate(sources, start=1):
         text = clean_evidence_text(source.snippet)
@@ -244,7 +244,11 @@ def _counted_enumeration_answer(
                 if value.strip()
             ]
             quoted_items = list(dict.fromkeys(quoted_items))
-            if len(quoted_items) == expected_count:
+            if quoted_items and (
+                len(quoted_items) == expected_count
+                if expected_count is not None
+                else len(quoted_items) >= 3
+            ):
                 subject = _answer_subject(question, source)
                 return (
                     f"{subject}包括：{'、'.join(quoted_items)}。"

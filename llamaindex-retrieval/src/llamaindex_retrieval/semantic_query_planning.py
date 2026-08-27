@@ -76,6 +76,14 @@ class LanguageModelQueryPlanner:
                 error=f"{type(error).__name__}: {error}",
             )
 
+        # A small model may keep only a broad scope word (for example
+        # ``中国``) as the subject of a list question.  The deterministic
+        # plan has already extracted the concrete topic (for example
+        # ``长城关隘``); keeping that longer, question-grounded subject
+        # prevents broad pages from displacing the actual topic page.
+        if self._prefer_fallback_subject(question, fallback, subject):
+            subject = fallback.subject
+
         if not self._contract_subject_is_grounded(question, fallback, subject):
             grounded_subject = self._ground_subject_from_contract(
                 question,
@@ -392,7 +400,9 @@ relations 只写关系名称及同义表达，不能填写猜测的具体答案�
 
     @staticmethod
     def _subject_is_supported(question: str, subject: str) -> bool:
-        normalized_question = normalize_search_text(question).replace(" ", "")
+        normalized_question = normalize_search_text(question).replace(" ", "").strip(
+            "？?。！!，,；;"
+        )
         normalized_subject = normalize_search_text(subject).replace(" ", "")
         if not normalized_subject:
             return False
@@ -420,6 +430,40 @@ relations 只写关系名称及同义表达，不能填写猜测的具体答案�
             min(len(fallback), len(model)) >= 3
             and (fallback in model or model in fallback)
         )
+
+    @classmethod
+    def _prefer_fallback_subject(
+        cls,
+        question: str,
+        fallback: QueryPlan,
+        model_subject: str,
+    ) -> bool:
+        """Keep a more specific deterministic subject for list questions."""
+
+        if not fallback.analysis.expects_list or not fallback.subject:
+            return False
+        normalized_question = normalize_search_text(question).replace(" ", "").strip(
+            "？?。！!，,；;"
+        )
+        fallback_subject = normalize_search_text(fallback.subject).replace(" ", "")
+        candidate_subject = normalize_search_text(model_subject).replace(" ", "")
+        if (
+            not candidate_subject
+            or candidate_subject == fallback_subject
+            or fallback_subject not in normalized_question
+            or fallback_subject[-1:] in "的都是有为在和与及"
+        ):
+            return False
+        # For a list request, the deterministic plan is the canonical object
+        # boundary.  A model subject may be broader (``中国``) or may echo the
+        # whole question (``中国有哪些……``); both forms cause broad pages to
+        # outrank the page containing the requested collection.
+        if candidate_subject == normalized_question:
+            return True
+        fallback_position = normalized_question.find(fallback_subject)
+        if fallback_position > 0 and candidate_subject in normalized_question[:fallback_position]:
+            return True
+        return len(fallback_subject) > len(candidate_subject)
 
     @classmethod
     def _contract_subject_is_grounded(

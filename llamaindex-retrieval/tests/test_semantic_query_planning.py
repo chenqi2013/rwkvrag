@@ -364,6 +364,33 @@ def test_model_planner_rejects_a_guessed_answer_as_subject() -> None:
     assert LanguageModelQueryPlanner._subject_matches_fallback("马斯克", "埃隆·马斯克") is True
 
 
+def test_list_planner_keeps_specific_fallback_subject() -> None:
+    question = "中国有哪些著名的长城关隘？"
+    fallback = build_query_plan(question)
+
+    assert LanguageModelQueryPlanner._prefer_fallback_subject(
+        question,
+        fallback,
+        "中国",
+    ) is True
+    assert LanguageModelQueryPlanner._prefer_fallback_subject(
+        question,
+        fallback,
+        "中国有哪些著名的长城关隘",
+    ) is True
+
+
+def test_list_planner_keeps_model_canonical_alias_when_fallback_is_noisy() -> None:
+    question = "深圳一号线都停靠哪些地方？"
+    fallback = build_query_plan(question)
+
+    assert LanguageModelQueryPlanner._prefer_fallback_subject(
+        question,
+        fallback,
+        "深圳地铁1号线",
+    ) is False
+
+
 def test_narrative_agent_relation_still_uses_model_query_expansion() -> None:
     simple = build_query_plan("宇树科技创始人是谁？")
     narrative = build_query_plan("水浒传里赤手空拳打死老虎的是谁？")

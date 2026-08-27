@@ -559,7 +559,7 @@ def test_adaptive_evidence_top_k_uses_question_complexity() -> None:
 
     cases = {
         "中国的首都是哪里？": (5, "simple_fact"),
-        "秦始皇有哪些伟大成就？": (8, "list"),
+        "秦始皇有哪些伟大成就？": (12, "complete_list"),
         "明朝为什么灭亡？": (10, "cause"),
         "尺八和长笛有什么区别？": (10, "comparison"),
         "深圳地铁1号线全部站点有哪些？": (12, "complete_list"),
@@ -1455,6 +1455,32 @@ async def test_ask_extracts_capital_answer_without_model_call() -> None:
 
 
 @pytest.mark.asyncio
+async def test_semantic_list_render_does_not_reuse_model_cache() -> None:
+    service = SearchService(
+        Settings(
+            semantic_pipeline_enabled=True,
+            active_retrieval_enabled=False,
+        ),
+        cast(Any, FakeGreatWallPassIndex()),
+        generator=cast(Any, FakeFailingGenerator()),
+    )
+    request = SearchRequest(question="中国有哪些著名的长城关隘？", top_k=1)
+    evidence = await service.search(request.model_copy(update={"top_k": 8}))
+    question = str(evidence.retrieval.get("normalized_question") or request.question)
+    plan = service._answer_plan(question, evidence.retrieval)
+    key = service._answer_cache_key(question, evidence, plan)
+    service._store_cached_answer(key, "长城的相关条目包括：山海关。[资料 1]")
+
+    response = await service.ask(request)
+
+    assert response.answer == (
+        "长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 1]"
+    )
+    assert response.generation["answer_strategy"] == "verified_structured_render"
+    assert response.generation["cache_hit"] is False
+
+
+@pytest.mark.asyncio
 async def test_ask_uses_active_bm25_search_when_initial_evidence_is_wrong() -> None:
     class FakeRecoveryIndex:
         def search(self, question: str, **kwargs: Any) -> list[LexicalResult]:
@@ -2225,6 +2251,51 @@ def test_verified_structured_render_requires_proven_complete_list() -> None:
     )
 
 
+def test_verified_structured_render_accepts_partial_list_when_source_is_explicit() -> None:
+    source = SourceItem(
+        id="passes",
+        document_id="great-wall",
+        source="wiki",
+        title="长城",
+        score=1.0,
+        snippet="长城著名关隘包括山海关、嘉峪关、居庸关、雁门关。",
+    )
+    plan = replace(
+        build_query_plan("中国有哪些著名的长城关隘？"),
+        answer_shape="list",
+        set_semantics="partial",
+    )
+
+    answer = SearchService._verified_structured_render(
+        "中国有哪些著名的长城关隘？",
+        plan,
+        [source],
+    )
+
+    assert answer == "根据检索资料，可确认：长城著名关隘包括山海关、嘉峪关、居庸关、雁门关。[资料 1]"
+
+
+def test_extraction_coverage_rejects_unrelated_summary_candidates() -> None:
+    extraction = EvidenceExtractionResult(
+        candidates=(
+            EvidenceSpan(
+                field_id="f1",
+                source_index=1,
+                span="《三国演义》作者一般被认为是罗贯中。",
+                content_hash="author",
+            ),
+        ),
+        attempted_sources=1,
+        completed_sources=1,
+    )
+    fallback = (
+        "根据检索资料，可确认：司马炎建立西晋统一天下；"
+        "三国时代终结。[资料 1]"
+    )
+
+    assert SearchService._extraction_covers_fallback(extraction, fallback) is False
+
+
 def test_answer_contract_rejects_echo_citation_shell_and_repetition() -> None:
     assert SearchService._answer_contract_failed(
         "宇树科技创始人是谁？",
@@ -2242,6 +2313,10 @@ def test_answer_contract_rejects_echo_citation_shell_and_repetition() -> None:
         "中国的首都是哪个城市？",
         "北京",
     ) is False
+    assert SearchService._answer_contract_failed(
+        "三国演义最后的结局是什么？",
+        "三国演义的结局是最终结局。",
+    ) is True
 
 
 @pytest.mark.asyncio
@@ -2446,3 +2521,52 @@ async def test_semantic_pipeline_never_generates_without_field_evidence() -> Non
     assert response.generation["answer_block_reason"] == "field_evidence_missing"
     assert "field_evidence_missing" in response.generation["evidence_gate_issues"]
     assert extractor.calls == 1
+
+
+@pytest.mark.asyncio
+async def test_semantic_pipeline_uses_raw_retrieval_when_extraction_errors() -> None:
+    class RawEvidenceGenerator:
+        assess_evidence = staticmethod(EvidenceAnswerGenerator.assess_evidence)
+
+        async def generate(self, question: str, sources: Any) -> str:
+            assert sources[0].snippet == "中华人民共和国的首都是北京。"
+            return "中华人民共和国的首都是北京。"
+
+        async def current_model(self) -> str:
+            return "test-model"
+
+    class FailedExtractor:
+        async def extract(
+            self,
+            question: str,
+            plan: Any,
+            sources: list[SourceItem],
+        ) -> EvidenceExtractionResult:
+            return EvidenceExtractionResult(
+                candidates=(),
+                attempted_sources=len(sources),
+                completed_sources=0,
+                errors=("TimeoutError: extractor timed out",),
+                source_signatures=tuple(
+                    (
+                        source.id,
+                        sha256(source.snippet.encode("utf-8")).hexdigest(),
+                    )
+                    for source in sources
+                ),
+            )
+
+    service = SearchService(
+        Settings(semantic_pipeline_enabled=True),
+        cast(Any, FakeCapitalIndex()),
+        generator=cast(Any, RawEvidenceGenerator()),
+        evidence_extractor=cast(Any, FailedExtractor()),
+    )
+
+    response = await service.ask(
+        SearchRequest(question="中国的首都是哪个城市？", top_k=1)
+    )
+
+    assert response.answer == "中华人民共和国的首都是北京。"
+    assert response.generation["field_evidence_fallback"] == "raw_retrieval"
+    assert response.generation["evidence_gate_passed"] is True

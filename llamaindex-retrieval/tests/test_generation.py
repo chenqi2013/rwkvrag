@@ -87,6 +87,19 @@ def test_counted_list_extracts_inline_encyclopedia_enumeration() -> None:
     )
 
 
+def test_uncounted_list_extracts_inline_quoted_enumeration() -> None:
+    evidence = source().model_copy(
+        update={
+            "title": "四大名著",
+            "snippet": "四大名著，是指《三国演义》《西游记》《水浒传》《红楼梦》4部中国古典小说。",
+        }
+    )
+
+    assert structured_list_answer("中国四大名著是哪几个？", [evidence]) == (
+        "四大名著包括：《三国演义》、《西游记》、《水浒传》、《红楼梦》。[资料 1]"
+    )
+
+
 def test_author_answer_does_not_treat_mingzhu_as_authorship_relation() -> None:
     commentary = SourceItem(
         id="journey-west-commentary",
