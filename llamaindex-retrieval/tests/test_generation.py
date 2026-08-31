@@ -206,7 +206,7 @@ def test_ordinal_prompt_requires_explicit_first_relation() -> None:
     assert "只能依据资料中明确出现的“第一个、第一位、首位或最早”关系作答" in prompt
 
 
-def test_semantic_prompt_uses_task_contract_without_question_word_rules() -> None:
+def test_semantic_writer_puts_evidence_before_question_with_minimal_controls() -> None:
     generator = EvidenceAnswerGenerator(Settings(semantic_pipeline_enabled=True))
 
     prompt = generator._prompt(
@@ -219,14 +219,14 @@ def test_semantic_prompt_uses_task_contract_without_question_word_rules() -> Non
         fields=(("f1", "首都城市", ("首都", "国都")),),
     )
 
-    assert '"answer_shape": "single_fact"' in prompt
-    assert '"field_id": "f1"' in prompt
-    assert '"question": "首都城市"' in prompt
-    assert "任务契约中的 subject 是待处理对象" in prompt
-    assert "引用编号可选" in prompt
-    assert "绝不能只输出“[资料 N]”" in prompt
-    assert "不得把事件发生后的结果当作原因" not in prompt
-    assert "只能依据资料中明确出现的“第一个" not in prompt
+    assert prompt.startswith("system:\n知识库问答助手；只能依据资料")
+    assert "任务契约" not in prompt
+    assert "answer_shape" not in prompt
+    assert prompt.index("资料：") < prompt.index("中华人民共和国的首都是北京。")
+    assert prompt.index("中华人民共和国的首都是北京。") < prompt.index(
+        "问题：换一种说法也要找到这条事实"
+    )
+    assert prompt.rstrip().endswith("assistant:")
 
 
 def test_agent_answer_extracts_explicit_founder_role() -> None:
