@@ -69,9 +69,8 @@ def diagnose_failure(
             "retrieval",
         )
 
-    evidence_count = int(generation.get("evidence_count") or len(sources))
     returned = retrieval.get("returned")
-    if evidence_count <= 0 or returned == 0:
+    if returned == 0:
         return FailureDiagnosis("data_missing", "no_evidence_returned", "retrieval")
 
     gate_passed = generation.get("evidence_gate_passed") is True
@@ -82,6 +81,8 @@ def diagnose_failure(
     field_strategy = str(generation.get("field_evidence_strategy") or "")
     field_available = generation.get("field_evidence_available") is True
     field_candidates = generation.get("field_evidence") or ()
+
+    evidence_count = int(generation.get("evidence_count") or len(sources))
 
     # Results that only share a loose token (for example “阿尔法” for the
     # unknown entity “阿尔法泽”) are not evidence for the requested object.
@@ -125,6 +126,9 @@ def diagnose_failure(
             "evidence_candidates_missing" if not field_errors else "evidence_extraction_error",
             "evidence_extraction",
         )
+
+    if evidence_count <= 0:
+        return FailureDiagnosis("data_missing", "no_answer_evidence", "retrieval")
 
     answer_strategy = str(generation.get("answer_strategy") or "")
     answer_block_reason = str(generation.get("answer_block_reason") or "")

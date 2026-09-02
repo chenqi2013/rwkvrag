@@ -2570,3 +2570,128 @@ async def test_semantic_pipeline_uses_raw_retrieval_when_extraction_errors() -> 
     assert response.answer == "中华人民共和国的首都是北京。"
     assert response.generation["field_evidence_fallback"] == "raw_retrieval"
     assert response.generation["evidence_gate_passed"] is True
+
+
+@pytest.mark.asyncio
+async def test_immutable_pipeline_writer_only_receives_resolver_spans() -> None:
+    question = "中国的首都是哪个城市？"
+    selected_span = "中华人民共和国的首都是北京。"
+
+    class Resolver:
+        async def extract(
+            self,
+            value: str,
+            plan: Any,
+            sources: list[SourceItem],
+        ) -> EvidenceExtractionResult:
+            assert value == question
+            return EvidenceExtractionResult(
+                candidates=(EvidenceSpan(
+                    field_id="f1",
+                    source_index=0,
+                    span=selected_span,
+                    content_hash=sha256(selected_span.encode("utf-8")).hexdigest(),
+                ),),
+                attempted_sources=1,
+                completed_sources=1,
+                source_signatures=((
+                    sources[0].id,
+                    sha256(sources[0].snippet.encode("utf-8")).hexdigest(),
+                ),),
+            )
+
+    class Writer:
+        received: list[SourceItem] = []
+
+        async def generate(self, value: str, sources: list[SourceItem]) -> str:
+            self.received = sources
+            return "北京。[资料 1]"
+
+    writer = Writer()
+    service = SearchService(
+        Settings(generation_output_mode="immutable"),
+        cast(Any, FakeCapitalIndex()),
+        generator=cast(Any, writer),
+        evidence_extractor=cast(Any, Resolver()),
+    )
+
+    response = await service.ask(SearchRequest(question=question, top_k=1))
+
+    assert response.answer == "北京。[资料 1]"
+    assert [source.snippet for source in writer.received] == [selected_span]
+    assert response.generation["trace_stages"][-1]["answer_modified"] is False
+    assert response.generation["writer_trace"]["output_modified"] is False
+
+
+@pytest.mark.asyncio
+async def test_immutable_pipeline_reopens_selected_documents_for_passages() -> None:
+    question = "深圳地铁1号线有哪些站点？"
+    station_span = "车站列表：罗湖、国贸、老街、大剧院、科学馆、华强路。"
+
+    class ExpandedIndex:
+        def search(self, *args: Any, **kwargs: Any) -> list[LexicalResult]:
+            return [LexicalResult(
+                node_id="overview",
+                document_id="metro",
+                text="深圳地铁1号线全长41.04公里，共设30个车站。",
+                metadata={"title": "深圳地铁1号线", "source": "wiki"},
+                score=1.0,
+            )]
+
+        def document_passage_candidates(self, *args: Any, **kwargs: Any) -> list[LexicalResult]:
+            return [
+                LexicalResult(
+                    node_id="overview",
+                    document_id="metro",
+                    text="深圳地铁1号线全长41.04公里，共设30个车站。",
+                    metadata={"title": "深圳地铁1号线", "source": "wiki"},
+                    score=1.0,
+                ),
+                LexicalResult(
+                    node_id="stations",
+                    document_id="metro",
+                    text=station_span,
+                    metadata={"title": "深圳地铁1号线", "source": "wiki"},
+                    score=0.95,
+                ),
+            ]
+
+    class Resolver:
+        async def extract(self, value: str, plan: Any, sources: list[SourceItem]) -> EvidenceExtractionResult:
+            station_index = next(index for index, source in enumerate(sources) if "车站列表" in source.snippet)
+            return EvidenceExtractionResult(
+                candidates=(EvidenceSpan(
+                    field_id="f1",
+                    source_index=station_index,
+                    span=station_span,
+                    content_hash=sha256(station_span.encode("utf-8")).hexdigest(),
+                ),),
+                attempted_sources=len(sources),
+                completed_sources=len(sources),
+                source_signatures=tuple((
+                    source.id,
+                    sha256(source.snippet.encode("utf-8")).hexdigest(),
+                ) for source in sources),
+            )
+
+    class Writer:
+        async def generate(self, value: str, sources: list[SourceItem]) -> str:
+            assert sources[0].snippet == station_span
+            return "罗湖、国贸、老街、大剧院、科学馆、华强路。[资料 1]"
+
+    service = SearchService(
+        Settings(
+            generation_output_mode="immutable",
+            model_query_planning_enabled=False,
+        ),
+        cast(Any, ExpandedIndex()),
+        generator=cast(Any, Writer()),
+        evidence_extractor=cast(Any, Resolver()),
+    )
+
+    response = await service.ask(SearchRequest(question=question, top_k=1))
+
+    expansion = response.retrieval["document_passage_expansion"]
+    assert expansion["enabled"] is True
+    assert expansion["documents"][0]["expanded_count"] == 2
+    assert response.answer.startswith("罗湖、国贸、老街")

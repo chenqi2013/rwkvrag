@@ -4,6 +4,9 @@
 
 ## 架构
 
+新的审计型问答链路遵循 [ARCHITECTURE_RULES.md](ARCHITECTURE_RULES.md)：Resolver 与 Writer
+证据隔离、RWKV 输出不可变、逐阶段保存 raw trace，并先通过固定材料问答做消融验证。
+
 ```text
 管理后台 -> MongoDB 任务 -> Markdown / PDF / DOCX / FineWiki -> LlamaIndex SentenceSplitter
 文本切片 -> 别名/结构提取 -> 中文规范化/Jieba 分词 -> OpenSearch BM25F 多字段索引
@@ -101,6 +104,8 @@ http://127.0.0.1:8090/admin/
 - 切片正文与 metadata 查看；
 - MongoDB 和 OpenSearch BM25 索引健康检查；
 - 在线检索测试。
+
+固定材料问答可通过 `POST /v1/material-ask` 调用，用于在不引入检索变量的情况下验证 Writer。
 
 答案生成使用 `RWKVRAG_GENERATION_*` 配置。请在实际运行环境中设置
 `RWKVRAG_GENERATION_PASSWORD`，不要将密码写入 Git。

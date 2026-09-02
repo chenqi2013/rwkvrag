@@ -863,6 +863,159 @@ class LexicalIndex:
             for raw, chunk in merged
         ]
 
+    def search_plain(
+        self,
+        query: str,
+        *,
+        candidate_k: int,
+        knowledge_base_id: str | None = None,
+    ) -> list[LexicalResult]:
+        tokens = lexical_tokens(query)
+        if not tokens:
+            return []
+        filters: list[dict[str, Any]] = []
+        if knowledge_base_id:
+            filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
+        response = self.client.search(
+            index=self.index_name,
+            body={
+                "size": max(candidate_k, min(candidate_k * 8, 200)),
+                "track_total_hits": False,
+                "_source": ["node_id", "document_id", "text", "metadata"],
+                "query": {
+                    "bool": {
+                        "must": [{
+                            "multi_match": {
+                                "query": " ".join(tokens),
+                                "fields": [
+                                    "body_tokens",
+                                    "title_tokens^3",
+                                    "alias_tokens^3",
+                                    "tags_tokens^1.5",
+                                    "section_tokens^2",
+                                    "structure_tokens^1.5",
+                                ],
+                                "type": "best_fields",
+                                "operator": "or",
+                            }
+                        }],
+                        "filter": filters,
+                    }
+                },
+            },
+        )
+        best_by_document: dict[str, tuple[float, dict[str, Any]]] = {}
+        for hit in response.get("hits", {}).get("hits", []):
+            source = dict(hit.get("_source") or {})
+            text = str(source.get("text") or "")
+            if is_repetitive_garbage(text):
+                continue
+            document_id = str(
+                source.get("document_id") or source.get("node_id") or ""
+            )
+            score = max(0.0, float(hit.get("_score") or 0.0))
+            current = best_by_document.get(document_id)
+            if current is None or score > current[0]:
+                best_by_document[document_id] = (score, source)
+        ranked = sorted(best_by_document.values(), key=lambda item: item[0], reverse=True)
+        top_score = max((score for score, _ in ranked), default=1.0) or 1.0
+        return [
+            LexicalResult(
+                node_id=str(source.get("node_id") or ""),
+                document_id=str(source.get("document_id") or source.get("node_id") or ""),
+                text=str(source.get("text") or ""),
+                metadata=dict(source.get("metadata") or {}),
+                score=min(1.0, score / top_score),
+            )
+            for score, source in ranked[:candidate_k]
+        ]
+
+    def document_passage_candidates(
+        self,
+        query: str,
+        *,
+        document_id: str,
+        knowledge_base_id: str | None,
+        limit: int,
+    ) -> list[LexicalResult]:
+        """Retrieve relevant passages after document-level ranking.
+
+        ``search_plain`` intentionally keeps one best passage per document so
+        that long documents cannot dominate RRF.  Once a document has been
+        selected, this method reopens that document and ranks its passages
+        independently.  The operation is purely lexical and therefore works
+        for prose, lists, and tables without question-specific rules.
+        """
+
+        # Reuse the index-wide query normalization (including generic
+        # synonyms), so equivalent terms can rank the matching passage.
+        tokens = query_tokens(query)
+        if not tokens or not document_id:
+            return []
+        filters: list[dict[str, Any]] = [{"term": {"document_id": document_id}}]
+        if knowledge_base_id:
+            filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
+        response = self.client.search(
+            index=self.index_name,
+            body={
+                "size": max(1, min(int(limit), 100)),
+                "track_total_hits": False,
+                "_source": ["node_id", "document_id", "text", "metadata"],
+                "query": {
+                    "bool": {
+                        "filter": filters,
+                        "must_not": [{"term": {"content_type": "key_value"}}],
+                        "must": [{
+                            "multi_match": {
+                                "query": " ".join(tokens),
+                                "fields": [
+                                    "body_tokens",
+                                    "section_tokens^3",
+                                    "structure_tokens^2",
+                                    "title_tokens",
+                                ],
+                                "type": "best_fields",
+                                "operator": "or",
+                                "minimum_should_match": 1,
+                            }
+                        }],
+                    }
+                },
+                "sort": [{"_score": "desc"}, {"chunk_order": "asc"}, {"node_id": "asc"}],
+            },
+        )
+        hits = [
+            hit
+            for hit in response.get("hits", {}).get("hits", [])
+            if not is_repetitive_garbage(
+                str((hit.get("_source") or {}).get("text") or "")
+            )
+        ]
+        hits.sort(key=lambda hit: (
+            -float(hit.get("_score") or 0.0),
+            int((hit.get("_source") or {}).get("metadata", {}).get("chunk_order") or 0),
+            str((hit.get("_source") or {}).get("node_id") or ""),
+        ))
+        top_raw = max((float(hit.get("_score") or 0.0) for hit in hits), default=1.0) or 1.0
+        results: list[LexicalResult] = []
+        seen: set[str] = set()
+        for hit in hits:
+            source = dict(hit.get("_source") or {})
+            node_id = str(source.get("node_id") or "")
+            if not node_id or node_id in seen:
+                continue
+            seen.add(node_id)
+            results.append(
+                LexicalResult(
+                    node_id=node_id,
+                    document_id=str(source.get("document_id") or document_id),
+                    text=str(source.get("text") or ""),
+                    metadata=dict(source.get("metadata") or {}),
+                    score=min(1.0, max(0.0, float(hit.get("_score") or 0.0) / top_raw)),
+                )
+            )
+        return results
+
     def structure_chunks(
         self,
         parent_id: str,

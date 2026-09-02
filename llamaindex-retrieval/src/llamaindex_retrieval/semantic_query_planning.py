@@ -11,7 +11,7 @@ from .config import Settings
 from .generation import EvidenceAnswerGenerator
 from .lexical_index import lexical_tokens, normalize_search_text
 from .query_planning import QueryPlan, TaskField
-from .qa_analysis import counted_list_size
+from .qa_analysis import QuestionAnalysis, counted_list_size
 
 
 PlannerStrategy = Literal["model", "deterministic_fallback"]
@@ -24,6 +24,8 @@ class QueryPlanningResult:
     strategy: PlannerStrategy
     model_queries: tuple[str, ...] = ()
     error: str | None = None
+    prompt: str = ""
+    raw_output: str = ""
 
 
 class LanguageModelQueryPlanner:
@@ -221,6 +223,74 @@ class LanguageModelQueryPlanner:
         )
         self._store_cached(question, result)
         return result
+
+    async def plan_immutable(self, question: str) -> QueryPlanningResult:
+        prompt = self._prompt(question)
+        try:
+            raw = await self._request(prompt)
+            (
+                subject,
+                intent,
+                answer_shape,
+                set_semantics,
+                fields,
+                relations,
+                model_queries,
+            ) = self._parse(raw)
+            if not self._subject_is_supported(question, subject):
+                raise ValueError("model subject is not grounded in the question")
+            queries = tuple(dict.fromkeys((*model_queries, question)))[
+                : self.settings.model_query_planning_max_queries
+            ]
+            plan = QueryPlan(
+                original_question=question,
+                normalized_question=normalize_search_text(question),
+                analysis=QuestionAnalysis(
+                    intent=intent,
+                    entity_type="unknown",
+                    subjects=(),
+                    expects_list=answer_shape == "list",
+                    expects_complete_list=(
+                        answer_shape == "list" and set_semantics == "all"
+                    ),
+                ),
+                queries=queries,
+                subject=subject,
+                relations=relations,
+                merge_strategy="rank_fusion",
+                context_policy="none",
+                fields=fields,
+                answer_shape=answer_shape,
+                set_semantics=set_semantics,
+            )
+            return QueryPlanningResult(
+                plan=plan,
+                strategy="model",
+                model_queries=model_queries,
+                prompt=prompt,
+                raw_output=raw,
+            )
+        except (httpx.HTTPError, TimeoutError, ValueError) as error:
+            fallback = QueryPlan(
+                original_question=question,
+                normalized_question=normalize_search_text(question),
+                analysis=QuestionAnalysis("fact", "unknown", (), False, False),
+                queries=(question,),
+                subject=question,
+                relations=(),
+                merge_strategy="rank_fusion",
+                context_policy="none",
+                fields=(TaskField("f1", question, ("相关事实",)),),
+                answer_shape="single_fact",
+                set_semantics="specific",
+            )
+            return QueryPlanningResult(
+                plan=fallback,
+                strategy="deterministic_fallback",
+                error=f"{type(error).__name__}: {error}",
+                prompt=prompt,
+                raw_output=locals().get("raw", ""),
+            )
 
     def _get_cached(self, question: str) -> QueryPlanningResult | None:
         cached = self._cache.get(question)

@@ -1,7 +1,7 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import Field
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     opensearch_bulk_timeout: int = Field(default=120, ge=1, le=1800)
     opensearch_bulk_size: int = Field(default=500, ge=50, le=5000)
     chunk_size: int = Field(default=512, ge=128, le=8192)
-    chunk_overlap: int = Field(default=64, ge=0, le=1024)
+    chunk_overlap: int = Field(default=64, ge=1, le=1024)
     candidate_k: int = Field(default=40, ge=5, le=200)
     default_top_k: int = Field(default=5, ge=1, le=50)
     max_top_k: int = Field(default=20, ge=1, le=100)
@@ -39,8 +39,15 @@ class Settings(BaseSettings):
     generation_password: str = ""
     generation_timeout: int = Field(default=90, ge=5, le=300)
     generation_total_timeout: int = Field(default=20, ge=5, le=120)
-    generation_max_tokens: int = Field(default=384, ge=32, le=4096)
+    generation_max_tokens: int = Field(default=2_048, ge=32, le=4096)
     generation_max_evidence_characters: int = Field(default=12_000, ge=1_000, le=48_000)
+    generation_output_mode: str = Field(default="legacy", pattern="^(immutable|legacy)$")
+
+    @model_validator(mode="after")
+    def validate_chunk_overlap(self) -> "Settings":
+        if self.chunk_overlap >= self.chunk_size:
+            raise ValueError("chunk_overlap must be smaller than chunk_size")
+        return self
     ask_total_timeout: int = Field(default=45, ge=10, le=180)
     ask_generation_reserve: int = Field(default=12, ge=3, le=60)
     answer_verification_min_budget: int = Field(default=15, ge=3, le=60)

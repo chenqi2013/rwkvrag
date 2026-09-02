@@ -24,6 +24,7 @@ from ..schemas import (
     KnowledgeBaseItem,
     KnowledgeBaseUpdate,
     SearchRequest,
+    MaterialAskRequest,
     SearchTestDetail,
     SearchTestPage,
     SearchTestRun,
@@ -223,10 +224,19 @@ async def rerun_search_history(
     item = await repo.get_search_test(test_id)
     if item is None:
         raise AdminNotFoundError(f"历史测试不存在：{test_id}")
-    request = SearchRequest.model_validate(item["request"])
-    response = await service.ask(request)
+    if "materials" in item["request"]:
+        material_request = MaterialAskRequest.model_validate(item["request"])
+        response = await service.ask_materials(
+            material_request.question,
+            material_request.materials,
+        )
+        request_payload = material_request.model_dump(mode="json")
+    else:
+        request = SearchRequest.model_validate(item["request"])
+        request_payload = request.model_dump(mode="json")
+        response = await service.ask(request)
     run = await repo.record_search_test_run(
-        request.model_dump(mode="json"),
+        request_payload,
         response.model_dump(mode="json"),
         test_id=test_id,
     )

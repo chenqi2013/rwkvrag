@@ -207,7 +207,7 @@ def test_ordinal_prompt_requires_explicit_first_relation() -> None:
 
 
 def test_semantic_writer_puts_evidence_before_question_with_minimal_controls() -> None:
-    generator = EvidenceAnswerGenerator(Settings(semantic_pipeline_enabled=True))
+    generator = EvidenceAnswerGenerator(Settings(generation_output_mode="immutable"))
 
     prompt = generator._prompt(
         "换一种说法也要找到这条事实",
@@ -1121,7 +1121,7 @@ async def test_generator_skips_model_call_when_subject_anchor_is_absent() -> Non
 
 
 @pytest.mark.asyncio
-async def test_generator_adds_a_citation_when_model_omits_one() -> None:
+async def test_legacy_generator_adds_citation_when_model_omits_one() -> None:
     async def handler(_: httpx.Request) -> httpx.Response:
         return httpx.Response(
             200,
@@ -1137,7 +1137,7 @@ async def test_generator_adds_a_citation_when_model_omits_one() -> None:
 
 
 @pytest.mark.asyncio
-async def test_generator_removes_invalid_citation_and_adds_valid_one() -> None:
+async def test_legacy_generator_repairs_invalid_citation() -> None:
     async def handler(_: httpx.Request) -> httpx.Response:
         return httpx.Response(
             200,
@@ -1150,6 +1150,40 @@ async def test_generator_removes_invalid_citation_and_adds_valid_one() -> None:
     )
 
     assert await generator.generate("中国的首都是哪个城市？", [source()]) == "北京。 [资料 1]"
+
+
+@pytest.mark.asyncio
+async def test_immutable_generator_returns_byte_exact_model_output_and_trace() -> None:
+    raw = "Assistant: <think>推理</think>北京。[资料 2]\n用户：继续"
+
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            content=(
+                "data: "
+                + json.dumps({"choices": [{"delta": {"content": raw}}]}, ensure_ascii=False)
+                + "\n\ndata: [DONE]\n\n"
+            ),
+        )
+
+    generator = EvidenceAnswerGenerator(
+        Settings(
+            generation_password="test-password",
+            generation_output_mode="immutable",
+        ),
+        transport=httpx.MockTransport(handler),
+    )
+
+    result = await generator.generate_with_trace(
+        "中国的首都是哪个城市？",
+        [source()],
+        trusted_evidence=True,
+    )
+
+    assert result.answer == raw
+    assert result.raw_output == raw
+    assert result.prompt.index("资料：") < result.prompt.index("问题：中国的首都是哪个城市？")
+    assert result.prompt.rstrip().endswith("assistant:")
 
 
 @pytest.mark.asyncio

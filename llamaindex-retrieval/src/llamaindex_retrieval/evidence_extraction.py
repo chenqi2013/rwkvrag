@@ -68,6 +68,7 @@ class EvidenceExtractionResult:
     errors: tuple[str, ...] = ()
     source_signatures: tuple[tuple[str, str], ...] = ()
     strategy: str = "model"
+    trace_events: tuple[dict[str, object], ...] = ()
 
     @property
     def available(self) -> bool:
@@ -123,6 +124,7 @@ class EvidenceExtractionResult:
             errors=self.errors,
             source_signatures=current_signatures,
             strategy=f"{self.strategy}_remapped",
+            trace_events=self.trace_events,
         )
 
     def answer_sources(self, sources: list[SourceItem]) -> list[SourceItem]:
@@ -180,7 +182,9 @@ class LanguageModelEvidenceExtractor:
         )
         selected: list[SourceItem] = []
         document_counts: Counter[str] = Counter()
-        max_chunks_per_document = 4 if plan.answer_shape in {"list", "summary", "narrative"} else 3
+        max_chunks_per_document = 6 if plan.answer_shape == "list" else (
+            4 if plan.answer_shape in {"summary", "narrative"} else 3
+        )
         for source in sources:
             if len(selected) >= source_limit:
                 break
@@ -203,6 +207,7 @@ class LanguageModelEvidenceExtractor:
             for source_index, source in enumerate(selected)
         ), return_exceptions=True)
         candidates: list[EvidenceSpan] = []
+        trace_events: list[dict[str, object]] = []
         errors: list[str] = []
         completed = 0
         seen: set[tuple[str, int, str]] = set()
@@ -211,7 +216,9 @@ class LanguageModelEvidenceExtractor:
                 errors.append(f"source_{source_index + 1}: {type(result).__name__}: {result}")
                 continue
             completed += 1
-            for candidate in result:
+            source_candidates, source_trace = result
+            trace_events.append(source_trace)
+            for candidate in source_candidates:
                 key = (candidate.field_id, candidate.source_index, candidate.span)
                 if key in seen:
                     continue
@@ -220,12 +227,14 @@ class LanguageModelEvidenceExtractor:
         strategy = "model" if candidates else "model_empty"
         if self.settings.semantic_pipeline_enabled and completed:
             try:
-                candidates = list(await self._adjudicate(
+                adjudicated, adjudication_trace = await self._adjudicate(
                     question,
                     plan,
                     selected,
                     candidates,
-                ))
+                )
+                candidates = list(adjudicated)
+                trace_events.append(adjudication_trace)
                 strategy = "model_map_reduce" if candidates else "model_map_reduce_empty"
             except Exception as error:
                 errors.append(f"adjudication: {type(error).__name__}: {error}")
@@ -237,6 +246,7 @@ class LanguageModelEvidenceExtractor:
             errors=tuple(errors),
             source_signatures=signatures,
             strategy=strategy,
+            trace_events=tuple(trace_events),
         )
 
     async def _adjudicate(
@@ -245,12 +255,18 @@ class LanguageModelEvidenceExtractor:
         plan: QueryPlan,
         sources: list[SourceItem],
         map_candidates: list[EvidenceSpan],
-    ) -> tuple[EvidenceSpan, ...]:
+    ) -> tuple[tuple[EvidenceSpan, ...], dict[str, object]]:
         units = self._adjudication_units(plan, sources, map_candidates)
         if not units:
-            return ()
+            return (), {
+                "stage": "resolver_adjudication",
+                "prompt": "",
+                "raw_output": "",
+                "selected_count": 0,
+            }
+        prompt = self._adjudication_prompt(question, plan, sources, units)
         payload = {
-            "contents": [self._adjudication_prompt(question, plan, sources, units)],
+            "contents": [prompt],
             "max_tokens": min(self.settings.evidence_extraction_max_tokens, 192),
             "temperature": 0.1,
             "top_k": 20,
@@ -316,7 +332,14 @@ class LanguageModelEvidenceExtractor:
                 span=unit.span,
                 content_hash=unit.content_hash,
             ))
-        return tuple(output)
+        return tuple(output), {
+            "stage": "resolver_adjudication",
+            "prompt": prompt,
+            "raw_output": raw,
+            "prompt_sha256": sha256(prompt.encode("utf-8")).hexdigest(),
+            "raw_output_sha256": sha256(raw.encode("utf-8")).hexdigest(),
+            "selected_count": len(output),
+        }
 
     def _adjudication_units(
         self,
@@ -558,20 +581,23 @@ class LanguageModelEvidenceExtractor:
                 raise ValueError("adjudicator response does not match the contract")
             first_line = compact.group(1)
         output: list[tuple[str, int]] = []
-        for field_id, unit_id in re.findall(
-            r"(f[1-9]\d*)\s*[:：]\s*e([1-9]\d*)",
+        field_groups = re.findall(
+            r"(f[1-9]\d*)\s*[:：]\s*"
+            r"(e[1-9]\d*(?:\s*[,，;；]\s*e[1-9]\d*)*)",
             first_line,
             flags=re.IGNORECASE,
-        ):
+        )
+        for field_id, evidence_ids in field_groups:
             normalized_field_id = field_id.lower()
-            unit_index = int(unit_id)
-            if (
-                normalized_field_id not in field_ids
-                or unit_index > unit_count
-                or (normalized_field_id, unit_index) in output
-            ):
-                continue
-            output.append((normalized_field_id, unit_index))
+            for unit_id in re.findall(r"e([1-9]\d*)", evidence_ids, flags=re.IGNORECASE):
+                unit_index = int(unit_id)
+                if (
+                    normalized_field_id not in field_ids
+                    or unit_index > unit_count
+                    or (normalized_field_id, unit_index) in output
+                ):
+                    continue
+                output.append((normalized_field_id, unit_index))
         if not output:
             raise ValueError("adjudicator selected no valid evidence ids")
         return tuple(output)
@@ -582,7 +608,7 @@ class LanguageModelEvidenceExtractor:
         plan: QueryPlan,
         source_index: int,
         source: SourceItem,
-    ) -> tuple[EvidenceSpan, ...]:
+    ) -> tuple[tuple[EvidenceSpan, ...], dict[str, object]]:
         sentence_units = self._attention_units(plan, source)
         prompt = self._prompt(
             question,
@@ -617,7 +643,7 @@ class LanguageModelEvidenceExtractor:
                     response,
                     total_timeout=self.settings.evidence_extraction_timeout,
                 )
-        return self._parse(
+        candidates = self._parse(
             raw,
             plan,
             source_index,
@@ -625,6 +651,16 @@ class LanguageModelEvidenceExtractor:
             sentence_units=sentence_units,
             semantic_mode=self.settings.semantic_pipeline_enabled,
         )
+        return candidates, {
+            "stage": "resolver_map",
+            "source_id": source.id,
+            "source_index": source_index,
+            "prompt": prompt,
+            "raw_output": raw,
+            "prompt_sha256": sha256(prompt.encode("utf-8")).hexdigest(),
+            "raw_output_sha256": sha256(raw.encode("utf-8")).hexdigest(),
+            "selected_count": len(candidates),
+        }
 
     def _prompt(
         self,

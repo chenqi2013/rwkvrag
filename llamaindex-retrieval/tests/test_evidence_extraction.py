@@ -146,6 +146,12 @@ def test_adjudication_parser_accepts_compact_field_evidence_pairs() -> None:
     ) == (("f1", 3), ("f1", 7))
 
     assert LanguageModelEvidenceExtractor._parse_adjudication(
+        "f1:e3,e7,e8",
+        {"f1"},
+        8,
+    ) == (("f1", 3), ("f1", 7), ("f1", 8))
+
+    assert LanguageModelEvidenceExtractor._parse_adjudication(
         "e2,e1",
         {"f1"},
         2,

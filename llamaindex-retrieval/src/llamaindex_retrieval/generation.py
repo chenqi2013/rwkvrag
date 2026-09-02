@@ -1,4 +1,6 @@
 import asyncio
+from dataclasses import dataclass
+from hashlib import sha256
 import json
 import re
 from time import monotonic
@@ -140,6 +142,21 @@ class AnswerGenerationError(RuntimeError):
     """Raised when the configured text generation service cannot answer."""
 
 
+@dataclass(frozen=True)
+class GenerationResult:
+    answer: str
+    prompt: str
+    raw_output: str
+
+    @property
+    def prompt_sha256(self) -> str:
+        return sha256(self.prompt.encode("utf-8")).hexdigest()
+
+    @property
+    def raw_output_sha256(self) -> str:
+        return sha256(self.raw_output.encode("utf-8")).hexdigest()
+
+
 class EvidenceAnswerGenerator:
     def __init__(
         self,
@@ -163,18 +180,43 @@ class EvidenceAnswerGenerator:
         set_semantics: str = "specific",
         fields: tuple[tuple[str, str, tuple[str, ...]], ...] = (),
     ) -> str:
+        result = await self.generate_with_trace(
+            question,
+            sources,
+            subject=subject,
+            relations=relations,
+            trusted_evidence=trusted_evidence,
+            answer_shape=answer_shape,
+            set_semantics=set_semantics,
+            fields=fields,
+        )
+        return result.answer
+
+    async def generate_with_trace(
+        self,
+        question: str,
+        sources: list[SourceItem],
+        *,
+        subject: str = "",
+        relations: tuple[str, ...] = (),
+        trusted_evidence: bool = False,
+        answer_shape: str = "single_fact",
+        set_semantics: str = "specific",
+        fields: tuple[tuple[str, str, tuple[str, ...]], ...] = (),
+    ) -> GenerationResult:
         if not sources:
-            return _NO_EVIDENCE_ANSWER
+            return GenerationResult(_NO_EVIDENCE_ANSWER, "", "")
         if (
+            self.settings.generation_output_mode == "legacy"
+            and
             not trusted_evidence
             and not self.assess_evidence(question, sources, subject=subject).grounded
         ):
-            return _INSUFFICIENT_EVIDENCE_ANSWER
+            return GenerationResult(_INSUFFICIENT_EVIDENCE_ANSWER, "", "")
         if not self.settings.generation_password:
             raise AnswerGenerationError("RWKVRAG_GENERATION_PASSWORD is not configured")
 
-        payload = {
-            "contents": [self._prompt(
+        prompt = self._prompt(
                 question,
                 sources,
                 subject=subject,
@@ -182,7 +224,9 @@ class EvidenceAnswerGenerator:
                 answer_shape=answer_shape,
                 set_semantics=set_semantics,
                 fields=fields,
-            )],
+            )
+        payload = {
+            "contents": [prompt],
             "max_tokens": self.settings.generation_max_tokens,
             "temperature": 0.2,
             "top_k": 50,
@@ -201,21 +245,23 @@ class EvidenceAnswerGenerator:
             ) as client:
                 async with client.stream("POST", endpoint, json=payload) as response:
                     response.raise_for_status()
-                    answer = await self._read_stream(
+                    raw_answer = await self._read_stream(
                         response,
                         total_timeout=self.settings.generation_total_timeout,
                     )
         except httpx.HTTPError as error:
             raise AnswerGenerationError(f"generation request failed: {error}") from error
 
-        answer = self._clean_answer(answer)
+        if self.settings.generation_output_mode == "immutable":
+            return GenerationResult(raw_answer, prompt, raw_answer)
+        answer = self._clean_answer(raw_answer)
         if not answer:
-            return _INSUFFICIENT_EVIDENCE_ANSWER
+            answer = _INSUFFICIENT_EVIDENCE_ANSWER
         if answer == _INSUFFICIENT_EVIDENCE_ANSWER:
-            return answer
-        if self.settings.semantic_pipeline_enabled:
-            return answer
-        return self._ensure_citation(answer, len(sources))
+            return GenerationResult(answer, prompt, raw_answer)
+        if not self.settings.semantic_pipeline_enabled:
+            answer = self._ensure_citation(answer, len(sources))
+        return GenerationResult(answer, prompt, raw_answer)
 
     async def current_model(self) -> str | None:
         if self._model_cache is not None:
@@ -296,8 +342,8 @@ class EvidenceAnswerGenerator:
         set_semantics: str = "specific",
         fields: tuple[tuple[str, str, tuple[str, ...]], ...] = (),
     ) -> str:
-        evidence = self._evidence(sources)
-        if self.settings.semantic_pipeline_enabled:
+        if self.settings.generation_output_mode == "immutable":
+            evidence = self._evidence(sources)
             return f"""system:
 知识库问答助手；只能依据资料；不足则说明；关键结论标注 [资料 1]、[资料 2]。
 
@@ -309,6 +355,7 @@ user:
 
 assistant:
 """
+        evidence = self._evidence(sources)
         normalized_fields = [
             {
                 "field_id": field_id,

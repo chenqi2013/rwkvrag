@@ -25,7 +25,7 @@ from .evidence_utils import (
     structured_list_answer,
     time_evidence_answer,
 )
-from .generation import AnswerGenerationError, EvidenceAnswerGenerator
+from .generation import AnswerGenerationError, EvidenceAnswerGenerator, GenerationResult
 from .evidence_extraction import (
     EvidenceSpan,
     EvidenceExtractionResult,
@@ -1226,6 +1226,8 @@ class SearchService:
         return merged
 
     async def ask(self, request: SearchRequest) -> AskResponse:
+        if self.settings.generation_output_mode == "immutable":
+            return await self._ask_immutable(request)
         ask_started = monotonic()
         deadline = ask_started + self.settings.ask_total_timeout
         timings: dict[str, object] = {}
@@ -1400,10 +1402,9 @@ class SearchService:
             verified_structured_answer = self._verified_structured_render(
                 question,
                 answer_plan,
-                evidence_response.results,
+                answer_sources,
             )
             if verified_structured_answer is not None:
-                answer_sources = evidence_response.results
                 active_retrieval["verified_structured_render"] = True
         if (
             answer_plan.analysis.intent == "agent"
@@ -1494,7 +1495,7 @@ class SearchService:
                         trusted_evidence=bool(field_extraction and field_extraction.has_candidates),
                         timeout=self._remaining_budget(deadline),
                     )
-                    raw_model_answer = answer
+                    raw_model_answer = self._model_raw_output(answer)
                     if (
                         self.settings.semantic_pipeline_enabled
                         and self._answer_contract_failed(question, answer)
@@ -1933,7 +1934,20 @@ class SearchService:
             "field_evidence_fallback": (
                 "raw_retrieval" if field_extraction_failed else None
             ),
+            "trace_version": "1",
+            "trace_stages": self._trace_stages(
+                request=request,
+                evidence_response=evidence_response,
+                answer_sources=answer_sources,
+                field_extraction=field_extraction,
+                active_retrieval=active_retrieval,
+            ),
         }
+        if isinstance(self.generator, EvidenceAnswerGenerator):
+            generation["writer_trace"] = {
+                "output_modified": True,
+                "note": "legacy pipeline output is retained for compatibility only",
+            }
         diagnosis = diagnose_failure(
             answer=answer,
             sources=response_results,
@@ -1951,6 +1965,403 @@ class SearchService:
             retrieval=retrieval,
             generation=generation,
         )
+
+    async def ask_materials(
+        self,
+        question: str,
+        materials: list[SourceItem],
+    ) -> AskResponse:
+        started = monotonic()
+        plan = build_query_plan(question)
+        result = await self._generate_with_trace(
+            question,
+            materials,
+            plan=plan,
+            trusted_evidence=True,
+            timeout=self.settings.generation_total_timeout,
+        )
+        return AskResponse(
+            answer=result.answer,
+            sources=materials,
+            retrieval={
+                "mode": "materials",
+                "returned": len(materials),
+                "timings_ms": {"total": self._elapsed_ms(started)},
+            },
+            generation={
+                "answer_strategy": "single_writer_call",
+                "output_mode": "immutable",
+                "raw_model_answer": result.raw_output,
+                "writer_trace": self._writer_trace(result, materials),
+                "trace_version": "1",
+                "trace_stages": [
+                    {"stage": "request", "question": question},
+                    {
+                        "stage": "materials",
+                        "source_ids": [source.id for source in materials],
+                        "count": len(materials),
+                    },
+                    {
+                        "stage": "writer",
+                        "source_ids": [source.id for source in materials],
+                    },
+                ],
+            },
+        )
+
+    async def _ask_immutable(self, request: SearchRequest) -> AskResponse:
+        started = monotonic()
+        display_top_k = min(
+            request.top_k or self.settings.default_top_k,
+            self.settings.max_top_k,
+        )
+        evidence_top_k, evidence_policy = self._adaptive_evidence_top_k(
+            request.question,
+            display_top_k=display_top_k,
+        )
+        retrieval_started = monotonic()
+        planning = await self._immutable_plan(request.question)
+        plan = planning.plan
+        search_method = getattr(self.index, "search_plain", self.index.search)
+        result_groups = await asyncio.gather(*(
+            asyncio.to_thread(
+                search_method,
+                query,
+                candidate_k=max(
+                    request.candidate_k or self.settings.candidate_k,
+                    evidence_top_k,
+                ),
+                knowledge_base_id=request.knowledge_base_id,
+            )
+            for query in plan.queries
+        ))
+        fused = self._merge_plain_rrf(result_groups)
+        # For complete-list tasks, prefer a dedicated topic page before
+        # passage expansion.  Other answer shapes retain the original RRF
+        # order so a title collision cannot change established fact answers.
+        if plan.answer_shape == "list":
+            fused = self._prioritize_topic_document(plan, fused)
+        selected = fused[:evidence_top_k]
+        selected, passage_expansion = await self._expand_immutable_passages(
+            plan,
+            selected,
+            knowledge_base_id=request.knowledge_base_id,
+        )
+        evidence_response = SearchResponse(
+            results=[self._source_item(result) for result in selected],
+            retrieval={
+                "algorithm": "OpenSearch BM25",
+                "mode": "model-query+bm25+document-rrf",
+                "index": self.settings.opensearch_index,
+                "top_k": evidence_top_k,
+                "returned": len(selected),
+                "query_plan": {
+                    "queries": list(plan.queries),
+                    "subject": plan.subject,
+                    "relations": list(plan.relations),
+                    "intent": plan.analysis.intent,
+                    "answer_shape": plan.answer_shape,
+                    "set_semantics": plan.set_semantics,
+                    "planner": planning.strategy,
+                    "fallback_reason": planning.error,
+                },
+                "document_passage_expansion": passage_expansion,
+                "planner_trace": {
+                    "prompt": planning.prompt,
+                    "raw_output": planning.raw_output,
+                    "prompt_sha256": sha256(planning.prompt.encode("utf-8")).hexdigest(),
+                    "raw_output_sha256": sha256(
+                        planning.raw_output.encode("utf-8")
+                    ).hexdigest(),
+                },
+            },
+        )
+        retrieval_ms = self._elapsed_ms(retrieval_started)
+        question = request.question
+        extraction_started = monotonic()
+        extraction = await self._extract_field_evidence(
+            question,
+            plan,
+            evidence_response.results,
+            timeout=self._remaining_budget(
+                started + self.settings.ask_total_timeout,
+                reserve=self.settings.ask_generation_reserve,
+            ),
+        )
+        extraction_ms = self._elapsed_ms(extraction_started)
+        writer_sources = (
+            extraction.answer_sources(evidence_response.results)
+            if extraction is not None and extraction.has_candidates
+            else []
+        )
+        writer_result: GenerationResult | None = None
+        generation_error: str | None = None
+        generation_started = monotonic()
+        if writer_sources:
+            try:
+                writer_result = await self._generate_with_trace(
+                    question,
+                    writer_sources,
+                    plan=plan,
+                    trusted_evidence=True,
+                    timeout=self._remaining_budget(started + self.settings.ask_total_timeout),
+                )
+            except Exception as error:
+                generation_error = f"{type(error).__name__}: {error}"
+        generation_ms = self._elapsed_ms(generation_started)
+        answer = writer_result.answer if writer_result is not None else ""
+        validation = validate_grounding(answer, writer_sources)
+        answer_support = evaluate_answer_support(
+            answer,
+            writer_sources,
+            question=question,
+        )
+        display_sources = writer_sources[:display_top_k]
+        retrieval = {
+            **evidence_response.retrieval,
+            "top_k": display_top_k,
+            "returned": len(display_sources),
+            "answer_evidence_top_k": evidence_top_k,
+            "answer_evidence_count": len(writer_sources),
+            "evidence_top_k_policy": evidence_policy,
+            "timings_ms": {
+                "retrieval": retrieval_ms,
+                "resolver": extraction_ms,
+                "writer": generation_ms,
+                "total": self._elapsed_ms(started),
+            },
+        }
+        generation = {
+            "answer_strategy": "single_writer_call" if writer_result else "writer_not_called",
+            "output_mode": "immutable",
+            "evidence_count": len(writer_sources),
+            "displayed_evidence_count": len(display_sources),
+            "raw_model_answer": writer_result.raw_output if writer_result else None,
+            "generation_error": generation_error,
+            "field_evidence_available": bool(extraction and extraction.available),
+            "field_evidence": [
+                {
+                    "field_id": candidate.field_id,
+                    "source_index": candidate.source_index + 1,
+                    "span": candidate.span,
+                    "sha256": candidate.content_hash,
+                }
+                for candidate in (extraction.candidates if extraction else ())
+            ],
+            "field_evidence_errors": list(extraction.errors) if extraction else [],
+            "field_evidence_strategy": extraction.strategy if extraction else None,
+            "grounding_valid": validation.valid,
+            "grounding_issues": list(validation.issues),
+            "answer_support_passed": answer_support.passed,
+            "answer_support_issues": list(answer_support.issues),
+            "writer_trace": self._writer_trace(writer_result, writer_sources)
+            if writer_result else None,
+            "trace_version": "1",
+            "trace_stages": [
+                {"stage": "request", "question": request.question},
+                {
+                    "stage": "retrieval",
+                    "source_ids": [source.id for source in evidence_response.results],
+                    "count": len(evidence_response.results),
+                    "index": self.settings.opensearch_index,
+                },
+                {
+                    "stage": "resolver",
+                    "source_ids": [source.id for source in writer_sources],
+                    "candidate_count": len(extraction.candidates) if extraction else 0,
+                    "errors": list(extraction.errors) if extraction else [],
+                    "model_calls": list(extraction.trace_events) if extraction else [],
+                },
+                {
+                    "stage": "writer",
+                    "called": writer_result is not None,
+                    "source_ids": [source.id for source in writer_sources],
+                    "error": generation_error,
+                },
+                {
+                    "stage": "audit",
+                    "grounding_valid": validation.valid,
+                    "grounding_issues": list(validation.issues),
+                    "answer_support_passed": answer_support.passed,
+                    "answer_support_issues": list(answer_support.issues),
+                    "answer_modified": False,
+                },
+            ],
+        }
+        diagnosis = diagnose_failure(
+            answer=answer,
+            sources=display_sources,
+            retrieval=retrieval,
+            generation=generation,
+        )
+        generation.update({
+            "failure_category": diagnosis.category,
+            "failure_reason": diagnosis.reason,
+            "failure_stage": diagnosis.stage,
+        })
+        return AskResponse(
+            answer=answer,
+            sources=display_sources,
+            retrieval=retrieval,
+            generation=generation,
+        )
+
+    async def _expand_immutable_passages(
+        self,
+        plan: QueryPlan,
+        selected: list[LexicalResult],
+        *,
+        knowledge_base_id: str | None,
+    ) -> tuple[list[LexicalResult], dict[str, object]]:
+        """Expand each RRF-selected document back into relevant passages.
+
+        RRF operates on documents to prevent long documents from voting more
+        than once.  The writer, however, needs the passage containing the
+        answer.  This second, document-scoped lexical pass restores that
+        context while keeping document-level ranking unchanged.
+        """
+
+        lookup = getattr(self.index, "document_passage_candidates", None)
+        if lookup is None or not selected:
+            return selected, {"enabled": False, "documents": []}
+        query = " ".join(dict.fromkeys((
+            plan.original_question,
+            *plan.queries,
+            plan.subject,
+            *plan.relations,
+        )))
+        per_document_limit = max(
+            4,
+            self.settings.list_query_max_chunks_per_document
+            if plan.answer_shape == "list"
+            else 4,
+        )
+        document_ids = list(dict.fromkeys(
+            result.document_id or result.node_id for result in selected
+        ))
+
+        async def expand(document_id: str) -> tuple[str, list[LexicalResult]]:
+            passages = await asyncio.to_thread(
+                lookup,
+                query,
+                document_id=document_id,
+                knowledge_base_id=knowledge_base_id,
+                limit=per_document_limit,
+            )
+            return document_id, passages
+
+        expanded_groups = await asyncio.gather(*(expand(document_id) for document_id in document_ids))
+        by_document = dict(expanded_groups)
+        output: list[LexicalResult] = []
+        trace_documents: list[dict[str, object]] = []
+        seen: set[str] = set()
+        for original in selected:
+            document_id = original.document_id or original.node_id
+            passages = list(by_document.get(document_id) or ())
+            if not passages:
+                passages = [original]
+            elif (
+                original.node_id not in {passage.node_id for passage in passages}
+                and original.metadata.get("content_type") != "key_value"
+            ):
+                passages.insert(0, original)
+
+            # Structured chunks often represent one logical table/list row.
+            # Reopen a parent only when the index exposes that structure; no
+            # content-specific question rule is involved here.
+            structure_lookup = getattr(self.index, "structure_chunks", None)
+            if structure_lookup is not None:
+                parent_ids = list(dict.fromkeys(
+                    str(passage.metadata.get("parent_id") or "")
+                    for passage in passages
+                    if passage.metadata.get("parent_id")
+                    and int(passage.metadata.get("structure_size") or 1) > 1
+                ))
+                for parent_id in parent_ids[:2]:
+                    siblings = await asyncio.to_thread(
+                        structure_lookup,
+                        parent_id,
+                        knowledge_base_id=knowledge_base_id,
+                        limit=per_document_limit,
+                        score=max((passage.score for passage in passages), default=original.score),
+                    )
+                    by_id = {passage.node_id: passage for passage in passages}
+                    for sibling in siblings:
+                        by_id.setdefault(sibling.node_id, sibling)
+                    passages = list(by_id.values())[:per_document_limit]
+
+            before_ids = [passage.node_id for passage in passages]
+            for passage in passages:
+                if passage.node_id in seen:
+                    continue
+                seen.add(passage.node_id)
+                output.append(passage)
+            trace_documents.append({
+                "document_id": document_id,
+                "before_node_ids": [original.node_id],
+                "after_node_ids": before_ids,
+                "expanded_count": len(before_ids),
+            })
+        return output, {
+            "enabled": True,
+            "query": query,
+            "per_document_limit": per_document_limit,
+            "documents": trace_documents,
+        }
+
+    async def _immutable_plan(self, question: str) -> QueryPlanningResult:
+        if self.query_planner is not None and hasattr(
+            self.query_planner,
+            "plan_immutable",
+        ):
+            return await self.query_planner.plan_immutable(question)
+        plan = build_query_plan(question)
+        return QueryPlanningResult(
+            plan=replace(
+                plan,
+                queries=(question,),
+                context_policy="none",
+                merge_strategy="rank_fusion",
+            ),
+            strategy="deterministic_fallback",
+            error="immutable_model_planner_not_configured",
+        )
+
+    @staticmethod
+    def _merge_plain_rrf(
+        result_groups: tuple[list[LexicalResult], ...],
+    ) -> list[LexicalResult]:
+        scores: dict[str, float] = {}
+        best: dict[str, LexicalResult] = {}
+        first_seen: dict[str, int] = {}
+        sequence = 0
+        for group in result_groups:
+            seen_documents: set[str] = set()
+            for rank, result in enumerate(group, start=1):
+                document_id = result.document_id or result.node_id
+                if document_id in seen_documents:
+                    continue
+                seen_documents.add(document_id)
+                scores[document_id] = scores.get(document_id, 0.0) + 1.0 / (60 + rank)
+                if document_id not in first_seen:
+                    first_seen[document_id] = sequence
+                    sequence += 1
+                current = best.get(document_id)
+                if current is None or result.score > current.score:
+                    best[document_id] = result
+        ranked_ids = sorted(
+            scores,
+            key=lambda document_id: (scores[document_id], -first_seen[document_id]),
+            reverse=True,
+        )
+        top_score = max((scores[document_id] for document_id in ranked_ids), default=1.0)
+        return [
+            replace(
+                best[document_id],
+                score=scores[document_id] / top_score if top_score else 0.0,
+            )
+            for document_id in ranked_ids
+        ]
 
     @staticmethod
     def _focus_complete_list_evidence(
@@ -2065,6 +2476,95 @@ class SearchService:
                 raise TimeoutError("request answer-generation budget exhausted")
             return await asyncio.wait_for(generate(), timeout=timeout)
         return await generate()
+
+    async def _generate_with_trace(
+        self,
+        question: str,
+        sources: list[SourceItem],
+        *,
+        plan: QueryPlan,
+        trusted_evidence: bool,
+        timeout: float | None = None,
+    ) -> GenerationResult:
+        async def generate() -> GenerationResult:
+            if isinstance(self.generator, EvidenceAnswerGenerator):
+                return await self.generator.generate_with_trace(
+                    question,
+                    sources,
+                    subject=plan.subject,
+                    relations=plan.relations,
+                    trusted_evidence=trusted_evidence,
+                    answer_shape=plan.answer_shape,
+                    set_semantics=plan.set_semantics,
+                    fields=tuple(
+                        (field.field_id, field.question, field.relations)
+                        for field in plan.fields
+                    ),
+                )
+            answer = await self.generator.generate(question, sources)
+            return GenerationResult(answer=answer, prompt="", raw_output=answer)
+
+        if timeout is not None:
+            if timeout <= 0:
+                raise TimeoutError("request answer-generation budget exhausted")
+            return await asyncio.wait_for(generate(), timeout=timeout)
+        return await generate()
+
+    @staticmethod
+    def _writer_trace(
+        result: GenerationResult,
+        sources: list[SourceItem],
+    ) -> dict[str, object]:
+        return {
+            "prompt": result.prompt,
+            "raw_output": result.raw_output,
+            "prompt_sha256": result.prompt_sha256,
+            "raw_output_sha256": result.raw_output_sha256,
+            "source_ids": [source.id for source in sources],
+            "source_span_hashes": [
+                sha256(source.snippet.encode("utf-8")).hexdigest()
+                for source in sources
+            ],
+            "output_modified": False,
+        }
+
+    def _model_raw_output(self, answer: str) -> str:
+        return answer
+
+    @staticmethod
+    def _trace_stages(
+        *,
+        request: SearchRequest,
+        evidence_response: SearchResponse,
+        answer_sources: list[SourceItem],
+        field_extraction: EvidenceExtractionResult | None,
+        active_retrieval: dict[str, object],
+    ) -> list[dict[str, object]]:
+        def source_ids(items: list[SourceItem]) -> list[str]:
+            return [item.id for item in items]
+
+        return [
+            {"stage": "request", "question": request.question},
+            {
+                "stage": "retrieval",
+                "source_ids": source_ids(evidence_response.results),
+                "count": len(evidence_response.results),
+                "retrieval": evidence_response.retrieval,
+            },
+            {
+                "stage": "active_retrieval",
+                "enabled": active_retrieval.get("enabled", False),
+                "rounds": active_retrieval.get("rounds", []),
+            },
+            {
+                "stage": "resolver",
+                "source_ids": source_ids(answer_sources),
+                "count": len(answer_sources),
+                "candidate_count": len(field_extraction.candidates) if field_extraction else 0,
+                "errors": list(field_extraction.errors) if field_extraction else [],
+            },
+            {"stage": "writer", "source_ids": source_ids(answer_sources)},
+        ]
 
     @staticmethod
     def _deterministic_answer(
@@ -2963,6 +3463,16 @@ class SearchService:
             normalized_title = normalize_search_text(title).replace(" ", "")
             exact_subject = title_matches_subject(title, normalize_search_text(plan.subject).replace(" ", ""))
             title_hits = sum(token in normalized_title for token in topic_tokens)
+            query_title_hits = sum(
+                token in normalized_title
+                for token in query_tokens(" ".join(plan.queries))
+                if token not in subject_tokens and len(token) >= 2
+            )
+            relation_title_hits = sum(
+                normalize_search_text(relation).replace(" ", "") in normalized_title
+                for relation in plan.relations
+                if relation.strip()
+            )
             subject_title_hits = len(
                 subject_tokens & set(lexical_tokens(title))
             )
@@ -2975,7 +3485,9 @@ class SearchService:
                 (8.0 if exact_subject else 0.0)
                 + subject_title_hits * 4.0
                 + (6.0 if core_tokens and core_tokens[0] in set(lexical_tokens(title)) else 0.0)
-                + title_hits * 10.0
+                + title_hits * 14.0
+                + query_title_hits * 8.0
+                + relation_title_hits * 8.0
                 + min(body_hits, 3) * 0.25
             )
             return score, -order[document_id]
@@ -3651,7 +4163,12 @@ class SearchService:
             snippet = clean_evidence_text(full_answer)
         else:
             content_type = str(metadata.get("content_type") or "prose")
-            snippet_limit = 6000 if content_type in {"table_summary", "table", "list"} else 900
+            snippet_limit = (
+                6000
+                if content_type in {"table_summary", "table", "list"}
+                or int(metadata.get("structure_size") or 1) > 1
+                else 900
+            )
             snippet = (
                 content
                 if len(content) <= snippet_limit

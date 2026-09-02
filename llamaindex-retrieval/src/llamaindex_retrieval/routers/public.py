@@ -7,7 +7,14 @@ from ..config import get_settings
 from ..dependencies import repository, search_service
 from ..ingest import ingest_markdown
 from ..generation import AnswerGenerationError
-from ..schemas import AskResponse, ImportResponse, MarkdownImportRequest, SearchRequest, SearchResponse
+from ..schemas import (
+    AskResponse,
+    ImportResponse,
+    MarkdownImportRequest,
+    MaterialAskRequest,
+    SearchRequest,
+    SearchResponse,
+)
 from ..repository import MongoRepository
 from ..service import SearchService
 
@@ -35,6 +42,23 @@ async def ask(
 ) -> AskResponse:
     try:
         response = await service.ask(payload)
+    except AnswerGenerationError as error:
+        raise HTTPException(status_code=502, detail=str(error)) from error
+    await repo.record_search_test_run(
+        payload.model_dump(mode="json"),
+        response.model_dump(mode="json"),
+    )
+    return response
+
+
+@router.post("/v1/material-ask", response_model=AskResponse)
+async def material_ask(
+    payload: MaterialAskRequest,
+    service: SearchService = Depends(search_service),
+    repo: MongoRepository = Depends(repository),
+) -> AskResponse:
+    try:
+        response = await service.ask_materials(payload.question, payload.materials)
     except AnswerGenerationError as error:
         raise HTTPException(status_code=502, detail=str(error)) from error
     await repo.record_search_test_run(

@@ -51,8 +51,11 @@ export default function SearchPage() {
     }
   };
 
-  const evidenceVerified = response?.generation.evidence_grounded === true
-    && response?.generation.evidence_gate_passed === true;
+  const writerCalled = response?.generation.answer_strategy === "single_writer_call"
+    || response?.generation.writer_trace != null;
+  const evidenceVerified = writerCalled
+    && response?.generation.grounding_valid === true
+    && response?.generation.answer_support_passed === true;
   const queryNormalized = response?.retrieval.query_normalized === true;
   const normalizedQuestion = String(response?.retrieval.normalized_question || "");
   const failureCategory = response?.generation.failure_category as FailureCategory | undefined;
@@ -114,8 +117,12 @@ export default function SearchPage() {
             extra={
               response && (
                 <Space size={4} wrap>
-                  <Tag color={evidenceVerified ? "green" : "orange"}>
-                    {evidenceVerified ? tr("证据校验通过", "Evidence verified") : tr("证据不足，未生成", "Insufficient evidence")}
+                  <Tag color={evidenceVerified ? "green" : writerCalled ? "blue" : "orange"}>
+                    {evidenceVerified
+                      ? tr("证据校验通过", "Evidence verified")
+                      : writerCalled
+                        ? tr("已生成，证据校验未通过", "Generated; evidence check failed")
+                        : tr("证据不足，未生成", "Insufficient evidence; not generated")}
                   </Tag>
                   {response.generation.model ? (
                     <Tag color="green">{tr("生成模型", "Model")} · {String(response.generation.model)}</Tag>

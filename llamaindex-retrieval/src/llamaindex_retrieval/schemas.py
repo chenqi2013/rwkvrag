@@ -43,6 +43,19 @@ class AskResponse(BaseModel):
     generation: dict[str, Any]
 
 
+class MaterialAskRequest(BaseModel):
+    question: str
+    materials: list[SourceItem] = Field(min_length=1, max_length=20)
+
+    @field_validator("question")
+    @classmethod
+    def validate_question(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("question must not be empty")
+        return value
+
+
 class SearchTestRun(BaseModel):
     id: str
     test_id: str

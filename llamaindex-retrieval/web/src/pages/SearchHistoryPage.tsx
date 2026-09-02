@@ -11,8 +11,11 @@ import { useLanguage } from "../i18n";
 function VersionResult({ run }: { run: SearchTestRun }) {
   const { tr } = useLanguage();
   const { response } = run;
-  const grounded = response.generation.evidence_grounded === true
-    && response.generation.evidence_gate_passed === true;
+  const writerCalled = response.generation.answer_strategy === "single_writer_call"
+    || response.generation.writer_trace != null;
+  const grounded = writerCalled
+    && response.generation.grounding_valid === true
+    && response.generation.answer_support_passed === true;
   const model = response.generation.model;
   const failureCategory = response.generation.failure_category as FailureCategory | undefined;
   const failureReason = response.generation.failure_reason as string | undefined;
@@ -28,8 +31,12 @@ function VersionResult({ run }: { run: SearchTestRun }) {
       <Space direction="vertical" size={5} style={{ width: "100%" }}>
         <Space wrap>
           <Tag color="blue">{tr(`第 ${run.run_number} 次`, `Run ${run.run_number}`)}</Tag>
-          <Tag color={grounded ? "green" : "orange"}>
-            {grounded ? tr("证据校验通过", "Evidence verified") : tr("证据不足", "Insufficient evidence")}
+          <Tag color={grounded ? "green" : writerCalled ? "blue" : "orange"}>
+            {grounded
+              ? tr("证据校验通过", "Evidence verified")
+              : writerCalled
+                ? tr("已生成，证据校验未通过", "Generated; evidence check failed")
+                : tr("证据不足，未生成", "Insufficient evidence; not generated")}
           </Tag>
           <Typography.Text type="secondary">{formatDate(run.created_at)}</Typography.Text>
           {model ? <Tag>{tr("模型", "Model")} · {String(model)}</Tag> : null}
