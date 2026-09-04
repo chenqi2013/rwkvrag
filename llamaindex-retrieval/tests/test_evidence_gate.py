@@ -1,7 +1,9 @@
 from llamaindex_retrieval.evidence_gate import (
     evaluate_answer_support,
     evaluate_evidence_gate,
+    ordinal_scope_match,
     repair_answer_citations,
+    title_matches_subject,
 )
 from llamaindex_retrieval.qa_analysis import analyze_question
 from llamaindex_retrieval.query_planning import build_query_plan
@@ -40,6 +42,53 @@ def test_gate_requires_subject_and_explicit_ordinal_relation() -> None:
     assert "relation_mismatch" in failed.issues
 
 
+def test_ordinal_scope_match_rejects_narrower_scope_claim() -> None:
+    question = "中国历史上第一个皇帝是谁？"
+    assert ordinal_scope_match(
+        question,
+        "在中国历史中，嬴政成为中原第一个皇帝，称始皇帝。",
+    ) is True
+    assert ordinal_scope_match(
+        question,
+        "蒙古使用皇帝作为君主头衔，元世祖成为大蒙古国首位使用汉制的皇帝称号。",
+    ) is False
+
+
+def test_gate_rejects_ordinal_evidence_from_narrower_scope() -> None:
+    result = evaluate_evidence_gate(
+        "中国历史上第一个皇帝是谁？",
+        analyze_question("中国历史上第一个皇帝是谁？"),
+        [source(
+            "皇帝",
+            "蒙古使用皇帝作为君主头衔，元世祖成为大蒙古国首位使用汉制的皇帝称号。",
+        )],
+        subject="中国 皇帝",
+        relations=("第一个", "第一位", "首位", "最早"),
+        field_evidence_available=True,
+        field_candidate_count=1,
+    )
+    assert result.passed is False
+    assert "ordinal_scope_mismatch" in result.issues
+
+
+def test_title_identity_accepts_event_wording_variants() -> None:
+    assert title_matches_subject("玄武门", "玄武门事变") is True
+    assert title_matches_subject("玄武门之变", "玄武门事变") is True
+
+
+def test_gate_accepts_arabic_and_chinese_number_entity_variants() -> None:
+    result = evaluate_evidence_gate(
+        "介绍下黄埔10道菜的由来",
+        analyze_question("介绍下黄埔10道菜的由来"),
+        [source("黃埔十道菜", "黃埔十道菜又稱黃埔十項全能。")],
+        subject="黄埔10道菜",
+        relations=("由来",),
+        field_evidence_available=True,
+        field_candidate_count=1,
+    )
+    assert result.passed is True
+
+
 def test_gate_accepts_explicit_person_role_relation() -> None:
     question = "宇树科技创始人是谁？"
     result = evaluate_evidence_gate(
@@ -67,6 +116,21 @@ def test_field_evidence_bypasses_brittle_title_string_matching() -> None:
 
     assert result.passed is True
     assert result.issues == ()
+
+
+def test_field_evidence_does_not_match_partial_multiword_subject() -> None:
+    result = evaluate_evidence_gate(
+        "北京大学的校长是谁？",
+        analyze_question("北京大学的校长是谁？"),
+        [source("北京交通大学", "北京交通大学校长是张三。")],
+        subject="北京大学",
+        relations=("校长",),
+        field_evidence_available=True,
+        field_candidate_count=1,
+    )
+
+    assert result.passed is False
+    assert "subject_mismatch" in result.issues
 
 
 def test_gate_uses_dynamic_planner_relation_outside_builtin_vocabulary() -> None:

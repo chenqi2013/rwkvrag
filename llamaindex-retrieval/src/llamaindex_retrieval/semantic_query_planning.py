@@ -10,12 +10,15 @@ import httpx
 from .config import Settings
 from .generation import EvidenceAnswerGenerator
 from .lexical_index import lexical_tokens, normalize_search_text
-from .query_planning import QueryPlan, TaskField
+from .query_planning import QueryPlan, TaskField, build_query_plan
 from .qa_analysis import QuestionAnalysis, counted_list_size
 
 
 PlannerStrategy = Literal["model", "deterministic_fallback"]
 _CACHE_MAX_ENTRIES = 512
+_IMPLICIT_RELATIONS = {
+    "ordinal": ("第一个", "第一位", "首位", "最早"),
+}
 
 
 @dataclass(frozen=True)
@@ -47,15 +50,6 @@ class LanguageModelQueryPlanner:
                 fallback,
                 "deterministic_fallback",
                 error="generation_password_not_configured",
-            )
-        if (
-            not self.settings.semantic_pipeline_enabled
-            and self._fallback_contract_is_sufficient(fallback)
-        ):
-            return QueryPlanningResult(
-                fallback,
-                "deterministic_fallback",
-                error="structured_fallback_sufficient",
             )
         cached = self._get_cached(question)
         if cached is not None:
@@ -134,15 +128,11 @@ class LanguageModelQueryPlanner:
                 pass
 
         query_limit = self.settings.model_query_planning_max_queries
-        if self._preserve_explicit_list_contract(fallback):
-            query_candidates = (*fallback.queries, *model_queries)
-        else:
-            model_prefix_size = max(1, query_limit // 2)
-            query_candidates = (
-                *model_queries[:model_prefix_size],
-                *fallback.queries,
-                *model_queries[model_prefix_size:],
-            )
+        # The model owns query semantics.  Deterministic fallback queries are
+        # used only when the model call fails; they are never mixed into a
+        # successful model plan because that reintroduces vocabulary-specific
+        # behaviour and can drown out a relevant model query.
+        query_candidates = (*model_queries, fallback.normalized_question)
         queries: list[str] = []
         for query in query_candidates:
             if query not in queries:
@@ -161,33 +151,6 @@ class LanguageModelQueryPlanner:
                 model_queries=model_queries,
                 error="model_subject_not_grounded_in_question",
             )
-        if fallback.analysis.expects_list:
-            intent = "list"
-            answer_shape = "list"
-            set_semantics = (
-                "all"
-                if fallback.analysis.expects_complete_list
-                else fallback.set_semantics
-            )
-        elif fallback.answer_shape in {"summary", "narrative"}:
-            answer_shape = fallback.answer_shape
-            set_semantics = fallback.set_semantics
-        if not self.settings.semantic_pipeline_enabled:
-            if fallback.analysis.intent == "agent" and fallback.subject:
-                subject = fallback.subject
-                relations = fallback.relations
-                fields = fallback.fields
-                intent = "agent"
-                answer_shape = "single_fact"
-                set_semantics = fallback.set_semantics
-            if fallback.analysis.expects_list:
-                intent = "list"
-                answer_shape = "list"
-                set_semantics = fallback.set_semantics
-                if self._subject_matches_fallback(fallback.subject, subject):
-                    subject = fallback.subject
-                    relations = fallback.relations
-                    fields = fallback.fields
         plan = replace(
             fallback,
             queries=tuple(queries[:query_limit]),
@@ -227,6 +190,7 @@ class LanguageModelQueryPlanner:
     async def plan_immutable(self, question: str) -> QueryPlanningResult:
         prompt = self._prompt(question)
         try:
+            fallback = build_query_plan(question)
             raw = await self._request(prompt)
             (
                 subject,
@@ -239,7 +203,47 @@ class LanguageModelQueryPlanner:
             ) = self._parse(raw)
             if not self._subject_is_supported(question, subject):
                 raise ValueError("model subject is not grounded in the question")
-            queries = tuple(dict.fromkeys((*model_queries, question)))[
+            if not subject or (
+                fallback.subject
+                and len(fallback.subject) > len(subject)
+                and normalize_search_text(subject) in normalize_search_text(fallback.subject)
+            ):
+                subject = fallback.subject
+            if intent == "ordinal" and fallback.analysis.subjects:
+                ordinal_subject = re.sub(
+                    r"\s+(?:第一个|第一位|首位|最早)\s+",
+                    " ",
+                    fallback.analysis.subjects[0],
+                ).strip()
+                if len(ordinal_subject) > len(subject):
+                    subject = ordinal_subject
+            fallback_fields = {
+                field.field_id: field
+                for field in fallback.fields
+            }
+            if fallback.analysis.intent != "fact" and intent == "fact":
+                intent = fallback.analysis.intent
+            if not relations:
+                relations = fallback.relations or _IMPLICIT_RELATIONS.get(intent, ())
+            fields = tuple(
+                replace(
+                    field,
+                    relations=field.relations or fallback_fields.get(
+                        field.field_id,
+                        TaskField(field.field_id, field.question, fallback.relations),
+                    ).relations or relations,
+                )
+                for field in (fields or fallback.fields)
+            )
+            if fallback.answer_shape != "single_fact" and answer_shape == "single_fact":
+                answer_shape = fallback.answer_shape
+            if answer_shape == "list" and set_semantics == "specific":
+                set_semantics = fallback.set_semantics
+            queries = tuple(dict.fromkeys((
+                *model_queries,
+                *fallback.queries,
+                question,
+            )))[
                 : self.settings.model_query_planning_max_queries
             ]
             plan = QueryPlan(
@@ -271,19 +275,7 @@ class LanguageModelQueryPlanner:
                 raw_output=raw,
             )
         except (httpx.HTTPError, TimeoutError, ValueError) as error:
-            fallback = QueryPlan(
-                original_question=question,
-                normalized_question=normalize_search_text(question),
-                analysis=QuestionAnalysis("fact", "unknown", (), False, False),
-                queries=(question,),
-                subject=question,
-                relations=(),
-                merge_strategy="rank_fusion",
-                context_policy="none",
-                fields=(TaskField("f1", question, ("相关事实",)),),
-                answer_shape="single_fact",
-                set_semantics="specific",
-            )
+            fallback = build_query_plan(question)
             return QueryPlanningResult(
                 plan=fallback,
                 strategy="deterministic_fallback",
@@ -342,6 +334,7 @@ class LanguageModelQueryPlanner:
         return f"""你是中文知识库的 BM25 查询规划器。你的任务不是回答问题，而是生成多组搜索关键词。
 请先把问题拆成一个可追踪的任务契约，再生成不同检索角度的关键词组合。
 查询应适合百科全文检索：保留专名，使用原问题可能对应的百科标题、关系词和常见同义表达。可以把可能的人物、事件结果或标准术语作为多种“检索假设”写入 queries，但不能把这些假设写进 subject；后端会用原文验证假设。
+对于带范围限定的对象，至少保留一条“完整范围 + 关系”的查询，并可在其他查询中使用资料常见的正式名称或别名；不要只保留宽泛范围词，也不要把范围限定从查询中删除。
 subject 必须是问题中已经出现的待查实体对象，不能填写你猜测的答案，也不能把“创始人、作者、原因、时间、地点、站点”等所求字段并入对象。例如“某公司创始人是谁”的 subject 只能是“某公司”；“赤手空拳打死老虎的是谁”不能把人物姓名填入 subject。
 如果问题询问“是谁”且描述的是一个事件，queries 中至少一条必须包含你推测的具体人物姓名及其典型事件关键词；不能全部只重复“人物、英雄、主角、人名”等抽象词。该人物只作为待验证的检索假设。
 intent 只能是 definition、fact、list、cause、time、location、birthplace、agent、ordinal、comparison、procedure。
@@ -433,8 +426,6 @@ relations 只写关系名称及同义表达，不能填写猜测的具体答案�
             raise ValueError("planner subject must not be empty")
         if not fields:
             raise ValueError("planner fields must not be empty")
-        if not relations:
-            raise ValueError("planner relations must not be empty")
         if not queries:
             raise ValueError("planner must return at least one query")
         return subject, intent, answer_shape, set_semantics, fields, relations, queries
@@ -454,15 +445,19 @@ relations 只写关系名称及同义表达，不能填写猜测的具体答案�
         seen_ids: set[str] = set()
         for item in value[:8]:
             if not isinstance(item, dict) or not {
-                "field_id", "question", "relations",
+                "field_id", "question",
             }.issubset(item):
                 continue
             field_id = cls._clean_string(item["field_id"], max_length=24)
             question = cls._clean_string(item["question"], max_length=160)
-            relations = cls._clean_string_list(item["relations"], max_items=8, max_length=32)
+            relations = cls._clean_string_list(
+                item.get("relations"),
+                max_items=8,
+                max_length=32,
+            )
             if not re.fullmatch(r"f[1-9]\d*", field_id) or field_id in seen_ids:
                 continue
-            if not question or not relations:
+            if not question:
                 continue
             seen_ids.add(field_id)
             fields.append(TaskField(field_id, question, relations))

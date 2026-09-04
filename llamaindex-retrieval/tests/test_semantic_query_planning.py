@@ -340,6 +340,23 @@ async def test_model_planner_falls_back_when_response_is_not_valid_json() -> Non
 
 
 @pytest.mark.asyncio
+async def test_immutable_planner_fallback_keeps_deterministic_subject() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return stream_response("not json")
+
+    question = "中国的首都是哪个城市？"
+    planner = LanguageModelQueryPlanner(
+        Settings(generation_password="secret"),
+        transport=httpx.MockTransport(handler),
+    )
+
+    result = await planner.plan_immutable(question)
+
+    assert result.strategy == "deterministic_fallback"
+    assert result.plan == build_query_plan(question)
+
+
+@pytest.mark.asyncio
 async def test_model_planner_can_be_disabled() -> None:
     settings = Settings(
         generation_password="secret",

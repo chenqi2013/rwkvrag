@@ -51,6 +51,8 @@ export default function SearchPage() {
     }
   };
 
+  const writerAttempted = response?.generation.answer_strategy === "single_writer_call"
+    || response?.generation.answer_strategy === "generation_failed";
   const writerCalled = response?.generation.answer_strategy === "single_writer_call"
     || response?.generation.writer_trace != null;
   const evidenceVerified = writerCalled
@@ -117,11 +119,13 @@ export default function SearchPage() {
             extra={
               response && (
                 <Space size={4} wrap>
-                  <Tag color={evidenceVerified ? "green" : writerCalled ? "blue" : "orange"}>
-                    {evidenceVerified
-                      ? tr("证据校验通过", "Evidence verified")
-                      : writerCalled
-                        ? tr("已生成，证据校验未通过", "Generated; evidence check failed")
+          <Tag color={evidenceVerified ? "green" : writerAttempted ? "blue" : "orange"}>
+            {evidenceVerified
+              ? tr("证据校验通过", "Evidence verified")
+              : response?.generation.answer_strategy === "generation_failed"
+                ? tr("生成失败", "Generation failed")
+              : writerCalled
+                ? tr("已生成，证据校验未通过", "Generated; evidence check failed")
                         : tr("证据不足，未生成", "Insufficient evidence; not generated")}
                   </Tag>
                   {response.generation.model ? (

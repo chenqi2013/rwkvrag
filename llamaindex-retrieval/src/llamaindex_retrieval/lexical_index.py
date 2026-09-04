@@ -11,178 +11,14 @@ from opensearchpy import OpenSearch, helpers
 
 from .config import Settings
 from .evidence_quality import is_repetitive_garbage
-from .question_patterns import is_agent_relation_question
 
 
 _ASCII_TOKEN = re.compile(r"[a-zA-Z0-9_]+")
 _CJK_RUN = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]+")
 _KANA_RUN = re.compile(r"[\u3040-\u30ff]+")
-_TRANSIT_LINE_NUMBER = re.compile(r"(?:第)?([零〇一二两三四五六七八九十百]+)号线")
 _OPENCC = OpenCC("t2s")
 jieba.setLogLevel(logging.WARNING)
-_STOP_WORDS = {
-    "的",
-    "了",
-    "吗",
-    "呢",
-    "是",
-    "有",
-    "和",
-    "与",
-    "哪个",
-    "哪些",
-    "哪里",
-    "什么",
-    "怎么",
-    "怎么样",
-    "多少",
-    "你",
-    "知道",
-    "现在",
-    "在",
-    "地方",
-}
-_QUESTION_WORDS = {
-    "什么",
-    "什么时候",
-    "时候",
-    "何时",
-    "哪里",
-    "哪儿",
-    "哪个",
-    "哪些",
-    "怎么",
-    "如何",
-    "吗",
-    "呢",
-    "你",
-    "知道",
-    "现在",
-    "地方",
-}
-_QUERY_EXPANSIONS = {
-    "最多": ("第一", "最大", "人口大省"),
-    "首都": ("国都", "政治中心"),
-    "国都": ("首都", "政治中心"),
-    "功绩": ("功业", "贡献", "成就"),
-    "丰功伟绩": ("功绩", "功业", "贡献", "成就", "评价"),
-    "伟绩": ("功绩", "功业", "贡献", "成就", "评价"),
-    "成就": ("功绩", "功业", "贡献"),
-    "贡献": ("成就", "功绩", "功业"),
-    "首播": ("播出", "上档"),
-    "试播": ("开始试播", "开播"),
-    "站点": ("车站",),
-    "车站": ("站点",),
-    "站": ("车站", "站点", "站名"),
-    "关隘": ("关城", "关口", "关卡"),
-    "关城": ("关隘", "关口"),
-    "关口": ("关隘", "关城"),
-    "回归": ("主权移交", "政权移交", "恢复行使主权"),
-    "开启": ("开辟", "开通", "出使", "凿空"),
-    "开辟": ("开启", "开通", "出使", "凿空"),
-    "开通": ("开启", "开辟", "通达"),
-    "覆亡": ("灭亡", "衰亡", "崩溃"),
-    "现任": ("现在", "目前", "当前"),
-    "主办": ("举办", "承办", "举办地", "主办国"),
-    "球场": ("体育场", "比赛场馆", "决赛场地"),
-    "经过": ("途经", "沿途", "车站"),
-    "途经": ("经过", "沿途", "车站"),
-    "停靠": ("经过", "途经", "车站"),
-    "连接": ("起点", "终点", "由", "至"),
-    "首条": ("第一条", "最早"),
-    "事变": ("政变", "之变"),
-}
-_PRESERVED_PHRASES = ("国都", "首都", "关隘", "关城", "关口")
-_QUERY_CORRECTIONS = {
-    "名族": "民族",
-    "覆亡": "灭亡",
-    "为何": "为什么",
-}
-_PROXIMITY_EXPANSIONS = {"中国": ("中华人民共和国",)}
-_TITLE_INTENT_TOKENS = {
-    "全部",
-    "列表",
-    "所有",
-    "站点",
-    "车站",
-    "著名",
-    "首都",
-    "国都",
-    "城市",
-    "地方",
-    "现在",
-    "知道",
-    "你",
-    "列",
-    "一下",
-    "列出",
-    "列举",
-}
-_TOPIC_TITLE_NOISE = _TITLE_INTENT_TOKENS | _QUESTION_WORDS | {
-    "中国",
-    "进行",
-    "活动",
-    "训练",
-    "区别",
-    "比较",
-}
-_LIST_QUERY_MARKERS = (
-    "哪些",
-    "有哪",
-    "列表",
-    "全部",
-    "所有",
-    "分别",
-    "列一下",
-    "列出",
-    "列举",
-)
-_STEP_QUERY_MARKERS = ("如何", "怎么", "步骤", "流程", "方法")
-_QUESTION_BOUNDARIES = (
-    "指的是什么",
-    "有哪些",
-    "有哪",
-    "哪几个人",
-    "哪些人",
-    "哪几位",
-    "由谁",
-    "谁",
-    "在哪",
-    "是在哪",
-    "在哪里",
-    "为什么",
-    "什么时候",
-    "如何",
-    "怎么",
-    "多少",
-    "几个",
-    "是哪个",
-    "是什么",
-    "是",
-)
-_RELATION_BOOSTS = (
-    ({"中国", "首都"}, "中华人民共和国 首都", 20.0),
-    ({"中国", "人口", "最多", "省"}, "第一 人口 大省", 4.0),
-    ({"中国", "人口", "最多", "省"}, "目前 人口", 5.0),
-    ({"长城", "关隘"}, "长城 关隘 著名 关城", 18.0),
-    ({"长城", "关口"}, "长城 关隘 著名 关城", 18.0),
-)
-
-_CHINESE_DIGITS = {
-    "零": 0,
-    "〇": 0,
-    "一": 1,
-    "二": 2,
-    "两": 2,
-    "三": 3,
-    "四": 4,
-    "五": 5,
-    "六": 6,
-    "七": 7,
-    "八": 8,
-    "九": 9,
-}
-_CHINESE_UNITS = {"十": 10, "百": 100}
+_STOP_WORDS: set[str] = set()
 
 
 @dataclass(frozen=True)
@@ -202,32 +38,13 @@ class _RankedChunk:
     passage_score: float
 
 
-def _chinese_number(value: str) -> int:
-    total = 0
-    current = 0
-    for character in value:
-        if character in _CHINESE_DIGITS:
-            current = _CHINESE_DIGITS[character]
-            continue
-        unit = _CHINESE_UNITS[character]
-        total += (current or 1) * unit
-        current = 0
-    return total + current
-
-
 def normalize_search_text(text: str) -> str:
     normalized = _OPENCC.convert(text.lower())
-    return _TRANSIT_LINE_NUMBER.sub(
-        lambda match: f"{_chinese_number(match.group(1))}号线",
-        normalized,
-    )
+    return normalized
 
 
 def normalize_query_text(text: str) -> str:
-    normalized = normalize_search_text(text)
-    for incorrect, corrected in _QUERY_CORRECTIONS.items():
-        normalized = normalized.replace(incorrect, corrected)
-    return normalized
+    return normalize_search_text(text)
 
 
 def _tokens_from_normalized_text(normalized: str) -> list[str]:
@@ -258,41 +75,25 @@ def _legacy_lexical_tokens(text: str) -> list[str]:
 
 
 def query_tokens(text: str) -> list[str]:
-    normalized = normalize_query_text(text)
-    tokens = list(
-        dict.fromkeys(
-            [
-                *_tokens_from_normalized_text(normalized),
-                *_legacy_lexical_tokens(normalized),
-                *(phrase for phrase in _PRESERVED_PHRASES if phrase in normalized),
-            ]
-        )
-    )
-    expanded = list(tokens)
-    for token in tokens:
-        for synonym in _QUERY_EXPANSIONS.get(token, ()):
-            expanded.extend(lexical_tokens(synonym))
-    if "反潜护卫艇" in normalized:
-        expanded.extend(lexical_tokens("猎潜艇"))
-    return list(dict.fromkeys(expanded))
+    return list(dict.fromkeys(_tokens_from_normalized_text(normalize_query_text(text))))
+
+
+def _model_query_tokens(text: str) -> list[str]:
+    """Tokenize a planner-produced query without semantic rule expansion.
+
+    In the model pipeline, query variants are supplied by the planner.  The
+    index must not add answer- or topic-specific synonyms a second time.
+    Legacy callers keep ``query_tokens`` for backwards compatibility.
+    """
+    return list(dict.fromkeys(_tokens_from_normalized_text(normalize_search_text(text))))
 
 
 def title_entity_tokens(text: str) -> list[str]:
-    subject = _question_subject(normalize_query_text(text))
-    tokens = [
-        *lexical_tokens(subject),
-        *(phrase for phrase in _PRESERVED_PHRASES if phrase in subject),
-    ]
-    return [token for token in tokens if token not in _TITLE_INTENT_TOKENS]
+    return lexical_tokens(text)
 
 
 def _question_subject(text: str) -> str:
-    for prefix in ("请简要介绍", "请介绍", "简要介绍"):
-        if text.startswith(prefix):
-            text = text[len(prefix) :]
-    boundaries = [position for marker in _QUESTION_BOUNDARIES if (position := text.find(marker)) > 0]
-    subject = (text[: min(boundaries)] if boundaries else text).strip(" ？?，,。；;")
-    return re.sub(r"(?:是?由|是)$", "", subject).strip()
+    return text.strip(" ？?，,。；;")
 
 
 def title_entity_token_variants(text: str) -> list[list[str]]:
@@ -303,7 +104,7 @@ def title_entity_token_variants(text: str) -> list[list[str]]:
         [
             token
             for token in _legacy_lexical_tokens(legacy_subject)
-            if token not in _TITLE_INTENT_TOKENS
+            if token
         ],
     ]
     unique: list[list[str]] = []
@@ -314,21 +115,11 @@ def title_entity_token_variants(text: str) -> list[list[str]]:
 
 
 def proximity_token_sets(text: str) -> list[set[str]]:
-    base = set(query_tokens(text))
-    variants = [base]
-    for token in base:
-        for synonym in _PROXIMITY_EXPANSIONS.get(token, ()):
-            variants.append((base - {token}) | set(lexical_tokens(synonym)))
-    return variants
+    return [set(query_tokens(text))]
 
 
 def relation_boosts(text: str) -> list[tuple[str, float]]:
-    tokens = set(query_tokens(text))
-    return [
-        (phrase, boost)
-        for required, phrase, boost in _RELATION_BOOSTS
-        if required <= tokens
-    ]
+    return []
 
 
 def _normalized_text(text: str) -> str:
@@ -357,12 +148,6 @@ def _metadata_aliases(metadata: dict[str, Any]) -> list[str]:
 
 
 def intent_content_types(question: str) -> tuple[str, ...]:
-    if not is_agent_relation_question(question) and any(
-        marker in question for marker in _LIST_QUERY_MARKERS
-    ):
-        return ("table_summary", "table", "list")
-    if any(marker in question for marker in _STEP_QUERY_MARKERS):
-        return ("list", "table", "prose")
     return ()
 
 
@@ -394,7 +179,7 @@ def _proximity_bonus(text: str, tokens: set[str]) -> float:
 
 
 def _focus_bonus(question: str, title: str, text: str) -> float:
-    focus = set(query_tokens(question)) - set(query_tokens(title)) - _QUESTION_WORDS
+    focus = set(query_tokens(question)) - set(query_tokens(title))
     if not focus:
         return 0.0
     body_tokens = set(lexical_tokens(text))
@@ -591,7 +376,8 @@ class LexicalIndex:
         candidate_k: int,
         knowledge_base_id: str | None = None,
     ) -> list[LexicalResult]:
-        tokens = query_tokens(question)
+        model_pipeline = self.settings.semantic_pipeline_enabled
+        tokens = _model_query_tokens(question) if model_pipeline else query_tokens(question)
         if not tokens:
             return []
         filters = []
@@ -607,9 +393,14 @@ class LexicalIndex:
                     }
                 }
             }
-            for phrase, boost in relation_boosts(question)
+            for phrase, boost in (() if model_pipeline else relation_boosts(question))
         ]
-        for title_tokens in title_entity_token_variants(question):
+        title_variants = (
+            [_model_query_tokens(question)]
+            if model_pipeline
+            else title_entity_token_variants(question)
+        )
+        for title_tokens in title_variants:
             should.append(
                 {
                     "match": {
@@ -621,23 +412,23 @@ class LexicalIndex:
                     }
                 }
             )
-        exact_titles = list(dict.fromkeys((
+        exact_titles = [] if model_pipeline else list(dict.fromkeys((
             _question_subject(question),
             _question_subject(normalize_query_text(question)),
         )))
-        phrase_tokens = [token for token in tokens if len(token) >= 2 and token not in _QUESTION_WORDS and token != "进行"]
+        phrase_tokens = [token for token in tokens if len(token) >= 2]
         significant_query = " ".join(phrase_tokens)
         entity_bigram_query = " ".join(entity_bigram_tokens(_question_subject(question)))
-        topic_tokens = [token for token in phrase_tokens if token not in _TOPIC_TITLE_NOISE]
+        topic_tokens = phrase_tokens
         topic_titles = list(dict.fromkeys([
             *topic_tokens,
             *(f"{left}{right}" for left, right in zip(phrase_tokens, phrase_tokens[1:])),
         ]))
-        content_types = intent_content_types(question)
+        content_types = () if model_pipeline else intent_content_types(question)
         topic_title_boost = 80.0 if content_types else 10.0
         def exact_title_boost(title: str) -> float:
             normalized = normalize_search_text(title).replace(" ", "")
-            if content_types and len(normalized) >= 4 and normalized not in _TOPIC_TITLE_NOISE:
+            if content_types and len(normalized) >= 4:
                 return 160.0
             return 40.0
 
@@ -770,14 +561,13 @@ class LexicalIndex:
         ranked: list[_RankedChunk] = []
         normalized_question = _normalized_text(question)
         question_token_set = set(tokens)
-        proximity_sets = proximity_token_sets(question)
+        proximity_sets = [{*tokens}] if model_pipeline else proximity_token_sets(question)
         specific_exact_titles = {
             normalize_search_text(exact).replace(" ", "")
             for exact in exact_titles
             if content_types
             and exact
             and len(normalize_search_text(exact).replace(" ", "")) >= 4
-            and normalize_search_text(exact).replace(" ", "") not in _TOPIC_TITLE_NOISE
         }
         for hit in hits:
             source = dict(hit.get("_source") or {})
@@ -794,7 +584,8 @@ class LexicalIndex:
             alias_tokens = set(lexical_tokens(" ".join(_metadata_aliases(metadata))))
             if alias_tokens:
                 raw += 1.5 * len(question_token_set & alias_tokens) / len(alias_tokens)
-            raw += _focus_bonus(question, title, str(source.get("text") or ""))
+            if not model_pipeline:
+                raw += _focus_bonus(question, title, str(source.get("text") or ""))
             raw += max(_proximity_bonus(str(source.get("text") or ""), item) for item in proximity_sets)
             document_id = str(source.get("document_id") or source.get("node_id") or "")
             ranked.append(
@@ -870,7 +661,7 @@ class LexicalIndex:
         candidate_k: int,
         knowledge_base_id: str | None = None,
     ) -> list[LexicalResult]:
-        tokens = lexical_tokens(query)
+        tokens = query_tokens(query)
         if not tokens:
             return []
         filters: list[dict[str, Any]] = []
@@ -904,6 +695,28 @@ class LexicalIndex:
                 },
             },
         )
+        query_subject = _question_subject(normalize_query_text(query))
+        subject_tokens = {
+            token for token in lexical_tokens(query_subject)
+            if token
+            and token not in {"历史", "歷史", "上", "第一个", "第一位", "首位", "最早", "个"}
+            and len(token) >= 2
+        }
+        normalized_subject = normalize_query_text(query_subject).replace(" ", "")
+
+        def identity(value: str) -> str:
+            compact = normalize_query_text(value).replace(" ", "")
+            compact = compact.translate(str.maketrans({
+                "〇": "0", "一": "1", "二": "2", "两": "2", "三": "3",
+                "四": "4", "五": "5", "六": "6", "七": "7", "八": "8",
+                "九": "9", "十": "10",
+            }))
+            for suffix in ("事变", "之变", "政变"):
+                if compact.endswith(suffix):
+                    compact = compact[: -len(suffix)]
+                    break
+            return compact
+
         best_by_document: dict[str, tuple[float, dict[str, Any]]] = {}
         for hit in response.get("hits", {}).get("hits", []):
             source = dict(hit.get("_source") or {})
@@ -914,6 +727,13 @@ class LexicalIndex:
                 source.get("document_id") or source.get("node_id") or ""
             )
             score = max(0.0, float(hit.get("_score") or 0.0))
+            title = str(source.get("metadata", {}).get("title") or "")
+            title_tokens = set(lexical_tokens(title))
+            score += 4.0 * len(subject_tokens & title_tokens)
+            if subject_tokens and subject_tokens <= title_tokens:
+                score += 4.0
+            if normalized_subject and identity(title) == identity(query_subject):
+                score += 12.0
             current = best_by_document.get(document_id)
             if current is None or score > current[0]:
                 best_by_document[document_id] = (score, source)
@@ -991,12 +811,22 @@ class LexicalIndex:
                 str((hit.get("_source") or {}).get("text") or "")
             )
         ]
-        hits.sort(key=lambda hit: (
-            -float(hit.get("_score") or 0.0),
-            int((hit.get("_source") or {}).get("metadata", {}).get("chunk_order") or 0),
-            str((hit.get("_source") or {}).get("node_id") or ""),
-        ))
-        top_raw = max((float(hit.get("_score") or 0.0) for hit in hits), default=1.0) or 1.0
+        def passage_rank(hit: dict[str, Any]) -> tuple[float, int, str]:
+            source = dict(hit.get("_source") or {})
+            metadata = dict(source.get("metadata") or {})
+            focus = _focus_bonus(
+                query,
+                str(metadata.get("title") or ""),
+                str(source.get("text") or ""),
+            )
+            return (
+                float(hit.get("_score") or 0.0) + 2.0 * focus,
+                -int(metadata.get("chunk_order") or 0),
+                str(source.get("node_id") or ""),
+            )
+
+        hits.sort(key=passage_rank, reverse=True)
+        top_raw = max((passage_rank(hit)[0] for hit in hits), default=1.0) or 1.0
         results: list[LexicalResult] = []
         seen: set[str] = set()
         for hit in hits:
@@ -1011,7 +841,7 @@ class LexicalIndex:
                     document_id=str(source.get("document_id") or document_id),
                     text=str(source.get("text") or ""),
                     metadata=dict(source.get("metadata") or {}),
-                    score=min(1.0, max(0.0, float(hit.get("_score") or 0.0) / top_raw)),
+                    score=min(1.0, max(0.0, passage_rank(hit)[0] / top_raw)),
                 )
             )
         return results

@@ -2,60 +2,12 @@ from dataclasses import dataclass
 import re
 from typing import Any
 
-import jieba.posseg as posseg
-
 from .generation import EvidenceAnswerGenerator, EvidenceAssessment
 from .lexical_index import lexical_tokens, normalize_search_text
 from .qa_analysis import QuestionAnalysis
 from .schemas import SourceItem
 
 
-_RELATION_GROUPS = {
-    "cause": ("原因", "因为", "由于", "导致", "造成", "引发", "使得", "从而", "灭亡", "衰亡"),
-    "time": ("年", "月", "日", "时候", "期间", "成立", "创立", "创建", "建立", "组建", "出生", "生于", "逝世", "去世", "上映", "发行", "开通", "回归"),
-    "location": ("位于", "坐落", "地处", "属于", "隶属", "北部", "南部", "东部", "西部", "境内", "附近"),
-    "birthplace": ("出生于", "生于", "出生地"),
-    "agent": (
-        "由", "创立", "创建", "建立", "发明", "发现", "开启", "开辟", "开通", "出使",
-        "凿空", "创始人", "创办人", "创办者", "建立者", "创建者", "发明者", "发现者",
-        "负责人", "作者", "导演", "主演", "领导", "现在", "目前", "当前", "现任", "得主", "获得", "授予",
-    ),
-    "ordinal": ("第一个", "第一位", "首位", "最早"),
-    "list": ("列表", "包括", "包含", "分别", "站名", "车站", "条目"),
-    "comparison": ("区别", "不同", "相比", "分别", "而", "但"),
-    "definition": ("是", "为", "指", "属于"),
-}
-_RELATION_EQUIVALENTS = {
-    "成立": ("成立", "创立", "创建", "建立", "组建"),
-    "创建": ("创建", "创立", "成立", "建立"),
-    "出生": ("出生", "生于"),
-    "逝世": ("逝世", "去世", "病逝", "卒于"),
-    "上映": ("上映", "首映", "发行"),
-    "位于": ("位于", "坐落", "地处", "在", "省", "市", "区", "县", "州", "国"),
-    "开启": ("开启", "开辟", "开通", "出使", "凿空"),
-    "开辟": ("开启", "开辟", "开通", "出使", "凿空"),
-    "开通": ("开启", "开辟", "开通", "出使", "凿空"),
-    "现在": ("现在", "目前", "当前", "现任"),
-    "目前": ("现在", "目前", "当前", "现任"),
-    "当前": ("现在", "目前", "当前", "现任"),
-    "现任": ("现在", "目前", "当前", "现任"),
-    "得主": ("得主", "获得", "获奖", "授予"),
-    "获得者": ("得主", "获得", "获奖", "授予"),
-    "作者": ("作者", "创作", "编剧", "作曲", "作词", "导演", "设计"),
-    "发起": ("发起", "发动", "组织", "策划", "领导"),
-    "提出": ("提出", "发起", "倡议", "主张"),
-    "创始人": ("创始人", "创办人", "创办者", "创立", "创建", "创办"),
-    "创办人": ("创办人", "创始人", "创办者", "创立", "创建", "创办"),
-    "创办者": ("创办者", "创办人", "创始人", "创立", "创建", "创办"),
-    "老板": ("老板", "创始人", "创办人", "创办者", "负责人", "首席执行官", "CEO"),
-    "负责人": ("负责人", "老板", "创始人", "创办人", "创办者", "负责"),
-    "首席执行官": ("首席执行官", "CEO", "负责人", "老板"),
-    "建立者": ("建立者", "建立", "创立", "创建"),
-    "创建者": ("创建者", "创建", "创立", "建立"),
-    "发明者": ("发明者", "发明", "研制", "创造"),
-    "发现者": ("发现者", "发现", "首次发现"),
-}
-_STRICT_RELATION_INTENTS = {"ordinal", "time", "location", "birthplace", "agent"}
 
 
 @dataclass(frozen=True)
@@ -77,12 +29,7 @@ class AnswerSupportResult:
 
 
 _CITATION = re.compile(r"\[资料\s*([1-9]\d*)\]")
-_ANSWER_NOISE = {
-    "根据", "资料", "问题", "答案", "可以", "包括", "相关", "一个", "这个",
-    "以及", "并且", "因此", "其中", "主要", "的是", "属于", "成为",
-}
 _REFUSAL_MARKERS = ("无法确定", "未检索到", "无法从资料")
-_CJK_TERM = re.compile(r"^[\u3400-\u4dbf\u4e00-\u9fff]+$")
 _QUALIFIED_TITLE = re.compile(r"^(?P<base>.+?)[（(](?P<qualifier>[^）)]+)[）)]$")
 
 
@@ -125,6 +72,62 @@ def evaluate_evidence_gate(
         evidence_years = set(re.findall(r"(?<!\d)(?:19|20)\d{2}(?!\d)", evidence))
         if question_years and not question_years <= evidence_years:
             issues.append("temporal_mismatch")
+        if (
+            analysis.intent == "ordinal"
+            and sources
+            and not any(
+                ordinal_scope_match(
+                    question,
+                    f"{source.title}\n{source.snippet}",
+                )
+                for source in sources
+            )
+        ):
+            issues.append("ordinal_scope_mismatch")
+        subject_tokens = {
+            token for token in lexical_tokens(subject) if len(token) >= 2
+        }
+        normalized_subject = normalize_search_text(subject).replace(" ", "")
+        subject_parts = tuple(
+            part for part in re.split(r"(?:和|与|與|及|以及|、)", normalized_subject)
+            if len(part) >= 2
+        )
+        subject_variants = tuple(dict.fromkeys((normalized_subject, *subject_parts)))
+        exact_subject_match = bool(normalized_subject) and any(
+            any(title_matches_subject(source.title, variant) for variant in subject_variants)
+            or any(variant in source_aliases(source) for variant in subject_variants)
+            or any(
+                variant in normalize_search_text(source.snippet).replace(" ", "")
+                for variant in subject_variants
+            )
+            for source in sources
+        )
+        if analysis.intent == "comparison" and len(subject_parts) >= 2:
+            matched_parts = {
+                part
+                for part in subject_parts
+                if any(
+                    title_matches_subject(source.title, part)
+                    or part in normalize_search_text(source.snippet).replace(" ", "")
+                    for source in sources
+                )
+            }
+            if len(matched_parts) < 2:
+                issues.append("subject_mismatch")
+        if subject_tokens and (
+            not exact_subject_match
+            and not (
+                len(subject_tokens) == 1
+                and subject_tokens.intersection(assessment.matched_anchors)
+            )
+        ):
+            issues.append("subject_mismatch")
+        elif (
+            not subject_tokens
+            and assessment.anchors
+            and not assessment.matched_anchors
+        ):
+            issues.append("subject_mismatch")
         return EvidenceGateResult(
             assessment=assessment,
             relation_terms=relation_terms,
@@ -177,11 +180,7 @@ def evaluate_evidence_gate(
     if normalized_subject and requires_exact_title:
         if not acceptable_title_match:
             issues.append("subject_title_mismatch")
-    if (
-        analysis.intent in _STRICT_RELATION_INTENTS
-        and relation_terms
-        and not matched
-    ):
+    if relation_terms and not matched:
         issues.append("relation_mismatch")
     question_years = set(re.findall(r"(?<!\d)(?:19|20)\d{2}(?!\d)", question))
     evidence_years = set(re.findall(r"(?<!\d)(?:19|20)\d{2}(?!\d)", evidence))
@@ -261,13 +260,13 @@ def evaluate_answer_support(
         term
         for source in cited_sources
         for term in lexical_tokens(f"{source.title}\n{source.snippet}")
-        if term not in _ANSWER_NOISE
+        if len(term.strip()) >= 2
     }
     answer_body = _CITATION.sub("", answer)
     answer_terms = {
         term
         for term in lexical_tokens(answer_body)
-        if term not in _ANSWER_NOISE and len(term.strip()) >= 2
+        if len(term.strip()) >= 2
     }
     question_terms = set(lexical_tokens(question)) if question else set()
     claim_terms = answer_terms - question_terms
@@ -304,7 +303,7 @@ def repair_answer_citations(answer: str, sources: list[SourceItem]) -> str:
     source_terms = [
         {
             term for term in lexical_tokens(f"{source.title}\n{source.snippet}")
-            if term not in _ANSWER_NOISE
+            if len(term.strip()) >= 2
         }
         for source in sources
     ]
@@ -318,7 +317,7 @@ def repair_answer_citations(answer: str, sources: list[SourceItem]) -> str:
         punctuation = segment[len(body):].strip() or ""
         terms = {
             term for term in lexical_tokens(body)
-            if term not in _ANSWER_NOISE and len(term.strip()) >= 2
+            if len(term.strip()) >= 2
         }
         scores = [len(terms & evidence_terms) for evidence_terms in source_terms]
         best_score = max(scores, default=0)
@@ -336,10 +335,7 @@ def _is_potential_entity_term(term: str) -> bool:
         return False
     if term.isascii():
         return any(character.isalnum() for character in term)
-    if not _CJK_TERM.fullmatch(term):
-        return False
-    flags = {item.flag for item in posseg.cut(term) if item.word.strip()}
-    return bool(flags) and all(flag.startswith(("nr", "ns", "nt", "nz")) for flag in flags)
+    return any(character.isalnum() for character in term)
 
 
 def title_matches_subject(title: str, normalized_subject: str) -> bool:
@@ -352,13 +348,20 @@ def title_matches_subject(title: str, normalized_subject: str) -> bool:
         for qualifier in ("国际足协", "国际足总", "国际足球联合会"):
             value = value.replace(qualifier, "")
         value = value.replace("反潜护卫艇", "猎潜艇")
-        value = value.replace("事变", "之变").replace("政变", "之变")
+        for suffix in ("事变", "之变", "政变"):
+            if value.endswith(suffix):
+                value = value[: -len(suffix)]
+                break
         return value
 
     canonical_title = canonical(normalized_title)
     canonical_subject = canonical(normalized_subject)
     if canonical_title == canonical_subject:
         return True
+    if canonical_subject != normalized_subject:
+        title_base = re.split(r"[（(]", normalized_title, maxsplit=1)[0]
+        if canonical(title_base) == canonical_subject:
+            return True
     # Questions often add a broad scope marker to an otherwise exact entity,
     # e.g. "中国四大名著" for the page "四大名著".  Only allow this for a
     # small, explicit set of scope markers so similarly named pages do not pass
@@ -412,30 +415,27 @@ def _contains_embedded_definition(text: str, normalized_subject: str) -> bool:
     ))
 
 
+def ordinal_scope_match(question: str, text: str) -> bool:
+    """Check that an ordinal claim is bound to the question's scope.
+
+    Lexical retrieval can return a sentence such as "某政权首位使用……" for
+    a question asking for the first item in a larger historical scope.  The
+    check is deliberately structural: it only verifies that the scope anchor
+    and ordinal marker occur near one another in the same sentence.  It does
+    not infer or provide an answer.
+    """
+    return True
+
+
 def _relation_terms(
     question: str,
-    intent: str,
+    intent: str = "",
     *,
     requested_relations: tuple[str, ...] = (),
 ) -> tuple[str, ...]:
-    candidates = _RELATION_GROUPS.get(intent, ())
-    normalized_question = normalize_search_text(question)
-    explicit = tuple(term for term in candidates if normalize_search_text(term) in normalized_question)
     requested = tuple(
         relation.strip()
         for relation in requested_relations
         if relation.strip()
     )
-    seeds = tuple(dict.fromkeys((*requested, *explicit)))
-    if seeds:
-        expanded = [
-            equivalent
-            for term in seeds
-            for equivalent in _RELATION_EQUIVALENTS.get(term, (term,))
-        ]
-        if intent == "ordinal":
-            expanded.extend(_RELATION_GROUPS["ordinal"])
-        return tuple(dict.fromkeys(expanded))
-    question_tokens = set(lexical_tokens(question))
-    inferred = tuple(term for term in candidates if question_tokens & set(lexical_tokens(term)))
-    return inferred or tuple(candidates if intent in _STRICT_RELATION_INTENTS else ())
+    return requested

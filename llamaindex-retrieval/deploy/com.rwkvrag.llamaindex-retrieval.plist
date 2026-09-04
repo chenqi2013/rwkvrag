@@ -35,6 +35,8 @@
     <string>immutable</string>
     <key>RWKVRAG_GENERATION_MAX_TOKENS</key>
     <string>2048</string>
+    <key>RWKVRAG_ANSWER_POINT_FANOUT_ENABLED</key>
+    <string>true</string>
     <key>RWKVRAG_MONGO_URL</key>
     <string>mongodb://127.0.0.1:27017</string>
     <key>RWKVRAG_MONGO_DATABASE</key>

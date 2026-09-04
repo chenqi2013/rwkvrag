@@ -2624,6 +2624,106 @@ async def test_immutable_pipeline_writer_only_receives_resolver_spans() -> None:
 
 
 @pytest.mark.asyncio
+async def test_immutable_answer_point_fanout_records_branch_trace() -> None:
+    question = "中国的首都是哪个城市？"
+    selected_span = "中华人民共和国的首都是北京。"
+
+    class Resolver:
+        async def extract(
+            self,
+            value: str,
+            plan: Any,
+            sources: list[SourceItem],
+        ) -> EvidenceExtractionResult:
+            return EvidenceExtractionResult(
+                candidates=(EvidenceSpan(
+                    field_id=plan.fields[0].field_id,
+                    source_index=0,
+                    span=selected_span,
+                    content_hash=sha256(selected_span.encode("utf-8")).hexdigest(),
+                ),),
+                attempted_sources=len(sources),
+                completed_sources=len(sources),
+                source_signatures=((
+                    sources[0].id,
+                    sha256(sources[0].snippet.encode("utf-8")).hexdigest(),
+                ),),
+            )
+
+    class Writer:
+        async def generate(self, value: str, sources: list[SourceItem]) -> str:
+            return "北京。[资料 1]"
+
+    service = SearchService(
+        Settings(
+            generation_output_mode="immutable",
+            answer_point_fanout_enabled=True,
+            model_query_planning_enabled=False,
+        ),
+        cast(Any, FakeCapitalIndex()),
+        generator=cast(Any, Writer()),
+        evidence_extractor=cast(Any, Resolver()),
+    )
+
+    response = await service.ask(SearchRequest(question=question, top_k=1))
+
+    assert response.answer == "北京。[资料 1]"
+    assert response.retrieval["answer_point_fanout"] is True
+    assert response.retrieval["mode"] == "answer-point-fanout+bm25+document-rrf"
+    assert [branch["field"] for branch in response.retrieval["branches"]] == ["f1"]
+
+
+@pytest.mark.asyncio
+async def test_immutable_pipeline_blocks_writer_for_mismatched_subject() -> None:
+    class Resolver:
+        async def extract(
+            self,
+            value: str,
+            plan: Any,
+            sources: list[SourceItem],
+        ) -> EvidenceExtractionResult:
+            span = sources[0].snippet
+            return EvidenceExtractionResult(
+                candidates=(EvidenceSpan(
+                    field_id="f1",
+                    source_index=0,
+                    span=span,
+                    content_hash=sha256(span.encode("utf-8")).hexdigest(),
+                ),),
+                attempted_sources=1,
+                completed_sources=1,
+                source_signatures=((
+                    sources[0].id,
+                    sha256(sources[0].snippet.encode("utf-8")).hexdigest(),
+                ),),
+            )
+
+    class Writer:
+        async def generate(self, value: str, sources: list[SourceItem]) -> str:
+            raise AssertionError("writer must not run without subject evidence")
+
+    service = SearchService(
+        Settings(
+            generation_output_mode="immutable",
+            model_query_planning_enabled=False,
+        ),
+        cast(Any, FakeMismatchIndex()),
+        generator=cast(Any, Writer()),
+        evidence_extractor=cast(Any, Resolver()),
+    )
+
+    response = await service.ask(
+        SearchRequest(question="武汉有哪些有名的小吃？", top_k=1)
+    )
+
+    assert response.answer == "根据检索到的资料，无法确定。"
+    assert response.generation["answer_strategy"] == "evidence_blocked"
+    assert response.generation["evidence_gate_passed"] is False
+    assert "subject_mismatch" in response.generation["evidence_gate_issues"]
+    assert response.generation["writer_trace"] is None
+
+
+@pytest.mark.asyncio
 async def test_immutable_pipeline_reopens_selected_documents_for_passages() -> None:
     question = "深圳地铁1号线有哪些站点？"
     station_span = "车站列表：罗湖、国贸、老街、大剧院、科学馆、华强路。"

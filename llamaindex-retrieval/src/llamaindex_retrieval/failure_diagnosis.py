@@ -99,6 +99,7 @@ def diagnose_failure(
             "weak_subject_coverage",
             "relation_mismatch",
             "temporal_mismatch",
+            "ordinal_scope_mismatch",
         })
         or (not matched_terms and not matched_anchors)
     ):

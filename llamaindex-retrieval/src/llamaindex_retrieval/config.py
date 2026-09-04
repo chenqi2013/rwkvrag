@@ -42,6 +42,8 @@ class Settings(BaseSettings):
     generation_max_tokens: int = Field(default=2_048, ge=32, le=4096)
     generation_max_evidence_characters: int = Field(default=12_000, ge=1_000, le=48_000)
     generation_output_mode: str = Field(default="legacy", pattern="^(immutable|legacy)$")
+    answer_point_fanout_enabled: bool = False
+    answer_point_fanout_concurrency: int = Field(default=3, ge=1, le=8)
 
     @model_validator(mode="after")
     def validate_chunk_overlap(self) -> "Settings":

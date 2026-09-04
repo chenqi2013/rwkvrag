@@ -11,6 +11,8 @@ import { useLanguage } from "../i18n";
 function VersionResult({ run }: { run: SearchTestRun }) {
   const { tr } = useLanguage();
   const { response } = run;
+  const writerAttempted = response.generation.answer_strategy === "single_writer_call"
+    || response.generation.answer_strategy === "generation_failed";
   const writerCalled = response.generation.answer_strategy === "single_writer_call"
     || response.generation.writer_trace != null;
   const grounded = writerCalled
@@ -31,9 +33,11 @@ function VersionResult({ run }: { run: SearchTestRun }) {
       <Space direction="vertical" size={5} style={{ width: "100%" }}>
         <Space wrap>
           <Tag color="blue">{tr(`第 ${run.run_number} 次`, `Run ${run.run_number}`)}</Tag>
-          <Tag color={grounded ? "green" : writerCalled ? "blue" : "orange"}>
+          <Tag color={grounded ? "green" : writerAttempted ? "blue" : "orange"}>
             {grounded
               ? tr("证据校验通过", "Evidence verified")
+              : response.generation.answer_strategy === "generation_failed"
+                ? tr("生成失败", "Generation failed")
               : writerCalled
                 ? tr("已生成，证据校验未通过", "Generated; evidence check failed")
                 : tr("证据不足，未生成", "Insufficient evidence; not generated")}

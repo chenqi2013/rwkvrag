@@ -15,33 +15,37 @@ from .query_planning import QueryPlan
 from .schemas import SourceItem
 
 
-_RELATION_EQUIVALENTS = {
-    "老板": ("老板", "创始人", "创办人", "创办者", "负责人", "首席执行官", "CEO"),
-    "负责人": ("负责人", "老板", "创始人", "创办人", "创办者", "负责"),
-    "首席执行官": ("首席执行官", "CEO", "负责人", "老板"),
-}
-_EVIDENCE_RELATION_MARKERS = (
-    "是", "为", "即", "成为", "定为", "位于", "来自", "创立", "创建",
-    "创办", "撰写", "著", "导演", "主演", "导致", "因为", "由于", "造成",
-    "引发", "包括", "包含", "分别", "设有", "共有",
-)
-_BROAD_CONTEXT_MARKERS = (
-    "很多", "更多", "各地", "各个", "历代", "歷代", "曾经", "曾經", "一般而言",
-    "七朝", "古称", "古稱", "历史上", "歷史上", "多个", "多個", "若干",
-)
-_CAUSE_PROGRESSION_MARKERS = (
-    "最终", "最終", "后期", "後期", "衰退", "衰亡", "灭亡", "滅亡", "危机", "危機",
-    "崩溃", "崩潰", "民变", "民變", "动荡", "動盪", "失去", "国力", "國力",
-)
-_CAUSE_EVENT_MARKERS = ("起兵", "即位", "推翻", "建立", "称帝", "稱帝", "迁都", "遷都")
+_EVIDENCE_RELATION_MARKERS: tuple[str, ...] = ()
+_BROAD_CONTEXT_MARKERS: tuple[str, ...] = ()
+_CAUSE_PROGRESSION_MARKERS: tuple[str, ...] = ()
+_CAUSE_EVENT_MARKERS: tuple[str, ...] = ()
+_SUBJECT_SEPARATORS = re.compile(r"(?:和|与|與|及|以及|、|及其)")
 
 
 def _relation_variants(relations: tuple[str, ...]) -> tuple[str, ...]:
-    return tuple(dict.fromkeys(
-        variant
-        for relation in relations
-        for variant in _RELATION_EQUIVALENTS.get(relation, (relation,))
-    ))
+    return tuple(dict.fromkeys(relation.strip() for relation in relations if relation.strip()))
+
+
+def _normalize_identity(value: str) -> str:
+    normalized = normalize_search_text(value).replace(" ", "").replace("的", "")
+    normalized = normalized.translate(str.maketrans({
+        "〇": "0", "一": "1", "二": "2", "两": "2", "三": "3",
+        "四": "4", "五": "5", "六": "6", "七": "7", "八": "8",
+        "九": "9", "十": "10",
+    }))
+    return normalized
+
+
+def _identity_variants(value: str) -> tuple[str, ...]:
+    normalized = _normalize_identity(value)
+    variants = [normalized]
+    title_base = re.split(r"[（(]", normalized, maxsplit=1)[0]
+    if title_base != normalized:
+        variants.append(title_base)
+    for suffix in ("事变", "之变", "政变"):
+        if normalized.endswith(suffix):
+            variants.append(normalized[: -len(suffix)])
+    return tuple(dict.fromkeys(variant for variant in variants if variant))
 
 
 @dataclass(frozen=True)
@@ -178,18 +182,27 @@ class LanguageModelEvidenceExtractor:
         source_limit = (
             self.settings.evidence_extraction_max_sources
             if plan.answer_shape in {"list", "summary", "narrative"}
-            else min(3, self.settings.evidence_extraction_max_sources)
+            else min(
+                8 if plan.analysis.intent == "comparison" else 3,
+                self.settings.evidence_extraction_max_sources,
+            )
         )
         selected: list[SourceItem] = []
         document_counts: Counter[str] = Counter()
         max_chunks_per_document = 6 if plan.answer_shape == "list" else (
             4 if plan.answer_shape in {"summary", "narrative"} else 3
         )
+        title_counts: Counter[str] = Counter()
         for source in sources:
             if len(selected) >= source_limit:
                 break
             if document_counts[source.document_id] >= max_chunks_per_document:
                 continue
+            if plan.analysis.intent == "comparison":
+                title_key = normalize_search_text(source.title).replace(" ", "")
+                if title_counts[title_key] >= 4:
+                    continue
+                title_counts[title_key] += 1
             selected.append(source)
             document_counts[source.document_id] += 1
         signatures = tuple(
@@ -444,6 +457,8 @@ class LanguageModelEvidenceExtractor:
                 for marker in ("转折点", "轉折點", "时间", "時間")
             ):
                 score -= 2.0
+            if plan.analysis.intent == "ordinal":
+                score += 0.0
             if plan.answer_shape == "single_fact" and any(
                 marker in normalized_span for marker in _BROAD_CONTEXT_MARKERS
             ):
@@ -697,6 +712,8 @@ class LanguageModelEvidenceExtractor:
 任务契约：{json.dumps(contract, ensure_ascii=False)}
 对每个字段查找能够直接支持“所求具体值”的最小编号句子。先根据字段问题判断所求值的类型，例如人物、地点、时间、数量、名称或列表；所选句子必须实际给出该类型的具体值。只出现关系词、讨论该关系、表达某人的观点，但没有给出字段所求具体值时，必须拒绝。
 候选必须属于任务对象；同名异物、导航、分类、页眉页脚和仅仅提到关键词的背景文字都不要提取。
+当问题包含“第一个、第一位、首位、最早”等序数关系时，所选句必须把该序数关系绑定到问题指定的范围；某个国家、朝代、组织或地区内部的“首位”不能替代更大范围的“第一位”。
+问题未指定历史时期时，资料中“曾经、历代、过去”等历史陈述不能替代当前或一般事实；候选必须与问题的时间范围一致。
 当 answer_shape=list 且 set_semantics=all 时，只选择明确构成所求集合的列表、表格行或连续枚举行；不要选择路线/过程叙述、历史讨论、举例、图片说明、分类文字，也不要把叙述中偶然出现的名称当成完整列表。列表跨多个连续编号句子时，选择该结构内所有直接承载项目的句子。
 当字段询问原因、成因或为何发生时，只选择明确表达因果关系、成因条件或直接导火事件的句子；因果结果必须就是字段中询问的那个事件或结局，同一对象文档内其他事件的因果关系也必须拒绝。仅说明某事件是“转折点”、列出结局或给出发生时间，不能直接回答原因。
 不要复制或改写正文，只输出“字段编号:句子编号”，例如 f1:s2。多条证据用逗号分隔，例如 f1:s2,f1:s3；没有直接证据只输出 NONE。不要解释。
@@ -764,8 +781,18 @@ class LanguageModelEvidenceExtractor:
 
     @staticmethod
     def _source_contains_subject(plan: QueryPlan, source: SourceItem) -> bool:
-        normalized_subject = normalize_search_text(plan.subject).replace(" ", "").replace("的", "")
-        normalized_title = normalize_search_text(source.title).replace(" ", "").replace("的", "")
+        subject_value = plan.subject or "和".join(plan.analysis.subjects)
+        normalized_subject = _normalize_identity(subject_value)
+        normalized_title = _normalize_identity(source.title)
+        subject_parts = [
+            part for part in _SUBJECT_SEPARATORS.split(normalized_subject)
+            if len(part) >= 2
+        ]
+        subject_variants = tuple(dict.fromkeys(
+            variant
+            for value in (normalized_subject, *subject_parts)
+            for variant in _identity_variants(value)
+        ))
         normalized_relations = {
             normalize_search_text(relation).replace(" ", "").replace("的", "")
             for relation in _relation_variants(plan.relations)
@@ -775,29 +802,33 @@ class LanguageModelEvidenceExtractor:
         title_values = {normalized_title}
         if isinstance(aliases, list):
             title_values.update(
-                normalize_search_text(str(alias)).replace(" ", "").replace("的", "")
+                _normalize_identity(str(alias))
                 for alias in aliases
                 if str(alias).strip()
             )
-        normalized_body = normalize_search_text(source.snippet).replace(" ", "").replace("的", "")
+        title_variants = tuple(dict.fromkeys(
+            variant for value in title_values for variant in _identity_variants(value)
+        ))
+        normalized_body = _normalize_identity(source.snippet)
         title_match = any(
-            normalized_subject == title
-            or (len(title) >= 3 and normalized_subject.endswith(title))
-            or title.endswith(f"·{normalized_subject}")
+            variant == title
+            or (len(title) >= 3 and variant.endswith(title))
+            or title.endswith(f"·{variant}")
             or any(
                 title == relation
-                or title.startswith(f"{normalized_subject}{relation}")
+                or title.startswith(f"{variant}{relation}")
                 for relation in normalized_relations
             )
-            for title in title_values
+            for variant in subject_variants
+            for title in title_variants
         )
         relation_title_match = any(
             title == relation or title.endswith(f"·{relation}")
             for title in title_values
             for relation in normalized_relations
         )
-        body_subject_match = bool(
-            normalized_subject and normalized_subject in normalized_body
+        body_subject_match = any(
+            variant and variant in normalized_body for variant in subject_variants
         )
         body_relation_match = any(
             relation in normalized_body for relation in normalized_relations
@@ -813,7 +844,7 @@ class LanguageModelEvidenceExtractor:
             and normalized_title == f"{transit_match.group('network')}车站列表"
             and transit_match.group("line") in normalized_body
         )
-        if plan.answer_shape == "single_fact":
+        if plan.answer_shape == "single_fact" and plan.analysis.intent != "comparison":
             return len(normalized_subject) >= 2 and (
                 body_match
                 or (title_match and (body_subject_match or body_relation_match))

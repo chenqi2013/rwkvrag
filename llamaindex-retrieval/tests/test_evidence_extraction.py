@@ -56,6 +56,30 @@ def test_subject_match_rejects_longer_unrelated_name_prefix() -> None:
     assert LanguageModelEvidenceExtractor._source_contains_subject(plan, place) is False
 
 
+def test_comparison_accepts_each_subject_page_independently() -> None:
+    plan = build_query_plan("尺八和长笛有什么区别？")
+    shakuhachi = SourceItem(
+        id="shakuhachi",
+        document_id="shakuhachi",
+        source="finewiki-zh",
+        title="尺八",
+        score=1.0,
+        snippet="尺八是竖吹乐器，竹制，音色苍凉。",
+    )
+    flute = SourceItem(
+        id="flute",
+        document_id="flute",
+        source="finewiki-zh",
+        title="长笛",
+        score=1.0,
+        snippet="长笛是横吹乐器，现代多使用金属材质。",
+    )
+
+    assert plan.analysis.intent == "comparison"
+    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, shakuhachi)
+    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, flute)
+
+
 def test_single_fact_rejects_title_only_unrelated_chunk() -> None:
     plan = replace(
         build_query_plan("西游记是谁写的？"),

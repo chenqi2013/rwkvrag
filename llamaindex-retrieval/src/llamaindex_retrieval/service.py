@@ -61,70 +61,15 @@ from .qa_analysis import (
 )
 from .query_planning import QueryPlan, TaskField, build_query_plan
 
-_MULTI_EVIDENCE_MARKERS = (
-    "哪些",
-    "有哪些",
-    "列表",
-    "全部",
-    "所有",
-    "分别",
-    "列一下",
-    "列出",
-    "列举",
-)
-_STRUCTURE_QUESTION_WORDS = {
-    "什么",
-    "什么时候",
-    "时候",
-    "何时",
-    "哪里",
-    "哪儿",
-    "哪个",
-    "哪些",
-    "怎么",
-    "如何",
-    "多少",
-    "几个",
-}
-_SCOPE_TOKENS = {
-    "中国",
-    "中华人民共和国",
-    "我国",
-    "国内",
-    "全国",
-    "世界",
-    "全球",
-    "亚洲",
-    "欧洲",
-    "历史",
-    "历史上",
-    "古代",
-    "现代",
-    "当代",
-    "本国",
-    "当地",
-}
-_STRUCTURE_TYPE_BONUS = {
-    "table_summary": 2.4,
-    "table": 1.8,
-    "list": 1.4,
-    "key_value": 0.8,
-    "timeline": 0.4,
-    "prose": 0.0,
-}
-_LIST_ANSWER_HINTS = (
-    "车站列表",
-    "站点列表",
-    "站名列表",
-    "站名/",
-    "列表",
-    "全部车站",
-    "全部站点",
-)
-_LIST_TOPIC_HINTS = ("车站", "站点", "站名")
-_EXPLANATORY_SECTION_HINTS = ("问题", "問題", "歷史", "历史", "命名", "更名", "工程", "續建", "续建")
-_TRANSFER_HINTS = ("转乘", "轉乘", "换乘", "換乘", "线网转乘", "線網轉乘")
-_STATION_STRUCTURE_NOISE = ("列车", "列車", "车型", "車型", "车队", "車隊", "制造商", "製造商")
+_MULTI_EVIDENCE_MARKERS: tuple[str, ...] = ()
+_STRUCTURE_QUESTION_WORDS: set[str] = set()
+_SCOPE_TOKENS: set[str] = set()
+_STRUCTURE_TYPE_BONUS: dict[str, float] = {}
+_LIST_ANSWER_HINTS: tuple[str, ...] = ()
+_LIST_TOPIC_HINTS: tuple[str, ...] = ()
+_EXPLANATORY_SECTION_HINTS: tuple[str, ...] = ()
+_TRANSFER_HINTS: tuple[str, ...] = ()
+_STATION_STRUCTURE_NOISE: tuple[str, ...] = ()
 _ANSWER_CACHE_TTL_SECONDS = 300.0
 _ANSWER_CACHE_MAX_ENTRIES = 128
 _ASK_MIN_EVIDENCE_TOP_K = 5
@@ -138,38 +83,14 @@ _EMPTY_ANSWER_SHELL = re.compile(
     r"(?:原因|因素|项目|条目|内容)(?:包括|有|是)?[：:]?\s*"
     r"(?:\[资料\s*\d+\])?[。.]?$"
 )
-_LEAD_FACT_MARKERS = (
-    "是什么",
-    "是谁",
-    "指的是什么",
-    "简要介绍",
-    "位于哪里",
-    "出生于哪里",
-    "哪一年成立",
-    "哪一年创建",
-    "逝世于哪一年",
-    "有什么区别",
-    "有何区别",
-    "相比如何",
-    "比较",
-)
-_CHRONOLOGICAL_LIST_MARKERS = ("从古至今", "自古至今", "历代", "歷代", "迄今为止")
-_EXHAUSTIVE_LIST_MARKERS = (
-    "全部", "所有", "完整", "总共", "總共", "一共",
-    "从古至今", "自古至今", "迄今为止", "逐一", "每一个", "每一個",
-)
-_ROUTE_ENDPOINT_PATTERN = re.compile(
-    r"连接(?P<start>[^，。？?和与]{1,20})(?:和|与)"
-    r"(?P<end>[^，。？?的]{1,20})的[^，。？?]{2,32}?(?:线路|路线)"
-)
+_LEAD_FACT_MARKERS: tuple[str, ...] = ()
+_CHRONOLOGICAL_LIST_MARKERS: tuple[str, ...] = ()
+_EXHAUSTIVE_LIST_MARKERS: tuple[str, ...] = ()
+_ROUTE_ENDPOINT_PATTERN = None
 
 
 def _is_station_list_question(question: str) -> bool:
-    normalized = normalize_search_text(question)
-    return bool(
-        any(marker in normalized for marker in ("车站", "站点", "站名"))
-        or re.search(r"(?:有)?哪(?:些|几个)?站|几个站", normalized)
-    )
+    return False
 
 
 def _core_subject_tokens(subject: str) -> tuple[str, ...]:
@@ -480,7 +401,10 @@ class SearchService:
                     first_seen[document_id] = sequence
                     sequence += 1
         normalized_subject = normalize_search_text(plan.subject).replace(" ", "")
-        endpoint_match = _ROUTE_ENDPOINT_PATTERN.search(plan.normalized_question)
+        endpoint_match = (
+            _ROUTE_ENDPOINT_PATTERN.search(plan.normalized_question)
+            if _ROUTE_ENDPOINT_PATTERN is not None else None
+        )
         if endpoint_match:
             start = normalize_search_text(endpoint_match.group("start")).replace(" ", "")
             end = normalize_search_text(endpoint_match.group("end")).replace(" ", "")
@@ -2022,82 +1946,128 @@ class SearchService:
         retrieval_started = monotonic()
         planning = await self._immutable_plan(request.question)
         plan = planning.plan
-        search_method = getattr(self.index, "search_plain", self.index.search)
-        result_groups = await asyncio.gather(*(
-            asyncio.to_thread(
-                search_method,
-                query,
-                candidate_k=max(
-                    request.candidate_k or self.settings.candidate_k,
-                    evidence_top_k,
+        if plan.analysis.intent == "ordinal":
+            fallback_plan = build_query_plan(request.question)
+            ordinal_subject = plan.subject
+            if fallback_plan.analysis.subjects:
+                ordinal_subject = re.sub(
+                    r"\s+(?:第一个|第一位|首位|最早)\s+",
+                    " ",
+                    fallback_plan.analysis.subjects[0],
+                ).strip() or ordinal_subject
+            ordinal_relations = fallback_plan.relations or (
+                "第一个", "第一位", "首位", "最早"
+            )
+            plan = replace(
+                plan,
+                subject=ordinal_subject,
+                relations=ordinal_relations,
+                fields=tuple(
+                    replace(field, relations=ordinal_relations)
+                    for field in plan.fields
                 ),
+            )
+        if self.settings.answer_point_fanout_enabled and plan.fields:
+            evidence_response, extraction, fanout_trace = (
+                await self._retrieve_answer_point_branches(
+                    request,
+                    plan,
+                    evidence_top_k=evidence_top_k,
+                    started=started,
+                )
+            )
+            passage_expansion = fanout_trace.get("passage_expansion", {})
+            extraction_ms = int(fanout_trace.get("extraction_ms", 0))
+            fanout_retrieval_ms = int(fanout_trace.get("retrieval_ms", 0))
+        else:
+            search_method = self.index.search
+            result_groups = await asyncio.gather(*(
+                asyncio.to_thread(
+                    search_method,
+                    query,
+                    candidate_k=max(
+                        request.candidate_k or self.settings.candidate_k,
+                        evidence_top_k,
+                    ),
+                    knowledge_base_id=request.knowledge_base_id,
+                )
+                for query in plan.queries
+            ))
+            fused = self._merge_plain_rrf(result_groups)
+            if plan.answer_shape == "list" or plan.analysis.intent == "ordinal":
+                fused = self._prioritize_topic_document(plan, fused)
+            selected = fused[:evidence_top_k]
+            selected, passage_expansion = await self._expand_immutable_passages(
+                plan,
+                selected,
                 knowledge_base_id=request.knowledge_base_id,
             )
-            for query in plan.queries
-        ))
-        fused = self._merge_plain_rrf(result_groups)
-        # For complete-list tasks, prefer a dedicated topic page before
-        # passage expansion.  Other answer shapes retain the original RRF
-        # order so a title collision cannot change established fact answers.
-        if plan.answer_shape == "list":
-            fused = self._prioritize_topic_document(plan, fused)
-        selected = fused[:evidence_top_k]
-        selected, passage_expansion = await self._expand_immutable_passages(
-            plan,
-            selected,
-            knowledge_base_id=request.knowledge_base_id,
-        )
-        evidence_response = SearchResponse(
-            results=[self._source_item(result) for result in selected],
-            retrieval={
-                "algorithm": "OpenSearch BM25",
-                "mode": "model-query+bm25+document-rrf",
-                "index": self.settings.opensearch_index,
-                "top_k": evidence_top_k,
-                "returned": len(selected),
-                "query_plan": {
-                    "queries": list(plan.queries),
-                    "subject": plan.subject,
-                    "relations": list(plan.relations),
-                    "intent": plan.analysis.intent,
-                    "answer_shape": plan.answer_shape,
-                    "set_semantics": plan.set_semantics,
-                    "planner": planning.strategy,
-                    "fallback_reason": planning.error,
+            evidence_response = SearchResponse(
+                results=[self._source_item(result) for result in selected],
+                retrieval={
+                    "algorithm": "OpenSearch BM25",
+                    "mode": "model-query+bm25+document-rrf",
+                    "index": self.settings.opensearch_index,
+                    "top_k": evidence_top_k,
+                    "returned": len(selected),
+                    "query_plan": {
+                        "queries": list(plan.queries),
+                        "subject": plan.subject,
+                        "relations": list(plan.relations),
+                        "intent": plan.analysis.intent,
+                        "answer_shape": plan.answer_shape,
+                        "set_semantics": plan.set_semantics,
+                        "planner": planning.strategy,
+                        "fallback_reason": planning.error,
+                    },
+                    "document_passage_expansion": passage_expansion,
+                    "planner_trace": {
+                        "prompt": planning.prompt,
+                        "raw_output": planning.raw_output,
+                        "prompt_sha256": sha256(planning.prompt.encode("utf-8")).hexdigest(),
+                        "raw_output_sha256": sha256(
+                            planning.raw_output.encode("utf-8")
+                        ).hexdigest(),
+                    },
                 },
-                "document_passage_expansion": passage_expansion,
-                "planner_trace": {
-                    "prompt": planning.prompt,
-                    "raw_output": planning.raw_output,
-                    "prompt_sha256": sha256(planning.prompt.encode("utf-8")).hexdigest(),
-                    "raw_output_sha256": sha256(
-                        planning.raw_output.encode("utf-8")
-                    ).hexdigest(),
-                },
-            },
-        )
+            )
+            extraction_started = monotonic()
+            extraction = await self._extract_field_evidence(
+                request.question,
+                plan,
+                evidence_response.results,
+                timeout=self._remaining_budget(
+                    started + self.settings.ask_total_timeout,
+                    reserve=self.settings.ask_generation_reserve,
+                ),
+            )
+            fanout_trace = {"enabled": False}
+            extraction_ms = self._elapsed_ms(extraction_started)
+            fanout_retrieval_ms = 0
         retrieval_ms = self._elapsed_ms(retrieval_started)
+        if fanout_retrieval_ms:
+            retrieval_ms = fanout_retrieval_ms
         question = request.question
-        extraction_started = monotonic()
-        extraction = await self._extract_field_evidence(
-            question,
-            plan,
-            evidence_response.results,
-            timeout=self._remaining_budget(
-                started + self.settings.ask_total_timeout,
-                reserve=self.settings.ask_generation_reserve,
-            ),
-        )
-        extraction_ms = self._elapsed_ms(extraction_started)
         writer_sources = (
             extraction.answer_sources(evidence_response.results)
             if extraction is not None and extraction.has_candidates
             else []
         )
+        writer_sources = self._dedupe_evidence_sources(writer_sources)
+        evidence_gate = evaluate_evidence_gate(
+            question,
+            plan.analysis,
+            writer_sources,
+            subject=plan.subject,
+            relations=plan.relations,
+            field_evidence_available=bool(extraction and extraction.available),
+            field_candidate_count=len(extraction.candidates) if extraction else 0,
+        )
         writer_result: GenerationResult | None = None
         generation_error: str | None = None
         generation_started = monotonic()
-        if writer_sources:
+        writer_attempted = bool(writer_sources and evidence_gate.passed)
+        if writer_attempted:
             try:
                 writer_result = await self._generate_with_trace(
                     question,
@@ -2109,7 +2079,11 @@ class SearchService:
             except Exception as error:
                 generation_error = f"{type(error).__name__}: {error}"
         generation_ms = self._elapsed_ms(generation_started)
-        answer = writer_result.answer if writer_result is not None else ""
+        answer = (
+            writer_result.answer
+            if writer_result is not None
+            else "根据检索到的资料，无法确定。"
+        )
         validation = validate_grounding(answer, writer_sources)
         answer_support = evaluate_answer_support(
             answer,
@@ -2132,7 +2106,15 @@ class SearchService:
             },
         }
         generation = {
-            "answer_strategy": "single_writer_call" if writer_result else "writer_not_called",
+            "answer_strategy": (
+                "single_writer_call"
+                if writer_result
+                else "generation_failed"
+                if writer_attempted
+                else "evidence_blocked"
+                if writer_sources and not evidence_gate.passed
+                else "writer_not_called"
+            ),
             "output_mode": "immutable",
             "evidence_count": len(writer_sources),
             "displayed_evidence_count": len(display_sources),
@@ -2150,6 +2132,13 @@ class SearchService:
             ],
             "field_evidence_errors": list(extraction.errors) if extraction else [],
             "field_evidence_strategy": extraction.strategy if extraction else None,
+            "evidence_gate_passed": evidence_gate.passed,
+            "evidence_gate_issues": list(evidence_gate.issues),
+            "evidence_anchors": sorted(evidence_gate.assessment.anchors),
+            "matched_evidence_anchors": sorted(evidence_gate.assessment.matched_anchors),
+            "matched_evidence_terms": sorted(evidence_gate.assessment.matched_terms),
+            "relation_terms": list(evidence_gate.relation_terms),
+            "matched_relation_terms": list(evidence_gate.matched_relation_terms),
             "grounding_valid": validation.valid,
             "grounding_issues": list(validation.issues),
             "answer_support_passed": answer_support.passed,
@@ -2173,8 +2162,14 @@ class SearchService:
                     "model_calls": list(extraction.trace_events) if extraction else [],
                 },
                 {
+                    "stage": "evidence_gate",
+                    "passed": evidence_gate.passed,
+                    "issues": list(evidence_gate.issues),
+                    "source_ids": [source.id for source in writer_sources],
+                },
+                {
                     "stage": "writer",
-                    "called": writer_result is not None,
+                    "called": writer_attempted,
                     "source_ids": [source.id for source in writer_sources],
                     "error": generation_error,
                 },
@@ -2308,6 +2303,219 @@ class SearchService:
             "per_document_limit": per_document_limit,
             "documents": trace_documents,
         }
+
+    async def _retrieve_answer_point_branches(
+        self,
+        request: SearchRequest,
+        plan: QueryPlan,
+        *,
+        evidence_top_k: int,
+        started: float,
+    ) -> tuple[SearchResponse, EvidenceExtractionResult | None, dict[str, object]]:
+        """Retrieve and extract evidence independently for each answer field."""
+
+        branch_started = monotonic()
+        search_method = self.index.search
+        fields = plan.fields or (TaskField("f1", request.question, plan.relations),)
+        semaphore = asyncio.Semaphore(self.settings.answer_point_fanout_concurrency)
+
+        async def run(field: TaskField) -> dict[str, object]:
+            async with semaphore:
+                field_question = field.question.strip() or plan.original_question
+                field_planning = QueryPlanningResult(
+                    plan=replace(plan, fields=(field,)),
+                    strategy="parent_plan",
+                )
+                field_queries = tuple(dict.fromkeys((
+                    *plan.queries,
+                    field_question,
+                    f"{plan.subject} {field_question}".strip(),
+                    plan.original_question,
+                )))[: self.settings.model_query_planning_max_queries]
+                retrieval_started = monotonic()
+                groups = await asyncio.gather(*(
+                    asyncio.to_thread(
+                        search_method,
+                        query,
+                        candidate_k=max(
+                            request.candidate_k or self.settings.candidate_k,
+                            evidence_top_k,
+                        ),
+                        knowledge_base_id=request.knowledge_base_id,
+                    )
+                    for query in field_queries
+                ))
+                branch_retrieval_ms = self._elapsed_ms(retrieval_started)
+                fused = self._merge_plain_rrf(groups)
+                field_plan = replace(
+                    plan,
+                    fields=(field,),
+                    relations=field.relations or plan.relations,
+                )
+                if field_plan.answer_shape == "list" or field_plan.analysis.intent == "ordinal":
+                    fused = self._prioritize_topic_document(field_plan, fused)
+                selected = fused[:evidence_top_k]
+                selected, expansion = await self._expand_immutable_passages(
+                    field_plan,
+                    selected,
+                    knowledge_base_id=request.knowledge_base_id,
+                )
+                sources = [self._source_item(result) for result in selected]
+                extraction_started = monotonic()
+                extraction = await self._extract_field_evidence(
+                    request.question,
+                    field_plan,
+                    sources,
+                    timeout=self._remaining_budget(
+                        started + self.settings.ask_total_timeout,
+                        reserve=self.settings.ask_generation_reserve,
+                    ),
+                )
+                branch_extraction_ms = self._elapsed_ms(extraction_started)
+                answer_sources = (
+                    extraction.answer_sources(sources)
+                    if extraction is not None and extraction.has_candidates
+                    else []
+                )
+                return {
+                    "field": field.field_id,
+                    "queries": list(field_queries),
+                    "planning": {
+                        "strategy": field_planning.strategy,
+                        "error": field_planning.error,
+                        "raw_output": field_planning.raw_output,
+                    },
+                    "sources": sources,
+                    "answer_sources": answer_sources,
+                    "extraction": extraction,
+                    "retrieval_ms": branch_retrieval_ms,
+                    "extraction_ms": branch_extraction_ms,
+                    "passage_expansion": expansion,
+                }
+
+        results = await asyncio.gather(*(run(field) for field in fields), return_exceptions=True)
+        branches: list[dict[str, object]] = []
+        merged_sources: list[SourceItem] = []
+        extraction_errors: list[str] = []
+        extraction_completed = 0
+        seen_sources: set[tuple[str, str]] = set()
+        for field, result in zip(fields, results, strict=True):
+            if isinstance(result, BaseException):
+                branches.append({"field": field.field_id, "error": f"{type(result).__name__}: {result}"})
+                continue
+            branches.append(result)
+            for source in result["answer_sources"]:
+                key = (source.document_id, source.snippet)
+                if key in seen_sources:
+                    continue
+                seen_sources.add(key)
+                merged_sources.append(source)
+            extraction = result["extraction"]
+            if extraction is not None:
+                extraction_completed += extraction.completed_sources
+                extraction_errors.extend(extraction.errors)
+        extraction_candidates = [
+            EvidenceSpan(
+                field_id=str((source.metadata.get("evidence_field_ids") or ["f1"])[0]),
+                source_index=index,
+                span=source.snippet,
+                content_hash=sha256(source.snippet.encode("utf-8")).hexdigest(),
+            )
+            for index, source in enumerate(merged_sources)
+        ]
+        combined = EvidenceExtractionResult(
+            tuple(extraction_candidates),
+            attempted_sources=len(merged_sources),
+            completed_sources=extraction_completed,
+            errors=tuple(extraction_errors),
+            strategy="answer_point_fanout",
+            trace_events=tuple(
+                event
+                for branch in branches
+                for event in (
+                    branch.get("extraction").trace_events
+                    if isinstance(branch.get("extraction"), EvidenceExtractionResult)
+                    else ()
+                )
+            ),
+        )
+        response = SearchResponse(
+            results=merged_sources,
+            retrieval={
+                "algorithm": "OpenSearch BM25",
+                "mode": "answer-point-fanout+bm25+document-rrf",
+                "index": self.settings.opensearch_index,
+                "top_k": evidence_top_k,
+                "returned": len(merged_sources),
+                "answer_point_fanout": True,
+                "branches": [
+                    {
+                        "field": branch.get("field"),
+                        "queries": branch.get("queries", []),
+                        "source_count": len(branch.get("sources", [])),
+                        "answer_source_count": len(branch.get("answer_sources", [])),
+                        "error": branch.get("error"),
+                    }
+                    for branch in branches
+                ],
+                "query_plan": {
+                    "queries": list(plan.queries),
+                    "subject": plan.subject,
+                    "relations": list(plan.relations),
+                    "intent": plan.analysis.intent,
+                    "answer_shape": plan.answer_shape,
+                    "set_semantics": plan.set_semantics,
+                    "planner": "answer_point_fanout",
+                },
+            },
+        )
+        return response, combined, {
+            "enabled": True,
+            "branches": [
+                {
+                    "field": branch.get("field"),
+                    "queries": branch.get("queries", []),
+                    "planning": branch.get("planning", {}),
+                    "source_count": len(branch.get("sources", [])),
+                    "answer_source_count": len(branch.get("answer_sources", [])),
+                    "error": branch.get("error"),
+                }
+                for branch in branches
+            ],
+            "passage_expansion": {
+                "enabled": True,
+                "branches": [branch.get("passage_expansion", {}) for branch in branches],
+            },
+            "retrieval_ms": max(
+                (int(branch.get("retrieval_ms", 0)) for branch in branches),
+                default=self._elapsed_ms(branch_started),
+            ),
+            "extraction_ms": max(
+                (int(branch.get("extraction_ms", 0)) for branch in branches),
+                default=0,
+            ),
+        }
+
+    @staticmethod
+    def _dedupe_evidence_sources(sources: list[SourceItem]) -> list[SourceItem]:
+        """Remove identical resolver evidence while preserving first rank.
+
+        A span can be returned more than once when overlapping chunks or
+        multiple query routes point at the same passage.  Passing those copies
+        to the writer does not add evidence and can cause repetitive answers.
+        The evidence text itself is never edited; only exact duplicate source
+        entries are omitted.
+        """
+
+        output: list[SourceItem] = []
+        seen: set[str] = set()
+        for source in sources:
+            key = normalize_search_text(source.snippet).strip()
+            if key in seen:
+                continue
+            seen.add(key)
+            output.append(source)
+        return output
 
     async def _immutable_plan(self, question: str) -> QueryPlanningResult:
         if self.query_planner is not None and hasattr(
@@ -3811,7 +4019,10 @@ class SearchService:
         if plan.analysis.intent == "time" and len(plan.analysis.subjects) > 2:
             return sources
         normalized_subject = normalize_search_text(plan.subject).replace(" ", "")
-        endpoint_match = _ROUTE_ENDPOINT_PATTERN.search(plan.normalized_question)
+        endpoint_match = (
+            _ROUTE_ENDPOINT_PATTERN.search(plan.normalized_question)
+            if _ROUTE_ENDPOINT_PATTERN is not None else None
+        )
         if endpoint_match and plan.analysis.intent == "list":
             start = normalize_search_text(endpoint_match.group("start")).replace(" ", "")
             end = normalize_search_text(endpoint_match.group("end")).replace(" ", "")
