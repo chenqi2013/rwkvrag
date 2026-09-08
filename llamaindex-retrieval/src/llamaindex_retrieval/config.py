@@ -47,6 +47,8 @@ class Settings(BaseSettings):
     native_plan_protocol: Literal["queries_fields", "shared_tasks"] = "queries_fields"
     native_resolver_prefill: Literal["<think", "<think></think"] = "<think"
     native_resolver_protocol: Literal["fields", "task_units"] = "fields"
+    native_task_source: Literal["fields", "queries"] = "fields"
+    native_candidate_order: Literal["rrf", "query_round_robin"] = "rrf"
     native_planner_max_tokens: int = Field(default=1024, ge=64, le=4096)
     native_resolver_max_tokens: int = Field(default=1024, ge=64, le=4096)
     native_resolver_sources: int = Field(default=24, ge=1, le=200)

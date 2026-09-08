@@ -16,7 +16,7 @@ from .lexical_index import LexicalIndex, LexicalResult
 from .native_rwkv import NativeRWKVClient, inspect_envelope
 from .schemas import AskResponse, ConversationMessage, SearchRequest, SourceItem
 
-PROMPT_VERSION = "bm250820-native-v3"
+PROMPT_VERSION = "bm250820-native-v4"
 SELECTION_PROTOCOL_VERSION = "field-evidence-v2"
 TASK_SELECTION_PROTOCOL_VERSION = "task-evidence-v1"
 
@@ -71,8 +71,10 @@ def source_from_hit(hit: LexicalResult) -> SourceItem:
     )
 
 
-def fuse_chunks(groups: list[list[LexicalResult]]) -> list[SourceItem]:
-    """RRF by chunk identity, not document identity; reject inconsistent IDs."""
+def fuse_chunks(groups: list[list[LexicalResult]], *, order: str = "rrf") -> list[SourceItem]:
+    """Validate chunk identities, then order by RRF or rotate query queues."""
+    if order not in {"rrf", "query_round_robin"}:
+        raise ValueError("unknown candidate ordering")
     scores: dict[str, float] = {}
     hits: dict[str, LexicalResult] = {}
     for group in groups:
@@ -90,6 +92,17 @@ def fuse_chunks(groups: list[list[LexicalResult]]) -> list[SourceItem]:
             hits.setdefault(hit.node_id, hit)
             scores[hit.node_id] = scores.get(hit.node_id, 0) + 1 / (60 + rank)
     ordered = sorted(hits, key=lambda key: -scores[key])
+    if order == "query_round_robin":
+        # Independent model queries can represent different requested objects.
+        # Rotate their ranked queues so cross-query weak matches do not consume
+        # the entire reader budget. This imposes no document quota or filter.
+        ordered = []
+        scheduled: set[str] = set()
+        for rank in range(max((len(group) for group in groups), default=0)):
+            for group in groups:
+                if rank < len(group) and group[rank].node_id not in scheduled:
+                    scheduled.add(group[rank].node_id)
+                    ordered.append(group[rank].node_id)
     return [source_from_hit(hits[key]).model_copy(update={"score": scores[key]}) for key in ordered]
 
 
@@ -408,6 +421,7 @@ class RWKVPipeline:
                            sources=sources, retrieval=retrieval, generation={
             "pipeline": "rwkv", "prompt_version": PROMPT_VERSION,
             "plan_protocol": self.settings.native_plan_protocol,
+            "task_source": self.settings.native_task_source,
             "selection_protocol": (TASK_SELECTION_PROTOCOL_VERSION
                 if self.settings.native_resolver_protocol == "task_units" else SELECTION_PROTOCOL_VERSION),
             "output_mode": "immutable", "status": status,
@@ -457,30 +471,37 @@ class RWKVPipeline:
             groups = await asyncio.gather(*(asyncio.to_thread(
                 self.index.search_chunks, query, candidate_k=candidate_k,
                 knowledge_base_id=request.knowledge_base_id) for query in plan["queries"]))
-            candidates = fuse_chunks(groups)
+            candidates = fuse_chunks(groups, order=self.settings.native_candidate_order)
         except Exception as error:
             return self._response(None, [], {"mode": "bm25", "returned": 0,
                 "plan": plan, "error": f"{type(error).__name__}: {error}"},
                 events, "retrieval_failed", started)
         selected = candidates[:self.settings.native_resolver_sources]
-        retrieval = {"mode": "native-plan+bm25+chunk-rrf", "index": self.settings.opensearch_index,
+        # A fixed configuration selects one model-authored list for both later
+        # stages. The original planner output remains in the trace; no per-query
+        # semantic choice, query rewriting or history resolution happens here.
+        active_tasks = plan[self.settings.native_task_source]
+        retrieval = {"mode": "native-plan+bm25+chunk-candidates", "index": self.settings.opensearch_index,
+            "candidate_order": self.settings.native_candidate_order, "score_method": "chunk_rrf",
             "plan": plan, "candidate_k_per_query": candidate_k,
+            "active_task_source": self.settings.native_task_source,
+            "active_tasks": active_tasks,
             "per_document_limit": None, "relative_score_threshold": None,
             "candidates": [s.model_dump() for s in candidates],
             "resolver_source_ids": [s.id for s in selected],
             "omitted_by_total_source_budget": [s.id for s in candidates[len(selected):]],
             "query_results": [[h.node_id for h in group] for group in groups]}
-        evidence, resolver_events = await self._resolve(task, plan["fields"], selected)
+        evidence, resolver_events = await self._resolve(task, active_tasks, selected)
         events.extend(resolver_events)
         retrieval["returned"] = len(evidence)
-        retrieval["uncovered_fields"] = [f"f{i}" for i in range(1, len(plan["fields"]) + 1)
+        retrieval["uncovered_fields"] = [f"f{i}" for i in range(1, len(active_tasks) + 1)
             if not any(f"f{i}" in s.metadata["field_ids"] for s in evidence)]
         if self.settings.native_resolver_protocol == "task_units":
             # A unit-level relevance decision does not prove any field complete.
             retrieval["uncovered_fields"] = None
             retrieval["field_coverage_assessed"] = False
         # Even empty evidence is an explicit writer input. No fabricated refusal.
-        result = await self._write(task, evidence, plan["fields"])
+        result = await self._write(task, evidence, active_tasks)
         events.append(result.trace)
         status = result.status
         if status == "completed" and any("parse_error" in event for event in resolver_events):

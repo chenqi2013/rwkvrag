@@ -349,6 +349,8 @@ async def execute(args, out, requests, expected_uuid):
         native_plan_protocol=args.plan_protocol,
         native_resolver_prefill=args.resolver_prefill,
         native_resolver_protocol=args.resolver_protocol,
+        native_task_source=args.task_source,
+        native_candidate_order=args.candidate_order,
         generation_max_tokens=args.max_tokens, generation_output_mode="immutable",
         opensearch_url=args.opensearch_url, opensearch_index=args.index,
         opensearch_username=None, opensearch_password=None, opensearch_verify_certs=True,
@@ -433,6 +435,8 @@ def arguments():
     parser.add_argument("--plan-protocol", choices=("queries_fields", "shared_tasks"), default="queries_fields")
     parser.add_argument("--resolver-prefill", choices=("<think", "<think></think"), default="<think")
     parser.add_argument("--resolver-protocol", choices=("fields", "task_units"), default="fields")
+    parser.add_argument("--task-source", choices=("fields", "queries"), default="fields")
+    parser.add_argument("--candidate-order", choices=("rrf", "query_round_robin"), default="rrf")
     parser.add_argument("--candidate-k", type=int, default=80)
     parser.add_argument("--max-tokens", type=int, default=2048)
     parser.add_argument("--timeout", type=int, default=180)

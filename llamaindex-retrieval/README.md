@@ -33,11 +33,28 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 | `NATIVE_PLANNER_PREFILL` / `NATIVE_RESOLVER_PREFILL` | `<think` / `<think` | 可选 `<think></think`，逐阶段实验开关 |
 | `NATIVE_PLAN_PROTOCOL` | `queries_fields` | `shared_tasks` 实验使用单一子问题列表贯穿检索和阅读 |
 | `NATIVE_RESOLVER_PROTOCOL` | `fields` | `task_units` 实验只选支持当前任务的原文编号，不推断字段覆盖 |
+| `NATIVE_TASK_SOURCE` | `fields` | 可选 `queries`，固定将该列表同时交给 Reader 和 Writer；原计划与完整历史保留 |
+| `NATIVE_CANDIDATE_ORDER` | `rrf` | 可选 `query_round_robin`，按各查询排序队列轮流取块，仍保留 RRF 分数和全部候选 |
 | `NATIVE_INGEST_CHUNK_CHARACTERS` | 2400 | 正文软窗口，结构块可更长 |
 | `NATIVE_INGEST_OVERLAP_CHARACTERS` | 180 | 连续正文重叠 |
 | `NATIVE_TIMEOUT_SECONDS` | 180 | 获取并发槽后 tokenize 与生成合计时限 |
 
-`candidate_k` 是每条检索式的候选量。新链路不用旧 `MAX_CHUNKS_PER_DOCUMENT`、`RELATIVE_SCORE_THRESHOLD` 或语义规则门禁。超长输入显式记录 `budget_exceeded`，不会裁切。多进程部署时各 worker 有自己的并发限制，应按 GPU 总容量分配。
+`NATIVE_RESOLVER_SOURCES` 是总来源上限，不是生成调用次数上限；一个超长来源可能按既定窗口分批阅读。`candidate_k` 是每条检索式的候选量。新链路不用旧 `MAX_CHUNKS_PER_DOCUMENT`、`RELATIVE_SCORE_THRESHOLD` 或语义规则门禁。超长输入显式记录 `budget_exceeded`，不会裁切。多进程部署时各 worker 有自己的并发限制，应按 GPU 总容量分配。
+
+若要试用实测的 v5 开发条件，在 `.env` 中替换以下值（仍不是通过质量验收的生产配置）：
+
+```dotenv
+RWKVRAG_NATIVE_PLANNER_PREFILL="<think></think"
+RWKVRAG_NATIVE_RESOLVER_PREFILL="<think></think"
+RWKVRAG_NATIVE_PLAN_PROTOCOL=queries_fields
+RWKVRAG_NATIVE_RESOLVER_PROTOCOL=task_units
+RWKVRAG_NATIVE_TASK_SOURCE=queries
+RWKVRAG_NATIVE_CANDIDATE_ORDER=query_round_robin
+RWKVRAG_NATIVE_RESOLVER_SOURCES=24
+RWKVRAG_NATIVE_TIMEOUT_SECONDS=600
+```
+
+其余参数沿用示例配置，Writer 保持开放 prefill 和 2,048 输出预算。v6 只把总来源改为 80；一轮观察中正确事实从 15/29 到 16/29，每题中位耗时从 39.96 到 98.88 秒，且一题规划输出也变化，不能将差异完全归因于来源预算。评测还固定了 4 题并发、模型/引擎及索引快照；仅修改 `.env` 不保证逐字重现。实际条件、原始调用及审阅见 [后续实验报告](eval/bm250820-followup-20260908/README.md)。
 
 ## API
 
@@ -82,6 +99,6 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 uv run pytest -q tests/test_native_rwkv.py tests/test_rwkv_pipeline.py tests/test_native_integration.py tests/test_verbatim_chunking.py tests/test_ingest.py
 ```
 
-这是实验开发链路，目前 Wiki 端到端尚未达标。默认保留可回归的早期协议，候选开关只有完成独立复测后才能据结果选择。具体结果与失败边界见 [Wiki 实验记录](eval/native-wiki/README.md)。
+这是实验开发链路，目前 Wiki 端到端尚未达标：最新 v6 在 8 道公开开发题上为 16/29 项事实正确，正式事实与引用完整通过 1/8，额外接受明确可读的其他引用格式时为 2/8。默认保留早期协议用于回归；上述 v5 配置是已测开发条件。初始流程见 [Wiki 实验记录](eval/native-wiki/README.md)，后续分阶段检查、完整复测与失败见 [最新实验报告](eval/bm250820-followup-20260908/README.md)。
 
-全部上游测试仍需运行并与纯净基线逐项对照；原有 114 项失败不标记通过。真实模型 smoke 用法和结果见 [验证记录](eval/native-smoke/README.md)。旧部署说明存档于 [基点文档](../docs/previous-python-guide.md)。
+最终全量测试为 472 通过 / 114 失败，失败 ID 与纯净基线完全一致，原有 114 项失败不标记通过。真实模型 smoke 用法和结果见 [验证记录](eval/native-smoke/README.md)。旧部署说明存档于 [基点文档](../docs/previous-python-guide.md)。
