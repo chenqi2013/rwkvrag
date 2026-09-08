@@ -26,6 +26,7 @@ import json
 import os
 from pathlib import Path
 import re
+import runpy
 import sys
 import threading
 import time
@@ -308,6 +309,24 @@ def summarize(out, ids):
     traces = [row["trace"] for row in calls]
     started_calls = [json.loads(path.read_text())
                      for path in sorted((out / "model-calls").glob("*.started.json"))]
+    batch_directory = out / "batch-http"
+    has_batch_receipts = any(batch_directory.glob("*.batch_*.json"))
+    token_directory = out / "token-http"
+    has_token_receipts = any(token_directory.glob("*.token_count_*.json"))
+    batch_http = token_http = None
+    if has_batch_receipts or has_token_receipts or any(trace.get("transport") == "rwkvos_batch" for trace in traces):
+        # This pure offline helper is part of the frozen source inventory. Load
+        # only its file, without preloading the pipeline package before execute().
+        relative = Path("src/llamaindex_retrieval/batch_receipts.py")
+        helper = out / "source" / relative
+        if not helper.is_file():
+            helper = Path(__file__).resolve().parents[2] / relative
+        accounting = runpy.run_path(str(helper))
+        batch_http = accounting["summarize_batch_http"](batch_directory, traces)
+        token_http = accounting["summarize_token_http"](token_directory, traces)
+    external_http = None
+    if batch_http is not None and batch_http["count_exact"] and token_http["count_exact"]:
+        external_http = batch_http["http_requests"] + token_http["http_requests"]
     return {"kind": "previously_exposed_development_e2e_smoke", "original_case_count": len(ids),
             "completed_case_slots": len(completed), "case_statuses": dict(status),
             "not_completed_case_ids": [id for id in ids if id not in {row["id"] for row in completed}],
@@ -315,7 +334,13 @@ def summarize(out, ids):
             "model_calls_without_completed_receipts": [row["ordinal"] for row in started_calls
                 if row["ordinal"] not in {call["ordinal"] for call in calls}],
             "generation_attempts": sum(bool(trace.get("completion_attempted")) for trace in traces),
-            "model_http_requests": sum(len(trace.get("http", [])) for trace in traces),
+            "model_http_requests": (external_http if batch_http is not None
+                else sum(len(trace.get("http", [])) for trace in traces)),
+            "batch_http": batch_http,
+            "token_http": token_http,
+            "generation_batch_http_requests": batch_http["http_requests"] if batch_http is not None else None,
+            "input_token_count_http_requests": token_http["http_requests"] if token_http is not None else None,
+            "provider_termination_unverified_calls": sum(trace.get("termination_verified") is False for trace in traces),
             "model_finish_reasons": dict(Counter(str(trace.get("finish_reason")) for trace in traces)),
             "semantic_quality_scored": False, "oracle_sent_to_pipeline": False,
             "automatic_retries": 0, "all_original_failures_retained": True}
@@ -329,7 +354,7 @@ async def execute(args, out, requests, expected_uuid):
     from opensearchpy import OpenSearch, Urllib3HttpConnection
     from llamaindex_retrieval.config import Settings
     from llamaindex_retrieval.lexical_index import LexicalIndex
-    from llamaindex_retrieval.native_rwkv import NativeRWKVClient
+    from llamaindex_retrieval.model_client import model_client_class, model_client_options
     from llamaindex_retrieval.rwkv_pipeline import RWKVPipeline
     from llamaindex_retrieval.schemas import SearchRequest
 
@@ -342,6 +367,15 @@ async def execute(args, out, requests, expected_uuid):
     settings = ExplicitSettings(
         rag_pipeline="rwkv", native_base_url=args.base_url, native_model=args.model,
         native_api_key=os.environ.get(args.api_key_env, ""),
+        native_transport=args.transport_kind, native_writer_prefill=args.writer_prefill,
+        rwkvos_cf_access_client_id=os.environ.get(args.cf_id_env, ""),
+        rwkvos_cf_access_client_secret=os.environ.get(args.cf_secret_env, ""),
+        rwkvos_prefill_mode=args.prefill_mode,
+        rwkvos_state_id=args.state_id, rwkvos_stop_tokens=args.stop_tokens,
+        rwkvos_batch_size=args.batch_size,
+        rwkvos_batch_wait_ms=args.batch_wait_ms,
+        rwkvos_count_input_tokens=args.count_input_tokens,
+        rwkvos_input_token_limit=args.input_token_limit,
         native_timeout_seconds=args.timeout, native_context_window_tokens=16384,
         native_max_concurrency=args.native_concurrency, native_resolver_sources=args.resolver_sources,
         native_planner_max_tokens=1024, native_resolver_max_tokens=1024,
@@ -358,13 +392,13 @@ async def execute(args, out, requests, expected_uuid):
     )
     public_settings = settings.model_dump(mode="json")
     for name in list(public_settings):
-        if any(word in name.lower() for word in ("password", "api_key", "secret")):
+        if any(word in name.lower() for word in ("password", "api_key", "secret", "cf_access")):
             public_settings[name] = {"configured": bool(public_settings[name]), "value_archived": False}
     save(out / "settings.json", public_settings)
     save(out / "settings-freeze.json", {
         "created_at": now(), "settings_sha256": digest(encoded(public_settings)),
         "manifest_sha256": digest((out / "manifest.json").read_bytes()),
-        "all_environment_configuration_ignored_except_explicit_api_key": True,
+        "environment_configuration": "only explicitly named credential environment variables; values not archived",
     })
     run_binding = {"manifest_sha256": digest((out / "manifest.json").read_bytes()),
                    "settings_sha256": digest(encoded(public_settings))}
@@ -386,12 +420,20 @@ async def execute(args, out, requests, expected_uuid):
                 return None
 
         index = ReadOnlyIndex(settings, client=client)
-        model = recording_model(NativeRWKVClient, out, run_binding)(
-            base_url=settings.native_base_url, model=settings.native_model,
-            api_key=settings.native_api_key, timeout_seconds=settings.native_timeout_seconds,
-            context_window_tokens=settings.native_context_window_tokens,
-            max_concurrency=settings.native_max_concurrency,
-        )
+        def record_batch(event, record):
+            if event in {"batch_started", "batch_completed"}:
+                directory, identity = "batch-http", record["batch_id"]
+            elif event in {"token_count_started", "token_count_completed"}:
+                directory, identity = "token-http", record["count_id"]
+            else:
+                raise ValueError("unknown HTTP receipt event")
+            if not isinstance(identity, str) or not re.fullmatch(r"[A-Za-z0-9_-]+", identity):
+                raise ValueError("invalid HTTP receipt identity")
+            save(out / directory / f"{identity}.{event}.json", record)
+        options = model_client_options(settings)
+        if settings.native_transport == "rwkvos_batch":
+            options["recorder"] = record_batch
+        model = recording_model(model_client_class(settings), out, run_binding)(**options)
         pipeline = RWKVPipeline(settings, index, model=model)
         save(out / "run-started.json", {"run_binding": run_binding, "started_at": now(),
             "case_count": len(requests), "question_concurrency": args.question_concurrency})
@@ -437,6 +479,18 @@ def arguments():
     parser.add_argument("--resolver-protocol", choices=("fields", "task_units"), default="fields")
     parser.add_argument("--task-source", choices=("fields", "queries"), default="fields")
     parser.add_argument("--candidate-order", choices=("rrf", "query_round_robin"), default="rrf")
+    parser.add_argument("--transport", dest="transport_kind", choices=("native", "rwkvos_batch"), default="native")
+    parser.add_argument("--writer-prefill", choices=("<think", "<think></think"), default="<think")
+    parser.add_argument("--prefill-mode", choices=("complete", "continuation"), default="complete")
+    parser.add_argument("--state-id")
+    parser.add_argument("--stop-tokens", type=json.loads, help="Explicit provider token IDs as a JSON list; omission uses its default")
+    parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--batch-wait-ms", type=float, default=5)
+    parser.add_argument("--count-input-tokens", action="store_true")
+    parser.add_argument("--input-token-limit", type=int,
+                        help="Optional input-only application limit; requires --count-input-tokens")
+    parser.add_argument("--cf-id-env", default="RWKVRAG_RWKVOS_CF_ACCESS_CLIENT_ID")
+    parser.add_argument("--cf-secret-env", default="RWKVRAG_RWKVOS_CF_ACCESS_CLIENT_SECRET")
     parser.add_argument("--candidate-k", type=int, default=80)
     parser.add_argument("--max-tokens", type=int, default=2048)
     parser.add_argument("--timeout", type=int, default=180)

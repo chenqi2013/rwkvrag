@@ -13,7 +13,7 @@ from time import monotonic
 
 from .config import Settings
 from .lexical_index import LexicalIndex, LexicalResult
-from .native_rwkv import NativeRWKVClient, inspect_envelope
+from .model_client import model_answer_bounds, model_client_class, model_client_options
 from .schemas import AskResponse, ConversationMessage, SearchRequest, SourceItem
 
 PROMPT_VERSION = "bm250820-native-v4"
@@ -36,8 +36,10 @@ class EvidenceUnit:
 def evidence_units(source_index: int, text: str, window: int, overlap: int):
     """Keep lines (including table rows) atomic; overlap long continuous prose.
 
-    A long table/list row stays intact even if it exceeds the soft window. The
-    native tokenizer enforces the hard context limit without truncating it.
+    A long table/list row stays intact even if it exceeds the soft window.
+    Native transport checks its tokenizer budget; the external transport only
+    enforces an explicitly enabled application input policy, never an inferred
+    provider context limit. Neither path truncates the original row here.
     Offsets always address Python Unicode characters in the indexed chunk.
     """
     start = 0
@@ -113,13 +115,15 @@ def conversation(question: str, history: list[ConversationMessage]) -> str:
 
 
 def structured_body(result) -> str:
-    """Interpret a completed native thinking envelope; leave raw output intact."""
+    """Interpret the completed transport body; leave raw output intact."""
     if result.status != "completed":
         raise ValueError(f"model stage did not complete: {result.status}")
     raw = result.raw_text
-    bounds = inspect_envelope(raw, result.trace.get("prefill", "<think"))
+    bounds = model_answer_bounds(raw, result.trace)
     if bounds is None:
-        raise ValueError("missing closed thinking envelope")
+        if result.trace.get("transport", "native") == "native":
+            raise ValueError("missing closed thinking envelope")
+        raise ValueError("missing valid model answer boundary")
     return raw[bounds[0]:bounds[1]].strip()
 
 
@@ -292,19 +296,15 @@ class RWKVPipeline:
     def __init__(self, settings: Settings, index: LexicalIndex, model=None):
         self.settings = settings
         self.index = index
-        self.model = model or NativeRWKVClient(
-            base_url=settings.native_base_url, model=settings.native_model,
-            api_key=settings.native_api_key, timeout_seconds=settings.native_timeout_seconds,
-            context_window_tokens=settings.native_context_window_tokens,
-            max_concurrency=settings.native_max_concurrency,
-        )
+        self.model = model or model_client_class(settings)(**model_client_options(settings))
 
     async def aclose(self):
         await self.model.aclose()
 
     async def _call(self, prompt: str, *, stage: str, max_tokens: int, sources=()):
         prefill = {"planner": self.settings.native_planner_prefill,
-                   "resolver": self.settings.native_resolver_prefill}.get(stage, "<think")
+                   "resolver": self.settings.native_resolver_prefill,
+                   "writer": self.settings.native_writer_prefill}.get(stage, "<think")
         return await self.model.complete(
             [{"role": "user", "content": prompt}], max_tokens=max_tokens,
             stage=stage, evidence_ids=tuple(source.id for source in sources),
@@ -414,7 +414,9 @@ class RWKVPipeline:
 
     def _response(self, answer, sources, retrieval, events, status, started):
         # Citation labels can be audited syntactically. This is NOT entailment.
-        bounds = inspect_envelope(answer)
+        writer_trace = next((event for event in reversed(events)
+                             if event.get("stage") == "writer"), {})
+        bounds = model_answer_bounds(answer, writer_trace)
         final_span = answer[bounds[0]:bounds[1]] if bounds else ""
         citations = sorted({int(x) for x in re.findall(r"\[资料\s*([1-9]\d*)\]", final_span)})
         return AskResponse(answer=answer if answer is not None else "",
@@ -428,6 +430,9 @@ class RWKVPipeline:
             "raw_model_answer": answer, "answer_modified": False,
             "answer_span": list(bounds) if bounds else None,
             "model": self.settings.native_model,
+            "transport": self.settings.native_transport,
+            "termination_verified": writer_trace.get("termination_verified"),
+            "provider_finish_reason": writer_trace.get("provider_finish_reason"),
             "model_calls": events, "elapsed_ms": round((monotonic() - started) * 1000),
             "evidence_count": len(sources),
             "citation_map": {str(i): source.id for i, source in enumerate(sources, 1)},

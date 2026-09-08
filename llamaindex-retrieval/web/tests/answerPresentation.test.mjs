@@ -63,7 +63,7 @@ test("writer budget rejection distinguishes stage entry from a model generation 
     model_calls: [{ stage: "writer", status: "budget_exceeded", completion_attempted: false }] }));
   assert.equal(result.writerAttempted, true);
   assert.equal(result.writerCalled, false);
-  assert.match(result.label[1], /Input exceeds model budget; not generated/);
+  assert.match(result.label[1], /Input exceeds configured budget; not generated/);
 });
 
 for (const status of ["planner_failed", "retrieval_failed", "invalid_materials"]) {

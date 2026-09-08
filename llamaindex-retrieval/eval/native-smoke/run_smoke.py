@@ -3,7 +3,7 @@
 
 Example (the output directory must not already exist):
   python eval/native-smoke/run_smoke.py --base-url http://127.0.0.1:18421/v1 \
-    --model rwkv7-g1j-13.3b-zero-state-capability-ctx16384 --output /new/smoke-run
+    --model rwkv7-g1j-2.9b-20260831-ctx16384 --output /new/smoke-run
 
 --validate-only and --self-test make no network requests. The latter exercises
 the real pipeline/native client through an in-process httpx MockTransport.
@@ -153,7 +153,7 @@ def load_fixtures(path):
 def runtime_modules(module_root):
     source = (module_root / "src").resolve()
     sys.path.insert(0, str(source))
-    names = ["config", "schemas", "native_rwkv", "rwkv_pipeline"]
+    names = ["config", "schemas", "native_rwkv", "rwkv_pipeline", "batch_receipts"]
     modules = {name: importlib.import_module(f"llamaindex_retrieval.{name}") for name in names}
     for name, module in tuple(sys.modules.items()):
         if name.startswith("llamaindex_retrieval") and getattr(module, "__file__", None):
@@ -266,6 +266,7 @@ async def execute(args, *, transport=None):
     fixtures_raw, fixtures = load_fixtures(args.fixtures)
     inventory = source_inventory(args.module_root)
     modules = runtime_modules(args.module_root)
+    client_module = importlib.import_module("llamaindex_retrieval.model_client")
     settings = modules["config"].Settings(
         _env_file=None,
         rag_pipeline="rwkv",
@@ -273,6 +274,17 @@ async def execute(args, *, transport=None):
         native_base_url=args.base_url,
         native_model=args.model,
         native_api_key=os.environ.get(args.api_key_env, ""),
+        native_transport=getattr(args, "transport_kind", "native"),
+        native_writer_prefill=getattr(args, "writer_prefill", "<think"),
+        rwkvos_cf_access_client_id=os.environ.get(getattr(args, "cf_id_env", "RWKVRAG_RWKVOS_CF_ACCESS_CLIENT_ID"), ""),
+        rwkvos_cf_access_client_secret=os.environ.get(getattr(args, "cf_secret_env", "RWKVRAG_RWKVOS_CF_ACCESS_CLIENT_SECRET"), ""),
+        rwkvos_prefill_mode=getattr(args, "prefill_mode", "complete"),
+        rwkvos_state_id=getattr(args, "state_id", None),
+        rwkvos_stop_tokens=getattr(args, "stop_tokens", None),
+        rwkvos_batch_size=getattr(args, "batch_size", 8),
+        rwkvos_batch_wait_ms=getattr(args, "batch_wait_ms", 5),
+        rwkvos_count_input_tokens=getattr(args, "count_input_tokens", False),
+        rwkvos_input_token_limit=getattr(args, "input_token_limit", None),
         native_timeout_seconds=args.timeout_seconds,
         native_context_window_tokens=args.context_window,
         native_max_concurrency=args.concurrency,
@@ -293,18 +305,23 @@ async def execute(args, *, transport=None):
         }
         for row in fixtures
     ]
-    client_type = recording_client_class(modules["native_rwkv"].NativeRWKVClient)
+    selected_client = client_module.model_client_class(settings)
+    client_type = recording_client_class(selected_client)
+    def record_batch(event, record):
+        if event in {"batch_started", "batch_completed"}:
+            directory, identity = "batch-http", record["batch_id"]
+        elif event in {"token_count_started", "token_count_completed"}:
+            directory, identity = "token-http", record["count_id"]
+        else:
+            raise ValueError("unknown HTTP receipt event")
+        if not isinstance(identity, str) or not re.fullmatch(r"[A-Za-z0-9_-]+", identity):
+            raise ValueError("invalid HTTP receipt identity")
+        write_new(args.output / directory / f"{identity}.{event}.json", record)
+    options = client_module.model_client_options(settings, transport=transport)
+    if settings.native_transport == "rwkvos_batch":
+        options["recorder"] = record_batch
     # Validate URL/model before reserving the run. Construction never makes HTTP.
-    client = client_type(
-        args.output,
-        base_url=args.base_url,
-        model=args.model,
-        api_key=settings.native_api_key,
-        timeout_seconds=args.timeout_seconds,
-        context_window_tokens=args.context_window,
-        max_concurrency=args.concurrency,
-        transport=transport,
-    )
+    client = client_type(args.output, **options)
     try:
         args.output.mkdir(parents=True, exist_ok=False, mode=0o700)
     except BaseException:
@@ -317,6 +334,8 @@ async def execute(args, *, transport=None):
         "model-completed",
         "http-started",
         "http-completed",
+        "batch-http",
+        "token-http",
         "frozen",
     ]:
         (args.output / directory).mkdir(mode=0o700)
@@ -349,6 +368,16 @@ async def execute(args, *, transport=None):
         "configuration": {
             "base_url": args.base_url,
             "model": args.model,
+            "transport": settings.native_transport,
+            "writer_prefill": settings.native_writer_prefill,
+            "state_id": settings.rwkvos_state_id,
+            "prefill_mode": settings.rwkvos_prefill_mode,
+            "stop_tokens": settings.rwkvos_stop_tokens,
+            "batch_size": settings.rwkvos_batch_size,
+            "batch_wait_ms": settings.rwkvos_batch_wait_ms,
+            "count_input_tokens": settings.rwkvos_count_input_tokens,
+            "input_token_limit": settings.rwkvos_input_token_limit,
+            "cf_access_configured": bool(settings.rwkvos_cf_access_client_id.get_secret_value()) and bool(settings.rwkvos_cf_access_client_secret.get_secret_value()),
             "concurrency": args.concurrency,
             "native_max_concurrency": args.concurrency,
             "timeout_seconds": args.timeout_seconds,
@@ -359,7 +388,7 @@ async def execute(args, *, transport=None):
             "native_complete_parameter_defaults": {
                 key: parameter.default
                 for key, parameter in inspect.signature(
-                    modules["native_rwkv"].NativeRWKVClient.complete
+                    selected_client.complete
                 ).parameters.items()
                 if key
                 in {
@@ -448,6 +477,15 @@ async def execute(args, *, transport=None):
         await pipeline.aclose()
     ordered = [records[request["id"]] for request in requests]
     unchanged = inventory == source_inventory(args.module_root)
+    batch_http = (modules["batch_receipts"].summarize_batch_http(
+        args.output / "batch-http", [trace for rows in client.traces.values() for trace in rows])
+        if settings.native_transport == "rwkvos_batch" else None)
+    token_http = (modules["batch_receipts"].summarize_token_http(
+        args.output / "token-http", [trace for rows in client.traces.values() for trace in rows])
+        if batch_http is not None else None)
+    external_http = None
+    if batch_http is not None and batch_http["count_exact"] and token_http["count_exact"]:
+        external_http = batch_http["http_requests"] + token_http["http_requests"]
     summary = {
         "schema": "rwkvrag-native-material-smoke-summary-v1",
         "planned_cases": len(fixtures),
@@ -455,7 +493,14 @@ async def execute(args, *, transport=None):
         "attempted_cases": sum(row["attempted"] for row in ordered),
         "status_counts": dict(Counter(row["status"] for row in ordered)),
         "model_calls": sum(client.call_counts.values()),
-        "http_requests": sum(client.http_counts.values()),
+        "http_requests": (external_http if batch_http is not None
+                          else sum(client.http_counts.values())),
+        "batch_http": batch_http,
+        "token_http": token_http,
+        "generation_batch_http_requests": batch_http["http_requests"] if batch_http is not None else None,
+        "input_token_count_http_requests": token_http["http_requests"] if token_http is not None else None,
+        "transport": settings.native_transport,
+        "termination_verification": "unavailable" if settings.native_transport == "rwkvos_batch" else "native_finish_reason",
         "elapsed_ms": (time.perf_counter() - start) * 1000,
         "interrupted": interrupted,
         "source_unchanged": unchanged,
@@ -623,6 +668,18 @@ def main():
         default="RWKVRAG_NATIVE_API_KEY",
         help="environment variable name; the key value is never saved",
     )
+    parser.add_argument("--transport", dest="transport_kind", choices=("native", "rwkvos_batch"), default="native")
+    parser.add_argument("--writer-prefill", choices=("<think", "<think></think"), default="<think")
+    parser.add_argument("--prefill-mode", choices=("complete", "continuation"), default="complete")
+    parser.add_argument("--state-id")
+    parser.add_argument("--stop-tokens", type=json.loads, help="Explicit provider token IDs as a JSON list; omission uses its default")
+    parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--batch-wait-ms", type=float, default=5)
+    parser.add_argument("--count-input-tokens", action="store_true")
+    parser.add_argument("--input-token-limit", type=int,
+                        help="Optional input-only application limit; requires --count-input-tokens")
+    parser.add_argument("--cf-id-env", default="RWKVRAG_RWKVOS_CF_ACCESS_CLIENT_ID")
+    parser.add_argument("--cf-secret-env", default="RWKVRAG_RWKVOS_CF_ACCESS_CLIENT_SECRET")
     parser.add_argument("--concurrency", type=int, default=8)
     parser.add_argument("--max-output-tokens", type=int, default=2048)
     parser.add_argument("--context-window", type=int, default=16384)

@@ -52,11 +52,13 @@ export function answerPresentation(response?: Pick<AskResponse, "answer" | "gene
       : !answerText.trim() ? ["生成完成，正文为空", "Generation completed; answer is empty"]
         : !writerAttempted && !writerCalled
           ? ["流程报告完成，缺少生成记录", "Completed status; generation record missing"]
-          : ["生成完成，尚未做语义核验", "Generation completed; semantic support not verified"];
+          : generation.termination_verified === false
+            ? ["已返回回答，终止原因与语义支持未核验", "Answer returned; termination and semantic support unverified"]
+            : ["生成完成，尚未做语义核验", "Generation completed; semantic support not verified"];
   } else if (status === "length" || writerStatus === "length") {
     label = ["达到输出上限，生成未完成", "Output limit reached; generation incomplete"];
   } else if (status === "budget_exceeded" || writerStatus === "budget_exceeded") {
-    label = ["输入超出模型预算，未生成", "Input exceeds model budget; not generated"];
+    label = ["输入超过配置预算，未生成", "Input exceeds configured budget; not generated"];
   } else if (status === "planner_failed") {
     color = "red";
     label = ["规划失败，未进入生成", "Planning failed; generation not reached"];

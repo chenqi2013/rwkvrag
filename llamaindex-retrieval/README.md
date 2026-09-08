@@ -1,64 +1,65 @@
 # RWKV 原生检索问答服务
 
-基于 `bm250820@2bbc406`。新链路由 `rwkv_pipeline.py` 编排，`native_rwkv.py` 负责推理传输，`verbatim_chunking.py` 保留导入原文。约束见 [ARCHITECTURE_RULES.md](ARCHITECTURE_RULES.md)。
+从 `bm250820@2bbc406` 重建。`rwkv_pipeline.py` 编排检索、原文选择和作答，`model_client.py` 选择原生或外部 batch 传输，`verbatim_chunking.py` 保留原文。约束见 [ARCHITECTURE_RULES.md](ARCHITECTURE_RULES.md)。
 
-当前主模型是 **RWKV7 G1j 2.9B（16K）**，优先使用外部 API、备用本机 GPU，不再使用 `rwkv-8222`。外部 batch 接口的连通性已验证，传输适配尚未完成；下列启动方式仍要求原生推理服务，不能将其 base URL 直接替换成外部 batch 地址。详见 [接口记录](../docs/rwkvos-api.md)。此前 13.3B 成绩保留为历史对照。
+当前主模型 **RWKV7 G1j 2.9B**，外部 API 适配和完整 Wiki 开发基线已完成，但质量尚未达标：8 题 / 29 事实为 0 正确、25 遗漏、4 错误，正式完整 0/8。固定材料 Writer 为 19/28。详见 [2.9B 评测](eval/rwkvos-29b-20260909/README.md) 和 [接口/state 合同](../docs/rwkvos-api.md)。此前 13.3B 是独立历史条件。
 
 ## 依赖与启动
 
-| 组件 | 作用 | 计算资源 |
+| 组件 | 作用 | 资源 |
 | --- | --- | --- |
-| OpenSearch | BM25 块检索 | CPU、内存、磁盘 |
+| OpenSearch | BM25 原文块检索 | CPU、内存、磁盘 |
 | MongoDB | 知识库、文件、任务、问答及 trace | CPU、内存、磁盘 |
-| RWKV 原生服务 | 规划、逐来源读取、作答 | GPU |
-| FastAPI | 编排、导入、管理和 API | CPU |
+| RWKV API | 规划、逐来源阅读、作答 | 当前外部 2.9B，备用本机 GPU |
+| FastAPI | 编排、导入、管理接口 | CPU |
 
-不需要 Qdrant 或 embedding 模型。RWKV 服务须支持本项目验证的原生协议：`/tokenize` 返回完整 token 列表、数量和上下文上限；`/v1/completions` 支持原生 prompt、单 BOS、停止符及 usage。普通 chat 接口不能替代此契约。
+不需要 Qdrant 或 embedding 服务。以下启动完整应用还需自行配置 OpenSearch 和 MongoDB；本轮本机基线只验证了索引与检索链路，并非管理服务部署验收。不再使用旧服务器。本机 GPU 备用需要另行部署和配置，目前没有自动故障切换。
 
 ```bash
 uv sync --frozen --extra dev
 cp .env.example .env
-# 编辑实际地址、模型名和数据目录
+# 在本机 .env 填写 CF Access 认证、数据库地址和数据目录
 uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 ```
 
-## 新链路参数
+示例明确启用 `RAG_PIPELINE=rwkv` 和 `NATIVE_TRANSPORT=rwkvos_batch`，采用已测零 state、complete 闭合前缀、EOS 停止、queries/tasks 原文选择、80 总来源配置。它是可复核的开发基线，没有通过质量验收。没有 .env 时保留 `existing` 及 `native` 兼容默认，不能用省略配置代替选择部署方案。
 
-| 参数（前缀 `RWKVRAG_`） | 默认值 | 意义 |
+## 主要参数
+
+表中参数均加 `RWKVRAG_` 前缀。软件默认保留回归兼容；示例配置选择本轮外部基线。
+
+| 参数 | 软件默认 | 意义 |
 | --- | --- | --- |
-| `RAG_PIPELINE` | `existing`；示例为 `rwkv` | 明确选择链路 |
-| `NATIVE_CONTEXT_WINDOW_TOKENS` | 16384 | 与服务上限取较小值 |
-| `NATIVE_MAX_CONCURRENCY` | 32 | 进程内所有模型阶段共享 |
+| `NATIVE_TRANSPORT` | `native` | 外部选 `rwkvos_batch` |
+| `NATIVE_BASE_URL` | 本机 18421/v1 | 外部示例 `https://api-3b.rwkvos.com/v1` |
+| `NATIVE_MODEL` | `rwkv7-g1j-2.9b-20260831-ctx16384` | 服务身份校验 |
+| `RWKVOS_CF_ACCESS_CLIENT_ID` / `RWKVOS_CF_ACCESS_CLIENT_SECRET` | 空 | 只在本机配置，不进入 trace |
+| `RWKVOS_STATE_ID` | 省略 | 仅使用有效且模型兼容的 state |
+| `RWKVOS_BATCH_SIZE` / `RWKVOS_BATCH_WAIT_MS` | 8 / 5 | 同参数调用合批 |
+| `NATIVE_MAX_CONCURRENCY` | 32 | 进程内所有阶段共享项数 |
+| `RWKVOS_PREFILL_MODE` | `complete` | `continuation` 省略前缀末尾 >，未晋级候选 |
+| `RWKVOS_STOP_TOKENS` | 省略 | 示例 `[0]`；与空数组不同 |
+| `RWKVOS_COUNT_INPUT_TOKENS` | false | 可选逐项完整 prompt 服务计数 |
+| `RWKVOS_INPUT_TOKEN_LIMIT` | 无 | 显式应用输入上限，须同时开启计数 |
+| `NATIVE_CONTEXT_WINDOW_TOKENS` | 16384 | native 与服务限制取小；外部不将它当服务硬上限 |
+| `NATIVE_PLANNER_PREFILL` / `NATIVE_RESOLVER_PREFILL` / `NATIVE_WRITER_PREFILL` | `<think` | 示例各为 `<think></think` |
+| `NATIVE_PLAN_PROTOCOL` | `queries_fields` | `shared_tasks` 为独立实验，未晋级 |
+| `NATIVE_RESOLVER_PROTOCOL` | `fields` | 示例 `task_units` 只选择原文编号 |
+| `NATIVE_TASK_SOURCE` | `fields` | 示例 `queries` 同时交给 Reader 和 Writer |
+| `NATIVE_CANDIDATE_ORDER` | `rrf` | 示例按查询轮转，保留 RRF 分数和所有候选 |
+| `NATIVE_RESOLVER_SOURCES` | 24 | 示例 80，总来源预算，无每文档配额 |
+| `NATIVE_PLANNER_MAX_TOKENS` / `NATIVE_RESOLVER_MAX_TOKENS` | 1024 / 1024 | 阶段输出预算 |
 | `GENERATION_MAX_TOKENS` | 2048 | Writer 输出预算 |
-| `NATIVE_PLANNER_MAX_TOKENS` / `NATIVE_RESOLVER_MAX_TOKENS` | 1024 / 1024 | 包括模型思考 |
-| `NATIVE_RESOLVER_SOURCES` | 24 | 总读取来源预算，无每文档配额 |
-| `NATIVE_PLANNER_PREFILL` / `NATIVE_RESOLVER_PREFILL` | `<think` / `<think` | 可选 `<think></think`，逐阶段实验开关 |
-| `NATIVE_PLAN_PROTOCOL` | `queries_fields` | `shared_tasks` 实验使用单一子问题列表贯穿检索和阅读 |
-| `NATIVE_RESOLVER_PROTOCOL` | `fields` | `task_units` 实验只选支持当前任务的原文编号，不推断字段覆盖 |
-| `NATIVE_TASK_SOURCE` | `fields` | 可选 `queries`，固定将该列表同时交给 Reader 和 Writer；原计划与完整历史保留 |
-| `NATIVE_CANDIDATE_ORDER` | `rrf` | 可选 `query_round_robin`，按各查询排序队列轮流取块，仍保留 RRF 分数和全部候选 |
-| `NATIVE_INGEST_CHUNK_CHARACTERS` | 2400 | 正文软窗口，结构块可更长 |
-| `NATIVE_INGEST_OVERLAP_CHARACTERS` | 180 | 连续正文重叠 |
-| `NATIVE_TIMEOUT_SECONDS` | 180 | 获取并发槽后 tokenize 与生成合计时限 |
+| `NATIVE_INGEST_CHUNK_CHARACTERS` / `NATIVE_INGEST_OVERLAP_CHARACTERS` | 2400 / 180 | 逐字软窗口与重叠 |
+| `NATIVE_TIMEOUT_SECONDS` | 180 | 示例 600；计数开启时涵盖排队、计数和生成 |
 
-`NATIVE_RESOLVER_SOURCES` 是总来源上限，不是生成调用次数上限；一个超长来源可能按既定窗口分批阅读。`candidate_k` 是每条检索式的候选量。新链路不用旧 `MAX_CHUNKS_PER_DOCUMENT`、`RELATIVE_SCORE_THRESHOLD` 或语义规则门禁。超长输入显式记录 `budget_exceeded`，不会裁切。多进程部署时各 worker 有自己的并发限制，应按 GPU 总容量分配。
+`candidate_k` 是每条检索式的候选量，总来源上限不是调用次数上限。超长原文可分多次读取。每次 Reader 的约 6,000 原文字符没有包括历史、任务、父级上下文和模板，不能当总 token 上限。外部计数默认关闭；启用后计数失败或超过显式应用上限均显式返回，不裁切输入。没有动态 state 续读，详细机制与 8K/16K/32K 结果见 [超长上下文](../docs/long-context.md)。
 
-若要试用实测的 v5 开发条件，在 `.env` 中替换以下值（仍不是通过质量验收的生产配置）：
+计数开启时，总期限从调用入口开始，包含等槽和批次排队；失败收据的有界落盘收尾单独计时。计数关闭时保留原外部批次 HTTP 时限。
 
-```dotenv
-RWKVRAG_NATIVE_PLANNER_PREFILL="<think></think"
-RWKVRAG_NATIVE_RESOLVER_PREFILL="<think></think"
-RWKVRAG_NATIVE_PLAN_PROTOCOL=queries_fields
-RWKVRAG_NATIVE_RESOLVER_PROTOCOL=task_units
-RWKVRAG_NATIVE_TASK_SOURCE=queries
-RWKVRAG_NATIVE_CANDIDATE_ORDER=query_round_robin
-RWKVRAG_NATIVE_RESOLVER_SOURCES=24
-RWKVRAG_NATIVE_TIMEOUT_SECONDS=600
-```
+新链路不用旧 `MAX_CHUNKS_PER_DOCUMENT`、`RELATIVE_SCORE_THRESHOLD` 或语义规则门禁。多 worker 各有独立并发限制，部署时需分配总容量。
 
-其余参数沿用示例配置，Writer 保持开放 prefill 和 2,048 输出预算。v6 只把总来源改为 80；一轮观察中正确事实从 15/29 到 16/29，每题中位耗时从 39.96 到 98.88 秒，且一题规划输出也变化，不能将差异完全归因于来源预算。评测还固定了 4 题并发、模型/引擎及索引快照；仅修改 `.env` 不保证逐字重现。实际条件、原始调用及审阅见 [后续实验报告](eval/bm250820-followup-20260908/README.md)。
-
-## API
+## API 与 trace
 
 `POST /v1/ask` 从完整知识库检索后作答：
 
@@ -74,33 +75,23 @@ RWKVRAG_NATIVE_TIMEOUT_SECONDS=600
 }
 ```
 
-`POST /v1/material-ask` 是固定材料 Writer 入口；传入 `question`、`history`、`materials: SourceItem[]`（1–20 份），不调用检索或 Resolver。
+`POST /v1/material-ask` 只运行固定材料 Writer，输入 question、history、materials（1–20 份 SourceItem）。`POST /v1/search` 只运行 BM25；展示 top_k 不限制 Writer 返回的引用来源。管理、导入和任务接口复用基点实现，新切块应使用新索引。
 
-`POST /v1/search` 提供 BM25 检索。`top_k` 控制搜索展示条数，不限制 `/v1/ask` 返回的 Writer 引用来源。
+`answer` 保留原始模型文本。`generation.answer_span` 标出正文的 Unicode 起止位置；不能把它当事实审核。没有模型文本时 answer 为空、raw_model_answer 为 null。
 
-管理页面、文件导入与任务接口复用基点实现。新切块方式应使用**新索引**，不把原文块和旧结构重写块混入同一评测索引。
+- `completed` 表示传输返回完成；外部 `termination_verified=false`，其 stop 不能证明自然结束。
+- `length`、`budget_exceeded`、`token_count_failed`、`timeout` 等保留错误与实际已有输出。
+- `planner_failed`、`retrieval_failed` 明确指出停止阶段。
+- `resolver_partial_failure` 表示部分读取或解析失败，即便 Writer 返回也不标整链路成功。
 
-## 输出与 trace
+`generation.model_calls` 保存 prompt、字节、SHA、输入来源及阶段耗时；共享 batch 按唯一 ID 统计，计数 HTTP 单列。`retrieval.candidates`、读取来源和预算排除项均可查；sources 与 citation_map 覆盖 Writer 全部资料。片段、原文块及父级上下文携带 Unicode 坐标和 SHA。
 
-`answer` 是原始 `choice.text`，包括思考封套，不能当成已审核正文。`generation.answer_span` 给出正文在原始字符串中的 Unicode 起止位置。尚无模型文本时 `answer=""`、`raw_model_answer=null`；错误看 `generation.status`。
-
-- `completed`：模型自然完成，不等于事实和引用都正确。
-- `length`、`budget_exceeded`、`timeout` 等：保留错误与已有原始输出。
-- `planner_failed`、`retrieval_failed`：链路停在相应阶段，已完成调用可检查。
-- `resolver_partial_failure`：部分读取/解析失败，即便 Writer 完成也不标整链路成功。
-
-`generation.model_calls` 保存精确 prompt、请求/响应字节、SHA、输入来源、状态、usage 和时间。`retrieval.candidates` 保存完整候选，另列入选来源、预算排除项。`sources` 与 `citation_map` 对应 Writer 全部资料。
-
-片段 `span_start/span_end` 相对于索引块；导入 `source_span` 相对于整篇提取正文，均为 Unicode 字符坐标。父级标题/表头上下文也携带原文位置与 SHA。`citation_audit` 仅扫描正文的字面标签，不证明语义支持，`semantic_support_verified` 固定为 false。
-
-没有应用层答案修复、静默重试或 RWKV state 缓存。
+原始输出不增删、不补引用、不静默重试。citation_audit 只检查标签，semantic_support_verified 保持 false。模型自己生成的“证据”列表不能替代真实输入来源。
 
 ## 验证
 
 ```bash
-uv run pytest -q tests/test_native_rwkv.py tests/test_rwkv_pipeline.py tests/test_native_integration.py tests/test_verbatim_chunking.py tests/test_ingest.py
+uv run pytest -q tests/test_native_rwkv.py tests/test_rwkvos_batch.py tests/test_model_transport.py tests/test_rwkv_pipeline.py tests/test_native_integration.py tests/test_verbatim_chunking.py tests/test_ingest.py
 ```
 
-这是实验开发链路，目前 Wiki 端到端尚未达标：最新 v6 在 8 道公开开发题上为 16/29 项事实正确，正式事实与引用完整通过 1/8，额外接受明确可读的其他引用格式时为 2/8。默认保留早期协议用于回归；上述 v5 配置是已测开发条件。初始流程见 [Wiki 实验记录](eval/native-wiki/README.md)，后续分阶段检查、完整复测与失败见 [最新实验报告](eval/bm250820-followup-20260908/README.md)。
-
-最终全量测试为 472 通过 / 114 失败，失败 ID 与纯净基线完全一致，原有 114 项失败不标记通过。真实模型 smoke 用法和结果见 [验证记录](eval/native-smoke/README.md)。旧部署说明存档于 [基点文档](../docs/previous-python-guide.md)。
+本轮完整回归与原始日志见 [2.9B 归档](eval/rwkvos-29b-20260909/README.md)，基点 114 项失败单列比较。前端测试与构建也单独验证。真实模型开发题、源码快照、失败输出和引用语义审阅全部保留；软件测试不证明模型答案正确。旧 13.3B 记录见 [历史报告](eval/bm250820-followup-20260908/README.md)，基点部署说明见 [存档](../docs/previous-python-guide.md)。

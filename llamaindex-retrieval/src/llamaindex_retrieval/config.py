@@ -2,7 +2,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, model_validator
+from pydantic import Field, SecretStr, StrictInt, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -40,6 +40,17 @@ class Settings(BaseSettings):
     native_base_url: str = "http://127.0.0.1:18421/v1"
     native_model: str = "rwkv7-g1j-2.9b-20260831-ctx16384"
     native_api_key: str = ""
+    native_transport: Literal["native", "rwkvos_batch"] = "native"
+    native_writer_prefill: Literal["<think", "<think></think"] = "<think"
+    rwkvos_cf_access_client_id: SecretStr = SecretStr("")
+    rwkvos_cf_access_client_secret: SecretStr = SecretStr("")
+    rwkvos_prefill_mode: Literal["complete", "continuation"] = "complete"
+    rwkvos_state_id: str | None = None
+    rwkvos_stop_tokens: list[StrictInt] | None = None
+    rwkvos_count_input_tokens: bool = False
+    rwkvos_input_token_limit: StrictInt | None = Field(default=None, ge=1)
+    rwkvos_batch_size: int = Field(default=8, ge=1, le=399)
+    rwkvos_batch_wait_ms: float = Field(default=5, ge=0, le=1000)
     native_timeout_seconds: int = Field(default=180, ge=5, le=1800)
     native_context_window_tokens: int = Field(default=16384, ge=1024)
     native_max_concurrency: int = Field(default=32, ge=1, le=256)
@@ -79,6 +90,8 @@ class Settings(BaseSettings):
             raise ValueError("native resolver overlap must be smaller than window")
         if self.native_ingest_overlap_characters >= self.native_ingest_chunk_characters:
             raise ValueError("native ingest overlap must be smaller than chunk")
+        if self.rwkvos_input_token_limit is not None and not self.rwkvos_count_input_tokens:
+            raise ValueError("rwkvos_input_token_limit requires rwkvos_count_input_tokens")
         return self
     ask_total_timeout: int = Field(default=45, ge=10, le=180)
     ask_generation_reserve: int = Field(default=12, ge=3, le=60)
