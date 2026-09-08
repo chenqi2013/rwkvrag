@@ -4,12 +4,21 @@ from typing import Any, Literal
 from pydantic import BaseModel, Field, field_validator
 
 
+SearchAnswerStatus = Literal["answered", "refused", "completed", "partial", "failed"]
+
+
+class ConversationMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str = Field(max_length=100_000)
+
+
 class SearchRequest(BaseModel):
     question: str
     top_k: int | None = Field(default=None, ge=1, le=100)
     candidate_k: int | None = Field(default=None, ge=5, le=200)
     min_score: float | None = None
     knowledge_base_id: str | None = None
+    history: list[ConversationMessage] = Field(default_factory=list, max_length=64)
 
     @field_validator("question")
     @classmethod
@@ -46,6 +55,7 @@ class AskResponse(BaseModel):
 class MaterialAskRequest(BaseModel):
     question: str
     materials: list[SourceItem] = Field(min_length=1, max_length=20)
+    history: list[ConversationMessage] = Field(default_factory=list, max_length=64)
 
     @field_validator("question")
     @classmethod
@@ -74,7 +84,7 @@ class SearchTestItem(BaseModel):
     created_at: datetime
     updated_at: datetime
     latest_run_id: str | None = None
-    latest_answer_status: Literal["answered", "refused"] | None = None
+    latest_answer_status: SearchAnswerStatus | None = None
     latest_failure_category: Literal[
         "data_missing",
         "retrieval_failed",

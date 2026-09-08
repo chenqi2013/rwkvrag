@@ -21,6 +21,7 @@ import { api } from "../api";
 import type { AskResponse, FailureCategory, KnowledgeBase } from "../types";
 import { errorMessage } from "../utils";
 import { useLanguage } from "../i18n";
+import { answerPresentation } from "../answerPresentation";
 
 interface SearchForm {
   question: string;
@@ -51,13 +52,7 @@ export default function SearchPage() {
     }
   };
 
-  const writerAttempted = response?.generation.answer_strategy === "single_writer_call"
-    || response?.generation.answer_strategy === "generation_failed";
-  const writerCalled = response?.generation.answer_strategy === "single_writer_call"
-    || response?.generation.writer_trace != null;
-  const evidenceVerified = writerCalled
-    && response?.generation.grounding_valid === true
-    && response?.generation.answer_support_passed === true;
+  const presentation = answerPresentation(response);
   const queryNormalized = response?.retrieval.query_normalized === true;
   const normalizedQuestion = String(response?.retrieval.normalized_question || "");
   const failureCategory = response?.generation.failure_category as FailureCategory | undefined;
@@ -101,8 +96,8 @@ export default function SearchPage() {
                 label={tr("页面显示数量", "Displayed results")}
                 name="top_k"
                 extra={tr(
-                  "仅控制页面展示；系统会按问题类型自动使用 5～12 条证据生成答案。",
-                  "Controls display only; the system automatically uses 5–12 evidence items based on question type.",
+                  "实际证据范围由当前检索流程决定；原生 RWKV 会保留完整引用来源列表。",
+                  "The active retrieval pipeline determines the evidence; native RWKV retains the complete citation source list.",
                 )}
               >
                 <InputNumber min={1} max={20} style={{ width: "100%" }} />
@@ -119,14 +114,8 @@ export default function SearchPage() {
             extra={
               response && (
                 <Space size={4} wrap>
-          <Tag color={evidenceVerified ? "green" : writerAttempted ? "blue" : "orange"}>
-            {evidenceVerified
-              ? tr("证据校验通过", "Evidence verified")
-              : response?.generation.answer_strategy === "generation_failed"
-                ? tr("生成失败", "Generation failed")
-              : writerCalled
-                ? tr("已生成，证据校验未通过", "Generated; evidence check failed")
-                        : tr("证据不足，未生成", "Insufficient evidence; not generated")}
+                  <Tag color={presentation.color}>
+                    {tr(...presentation.label)}
                   </Tag>
                   {response.generation.model ? (
                     <Tag color="green">{tr("生成模型", "Model")} · {String(response.generation.model)}</Tag>
@@ -156,15 +145,31 @@ export default function SearchPage() {
                     </Typography.Text>
                   ) : null}
                 </Space>
-                <Typography.Paragraph className="result-snippet" copyable={{ text: response.answer }}>
-                  {response.answer}
-                </Typography.Paragraph>
+                {presentation.answerText ? (
+                  <Typography.Paragraph className="result-snippet" copyable={{ text: presentation.answerText }}>
+                    {presentation.answerText}
+                  </Typography.Paragraph>
+                ) : <Typography.Text type="secondary">{tr("未提供可显示的答案正文。", "No answer body is available.")}</Typography.Text>}
+                {presentation.isNative && (
+                  <details>
+                    <summary>{tr("原始模型输出与运行记录", "Raw model output and trace")}</summary>
+                    <Typography.Paragraph className="result-snippet" copyable={{ text: presentation.rawAnswer }}>
+                      {presentation.rawAnswer || tr("无原始输出", "No raw output")}
+                    </Typography.Paragraph>
+                    <details>
+                      <summary>{tr("完整运行记录", "Full trace")}</summary>
+                      <pre style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>
+                        {JSON.stringify({ retrieval: response.retrieval, generation: response.generation }, null, 2)}
+                      </pre>
+                    </details>
+                  </details>
+                )}
                 <Card
                   size="small"
                   title={tr("检索证据", "Retrieved Evidence")}
                   extra={
                     <Space>
-                      <Tag color="cyan">{String(response.retrieval.algorithm)}</Tag>
+                      {response.retrieval.algorithm ? <Tag color="cyan">{String(response.retrieval.algorithm)}</Tag> : null}
                       <Tag>{String(response.retrieval.mode)}</Tag>
                       <Tag>{String(response.retrieval.returned)} {tr("条", "results")}</Tag>
                     </Space>
@@ -172,7 +177,7 @@ export default function SearchPage() {
                 >
                   <List
                     dataSource={response.sources}
-                    locale={{ emptyText: <Empty description={tr("没有达到相关性阈值的结果", "No results met the relevance threshold")} /> }}
+                    locale={{ emptyText: <Empty description={tr("没有返回证据", "No evidence returned")} /> }}
                     renderItem={(item, index) => (
                       <List.Item>
                         <Card size="small" className="result-card">

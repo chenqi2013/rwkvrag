@@ -4,20 +4,15 @@ import type { ColumnsType } from "antd/es/table";
 import { useCallback, useEffect, useState } from "react";
 
 import { api } from "../api";
-import type { FailureCategory, SearchTestDetail, SearchTestItem, SearchTestRun } from "../types";
+import type { FailureCategory, SearchAnswerStatus, SearchTestDetail, SearchTestItem, SearchTestRun } from "../types";
 import { errorMessage, formatDate } from "../utils";
 import { useLanguage } from "../i18n";
+import { answerPresentation } from "../answerPresentation";
 
 function VersionResult({ run }: { run: SearchTestRun }) {
   const { tr } = useLanguage();
   const { response } = run;
-  const writerAttempted = response.generation.answer_strategy === "single_writer_call"
-    || response.generation.answer_strategy === "generation_failed";
-  const writerCalled = response.generation.answer_strategy === "single_writer_call"
-    || response.generation.writer_trace != null;
-  const grounded = writerCalled
-    && response.generation.grounding_valid === true
-    && response.generation.answer_support_passed === true;
+  const presentation = answerPresentation(response);
   const model = response.generation.model;
   const failureCategory = response.generation.failure_category as FailureCategory | undefined;
   const failureReason = response.generation.failure_reason as string | undefined;
@@ -33,14 +28,8 @@ function VersionResult({ run }: { run: SearchTestRun }) {
       <Space direction="vertical" size={5} style={{ width: "100%" }}>
         <Space wrap>
           <Tag color="blue">{tr(`第 ${run.run_number} 次`, `Run ${run.run_number}`)}</Tag>
-          <Tag color={grounded ? "green" : writerAttempted ? "blue" : "orange"}>
-            {grounded
-              ? tr("证据校验通过", "Evidence verified")
-              : response.generation.answer_strategy === "generation_failed"
-                ? tr("生成失败", "Generation failed")
-              : writerCalled
-                ? tr("已生成，证据校验未通过", "Generated; evidence check failed")
-                : tr("证据不足，未生成", "Insufficient evidence; not generated")}
+          <Tag color={presentation.color}>
+            {tr(...presentation.label)}
           </Tag>
           <Typography.Text type="secondary">{formatDate(run.created_at)}</Typography.Text>
           {model ? <Tag>{tr("模型", "Model")} · {String(model)}</Tag> : null}
@@ -56,9 +45,25 @@ function VersionResult({ run }: { run: SearchTestRun }) {
             {tr("失败原因：", "Failure reason: ")}{failureReason}
           </Typography.Text>
         ) : null}
-        <Typography.Paragraph className="result-snippet" copyable={{ text: response.answer }}>
-          {response.answer}
-        </Typography.Paragraph>
+        {presentation.answerText ? (
+          <Typography.Paragraph className="result-snippet" copyable={{ text: presentation.answerText }}>
+            {presentation.answerText}
+          </Typography.Paragraph>
+        ) : <Typography.Text type="secondary">{tr("未提供可显示的答案正文。", "No answer body is available.")}</Typography.Text>}
+        {presentation.isNative && (
+          <details>
+            <summary>{tr("原始模型输出与运行记录", "Raw model output and trace")}</summary>
+            <Typography.Paragraph className="result-snippet" copyable={{ text: presentation.rawAnswer }}>
+              {presentation.rawAnswer || tr("无原始输出", "No raw output")}
+            </Typography.Paragraph>
+            <details>
+              <summary>{tr("完整运行记录", "Full trace")}</summary>
+              <pre style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>
+                {JSON.stringify({ retrieval: response.retrieval, generation: response.generation }, null, 2)}
+              </pre>
+            </details>
+          </details>
+        )}
         <List
           size="small"
           dataSource={response.sources}
@@ -87,13 +92,13 @@ export default function SearchHistoryPage() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [total, setTotal] = useState(0);
-  const [answerStatus, setAnswerStatus] = useState<"all" | "answered" | "refused">("all");
+  const [answerStatus, setAnswerStatus] = useState<"all" | SearchAnswerStatus>("all");
   const [failureCategory, setFailureCategory] = useState<"all" | FailureCategory>("all");
 
   const load = useCallback(async (
     nextPage: number,
     nextPageSize: number,
-    nextAnswerStatus: "all" | "answered" | "refused",
+    nextAnswerStatus: "all" | SearchAnswerStatus,
     nextFailureCategory: "all" | FailureCategory,
   ) => {
     setLoading(true);
@@ -132,6 +137,8 @@ export default function SearchHistoryPage() {
     setRerunningId(item.id);
     try {
       const run = await api.rerunSearchHistory(item.id);
+      const detail = await api.searchHistoryDetail(item.id);
+      setDetails((current) => ({ ...current, [item.id]: detail }));
       // Update the row in place so rerunning does not move it to the top of
       // the server's updated_at-sorted history list or reset the current page.
       setItems((current) => current.map((currentItem) => currentItem.id === item.id
@@ -142,13 +149,12 @@ export default function SearchHistoryPage() {
             updated_at: run.created_at,
             latest_run_id: run.id,
             latest_run: run,
-            latest_answer_status: run.response.answer === "根据检索到的资料，无法确定。" ? "refused" : "answered",
-            latest_failure_category: run.response.generation.failure_category as FailureCategory | undefined,
-            latest_failure_reason: run.response.generation.failure_reason as string | undefined,
+            latest_answer_status: detail.latest_answer_status,
+            latest_failure_category: detail.latest_failure_category,
+            latest_failure_reason: detail.latest_failure_reason,
           }
         : currentItem));
-      await loadDetail(item.id);
-      if (answerStatus !== "all") {
+      if (answerStatus !== "all" || failureCategory !== "all") {
         await load(page, pageSize, answerStatus, failureCategory);
       }
       void message.success(tr("已追加一次重新检索生成结果", "A new search run has been added"));
@@ -179,9 +185,11 @@ export default function SearchHistoryPage() {
       render: (_, item) => {
         const run = item.latest_run;
         if (!run) return "—";
+        const presentation = answerPresentation(run.response);
+        const preview = presentation.answerText || tr("未提供答案正文", "No answer body");
         return (
-          <Typography.Paragraph className="history-answer" ellipsis={{ rows: 2, tooltip: run.response.answer }}>
-            {run.response.answer}
+          <Typography.Paragraph className="history-answer" ellipsis={{ rows: 2, tooltip: preview }}>
+            {preview}
           </Typography.Paragraph>
         );
       },
@@ -191,6 +199,10 @@ export default function SearchHistoryPage() {
       key: "failure",
       width: 180,
       render: (_, item) => {
+        if (item.latest_run?.response.generation.pipeline === "rwkv") {
+          const presentation = answerPresentation(item.latest_run.response);
+          return <Tag color={presentation.color}>{tr(...presentation.label)}</Tag>;
+        }
         if (!item.latest_failure_category) return <Tag color="green">{tr("无", "None")}</Tag>;
         const labels: Record<FailureCategory, [string, string]> = {
           data_missing: ["数据缺失", "Data missing"],
@@ -252,8 +264,11 @@ export default function SearchHistoryPage() {
             style={{ width: 150 }}
             options={[
               { value: "all", label: tr("全部状态", "All statuses") },
-              { value: "answered", label: tr("正常回答", "Answered") },
-              { value: "refused", label: tr("无法确定", "Unable to determine") },
+              { value: "completed", label: tr("生成完成（未核验语义）", "Completed (semantics unverified)") },
+              { value: "partial", label: tr("部分步骤失败", "Some stages failed") },
+              { value: "failed", label: tr("流程未完成", "Execution incomplete") },
+              { value: "answered", label: tr("旧链路：标记已回答", "Legacy: marked answered") },
+              { value: "refused", label: tr("旧链路：无法确定", "Legacy: unable to determine") },
             ]}
             onChange={(value) => {
               setAnswerStatus(value);

@@ -1,0 +1,11 @@
+{
+  "base_commit": "2bbc406125e7e030eda98b11993dc13fc4534ca4",
+  "base_log_sha256": "a855f7eacb9fbdc86bd9bdc60da8c03ee402a01504984ca96e317f198dec0001",
+  "current_log_sha256": "f3a536f7a8bc99ef19501979eefddedda0cebeda3bab02434f1ac8ccd49a06ce",
+  "same_failed_test_ids": true,
+  "new_failures": [],
+  "resolved_baseline_failures": [],
+  "summary": "114 failed, 466 passed, 1 warning in 3.59s",
+  "exit_code": 1,
+  "all_tests_pass": false
+}

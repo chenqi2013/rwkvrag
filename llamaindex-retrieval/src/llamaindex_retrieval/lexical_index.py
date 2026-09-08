@@ -307,7 +307,8 @@ class LexicalIndex:
 
     def _record(self, node: BaseNode) -> dict[str, Any]:
         metadata = dict(node.metadata)
-        text = node.get_content().strip()
+        # Native evidence offsets address this exact string, including whitespace.
+        text = node.get_content()
         full_answer = str(metadata.get("full_answer") or "").strip()
         body = " ".join(part for part in (text, full_answer) if part)
         aliases = _metadata_aliases(metadata)
@@ -653,6 +654,47 @@ class LexicalIndex:
             )
             for raw, chunk in merged
         ]
+
+    def search_chunks(
+        self,
+        query: str,
+        *,
+        candidate_k: int,
+        knowledge_base_id: str | None = None,
+    ) -> list[LexicalResult]:
+        """BM25 chunk ranking for the native pipeline, without document quotas.
+
+        Return complete indexed text. Semantic selection belongs to the resolver;
+        this method does not substitute lead chunks or apply entity-specific rules.
+        """
+        tokens = query_tokens(query)
+        if not tokens:
+            return []
+        filters = (
+            [{"term": {"knowledge_base_id": knowledge_base_id}}]
+            if knowledge_base_id else []
+        )
+        response = self.client.search(index=self.index_name, body={
+            "size": candidate_k,
+            "track_total_hits": False,
+            "_source": ["node_id", "document_id", "text", "metadata"],
+            "query": {"bool": {
+                "must": [{"multi_match": {
+                    "query": " ".join(tokens),
+                    "fields": ["body_tokens", "title_tokens^3", "alias_tokens^3",
+                               "tags_tokens^1.5", "section_tokens^2", "structure_tokens^1.5"],
+                    "type": "best_fields", "operator": "or",
+                }}],
+                "filter": filters,
+            }},
+        })
+        return [LexicalResult(
+            node_id=str(hit["_source"]["node_id"]),
+            document_id=str(hit["_source"]["document_id"]),
+            text=str(hit["_source"]["text"]),
+            metadata=dict(hit["_source"].get("metadata") or {}),
+            score=float(hit.get("_score") or 0),
+        ) for hit in response.get("hits", {}).get("hits", [])]
 
     def search_plain(
         self,

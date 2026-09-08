@@ -1,6 +1,6 @@
 import asyncio
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from hashlib import sha256
 import json
 from math import log
@@ -64,6 +64,14 @@ class _EvidenceUnit:
     score: float
 
 
+def _source_signature(source: SourceItem) -> tuple[str, str]:
+    return source.id, sha256(source.snippet.encode("utf-8")).hexdigest()
+
+
+def _source_identity(source: SourceItem) -> tuple[str, str, str, str, str | None]:
+    return source.id, source.document_id, source.source, source.title, source.uri
+
+
 @dataclass(frozen=True)
 class EvidenceExtractionResult:
     candidates: tuple[EvidenceSpan, ...]
@@ -73,6 +81,7 @@ class EvidenceExtractionResult:
     source_signatures: tuple[tuple[str, str], ...] = ()
     strategy: str = "model"
     trace_events: tuple[dict[str, object], ...] = ()
+    source_identities: tuple[tuple[str, str, str, str, str | None], ...] = ()
 
     @property
     def available(self) -> bool:
@@ -83,12 +92,62 @@ class EvidenceExtractionResult:
         return bool(self.candidates)
 
     def matches_sources(self, sources: list[SourceItem]) -> bool:
-        selected = sources[: self.attempted_sources]
-        signatures = tuple(
-            (source.id, sha256(source.snippet.encode("utf-8")).hexdigest())
-            for source in selected
+        if not self.source_signatures:
+            return False
+        selected = sources[: len(self.source_signatures)]
+        if tuple(_source_signature(source) for source in selected) != self.source_signatures:
+            return False
+        if self.source_identities and (
+            tuple(_source_identity(source) for source in selected) != self.source_identities
+        ):
+            return False
+        resolved = self._resolved_candidates(sources)
+        return len(resolved) == len(self.candidates) and all(
+            original.source_index == current.source_index
+            for original, current in zip(self.candidates, resolved, strict=True)
         )
-        return signatures == self.source_signatures
+
+    def _resolved_candidates(self, sources: list[SourceItem]) -> tuple[EvidenceSpan, ...]:
+        """Bind quotes to the exact selected source, never to a shifted list position."""
+        indexes: dict[tuple[str, str], list[int]] = {}
+        for index, source in enumerate(sources):
+            indexes.setdefault(_source_signature(source), []).append(index)
+        resolved: list[EvidenceSpan] = []
+        for candidate in self.candidates:
+            index = candidate.source_index
+            if type(index) is not int or index < 0:
+                continue
+            if (
+                not isinstance(candidate.span, str)
+                or not candidate.span
+                or sha256(candidate.span.encode("utf-8")).hexdigest() != candidate.content_hash
+            ):
+                continue
+            identity = None
+            if self.source_identities:
+                if index >= len(self.source_identities):
+                    continue
+                identity = self.source_identities[index]
+            if self.source_signatures:
+                if index >= len(self.source_signatures):
+                    continue
+                matches = indexes.get(self.source_signatures[index], [])
+                if identity is not None:
+                    matches = [i for i in matches if _source_identity(sources[i]) == identity]
+                if len(matches) != 1:
+                    continue
+                index = matches[0]
+            elif index >= len(sources):
+                continue
+            # Unbound legacy/internal results can only use their original position.
+            # Even those must contain the exact quote and its authentic content hash.
+            source = sources[index]
+            if identity is not None and _source_identity(source) != identity:
+                continue
+            if candidate.span not in source.snippet:
+                continue
+            resolved.append(replace(candidate, source_index=index))
+        return tuple(resolved)
 
     def remap_sources(
         self,
@@ -96,29 +155,7 @@ class EvidenceExtractionResult:
     ) -> "EvidenceExtractionResult | None":
         if not self.candidates:
             return None
-        current_signatures = tuple(
-            (source.id, sha256(source.snippet.encode("utf-8")).hexdigest())
-            for source in sources
-        )
-        current_indexes = {
-            signature: source_index
-            for source_index, signature in enumerate(current_signatures)
-        }
-        remapped: list[EvidenceSpan] = []
-        for candidate in self.candidates:
-            if candidate.source_index >= len(self.source_signatures):
-                continue
-            source_index = current_indexes.get(
-                self.source_signatures[candidate.source_index]
-            )
-            if source_index is None:
-                continue
-            remapped.append(EvidenceSpan(
-                field_id=candidate.field_id,
-                source_index=source_index,
-                span=candidate.span,
-                content_hash=candidate.content_hash,
-            ))
+        remapped = self._resolved_candidates(sources)
         if not remapped:
             return None
         return EvidenceExtractionResult(
@@ -126,31 +163,31 @@ class EvidenceExtractionResult:
             attempted_sources=len(sources),
             completed_sources=min(self.completed_sources, len(sources)),
             errors=self.errors,
-            source_signatures=current_signatures,
+            source_signatures=tuple(_source_signature(source) for source in sources),
             strategy=f"{self.strategy}_remapped",
             trace_events=self.trace_events,
+            source_identities=tuple(_source_identity(source) for source in sources),
         )
 
     def answer_sources(self, sources: list[SourceItem]) -> list[SourceItem]:
         grouped: dict[int, list[EvidenceSpan]] = {}
-        for candidate in self.candidates:
+        for candidate in self._resolved_candidates(sources):
             grouped.setdefault(candidate.source_index, []).append(candidate)
         output: list[SourceItem] = []
         for source_index in grouped:
-            if source_index >= len(sources):
-                continue
             source = sources[source_index]
             candidates = grouped[source_index]
             spans = list(dict.fromkeys(candidate.span for candidate in candidates))
             hashes = [candidate.content_hash for candidate in candidates]
+            copied_source = source.model_copy(deep=True)
             metadata = {
-                **source.metadata,
+                **copied_source.metadata,
                 "evidence_span_hashes": hashes,
                 "evidence_field_ids": list(dict.fromkeys(
                     candidate.field_id for candidate in candidates
                 )),
             }
-            output.append(source.model_copy(update={
+            output.append(copied_source.model_copy(update={
                 "snippet": "\n".join(spans),
                 "metadata": metadata,
             }))
@@ -179,36 +216,10 @@ class LanguageModelEvidenceExtractor:
             return EvidenceExtractionResult(
                 (), 0, 0, ("generation_password_not_configured",)
             )
-        source_limit = (
-            self.settings.evidence_extraction_max_sources
-            if plan.answer_shape in {"list", "summary", "narrative"}
-            else min(
-                8 if plan.analysis.intent == "comparison" else 3,
-                self.settings.evidence_extraction_max_sources,
-            )
-        )
-        selected: list[SourceItem] = []
-        document_counts: Counter[str] = Counter()
-        max_chunks_per_document = 6 if plan.answer_shape == "list" else (
-            4 if plan.answer_shape in {"summary", "narrative"} else 3
-        )
-        title_counts: Counter[str] = Counter()
-        for source in sources:
-            if len(selected) >= source_limit:
-                break
-            if document_counts[source.document_id] >= max_chunks_per_document:
-                continue
-            if plan.analysis.intent == "comparison":
-                title_key = normalize_search_text(source.title).replace(" ", "")
-                if title_counts[title_key] >= 4:
-                    continue
-                title_counts[title_key] += 1
-            selected.append(source)
-            document_counts[source.document_id] += 1
-        signatures = tuple(
-            (source.id, sha256(source.snippet.encode("utf-8")).hexdigest())
-            for source in selected
-        )
+        source_limit = self.settings.evidence_extraction_max_sources
+        selected = [source.model_copy(deep=True) for source in sources[:source_limit]]
+        signatures = tuple(_source_signature(source) for source in selected)
+        identities = tuple(_source_identity(source) for source in selected)
         semaphore = asyncio.Semaphore(self.settings.evidence_extraction_concurrency)
 
         async def run(source_index: int, source: SourceItem):
@@ -220,7 +231,21 @@ class LanguageModelEvidenceExtractor:
             for source_index, source in enumerate(selected)
         ), return_exceptions=True)
         candidates: list[EvidenceSpan] = []
-        trace_events: list[dict[str, object]] = []
+        trace_events: list[dict[str, object]] = [{
+            "stage": "resolver_selection",
+            "source_budget": source_limit,
+            "input_source_count": len(sources),
+            "selected_sources": [
+                {
+                    "source_id": source.id,
+                    "document_id": source.document_id,
+                    "original_source_index": index,
+                    "selected_source_index": index,
+                    "source_text_sha256": signatures[index][1],
+                }
+                for index, source in enumerate(selected)
+            ],
+        }]
         errors: list[str] = []
         completed = 0
         seen: set[tuple[str, int, str]] = set()
@@ -260,6 +285,7 @@ class LanguageModelEvidenceExtractor:
             source_signatures=signatures,
             strategy=strategy,
             trace_events=tuple(trace_events),
+            source_identities=identities,
         )
 
     async def _adjudicate(
@@ -670,6 +696,8 @@ class LanguageModelEvidenceExtractor:
             "stage": "resolver_map",
             "source_id": source.id,
             "source_index": source_index,
+            "original_source_index": source_index,
+            "source_text_sha256": sha256(source.snippet.encode("utf-8")).hexdigest(),
             "prompt": prompt,
             "raw_output": raw,
             "prompt_sha256": sha256(prompt.encode("utf-8")).hexdigest(),

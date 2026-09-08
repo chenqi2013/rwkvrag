@@ -1,11 +1,16 @@
 import json
 from dataclasses import replace
+from hashlib import sha256
 
 import httpx
 import pytest
 
 from llamaindex_retrieval.config import Settings
-from llamaindex_retrieval.evidence_extraction import LanguageModelEvidenceExtractor
+from llamaindex_retrieval.evidence_extraction import (
+    EvidenceExtractionResult,
+    EvidenceSpan,
+    LanguageModelEvidenceExtractor,
+)
 from llamaindex_retrieval.query_planning import TaskField, build_query_plan
 from llamaindex_retrieval.schemas import SourceItem
 
@@ -31,6 +36,191 @@ def source(snippet: str) -> SourceItem:
         score=1.0,
         snippet=snippet,
     )
+
+
+def bound_result(sources: list[SourceItem], index: int, span: str) -> EvidenceExtractionResult:
+    return EvidenceExtractionResult(
+        candidates=(EvidenceSpan("f1", index, span, sha256(span.encode()).hexdigest()),),
+        attempted_sources=len(sources),
+        completed_sources=len(sources),
+        source_signatures=tuple(
+            (item.id, sha256(item.snippet.encode()).hexdigest()) for item in sources
+        ),
+        source_identities=tuple(
+            (item.id, item.document_id, item.source, item.title, item.uri) for item in sources
+        ),
+    )
+
+
+def test_selected_local_index_is_resolved_before_attaching_source_identity() -> None:
+    original = [
+        source(f"Article A paragraph {i}.").model_copy(update={"id": f"a{i}"})
+        for i in range(4)
+    ]
+    selected_b = SourceItem(
+        id="b0", document_id="article-b", source="wiki", title="Article B",
+        uri="https://example.test/B", score=0.7, snippet="B has the answer. Other B text.",
+        metadata={"nested": {"revision": 42}},
+    )
+    original.append(selected_b)
+    selected = original[:3] + original[4:]
+    extraction = bound_result(selected, 3, "B has the answer.")
+    before = [item.model_dump() for item in original]
+
+    assert not extraction.matches_sources(original)
+    rendered = extraction.answer_sources(original)
+    assert len(rendered) == 1
+    assert rendered[0].id == "b0"
+    assert rendered[0].document_id == "article-b"
+    assert rendered[0].title == "Article B"
+    assert rendered[0].uri == "https://example.test/B"
+    assert rendered[0].snippet == "B has the answer."
+    assert rendered[0].score == 0.7
+    rendered[0].metadata["nested"]["revision"] = 99
+    assert [item.model_dump() for item in original] == before
+
+    reordered = [original[4], *original[:4]]
+    remapped = extraction.remap_sources(reordered)
+    assert remapped is not None
+    assert remapped.candidates[0].source_index == 0
+    assert remapped.matches_sources(reordered)
+    assert remapped.answer_sources(reordered)[0].id == "b0"
+    assert extraction.candidates[0].source_index == 3
+
+
+@pytest.mark.parametrize("changed", [
+    {"id": "reused-text-other-node"},
+    {"document_id": "other-document"},
+    {"title": "Other title"},
+    {"uri": "https://example.test/other"},
+    {"source": "other-collection"},
+    {"snippet": "The quoted answer. Changed surrounding context."},
+])
+def test_binding_rejects_identity_or_complete_source_changes(changed: dict) -> None:
+    original = source("The quoted answer. Original surrounding context.")
+    extraction = bound_result([original], 0, "The quoted answer.")
+    changed_source = original.model_copy(update=changed)
+
+    assert not extraction.matches_sources([changed_source])
+    assert extraction.remap_sources([changed_source]) is None
+    assert extraction.answer_sources([changed_source]) == []
+
+
+@pytest.mark.parametrize("index", [-1, True, 1])
+def test_invalid_candidate_indexes_cannot_use_python_negative_indexing(index: int) -> None:
+    original = source("Exact evidence.")
+    extraction = bound_result([original], 0, original.snippet)
+    extraction = replace(extraction, candidates=(replace(extraction.candidates[0], source_index=index),))
+    assert extraction.answer_sources([original]) == []
+    assert extraction.remap_sources([original]) is None
+
+
+@pytest.mark.parametrize("span, content_hash", [
+    ("Exact evidence.", "0" * 64),
+    ("Invented evidence.", sha256(b"Invented evidence.").hexdigest()),
+    ("", sha256(b"").hexdigest()),
+])
+def test_binding_checks_exact_quote_and_quote_hash(span: str, content_hash: str) -> None:
+    original = source("Exact evidence.")
+    extraction = bound_result([original], 0, original.snippet)
+    extraction = replace(
+        extraction,
+        candidates=(replace(extraction.candidates[0], span=span, content_hash=content_hash),),
+    )
+    assert not extraction.matches_sources([original])
+    assert extraction.answer_sources([original]) == []
+    assert extraction.remap_sources([original]) is None
+
+
+def test_duplicate_source_identity_is_rejected_instead_of_picking_last_match() -> None:
+    original = source("Exact evidence.")
+    extraction = bound_result([original], 0, original.snippet)
+    duplicates = [original, original.model_copy(deep=True)]
+    assert not extraction.matches_sources(duplicates)
+    assert extraction.answer_sources(duplicates) == []
+    assert extraction.remap_sources(duplicates) is None
+
+
+def test_remapping_keeps_only_valid_surviving_sources() -> None:
+    first = source("First evidence.").model_copy(update={"id": "first"})
+    second = source("Second evidence.").model_copy(update={"id": "second"})
+    extraction = bound_result([first, second], 0, first.snippet)
+    extraction = replace(extraction, candidates=(
+        *extraction.candidates,
+        EvidenceSpan("f2", 1, second.snippet, sha256(second.snippet.encode()).hexdigest()),
+    ))
+    current = [second, first.model_copy(update={"snippet": "Changed first."})]
+    remapped = extraction.remap_sources(current)
+    assert remapped is not None
+    assert [(item.field_id, item.source_index) for item in remapped.candidates] == [("f2", 0)]
+    assert [item.id for item in extraction.answer_sources(current)] == ["second"]
+    assert [item.id for item in remapped.answer_sources(current)] == ["second"]
+
+
+def test_legacy_unbound_result_requires_exact_evidence_at_original_position() -> None:
+    original = source("Exact evidence.")
+    extraction = EvidenceExtractionResult(
+        (EvidenceSpan("f1", 0, original.snippet, sha256(original.snippet.encode()).hexdigest()),),
+        1, 1,
+    )
+    assert extraction.answer_sources([original])[0].snippet == original.snippet
+    unrelated = source("Other evidence.").model_copy(update={"id": "other"})
+    assert extraction.answer_sources([unrelated, original]) == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("shape, limit", [("single_fact", 6), ("summary", 6), ("list", 8)])
+async def test_extraction_uses_total_budget_without_per_document_quota(
+    shape: str, limit: int,
+) -> None:
+    calls = []
+
+    async def handler(request: httpx.Request) -> httpx.Response:
+        calls.append(json.loads(request.content))
+        return stream_response("f1:s1")
+
+    settings = Settings(
+        generation_password="secret",
+        generation_base_url="https://generation.example/v1",
+        evidence_extraction_max_sources=limit,
+    )
+    extractor = LanguageModelEvidenceExtractor(settings, transport=httpx.MockTransport(handler))
+    plan = replace(
+        build_query_plan("Atlas的指标是什么？"), subject="Atlas", relations=("指标",),
+        fields=(TaskField("f1", "Atlas的指标是什么？", ("指标",)),), answer_shape=shape,
+    )
+    sources = [
+        SourceItem(
+            id=f"atlas-{i}", document_id="atlas", title="Atlas", source="wiki",
+            score=1, snippet=f"Atlas 的第{i}项指标为编号{i}。",
+        )
+        for i in range(limit + 1)
+    ]
+    original = [item.model_dump() for item in sources]
+    result = await extractor.extract(plan.original_question, plan, sources)
+
+    assert len(calls) == limit
+    assert result.attempted_sources == result.completed_sources == limit
+    assert [item.id for item in result.answer_sources(sources)] == [
+        item.id for item in sources[:limit]
+    ]
+    selection = result.trace_events[0]
+    assert selection["stage"] == "resolver_selection"
+    assert selection["source_budget"] == limit
+    assert selection["input_source_count"] == limit + 1
+    assert selection["selected_sources"] == [
+        {
+            "source_id": item.id, "document_id": item.document_id,
+            "original_source_index": i, "selected_source_index": i,
+            "source_text_sha256": sha256(item.snippet.encode()).hexdigest(),
+        }
+        for i, item in enumerate(sources[:limit])
+    ]
+    for event in result.trace_events[1:]:
+        i = event["original_source_index"]
+        assert event["source_id"] == sources[i].id
+        assert event["source_text_sha256"] == sha256(sources[i].snippet.encode()).hexdigest()
+    assert [item.model_dump() for item in sources] == original
 
 
 def test_subject_match_rejects_longer_unrelated_name_prefix() -> None:

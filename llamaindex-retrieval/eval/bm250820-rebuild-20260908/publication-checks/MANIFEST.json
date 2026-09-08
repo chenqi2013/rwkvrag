@@ -1,0 +1,282 @@
+{
+  "base_commit": "2bbc406125e7e030eda98b11993dc13fc4534ca4",
+  "source_and_tests": {
+    "src/llamaindex_retrieval/__init__.py": {
+      "bytes": 74,
+      "sha256": "64b56d0ee6b98654883d15c80a1da75c145f72b7d93aa67e1b0d95eb001291cb"
+    },
+    "src/llamaindex_retrieval/active_retrieval.py": {
+      "bytes": 7011,
+      "sha256": "a0f11ba8f0e6677049ccbd4c43b788100e39ad36fc32ffd6bb7101d483614ec3"
+    },
+    "src/llamaindex_retrieval/admin_service.py": {
+      "bytes": 8008,
+      "sha256": "054fa5005375519cddf62bc8dee00573b8b3156c17d3b36a7f331ce0b8e91df8"
+    },
+    "src/llamaindex_retrieval/api.py": {
+      "bytes": 3871,
+      "sha256": "63343ef4fcef76c0fef196b6c22937dd2e21284359c2e58eea3556714348504f"
+    },
+    "src/llamaindex_retrieval/cli.py": {
+      "bytes": 4200,
+      "sha256": "d6315e32655d7d06080a55e70d49d15ec1aa816030f6a8a6a58f43b0ac7787ce"
+    },
+    "src/llamaindex_retrieval/components.py": {
+      "bytes": 475,
+      "sha256": "027a57719a04caac804a5ddc392cdceb9f1acbf506bbf1fc4ebae964e00e162a"
+    },
+    "src/llamaindex_retrieval/config.py": {
+      "bytes": 7227,
+      "sha256": "f29658d65381a6b85d16025c42082d358542a5278636a669dd7416ce884b0e1c"
+    },
+    "src/llamaindex_retrieval/dependencies.py": {
+      "bytes": 702,
+      "sha256": "32253c1c123abefa7b84daf1d8e56e41c313a45422d45098d1ca173cd34a45ae"
+    },
+    "src/llamaindex_retrieval/document_reranking.py": {
+      "bytes": 16417,
+      "sha256": "6306b95398dc6438c63b9610bcdb4c7776a6770b9c3cf2f9c5a5d372425c2a2a"
+    },
+    "src/llamaindex_retrieval/evaluate.py": {
+      "bytes": 2252,
+      "sha256": "c542fe059878165e9e8c3a3725d0bd74e02e53bf41e6bd8fcb5cab571874f85e"
+    },
+    "src/llamaindex_retrieval/evidence_extraction.py": {
+      "bytes": 46616,
+      "sha256": "3a188c1841cb6291bfe5a0b98849fcaa5c624286115a6875c402c7ecd1bef66f"
+    },
+    "src/llamaindex_retrieval/evidence_gate.py": {
+      "bytes": 16666,
+      "sha256": "913be57272cfedef82539199bbe3bfd2d770f46274b7cf3c292cc85a97d4214a"
+    },
+    "src/llamaindex_retrieval/evidence_quality.py": {
+      "bytes": 956,
+      "sha256": "e81f0c0f5c284169721ac852b3865da33645acc1dcbf5376be79392bdea7f027"
+    },
+    "src/llamaindex_retrieval/evidence_utils.py": {
+      "bytes": 60222,
+      "sha256": "cdd583822ace6823976b127255d50c579ef72e998e22f1eb03c21ad02c22132c"
+    },
+    "src/llamaindex_retrieval/failure_diagnosis.py": {
+      "bytes": 5772,
+      "sha256": "1db6857e0605b4b8f88fe636e2ddb37aef0dd9978f88b6a4a38d1d2b694026c7"
+    },
+    "src/llamaindex_retrieval/finewiki_browser.py": {
+      "bytes": 1951,
+      "sha256": "a4e2c6262b17d27c3aa19a76cbace68ef9d5f7713cf1181b3d1543e5829a2909"
+    },
+    "src/llamaindex_retrieval/generation.py": {
+      "bytes": 16940,
+      "sha256": "45a83a3a49763c14ee3cf3f6a1bf7e1a31e30be99efe845009f837b1f2951f6f"
+    },
+    "src/llamaindex_retrieval/ingest.py": {
+      "bytes": 10837,
+      "sha256": "62d685fcaf4f2a5e66b5751949b0b25acae5fa10c64fc58713bd8a7278c8c60d"
+    },
+    "src/llamaindex_retrieval/lexical_features.py": {
+      "bytes": 2419,
+      "sha256": "418f5bb5643c919f514c631fee6d8e77f0ea835ba1942a212cbba8b2f7acfa5e"
+    },
+    "src/llamaindex_retrieval/lexical_index.py": {
+      "bytes": 56543,
+      "sha256": "d2b11d9aa4640393e14089e8821a1fa663d1af175e89568625914f01262cc289"
+    },
+    "src/llamaindex_retrieval/migrate_sqlite.py": {
+      "bytes": 2608,
+      "sha256": "04605c1ca0eb3e45f2b4b50b7d5fc8ea5c8e3927e839f6401dc39a9b9e1825f6"
+    },
+    "src/llamaindex_retrieval/native_rwkv.py": {
+      "bytes": 17694,
+      "sha256": "355e044319331cc5fa25b5c44f7a67552821d399aa1f1f8b083cfaec1179b921"
+    },
+    "src/llamaindex_retrieval/parsers.py": {
+      "bytes": 8601,
+      "sha256": "2270008b243666d3d99039c66740dd8e793e1743cb6f4c3bddf87b5d6c67cf3a"
+    },
+    "src/llamaindex_retrieval/qa_analysis.py": {
+      "bytes": 2746,
+      "sha256": "83aaaa241072e777eb6e20517564552790e2c278422da6ee6153f4957bd6feca"
+    },
+    "src/llamaindex_retrieval/query_planning.py": {
+      "bytes": 1582,
+      "sha256": "61216139b8c635df06dfc7be4f20a9018a503965cc1a14c8e791f462c9bfc649"
+    },
+    "src/llamaindex_retrieval/question_patterns.py": {
+      "bytes": 139,
+      "sha256": "bdd518fd0cbf23b3498074c764d7de90ac4473d0fdb08beb7dcc7df5fd5aab33"
+    },
+    "src/llamaindex_retrieval/repository.py": {
+      "bytes": 17823,
+      "sha256": "7927edb1a7447c0f687fcb3330c5172a5f01b18aadbbd6f7f76a8a4fefdd9ea4"
+    },
+    "src/llamaindex_retrieval/routers/__init__.py": {
+      "bytes": 26,
+      "sha256": "91a71aff4bd3390524cba41ba5284ae26d52d957909f8b364c0014752d5c2d2c"
+    },
+    "src/llamaindex_retrieval/routers/admin.py": {
+      "bytes": 8766,
+      "sha256": "bc1fd22382f86d34578035038976fe44ed6eeb148fe083c2f389e2da91bc5f5e"
+    },
+    "src/llamaindex_retrieval/routers/public.py": {
+      "bytes": 2601,
+      "sha256": "da9138959b3934e05c2391cefb9ab1c951e7bb016b3e83a8e804ea6806a88017"
+    },
+    "src/llamaindex_retrieval/rwkv_pipeline.py": {
+      "bytes": 25454,
+      "sha256": "3d6676f52cdb6af61384fd7d8618adfeeb77dc18ceb14b4bc7206fd939bfdbc5"
+    },
+    "src/llamaindex_retrieval/schemas.py": {
+      "bytes": 5607,
+      "sha256": "8153ec5274144ade7b5d5123f587216e92c0c42ca7cf4fa36feccf49ea2a75e7"
+    },
+    "src/llamaindex_retrieval/semantic_query_planning.py": {
+      "bytes": 26489,
+      "sha256": "98687c21ba159c701bb434d5d8689e09893ebb47ce4a0fb1d2c6d10fe4831108"
+    },
+    "src/llamaindex_retrieval/service.py": {
+      "bytes": 184290,
+      "sha256": "a1eb7377d40f1b936ab59f8240ea7225d7f5771bb47aef34071d56b79606eb3d"
+    },
+    "src/llamaindex_retrieval/sparse.py": {
+      "bytes": 1554,
+      "sha256": "fbd8676a68b1e4d81fdc091691b198e20abdca617c51d0a78e216929974ac662"
+    },
+    "src/llamaindex_retrieval/structured_chunking.py": {
+      "bytes": 11295,
+      "sha256": "667f08d5e23179bad5c100498f306c63242a0336a02b53bef93f291cbbfd1428"
+    },
+    "src/llamaindex_retrieval/tasks.py": {
+      "bytes": 9629,
+      "sha256": "ad55dae48fdf5b88f85a7b84766de76d9ef14165fc601acae8e22b656b0991da"
+    },
+    "src/llamaindex_retrieval/verbatim_chunking.py": {
+      "bytes": 9672,
+      "sha256": "d7ad7f58207b5602b0b819c43ca684a826f3fad822573bb1ae4f5fba3aa2b4d5"
+    },
+    "tests/test_active_retrieval.py": {
+      "bytes": 2597,
+      "sha256": "c1855cf274d1fc6cbeb7f64db25303727835c1b8f2e46ed5c0dc7719f96d7355"
+    },
+    "tests/test_admin_router.py": {
+      "bytes": 986,
+      "sha256": "6a1926abaec7282e9a8cfb5d64284694122ba6775fe9db2eaa79f3731d87e586"
+    },
+    "tests/test_document_reranking.py": {
+      "bytes": 5088,
+      "sha256": "2511ef0647e17e7a36c5669ab1d4c9c3921848d617651ab2b87674c04567d8e5"
+    },
+    "tests/test_evidence_extraction.py": {
+      "bytes": 26560,
+      "sha256": "93b0351743416349016cdca16855173548934554adcd5eced8a3538b48d80184"
+    },
+    "tests/test_evidence_gate.py": {
+      "bytes": 19048,
+      "sha256": "91032642ef21152a1a88ffba17ae9c6c8efd547e00f952ffd59250163c65ed5c"
+    },
+    "tests/test_failure_diagnosis.py": {
+      "bytes": 4301,
+      "sha256": "22af9db61106cee16193ce6d2cdf34c4df0362a1641826cd1730903d52016501"
+    },
+    "tests/test_finewiki_browser.py": {
+      "bytes": 1502,
+      "sha256": "637c32fdb277452c41e8ddfeea3daac7e2e53457eec8897fa4f94c0b855833c6"
+    },
+    "tests/test_generation.py": {
+      "bytes": 43852,
+      "sha256": "cb5d4588b8ad77393e517fd4b16d337426b32067faedddf1f6c4a0332932d6dc"
+    },
+    "tests/test_ingest.py": {
+      "bytes": 8707,
+      "sha256": "9cd06a11a7546194064830e474b3a79052c1d47dc39f0d18b19334d52565d722"
+    },
+    "tests/test_lexical_features.py": {
+      "bytes": 1286,
+      "sha256": "daf873725ee4bd41554075259553858d2d23591ae086e45ad7bc3fa174a50e9a"
+    },
+    "tests/test_native_history_status.py": {
+      "bytes": 6433,
+      "sha256": "c0e55b52de6367639ff6a37c1272207301a00ddbfabd393eb1afc5aebc16118b"
+    },
+    "tests/test_native_integration.py": {
+      "bytes": 8312,
+      "sha256": "36bc391b16bb8fbe324969e947daf6c461b20b7f267b85e55ddf7216c17cdf72"
+    },
+    "tests/test_native_plan_contract.py": {
+      "bytes": 2498,
+      "sha256": "61ceb921926aa5828a4983783cbe95f2099ef7ff4c87666c11104dceb631e7dd"
+    },
+    "tests/test_native_rwkv.py": {
+      "bytes": 14265,
+      "sha256": "1aa3302cacd5724939e8c1d620c626e6e081c89bec0ace886048cd8180a0cc42"
+    },
+    "tests/test_native_task_selection.py": {
+      "bytes": 3616,
+      "sha256": "936e12aa3cd441698ad8fd5309ba7235ea1e862da8d3107523e8e96686d12c71"
+    },
+    "tests/test_parsers.py": {
+      "bytes": 3336,
+      "sha256": "0a28539690e8c81f6339e37a81613b8f721daa62fece51b7214c60595bc0adb6"
+    },
+    "tests/test_qa_analysis.py": {
+      "bytes": 8350,
+      "sha256": "9f6d9c2d8256d2be0a1205180deff846d066dfddd3a10ccaff2f0239a6e1429b"
+    },
+    "tests/test_query_planning.py": {
+      "bytes": 13185,
+      "sha256": "618a55bf90625501494abb4bd4a2216c2e9250c5faf76385b3b86e27e616757d"
+    },
+    "tests/test_repository.py": {
+      "bytes": 908,
+      "sha256": "6ce527c47499b85eb41205cbb8806844a55de42d7e603835d1c628fa3316db39"
+    },
+    "tests/test_rwkv_pipeline.py": {
+      "bytes": 21418,
+      "sha256": "5878155660bd7bd574b2c26f44412616f9bde59c7e88599f490d22cddd7b905c"
+    },
+    "tests/test_schemas.py": {
+      "bytes": 618,
+      "sha256": "b0b7b51cccc5ab3abf74ac1d0bc52a392d7661f5adbaa7bacc5012f62ac96927"
+    },
+    "tests/test_semantic_query_planning.py": {
+      "bytes": 15672,
+      "sha256": "2d017fc94bb02fdbc7c19ae7b8c28d284f385acc3d973f57b3cc083a94d28307"
+    },
+    "tests/test_service.py": {
+      "bytes": 98506,
+      "sha256": "31f2c11106dc434464a6e2efc25fb7792e89cd9cca3ba39bd5927ef8ea6b7468"
+    },
+    "tests/test_sparse.py": {
+      "bytes": 529,
+      "sha256": "cbf59224047c71bf3231e8ca41c8bc96c6044ec0e72ccbed0d455528120a512a"
+    },
+    "tests/test_structured_chunking.py": {
+      "bytes": 4377,
+      "sha256": "4db6eb0d56f7e60383e9c7bfd47b71af9ae735f5536d14744a81d762e3bd10a9"
+    },
+    "tests/test_verbatim_chunking.py": {
+      "bytes": 12461,
+      "sha256": "e3bb14843f93d916fce5282321065790e0ed7093c6206de4789880ccc6b80fd9"
+    }
+  },
+  "checks": {
+    "FRONTEND.json": "b74996610f12bc7c837569f126f619ed7808e83c22d45960fc3e180a7de123ec",
+    "current-pytest-publication-v2.txt.gz": "4a4fcfbaed5880858b36687750f37edca8f8f10cbb8082711391a02cdc10e9c1",
+    "current-pytest-publication-v1.txt.gz": "3e70ab2b74c0424d660125aba7b338e3ff5c9b0ef2c9040e06d0213f17a50eff",
+    "pytest-comparison-publication-v2.json": "9879fa8aa0798b0bc27ff18d9ef9af15eab199b4594c9fe11c6ec9e21764045e",
+    "pytest-comparison-publication-v1.json": "c75a821d2df9becef8961f174e2fbb3222059f6c6c24347c78ccba843dedb6a6"
+  },
+  "current_pytest_log": "current-pytest-publication-v2.txt.gz",
+  "pytest": "466 passed; 114 inherited failures, same failing test IDs as pristine base",
+  "candidate_protocols_are_experimental": true,
+  "raw_log_compression": "gzip (decompression preserves exact original bytes)",
+  "logs": {
+    "current-pytest-publication-v2.txt.gz": {
+      "uncompressed_sha256": "f3a536f7a8bc99ef19501979eefddedda0cebeda3bab02434f1ac8ccd49a06ce",
+      "uncompressed_bytes": 136909
+    },
+    "current-pytest-publication-v1.txt.gz": {
+      "uncompressed_sha256": "baa825a3ceed5f755ae44508b9ce789abeafca3943cfde7c28a4acbf6df8fffe",
+      "uncompressed_bytes": 136829
+    }
+  }
+}

@@ -10,6 +10,15 @@ from .lexical_index import LexicalIndex
 from .structured_chunking import structure_aware_nodes
 
 TEXT_COLUMNS = ("text", "markdown", "content", "article", "plain_text", "body")
+FINEWIKI_METADATA_COLUMNS = (
+    "page_id",
+    "wikiname",
+    "in_language",
+    "version",
+    "date_modified",
+    "wikidata_id",
+    "language",
+)
 
 
 def parquet_files(path: Path) -> list[Path]:
@@ -43,6 +52,34 @@ def document_id(source: str, external_id: str, title: str) -> str:
     return hashlib.sha256(value).hexdigest()[:24]
 
 
+def finewiki_text(row: dict) -> str:
+    """Choose a populated text column without changing its Unicode contents."""
+    for name in TEXT_COLUMNS:
+        value = row.get(name)
+        if value is not None:
+            content = str(value)
+            if content.strip():
+                return content
+    return ""
+
+
+def finewiki_external_id(row: dict, file_name: str, row_number: int) -> str:
+    explicit_id = row.get("id")
+    if explicit_id is not None and str(explicit_id).strip():
+        # Preserve the existing explicit-ID hash input, including its whitespace.
+        return str(explicit_id)
+    page_id = row.get("page_id")
+    if page_id is not None and str(page_id).strip():
+        wiki = first_value(row, ("wikiname",))
+        if wiki:
+            return f"{wiki}/{page_id}"
+        language = first_value(row, ("in_language", "language"))
+        if language:
+            return f"language:{language}/{page_id}"
+        return f"page_id:{page_id}"
+    return f"{file_name}:{row_number}"
+
+
 def iter_finewiki_documents(
     path: Path,
     source: str = "finewiki-zh",
@@ -57,18 +94,19 @@ def iter_finewiki_documents(
         available = set(parquet_file.schema_arrow.names)
         selected = [
             name
-            for name in ("id", "title", "url", "uri", "language", *TEXT_COLUMNS)
+            for name in ("id", "title", "url", "uri", *FINEWIKI_METADATA_COLUMNS, *TEXT_COLUMNS)
             if name in available
         ]
+        row_offset = 0
         for batch in parquet_file.iter_batches(batch_size=256, columns=selected):
-            for row_number, row in enumerate(batch.to_pylist()):
+            for row_number, row in enumerate(batch.to_pylist(), start=row_offset):
                 title = str(row.get("title") or "").strip()
                 if titles and title not in titles:
                     continue
-                content = first_value(row, TEXT_COLUMNS)
+                content = finewiki_text(row)
                 if not content:
                     continue
-                external_id = str(row.get("id") or f"{file_path.name}:{row_number}")
+                external_id = finewiki_external_id(row, file_path.name, row_number)
                 stable_id = document_id(source, external_id, title)
                 uri = str(row.get("url") or row.get("uri") or "").strip()
                 metadata = {
@@ -80,7 +118,16 @@ def iter_finewiki_documents(
                     "uri": uri,
                     "file": file_path.name,
                     "kind": "finewiki",
+                    "external_id": external_id,
+                    # Hash the complete extracted text encoded as UTF-8, not the
+                    # Parquet storage bytes. Do not normalize Unicode or newlines.
+                    "source_text_sha256": hashlib.sha256(content.encode("utf-8")).hexdigest(),
+                    "source_text_encoding": "utf-8",
+                    "source_row_index": row_number,
                 }
+                metadata.update(
+                    {key: row[key] for key in FINEWIKI_METADATA_COLUMNS if row.get(key) is not None}
+                )
                 if import_job_id:
                     metadata["import_job_id"] = import_job_id
                 excluded = [
@@ -92,6 +139,11 @@ def iter_finewiki_documents(
                     "file",
                     "kind",
                     "import_job_id",
+                    "external_id",
+                    "source_text_sha256",
+                    "source_text_encoding",
+                    "source_row_index",
+                    *FINEWIKI_METADATA_COLUMNS,
                 ]
                 yield Document(
                     id_=stable_id,
@@ -103,6 +155,8 @@ def iter_finewiki_documents(
                 emitted += 1
                 if limit and emitted >= limit:
                     return
+            # Source row numbers count skipped/filtered rows and cross batches.
+            row_offset += batch.num_rows
 
 
 def batched(documents: Iterator[Document], batch_size: int) -> Iterator[list[Document]]:
@@ -124,7 +178,7 @@ def iter_markdown_documents(
 ) -> Iterator[Document]:
     emitted = 0
     for file_path in markdown_files(path):
-        content = file_path.read_text(encoding="utf-8").strip()
+        content = file_path.read_text(encoding="utf-8")
         if not content:
             continue
         title = next(
@@ -183,11 +237,19 @@ def ingest_documents(
     documents_count = 0
     nodes_count = 0
     for document_batch in batched(documents, batch_size):
-        nodes = [
-            node
-            for document in document_batch
-            for node in structure_aware_nodes(document, splitter)
-        ]
+        if settings.rag_pipeline == "rwkv":
+            from .verbatim_chunking import verbatim_nodes
+
+            nodes = [node for document in document_batch for node in verbatim_nodes(
+                document, chunk_characters=settings.native_ingest_chunk_characters,
+                overlap_characters=settings.native_ingest_overlap_characters,
+            )]
+        else:
+            nodes = [
+                node
+                for document in document_batch
+                for node in structure_aware_nodes(document, splitter)
+            ]
         index.upsert_nodes(nodes)
         documents_count += len(document_batch)
         nodes_count += len(nodes)

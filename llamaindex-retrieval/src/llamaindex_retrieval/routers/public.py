@@ -58,7 +58,12 @@ async def material_ask(
     repo: MongoRepository = Depends(repository),
 ) -> AskResponse:
     try:
-        response = await service.ask_materials(payload.question, payload.materials)
+        if payload.history:
+            response = await service.ask_materials(
+                payload.question, payload.materials, history=payload.history,
+            )
+        else:
+            response = await service.ask_materials(payload.question, payload.materials)
     except AnswerGenerationError as error:
         raise HTTPException(status_code=502, detail=str(error)) from error
     await repo.record_search_test_run(

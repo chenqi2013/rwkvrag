@@ -24,6 +24,7 @@ from ..schemas import (
     KnowledgeBaseItem,
     KnowledgeBaseUpdate,
     SearchRequest,
+    SearchAnswerStatus,
     MaterialAskRequest,
     SearchTestDetail,
     SearchTestPage,
@@ -185,7 +186,7 @@ async def list_jobs(
 async def list_search_history(
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=20, ge=1, le=100),
-    answer_status: Literal["answered", "refused"] | None = Query(default=None),
+    answer_status: SearchAnswerStatus | None = Query(default=None),
     failure_category: Literal[
         "data_missing",
         "retrieval_failed",

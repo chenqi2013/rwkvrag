@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -34,6 +35,29 @@ class Settings(BaseSettings):
     relative_score_threshold: float = Field(default=0.55, ge=0, le=1)
     min_relevance_score: float = 0
 
+    # The existing pipeline remains available for regression comparisons.
+    rag_pipeline: str = Field(default="existing", pattern="^(existing|rwkv)$")
+    native_base_url: str = "http://127.0.0.1:18421/v1"
+    native_model: str = "rwkv7-g1j-13.3b-zero-state-capability-ctx16384"
+    native_api_key: str = ""
+    native_timeout_seconds: int = Field(default=180, ge=5, le=1800)
+    native_context_window_tokens: int = Field(default=16384, ge=1024)
+    native_max_concurrency: int = Field(default=32, ge=1, le=256)
+    native_planner_prefill: Literal["<think", "<think></think"] = "<think"
+    native_plan_protocol: Literal["queries_fields", "shared_tasks"] = "queries_fields"
+    native_resolver_prefill: Literal["<think", "<think></think"] = "<think"
+    native_resolver_protocol: Literal["fields", "task_units"] = "fields"
+    native_planner_max_tokens: int = Field(default=1024, ge=64, le=4096)
+    native_resolver_max_tokens: int = Field(default=1024, ge=64, le=4096)
+    native_resolver_sources: int = Field(default=24, ge=1, le=200)
+    native_resolver_window_characters: int = Field(default=1200, ge=256, le=8000)
+    native_resolver_overlap_characters: int = Field(default=180, ge=1, le=2000)
+    native_resolver_batch_characters: int = Field(default=6000, ge=1000, le=48000)
+    native_max_queries: int = Field(default=6, ge=1, le=16)
+    native_max_fields: int = Field(default=12, ge=1, le=32)
+    native_ingest_chunk_characters: int = Field(default=2400, ge=256, le=24000)
+    native_ingest_overlap_characters: int = Field(default=180, ge=1, le=2000)
+
     generation_base_url: str = "http://192.168.0.125:8002/v1"
     generation_models_url: str = "http://192.168.0.125:8002/v1/models"
     generation_password: str = ""
@@ -49,6 +73,10 @@ class Settings(BaseSettings):
     def validate_chunk_overlap(self) -> "Settings":
         if self.chunk_overlap >= self.chunk_size:
             raise ValueError("chunk_overlap must be smaller than chunk_size")
+        if self.native_resolver_overlap_characters >= self.native_resolver_window_characters:
+            raise ValueError("native resolver overlap must be smaller than window")
+        if self.native_ingest_overlap_characters >= self.native_ingest_chunk_characters:
+            raise ValueError("native ingest overlap must be smaller than chunk")
         return self
     ask_total_timeout: int = Field(default=45, ge=10, le=180)
     ask_generation_reserve: int = Field(default=12, ge=3, le=60)

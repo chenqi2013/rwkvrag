@@ -1,13 +1,14 @@
 import hashlib
 import json
 from datetime import UTC, datetime
-from typing import Any, Literal
+from typing import Any
 from uuid import uuid4
 
 from pymongo import ASCENDING, DESCENDING, AsyncMongoClient, ReturnDocument, UpdateOne
 from pymongo.errors import DuplicateKeyError
 
 from .failure_diagnosis import FailureCategory
+from .schemas import SearchAnswerStatus
 
 
 def utc_now() -> datetime:
@@ -18,16 +19,38 @@ class RepositoryConflictError(RuntimeError):
     pass
 
 
-SearchAnswerStatus = Literal["answered", "refused"]
 REFUSAL_ANSWER = "根据检索到的资料，无法确定。"
 
 
+def _native_generation(response: dict[str, Any]) -> dict[str, Any] | None:
+    generation = response.get("generation")
+    return generation if isinstance(generation, dict) and generation.get("pipeline") == "rwkv" else None
+
+
 def search_answer_status(response: dict[str, Any]) -> SearchAnswerStatus:
+    generation = _native_generation(response)
+    if generation is not None:
+        # These are execution states, not answer/refusal or support judgments.
+        if generation.get("status") == "completed":
+            return "completed"
+        if generation.get("status") == "resolver_partial_failure":
+            return "partial"
+        return "failed"
     answer = str(response.get("answer") or "").strip()
     return "refused" if answer == REFUSAL_ANSWER else "answered"
 
 
 def search_failure_category(response: dict[str, Any]) -> FailureCategory | None:
+    native = _native_generation(response)
+    if native is not None:
+        status = native.get("status")
+        if status == "completed":
+            return None
+        if status in ("planner_failed", "retrieval_failed"):
+            return "retrieval_failed"
+        if status in ("resolver_partial_failure", "invalid_materials"):
+            return "evidence_extraction_failed"
+        return "generation_failed"
     generation = response.get("generation")
     if not isinstance(generation, dict):
         return None
@@ -41,6 +64,17 @@ def search_failure_category(response: dict[str, Any]) -> FailureCategory | None:
 
 
 def search_failure_reason(response: dict[str, Any]) -> str | None:
+    native = _native_generation(response)
+    if native is not None:
+        status = native.get("status")
+        if status == "completed":
+            return None
+        known = ("planner_failed", "retrieval_failed", "resolver_partial_failure",
+                 "invalid_materials", "length", "timeout", "budget_exceeded", "http_error",
+                 "transport_error", "invalid_request", "invalid_response", "cancelled")
+        if status in known:
+            return f"native_{status}"
+        return "native_status_missing" if status is None else "native_status_unknown"
     generation = response.get("generation")
     if not isinstance(generation, dict):
         return None

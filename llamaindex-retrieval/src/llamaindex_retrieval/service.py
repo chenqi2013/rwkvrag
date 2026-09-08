@@ -135,6 +135,14 @@ class SearchService:
         self.evidence_extractor = evidence_extractor
         self.document_reranker = document_reranker
         self._answer_cache: OrderedDict[tuple[object, ...], tuple[float, str]] = OrderedDict()
+        self.native_pipeline = None
+        if settings.rag_pipeline == "rwkv":
+            from .rwkv_pipeline import RWKVPipeline
+            self.native_pipeline = RWKVPipeline(settings, index)
+
+    async def aclose(self) -> None:
+        if self.native_pipeline is not None:
+            await self.native_pipeline.aclose()
 
     async def search(
         self,
@@ -143,6 +151,14 @@ class SearchService:
         use_model_planner: bool = True,
         query_override: tuple[str, ...] | None = None,
     ) -> SearchResponse:
+        if self.native_pipeline is not None:
+            sources = await self.native_pipeline.search(request)
+            top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
+            return SearchResponse(results=sources[:top_k], retrieval={
+                "mode": "native-bm25-chunks", "index": self.settings.opensearch_index,
+                "candidate_count": len(sources), "returned": len(sources[:top_k]),
+                "per_document_limit": None,
+            })
         search_started = monotonic()
         top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
         candidate_k = max(request.candidate_k or self.settings.candidate_k, top_k)
@@ -1150,6 +1166,10 @@ class SearchService:
         return merged
 
     async def ask(self, request: SearchRequest) -> AskResponse:
+        if self.native_pipeline is not None:
+            return await self.native_pipeline.ask(request)
+        if request.history:
+            raise AnswerGenerationError("conversation history requires RWKVRAG_RAG_PIPELINE=rwkv")
         if self.settings.generation_output_mode == "immutable":
             return await self._ask_immutable(request)
         ask_started = monotonic()
@@ -1894,7 +1914,12 @@ class SearchService:
         self,
         question: str,
         materials: list[SourceItem],
+        history=None,
     ) -> AskResponse:
+        if self.native_pipeline is not None:
+            return await self.native_pipeline.ask_materials(question, materials, history)
+        if history:
+            raise AnswerGenerationError("conversation history requires RWKVRAG_RAG_PIPELINE=rwkv")
         started = monotonic()
         plan = build_query_plan(question)
         result = await self._generate_with_trace(

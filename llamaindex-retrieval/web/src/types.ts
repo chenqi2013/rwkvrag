@@ -98,6 +98,8 @@ export interface SearchTestRun {
   created_at: string;
 }
 
+export type SearchAnswerStatus = "answered" | "refused" | "completed" | "partial" | "failed";
+
 export interface SearchTestItem {
   id: string;
   question: string;
@@ -107,7 +109,7 @@ export interface SearchTestItem {
   created_at: string;
   updated_at: string;
   latest_run_id?: string;
-  latest_answer_status?: "answered" | "refused";
+  latest_answer_status?: SearchAnswerStatus;
   latest_failure_category?: FailureCategory | null;
   latest_failure_reason?: string | null;
   latest_run?: SearchTestRun;

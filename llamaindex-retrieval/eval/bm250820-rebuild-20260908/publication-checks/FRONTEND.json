@@ -1,0 +1,30 @@
+{
+  "node_tests": {
+    "command": "node --test tests/answerPresentation.test.mjs",
+    "passed": 19,
+    "failed": 0
+  },
+  "build": {
+    "command": "npm run build",
+    "result": "PASS"
+  },
+  "tracked_ui_sha256": {
+    "web/src/types.ts": "a8fcb1d39c105e5066fc71f0af5383c3cc0ba53377a66bc00b72756a4022cdde",
+    "web/src/utils.ts": "74ae6b1e0d4b4b649ddf6360ef95d7257228a88ff51b9cea8ae99e8eb248cbce",
+    "web/src/main.tsx": "276591a60e0c5bbaa833589aba44503e89186bc7c163af6f31de16f808ae190a",
+    "web/src/answerPresentation.ts": "150f94f5c352c48073d44040f851aeb05b5113965640fd6766385d0195fe3643",
+    "web/src/App.tsx": "771eb56a68b5120ae9cf64a26aa33ea93fb2bf4b54e5cccd850115e1e0c69bfe",
+    "web/src/api.ts": "365c2a740801873ceee251b84563289d078f819f8ddf3395e94277b33a8dd079",
+    "web/src/i18n.tsx": "987eaaa209353ed89f7881515dc55b767ca8ffac61a14d3701ae010b162d0cbb",
+    "web/src/styles.css": "a373e7db3df34b3880bc95ccaa846ee0ce8e23dc0a4a0f3f3b52da9fecd300e8",
+    "web/src/pages/ImportsPage.tsx": "6df8212d26e95ff3a896f47a678adf845938b0955e22a6e90ca6c2b63f194dfa",
+    "web/src/pages/SearchPage.tsx": "9e16a8c8683fef9a8e17ad306bbd804b927240240fc532455fbabb2c33d93460",
+    "web/src/pages/FilesPage.tsx": "e53214d3dfc4a89cf7e853f2dec778072cdc9811103d7c8c5f52306ce46401a1",
+    "web/src/pages/SearchHistoryPage.tsx": "979097059eaa85ac9ce4f7e97b8c85c3a783542afceb5677821cee554c35193a",
+    "web/src/pages/KnowledgeBasesPage.tsx": "a5b736d6b11fe97c70238e038729a2430e31a501c80a102e640512aa22b2d139",
+    "web/src/pages/DashboardPage.tsx": "829c2a1d2a41beb991fba5243680b46777bc2086ca791806fe31de01db54c557",
+    "src/llamaindex_retrieval/static/admin/index.html": "bead97624409f19e489d3f27d4c004c250ca4ea6a632bae0261508e9369a2617",
+    "src/llamaindex_retrieval/static/admin/assets/index-Bkal3fG2.css": "5603b004bc98f3d9c2863553d3ce5142964389754272bbd3d21c8a4e96062276",
+    "src/llamaindex_retrieval/static/admin/assets/index-B2U4qG5T.js": "0a0f681a34fac0609e464c8c2e3782a5cd7f6cd45d5f19e0646596fc4a07a4d2"
+  }
+}

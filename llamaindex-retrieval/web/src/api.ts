@@ -11,6 +11,7 @@ import type {
   SearchTestRun,
   SearchResponse,
   FailureCategory,
+  SearchAnswerStatus,
 } from "./types";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
@@ -96,7 +97,7 @@ export const api = {
   searchHistory: (
     page = 1,
     pageSize = 20,
-    answerStatus?: "answered" | "refused",
+    answerStatus?: SearchAnswerStatus,
     failureCategory?: FailureCategory,
   ) =>
     request<SearchTestPage>(

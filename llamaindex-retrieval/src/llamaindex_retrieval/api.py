@@ -52,6 +52,7 @@ async def lifespan(app: FastAPI):
     await task_manager.start()
     yield
     await task_manager.shutdown()
+    await search.aclose()
     lexical_index.close()
     await repository.close()
 
