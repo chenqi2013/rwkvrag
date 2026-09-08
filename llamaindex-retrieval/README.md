@@ -2,6 +2,8 @@
 
 基于 `bm250820@2bbc406`。新链路由 `rwkv_pipeline.py` 编排，`native_rwkv.py` 负责推理传输，`verbatim_chunking.py` 保留导入原文。约束见 [ARCHITECTURE_RULES.md](ARCHITECTURE_RULES.md)。
 
+当前主模型是 **RWKV7 G1j 2.9B（16K）**，优先使用外部 API、备用本机 GPU，不再使用 `rwkv-8222`。外部 batch 接口的连通性已验证，传输适配尚未完成；下列启动方式仍要求原生推理服务，不能将其 base URL 直接替换成外部 batch 地址。详见 [接口记录](../docs/rwkvos-api.md)。此前 13.3B 成绩保留为历史对照。
+
 ## 依赖与启动
 
 | 组件 | 作用 | 计算资源 |

@@ -1,0 +1,75 @@
+{
+  "checked_at": "2026-09-08T12:18:18.352829+00:00",
+  "endpoint": "https://api-3b.rwkvos.com/v1/batch/completions",
+  "provider_reported_model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+  "model_list_and_successful_response_ids_match": true,
+  "independent_remote_weight_hash_verified": false,
+  "provided_request_status": 400,
+  "provided_request_error": "uploaded state not found",
+  "sample_json_trailing_comma_removed": true,
+  "zero_state_status": 200,
+  "zero_state_seconds": 1.9433555840078043,
+  "batch_temperature_zero_status": 400,
+  "minimum_temperature_reported_by_server": 0.001,
+  "batch_min_temperature_status": 200,
+  "batch_min_temperature_seconds": 0.8500071549933637,
+  "batch_choices": [
+    {
+      "index": 0,
+      "finish_reason": "stop",
+      "raw_content": "青杉号于2024年5月首航。"
+    },
+    {
+      "index": 1,
+      "finish_reason": "stop",
+      "raw_content": "\n根据提供的资料，试验电池的容量为72千瓦时。"
+    }
+  ],
+  "synthetic_batch_facts_correct": 2,
+  "synthetic_batch_citation_tags_present": 0,
+  "end_to_end_rag_test": false,
+  "automatic_retries": 0,
+  "http_attempts_total": 6,
+  "successful_generation_requests": 2,
+  "successful_generation_choices": 3,
+  "credential_values_in_report": false,
+  "local_gpu_fallback": "NVIDIA GeForce RTX 5070 Ti, 16303MiB",
+  "server_use_policy": "No further rwkv-8222 inference or indexing; task-owned services stopped and disk data retained",
+  "compatibility": "Dedicated batch adapter needed for contents/choice indexes/message.content; observed responses omit usage, budget/BOS verification must not be invented",
+  "evidence": {
+    "models-response.bin": "d91a59844118e7b136c8f4ea9490983c72530ab1b2f10e1dea854d8c2da3ad57",
+    "zero-state-receipt.json": "9875ae777a72b31d83668a40d42f0d610cb3c699453b97a3698369f4c3d5ca1c",
+    "openapi-response.bin": "3319a122367a42536a5e0f079336dd0b0efd25a74ae4196cbfeabdb5662e5228",
+    "batch-two-response.bin": "d9292f18de5abce0a86f59db298171b095a1f21eb75b864083a498a638615d9d",
+    "batch-two-receipt.json": "24ba663e7b6b182d24240dfd93dd57898f05e8820b761f0d9184fc93e14b59ba",
+    "batch-two-min-temperature-receipt.json": "0decf3ad348b24bdd2f0d306bba05f2ce747e79f6c1bad10e183661b3ca311dc",
+    "batch-two-min-temperature-response.bin": "77f7c52be38e850533920aabb52a3aa93a92539665a851f22aff30560290a473",
+    "models-receipt.json": "54aaafbb62e36df7864d15984cef5ab98de2ed392629e1e6ea58be79bb0a9277",
+    "zero-state-response.bin": "32797d0640a84772f0f317a84a7d6d1f08f3d35e80254ceddfbe2779053515fa",
+    "openapi-receipt.json": "edde6958fa85525a8e39b7cc3ced14209ed3cbac413538da6268202772c86e77",
+    "provided-sample-receipt.json": "823b5f1ddb06e307598c066dd093a7332b3c50142ec1dc98d68a71b7c586912a",
+    "provided-sample-response.bin": "8733af6f4920b018045e9942b2c2ea626df253e5b0da85cb20ea493bdbbf83c3"
+  },
+  "server_release": {
+    "status": "task_owned_resources_released",
+    "systemd_units_stopped": 37,
+    "standalone_embedding_process_stopped": true,
+    "gpu_released_mib": 92048,
+    "gpu_released_gib": 89.890625,
+    "data_and_logs_retained": true,
+    "assessment_sha256": "65f5daf639fcf53ca0a0219d2749e445e5ce85f22383b72cde68bc12bb5d980b",
+    "assessment_original_guard_failure_preserved": true,
+    "original_guard_note": "An unrelated project worker had already exited before stop actions; retained original failed guard receipt and independently verified all authorized task targets."
+  },
+  "default_configuration_validation": {
+    "started_at": "2026-09-08T12:18:50.572170+00:00",
+    "completed_at": "2026-09-08T12:18:55.246245+00:00",
+    "exit_code": 1,
+    "summary": "114 failed, 472 passed, 1 warning in 3.81s",
+    "same_failed_test_ids": true,
+    "new_failures": [],
+    "missing_baseline_failures": [],
+    "log_sha256": "1c631e63f5d1ff14c6af1e2fc43e3e154118d85200cf2c1f6c1625807c9bd0e6",
+    "config_sha256": "62c1aa92db90ee1587711d8d1302e0cf4c3a23dcbc7097e8542392e15fd192eb"
+  }
+}

@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     # The existing pipeline remains available for regression comparisons.
     rag_pipeline: str = Field(default="existing", pattern="^(existing|rwkv)$")
     native_base_url: str = "http://127.0.0.1:18421/v1"
-    native_model: str = "rwkv7-g1j-13.3b-zero-state-capability-ctx16384"
+    native_model: str = "rwkv7-g1j-2.9b-20260831-ctx16384"
     native_api_key: str = ""
     native_timeout_seconds: int = Field(default=180, ge=5, le=1800)
     native_context_window_tokens: int = Field(default=16384, ge=1024)

@@ -2,6 +2,8 @@
 
 本分支从 [chenqi2013/rwkvrag:bm250820](https://github.com/chenqi2013/rwkvrag/tree/bm250820) 的 `2bbc406125e7e030eda98b11993dc13fc4534ca4` 开始修改，分支名为 `chase/rwkv-native-rag-rebuild`。
 
+**后续主模型为 RWKV7 G1j 2.9B（16K）**，优先使用 `api-3b.rwkvos.com`，不可用时使用本机 GPU，不再使用 `rwkv-8222`。外部接口的模型列表、零状态请求和两项批处理已验证；现客户端与该接口仍需适配，尚未完成 2.9B 完整 RAG 基线。下文 v1–v6 是此前 13.3B 的历史成绩。详见 [接口验证和运行位置](docs/rwkvos-api.md)。
+
 Python 主链路使用 **OpenSearch BM25 + MongoDB + RWKV 原生推理服务**。OpenSearch 负责搜索，MongoDB 保存知识库、导入任务和问答记录；两者使用 CPU、内存和磁盘。RWKV 推理使用 GPU。新链路不需要 Qdrant 或 embedding 服务。
 
 ```mermaid
