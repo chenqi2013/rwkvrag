@@ -13,7 +13,7 @@
 | RWKV API | 规划、逐来源阅读、作答 | 当前外部 2.9B，备用本机 GPU |
 | FastAPI | 编排、导入、管理接口 | CPU |
 
-不需要 Qdrant 或 embedding 服务。以下启动完整应用还需自行配置 OpenSearch 和 MongoDB；本轮本机基线只验证了索引与检索链路，并非管理服务部署验收。不再使用旧服务器。本机 GPU 备用需要另行部署和配置，目前没有自动故障切换。
+不需要 Qdrant 或 embedding 服务。以下启动完整应用还需自行配置 OpenSearch 和 MongoDB；本轮本机基线只验证了索引与检索链路，并非管理服务部署验收。本机已跑通官方 2.9B 短输入推理及 state 梯度检查，尚未部署为备用 API，也没有自动故障切换。本机资源不足时可按最新授权使用 `rwkv-8222` 的 GPU2，仍使用 2.9B；本轮尚未启用服务器。最新质量与兼容性结果见 [后续验证](eval/rwkvos-reader-followup-20260909/README.md)。
 
 ```bash
 uv sync --frozen --extra dev

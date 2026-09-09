@@ -1,6 +1,6 @@
 # 2.9B 外部 API 与 state
 
-当前使用 `https://api-3b.rwkvos.com/v1/batch/completions`，模型列表与实际响应均报告 `rwkv7-g1j-2.9b-20260831-ctx16384`。这验证了服务自报身份，远端权重 SHA 未独立核验。推理不可用时仅允许另行配置本机 GPU 备用，尚未实现自动切换或验证本机 2.9B 部署；不再占用 `rwkv-8222`。
+当前使用 `https://api-3b.rwkvos.com/v1/batch/completions`，模型列表与实际响应均报告 `rwkv7-g1j-2.9b-20260831-ctx16384`。这验证了服务自报身份，远端权重 SHA 未独立核验。本机官方 2.9B 已通过完整加载、短输入推理和 state 梯度检查，尚未部署备用 API 或实现自动切换。本机资源不足时，最新授权允许使用 `rwkv-8222` 的 GPU2，仍使用 2.9B；本轮尚未访问或启用该服务器。
 
 ## 已接入的传输
 
@@ -16,6 +16,8 @@
 
 默认 complete 前缀实际为 `Assistant: <think></think>`；可选 continuation 会省略末尾 `>`，保留模型实际生成的字符，再通过 answer_span 标识正文。两者是不同实验条件。官方未闭合 fake-think 候选在固定材料上增加了正确事实，也产生新无依据断言，未被设为默认。[固定版本模板实现](https://github.com/Alic-Li/rwkv_lightning_cuda/blob/6253c9e0345a1c5e42bf0a10e722ba09de06a2ac/src/rwkv_inference_engine.cpp#L680)。
 
+后续两组 batch8 → 相同输入逐条调用 → 原 batch8 重复实验中，16 个槽位的三次输出逐字一致；这个小样本没有观察到批处理造成的差异。不过另一组 80 项控制的 10 个请求正文、批次成员及顺序完全相同，仍有 6 项输出变化。`top_p=0` 因此不能作为本服务输出可逐字复现的保证。恢复历史请求的原始 JSON 字节也未恢复 CAN 的历史输出；不能单凭这些现象推断远端换了权重或确定某个内核有错。见 [完整对照](../llamaindex-retrieval/eval/rwkvos-reader-followup-20260909/README.md)。
+
 ## 输入预算与长上下文
 
 `POST /v1/tokens/count` 使用 `{"text":完整原始prompt}` 获取单项服务计数。传入 `contents` 数组会返回拼接总数，不能当每项计数；`messages` 会加模板，不能替代 raw prompt。
@@ -28,11 +30,17 @@
 
 上游支持 `/v1/state/upload` 上传单个 `.pth`，之后通过 `state_id` 初始化 batch。上传阶段的检查不等于模型兼容验证，真正加载时才检查完整层数、形状和类型。[上传与加载实现](https://github.com/Alic-Li/rwkv_lightning_cuda/blob/6253c9e0345a1c5e42bf0a10e722ba09de06a2ac/src/rwkv7_fast_v4.cu#L2337)。
 
-G1j 2.9B 预期为 32 个 `blocks.N.att.time_state`，每个 `[40,64,64]`，BF16 或 FP32。canonical 文件轴序为 `[H,V,K]`，CUDA loader 内部再转置一次。训练和上传前仍须记录确切基座 SHA 并检查所有张量；未进行本机全权重加载或训练验证。
+官方 G1j 2.9B 本地文件已经核验：SHA256 `966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239`，1,062 个基础张量、2,948,065,280 参数，完整 key/shape 匹配。32 个 `blocks.N.att.time_state` 各为 `[40,64,64]`。canonical 文件轴序为 `[H,V,K]`，外部上游 CUDA loader 内部再转置一次，不能提前双重转置。
+
+本机 RTX 5070 Ti 的 BF16/FLA 40-token 前向与一次 state-only backward 已通过：所有基础权重冻结且无梯度，32 层 state 梯度全部有限且非零；峰值 allocated 约 5.79 GiB。这只是短输入计算图检查，不是长序列训练容量或收敛验证。优化器更新为零。
+
+本地 PEFT/FLA 与 `rwkv` 0.8.30 纯 Torch 推理又做了同一短输入、零 state 和非对称 state 的逐位置 logits 对照：零 state 的 top1 相同 39/40，非对称 state 为 40/40。数值存在差异，不能把两实现称为逐字等价；非对称探针和原始 logits 已归档，未用零矩阵相等冒充轴序验证。
+
+外部全零 state 兼容探针在上传约 10.5 MB 的文件时出现 `ReadError`，没有收到 HTTP 响应或 `state_id`。上传的远端结果未知，无法定位或删除可能已创建的状态；没有静默重试，也没有执行随后带 state 的生成。此次没有完成外部加载验收。该文件未训练，不能代表 tuned state 的能力或完整长文记忆。
 
 上传文件初始化 WKV，不能恢复完整的动态 shift/elapsed。上游另有 session 状态接口，但本 RAG 尚未接入，也未验证部署的会话隔离、续读和分叉行为。不能把上传的 tuned state 称为已有长文记忆。
 
-本轮全部为零 state，没有训练、上传新 state 或调用旧服务器。下一步从真实 trace 建立统一协议的训练目标，分开检查格式、任务范围、证据选择和事实引用，并用新留出题验证。已有开发题不能兼作训练后的盲测。
+质量实验全部为零 state，没有优化器更新或调用旧服务器；非对称 state 仅用于本地数值诊断。下一步从真实 trace 建立统一协议的训练目标，分开检查格式、任务范围、证据选择和事实引用，并用新留出题验证。已有开发题不能兼作训练后的盲测。
 
 ## 当前质量与运行位置
 

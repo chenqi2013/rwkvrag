@@ -38,7 +38,7 @@ flowchart TD
 | --- | --- |
 | 同一次请求内分片 prefill | 上游实现持续更新同一 GenerationState；服务当时报告输入片大小 128。它解决输入计算分片，不保证事实长期保持。 |
 | 独立文档并发读取 | 当前已实现；各调用独立，不合并不同文档的神经 state。 |
-| 上传 statetune 的初始 WKV state | adapter 可传 `state_id`，本轮没有可用 state、没有上传或训练。它不包含完整动态 shift/elapsed。 |
+| 上传 statetune 的初始 WKV state | adapter 可传 `state_id`；本地短输入的 state 梯度检查已通过，尚无优化器更新。外部全零 state 上传因连接中断未取得 ID，尚未验证加载。初始 WKV 不包含完整动态 shift/elapsed。 |
 | 跨请求完整状态续读/分叉 | 上游有 session 路由，当前 RAG 未接入；部署兼容性、会话亲和与分叉语义尚未实测。 |
 
 请求参数 `chunk_size=8` 控制生成输出刷新频率，不是输入分块。上述服务行为来自 [固定版本上游实现](https://github.com/Alic-Li/rwkv_lightning_cuda/blob/6253c9e0345a1c5e42bf0a10e722ba09de06a2ac/src/rwkv_inference_engine.cpp#L275) 与部署探针；远端部署源码版本未独立认证。

@@ -1,0 +1,213 @@
+{
+  "schema": "rwkvos-reader-followup-independent-publication-verification-v1",
+  "status": "PASS",
+  "reviewer": "Codex independent agent readme_status",
+  "started_at": "2026-09-09T01:10:55.563377+00:00",
+  "completed_at": "2026-09-09T01:10:56.815775+00:00",
+  "elapsed_seconds": 1.2523881700035417,
+  "command": [
+    "/usr/bin/python3",
+    "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/rwkvos-reader-followup-20260909/build_archive.py",
+    "verify",
+    "--manifest",
+    "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/rwkvos-reader-followup-20260909/archives/RECORDS-MANIFEST.json",
+    "--extract",
+    "/home/chase/GitHub/rwkvrag-reader-publication-verify-20260909"
+  ],
+  "exit_code": 0,
+  "stdout": [
+    {
+      "verified_members": 1357,
+      "archives": 17,
+      "integrity_only": true
+    }
+  ],
+  "stderr": "",
+  "tool": {
+    "path": "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/rwkvos-reader-followup-20260909/build_archive.py",
+    "bytes": 19867,
+    "sha256": "6226980a64a89678cc0a1aa5cfa2fa9789732cfa5ef46f8c3ad5b3f30a7dceed"
+  },
+  "manifest": {
+    "path": "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/rwkvos-reader-followup-20260909/archives/RECORDS-MANIFEST.json",
+    "bytes": 549276,
+    "sha256": "297ae5a639af9f92a85ad3494315fecdc8125a1c9e6510b868685b9ded42fd26"
+  },
+  "selection": {
+    "path": "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/rwkvos-reader-followup-20260909/ARCHIVE-SELECTION.json",
+    "bytes": 495546,
+    "sha256": "7cbe46a866d15be096984b9377d7616e162a5409384042c85e0beb5ed7adb15d"
+  },
+  "final_freeze": {
+    "path": "/home/chase/GitHub/rwkvrag-bm-29b-followup-20260909/FINAL-RECORDS-FREEZE.json",
+    "bytes": 192828,
+    "sha256": "1461e0ed6ebe3fd3d76d249a6b6d6c2965f18f4f900479e6aad7cd37edc42fca"
+  },
+  "extract_directory": "/home/chase/GitHub/rwkvrag-reader-publication-verify-20260909",
+  "verified_members": 1357,
+  "verified_raw_bytes": 122645507,
+  "archive_count": 17,
+  "stored_archive_bytes": 29713027,
+  "maximum_archive_bytes": 21225160,
+  "archives": [
+    {
+      "bytes": 5596,
+      "members": 4,
+      "path": "backend-audit.tar.gz",
+      "sha256": "3c37fae60f336953ad4b4752535d0c2eb607e1c5cc96a24dc2d6fd72ccbf0bdd"
+    },
+    {
+      "bytes": 155662,
+      "members": 50,
+      "path": "batch-parity.tar.gz",
+      "sha256": "99df5a53423bb19d52bc40c6051a5877554216b2b2beebc6b2685bb915301883"
+    },
+    {
+      "bytes": 43424,
+      "members": 17,
+      "path": "external-zero-state.tar.gz",
+      "sha256": "7c94e9828f95e2fbfcc75cf1a21016b8d818b7b511fd9e755992a626c3f55b71"
+    },
+    {
+      "bytes": 422505,
+      "members": 21,
+      "path": "local-reader.tar.gz",
+      "sha256": "8e632d6ad03db7e141e22428284b9dd4ed23702f7b0f95381097984ed8cbfe8d"
+    },
+    {
+      "bytes": 24299,
+      "members": 21,
+      "path": "local-readiness.tar.gz",
+      "sha256": "03bf7c9dbf9999af91a6481d5aad744cf38f2ce75dbfe6cc37c632bacb2bff25"
+    },
+    {
+      "bytes": 21225160,
+      "members": 23,
+      "path": "local-runtime-alignment.tar.gz",
+      "sha256": "9d3ee3382243ec701285b2c6e414f03b38027f2fa86a085025bb52dd98db2f04"
+    },
+    {
+      "bytes": 56272,
+      "members": 22,
+      "path": "local-state-smoke.tar.gz",
+      "sha256": "0ab26c851959de507794a7b1f50898f271214c9bbc8bc39e8f6a7ff7f7f7bf6a"
+    },
+    {
+      "bytes": 59977,
+      "members": 13,
+      "path": "original-wire.tar.gz",
+      "sha256": "23521a3c87c7c187f5ccde16a0d8bb2c256288090b8d33c1589578627e07d423"
+    },
+    {
+      "bytes": 8405,
+      "members": 3,
+      "path": "reader-design.tar.gz",
+      "sha256": "ec85fa39e0b13291add84a10df312d78827babd0af146e3d58eb5a35946532a6"
+    },
+    {
+      "bytes": 990147,
+      "members": 126,
+      "path": "reader-examples.tar.gz",
+      "sha256": "0d13d10808504e4ee7391355ef0d700eb9c34388f035599ff9b110657dc512e0"
+    },
+    {
+      "bytes": 291358,
+      "members": 40,
+      "path": "reader-fixtures.tar.gz",
+      "sha256": "b59f1927719fb7ff789ef4f41a48c8a97d60d5af9e072f3291384c8cddb7f595"
+    },
+    {
+      "bytes": 2033339,
+      "members": 374,
+      "path": "reader-focused.tar.gz",
+      "sha256": "9cdf4c93f98cd6fec94f581f901732adf83dcefaa6e999dd4a9ac03c0da94010"
+    },
+    {
+      "bytes": 1087695,
+      "members": 123,
+      "path": "reader-open-thinking.tar.gz",
+      "sha256": "4bdf1fc69d8843381d693e34b9188832838327d2e9286887cd1abb1acf1faef4"
+    },
+    {
+      "bytes": 1562276,
+      "members": 268,
+      "path": "reader-per-task.tar.gz",
+      "sha256": "c7c93469959c718bc6f62667881b23e83c1a1828c8120eb0388ca31c375a255d"
+    },
+    {
+      "bytes": 879225,
+      "members": 142,
+      "path": "reader-presentation.tar.gz",
+      "sha256": "b810de0befa8643cbb363662a6a54d8ab3c8847a1737c8fb788877be7536cc52"
+    },
+    {
+      "bytes": 679497,
+      "members": 91,
+      "path": "research-peft-source.tar.gz",
+      "sha256": "ff75dc32f584dc3addc7e13d242d32155e7c9050bf0068858c582c808d59e2a1"
+    },
+    {
+      "bytes": 188190,
+      "members": 19,
+      "path": "support.tar.gz",
+      "sha256": "9992df4469157a22333ef2cbbb261acf5bcc82624ae6c2981511a98a64bd5da1"
+    }
+  ],
+  "checks": {
+    "safe_manifest_paths": true,
+    "safe_tar_regular_files_only": true,
+    "no_extra_missing_or_duplicate_members": true,
+    "all_extracted_member_bytes_match_manifest_and_original_N": true,
+    "checkpoint_5896273469_bytes_excluded": true,
+    "two_exact_research_sources_absent": [
+      "peft-source-v1/json2binidx_tool/20B_tokenizer.json",
+      "peft-source-v1/scripts/validate_and_start_round71_v4_vllm.sh"
+    ],
+    "all_six_diagnostic_binaries_present_exact_sha_and_size": true,
+    "all_archives_strictly_below_50000000_bytes": true,
+    "N_original_records_written": false,
+    "original_archives_modified": false,
+    "independent_new_api_calls": 0
+  },
+  "diagnostic_binaries": {
+    "local-runtime-alignment-v1/asymmetric-initial-state.pth": {
+      "bytes": 10495555,
+      "role": "Fixed-seed asymmetric input state for numerical comparison; untrained, no optimizer updates, not uploaded.",
+      "sha256": "5dd2f9ad0b17ee2aebf1b3f19bbf55e0bde731f6ccc9758e3f0c09da72735944"
+    },
+    "local-runtime-alignment-v1/peft-fla-asymmetric-logits.pth": {
+      "bytes": 10487337,
+      "role": "Full 40 x 65536 diagnostic logits from PEFT/FLA asymmetric-state forward; not model weights.",
+      "sha256": "139d7d69b522acb5f745e862986c557fd517f42935c2a1507ded44cada5c6dbe"
+    },
+    "local-runtime-alignment-v1/peft-fla-zero-logits.pth": {
+      "bytes": 10487337,
+      "role": "Full 40 x 65536 diagnostic logits from PEFT/FLA zero-state forward; not model weights.",
+      "sha256": "4cc089dff4463d0077b78db490abdca049287dbb39e0d5dc72ade71fef25b5a5"
+    },
+    "local-runtime-alignment-v1/rwkv-torch-asymmetric-logits.pth": {
+      "bytes": 10487337,
+      "role": "Full 40 x 65536 diagnostic logits from pure Torch asymmetric-state forward; not model weights.",
+      "sha256": "dba708feac009fae91fcc2951c6f97e15ed2ca0127ebe8c7c4f5901f9ef02276"
+    },
+    "local-runtime-alignment-v1/rwkv-torch-zero-logits.pth": {
+      "bytes": 10487337,
+      "role": "Full 40 x 65536 diagnostic logits from pure Torch zero-state forward; not model weights.",
+      "sha256": "300e38685ca60a9bc0ef97ba790b93650b3c829189bf7f89d9fe691db801407c"
+    },
+    "local-state-smoke-v1/gpu-01/untrained-zero-time-state.pth": {
+      "bytes": 10495555,
+      "role": "All-zero 32-layer diagnostic state; untrained and zero optimizer updates. Not uploaded during the smoke phase; a later external-zero-state-v1 upload attempt ended without a response, so the remote outcome is unknown. Not the model checkpoint.",
+      "sha256": "d9e760c5cbf6101ba86266c944aa101990f43ee186d49b416578cc83dc932aff"
+    }
+  },
+  "credential_scan": {
+    "result": "PASS as recorded by the pinned prepare selection",
+    "actual_CF_value_scan_source": "ARCHIVE-SELECTION.json secret_scan",
+    "actual_CF_scan_reexecuted_by_this_review": false,
+    "credentials_read_by_this_review": false,
+    "credential_values_or_hashes_stored": false,
+    "selection_sha256": "7cbe46a866d15be096984b9377d7616e162a5409384042c85e0beb5ed7adb15d"
+  },
+  "scope": "Independent final-tool verify and safe extraction plus every-member comparison against original N. Integrity verification does not rerun model inference or certify semantic quality."
+}
