@@ -28,6 +28,7 @@ class LexicalResult:
     text: str
     metadata: dict[str, Any]
     score: float
+    raw_score: float | None = None
 
 
 @dataclass(frozen=True)
@@ -276,6 +277,9 @@ class LexicalIndex:
                     "parent_id": {"type": "keyword"},
                     "content_type": {"type": "keyword"},
                     "chunk_order": {"type": "integer"},
+                    "source_start": {"type": "integer"},
+                    "source_end": {"type": "integer"},
+                    "source_sha256": {"type": "keyword"},
                     "uri": {"type": "keyword", "index": False},
                     "text": {"type": "text", "index": False},
                     "full_answer": {"type": "text", "index": False},
@@ -322,6 +326,23 @@ class LexicalIndex:
             "parent_id": str(metadata.get("parent_id") or ""),
             "content_type": str(metadata.get("content_type") or "prose"),
             "chunk_order": int(metadata.get("chunk_order") or 0),
+            "source_start": (
+                int((metadata.get("source_span") or {}).get("start"))
+                if isinstance(metadata.get("source_span"), dict)
+                and (metadata.get("source_span") or {}).get("start") is not None
+                else None
+            ),
+            "source_end": (
+                int((metadata.get("source_span") or {}).get("end"))
+                if isinstance(metadata.get("source_span"), dict)
+                and (metadata.get("source_span") or {}).get("end") is not None
+                else None
+            ),
+            "source_sha256": (
+                str((metadata.get("source_span") or {}).get("sha256") or "")
+                if isinstance(metadata.get("source_span"), dict)
+                else ""
+            ),
             "uri": str(metadata.get("uri")) if metadata.get("uri") else None,
             "text": text,
             "metadata": metadata,
@@ -406,11 +427,25 @@ class LexicalIndex:
                     "match": {
                         "title_tokens": {
                             "query": " ".join(title_tokens),
-                            "operator": "and",
-                            "boost": 12.0,
+                            "operator": "or",
+                            "minimum_should_match": 1 if model_pipeline else "2<75%",
+                            "boost": 12.0 if not model_pipeline else 6.0,
                         }
                     }
                 }
+            )
+        if model_pipeline:
+            should.extend(
+                {
+                    "match_phrase": {
+                        "title_tokens": {
+                            "query": query,
+                            "slop": 2,
+                            "boost": 24.0,
+                        }
+                    }
+                }
+                for query in (question,)
             )
         exact_titles = [] if model_pipeline else list(dict.fromkeys((
             _question_subject(question),
@@ -530,6 +565,7 @@ class LexicalIndex:
         body = {
             "size": raw_candidate_k,
             "track_total_hits": False,
+            "collapse": {"field": "document_id"},
             "_source": ["node_id", "document_id", "text", "metadata", "title"],
             "query": {
                 "bool": {
@@ -650,6 +686,7 @@ class LexicalIndex:
                 text=str(chunk.source.get("text") or ""),
                 metadata=dict(chunk.source.get("metadata") or {}),
                 score=min(1.0, max(0.0, raw / top_raw)),
+                raw_score=raw,
             )
             for raw, chunk in merged
         ]
@@ -672,6 +709,7 @@ class LexicalIndex:
             body={
                 "size": max(candidate_k, min(candidate_k * 8, 200)),
                 "track_total_hits": False,
+                "collapse": {"field": "document_id"},
                 "_source": ["node_id", "document_id", "text", "metadata"],
                 "query": {
                     "bool": {
@@ -695,28 +733,6 @@ class LexicalIndex:
                 },
             },
         )
-        query_subject = _question_subject(normalize_query_text(query))
-        subject_tokens = {
-            token for token in lexical_tokens(query_subject)
-            if token
-            and token not in {"历史", "歷史", "上", "第一个", "第一位", "首位", "最早", "个"}
-            and len(token) >= 2
-        }
-        normalized_subject = normalize_query_text(query_subject).replace(" ", "")
-
-        def identity(value: str) -> str:
-            compact = normalize_query_text(value).replace(" ", "")
-            compact = compact.translate(str.maketrans({
-                "〇": "0", "一": "1", "二": "2", "两": "2", "三": "3",
-                "四": "4", "五": "5", "六": "6", "七": "7", "八": "8",
-                "九": "9", "十": "10",
-            }))
-            for suffix in ("事变", "之变", "政变"):
-                if compact.endswith(suffix):
-                    compact = compact[: -len(suffix)]
-                    break
-            return compact
-
         best_by_document: dict[str, tuple[float, dict[str, Any]]] = {}
         for hit in response.get("hits", {}).get("hits", []):
             source = dict(hit.get("_source") or {})
@@ -727,13 +743,6 @@ class LexicalIndex:
                 source.get("document_id") or source.get("node_id") or ""
             )
             score = max(0.0, float(hit.get("_score") or 0.0))
-            title = str(source.get("metadata", {}).get("title") or "")
-            title_tokens = set(lexical_tokens(title))
-            score += 4.0 * len(subject_tokens & title_tokens)
-            if subject_tokens and subject_tokens <= title_tokens:
-                score += 4.0
-            if normalized_subject and identity(title) == identity(query_subject):
-                score += 12.0
             current = best_by_document.get(document_id)
             if current is None or score > current[0]:
                 best_by_document[document_id] = (score, source)
@@ -746,6 +755,7 @@ class LexicalIndex:
                 text=str(source.get("text") or ""),
                 metadata=dict(source.get("metadata") or {}),
                 score=min(1.0, score / top_score),
+                raw_score=score,
             )
             for score, source in ranked[:candidate_k]
         ]

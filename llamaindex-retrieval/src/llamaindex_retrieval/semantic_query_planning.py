@@ -16,11 +16,6 @@ from .qa_analysis import QuestionAnalysis, counted_list_size
 
 PlannerStrategy = Literal["model", "deterministic_fallback"]
 _CACHE_MAX_ENTRIES = 512
-_IMPLICIT_RELATIONS = {
-    "ordinal": ("第一个", "第一位", "首位", "最早"),
-}
-
-
 @dataclass(frozen=True)
 class QueryPlanningResult:
     plan: QueryPlan
@@ -65,6 +60,23 @@ class LanguageModelQueryPlanner:
                 relations,
                 model_queries,
             ) = self._parse(raw)
+            # A second, independent pass catches contracts that are valid JSON
+            # but silently changed the user's requested field or answer shape.
+            # The reviewer receives no documents and cannot answer the task;
+            # it may only return a corrected contract.
+            reviewed_raw = await self._request(
+                self._review_prompt(question, raw)
+            )
+            (
+                subject,
+                intent,
+                answer_shape,
+                set_semantics,
+                fields,
+                relations,
+                model_queries,
+            ) = self._parse(reviewed_raw)
+            raw = reviewed_raw
         except (httpx.HTTPError, TimeoutError, ValueError) as error:
             return QueryPlanningResult(
                 fallback,
@@ -217,14 +229,7 @@ class LanguageModelQueryPlanner:
                 ).strip()
                 if len(ordinal_subject) > len(subject):
                     subject = ordinal_subject
-            fallback_fields = {
-                field.field_id: field
-                for field in fallback.fields
-            }
-            if fallback.analysis.intent != "fact" and intent == "fact":
-                intent = fallback.analysis.intent
-            if not relations:
-                relations = fallback.relations or _IMPLICIT_RELATIONS.get(intent, ())
+            fallback_fields = {field.field_id: field for field in fallback.fields}
             fields = tuple(
                 replace(
                     field,
@@ -235,13 +240,9 @@ class LanguageModelQueryPlanner:
                 )
                 for field in (fields or fallback.fields)
             )
-            if fallback.answer_shape != "single_fact" and answer_shape == "single_fact":
-                answer_shape = fallback.answer_shape
-            if answer_shape == "list" and set_semantics == "specific":
-                set_semantics = fallback.set_semantics
             queries = tuple(dict.fromkeys((
                 *model_queries,
-                *fallback.queries,
+                subject,
                 question,
             )))[
                 : self.settings.model_query_planning_max_queries
@@ -331,12 +332,11 @@ class LanguageModelQueryPlanner:
 
     @staticmethod
     def _prompt(question: str) -> str:
-        return f"""你是中文知识库的 BM25 查询规划器。你的任务不是回答问题，而是生成多组搜索关键词。
-请先把问题拆成一个可追踪的任务契约，再生成不同检索角度的关键词组合。
-查询应适合百科全文检索：保留专名，使用原问题可能对应的百科标题、关系词和常见同义表达。可以把可能的人物、事件结果或标准术语作为多种“检索假设”写入 queries，但不能把这些假设写进 subject；后端会用原文验证假设。
-对于带范围限定的对象，至少保留一条“完整范围 + 关系”的查询，并可在其他查询中使用资料常见的正式名称或别名；不要只保留宽泛范围词，也不要把范围限定从查询中删除。
+        return f"""你是中文知识库的 BM25 查询规划器。你的任务不是回答问题，而是把原问题转换为可检索的任务契约。
+先准确理解用户要查的对象、字段和答案形状，再生成多组彼此互补的查询。查询只能是原问题的忠实改写：保留原问题中的对象、范围、数量和关系，不添加原问题没有表达的答案、子类型、起点、终点、时间或其他事实。不能用猜测替换用户的原始关系，也不能把一个集合问题缩小成单个字段。
+查询应适合百科全文检索：保留专名，使用原问题中已有的术语和不改变含义的自然表达；对口语字段可改写为资料中更常见的百科标题术语（尤其是列表、表格、人物归属等字段），但不得添加事实或答案。至少一条查询保留原问题，至少一条查询使用完整对象与字段，另至少一条查询采用“对象 + 字段核心名词”的标题式短查询。对于带范围限定的对象，至少保留一条完整范围查询；不要只保留宽泛范围词，也不要删除范围限定。
+如果问题要求列举多个对象、成员、站点、项目、原因或成就，answer_shape 必须为 list，并且 set_semantics 按问题要求选择 all、partial 或 specific；不要把它标成 single_fact。若问题只问一个值，才使用 single_fact。
 subject 必须是问题中已经出现的待查实体对象，不能填写你猜测的答案，也不能把“创始人、作者、原因、时间、地点、站点”等所求字段并入对象。例如“某公司创始人是谁”的 subject 只能是“某公司”；“赤手空拳打死老虎的是谁”不能把人物姓名填入 subject。
-如果问题询问“是谁”且描述的是一个事件，queries 中至少一条必须包含你推测的具体人物姓名及其典型事件关键词；不能全部只重复“人物、英雄、主角、人名”等抽象词。该人物只作为待验证的检索假设。
 intent 只能是 definition、fact、list、cause、time、location、birthplace、agent、ordinal、comparison、procedure。
 answer_shape 只能是 single_fact、list、summary、narrative；set_semantics 只能是 latest、all、partial、specific。
 fields 固定至少一项；field_id 从 f1 开始，question 写该字段具体要求，relations 写资料中可能出现的 2 到 6 个简短同义表达。
@@ -360,6 +360,16 @@ relations 只写关系名称及同义表达，不能填写猜测的具体答案�
 原问题：{question}
 无效输出：{invalid_output[-2000:]}
 修复后的 JSON："""
+
+    @staticmethod
+    def _review_prompt(question: str, contract: str) -> str:
+        return f"""你是查询契约审计器。只检查契约是否忠实表达原问题，不回答原问题。
+如果契约已经忠实，原样输出；如果对象、字段、数量范围或答案形状被改变，修正后输出。
+必须保留原问题要求的完整集合，不得把多值问题缩成单值；不得添加原问题没有表达的答案或事实。
+只输出完整 JSON，不要解释：
+原问题：{question}
+候选契约：{contract[-6000:]}
+JSON："""
 
     @classmethod
     def _parse(

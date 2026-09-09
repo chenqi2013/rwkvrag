@@ -1,3 +1,5 @@
+import hashlib
+
 from llama_index.core import Document
 from llama_index.core.node_parser import SentenceSplitter
 
@@ -150,3 +152,43 @@ def test_document_aliases_are_attached_to_every_chunk() -> None:
 
     assert nodes
     assert all("罗宝线" in node.metadata["aliases"] for node in nodes)
+
+
+def test_prose_span_round_trips_to_original_document() -> None:
+    source = """# 介绍
+
+第一段内容重复。
+
+## 详情
+第一段内容重复。
+第二句提供事实。
+"""
+    nodes = structure_aware_nodes(
+        document(source),
+        SentenceSplitter(chunk_size=128, chunk_overlap=16),
+    )
+    prose_nodes = [node for node in nodes if node.metadata["content_type"] == "prose"]
+
+    assert len(prose_nodes) == 2
+    spans = [node.metadata["source_span"] for node in prose_nodes]
+    assert all(span is not None for span in spans)
+    assert spans[0]["start"] < spans[1]["start"]
+    for span in spans:
+        original = source[span["start"]:span["end"]]
+        assert hashlib.sha256(original.encode("utf-8")).hexdigest() == span["sha256"]
+
+
+def test_structured_chunk_does_not_claim_a_source_span() -> None:
+    source = """# 规格
+
+型号：A1
+容量：10GB
+"""
+    nodes = structure_aware_nodes(
+        document(source),
+        SentenceSplitter(chunk_size=128, chunk_overlap=16),
+    )
+
+    structured = next(node for node in nodes if node.metadata["content_type"] == "key_value")
+    assert structured.metadata["source_span"] is None
+    assert structured.metadata["source_transform"] == "structured"

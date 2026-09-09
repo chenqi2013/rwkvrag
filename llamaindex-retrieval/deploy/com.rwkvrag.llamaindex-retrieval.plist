@@ -33,6 +33,10 @@
     <string>5</string>
     <key>RWKVRAG_GENERATION_OUTPUT_MODE</key>
     <string>immutable</string>
+    <key>RWKVRAG_SEMANTIC_PIPELINE_ENABLED</key>
+    <string>true</string>
+    <key>RWKVRAG_EVIDENCE_EXTRACTION_MAX_SOURCES</key>
+    <string>8</string>
     <key>RWKVRAG_GENERATION_MAX_TOKENS</key>
     <string>2048</string>
     <key>RWKVRAG_ANSWER_POINT_FANOUT_ENABLED</key>

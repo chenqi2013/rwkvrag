@@ -60,6 +60,7 @@ from .qa_analysis import (
     validate_list_answer,
 )
 from .query_planning import QueryPlan, TaskField, build_query_plan
+from .retrieval_candidates import fuse_document_rrf
 
 _MULTI_EVIDENCE_MARKERS: tuple[str, ...] = ()
 _STRUCTURE_QUESTION_WORDS: set[str] = set()
@@ -172,7 +173,6 @@ class SearchService:
             candidate_k=candidate_k,
             knowledge_base_id=request.knowledge_base_id,
         )
-        results = self._prioritize_topic_document(plan, results)
         bm25_ms = self._elapsed_ms(bm25_started)
         context_started = monotonic()
         results, structure_expanded = await self._expand_structured_results(
@@ -193,17 +193,16 @@ class SearchService:
         # Context expansion can add a more specific topic document after the
         # initial fusion. Reapply the same whole-document ordering before the
         # top-k cut so supplemental chunks cannot put a broad page back first.
-        results = self._prioritize_topic_document(plan, results)
         min_score = (
             request.min_score
             if request.min_score is not None
             else self.settings.min_relevance_score
         )
         max_chunks_per_document = self._max_chunks_per_document(
-            plan.normalized_question,
+            plan,
             top_k=top_k,
         )
-        filtered = self._select_results(
+        filtered, selection_trace = self._select_results_with_trace(
             results,
             top_k,
             min_score,
@@ -240,6 +239,7 @@ class SearchService:
                 "structure_expanded": structure_expanded,
                 "section_context_expanded": section_context_expanded,
                 "document_relation_expanded": relation_context_expanded,
+                "candidate_selection": selection_trace,
                 "cause_context_expanded": (
                     section_context_expanded and analysis.intent == "cause"
                 ),
@@ -775,21 +775,8 @@ class SearchService:
 
     @staticmethod
     def _document_relation_search_terms(plan: QueryPlan) -> tuple[str, ...]:
-        subject_tokens = set(lexical_tokens(plan.subject))
-        ignored = subject_tokens | {
-            "什么", "哪些", "哪个", "哪几个", "怎么", "如何", "多少",
-            "主要", "历史", "著名", "伟大", "列表", "全部", "所有",
-        }
-        query_relations = [
-            token
-            for token in query_tokens(" ".join(plan.queries))
-            if len(token.strip()) >= 2 and token not in ignored
-        ]
-        summary_terms = (
-            "结局", "结尾", "终结", "结束", "最终", "最后", "结果",
-            "归一", "一统", "统一", "灭亡", "完成",
-        ) if plan.answer_shape in {"summary", "narrative"} else ()
-        return tuple(dict.fromkeys((*plan.relations, *query_relations, *summary_terms)))
+        query_terms = query_tokens(" ".join((*plan.queries, plan.subject)))
+        return tuple(dict.fromkeys((*plan.relations, *query_terms)))
 
     @staticmethod
     def _topic_tokens(question: str, subject: str) -> set[str]:
@@ -800,10 +787,6 @@ class SearchService:
             if token not in subject_tokens
             and token not in _STRUCTURE_QUESTION_WORDS
             and token not in _SCOPE_TOKENS
-            and token not in {
-                "个", "总共", "一共", "哪些", "哪几个", "全部", "所有",
-                "列表", "主要", "著名", "伟大", "分别", "从古至今", "至今",
-            }
             and len(token) >= 2
         }
 
@@ -1156,8 +1139,9 @@ class SearchService:
         deadline = ask_started + self.settings.ask_total_timeout
         timings: dict[str, object] = {}
         display_top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
+        initial_plan = build_query_plan(request.question)
         evidence_top_k, evidence_policy = self._adaptive_evidence_top_k(
-            request.question,
+            initial_plan,
             display_top_k=display_top_k,
         )
         evidence_request = request.model_copy(
@@ -1858,7 +1842,7 @@ class SearchService:
             "field_evidence_fallback": (
                 "raw_retrieval" if field_extraction_failed else None
             ),
-            "trace_version": "1",
+            "trace_version": "2",
             "trace_stages": self._trace_stages(
                 request=request,
                 evidence_response=evidence_response,
@@ -1939,34 +1923,13 @@ class SearchService:
             request.top_k or self.settings.default_top_k,
             self.settings.max_top_k,
         )
-        evidence_top_k, evidence_policy = self._adaptive_evidence_top_k(
-            request.question,
-            display_top_k=display_top_k,
-        )
         retrieval_started = monotonic()
         planning = await self._immutable_plan(request.question)
         plan = planning.plan
-        if plan.analysis.intent == "ordinal":
-            fallback_plan = build_query_plan(request.question)
-            ordinal_subject = plan.subject
-            if fallback_plan.analysis.subjects:
-                ordinal_subject = re.sub(
-                    r"\s+(?:第一个|第一位|首位|最早)\s+",
-                    " ",
-                    fallback_plan.analysis.subjects[0],
-                ).strip() or ordinal_subject
-            ordinal_relations = fallback_plan.relations or (
-                "第一个", "第一位", "首位", "最早"
-            )
-            plan = replace(
-                plan,
-                subject=ordinal_subject,
-                relations=ordinal_relations,
-                fields=tuple(
-                    replace(field, relations=ordinal_relations)
-                    for field in plan.fields
-                ),
-            )
+        evidence_top_k, evidence_policy = self._adaptive_evidence_top_k(
+            plan,
+            display_top_k=display_top_k,
+        )
         if self.settings.answer_point_fanout_enabled and plan.fields:
             evidence_response, extraction, fanout_trace = (
                 await self._retrieve_answer_point_branches(
@@ -1993,9 +1956,11 @@ class SearchService:
                 )
                 for query in plan.queries
             ))
-            fused = self._merge_plain_rrf(result_groups)
-            if plan.answer_shape == "list" or plan.analysis.intent == "ordinal":
-                fused = self._prioritize_topic_document(plan, fused)
+            fused, fusion_trace = fuse_document_rrf(
+                result_groups,
+                queries=plan.queries,
+                limit=evidence_top_k,
+            )
             selected = fused[:evidence_top_k]
             selected, passage_expansion = await self._expand_immutable_passages(
                 plan,
@@ -2021,6 +1986,7 @@ class SearchService:
                         "fallback_reason": planning.error,
                     },
                     "document_passage_expansion": passage_expansion,
+                    "fusion": fusion_trace,
                     "planner_trace": {
                         "prompt": planning.prompt,
                         "raw_output": planning.raw_output,
@@ -2065,6 +2031,7 @@ class SearchService:
         )
         writer_result: GenerationResult | None = None
         generation_error: str | None = None
+        generation_error_trace: dict[str, object] | None = None
         generation_started = monotonic()
         writer_attempted = bool(writer_sources and evidence_gate.passed)
         if writer_attempted:
@@ -2078,6 +2045,7 @@ class SearchService:
                 )
             except Exception as error:
                 generation_error = f"{type(error).__name__}: {error}"
+                generation_error_trace = getattr(error, "trace", None)
         generation_ms = self._elapsed_ms(generation_started)
         answer = (
             writer_result.answer
@@ -2120,6 +2088,9 @@ class SearchService:
             "displayed_evidence_count": len(display_sources),
             "raw_model_answer": writer_result.raw_output if writer_result else None,
             "generation_error": generation_error,
+            "generation_error_trace": (
+                generation_error_trace if generation_error else None
+            ),
             "field_evidence_available": bool(extraction and extraction.available),
             "field_evidence": [
                 {
@@ -2145,7 +2116,7 @@ class SearchService:
             "answer_support_issues": list(answer_support.issues),
             "writer_trace": self._writer_trace(writer_result, writer_sources)
             if writer_result else None,
-            "trace_version": "1",
+            "trace_version": "2",
             "trace_stages": [
                 {"stage": "request", "question": request.question},
                 {
@@ -2153,6 +2124,9 @@ class SearchService:
                     "source_ids": [source.id for source in evidence_response.results],
                     "count": len(evidence_response.results),
                     "index": self.settings.opensearch_index,
+                    "query_plan": evidence_response.retrieval.get("query_plan", {}),
+                    "fusion": evidence_response.retrieval.get("fusion"),
+                    "branches": evidence_response.retrieval.get("branches", []),
                 },
                 {
                     "stage": "resolver",
@@ -2326,8 +2300,16 @@ class SearchService:
                     plan=replace(plan, fields=(field,)),
                     strategy="parent_plan",
                 )
+                subject_tokens = set(query_tokens(plan.subject))
+                field_core_query = " ".join(
+                    token for token in query_tokens(field_question)
+                    if token not in subject_tokens
+                )
                 field_queries = tuple(dict.fromkeys((
                     *plan.queries,
+                    plan.subject,
+                    *field.relations,
+                    field_core_query,
                     field_question,
                     f"{plan.subject} {field_question}".strip(),
                     plan.original_question,
@@ -2340,20 +2322,23 @@ class SearchService:
                         candidate_k=max(
                             request.candidate_k or self.settings.candidate_k,
                             evidence_top_k,
+                            100 if plan.answer_shape == "list" else 0,
                         ),
                         knowledge_base_id=request.knowledge_base_id,
                     )
                     for query in field_queries
                 ))
                 branch_retrieval_ms = self._elapsed_ms(retrieval_started)
-                fused = self._merge_plain_rrf(groups)
+                fused, fusion_trace = fuse_document_rrf(
+                    groups,
+                    queries=field_queries,
+                    limit=evidence_top_k,
+                )
                 field_plan = replace(
                     plan,
                     fields=(field,),
                     relations=field.relations or plan.relations,
                 )
-                if field_plan.answer_shape == "list" or field_plan.analysis.intent == "ordinal":
-                    fused = self._prioritize_topic_document(field_plan, fused)
                 selected = fused[:evidence_top_k]
                 selected, expansion = await self._expand_immutable_passages(
                     field_plan,
@@ -2391,6 +2376,7 @@ class SearchService:
                     "retrieval_ms": branch_retrieval_ms,
                     "extraction_ms": branch_extraction_ms,
                     "passage_expansion": expansion,
+                    "fusion": fusion_trace,
                 }
 
         results = await asyncio.gather(*(run(field) for field in fields), return_exceptions=True)
@@ -2454,6 +2440,7 @@ class SearchService:
                         "queries": branch.get("queries", []),
                         "source_count": len(branch.get("sources", [])),
                         "answer_source_count": len(branch.get("answer_sources", [])),
+                        "fusion": branch.get("fusion", {}),
                         "error": branch.get("error"),
                     }
                     for branch in branches
@@ -2478,6 +2465,7 @@ class SearchService:
                     "planning": branch.get("planning", {}),
                     "source_count": len(branch.get("sources", [])),
                     "answer_source_count": len(branch.get("answer_sources", [])),
+                    "fusion": branch.get("fusion", {}),
                     "error": branch.get("error"),
                 }
                 for branch in branches
@@ -2536,42 +2524,6 @@ class SearchService:
         )
 
     @staticmethod
-    def _merge_plain_rrf(
-        result_groups: tuple[list[LexicalResult], ...],
-    ) -> list[LexicalResult]:
-        scores: dict[str, float] = {}
-        best: dict[str, LexicalResult] = {}
-        first_seen: dict[str, int] = {}
-        sequence = 0
-        for group in result_groups:
-            seen_documents: set[str] = set()
-            for rank, result in enumerate(group, start=1):
-                document_id = result.document_id or result.node_id
-                if document_id in seen_documents:
-                    continue
-                seen_documents.add(document_id)
-                scores[document_id] = scores.get(document_id, 0.0) + 1.0 / (60 + rank)
-                if document_id not in first_seen:
-                    first_seen[document_id] = sequence
-                    sequence += 1
-                current = best.get(document_id)
-                if current is None or result.score > current.score:
-                    best[document_id] = result
-        ranked_ids = sorted(
-            scores,
-            key=lambda document_id: (scores[document_id], -first_seen[document_id]),
-            reverse=True,
-        )
-        top_score = max((scores[document_id] for document_id in ranked_ids), default=1.0)
-        return [
-            replace(
-                best[document_id],
-                score=scores[document_id] / top_score if top_score else 0.0,
-            )
-            for document_id in ranked_ids
-        ]
-
-    @staticmethod
     def _focus_complete_list_evidence(
         sources: list[SourceItem],
     ) -> list[SourceItem]:
@@ -2616,11 +2568,10 @@ class SearchService:
 
     def _adaptive_evidence_top_k(
         self,
-        question: str,
+        plan: QueryPlan,
         *,
         display_top_k: int,
     ) -> tuple[int, dict[str, object]]:
-        plan = build_query_plan(question)
         analysis = plan.analysis
         target = _ASK_MIN_EVIDENCE_TOP_K
         reason = "simple_fact"
@@ -2636,7 +2587,7 @@ class SearchService:
             target = 10
             reason = "multi_subject_time"
         elif plan.answer_shape == "list" or analysis.intent == "procedure":
-            target = 8
+            target = 12
             reason = "list" if plan.answer_shape == "list" else analysis.intent
         evidence_top_k = min(
             self.settings.max_top_k,
@@ -2728,12 +2679,13 @@ class SearchService:
             "raw_output": result.raw_output,
             "prompt_sha256": result.prompt_sha256,
             "raw_output_sha256": result.raw_output_sha256,
+            "transport": result.trace,
             "source_ids": [source.id for source in sources],
             "source_span_hashes": [
                 sha256(source.snippet.encode("utf-8")).hexdigest()
                 for source in sources
             ],
-            "output_modified": False,
+            "output_modified": result.answer != result.raw_output,
         }
 
     def _model_raw_output(self, answer: str) -> str:
@@ -3432,6 +3384,30 @@ class SearchService:
         knowledge_base_id: str | None,
         top_k: int,
     ) -> tuple[list[LexicalResult], bool]:
+        if results:
+            anchor = next(
+                (
+                    result for result in results
+                    if result.metadata.get("parent_id")
+                    and int(result.metadata.get("structure_size") or 1) > 1
+                ),
+                None,
+            )
+            lookup = getattr(self.index, "structure_chunks", None)
+            if anchor is not None and lookup is not None:
+                siblings = await asyncio.to_thread(
+                    lookup,
+                    str(anchor.metadata["parent_id"]),
+                    knowledge_base_id=knowledge_base_id,
+                    limit=max(top_k, self.settings.list_query_max_chunks_per_document),
+                    score=anchor.score,
+                )
+                if siblings:
+                    sibling_ids = {result.node_id for result in siblings}
+                    return [
+                        *siblings,
+                        *(result for result in results if result.node_id not in sibling_ids),
+                    ], True
         content_types = set(intent_content_types(question))
         if not content_types or not results:
             return results, False
@@ -3935,32 +3911,86 @@ class SearchService:
         min_score: float,
         max_chunks_per_document: int | None = None,
     ) -> list[LexicalResult]:
+        selected, _ = self._select_results_with_trace(
+            results,
+            top_k,
+            min_score,
+            max_chunks_per_document=max_chunks_per_document,
+        )
+        return selected
+
+    def _select_results_with_trace(
+        self,
+        results: list[LexicalResult],
+        top_k: int,
+        min_score: float,
+        max_chunks_per_document: int | None = None,
+    ) -> tuple[list[LexicalResult], dict[str, object]]:
         if not results:
-            return []
+            return [], {
+                "score_space": "normalized_retrieval",
+                "top_k": top_k,
+                "score_floor": min_score,
+                "decisions": [],
+            }
         top_score = max(float(result.score or 0) for result in results)
         relative_floor = max(0, top_score) * self.settings.relative_score_threshold
         score_floor = max(min_score, relative_floor)
         document_limit = max_chunks_per_document or self.settings.max_chunks_per_document
         document_counts: dict[str, int] = {}
         selected: list[LexicalResult] = []
-        for result in results:
-            if float(result.score or 0) < score_floor:
-                continue
+        decisions: list[dict[str, object]] = []
+        for rank, result in enumerate(results, start=1):
             document_id = result.document_id or result.node_id
+            decision = {
+                "rank": rank,
+                "node_id": result.node_id,
+                "document_id": document_id,
+                "score": result.score,
+                "raw_score": result.raw_score,
+                "action": "drop",
+            }
+            if float(result.score or 0) < score_floor:
+                decision["reason"] = "score_threshold"
+                decisions.append(decision)
+                continue
             if document_counts.get(document_id, 0) >= document_limit:
+                decision["reason"] = "document_limit"
+                decisions.append(decision)
+                continue
+            if len(selected) >= top_k:
+                decision["reason"] = "candidate_limit"
+                decisions.append(decision)
                 continue
             document_counts[document_id] = document_counts.get(document_id, 0) + 1
             selected.append(result)
-            if len(selected) >= top_k:
-                break
-        return selected
+            decision.update(action="keep", reason="selected", selected_rank=len(selected))
+            decisions.append(decision)
+        return selected, {
+            "score_space": "normalized_retrieval",
+            "top_score": top_score,
+            "relative_score_threshold": self.settings.relative_score_threshold,
+            "relative_floor": relative_floor,
+            "minimum_score": min_score,
+            "score_floor": score_floor,
+            "top_k": top_k,
+            "document_limit": document_limit,
+            "candidate_count": len(results),
+            "selected_count": len(selected),
+            "budget_unfilled": len(selected) < top_k,
+            "decisions": decisions,
+        }
 
-    def _max_chunks_per_document(self, question: str, *, top_k: int | None = None) -> int:
-        intent = analyze_question(question).intent
-        if intent == "list" and any(
-            marker in question
-            for marker in (*_MULTI_EVIDENCE_MARKERS, "哪几个", "有哪几个")
-        ):
+    def _max_chunks_per_document(
+        self,
+        plan: QueryPlan | str,
+        *,
+        top_k: int | None = None,
+    ) -> int:
+        if isinstance(plan, str):
+            plan = build_query_plan(plan)
+        intent = plan.analysis.intent
+        if plan.answer_shape == "list":
             return max(
                 self.settings.max_chunks_per_document,
                 self.settings.list_query_max_chunks_per_document,

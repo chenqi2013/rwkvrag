@@ -279,6 +279,7 @@ def structure_aware_nodes(document: Document, splitter: SentenceSplitter) -> lis
         blocks = parse_structure_blocks(document.text, fallback_section)
 
     nodes: list[TextNode] = []
+    source_cursor = 0
     for block_index, block in enumerate(blocks):
         parent_id = _stable_id(document_id, block_index, block.content_type, block.section, length=24)
         if block.content_type == "prose":
@@ -290,6 +291,11 @@ def structure_aware_nodes(document: Document, splitter: SentenceSplitter) -> lis
             pieces = _structured_texts(block, max_chars, document_context=document.text)
 
         structure_size = len(pieces)
+        block_body = "\n".join(block.lines)
+        block_start = document.text.find(block_body, source_cursor) if block_body else -1
+        if block_start < 0 and block_body:
+            block_start = document.text.find(block_body)
+        piece_cursor = max(0, block_start)
         for chunk_order, (content_type, text) in enumerate(pieces):
             node_metadata = {
                 **metadata,
@@ -300,6 +306,33 @@ def structure_aware_nodes(document: Document, splitter: SentenceSplitter) -> lis
                 "structure_size": structure_size,
                 "keywords": _keywords(content_type, block.section),
             }
+            if content_type == "prose":
+                # SentenceSplitter returns source text verbatim, but the
+                # section label is synthetic. Only record a span when the
+                # exact body text can be located; structured renderings are
+                # intentionally left without a fabricated offset.
+                body_piece = text
+                prefix = f"{block.section}\n\n"
+                if body_piece.startswith(prefix):
+                    body_piece = body_piece[len(prefix):]
+                source_start = document.text.find(body_piece, piece_cursor)
+                if source_start < 0 and block_start >= 0:
+                    source_start = document.text.find(body_piece, block_start)
+                if body_piece and source_start >= 0:
+                    source_end = source_start + len(body_piece)
+                    piece_cursor = source_start + 1
+                    node_metadata["source_span"] = {
+                        "start": source_start,
+                        "end": source_end,
+                        "sha256": hashlib.sha256(
+                            document.text[source_start:source_end].encode("utf-8")
+                        ).hexdigest(),
+                    }
+                else:
+                    node_metadata["source_span"] = None
+            else:
+                node_metadata["source_span"] = None
+                node_metadata["source_transform"] = "structured"
             node_id = _stable_id(document_id, parent_id, chunk_order, content_type, text)
             nodes.append(
                 TextNode(
@@ -310,4 +343,6 @@ def structure_aware_nodes(document: Document, splitter: SentenceSplitter) -> lis
                     excluded_llm_metadata_keys=list(document.excluded_llm_metadata_keys),
                 )
             )
+        if block_start >= 0:
+            source_cursor = block_start + len(block_body)
     return nodes

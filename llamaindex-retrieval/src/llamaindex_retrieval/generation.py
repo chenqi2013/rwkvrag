@@ -1,5 +1,5 @@
 import asyncio
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from hashlib import sha256
 import json
 import re
@@ -7,6 +7,7 @@ from time import monotonic
 
 import httpx
 
+from .citation_diagnostics import diagnose_citations
 from .config import Settings
 from .evidence_utils import clean_evidence_text
 from .lexical_index import lexical_tokens, normalize_search_text, query_tokens
@@ -80,12 +81,17 @@ class EvidenceAssessment:
 class AnswerGenerationError(RuntimeError):
     """Raised when the configured text generation service cannot answer."""
 
+    def __init__(self, message: str, *, trace: dict[str, object] | None = None) -> None:
+        super().__init__(message)
+        self.trace = trace or {}
+
 
 @dataclass(frozen=True)
 class GenerationResult:
     answer: str
     prompt: str
     raw_output: str
+    trace: dict[str, object] = field(default_factory=dict)
 
     @property
     def prompt_sha256(self) -> str:
@@ -177,30 +183,57 @@ class EvidenceAnswerGenerator:
             "password": self.settings.generation_password,
         }
         endpoint = f"{self.settings.generation_base_url.rstrip('/')}/chat/completions"
+        trace_payload = {**payload, "password": "***"}
+        generation_trace: dict[str, object] = {
+            "endpoint": endpoint,
+            "request": {
+                "payload": trace_payload,
+                "password_present": bool(payload.get("password")),
+                "redacted_payload_sha256": sha256(
+                    json.dumps(trace_payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+                ).hexdigest(),
+            },
+            "response": {},
+        }
         try:
             async with httpx.AsyncClient(
                 timeout=self.settings.generation_timeout,
                 transport=self.transport,
             ) as client:
                 async with client.stream("POST", endpoint, json=payload) as response:
+                    generation_trace["response"] = {
+                        "status_code": response.status_code,
+                        "headers": {
+                            key: value for key, value in response.headers.items()
+                            if key.lower() in {"content-type", "content-length", "x-request-id"}
+                        },
+                    }
                     response.raise_for_status()
                     raw_answer = await self._read_stream(
                         response,
                         total_timeout=self.settings.generation_total_timeout,
+                        trace=generation_trace["response"],
                     )
         except httpx.HTTPError as error:
-            raise AnswerGenerationError(f"generation request failed: {error}") from error
+            generation_trace["error"] = {"type": type(error).__name__, "message": str(error)}
+            raise AnswerGenerationError(
+                f"generation request failed: {error}",
+                trace=generation_trace,
+            ) from error
 
         if self.settings.generation_output_mode == "immutable":
-            return GenerationResult(raw_answer, prompt, raw_answer)
+            generation_trace["citation_diagnostics"] = diagnose_citations(raw_answer, len(sources)).as_dict()
+            return GenerationResult(raw_answer, prompt, raw_answer, generation_trace)
         answer = self._clean_answer(raw_answer)
         if not answer:
             answer = _INSUFFICIENT_EVIDENCE_ANSWER
         if answer == _INSUFFICIENT_EVIDENCE_ANSWER:
-            return GenerationResult(answer, prompt, raw_answer)
+            generation_trace["citation_diagnostics"] = diagnose_citations(raw_answer, len(sources)).as_dict()
+            return GenerationResult(answer, prompt, raw_answer, generation_trace)
         if not self.settings.semantic_pipeline_enabled:
             answer = self._ensure_citation(answer, len(sources))
-        return GenerationResult(answer, prompt, raw_answer)
+        generation_trace["citation_diagnostics"] = diagnose_citations(raw_answer, len(sources)).as_dict()
+        return GenerationResult(answer, prompt, raw_answer, generation_trace)
 
     async def current_model(self) -> str | None:
         if self._model_cache is not None:
@@ -282,7 +315,7 @@ class EvidenceAnswerGenerator:
         if self.settings.generation_output_mode == "immutable":
             evidence = self._evidence(sources)
             return f"""system:
-知识库问答助手；只能依据资料；不足则说明；关键结论标注 [资料 1]、[资料 2]。同一事实或列表项只输出一次，不要重复。
+知识库问答助手；只能依据资料；不足则说明；关键结论标注 [资料 1]、[资料 2]。答案中的每个事实和列表项必须能在资料中直接找到；同一事实或列表项只输出一次，不要补充资料外内容。资料只能支持部分集合时，只回答资料中明确出现的部分并说明范围，不要猜测或补齐。
 
 user:
 资料：
@@ -349,8 +382,18 @@ assistant:
         return "\n\n---\n\n".join(blocks)
 
     @staticmethod
-    async def _read_stream(response: httpx.Response, *, total_timeout: float) -> str:
+    async def _read_stream(
+        response: httpx.Response,
+        *,
+        total_timeout: float,
+        trace: dict[str, object] | None = None,
+    ) -> str:
         parts: list[str] = []
+        event_count = 0
+        response_bytes = 0
+        finish_reasons: list[str] = []
+        response_hash = sha256()
+        sse_lines: list[str] = []
         lines = response.aiter_lines()
         deadline = monotonic() + total_timeout
         while True:
@@ -359,20 +402,45 @@ assistant:
                 break
             try:
                 line = await asyncio.wait_for(anext(lines), timeout=remaining)
-            except (StopAsyncIteration, TimeoutError):
+            except StopAsyncIteration:
+                if trace is not None:
+                    trace["end_reason"] = "eof"
                 break
+            except TimeoutError:
+                if trace is not None:
+                    trace["end_reason"] = "timeout"
+                break
+            response_bytes += len(line.encode("utf-8")) + 1
+            response_hash.update((line + "\n").encode("utf-8"))
+            sse_lines.append(line)
             if not line.startswith("data:"):
                 continue
             event = line.removeprefix("data:").strip()
             if event == "[DONE]":
+                if trace is not None:
+                    trace["end_reason"] = "done"
                 break
             try:
                 payload = json.loads(event)
                 content = payload["choices"][0]["delta"].get("content", "")
+                finish_reason = payload["choices"][0].get("finish_reason")
+                if finish_reason:
+                    finish_reasons.append(str(finish_reason))
             except (IndexError, KeyError, TypeError, json.JSONDecodeError):
                 continue
+            event_count += 1
             if isinstance(content, str):
                 parts.append(content)
+        if trace is not None:
+            trace.update({
+                "event_count": event_count,
+                "response_bytes": response_bytes,
+                "normalized_sse_sha256": response_hash.hexdigest(),
+                "normalized_sse_lines": sse_lines,
+                "finish_reasons": finish_reasons,
+                "output_characters": sum(len(part) for part in parts),
+                "end_reason": trace.get("end_reason", "stream_end"),
+            })
         return "".join(parts)
 
     @staticmethod

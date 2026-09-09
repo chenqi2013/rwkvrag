@@ -53,7 +53,7 @@ class Settings(BaseSettings):
     ask_total_timeout: int = Field(default=45, ge=10, le=180)
     ask_generation_reserve: int = Field(default=12, ge=3, le=60)
     answer_verification_min_budget: int = Field(default=15, ge=3, le=60)
-    semantic_pipeline_enabled: bool = False
+    semantic_pipeline_enabled: bool = True
     model_query_planning_enabled: bool = True
     model_query_planning_timeout: int = Field(default=10, ge=3, le=120)
     model_query_planning_max_tokens: int = Field(default=256, ge=64, le=1024)
@@ -68,7 +68,7 @@ class Settings(BaseSettings):
     evidence_extraction_enabled: bool = True
     evidence_extraction_timeout: int = Field(default=15, ge=3, le=120)
     evidence_extraction_max_tokens: int = Field(default=384, ge=64, le=2048)
-    evidence_extraction_max_sources: int = Field(default=6, ge=1, le=20)
+    evidence_extraction_max_sources: int = Field(default=8, ge=1, le=20)
     evidence_extraction_max_source_characters: int = Field(default=2_500, ge=500, le=24_000)
     evidence_extraction_concurrency: int = Field(default=2, ge=1, le=10)
     active_retrieval_enabled: bool = True

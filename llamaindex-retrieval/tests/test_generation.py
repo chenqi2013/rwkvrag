@@ -1072,7 +1072,7 @@ async def test_generator_skips_model_call_when_evidence_does_not_cover_question(
         pytest.fail("the generation model must not be called for unrelated evidence")
 
     generator = EvidenceAnswerGenerator(
-        Settings(generation_password="test-password"),
+        Settings(generation_password="test-password", semantic_pipeline_enabled=False),
         transport=httpx.MockTransport(handler),
     )
 
@@ -1153,6 +1153,28 @@ async def test_legacy_generator_repairs_invalid_citation() -> None:
 
 
 @pytest.mark.asyncio
+async def test_legacy_trace_reports_when_public_answer_differs_from_raw_output() -> None:
+    async def handler(_: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            content='data: {"choices":[{"delta":{"content":"北京。"}}]}\n\ndata: [DONE]\n\n',
+        )
+
+    generator = EvidenceAnswerGenerator(
+        Settings(
+            generation_password="test-password",
+            semantic_pipeline_enabled=False,
+        ),
+        transport=httpx.MockTransport(handler),
+    )
+
+    result = await generator.generate_with_trace("中国的首都在哪里？", [source()])
+
+    assert result.answer == "北京。 [资料 1]"
+    assert result.answer != result.raw_output
+
+
+@pytest.mark.asyncio
 async def test_immutable_generator_returns_byte_exact_model_output_and_trace() -> None:
     raw = "Assistant: <think>推理</think>北京。[资料 2]\n用户：继续"
 
@@ -1182,6 +1204,9 @@ async def test_immutable_generator_returns_byte_exact_model_output_and_trace() -
 
     assert result.answer == raw
     assert result.raw_output == raw
+    assert result.trace["request"]["payload"]["password"] == "***"
+    assert result.trace["request"]["password_present"] is True
+    assert result.trace["response"]["end_reason"] == "done"
     assert result.prompt.index("资料：") < result.prompt.index("问题：中国的首都是哪个城市？")
     assert result.prompt.rstrip().endswith("assistant:")
 
