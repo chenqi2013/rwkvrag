@@ -1,51 +1,15 @@
 import asyncio
-from collections import Counter
 from dataclasses import dataclass
 from hashlib import sha256
 import json
-from math import log
 import re
 
 import httpx
 
 from .config import Settings
 from .generation import EvidenceAnswerGenerator
-from .lexical_index import lexical_tokens, normalize_search_text
 from .query_planning import QueryPlan
 from .schemas import SourceItem
-
-
-_EVIDENCE_RELATION_MARKERS: tuple[str, ...] = ()
-_BROAD_CONTEXT_MARKERS: tuple[str, ...] = ()
-_CAUSE_PROGRESSION_MARKERS: tuple[str, ...] = ()
-_CAUSE_EVENT_MARKERS: tuple[str, ...] = ()
-_SUBJECT_SEPARATORS = re.compile(r"(?:和|与|與|及|以及|、|及其)")
-
-
-def _relation_variants(relations: tuple[str, ...]) -> tuple[str, ...]:
-    return tuple(dict.fromkeys(relation.strip() for relation in relations if relation.strip()))
-
-
-def _normalize_identity(value: str) -> str:
-    normalized = normalize_search_text(value).replace(" ", "").replace("的", "")
-    normalized = normalized.translate(str.maketrans({
-        "〇": "0", "一": "1", "二": "2", "两": "2", "三": "3",
-        "四": "4", "五": "5", "六": "6", "七": "7", "八": "8",
-        "九": "9", "十": "10",
-    }))
-    return normalized
-
-
-def _identity_variants(value: str) -> tuple[str, ...]:
-    normalized = _normalize_identity(value)
-    variants = [normalized]
-    title_base = re.split(r"[（(]", normalized, maxsplit=1)[0]
-    if title_base != normalized:
-        variants.append(title_base)
-    for suffix in ("事变", "之变", "政变"):
-        if normalized.endswith(suffix):
-            variants.append(normalized[: -len(suffix)])
-    return tuple(dict.fromkeys(variant for variant in variants if variant))
 
 
 @dataclass(frozen=True)
@@ -179,32 +143,12 @@ class LanguageModelEvidenceExtractor:
             return EvidenceExtractionResult(
                 (), 0, 0, ("generation_password_not_configured",)
             )
-        source_limit = (
-            self.settings.evidence_extraction_max_sources
-            if plan.answer_shape in {"list", "summary", "narrative"}
-            else min(
-                8 if plan.analysis.intent == "comparison" else 3,
-                self.settings.evidence_extraction_max_sources,
-            )
-        )
+        source_limit = self.settings.evidence_extraction_max_sources
         selected: list[SourceItem] = []
-        document_counts: Counter[str] = Counter()
-        max_chunks_per_document = 6 if plan.answer_shape == "list" else (
-            4 if plan.answer_shape in {"summary", "narrative"} else 3
-        )
-        title_counts: Counter[str] = Counter()
         for source in sources:
             if len(selected) >= source_limit:
                 break
-            if document_counts[source.document_id] >= max_chunks_per_document:
-                continue
-            if plan.analysis.intent == "comparison":
-                title_key = normalize_search_text(source.title).replace(" ", "")
-                if title_counts[title_key] >= 4:
-                    continue
-                title_counts[title_key] += 1
             selected.append(source)
-            document_counts[source.document_id] += 1
         signatures = tuple(
             (source.id, sha256(source.snippet.encode("utf-8")).hexdigest())
             for source in selected
@@ -306,25 +250,7 @@ class LanguageModelEvidenceExtractor:
             {field.field_id for field in plan.fields},
             len(units),
         )
-        if plan.analysis.intent == "cause" and units:
-            strongest_index = max(
-                range(1, len(units) + 1),
-                key=lambda index: units[index - 1].score,
-            )
-            strongest_selection = (plan.fields[0].field_id, strongest_index)
-            if strongest_selection not in selections:
-                selections = (strongest_selection, *selections)
-            selections = tuple(sorted(
-                selections,
-                key=lambda item: units[item[1] - 1].score,
-                reverse=True,
-            ))
-        selection_limit = (
-            4
-            if plan.analysis.intent == "cause"
-            else 6 if plan.answer_shape in {"list", "summary", "narrative"} else 3
-        )
-        selections = selections[:selection_limit]
+        selections = selections[:16]
         output: list[EvidenceSpan] = []
         seen: set[tuple[str, int, str]] = set()
         for field_id, unit_index in selections:
@@ -360,13 +286,16 @@ class LanguageModelEvidenceExtractor:
         sources: list[SourceItem],
         map_candidates: list[EvidenceSpan],
     ) -> tuple[_EvidenceUnit, ...]:
+        """Build a bounded, deterministic view for the resolver model.
+
+        Ordering and limits are transport concerns. No question vocabulary,
+        intent marker, title heuristic, or answer-specific bonus is applied.
+        """
         raw_units: list[tuple[int, str, bool]] = []
         seen: set[tuple[int, str]] = set()
         for candidate in map_candidates:
             key = (candidate.source_index, candidate.span)
             if key in seen or candidate.source_index >= len(sources):
-                continue
-            if self._is_structural_noise(candidate.span, sources[candidate.source_index]):
                 continue
             seen.add(key)
             raw_units.append((candidate.source_index, candidate.span, True))
@@ -375,145 +304,20 @@ class LanguageModelEvidenceExtractor:
                 key = (source_index, span)
                 if key in seen:
                     continue
-                if self._is_structural_noise(span, source):
-                    continue
                 seen.add(key)
                 raw_units.append((source_index, span, False))
         if not raw_units:
             return ()
-
-        tokenized = [tuple(lexical_tokens(span)) for _, span, _ in raw_units]
-        document_frequency = Counter(
-            token for tokens in tokenized for token in set(tokens)
-        )
-        query_terms = tuple(dict.fromkeys(lexical_tokens(" ".join((
-            plan.subject,
-            *(field.question for field in plan.fields),
-            *plan.relations,
-            *plan.queries,
-        )))))
-        average_length = sum(map(len, tokenized)) / max(1, len(tokenized))
-        corpus_size = len(tokenized)
-        ranked: list[_EvidenceUnit] = []
-        for (source_index, span, selected_by_map), tokens in zip(
-            raw_units,
-            tokenized,
-            strict=True,
-        ):
-            frequencies = Counter(tokens)
-            length_normalizer = 0.25 + 0.75 * (
-                len(tokens) / max(1.0, average_length)
-            )
-            score = 0.0
-            for term in query_terms:
-                frequency = frequencies.get(term, 0)
-                if not frequency:
-                    continue
-                document_count = document_frequency.get(term, 0)
-                inverse_frequency = log(
-                    1.0 + (corpus_size - document_count + 0.5) / (document_count + 0.5)
-                )
-                score += inverse_frequency * (
-                    frequency * 2.2 / (frequency + 1.2 * length_normalizer)
-                )
-            if selected_by_map:
-                score += 0.5
-            normalized_span = normalize_search_text(span).replace(" ", "")
-            normalized_subject = normalize_search_text(plan.subject).replace(" ", "")
-            source_title = normalize_search_text(
-                sources[source_index].title
-            ).replace(" ", "")
-            relation_terms = tuple(
-                normalize_search_text(relation).replace(" ", "")
-                for field in plan.fields
-                for relation in field.relations
-                if relation.strip()
-            )
-            if normalized_subject and normalized_subject in source_title:
-                score += 2.5
-            if plan.answer_shape == "single_fact" and relation_terms and not any(
-                relation in normalized_span for relation in relation_terms
-            ):
-                score -= 2.0
-            if any(marker in normalized_span for marker in _EVIDENCE_RELATION_MARKERS):
-                score += 1.0
-            if plan.analysis.intent == "cause" and any(
-                marker in normalized_span
-                for marker in ("因为", "由于", "导致", "造成", "引发", "促成", "因素", "原因")
-            ):
-                score += 5.0
-            if plan.analysis.intent == "cause" and any(
-                marker in normalized_span for marker in _CAUSE_PROGRESSION_MARKERS
-            ):
-                score += 2.0
-            if plan.analysis.intent == "cause" and any(
-                marker in normalized_span for marker in _CAUSE_EVENT_MARKERS
-            ) and not any(
-                marker in normalized_span for marker in _CAUSE_PROGRESSION_MARKERS
-            ):
-                score -= 2.0
-            if plan.analysis.intent == "cause" and any(
-                marker in normalized_span
-                for marker in ("转折点", "轉折點", "时间", "時間")
-            ):
-                score -= 2.0
-            if plan.analysis.intent == "ordinal":
-                score += 0.0
-            if plan.answer_shape == "single_fact" and any(
-                marker in normalized_span for marker in _BROAD_CONTEXT_MARKERS
-            ):
-                score -= 4.0
-            ranked.append(_EvidenceUnit(
+        units = [
+            _EvidenceUnit(
                 source_index=source_index,
                 span=span,
                 content_hash=sha256(span.encode("utf-8")).hexdigest(),
-                score=score,
-            ))
-
-        selected: list[_EvidenceUnit] = []
-        used_characters = 0
-        per_source: Counter[int] = Counter()
-        if plan.analysis.intent == "cause":
-            causal_units = [
-                unit for unit in ranked
-                if any(
-                    marker in normalize_search_text(unit.span).replace(" ", "")
-                    for marker in (
-                        "因为", "由于", "导致", "造成", "引发", "促成", "因素", "原因",
-                    )
-                )
-            ]
-            if causal_units:
-                ranked = causal_units
-        unit_limit = 8 if plan.answer_shape == "single_fact" else 16
-        for unit in sorted(ranked, key=lambda item: (-item.score, item.source_index)):
-            if len(selected) >= unit_limit:
-                break
-            if per_source[unit.source_index] >= 6:
-                continue
-            if selected and used_characters + len(unit.span) > 6_000:
-                continue
-            selected.append(unit)
-            per_source[unit.source_index] += 1
-            used_characters += len(unit.span)
-        return tuple(selected)
-
-    @staticmethod
-    def _is_structural_noise(span: str, source: SourceItem) -> bool:
-        normalized = normalize_search_text(span).replace(" ", "")
-        if not normalized:
-            return True
-        title = normalize_search_text(source.title).replace(" ", "")
-        if normalized == title and len(normalized) <= 80:
-            return True
-        keywords = source.metadata.get("keywords")
-        if isinstance(keywords, list) and any(
-            normalized == normalize_search_text(str(keyword)).replace(" ", "")
-            for keyword in keywords
-            if str(keyword).strip()
-        ):
-            return True
-        return normalized in {"历史", "歷史", "目录", "目錄"}
+                score=1.0 if selected_by_map else 0.0,
+            )
+            for source_index, span, selected_by_map in raw_units
+        ]
+        return tuple(units[:16])
 
     @staticmethod
     def _adjudication_prompt(
@@ -708,15 +512,10 @@ class LanguageModelEvidenceExtractor:
             f"{field.field_id}：{field.question}"
             for field in plan.fields
         )
-        return f"""你是证据抽取器，不回答问题，也不使用常识。只处理当前这一份资料。
+        return f"""你是证据抽取器，不回答问题，也不使用资料外知识。只处理当前这一份资料。
 任务契约：{json.dumps(contract, ensure_ascii=False)}
-对每个字段查找能够直接支持“所求具体值”的最小编号句子。先根据字段问题判断所求值的类型，例如人物、地点、时间、数量、名称或列表；所选句子必须实际给出该类型的具体值。只出现关系词、讨论该关系、表达某人的观点，但没有给出字段所求具体值时，必须拒绝。
-候选必须属于任务对象；同名异物、导航、分类、页眉页脚和仅仅提到关键词的背景文字都不要提取。
-当问题包含“第一个、第一位、首位、最早”等序数关系时，所选句必须把该序数关系绑定到问题指定的范围；某个国家、朝代、组织或地区内部的“首位”不能替代更大范围的“第一位”。
-问题未指定历史时期时，资料中“曾经、历代、过去”等历史陈述不能替代当前或一般事实；候选必须与问题的时间范围一致。
-当 answer_shape=list 且 set_semantics=all 时，只选择明确构成所求集合的列表、表格行或连续枚举行；不要选择路线/过程叙述、历史讨论、举例、图片说明、分类文字，也不要把叙述中偶然出现的名称当成完整列表。列表跨多个连续编号句子时，选择该结构内所有直接承载项目的句子。
-当字段询问原因、成因或为何发生时，只选择明确表达因果关系、成因条件或直接导火事件的句子；因果结果必须就是字段中询问的那个事件或结局，同一对象文档内其他事件的因果关系也必须拒绝。仅说明某事件是“转折点”、列出结局或给出发生时间，不能直接回答原因。
-不要复制或改写正文，只输出“字段编号:句子编号”，例如 f1:s2。多条证据用逗号分隔，例如 f1:s2,f1:s3；没有直接证据只输出 NONE。不要解释。
+模型负责判断哪些编号句子能够支持字段问题。只选择资料中逐字存在、足以支撑字段答案的句子；不确定时不要选择。不要复制、改写或补充正文。
+只输出“字段编号:句子编号”，例如 f1:s2；多条证据用逗号分隔；没有直接证据只输出 NONE。不要解释。
 
 问题：{question}
 资料标题：{source.title}
@@ -739,38 +538,9 @@ class LanguageModelEvidenceExtractor:
             for value in re.split(r"(?<=[。！？!?；;])|\n+", source.snippet)
             if value.strip()
         ]
-        if len(source.snippet) <= limit and len(all_units) <= 6:
-            return tuple(all_units)
-        terms = {
-            term
-            for term in lexical_tokens(" ".join((
-                plan.subject,
-                *(field.question for field in plan.fields),
-                *plan.relations,
-            )))
-            if len(term.strip()) >= 2
-        }
-        ranked: list[tuple[float, int, str]] = []
-        normalized_subject = normalize_search_text(plan.subject).replace(" ", "")
-        for index, unit in enumerate(all_units):
-            normalized = normalize_search_text(unit).replace(" ", "")
-            unit_terms = set(lexical_tokens(unit))
-            score = float(len(terms & unit_terms))
-            if normalized_subject and normalized_subject in normalized:
-                score += 3.0
-            score += sum(
-                1.5
-                for relation in plan.relations
-                if normalize_search_text(relation).replace(" ", "") in normalized
-            )
-            ranked.append((score, index, unit))
-        selected = sorted(
-            sorted(ranked, key=lambda item: (-item[0], item[1]))[:8],
-            key=lambda item: item[1],
-        )
         output: list[str] = []
         used = 0
-        for _, _, unit in selected:
+        for unit in all_units:
             remaining = limit - used
             if remaining <= 0:
                 break
@@ -778,80 +548,6 @@ class LanguageModelEvidenceExtractor:
             output.append(value)
             used += len(value) + 1
         return tuple(output)
-
-    @staticmethod
-    def _source_contains_subject(plan: QueryPlan, source: SourceItem) -> bool:
-        subject_value = plan.subject or "和".join(plan.analysis.subjects)
-        normalized_subject = _normalize_identity(subject_value)
-        normalized_title = _normalize_identity(source.title)
-        subject_parts = [
-            part for part in _SUBJECT_SEPARATORS.split(normalized_subject)
-            if len(part) >= 2
-        ]
-        subject_variants = tuple(dict.fromkeys(
-            variant
-            for value in (normalized_subject, *subject_parts)
-            for variant in _identity_variants(value)
-        ))
-        normalized_relations = {
-            normalize_search_text(relation).replace(" ", "").replace("的", "")
-            for relation in _relation_variants(plan.relations)
-            if len(relation.strip()) >= 2
-        }
-        aliases = source.metadata.get("aliases")
-        title_values = {normalized_title}
-        if isinstance(aliases, list):
-            title_values.update(
-                _normalize_identity(str(alias))
-                for alias in aliases
-                if str(alias).strip()
-            )
-        title_variants = tuple(dict.fromkeys(
-            variant for value in title_values for variant in _identity_variants(value)
-        ))
-        normalized_body = _normalize_identity(source.snippet)
-        title_match = any(
-            variant == title
-            or (len(title) >= 3 and variant.endswith(title))
-            or title.endswith(f"·{variant}")
-            or any(
-                title == relation
-                or title.startswith(f"{variant}{relation}")
-                for relation in normalized_relations
-            )
-            for variant in subject_variants
-            for title in title_variants
-        )
-        relation_title_match = any(
-            title == relation or title.endswith(f"·{relation}")
-            for title in title_values
-            for relation in normalized_relations
-        )
-        body_subject_match = any(
-            variant and variant in normalized_body for variant in subject_variants
-        )
-        body_relation_match = any(
-            relation in normalized_body for relation in normalized_relations
-        )
-        body_match = body_subject_match and body_relation_match
-        transit_match = re.fullmatch(
-            r"(?P<network>[\u3400-\u9fff]{2,20}?地铁)(?P<line>\d+号线)",
-            normalized_subject,
-        )
-        transit_companion_match = bool(
-            plan.answer_shape == "list"
-            and transit_match
-            and normalized_title == f"{transit_match.group('network')}车站列表"
-            and transit_match.group("line") in normalized_body
-        )
-        if plan.answer_shape == "single_fact" and plan.analysis.intent != "comparison":
-            return len(normalized_subject) >= 2 and (
-                body_match
-                or (title_match and (body_subject_match or body_relation_match))
-            )
-        return len(normalized_subject) >= 2 and (
-            title_match or relation_title_match or body_match or transit_companion_match
-        )
 
     @staticmethod
     def _parse(
@@ -863,11 +559,6 @@ class LanguageModelEvidenceExtractor:
         sentence_units: tuple[str, ...] | None = None,
         semantic_mode: bool = False,
     ) -> tuple[EvidenceSpan, ...]:
-        if (
-            not semantic_mode
-            and not LanguageModelEvidenceExtractor._source_contains_subject(plan, source)
-        ):
-            return ()
         cleaned = re.sub(r"<think>.*?</think>", "", raw, flags=re.IGNORECASE | re.DOTALL)
         cleaned = re.sub(r"```(?:json)?", "", cleaned, flags=re.IGNORECASE).replace("```", "")
         start = cleaned.find("{")
@@ -888,99 +579,23 @@ class LanguageModelEvidenceExtractor:
                 cleaned,
                 field_ids,
             )
-        normalized_title = normalize_search_text(source.title).replace(" ", "")
-        contract_text = normalize_search_text(" ".join((
-            plan.subject,
-            *(field.question for field in plan.fields),
-        ))).replace(" ", "")
-        normalized_relations = {
-            normalize_search_text(relation).replace(" ", "")
-            for relation in _relation_variants(plan.relations)
-            if len(relation.replace(" ", "")) >= 2
-        }
-        explicit_relations = {
-            normalize_search_text(relation).replace(" ", "")
-            for relation in _relation_variants(plan.relations)
-            if len(relation.replace(" ", "")) >= 4
-        }
-        requested_relations = {
-            normalize_search_text(relation).replace(" ", "")
-            for relation in _relation_variants(plan.relations)
-            if len(relation.replace(" ", "")) >= 2
-        }
-        summary_markers = (
-            "结局", "結局", "结尾", "結尾", "终结", "終結", "结束", "結束",
-            "最终", "最終", "最后", "最後", "结果", "結果", "归一", "歸一",
-            "一统", "一統", "统一", "統一", "灭亡", "滅亡", "完成",
-        )
         candidates: list[EvidenceSpan] = []
         for item in values[:32]:
             if not isinstance(item, dict) or "field_id" not in item:
                 continue
             field_id = str(item["field_id"]).strip()
             span = ""
-            selected_by_id = False
             if set(item) == {"field_id", "sentence_id"} and sentence_units is not None:
                 sentence_match = re.fullmatch(r"s([1-9]\d*)", str(item["sentence_id"]).strip())
                 if sentence_match:
                     sentence_index = int(sentence_match.group(1)) - 1
                     if sentence_index < len(sentence_units):
                         span = sentence_units[sentence_index]
-                        selected_by_id = True
             elif set(item) == {"field_id", "span"}:
                 span = str(item["span"]).strip()
             if field_id not in field_ids or not span:
                 continue
             if len(span) > 2_000 or span not in source.snippet:
-                continue
-            if semantic_mode:
-                if LanguageModelEvidenceExtractor._is_structural_noise(span, source):
-                    continue
-                candidates.append(EvidenceSpan(
-                    field_id=field_id,
-                    source_index=source_index,
-                    span=span,
-                    content_hash=sha256(span.encode("utf-8")).hexdigest(),
-                ))
-                continue
-            normalized_span = normalize_search_text(span).replace(" ", "")
-            if normalized_span == normalized_title or (
-                len(normalized_span) >= 4 and normalized_span in contract_text
-            ):
-                continue
-            if (
-                plan.analysis.intent == "agent"
-                and len(normalized_span) <= 16
-                and not any(marker in normalized_span for marker in (
-                    "是", "为", "由", "被", "害死", "杀害", "打死", "处死", "发起",
-                ))
-                and normalize_search_text(plan.subject).replace(" ", "")
-                not in normalized_span
-            ):
-                continue
-            if (
-                selected_by_id
-                and plan.answer_shape == "single_fact"
-                and normalized_relations
-                and not any(
-                    relation in normalized_span
-                    for relation in normalized_relations
-                )
-            ):
-                continue
-            if not selected_by_id and explicit_relations and not any(
-                relation in normalized_span
-                for relation in explicit_relations
-            ):
-                continue
-            if (
-                plan.answer_shape in {"summary", "narrative"}
-                and not any(
-                    relation in normalized_span
-                    for relation in requested_relations
-                )
-                and not any(marker in normalized_span for marker in summary_markers)
-            ):
                 continue
             candidates.append(EvidenceSpan(
                 field_id=field_id,
@@ -988,35 +603,6 @@ class LanguageModelEvidenceExtractor:
                 span=span,
                 content_hash=sha256(span.encode("utf-8")).hexdigest(),
             ))
-        if (
-            not semantic_mode
-            and not candidates
-            and plan.answer_shape == "list"
-            and sentence_units
-        ):
-            subject_terms = {
-                normalize_search_text(value).replace(" ", "")
-                for value in (plan.subject, source.title)
-                if value.strip()
-            }
-            relation_terms = {
-                relation
-                for relation in normalized_relations
-                if len(relation) >= 2
-            }
-            for unit in sentence_units:
-                normalized_unit = normalize_search_text(unit).replace(" ", "")
-                if not any(term in normalized_unit for term in subject_terms):
-                    continue
-                if not any(relation in normalized_unit for relation in relation_terms):
-                    continue
-                candidates.append(EvidenceSpan(
-                    field_id=next(iter(field_ids)),
-                    source_index=source_index,
-                    span=unit,
-                    content_hash=sha256(unit.encode("utf-8")).hexdigest(),
-                ))
-                break
         return tuple(candidates)
 
     @staticmethod

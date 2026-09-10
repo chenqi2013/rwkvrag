@@ -397,299 +397,80 @@ class LexicalIndex:
         candidate_k: int,
         knowledge_base_id: str | None = None,
     ) -> list[LexicalResult]:
-        model_pipeline = self.settings.semantic_pipeline_enabled
-        tokens = _model_query_tokens(question) if model_pipeline else query_tokens(question)
+        return self._search_generic(
+            question,
+            candidate_k=candidate_k,
+            knowledge_base_id=knowledge_base_id,
+        )
+
+    def _search_generic(
+        self,
+        question: str,
+        *,
+        candidate_k: int,
+        knowledge_base_id: str | None = None,
+    ) -> list[LexicalResult]:
+        """Run a content-neutral BM25 query and collapse to one hit per document."""
+        tokens = query_tokens(question)
         if not tokens:
             return []
-        filters = []
+        filters: list[dict[str, Any]] = []
         if knowledge_base_id:
             filters.append({"term": {"knowledge_base_id": knowledge_base_id}})
-        should = [
-            {
-                "match_phrase": {
-                    "body_tokens": {
-                        "query": phrase,
-                        "slop": 4,
-                        "boost": boost,
-                    }
-                }
-            }
-            for phrase, boost in (() if model_pipeline else relation_boosts(question))
-        ]
-        title_variants = (
-            [_model_query_tokens(question)]
-            if model_pipeline
-            else title_entity_token_variants(question)
-        )
-        for title_tokens in title_variants:
-            should.append(
-                {
-                    "match": {
-                        "title_tokens": {
-                            "query": " ".join(title_tokens),
-                            "operator": "or",
-                            "minimum_should_match": 1 if model_pipeline else "2<75%",
-                            "boost": 12.0 if not model_pipeline else 6.0,
-                        }
-                    }
-                }
-            )
-        if model_pipeline:
-            should.extend(
-                {
-                    "match_phrase": {
-                        "title_tokens": {
-                            "query": query,
-                            "slop": 2,
-                            "boost": 24.0,
-                        }
-                    }
-                }
-                for query in (question,)
-            )
-        exact_titles = [] if model_pipeline else list(dict.fromkeys((
-            _question_subject(question),
-            _question_subject(normalize_query_text(question)),
-        )))
-        phrase_tokens = [token for token in tokens if len(token) >= 2]
-        significant_query = " ".join(phrase_tokens)
-        entity_bigram_query = " ".join(entity_bigram_tokens(_question_subject(question)))
-        topic_tokens = phrase_tokens
-        topic_titles = list(dict.fromkeys([
-            *topic_tokens,
-            *(f"{left}{right}" for left, right in zip(phrase_tokens, phrase_tokens[1:])),
-        ]))
-        content_types = () if model_pipeline else intent_content_types(question)
-        topic_title_boost = 80.0 if content_types else 10.0
-        def exact_title_boost(title: str) -> float:
-            normalized = normalize_search_text(title).replace(" ", "")
-            if content_types and len(normalized) >= 4:
-                return 160.0
-            return 40.0
-
-        def topic_boost(title: str) -> float:
-            # Prefer meaningful multi-token phrases such as “舱外活动” over
-            # a broad subject token such as “深圳地铁”. A broad token must not
-            # overpower the more specific page merely because the question is
-            # asking for a list.
-            return (
-                min(4.0, topic_title_boost)
-                if title in topic_tokens
-                else topic_title_boost * 2.0
-            )
-
-        for title in topic_titles:
-            # Topic overview pages are often short and otherwise lose to highly
-            # repetitive detail pages (for example an individual mountain pass).
-            should.append({"term": {"title": {"value": title, "boost": topic_boost(title)}}})
-        for title in exact_titles:
-            if title:
-                should.extend([
-                    {"term": {"title": {"value": f"{title} (消歧义)", "boost": 18.0}}},
-                    {"term": {"title": {"value": f"{title} (消歧義)", "boost": 18.0}}},
-                ])
-        if content_types:
-            should.append(
-                {
-                    "constant_score": {
-                        "filter": {"terms": {"content_type": list(content_types)}},
-                        "boost": 3.0,
-                    }
-                }
-            )
-        # A title match can cover many chunks from one page. Pull a wider raw
-        # window so those chunks cannot crowd every other relevant page out.
-        raw_candidate_k = max(candidate_k, min(candidate_k * 12, 200), 1)
-        lexical_fields = [
-            "body_tokens",
-            "title_tokens^3",
-            "alias_tokens^4",
-            "tags_tokens^1.5",
-            "section_tokens^3",
-            "structure_tokens^2",
-            "entity_bigram_tokens^0.6",
-        ]
-        recall_queries: list[dict[str, Any]] = [
-            {
-                "multi_match": {
-                    "query": " ".join(tokens),
-                    "fields": lexical_fields,
-                    "type": "best_fields",
-                    "operator": "or",
-                }
-            }
-        ]
-        if significant_query:
-            recall_queries.extend([
-                {
-                    "multi_match": {
-                        "query": significant_query,
-                        "fields": [
-                            "title_tokens^8",
-                            "alias_tokens^7",
-                            "section_tokens^4",
-                            "body_tokens^2",
-                        ],
-                        "type": "phrase",
-                        "slop": 2,
-                        "boost": 2.0,
+        size = max(1, min(int(candidate_k), 200))
+        response = self.client.search(
+            index=self.index_name,
+            body={
+                "size": size,
+                "track_total_hits": False,
+                "collapse": {"field": "document_id"},
+                "_source": ["node_id", "document_id", "text", "metadata", "title"],
+                "query": {
+                    "bool": {
+                        "filter": filters,
+                        "must": [{
+                            "multi_match": {
+                                "query": " ".join(tokens),
+                                "fields": [
+                                    "body_tokens",
+                                    "title_tokens^4",
+                                    "alias_tokens^3",
+                                    "tags_tokens^2",
+                                    "section_tokens^2",
+                                    "structure_tokens",
+                                    "entity_bigram_tokens",
+                                ],
+                                "type": "best_fields",
+                                "operator": "or",
+                            }
+                        }],
                     }
                 },
-                {
-                    "multi_match": {
-                        "query": significant_query,
-                        "fields": [
-                            "title_tokens^5",
-                            "alias_tokens^5",
-                            "section_tokens^3",
-                            "body_tokens",
-                        ],
-                        "type": "cross_fields",
-                        "operator": "and",
-                        "boost": 1.5,
-                    }
-                },
-            ])
-        if entity_bigram_query:
-            recall_queries.append(
-                {
-                    "match": {
-                        "entity_bigram_tokens": {
-                            "query": entity_bigram_query,
-                            "operator": "and",
-                            "boost": 1.2,
-                        }
-                    }
-                }
-            )
-        body = {
-            "size": raw_candidate_k,
-            "track_total_hits": False,
-            "collapse": {"field": "document_id"},
-            "_source": ["node_id", "document_id", "text", "metadata", "title"],
-            "query": {
-                "bool": {
-                    "must": [{
-                        "bool": {
-                            "should": [
-                                *recall_queries,
-                                *(
-                                    {"term": {"title": {"value": title, "boost": exact_title_boost(title)}}}
-                                    for title in exact_titles
-                                    if title
-                                ),
-                                *(
-                                    {"term": {"title": {"value": title, "boost": topic_boost(title)}}}
-                                    for title in topic_titles
-                                    if title
-                                ),
-                            ],
-                            "minimum_should_match": 1,
-                        }
-                    }],
-                    "should": should,
-                    "filter": filters,
-                }
             },
-        }
-        response = self.client.search(index=self.index_name, body=body)
+        )
         hits = response.get("hits", {}).get("hits", [])
-        ranked: list[_RankedChunk] = []
-        normalized_question = _normalized_text(question)
-        question_token_set = set(tokens)
-        proximity_sets = [{*tokens}] if model_pipeline else proximity_token_sets(question)
-        specific_exact_titles = {
-            normalize_search_text(exact).replace(" ", "")
-            for exact in exact_titles
-            if content_types
-            and exact
-            and len(normalize_search_text(exact).replace(" ", "")) >= 4
-        }
-        for hit in hits:
+        raw_scores = [max(0.0, float(hit.get("_score") or 0.0)) for hit in hits]
+        top_score = max(raw_scores, default=1.0) or 1.0
+        results: list[LexicalResult] = []
+        for hit, raw_score in zip(hits, raw_scores, strict=True):
             source = dict(hit.get("_source") or {})
-            title = str(source.get("title") or "")
-            metadata = dict(source.get("metadata") or {})
-            if is_repetitive_garbage(str(source.get("text") or "")):
+            text = str(source.get("text") or "")
+            if is_repetitive_garbage(text):
                 continue
-            raw = max(0.0, float(hit.get("_score") or 0))
-            if normalized_question and normalized_question in _normalized_text(title):
-                raw += 1.5
-            title_tokens = set(lexical_tokens(title))
-            if title_tokens:
-                raw += 1.25 * len(question_token_set & title_tokens) / len(title_tokens)
-            alias_tokens = set(lexical_tokens(" ".join(_metadata_aliases(metadata))))
-            if alias_tokens:
-                raw += 1.5 * len(question_token_set & alias_tokens) / len(alias_tokens)
-            if not model_pipeline:
-                raw += _focus_bonus(question, title, str(source.get("text") or ""))
-            raw += max(_proximity_bonus(str(source.get("text") or ""), item) for item in proximity_sets)
-            document_id = str(source.get("document_id") or source.get("node_id") or "")
-            ranked.append(
-                _RankedChunk(
-                    source=source,
-                    document_id=document_id,
-                    page_score=raw,
-                    passage_score=_passage_score(
-                        question,
-                        source,
-                        page_score=raw,
-                        proximity_sets=proximity_sets,
-                    ),
+            node_id = str(source.get("node_id") or "")
+            if not node_id:
+                continue
+            results.append(
+                LexicalResult(
+                    node_id=node_id,
+                    document_id=str(source.get("document_id") or node_id),
+                    text=text,
+                    metadata=dict(source.get("metadata") or {}),
+                    score=min(1.0, raw_score / top_score),
+                    raw_score=raw_score,
                 )
             )
-        page_best: dict[str, _RankedChunk] = {}
-        page_support: dict[str, float] = {}
-        page_chunk_counts: dict[str, int] = {}
-        for chunk in ranked:
-            page_chunk_counts[chunk.document_id] = page_chunk_counts.get(chunk.document_id, 0) + 1
-            page_support[chunk.document_id] = page_support.get(chunk.document_id, 0.0) + (
-                chunk.page_score / (60.0 + page_chunk_counts[chunk.document_id])
-            )
-            current = page_best.get(chunk.document_id)
-            if current is None or (
-                chunk.passage_score,
-                -_chunk_order(chunk.source),
-                chunk.source.get("node_id") or "",
-            ) > (
-                current.passage_score,
-                -_chunk_order(current.source),
-                current.source.get("node_id") or "",
-            ):
-                page_best[chunk.document_id] = chunk
-
-        merged = [
-            (
-                chunk.page_score + min(0.25, page_support.get(document_id, 0.0)),
-                chunk,
-            )
-            for document_id, chunk in page_best.items()
-        ]
-        highest_page_score = max((raw for raw, _chunk in merged), default=0.0)
-        merged = [
-            (
-                raw + highest_page_score + 1.0
-                if normalize_search_text(str(chunk.source.get("title") or "")).replace(" ", "")
-                in specific_exact_titles
-                else raw,
-                chunk,
-            )
-            for raw, chunk in merged
-        ]
-        merged.sort(key=lambda item: item[0], reverse=True)
-        top_raw = max((raw for raw, _chunk in merged), default=1.0) or 1.0
-        return [
-            LexicalResult(
-                node_id=str(chunk.source.get("node_id") or ""),
-                document_id=str(
-                    chunk.source.get("document_id") or chunk.source.get("node_id") or ""
-                ),
-                text=str(chunk.source.get("text") or ""),
-                metadata=dict(chunk.source.get("metadata") or {}),
-                score=min(1.0, max(0.0, raw / top_raw)),
-                raw_score=raw,
-            )
-            for raw, chunk in merged
-        ]
+        return results
 
     def search_plain(
         self,

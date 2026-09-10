@@ -9,9 +9,9 @@ import httpx
 
 from .config import Settings
 from .generation import EvidenceAnswerGenerator
-from .lexical_index import lexical_tokens, normalize_search_text
+from .lexical_index import normalize_search_text
 from .query_planning import QueryPlan, TaskField, build_query_plan
-from .qa_analysis import QuestionAnalysis, counted_list_size
+from .qa_analysis import QuestionAnalysis
 
 
 PlannerStrategy = Literal["model", "deterministic_fallback"]
@@ -84,61 +84,6 @@ class LanguageModelQueryPlanner:
                 error=f"{type(error).__name__}: {error}",
             )
 
-        # A small model may keep only a broad scope word (for example
-        # ``中国``) as the subject of a list question.  The deterministic
-        # plan has already extracted the concrete topic (for example
-        # ``长城关隘``); keeping that longer, question-grounded subject
-        # prevents broad pages from displacing the actual topic page.
-        if self._prefer_fallback_subject(question, fallback, subject):
-            subject = fallback.subject
-
-        if not self._contract_subject_is_grounded(question, fallback, subject):
-            grounded_subject = self._ground_subject_from_contract(
-                question,
-                fallback,
-                fields,
-                model_queries,
-            )
-            if grounded_subject:
-                invalid_subject = normalize_search_text(subject).replace(" ", "")
-                relations = tuple(
-                    relation
-                    for relation in relations
-                    if normalize_search_text(relation).replace(" ", "")
-                    != invalid_subject
-                )
-                fields = tuple(
-                    replace(
-                        field,
-                        relations=tuple(
-                            relation
-                            for relation in field.relations
-                            if normalize_search_text(relation).replace(" ", "")
-                            != invalid_subject
-                        ),
-                    )
-                    for field in fields
-                )
-                if relations and all(field.relations for field in fields):
-                    subject = grounded_subject
-
-        if not self._contract_subject_is_grounded(question, fallback, subject):
-            try:
-                repaired_raw = await self._request(
-                    self._repair_prompt(question, raw)
-                )
-                (
-                    subject,
-                    intent,
-                    answer_shape,
-                    set_semantics,
-                    fields,
-                    relations,
-                    model_queries,
-                ) = self._parse(repaired_raw)
-            except (httpx.HTTPError, TimeoutError, ValueError):
-                pass
-
         query_limit = self.settings.model_query_planning_max_queries
         # The model owns query semantics.  Deterministic fallback queries are
         # used only when the model call fails; they are never mixed into a
@@ -156,13 +101,6 @@ class LanguageModelQueryPlanner:
                 queries[-1] = fallback.normalized_question
             else:
                 queries.append(fallback.normalized_question)
-        if not self._contract_subject_is_grounded(question, fallback, subject):
-            return QueryPlanningResult(
-                replace(fallback, queries=tuple(queries[:query_limit])),
-                "deterministic_fallback",
-                model_queries=model_queries,
-                error="model_subject_not_grounded_in_question",
-            )
         plan = replace(
             fallback,
             queries=tuple(queries[:query_limit]),
@@ -213,33 +151,7 @@ class LanguageModelQueryPlanner:
                 relations,
                 model_queries,
             ) = self._parse(raw)
-            if not self._subject_is_supported(question, subject):
-                raise ValueError("model subject is not grounded in the question")
-            if not subject or (
-                fallback.subject
-                and len(fallback.subject) > len(subject)
-                and normalize_search_text(subject) in normalize_search_text(fallback.subject)
-            ):
-                subject = fallback.subject
-            if intent == "ordinal" and fallback.analysis.subjects:
-                ordinal_subject = re.sub(
-                    r"\s+(?:第一个|第一位|首位|最早)\s+",
-                    " ",
-                    fallback.analysis.subjects[0],
-                ).strip()
-                if len(ordinal_subject) > len(subject):
-                    subject = ordinal_subject
-            fallback_fields = {field.field_id: field for field in fallback.fields}
-            fields = tuple(
-                replace(
-                    field,
-                    relations=field.relations or fallback_fields.get(
-                        field.field_id,
-                        TaskField(field.field_id, field.question, fallback.relations),
-                    ).relations or relations,
-                )
-                for field in (fields or fallback.fields)
-            )
+            fields = fields or fallback.fields
             queries = tuple(dict.fromkeys((
                 *model_queries,
                 subject,
@@ -472,155 +384,6 @@ JSON："""
             seen_ids.add(field_id)
             fields.append(TaskField(field_id, question, relations))
         return tuple(fields)
-
-    @staticmethod
-    def _subject_is_supported(question: str, subject: str) -> bool:
-        normalized_question = normalize_search_text(question).replace(" ", "").strip(
-            "？?。！!，,；;"
-        )
-        normalized_subject = normalize_search_text(subject).replace(" ", "")
-        if not normalized_subject:
-            return False
-        if normalized_subject in normalized_question:
-            return True
-        question_terms = {
-            term for term in lexical_tokens(question)
-            if len(term.strip()) >= 2
-        }
-        subject_terms = {
-            term for term in lexical_tokens(subject)
-            if len(term.strip()) >= 2
-        }
-        return bool(question_terms & subject_terms)
-
-    @staticmethod
-    def _subject_matches_fallback(fallback_subject: str, model_subject: str) -> bool:
-        fallback = normalize_search_text(fallback_subject).replace(" ", "")
-        model = normalize_search_text(model_subject).replace(" ", "")
-        if not fallback:
-            return True
-        if not model:
-            return False
-        return fallback == model or (
-            min(len(fallback), len(model)) >= 3
-            and (fallback in model or model in fallback)
-        )
-
-    @classmethod
-    def _prefer_fallback_subject(
-        cls,
-        question: str,
-        fallback: QueryPlan,
-        model_subject: str,
-    ) -> bool:
-        """Keep a more specific deterministic subject for list questions."""
-
-        if not fallback.analysis.expects_list or not fallback.subject:
-            return False
-        normalized_question = normalize_search_text(question).replace(" ", "").strip(
-            "？?。！!，,；;"
-        )
-        fallback_subject = normalize_search_text(fallback.subject).replace(" ", "")
-        candidate_subject = normalize_search_text(model_subject).replace(" ", "")
-        if (
-            not candidate_subject
-            or candidate_subject == fallback_subject
-            or fallback_subject not in normalized_question
-            or fallback_subject[-1:] in "的都是有为在和与及"
-        ):
-            return False
-        # For a list request, the deterministic plan is the canonical object
-        # boundary.  A model subject may be broader (``中国``) or may echo the
-        # whole question (``中国有哪些……``); both forms cause broad pages to
-        # outrank the page containing the requested collection.
-        if candidate_subject == normalized_question:
-            return True
-        fallback_position = normalized_question.find(fallback_subject)
-        if fallback_position > 0 and candidate_subject in normalized_question[:fallback_position]:
-            return True
-        return len(fallback_subject) > len(candidate_subject)
-
-    @classmethod
-    def _contract_subject_is_grounded(
-        cls,
-        question: str,
-        fallback: QueryPlan,
-        model_subject: str,
-    ) -> bool:
-        return cls._subject_is_supported(question, model_subject)
-
-    @staticmethod
-    def _preserve_explicit_list_contract(plan: QueryPlan) -> bool:
-        if not plan.analysis.expects_complete_list:
-            return False
-        if counted_list_size(plan.normalized_question) is not None:
-            return True
-        return bool(re.search(
-            r"(?:是|为)(?:哪几个|哪几种|哪几类|哪几项|哪几篇|哪几部|哪几本)",
-            plan.normalized_question,
-        ))
-
-    @classmethod
-    def _ground_subject_from_contract(
-        cls,
-        question: str,
-        fallback: QueryPlan,
-        fields: tuple[TaskField, ...],
-        model_queries: tuple[str, ...],
-    ) -> str:
-        if fallback.subject and cls._subject_is_supported(question, fallback.subject):
-            return fallback.subject
-        contract_text = " ".join((
-            *(field.question for field in fields),
-            *model_queries,
-        ))
-        quoted: list[str] = []
-        for match in re.finditer(
-            r"《([^》]{1,80})》|“([^”]{1,80})”|\"([^\"]{1,80})\"",
-            question,
-        ):
-            quoted.extend(
-                value.strip()
-                for value in match.groups()
-                if value and value.strip()
-            )
-        candidates = [
-            value
-            for value in quoted
-            if normalize_search_text(value).replace(" ", "")
-            in normalize_search_text(contract_text).replace(" ", "")
-        ]
-        if candidates:
-            return max(candidates, key=len)
-        question_terms = {
-            term.strip()
-            for term in lexical_tokens(question)
-            if len(term.strip()) >= 2
-        }
-        contract_terms = {
-            term.strip()
-            for term in lexical_tokens(contract_text)
-            if len(term.strip()) >= 2
-        }
-        shared = question_terms & contract_terms
-        return max(shared, key=len) if shared else ""
-
-    @staticmethod
-    def _fallback_contract_is_sufficient(plan: QueryPlan) -> bool:
-        if not plan.subject or not plan.relations:
-            return False
-        if plan.answer_shape != "single_fact":
-            return False
-        if plan.relations == ("简介", "定义"):
-            return len(plan.subject.replace(" ", "")) <= 10
-        if plan.analysis.intent == "agent" and any(
-            len(relation.replace(" ", "")) > 6
-            for relation in plan.relations
-        ):
-            return False
-        return plan.analysis.intent in {
-            "definition", "time", "location", "birthplace", "agent", "ordinal",
-        }
 
     @staticmethod
     def _clean_string(value: object, *, max_length: int) -> str:
