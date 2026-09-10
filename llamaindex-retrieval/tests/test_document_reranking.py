@@ -3,6 +3,7 @@ import json
 import httpx
 import pytest
 
+
 from llamaindex_retrieval.config import Settings
 from llamaindex_retrieval.document_reranking import LanguageModelDocumentReranker
 from llamaindex_retrieval.query_planning import build_query_plan
@@ -46,6 +47,7 @@ async def test_reranker_selects_relevant_document_without_rewriting_evidence() -
         Settings(
             generation_password="secret",
             document_reranking_enabled=True,
+            semantic_pipeline_enabled=False,
         ),
         transport=httpx.MockTransport(handler),
     )
@@ -142,6 +144,8 @@ def test_reranker_rejects_inconsistent_contract() -> None:
 
 
 def test_reranker_accepts_compact_small_model_contract() -> None:
-    assert LanguageModelDocumentReranker._parse(
-        ">\n3|直接给出所求事实\n后续解释不参与协议"
-    ) == (True, 3, "直接给出所求事实")
+    assert LanguageModelDocumentReranker._parse(">\n3|直接给出所求事实\n后续解释不参与协议") == (
+        True,
+        3,
+        "直接给出所求事实",
+    )

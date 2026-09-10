@@ -1,13 +1,139 @@
 import json
 from dataclasses import replace
+from hashlib import sha256
 
 import httpx
 import pytest
+
 
 from llamaindex_retrieval.config import Settings
 from llamaindex_retrieval.evidence_extraction import LanguageModelEvidenceExtractor
 from llamaindex_retrieval.query_planning import TaskField, build_query_plan
 from llamaindex_retrieval.schemas import SourceItem
+
+
+@pytest.mark.parametrize(
+    "selection",
+    [
+        {"field_id": "f1", "span": "不存在的引用"},
+        {"field_id": "f2", "span": "甲由乙创立。"},
+        {"field_id": "f1", "sentence_id": "s99"},
+        {"field_id": "f1", "sentence_id": "s0"},
+        {"field_id": "f1", "sentence_id": "s-1"},
+    ],
+)
+def test_parser_rejects_invalid_field_sentence_and_nonverbatim_span(selection) -> None:
+    evidence = source("甲由乙创立。")
+    parsed = LanguageModelEvidenceExtractor._parse(
+        json.dumps({"candidates": [selection]}),
+        build_query_plan("甲的创建者是谁？"),
+        0,
+        evidence,
+        sentence_units=(evidence.snippet,),
+    )
+    assert parsed == ()
+
+
+def test_parser_preserves_model_selection_without_relation_word_filter() -> None:
+    evidence = source("代号乙担任最初的召集者。")
+    plan = replace(build_query_plan("谁创立了它？"), subject="甲", relations=("创始人",))
+    parsed = LanguageModelEvidenceExtractor._parse(
+        '{"candidates":[{"field_id":"f1","sentence_id":"s1"}]}',
+        plan,
+        0,
+        evidence,
+        sentence_units=(evidence.snippet,),
+    )
+    assert parsed[0].span == evidence.snippet
+    assert parsed[0].content_hash == sha256(evidence.snippet.encode()).hexdigest()
+
+
+@pytest.mark.asyncio
+async def test_resolver_calls_read_sources_independently_and_select_original_spans() -> None:
+    evidence = [
+        source("甲片段包含干扰项。"),
+        source("乙片段给出了创建者。 ").model_copy(update={"id": "second"}),
+    ]
+    map_prompts = []
+
+    async def handler(request: httpx.Request) -> httpx.Response:
+        prompt = json.loads(request.content)["contents"][0]
+        if "你是证据裁决器" in prompt:
+            assert "甲片段包含干扰项" in prompt
+            assert "乙片段给出了创建者" in prompt
+            return stream_response("f1:e2")
+        map_prompts.append(prompt)
+        assert ("甲片段包含干扰项" in prompt) != ("乙片段给出了创建者" in prompt)
+        return stream_response("f1:s1")
+
+    extractor = LanguageModelEvidenceExtractor(
+        Settings(generation_password="secret", semantic_pipeline_enabled=True),
+        transport=httpx.MockTransport(handler),
+    )
+    result = await extractor.extract("谁创建了它？", build_query_plan("谁创建了它？"), evidence)
+
+    assert len(map_prompts) == 2
+    assert result.errors == ()
+    assert result.completed_sources == 2
+    assert result.matches_sources(evidence)
+    assert result.candidates[0].source_index == 1
+    assert result.candidates[0].span == "乙片段给出了创建者。"
+    assert result.answer_sources(evidence)[0].id == "second"
+    assert result.answer_sources(evidence)[0].snippet == result.candidates[0].span
+    assert [event["stage"] for event in result.trace_events] == [
+        "resolver_map",
+        "resolver_map",
+        "resolver_adjudication",
+    ]
+    for event in result.trace_events:
+        assert event["raw_output_sha256"] == sha256(event["raw_output"].encode()).hexdigest()
+    changed = [evidence[0], evidence[1].model_copy(update={"snippet": "已修改正文"})]
+    assert not result.matches_sources(changed)
+    assert result.remap_sources(changed) is None
+
+
+@pytest.mark.asyncio
+async def test_resolver_empty_decision_does_not_create_fallback_evidence() -> None:
+    async def handler(request: httpx.Request) -> httpx.Response:
+        return stream_response("NONE")
+
+    extractor = LanguageModelEvidenceExtractor(
+        Settings(generation_password="secret", semantic_pipeline_enabled=True),
+        transport=httpx.MockTransport(handler),
+    )
+    result = await extractor.extract(
+        "创建者是谁？",
+        build_query_plan("创建者是谁？"),
+        [source("甲由乙创立。")],
+    )
+    assert result.available
+    assert not result.has_candidates
+    assert result.errors == ()
+    assert result.answer_sources([source("甲由乙创立。")]) == []
+
+
+@pytest.mark.parametrize("failure", ["http", "timeout", "invalid_output"])
+@pytest.mark.asyncio
+async def test_extractor_reports_transport_and_protocol_errors(failure) -> None:
+    async def handler(request: httpx.Request) -> httpx.Response:
+        if failure == "http":
+            return httpx.Response(503)
+        if failure == "timeout":
+            raise httpx.ReadTimeout("timed out", request=request)
+        return stream_response("invalid output")
+
+    extractor = LanguageModelEvidenceExtractor(
+        Settings(generation_password="secret"),
+        transport=httpx.MockTransport(handler),
+    )
+    result = await extractor.extract(
+        "创建者是谁？", build_query_plan("创建者是谁？"), [source("正文。")]
+    )
+    assert result.attempted_sources == 1
+    assert result.completed_sources == 0
+    assert not result.has_candidates
+    assert len(result.errors) == 1
+    assert "source_1" in result.errors[0]
 
 
 def stream_response(content: str) -> httpx.Response:
@@ -33,81 +159,6 @@ def source(snippet: str) -> SourceItem:
     )
 
 
-def test_subject_match_rejects_longer_unrelated_name_prefix() -> None:
-    plan = build_query_plan("马斯克创办了哪几家公司？")
-    elon = SourceItem(
-        id="elon",
-        document_id="elon",
-        source="finewiki-zh",
-        title="埃隆·马斯克",
-        score=1.0,
-        snippet="马斯克是SpaceX创始人。",
-    )
-    place = SourceItem(
-        id="muskadine",
-        document_id="muskadine",
-        source="finewiki-zh",
-        title="马斯克丁 (阿拉巴马州)",
-        score=0.9,
-        snippet="马斯克丁是美国的一处非建制地区。",
-    )
-
-    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, elon) is True
-    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, place) is False
-
-
-def test_comparison_accepts_each_subject_page_independently() -> None:
-    plan = build_query_plan("尺八和长笛有什么区别？")
-    shakuhachi = SourceItem(
-        id="shakuhachi",
-        document_id="shakuhachi",
-        source="finewiki-zh",
-        title="尺八",
-        score=1.0,
-        snippet="尺八是竖吹乐器，竹制，音色苍凉。",
-    )
-    flute = SourceItem(
-        id="flute",
-        document_id="flute",
-        source="finewiki-zh",
-        title="长笛",
-        score=1.0,
-        snippet="长笛是横吹乐器，现代多使用金属材质。",
-    )
-
-    assert plan.analysis.intent == "comparison"
-    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, shakuhachi)
-    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, flute)
-
-
-def test_single_fact_rejects_title_only_unrelated_chunk() -> None:
-    plan = replace(
-        build_query_plan("西游记是谁写的？"),
-        subject="西游记",
-        relations=("作者", "作者姓名"),
-        fields=(TaskField("f1", "西游记的作者是谁？", ("作者", "作者姓名")),),
-    )
-    unrelated = SourceItem(
-        id="journey-west-theory",
-        document_id="journey-west",
-        source="finewiki-zh",
-        title="西游记",
-        score=1.0,
-        snippet="脱冕説",
-    )
-    direct = SourceItem(
-        id="journey-west-lead",
-        document_id="journey-west",
-        source="finewiki-zh",
-        title="西游记",
-        score=1.0,
-        snippet="成书于16世纪明朝中叶，一般认为作者是明朝的吴承恩。",
-    )
-
-    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, unrelated) is False
-    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, direct) is True
-
-
 def test_semantic_parser_accepts_compact_sentence_selection() -> None:
     evidence = SourceItem(
         id="capital",
@@ -115,10 +166,7 @@ def test_semantic_parser_accepts_compact_sentence_selection() -> None:
         source="finewiki-zh",
         title="中国首都",
         score=1.0,
-        snippet=(
-            "清朝入主中原后将北京定为国都。\n"
-            "现时北京自1949年後定为中华人民共和国首都。"
-        ),
+        snippet=("清朝入主中原后将北京定为国都。\n现时北京自1949年後定为中华人民共和国首都。"),
     )
     plan = replace(
         build_query_plan("中国的首都是哪个城市？"),
@@ -250,43 +298,27 @@ async def test_semantic_extractor_adjudicates_candidates_across_chunks() -> None
     assert [candidate.span for candidate in result.candidates] == [sources[1].snippet]
 
 
-def test_adjudication_prioritizes_causal_relation_over_event_only_sentence() -> None:
-    extractor = LanguageModelEvidenceExtractor(Settings(semantic_pipeline_enabled=True))
-    plan = replace(
-        build_query_plan("某王朝灭亡的原因是什么？"),
-        subject="某王朝",
-        relations=("原因", "灭亡"),
-        fields=(TaskField("f1", "某王朝灭亡的原因是什么？", ("原因", "灭亡")),),
-        answer_shape="summary",
-    )
-    source_item = SourceItem(
-        id="dynasty",
-        document_id="dynasty",
-        source="wiki",
-        title="某王朝",
-        score=1.0,
-        snippet="某王朝灭亡。政治腐败导致国力衰退，最终爆发民变。",
-    )
-    units = extractor._adjudication_units(plan, [source_item], [])
-
-    assert "导致国力衰退" in units[0].span
-
-
 @pytest.mark.asyncio
 async def test_extractor_keeps_only_verbatim_spans() -> None:
     snippet = "2016年，宇树科技创始人王兴兴开发了XDog，随后创办宇树科技。"
 
     async def handler(_: httpx.Request) -> httpx.Response:
-        return stream_response(json.dumps({
-            "candidates": [
-                {"field_id": "f1", "sentence_id": "s1"},
-                {"field_id": "f1", "sentence_id": "s99"},
-            ]
-        }, ensure_ascii=False))
+        return stream_response(
+            json.dumps(
+                {
+                    "candidates": [
+                        {"field_id": "f1", "sentence_id": "s1"},
+                        {"field_id": "f1", "sentence_id": "s99"},
+                    ]
+                },
+                ensure_ascii=False,
+            )
+        )
 
     settings = Settings(
         generation_password="secret",
         generation_base_url="https://generation.example/v1",
+        semantic_pipeline_enabled=False,
     )
     extractor = LanguageModelEvidenceExtractor(
         settings,
@@ -306,9 +338,7 @@ async def test_extractor_keeps_only_verbatim_spans() -> None:
     assert [candidate.span for candidate in result.candidates] == [
         snippet,
     ]
-    assert result.answer_sources([source(snippet)])[0].snippet == (
-        snippet
-    )
+    assert result.answer_sources([source(snippet)])[0].snippet == (snippet)
     assert len(result.candidates[0].content_hash) == 64
     unrelated = SourceItem(
         id="other",
@@ -332,6 +362,7 @@ async def test_extractor_distinguishes_no_candidate_from_transport_failure() -> 
     settings = Settings(
         generation_password="secret",
         generation_base_url="https://generation.example/v1",
+        semantic_pipeline_enabled=False,
     )
     extractor = LanguageModelEvidenceExtractor(
         settings,
@@ -346,62 +377,6 @@ async def test_extractor_distinguishes_no_candidate_from_transport_failure() -> 
     assert result.available is True
     assert result.has_candidates is False
     assert result.errors == ()
-
-
-@pytest.mark.asyncio
-async def test_extractor_rejects_verbatim_value_from_unrelated_source() -> None:
-    async def handler(_: httpx.Request) -> httpx.Response:
-        return stream_response(json.dumps({
-            "candidates": [{"field_id": "f1", "span": "北京"}]
-        }, ensure_ascii=False))
-
-    settings = Settings(
-        generation_password="secret",
-        generation_base_url="https://generation.example/v1",
-    )
-    extractor = LanguageModelEvidenceExtractor(
-        settings,
-        transport=httpx.MockTransport(handler),
-    )
-    unrelated = SourceItem(
-        id="train",
-        document_id="train",
-        source="finewiki-zh",
-        title="京泰高速动车组列车",
-        score=1.0,
-        snippet="该列车往返北京至泰州。",
-    )
-    result = await extractor.extract(
-        "中国的首都在哪里",
-        build_query_plan("中国的首都在哪里"),
-        [unrelated],
-    )
-
-    assert result.available is True
-    assert result.has_candidates is False
-
-
-def test_narrative_event_extractor_rejects_value_without_relation_span() -> None:
-    plan = build_query_plan("水浒传里赤手空拳打死老虎的是谁？")
-    evidence = SourceItem(
-        id="water-margin",
-        document_id="water-margin",
-        source="finewiki-zh",
-        title="水浒传",
-        score=1.0,
-        snippet="宋江代表的动物是老虎；武松在景阳冈打死老虎。",
-    )
-    value_only = json.dumps({
-        "candidates": [{"field_id": "f1", "span": "宋江"}]
-    }, ensure_ascii=False)
-    direct_fact = json.dumps({
-        "candidates": [{"field_id": "f1", "span": "武松在景阳冈打死老虎。"}]
-    }, ensure_ascii=False)
-
-    assert LanguageModelEvidenceExtractor._parse(value_only, plan, 0, evidence) == ()
-    assert LanguageModelEvidenceExtractor._parse(direct_fact, plan, 0, evidence)[0].span == (
-        "武松在景阳冈打死老虎。"
-    )
 
 
 def test_sentence_selection_does_not_require_literal_relation_alias() -> None:
@@ -420,9 +395,7 @@ def test_sentence_selection_does_not_require_literal_relation_alias() -> None:
         relations=("作者", "作者姓名"),
         fields=(TaskField("f1", "西游记的作者是谁？", ("作者", "作者姓名")),),
     )
-    raw = json.dumps({
-        "candidates": [{"field_id": "f1", "sentence_id": "s1"}]
-    }, ensure_ascii=False)
+    raw = json.dumps({"candidates": [{"field_id": "f1", "sentence_id": "s1"}]}, ensure_ascii=False)
 
     result = LanguageModelEvidenceExtractor._parse(
         raw,
@@ -451,10 +424,13 @@ def test_extractor_accepts_metadata_fields_alongside_candidates() -> None:
         relations=("老板",),
         fields=(TaskField("f1", "宇树科技的老板是谁？", ("老板",)),),
     )
-    raw = json.dumps({
-        "candidates": [{"field_id": "f1", "sentence_id": "s1"}],
-        "confidence": 0.98,
-    }, ensure_ascii=False)
+    raw = json.dumps(
+        {
+            "candidates": [{"field_id": "f1", "sentence_id": "s1"}],
+            "confidence": 0.98,
+        },
+        ensure_ascii=False,
+    )
 
     result = LanguageModelEvidenceExtractor._parse(
         raw,
@@ -465,105 +441,3 @@ def test_extractor_accepts_metadata_fields_alongside_candidates() -> None:
     )
 
     assert result[0].span == sentence
-
-
-def test_sentence_selection_rejects_relationless_heading() -> None:
-    snippet = "作者认为传统宗教经书已成为束缚。\n脱冕説"
-    evidence = SourceItem(
-        id="journey-west-theory",
-        document_id="journey-west",
-        source="finewiki-zh",
-        title="西游记",
-        score=1.0,
-        snippet=snippet,
-    )
-    plan = replace(
-        build_query_plan("西游记是谁写的？"),
-        subject="西游记",
-        relations=("作者", "作者姓名"),
-        fields=(TaskField("f1", "西游记的作者是谁？", ("作者", "作者姓名")),),
-    )
-    raw = json.dumps({
-        "candidates": [{"field_id": "f1", "sentence_id": "s2"}]
-    }, ensure_ascii=False)
-
-    assert LanguageModelEvidenceExtractor._parse(
-        raw,
-        plan,
-        0,
-        evidence,
-        sentence_units=("作者认为传统宗教经书已成为束缚。", "脱冕説"),
-    ) == ()
-
-
-def test_summary_selection_rejects_unrelated_subject_mention() -> None:
-    evidence = SourceItem(
-        id="author",
-        document_id="author",
-        source="finewiki-zh",
-        title="罗贯中",
-        score=1.0,
-        snippet="罗贯中是《三国演义》的编作者。",
-    )
-    plan = replace(
-        build_query_plan("三国演义最后的结局是什么？"),
-        subject="三国演义",
-        relations=("最终结局", "结局"),
-        fields=(TaskField("f1", "最后的结局", ("最终结局", "结局")),),
-        answer_shape="summary",
-    )
-    raw = json.dumps({
-        "candidates": [{"field_id": "f1", "sentence_id": "s1"}],
-    }, ensure_ascii=False)
-
-    assert LanguageModelEvidenceExtractor._parse(
-        raw,
-        plan,
-        0,
-        evidence,
-        sentence_units=("罗贯中是《三国演义》的编作者。",),
-    ) == ()
-
-
-def test_list_evidence_falls_back_to_direct_relation_sentence() -> None:
-    sentence = "四大名著，即四大小说名著，是指《三国演义》《西游记》《水浒传》《红楼梦》4部小说。"
-    evidence = SourceItem(
-        id="four-classics",
-        document_id="four-classics",
-        source="finewiki-zh",
-        title="四大名著",
-        score=1.0,
-        snippet=sentence,
-    )
-    plan = replace(
-        build_query_plan("中国四大名著是哪几个？"),
-        subject="中国四大名著",
-        relations=("是指", "包括", "分别是", "分别为"),
-        fields=(TaskField("f1", "中国四大名著是哪几个？", ("是指", "包括")),),
-        answer_shape="list",
-        set_semantics="all",
-    )
-
-    result = LanguageModelEvidenceExtractor._parse(
-        '{"candidates":[]}',
-        plan,
-        0,
-        evidence,
-        sentence_units=(sentence,),
-    )
-
-    assert [candidate.span for candidate in result] == [sentence]
-
-
-def test_station_companion_page_is_valid_subject_evidence() -> None:
-    plan = build_query_plan("深圳地铁1号线有哪几个站")
-    evidence = SourceItem(
-        id="station-list",
-        document_id="station-list",
-        source="finewiki-zh",
-        title="深圳地铁车站列表",
-        score=1.0,
-        snippet="1号线沿途共设30个车站：罗湖站、国贸站、老街站。",
-    )
-
-    assert LanguageModelEvidenceExtractor._source_contains_subject(plan, evidence) is True
