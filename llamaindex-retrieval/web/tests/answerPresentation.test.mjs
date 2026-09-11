@@ -1,6 +1,27 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { answerPresentation } from "../src/answerPresentation.ts";
+import { answerPresentation, evidenceWarnings } from "../src/answerPresentation.ts";
+
+test("Shanghai response exposes missing evidence and invalid citation without replacing model output", () => {
+  const response = { answer: "上海地铁线路数量：[资料 1] 上海地铁线路总数：[资料 1] 上海地铁线路数：[资料 1]",
+    sources: [], generation: { pipeline: "rwkv", status: "completed", writer_status: "completed",
+      answer_span: [0, 46], evidence_count: 0,
+      citation_audit: { unknown_label_ids: [1], semantic_support_verified: false } } };
+  const before = JSON.stringify(response);
+  const warnings = evidenceWarnings(response);
+  assert.equal(warnings.length, 2);
+  assert.match(warnings[0][0], /未返回有效证据/);
+  assert.match(warnings[1][0], /引用无对应来源：\[资料 1\]/);
+  assert.equal(answerPresentation(response).answerText, response.answer);
+  assert.equal(JSON.stringify(response), before);
+});
+
+test("evidence notices tolerate legacy responses and do not infer semantic correctness", () => {
+  assert.deepEqual(evidenceWarnings(), []);
+  assert.deepEqual(evidenceWarnings({ sources: [{}], generation: {} }), []);
+  assert.deepEqual(evidenceWarnings({ sources: [{}], generation: {
+    citation_audit: { unknown_label_ids: [], semantic_support_verified: false } } }), []);
+});
 
 function native(answer, extra = {}) {
   return { answer, generation: { pipeline: "rwkv", status: "completed",

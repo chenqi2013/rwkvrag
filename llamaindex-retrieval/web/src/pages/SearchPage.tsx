@@ -1,5 +1,6 @@
 import { LinkOutlined, SearchOutlined } from "@ant-design/icons";
 import {
+  Alert,
   Button,
   Card,
   Col,
@@ -21,7 +22,7 @@ import { api } from "../api";
 import type { AskResponse, FailureCategory, KnowledgeBase } from "../types";
 import { errorMessage } from "../utils";
 import { useLanguage } from "../i18n";
-import { answerPresentation } from "../answerPresentation";
+import { answerPresentation, evidenceWarnings } from "../answerPresentation";
 
 interface ConversationTurn {
   role: "user" | "assistant";
@@ -74,6 +75,7 @@ export default function SearchPage() {
   };
 
   const presentation = answerPresentation(response);
+  const warnings = evidenceWarnings(response);
   const queryNormalized = response?.retrieval.query_normalized === true;
   const normalizedQuestion = String(response?.retrieval.normalized_question || "");
   const failureCategory = response?.generation.failure_category as FailureCategory | undefined;
@@ -150,11 +152,12 @@ export default function SearchPage() {
           </Card>
         </Col>
         <Col xs={24} xl={16}>
-          <Card
-            title={tr("生成答案", "Generated Answer")}
-            extra={
-              response && (
-                <Space size={4} wrap>
+          <Card className="answer-card" title={tr("生成答案", "Generated Answer")}>
+            {!response ? (
+              <Empty description={tr("提交问题后查看生成答案和证据", "Submit a question to view the answer and evidence")} />
+            ) : (
+              <Space direction="vertical" size={12} style={{ width: "100%" }}>
+                <Space size={4} wrap className="answer-status">
                   <Tag color={presentation.color}>
                     {tr(...presentation.label)}
                   </Tag>
@@ -165,16 +168,9 @@ export default function SearchPage() {
                     <Tag color="red">{tr(failureLabels[failureCategory][0], failureLabels[failureCategory][1])}</Tag>
                   ) : null}
                 </Space>
-              )
-            }
-          >
-            {!response ? (
-              <Empty description={tr("提交问题后查看生成答案和证据", "Submit a question to view the answer and evidence")} />
-            ) : (
-              <Space direction="vertical" size={12} style={{ width: "100%" }}>
-                <Space wrap>
+                {warnings.map((warning) => <Alert key={warning[1]} type="warning" showIcon title={tr(...warning)} />)}
+                {(queryNormalized || !!response.retrieval.evidence_top_k_policy || !!(failureCategory && response.generation.failure_reason)) && <Space wrap className="answer-status">
                   {queryNormalized && <Tag color="blue">{tr("已纠正查询：", "Normalized query: ")}{normalizedQuestion}</Tag>}
-                  <Tag>{tr("答案需标注资料编号", "Answer must cite source numbers")}</Tag>
                   {response.retrieval.evidence_top_k_policy ? (
                     <Tag color="purple">
                       {tr("自适应证据", "Adaptive evidence")} · {String(response.retrieval.answer_evidence_top_k)}
@@ -185,21 +181,21 @@ export default function SearchPage() {
                       {tr("失败原因：", "Failure reason: ")}{String(response.generation.failure_reason)}
                     </Typography.Text>
                   ) : null}
-                </Space>
+                </Space>}
                 {presentation.answerText ? (
-                  <Typography.Paragraph className="result-snippet" copyable={{ text: presentation.answerText }}>
+                  <Typography.Paragraph className="result-snippet answer-body" copyable={{ text: presentation.answerText }}>
                     {presentation.answerText}
                   </Typography.Paragraph>
                 ) : <Typography.Text type="secondary">{tr("未提供可显示的答案正文。", "No answer body is available.")}</Typography.Text>}
                 {presentation.isNative && (
-                  <details>
+                  <details className="answer-trace">
                     <summary>{tr("原始模型输出与运行记录", "Raw model output and trace")}</summary>
-                    <Typography.Paragraph className="result-snippet" copyable={{ text: presentation.rawAnswer }}>
+                    <Typography.Paragraph className="result-snippet raw-output" copyable={{ text: presentation.rawAnswer }}>
                       {presentation.rawAnswer || tr("无原始输出", "No raw output")}
                     </Typography.Paragraph>
                     <details>
                       <summary>{tr("完整运行记录", "Full trace")}</summary>
-                      <pre style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>
+                      <pre className="trace-json" tabIndex={0} aria-label={tr("完整运行记录", "Full trace")}>
                         {JSON.stringify({ retrieval: response.retrieval, generation: response.generation }, null, 2)}
                       </pre>
                     </details>
@@ -208,14 +204,12 @@ export default function SearchPage() {
                 <Card
                   size="small"
                   title={tr("检索证据", "Retrieved Evidence")}
-                  extra={
-                    <Space>
-                      {response.retrieval.algorithm ? <Tag color="cyan">{String(response.retrieval.algorithm)}</Tag> : null}
-                      <Tag>{String(response.retrieval.mode)}</Tag>
-                      <Tag>{String(response.retrieval.returned)} {tr("条", "results")}</Tag>
-                    </Space>
-                  }
                 >
+                  <Space wrap className="answer-status">
+                    {response.retrieval.algorithm ? <Tag color="cyan">{String(response.retrieval.algorithm)}</Tag> : null}
+                    <Tag>{String(response.retrieval.mode)}</Tag>
+                    <Tag>{response.sources.length} {tr("条", "results")}</Tag>
+                  </Space>
                   <List
                     dataSource={response.sources}
                     locale={{ emptyText: <Empty description={tr("没有返回证据", "No evidence returned")} /> }}

@@ -7,12 +7,13 @@ import { api } from "../api";
 import type { FailureCategory, SearchAnswerStatus, SearchTestDetail, SearchTestItem, SearchTestRun } from "../types";
 import { errorMessage, formatDate } from "../utils";
 import { useLanguage } from "../i18n";
-import { answerPresentation } from "../answerPresentation";
+import { answerPresentation, evidenceWarnings } from "../answerPresentation";
 
 function VersionResult({ run }: { run: SearchTestRun }) {
   const { tr } = useLanguage();
   const { response } = run;
   const presentation = answerPresentation(response);
+  const warnings = evidenceWarnings(response);
   const model = response.generation.model;
   const failureCategory = response.generation.failure_category as FailureCategory | undefined;
   const failureReason = response.generation.failure_reason as string | undefined;
@@ -26,7 +27,7 @@ function VersionResult({ run }: { run: SearchTestRun }) {
   return (
     <Card size="small" className="history-run-card">
       <Space direction="vertical" size={5} style={{ width: "100%" }}>
-        <Space wrap>
+        <Space wrap className="answer-status">
           <Tag color="blue">{tr(`第 ${run.run_number} 次`, `Run ${run.run_number}`)}</Tag>
           <Tag color={presentation.color}>
             {tr(...presentation.label)}
@@ -40,25 +41,26 @@ function VersionResult({ run }: { run: SearchTestRun }) {
             </Tag>
           ) : null}
         </Space>
+        {warnings.map((warning) => <Alert key={warning[1]} type="warning" showIcon title={tr(...warning)} />)}
         {failureCategory && failureReason ? (
           <Typography.Text type="danger">
             {tr("失败原因：", "Failure reason: ")}{failureReason}
           </Typography.Text>
         ) : null}
         {presentation.answerText ? (
-          <Typography.Paragraph className="result-snippet" copyable={{ text: presentation.answerText }}>
+          <Typography.Paragraph className="result-snippet answer-body" copyable={{ text: presentation.answerText }}>
             {presentation.answerText}
           </Typography.Paragraph>
         ) : <Typography.Text type="secondary">{tr("未提供可显示的答案正文。", "No answer body is available.")}</Typography.Text>}
         {presentation.isNative && (
-          <details>
+          <details className="answer-trace">
             <summary>{tr("原始模型输出与运行记录", "Raw model output and trace")}</summary>
-            <Typography.Paragraph className="result-snippet" copyable={{ text: presentation.rawAnswer }}>
+            <Typography.Paragraph className="result-snippet raw-output" copyable={{ text: presentation.rawAnswer }}>
               {presentation.rawAnswer || tr("无原始输出", "No raw output")}
             </Typography.Paragraph>
             <details>
               <summary>{tr("完整运行记录", "Full trace")}</summary>
-              <pre style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>
+              <pre className="trace-json" tabIndex={0} aria-label={tr("完整运行记录", "Full trace")}>
                 {JSON.stringify({ retrieval: response.retrieval, generation: response.generation }, null, 2)}
               </pre>
             </details>

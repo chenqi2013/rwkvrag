@@ -1,0 +1,35 @@
+{
+  "mode": "replay_saved_real_response_for_display; history_loaded_from_live_API",
+  "results": [
+    {
+      "height": 318,
+      "scrollHeight": 184510,
+      "overflowY": "auto",
+      "pageWidth": 1440,
+      "viewport": 1440,
+      "fontSize": "14px"
+    },
+    {
+      "height": 318,
+      "scrollHeight": 183712,
+      "overflowY": "auto",
+      "pageWidth": 1024,
+      "viewport": 1024,
+      "fontSize": "14px"
+    }
+  ],
+  "history_warning_visible": true,
+  "answer_unchanged": true,
+  "errors": [],
+  "frontend_build": "passed; existing bundle-size warning",
+  "answer_presentation_tests": {
+    "passed": 21,
+    "failed": 0
+  },
+  "original_question": "上海的地铁存在多少号线",
+  "original_source_count": 0,
+  "original_unknown_citation_ids": [
+    1
+  ],
+  "scope": "Frontend display only; the original model answer is still incorrect."
+}

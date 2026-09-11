@@ -2,6 +2,26 @@ import type { AskResponse } from "./types";
 
 type Label = [string, string];
 
+export function evidenceWarnings(response?: Pick<AskResponse, "generation" | "sources">): Label[] {
+  if (!response) return [];
+  const warnings: Label[] = [];
+  if (response.sources.length === 0) {
+    warnings.push(["本次未返回有效证据，下面的模型输出没有可核对的来源。",
+      "No evidence was returned. The model output below has no sources to check."]);
+  }
+  const audit = response.generation.citation_audit;
+  const unknown = audit && typeof audit === "object" && "unknown_label_ids" in audit
+    ? audit.unknown_label_ids : undefined;
+  if (Array.isArray(unknown)) {
+    const ids = unknown.filter((id): id is number => Number.isInteger(id) && id > 0);
+    if (ids.length) warnings.push([
+      `引用无对应来源：${ids.map((id) => `[资料 ${id}]`).join("、")}。请勿将这些引用视为依据。`,
+      `Citations have no matching source: ${ids.map((id) => `[Source ${id}]`).join(", ")}. These citations do not support the answer.`,
+    ]);
+  }
+  return warnings;
+}
+
 export function answerPresentation(response?: Pick<AskResponse, "answer" | "generation">) {
   const generation = response?.generation ?? {};
   const rawAnswer = response?.answer ?? "";
