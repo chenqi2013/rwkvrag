@@ -98,6 +98,8 @@ def test_continuation_prefill_changes_only_final_prompt_character_and_body_bound
     {"rwkvos_reader_state_id": "reader-trained"},
     {"rwkvos_reader_prompt_protocol": "rwkv_g1j_no_think_v1"},
     {"rwkvos_reader_input_layout": "task_last"},
+    {"rwkvos_binary_reader_state_id": "reader-trace-450"},
+    {"rwkvos_writer_state_id": "writer-trace-300"},
 ])
 def test_reader_state_configuration_rejects_mismatched_pipeline(overrides):
     with pytest.raises(ValueError):
@@ -115,3 +117,21 @@ def test_canonical_reader_configuration_routes_only_reader_options():
     assert options["reader_prompt_protocol"] == "rwkv_g1j_no_think_v1"
     assert options["reader_input_layout"] == "task_last"
     assert settings.native_resolver_max_tokens == 32
+
+
+def test_trace_states_use_separate_stage_options_with_zero_planner():
+    settings = Settings(_env_file=None, native_transport="rwkvos_batch",
+        native_resolver_protocol="binary_query", native_resolver_prefill="<think></think",
+        native_task_source="queries", native_resolver_task_grouping="individual",
+        rwkvos_reader_prompt_protocol="rwkv_g1j_no_think_v1",
+        rwkvos_binary_reader_state_id="reader-trace-450",
+        native_writer_prompt_protocol="evidence_first", native_writer_prefill="<think></think",
+        rwkvos_writer_prompt_protocol="rwkv_g1j_no_think_v1",
+        rwkvos_writer_state_id="writer-trace-300")
+    options = model_client_options(settings)
+    assert options["state_id"] is None
+    assert options["reader_state_id"] == "reader-trace-450"
+    assert options["writer_state_id"] == "writer-trace-300"
+    assert options["reader_input_layout"] == "original"
+    with pytest.raises(ValueError):
+        Settings(**{**settings.model_dump(), "native_resolver_protocol": "task_units"})

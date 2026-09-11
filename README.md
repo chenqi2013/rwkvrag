@@ -17,7 +17,7 @@ Reader在60道受控阅读挑战中从48/60提高到60/60。Writer明显减少�
 
 ## 使用
 
-通用安装与接口见[Python服务说明](llamaindex-retrieval/README.md)，现有环境的管理方式见[本地部署说明](llamaindex-retrieval/deploy/local/README.md)。通过 `POST /v1/ask` 使用RAG；API接口文档为 `/docs`。当前项目只维护后端，前端已移除。
+通用安装与接口见[Python服务说明](llamaindex-retrieval/README.md)，现有环境的管理方式见[本地部署说明](llamaindex-retrieval/deploy/local/README.md)。本地页面为 <http://127.0.0.1:18440/admin/#/search>，通过后端 `POST /v1/ask` 执行真实RAG；API接口文档为 `/docs`。现有前端已恢复用于人工试用。
 
 仅使用指定的RWKV7 G1j 2.9B。训练后的state必须显式选择；训练完成不等于应用默认配置已经切换。2026-09-11测试结束后，按用户要求保留比较服务，没有恢复原问答服务。
 

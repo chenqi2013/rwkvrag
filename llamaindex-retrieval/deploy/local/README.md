@@ -1,8 +1,8 @@
 # WSL 本地问答
 
-本地API地址为 `http://127.0.0.1:18440`，交互接口文档为 `/docs`，RAG调用为 `POST /v1/ask`。当前只维护后端API。
+本地API地址为 `http://127.0.0.1:18440`，交互接口文档为 `/docs`，RAG调用为 `POST /v1/ask`。页面入口为 <http://127.0.0.1:18440/admin/#/search>，已有前端用于实际试用。
 
-使用 **RWKV7 G1j 2.9B + OpenSearch BM25 + MongoDB**，没有embedding，服务器推理使用物理GPU3。本轮训练和评测见[StateTune经验](../../../docs/statetune-experience.md)。2026-09-11测试后保留比较服务，未恢复原问答推理服务；下面的管理命令是已有服务的操作说明，不表示现在已加载zero或某个训练state。
+使用 **RWKV7 G1j 2.9B + OpenSearch BM25 + MongoDB**，没有embedding，服务器推理使用物理GPU3。本轮训练和评测见[StateTune经验](../../../docs/statetune-experience.md)。2026-09-11测试后保留比较服务，未恢复原问答推理服务；前端试用配置将Reader设为reader-trace-450、Writer设为writer-trace-300，Planner保持zero；三阶段由同一比较推理服务按请求加载对应state，不启动第二个GPU模型服务。
 
 ## 本地服务
 

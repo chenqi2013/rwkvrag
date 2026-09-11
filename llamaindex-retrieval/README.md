@@ -2,9 +2,9 @@
 
 从 `bm250820@2bbc406` 重建。`rwkv_pipeline.py` 编排检索、原文选择和作答，`model_client.py` 选择传输，`verbatim_chunking.py` 保留原文。约束见 [ARCHITECTURE_RULES.md](ARCHITECTURE_RULES.md)。
 
-通过 `POST /v1/ask` 调用 **RWKV7 G1j 2.9B + OpenSearch BM25 + MongoDB**，不使用embedding。前端源码与静态页面已移除；API交互文档在 `/docs`，文件、知识库、历史和trace仍由后端接口管理。
+通过 `POST /v1/ask` 调用 **RWKV7 G1j 2.9B + OpenSearch BM25 + MongoDB**，不使用embedding。现有前端用于人工试用，入口为 <http://127.0.0.1:18440/admin/#/search>；API交互文档在 `/docs`。文件、知识库、历史和trace由后端接口管理。
 
-本轮2000条数据与六组state训练、评测已完成，见[StateTune经验](../docs/statetune-experience.md)及[最新结果](eval/trace-eval-20260911/RESULTS.md)。Reader和Writer部分能力有改善，Planner出现格式退步；不同题组结果不能合成全场景准确率。训练state需要显式选择，应用配置以本机配置文件为准。
+本轮2000条数据与六组state训练、评测已完成，见[StateTune经验](../docs/statetune-experience.md)及[最新结果](eval/trace-eval-20260911/RESULTS.md)。Reader和Writer部分能力有改善，Planner出现格式退步；不同题组结果不能合成全场景准确率。试用配置按阶段使用Reader450与Writer300，Planner保持零state；这个组合是试用候选，尚未证明在完整RAG中最优。应用配置以本机配置文件为准。
 
 实验原始输出、旧方案、模型与源码依赖按[归档说明](../docs/artifacts.md)恢复。2026-09-11测试后保留比较推理服务，未恢复旧问答模型服务；不要将历史部署说明当成当前加载状态。
 
@@ -40,6 +40,8 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 | `NATIVE_MODEL` | `rwkv7-g1j-2.9b-20260831-ctx16384` | 服务身份校验 |
 | `RWKVOS_CF_ACCESS_CLIENT_ID` / `RWKVOS_CF_ACCESS_CLIENT_SECRET` | 空 | 只在本机配置，不进入 trace |
 | `RWKVOS_STATE_ID` | 省略 | 仅使用有效且模型兼容的 state |
+| `RWKVOS_WRITER_STATE_ID` | 省略 | 只覆盖Writer；需要canonical evidence-first协议 |
+| `RWKVOS_BINARY_READER_STATE_ID` | 省略 | 只供binary_query Reader使用，与旧编号Reader state分开 |
 | `RWKVOS_READER_STATE_ID` | 省略 | 可仅覆盖 Reader；省略时继承全局 state，零对照须两者均为空 |
 | `RWKVOS_READER_PROMPT_PROTOCOL` | `batch_complete_v1` | 显式 canonical 候选为 `rwkv_g1j_no_think_v1` |
 | `RWKVOS_READER_INPUT_LAYOUT` | `original` | `task_last` 与数据渲染共用实现，仅可搭配 canonical Reader |

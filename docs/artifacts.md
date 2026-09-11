@@ -48,6 +48,6 @@ tar -xzf data/downloads/statetune-20260911/statetune-states-20260911.tar.gz \
 
 维护入口收敛为根README、后端说明、StateTune经验和数据入口。重复阶段报告、旧草稿和原始调用移出活动目录，保存在已校验附件及本地归档中；原有Git历史保持不变。具体路径见[CLEANUP.json](../artifacts/statetune-20260911/CLEANUP.json)。
 
-按要求删除前端 `web/`、静态页面与挂载逻辑，后端根路径指向API文档；知识库、文件、历史及RAG后端接口保留。前端不再参与构建或验证。旧Go原型同样移除。
+旧Go原型已移除。现有前端根据最新试用要求恢复，连接同一套2.9B RAG后端；实验记录与过时文档的清理保持有效。后续部署验证单独记录，不改写历史测试回执。
 
 必要的小型回归材料保留在Git。发布时测试结果及历史失败对照见[VALIDATION.json](../artifacts/statetune-20260911/VALIDATION.json)，没有把已知失败改成跳过或声称全量测试通过。

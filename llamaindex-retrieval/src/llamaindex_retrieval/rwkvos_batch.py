@@ -147,6 +147,7 @@ class RwkvosBatchClient:
         max_concurrency: int = 32, transport: httpx.AsyncBaseTransport | None = None,
         batch_size: int = 8, batch_wait_ms: float = 5, state_id: str | None = None,
         reader_state_id: str | None = None, reader_prompt_protocol: str = "legacy",
+        writer_state_id: str | None = None,
         reader_input_layout: str = "original",
         writer_prompt_protocol: str = "legacy",
         prefill_mode: str = "complete",
@@ -178,6 +179,10 @@ class RwkvosBatchClient:
             raise ValueError("unsupported Reader prompt protocol")
         if writer_prompt_protocol not in {"legacy", "rwkv_g1j_no_think_v1"}:
             raise ValueError("unsupported Writer prompt protocol")
+        if writer_state_id is not None and (
+                not isinstance(writer_state_id, str) or not writer_state_id.strip()
+                or writer_prompt_protocol != "rwkv_g1j_no_think_v1"):
+            raise ValueError("Writer state requires a nonempty ID and canonical prompt protocol")
         if reader_state_id is not None and reader_prompt_protocol != "rwkv_g1j_no_think_v1":
             raise ValueError("Reader state requires its canonical prompt protocol")
         if reader_input_layout not in {"original", "task_last"}:
@@ -220,6 +225,7 @@ class RwkvosBatchClient:
         self.prefill_mode = prefill_mode
         self.state_id = state_id
         self.reader_state_id = reader_state_id
+        self.writer_state_id = writer_state_id
         self.reader_prompt_protocol = reader_prompt_protocol
         self.reader_input_layout = reader_input_layout
         self.writer_prompt_protocol = writer_prompt_protocol
@@ -400,6 +406,8 @@ class RwkvosBatchClient:
         reader_stage = stage in ("reader", "resolver")
         state_id = (self.reader_state_id if reader_stage and self.reader_state_id is not None
                     else self.state_id)
+        if stage == "writer" and self.writer_state_id is not None:
+            state_id = self.writer_state_id
         record.update(call_id=str(uuid4()), transport="rwkvos_batch", stage=stage, model=self.model,
                       state_id=state_id, messages=deepcopy(messages), evidence_ids=list(evidence_ids),
                       started_at=_now(), status="pending", http=[], raw_text=None, finish_reason=None,

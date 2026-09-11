@@ -1,0 +1,22 @@
+{
+  "status": "frontend restored for real trial; stage-specific state routing added",
+  "pytest": {
+    "passed": 761,
+    "failed": 114,
+    "skipped": 2,
+    "same_historical_failure_ids": true,
+    "log": "pytest-stage-states.log",
+    "sha256": "736711ed0f3afaaf74982e7781839ca9956dbe1d9f95c032af513d026be72cf5"
+  },
+  "focused_tests_passed": 103,
+  "frontend_tests_passed": 19,
+  "frontend_build": "passed",
+  "frontend_build_warning": "existing JS bundle exceeds500kB",
+  "frontend_dependency_audit": "npm ci reported6 existing vulnerabilities (2moderate,4high); dependencies not upgraded in this change",
+  "intended_trial_states": {
+    "planner": null,
+    "resolver": "reader-trace-450",
+    "writer": "writer-trace-300"
+  },
+  "scope": "Not an end-to-end optimum claim. Interactive and real-call checks follow deployment."
+}

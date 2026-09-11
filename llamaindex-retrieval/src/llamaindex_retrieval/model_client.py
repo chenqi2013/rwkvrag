@@ -26,7 +26,10 @@ def model_client_options(settings, **overrides):
             if value.get_secret_value():
                 headers[name] = value.get_secret_value()
         options.update(headers=headers, state_id=settings.rwkvos_state_id,
-                       reader_state_id=settings.rwkvos_reader_state_id,
+                       reader_state_id=(settings.rwkvos_binary_reader_state_id
+                                        if settings.native_resolver_protocol == "binary_query"
+                                        else settings.rwkvos_reader_state_id),
+                       writer_state_id=settings.rwkvos_writer_state_id,
                        reader_prompt_protocol=settings.rwkvos_reader_prompt_protocol,
                        reader_input_layout=settings.rwkvos_reader_input_layout,
                        writer_prompt_protocol=settings.rwkvos_writer_prompt_protocol,

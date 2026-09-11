@@ -388,6 +388,26 @@ async def test_reader_state_and_canonical_prompt_are_isolated_from_planner_write
     assert all(r.raw_text == " E1 \n" for r in results)
 
 
+async def test_writer_and_reader_states_keep_planner_at_zero_and_preserve_raw_outputs():
+    payloads = []
+    def handler(request):
+        payload = json.loads(request.content)
+        payloads.append(payload)
+        return httpx.Response(200, json=response([" 原始结果 \n"] * len(payload["contents"])))
+    async with client(handler, reader_state_id="reader-trace-450",
+                      writer_state_id="writer-trace-300",
+                      reader_prompt_protocol="rwkv_g1j_no_think_v1",
+                      writer_prompt_protocol="rwkv_g1j_no_think_v1") as model:
+        results = await asyncio.gather(*(model.complete(MESSAGES, stage=stage)
+                                        for stage in ["resolver", "planner", "writer"]))
+    assert len(payloads) == 3
+    assert [r.trace["state_id"] for r in results] == ["reader-trace-450", None, "writer-trace-300"]
+    legacy, _ = render_batch_prompt(MESSAGES, "<think></think>")
+    for payload in payloads:
+        assert payload["contents"] == [legacy + ("\n" if "state_id" in payload else "")]
+    assert all(r.raw_text == " 原始结果 \n" for r in results)
+
+
 async def test_zero_state_reader_uses_same_canonical_prompt_without_state_parameter():
     payloads = []
     def handler(request):

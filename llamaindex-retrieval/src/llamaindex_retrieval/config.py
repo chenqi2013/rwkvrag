@@ -50,6 +50,8 @@ class Settings(BaseSettings):
     rwkvos_prefill_mode: Literal["complete", "continuation"] = "complete"
     rwkvos_state_id: str | None = None
     rwkvos_reader_state_id: str | None = None
+    rwkvos_binary_reader_state_id: str | None = None
+    rwkvos_writer_state_id: str | None = None
     rwkvos_reader_prompt_protocol: Literal["legacy", "rwkv_g1j_no_think_v1"] = "legacy"
     rwkvos_writer_prompt_protocol: Literal["legacy", "rwkv_g1j_no_think_v1"] = "legacy"
     rwkvos_reader_input_layout: Literal["original", "task_last"] = "original"
@@ -110,6 +112,16 @@ class Settings(BaseSettings):
             raise ValueError("Binary Reader requires individual query tasks, original layout and no legacy state")
         if self.native_resolver_format_repair and self.native_resolver_protocol != "task_units":
             raise ValueError("Reader format repair requires task_units")
+        if self.rwkvos_binary_reader_state_id is not None:
+            if (not self.rwkvos_binary_reader_state_id.strip()
+                    or self.native_resolver_protocol != "binary_query"
+                    or self.rwkvos_reader_prompt_protocol != "rwkv_g1j_no_think_v1"):
+                raise ValueError("Binary Reader state requires its canonical binary protocol")
+        if self.rwkvos_writer_state_id is not None:
+            if (not self.rwkvos_writer_state_id.strip()
+                    or self.rwkvos_writer_prompt_protocol != "rwkv_g1j_no_think_v1"
+                    or self.native_writer_prompt_protocol != "evidence_first"):
+                raise ValueError("Writer state requires canonical evidence-first Writer protocol")
         if self.rwkvos_writer_prompt_protocol == "rwkv_g1j_no_think_v1":
             if (self.native_transport != "rwkvos_batch" or self.rwkvos_prefill_mode != "complete"
                     or self.native_writer_prefill != "<think></think"):
