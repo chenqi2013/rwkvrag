@@ -1,0 +1,35 @@
+{
+  "knowledge_base_id": "wiki-5000-20260908",
+  "knowledge_base_name": "FineWiki 中文百科（5000篇）",
+  "source_index": "rwkvrag-bm250820-wiki-5000-20260908",
+  "source_uuid": "lYXmlfpMRPCJ5tyq9YW67g",
+  "target_index": "rwkvrag-local-use-v1",
+  "documents": 5000,
+  "wiki_chunks": 45960,
+  "previous_target_chunks": 91,
+  "target_chunks": 46051,
+  "source_spans_verified": 45960,
+  "all_copied_nodes_equal": true,
+  "previous_nodes_unchanged": true,
+  "reindex": {
+    "took": 2756,
+    "timed_out": false,
+    "total": 45960,
+    "updated": 0,
+    "created": 45960,
+    "deleted": 0,
+    "batches": 46,
+    "version_conflicts": 0,
+    "noops": 0,
+    "retries": {
+      "bulk": 0,
+      "search": 0
+    },
+    "throttled_millis": 0,
+    "requests_per_second": -1.0,
+    "throttled_until_millis": 0,
+    "failures": []
+  },
+  "corpus_manifest_sha256": "35563fa6e5d7c9205cea3d9e1cd5476b01774f11a292dafcfed82fe4d8256ced",
+  "source_content_manifest_sha256": "4276c6df4973ed1b0dc1828224e1bf8d9146429035cc93a995faf2ea9c56fe2f"
+}

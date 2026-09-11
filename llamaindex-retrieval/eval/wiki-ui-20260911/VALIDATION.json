@@ -1,0 +1,75 @@
+{
+  "files_api_unique_ids": 5000,
+  "all_ready": true,
+  "node_count_sum": 45960,
+  "empty_past_last_page": true,
+  "representative_downloads": [
+    {
+      "page_id": "1674322",
+      "file_id": "f9fea43cdecd6b8e78e44089",
+      "sha256": "943ee9f709b4b19278e39546d178de462c1ac1ddba3245be7961f79711796044",
+      "chunks_response_keys": [
+        "items",
+        "next_offset"
+      ]
+    },
+    {
+      "page_id": "3088073",
+      "file_id": "5ca07bb0fe70b111e1929492",
+      "sha256": "b9173b52d2c1df523589004563f26a8beb654b456d644bdcda30bcce722c553a",
+      "chunks_response_keys": [
+        "items",
+        "next_offset"
+      ]
+    },
+    {
+      "page_id": "3231096",
+      "file_id": "f12cdf1d1e9585242e5aa62f",
+      "sha256": "78637a3081f90624fce2eb56d76f8a5a51ff18c692e40ed2b9e3203dfdc39995",
+      "chunks_response_keys": [
+        "items",
+        "next_offset"
+      ]
+    },
+    {
+      "page_id": "3675734",
+      "file_id": "36487f8ea6c5afcc0ff03377",
+      "sha256": "20677232e8c96a3614336d67ba286ad319d5d5ebdc7463dc1959316145828714",
+      "chunks_response_keys": [
+        "items",
+        "next_offset"
+      ]
+    },
+    {
+      "page_id": "7035429",
+      "file_id": "490f8b74a7ec8a9b08a40f5e",
+      "sha256": "69a6e2cea663aaebb2569c30ade613d1db78179a6321e9721d0ba3cbf75a35bd",
+      "chunks_response_keys": [
+        "items",
+        "next_offset"
+      ]
+    },
+    {
+      "page_id": "7670931",
+      "file_id": "8cf1a8c41979df5113e6621d",
+      "sha256": "af17bbde9251795c0f219a79cb55d252e45790c3b8731bbee459b0bfe57caa5f",
+      "chunks_response_keys": [
+        "items",
+        "next_offset"
+      ]
+    }
+  ],
+  "questions": 13,
+  "source_quotes_hashes_verified": true,
+  "pytest": {
+    "passed": 761,
+    "failed": 114,
+    "skipped": 2,
+    "failure_ids_unchanged": true
+  },
+  "frontend_build": "passed; existing bundle-size warning",
+  "frontend_answer_presentation_tests": {
+    "passed": 19,
+    "failed": 0
+  }
+}

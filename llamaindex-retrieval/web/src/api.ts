@@ -51,9 +51,9 @@ export const api = {
     }),
   deleteKnowledgeBase: (id: string) =>
     request<void>(`/v1/admin/knowledge-bases/${id}`, { method: "DELETE" }),
-  files: (knowledgeBaseId?: string) =>
+  files: (knowledgeBaseId?: string, limit = 200, offset = 0) =>
     request<FileItem[]>(
-      `/v1/admin/files${knowledgeBaseId ? `?knowledge_base_id=${encodeURIComponent(knowledgeBaseId)}` : ""}`,
+      `/v1/admin/files?limit=${limit}&offset=${offset}${knowledgeBaseId ? `&knowledge_base_id=${encodeURIComponent(knowledgeBaseId)}` : ""}`,
     ),
   uploadFile: (file: File, knowledgeBaseId: string) => {
     const form = new FormData();

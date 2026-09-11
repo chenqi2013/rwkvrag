@@ -251,9 +251,12 @@ class MongoRepository:
         self,
         knowledge_base_id: str | None = None,
         limit: int = 200,
+        offset: int = 0,
     ) -> list[dict[str, Any]]:
         query = {"knowledge_base_id": knowledge_base_id} if knowledge_base_id else {}
-        cursor = self.files.find(query, {"_id": 0}).sort("created_at", DESCENDING).limit(limit)
+        cursor = self.files.find(query, {"_id": 0}).sort(
+            [("created_at", DESCENDING), ("id", ASCENDING)]
+        ).skip(offset).limit(limit)
         return await cursor.to_list(length=limit)
 
     async def update_file(self, file_id: str, values: dict[str, Any]) -> dict[str, Any] | None:

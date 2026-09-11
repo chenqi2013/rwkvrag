@@ -27,7 +27,9 @@ systemctl --user stop rwkvrag-api.service rwkvrag-mongodb.service rwkvrag-opense
 
 本地服务启动后，需等 MongoDB、OpenSearch 恢复完成；`/v1/admin/health` 检查两者，模型就绪另看 `http://127.0.0.1:18423/health`。`active` 本身不证明模型已加载。
 
-“验收资料”知识库包含人工构造材料。原5,000篇Wiki索引保留用于大库测试；`rwkvrag-local-use-v1`是另一个知识库。
+“验收资料”知识库包含人工构造材料。此前评测的5000篇Wiki已接入页面，选择“FineWiki 中文百科（5000篇）”即可检索45960个原文片段。`rwkvrag-local-use-v1`是页面使用的OpenSearch索引，包含这个Wiki知识库和原有小型知识库；原Wiki索引另行保留。接入后页面索引合计5019篇文档、46051个片段，文档列表支持分页。
+
+[Wiki试用指南与13道参考问答](../../../docs/wiki-rag-test-guide.md)说明如何选择资料、核对答案，以及如何用本目录的 `connect_wiki.py` 将已有冻结Wiki索引接入管理页。
 
 ## GPU3 服务
 
@@ -51,7 +53,7 @@ Reader协议取决于选用的配置，合法输出仍可能选错原文，需�
 
 服务代码同时校验2.9B模型名、权重SHA及32层/40头布局，不能仅修改配置便换成其他模型。
 
-## 当前页面试用
+## StateTune 方法文档试用
 
 打开 <http://127.0.0.1:18440/admin/#/search>，知识库过滤选择“StateTune 数据构建与训练方法”。这里导入的是项目正式方法文档，模型仍需通过BM25检索、Reader判断和Writer生成；没有预置这些问题的答案。
 

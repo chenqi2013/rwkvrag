@@ -1,0 +1,391 @@
+{
+  "results": [
+    {
+      "id": "wiki-ui-09",
+      "status": 200,
+      "question": "克赖沙的面积和人口分别是多少？人口统计截至哪一年？",
+      "answer": "克赖沙面积：28.92平方千米[资料 1]\n克赖沙人口：4533人[资料 1]\n克赖沙人口统计截至哪一年：截至2020年[资料 1]",
+      "generation": "completed",
+      "history": [],
+      "stages": [
+        {
+          "stage": "planner",
+          "state_id": null,
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "writer",
+          "state_id": "writer-trace-300",
+          "status": "completed"
+        }
+      ],
+      "source_count": 4,
+      "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+      "answer_modified": false,
+      "elapsed_ms": 17057,
+      "citation_map": {
+        "1": "verbatim-v1:d7c0acf2a265e832b583e143fde27046cec5e0e8e19016512475e79d71a6c964@0:70:e388530ae71c",
+        "2": "verbatim-v1:9949445cf2095463afbf5f958aa900b9add6ef77e9bc0e7b42bd14d9e2e320f4@0:76:3c0556c4a7d0",
+        "3": "verbatim-v1:2b2879195616fa69bbacbabd60aff27ffec78b08e7f617d5aad251cf27fb4622@0:97:a1579a5cab4e",
+        "4": "verbatim-v1:0151b7b3497bc85326ef28ad4d07b8975d8efb052768020f5f689a74329d2c4a@0:95:5959b6743ebd"
+      },
+      "citation_audit": {
+        "label_ids": [
+          1
+        ],
+        "scope": "literal_labels_in_answer_span",
+        "unknown_label_ids": [],
+        "semantic_support_verified": false
+      },
+      "raw_response_sha256": "832fad8cd0d00f03b1b86660cafc218938c16928ffd038bf0d28858efa1070f3",
+      "sources": [
+        {
+          "title": "克赖沙",
+          "snippet": "克赖沙（德語：）是德国萨克森州的一个市镇，隶属于萨克森施韦茨-东厄尔士山县。总面积为28.92平方千米，截至2020年总人口为4533人。\n",
+          "uri": "https://zh.wikipedia.org/wiki/%E5%85%8B%E8%B5%96%E6%B2%99"
+        },
+        {
+          "title": "下萨瓦统计区",
+          "snippet": "下萨瓦统计区（斯洛維尼亞語：） ，是斯洛文尼亚的一个统计区，位於該國東南部。面積968平方公里，人口75,727人(2015年)，最大城市為克爾什科。\n",
+          "uri": "https://zh.wikipedia.org/wiki/%E4%B8%8B%E8%90%A8%E7%93%A6%E7%BB%9F%E8%AE%A1%E5%8C%BA"
+        },
+        {
+          "title": "內利堡 (密西西比州)",
+          "snippet": "根據2020年美國人口普查的數據，內利堡的面積為18.48平方千米，當中陸地面積為18.38平方千米，而水域面積為0.10平方千米。當地共有人口1316人，而人口密度為每平方千米71.21人。\n",
+          "uri": "https://zh.wikipedia.org/wiki/%E5%85%A7%E5%88%A9%E5%A0%A1_(%E5%AF%86%E8%A5%BF%E8%A5%BF%E6%AF%94%E5%B7%9E)"
+        },
+        {
+          "title": "佩森鎮區 (伊利諾伊州亞當斯縣)",
+          "snippet": "根據2010年美國人口普查的數據，佩森鎮區的面積為99.20平方千米，當中陸地面積為99.10平方千米，而水域面積為0.10平方千米。當地共有人口1764人，而人口密度為每平方千米17人。\n",
+          "uri": "https://zh.wikipedia.org/wiki/%E4%BD%A9%E6%A3%AE%E9%8E%AE%E5%8D%80_(%E4%BC%8A%E5%88%A9%E8%AB%BE%E4%BC%8A%E5%B7%9E%E4%BA%9E%E7%95%B6%E6%96%AF%E7%B8%A3)"
+        }
+      ]
+    },
+    {
+      "id": "wiki-ui-06",
+      "status": 200,
+      "question": "Windows NT 3.5 工作站版允许多少个客户端并发访问文件服务器？支持 Mac 客户端吗？",
+      "answer": "Windows NT 3.5 工作站版允许 10 个客户端并发访问文件服务器[资料 1]。不支持 Mac 客户端[资料 1]。",
+      "generation": "completed",
+      "history": [],
+      "stages": [
+        {
+          "stage": "planner",
+          "state_id": null,
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "writer",
+          "state_id": "writer-trace-300",
+          "status": "completed"
+        }
+      ],
+      "source_count": 1,
+      "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+      "answer_modified": false,
+      "elapsed_ms": 19960,
+      "citation_map": {
+        "1": "verbatim-v1:f1a75b70d11a1bd1a209ee5f51525da833cc70133a30112ade9f82d0d9f6080c@0:756:95bc906b6cd3"
+      },
+      "citation_audit": {
+        "label_ids": [
+          1
+        ],
+        "scope": "literal_labels_in_answer_span",
+        "unknown_label_ids": [],
+        "semantic_support_verified": false
+      },
+      "raw_response_sha256": "3429803235f9610ab1ffffa0ee3f9dca801db275314cc4298d937c09bdd3bb31",
+      "sources": [
+        {
+          "title": "Windows NT 3.5",
+          "snippet": "Windows NT 3.5有两个版本：NT Workstation（工作站版）和NT Server（服务器版）。他们分别代替了Windows NT 3.1的NT和NT Advanced Server（高级服务器）版本。工作站版本只允许10个客户端并发访问文件服务器，不支持Mac客户端。\nWindows NT 3.5包括集成的Winsock和TCP/IP支持。（它的前任Windows NT 3.1，只包括了TCP/IP的一个基于AT&T UNIX System V的“STREAMS”应用程序接口的不完整实现。）Windows NT 3.5中的TCP/IP和IPX/SPX协议栈被改写。 NetBIOS over TCP/IP ( NetBT ) （用作对于TCP/IP的兼容层）、Microsoft DHCP客户端与服务器和Microsoft WINS客户端与服务器也被引入。\nWindows NT 3.5可以通过FTP分享文件，通过LPR共享打印机。它可以作为一个Gopher，HTTP或WAIS服务器运行，并包括远程访问服务，可使远程拨号调制解调器使用SLIP或PPP协议接入局域网服务。Windows NT 3.5资源包包括了Microsoft DNS的首个实现。\nWindows NT 3.5的其他新功能还包括对VFAT文件系统的支持（可使用长达255个字符的文件名），对象连接与嵌入（OLE）2.0版，支持IOCP。它搭载了新的启动画面，配合全新的用户图形界面，以便与Windows for Workgroups 3.11保持一致。它在性能上有所提升，并且比Windows NT 3.1所需内存更少。除此之外，从Windows NT 3.5之后，Windows NT不再依赖MS-DOS使用。\n\n",
+          "uri": "https://zh.wikipedia.org/wiki/Windows_NT_3.5"
+        }
+      ]
+    },
+    {
+      "id": "wiki-ui-10",
+      "status": 200,
+      "question": "仅依据《克赖沙》这篇资料，2026年人口是多少？",
+      "answer": "2026年人口数据不可用。[资料 2]",
+      "generation": "completed",
+      "history": [],
+      "stages": [
+        {
+          "stage": "planner",
+          "state_id": null,
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "resolver",
+          "state_id": "reader-trace-450",
+          "status": "completed"
+        },
+        {
+          "stage": "writer",
+          "state_id": "writer-trace-300",
+          "status": "completed"
+        }
+      ],
+      "source_count": 0,
+      "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+      "answer_modified": false,
+      "elapsed_ms": 7095,
+      "citation_map": {},
+      "citation_audit": {
+        "label_ids": [
+          2
+        ],
+        "scope": "literal_labels_in_answer_span",
+        "unknown_label_ids": [
+          2
+        ],
+        "semantic_support_verified": false
+      },
+      "raw_response_sha256": "239cc93a047aee3908859333dc5c23257ae6925ebad3f4cbdd937202262dc1b1",
+      "sources": []
+    }
+  ],
+  "errors": [],
+  "manual_assessment": {
+    "wiki-ui-09": "面积、人口、年份正确；资料1包含对应事实。",
+    "wiki-ui-06": "10个并发客户端与不支持Mac正确；资料1包含对应事实。",
+    "wiki-ui-10": "未编造2026年人口数值，但无有效来源仍生成资料2引用，不能判为完整通过。"
+  }
+}

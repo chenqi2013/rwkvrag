@@ -43,6 +43,8 @@ export default function FilesPage() {
   const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [knowledgeBaseId, setKnowledgeBaseId] = useState("default");
   const [files, setFiles] = useState<FileItem[]>([]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [chunks, setChunks] = useState<ChunkItem[]>([]);
@@ -54,16 +56,20 @@ export default function FilesPage() {
     try {
       const [knowledgeBaseData, fileData] = await Promise.all([
         api.knowledgeBases(),
-        api.files(knowledgeBaseId),
+        api.files(knowledgeBaseId, pageSize, (page - 1) * pageSize),
       ]);
       setKnowledgeBases(knowledgeBaseData);
       setFiles(fileData);
+      const count = knowledgeBaseData.find((item) => item.id === knowledgeBaseId)?.file_count ?? 0;
+      if ((page - 1) * pageSize >= count && page > 1) {
+        setPage(Math.max(1, Math.ceil(count / pageSize)));
+      }
     } catch (error) {
       void message.error(errorMessage(error));
     } finally {
       setLoading(false);
     }
-  }, [knowledgeBaseId]);
+  }, [knowledgeBaseId, page, pageSize]);
 
   useEffect(() => void load(), [load]);
 
@@ -194,7 +200,7 @@ export default function FilesPage() {
           value={knowledgeBaseId}
           style={{ width: 180 }}
           options={knowledgeBases.map((item) => ({ value: item.id, label: item.name }))}
-          onChange={setKnowledgeBaseId}
+          onChange={(id) => { setKnowledgeBaseId(id); setPage(1); }}
         />
       </div>
       <Alert
@@ -225,7 +231,13 @@ export default function FilesPage() {
           columns={columns}
           dataSource={files}
           loading={loading}
-          pagination={{ pageSize: 10 }}
+          pagination={{
+            current: page, pageSize,
+            total: knowledgeBases.find((item) => item.id === knowledgeBaseId)?.file_count ?? 0,
+            showSizeChanger: true,
+            showTotal: (total) => tr(`共 ${total} 篇文档`, `${total} documents`),
+            onChange: (nextPage, nextSize) => { setPage(nextPage); setPageSize(nextSize); },
+          }}
           locale={{ emptyText: <Empty description={tr("当前知识库还没有上传文件", "No files have been uploaded to this knowledge base")} /> }}
           scroll={{ x: 1000 }}
         />

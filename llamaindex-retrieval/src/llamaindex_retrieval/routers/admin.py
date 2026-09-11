@@ -82,9 +82,10 @@ async def delete_knowledge_base(
 async def list_files(
     knowledge_base_id: str | None = None,
     limit: int = Query(default=200, ge=1, le=1000),
+    offset: int = Query(default=0, ge=0),
     repo: MongoRepository = Depends(repository),
 ) -> list[dict]:
-    return await repo.list_files(knowledge_base_id, limit)
+    return await repo.list_files(knowledge_base_id, limit, offset)
 
 
 @router.post("/files", response_model=FileUploadAccepted, status_code=202)
