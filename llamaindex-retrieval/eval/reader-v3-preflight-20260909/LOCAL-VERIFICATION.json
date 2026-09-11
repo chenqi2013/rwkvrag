@@ -1,0 +1,9 @@
+{
+  "verified_result_files": 6,
+  "all_result_hashes_match": true,
+  "all1062_base_tensors_equal": true,
+  "group_divisors_verified": true,
+  "optimizer_updates": 0,
+  "peak_allocated_gib": 7.769630432128906,
+  "checkpointing_caveat": "One top-level model forward; internal blocks recomputed during backward."
+}

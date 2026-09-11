@@ -1,0 +1,9 @@
+{
+  "page_id": "5409100",
+  "title": "1972年臺灣",
+  "reason": "Formal canonical prompts require4254..4282 tokens, exceed4096 before full generation reserve. Entire document rejected without truncation.",
+  "original_author_script_sha256": "9d25025e442454c6051b1697b7f854959653031fb4cf6e0d9faf3693821257c1",
+  "replacement_page_id": "7340228",
+  "replacement_title": "上小川站",
+  "source_files_changed": false
+}

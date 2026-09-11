@@ -1,0 +1,21 @@
+{
+  "rejected_original_pages": [
+    "2861720",
+    "2899841",
+    "2901031",
+    "2902065",
+    "3790333",
+    "6069162",
+    "7985587",
+    "8716488"
+  ],
+  "same_page_split_preserved": true,
+  "four_structured_sources_changed_to_prose": [
+    "7985587",
+    "2861720",
+    "6069162",
+    "3790333"
+  ],
+  "original_files_preserved": true,
+  "review_pending": true
+}

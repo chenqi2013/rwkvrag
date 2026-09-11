@@ -1,0 +1,318 @@
+{
+  "reviewer": "Codex original author, second pass",
+  "independent_review": false,
+  "semantic_verification_by_code": false,
+  "model_outputs_used": false,
+  "cases_rechecked": 43,
+  "labels_changed": 0,
+  "annotations_sha256": "03e55f3bced42489233cbe0274ca61b2528b578e8a6f7f714b503048e846c119",
+  "documents": [
+    {
+      "page_id": "3238689",
+      "review_note": "E1给出列宁命名，E2给出1541台，E3给出1980年报废；完整原文未给出平均无故障里程或单台改造费。复合问题只选可支持生产数量的E2。"
+    },
+    {
+      "page_id": "8024544",
+      "review_note": "E1解释OO来自法语或是，E2列出同愛一家2020-05-20，E3列出日光樹影2021-12-17。上架日期不能证明拍摄天数或平台订阅收入。"
+    },
+    {
+      "page_id": "6124888",
+      "review_note": "E1列出四板块，E2载明50处避难所至少171人，E3载明总补助预算2亿日元。文章未给银山财产损失总金额，也不能将总预算视为每户上限。"
+    },
+    {
+      "page_id": "5452404",
+      "review_note": "E1给出加时及十二码规则；SS02比分在E2，SS10比分和香港大球场在E3。比分、进球和入场人数不支持控球率或教练月薪。"
+    },
+    {
+      "page_id": "1279264",
+      "review_note": "校训在E1，1971年382人和3年制在E2，2021年学院转设校名及持有公司在E3。全校研究生人数和固定资产额不支持温州首届博士录取数或2017科研经费。"
+    },
+    {
+      "page_id": "5706573",
+      "review_note": "宝山区合并在E1，1754人献血在E2，沪嘉高速10月31日通车在E3。设计通行能力不等于首日实际车流，每日装配数量不等于售价；复合问句保留通车日期证据。"
+    },
+    {
+      "page_id": "1618999",
+      "review_note": "E1给出周一至周五19:00至21:00。E2给出2011梦想高飞日期，E3给出2014秘密花園重播日期；其他年份的同名节目不满足年份范围。全文没有收视率或版权费。"
+    },
+    {
+      "page_id": "4397431",
+      "review_note": "E1直接给出TypeScript，E2给出截至2017年5亿台设备，E3给出QuickSDK。工具用途描述不包含Wing售价、Texture Merger吞吐量或SDK授权费；复合问句仍选择已有SDK证据。"
+    }
+  ],
+  "case_results": [
+    {
+      "id": "reader_v3_3238689_01",
+      "selected_unit_ids": [
+        "E1"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_3238689_02",
+      "selected_unit_ids": [
+        "E2"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_3238689_03",
+      "selected_unit_ids": [
+        "E3"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_3238689_04",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_3238689_05",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_3238689_06",
+      "selected_unit_ids": [
+        "E2"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_8024544_01",
+      "selected_unit_ids": [
+        "E1"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_8024544_02",
+      "selected_unit_ids": [
+        "E2"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_8024544_03",
+      "selected_unit_ids": [
+        "E2",
+        "E3"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_8024544_04",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_8024544_05",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_6124888_01",
+      "selected_unit_ids": [
+        "E1"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_6124888_02",
+      "selected_unit_ids": [
+        "E2"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_6124888_03",
+      "selected_unit_ids": [
+        "E3"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_6124888_04",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_6124888_05",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_5452404_01",
+      "selected_unit_ids": [
+        "E1"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_5452404_02",
+      "selected_unit_ids": [
+        "E2"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_5452404_03",
+      "selected_unit_ids": [
+        "E3"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_5452404_04",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_5452404_05",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_1279264_01",
+      "selected_unit_ids": [
+        "E1"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_1279264_02",
+      "selected_unit_ids": [
+        "E2"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_1279264_03",
+      "selected_unit_ids": [
+        "E3"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_1279264_04",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_1279264_05",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_5706573_01",
+      "selected_unit_ids": [
+        "E1"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_5706573_02",
+      "selected_unit_ids": [
+        "E2"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_5706573_03",
+      "selected_unit_ids": [
+        "E2",
+        "E3"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_5706573_04",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_5706573_05",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_5706573_06",
+      "selected_unit_ids": [
+        "E3"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_1618999_01",
+      "selected_unit_ids": [
+        "E1"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_1618999_02",
+      "selected_unit_ids": [
+        "E2"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_1618999_03",
+      "selected_unit_ids": [
+        "E3"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_1618999_04",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_1618999_05",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_4397431_01",
+      "selected_unit_ids": [
+        "E1"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_4397431_02",
+      "selected_unit_ids": [
+        "E2"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_4397431_03",
+      "selected_unit_ids": [
+        "E2",
+        "E3"
+      ],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_4397431_04",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_4397431_05",
+      "selected_unit_ids": [],
+      "disposition": "unchanged after author recheck"
+    },
+    {
+      "id": "reader_v3_4397431_06",
+      "selected_unit_ids": [
+        "E3"
+      ],
+      "disposition": "unchanged after author recheck"
+    }
+  ],
+  "remaining": "Independent semantic review remains open before optimizer training; zero-update preflight measures computational feasibility only."
+}

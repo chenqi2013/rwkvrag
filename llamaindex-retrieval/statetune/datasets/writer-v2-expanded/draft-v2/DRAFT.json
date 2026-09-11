@@ -1,0 +1,57 @@
+{
+  "counts": {
+    "train": 600,
+    "evaluation": 200
+  },
+  "base_source_groups": {
+    "train": 120,
+    "evaluation": 40
+  },
+  "by_split_kind_family": {
+    "train/wiki_infobox/single": 77,
+    "train/wiki_infobox/multiple": 77,
+    "train/wiki_infobox/history": 77,
+    "train/wiki_infobox/partial": 77,
+    "train/wiki_infobox/empty": 40,
+    "train/wiki_infobox/irrelevant": 37,
+    "train/wiki_prose/single": 23,
+    "train/wiki_prose/multiple": 23,
+    "train/wiki_prose/history": 23,
+    "train/wiki_prose/partial": 23,
+    "train/wiki_prose/irrelevant": 13,
+    "train/wiki_prose/empty": 10,
+    "evaluation/wiki_infobox/single": 19,
+    "evaluation/wiki_infobox/multiple": 19,
+    "evaluation/wiki_infobox/history": 19,
+    "evaluation/wiki_infobox/partial": 19,
+    "evaluation/wiki_infobox/empty": 9,
+    "evaluation/wiki_infobox/irrelevant": 10,
+    "evaluation/wiki_prose/single": 11,
+    "evaluation/wiki_prose/multiple": 11,
+    "evaluation/wiki_prose/history": 11,
+    "evaluation/wiki_prose/partial": 11,
+    "evaluation/wiki_prose/empty": 6,
+    "evaluation/wiki_prose/irrelevant": 5,
+    "train/synthetic/table": 20,
+    "train/synthetic/versions": 20,
+    "train/synthetic/history": 20,
+    "train/synthetic/partial": 20,
+    "train/synthetic/conflict": 20,
+    "evaluation/synthetic/table": 10,
+    "evaluation/synthetic/versions": 10,
+    "evaluation/synthetic/history": 10,
+    "evaluation/synthetic/partial": 10,
+    "evaluation/synthetic/conflict": 10
+  },
+  "max_prompt_tokens": 1535,
+  "max_target_tokens": 110,
+  "training_admitted": false,
+  "independent_review_required": true,
+  "test_is_not_blind_to_authors": true,
+  "same_templates_across_splits": true,
+  "files": {
+    "train.tokens.jsonl": "8ad67c4725177fe5a3aacb88dcc9c52700971875473e72fe042e42f395d9c355",
+    "evaluation.drafts.jsonl": "3953735426137b7a195380f2de90561f761386209458d4fa8c77223d1313e1a3",
+    "train.drafts.jsonl": "bfd72b60352cf970c7a841abdf86597f5cfb50eb6cf8e933fc96de6aecc1d3b8"
+  }
+}

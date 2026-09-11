@@ -1,0 +1,66 @@
+{
+  "schema": "reader-state-eval-split-freeze-v2",
+  "at": "2026-09-09T02:47:31.665430+00:00",
+  "split": "heldout",
+  "files": {
+    "heldout.inputs.jsonl": {
+      "bytes": 230951,
+      "sha256": "8a8c7fd89656ea9b55ab6ae3715ab0a63c3742524c7c5fb1c53c8cd707656670"
+    },
+    "heldout.gold.jsonl": {
+      "bytes": 30257,
+      "sha256": "d1324e377e6ed462a9ae208d8fd633f333d122a3ab6e06d04bb05fd5bcc05248"
+    },
+    "HELDOUT-CHECKS.json": {
+      "bytes": 6252,
+      "sha256": "a22cedb4876d79034c1e1362bd172395d83237781bacd6e38cd1c1b3087159f7"
+    },
+    "HELDOUT-DOCUMENTS.json": {
+      "bytes": 4380,
+      "sha256": "59a058a5adf6d55855a55b7d27ee9decdb4d3cf8ea29192b58619cd2eca90f96"
+    },
+    "author/build_eval_v2.py": {
+      "bytes": 11309,
+      "sha256": "42db1539860146f3c33600e5e73bc4a2971ab3b52159b945670d06fe38fb203f"
+    },
+    "author/HELDOUT-SPECS.json": {
+      "bytes": 12059,
+      "sha256": "72662b2c14886f3fadc8ee5d32a2a78d4f9fda0769eebc9936040dde0ef85170"
+    },
+    "articles/5197292.md": {
+      "bytes": 1633,
+      "sha256": "392dc72cd4da36b24fd502c8e7d818568e53017b6fa01118c6d964b04a876d93"
+    },
+    "articles/3636651.md": {
+      "bytes": 1575,
+      "sha256": "3da47699493c1133e082c1d9b9a5664f4db2c3073f17bf0bed759b4df4688fbd"
+    },
+    "articles/6722585.md": {
+      "bytes": 1413,
+      "sha256": "01cc00734585e278a0f0a01b15a2a9227c5673a90f3c9159d79c3c488389725a"
+    },
+    "articles/4554642.md": {
+      "bytes": 1856,
+      "sha256": "aa8c9f8f6c02b187309d098f3909e799702ac7360dc83b14cbc93da5935f3799"
+    },
+    "articles/5255071.md": {
+      "bytes": 1705,
+      "sha256": "70edff7d1f3ecf38d2388ea8d34843b96b85affe88fe1566d99b225670209d3b"
+    },
+    "articles/232159.md": {
+      "bytes": 2783,
+      "sha256": "16598e89506d952d139e4b5feda7514cf423e9680f826604ff2951196e468406"
+    },
+    "articles/3887457.md": {
+      "bytes": 4603,
+      "sha256": "810c4a565d39eaebeca63745c87cf9added6b5c3a23b063415618caca3f4db3f"
+    },
+    "articles/1261376.md": {
+      "bytes": 1920,
+      "sha256": "1cdc74f8269c16457f123b1ed9a7b0cd644e5069c267c7ef7da437e21bf9c6e8"
+    }
+  },
+  "train_freeze_sha256": "7e885a1ddb5e218f56108c2fae945a8fdebdd4c0bb179984256d8615c625a2cd",
+  "stage": "Author-known evaluation; pending independent semantics audit before release",
+  "completed_samples": 16
+}

@@ -1,0 +1,94 @@
+{
+  "status": "PASS",
+  "independent": true,
+  "reviewer": "Codex independent subagent /root/v3_semantic_review",
+  "date": "2026-09-10",
+  "scope": "GPU3新PILOT相对原冻结配置的精确差异，以及实际GPU3预检收据和源码/数据绑定。",
+  "pilot_config_sha256": "8a7ad960b1e744cb8cdc26b5f013eb9b07743316ab95f1380ac5fb4b1f882837",
+  "previous_pilot_config_sha256": "0c856d856e28e53cd01d7bc00611db1abb8311f03b7667904415d1ceb23920da",
+  "allowed_changes_only": true,
+  "actual_changed_fields": [
+    "code_bindings.llamaindex-retrieval/statetune/preflight_state.py",
+    "preflight",
+    "preflight_started"
+  ],
+  "all_other_fields_equal": true,
+  "preflight_script_sha256": "d6edbdc99c95fde6c67161456c1da07f953eb6b58f4e8e73cc48aaa2eeaace10",
+  "preflight_config_sha256": "67d3e11e3d5a1a8dcf652a8a5df112e2ac06e798b7c39fd6bbe655023b9f54c4",
+  "receipt_pins": {
+    "preflight": {
+      "path": "llamaindex-retrieval/eval/reader-v3-gpu3-20260910/run/preflight/COMPLETED.json",
+      "sha256": "084815b857603523c732e8f5fd6a093421b8c63cdad43a793ff039e59d60b0fa",
+      "verified": true
+    },
+    "preflight_started": {
+      "path": "llamaindex-retrieval/eval/reader-v3-gpu3-20260910/run/preflight/STARTED.json",
+      "sha256": "0ce7b52cec5b10323c47cef847f38f5a15cabcd920ba26f813b1a39e774f2895",
+      "verified": true
+    },
+    "semantic_review": {
+      "path": "llamaindex-retrieval/eval/reader-v3-pilot-20260909/SEMANTIC-CERTIFICATE.json",
+      "sha256": "dcc1e00662872fff09f8ca8391de228f807ab13c55ef53a49718c7aa94caad89",
+      "verified": true
+    }
+  },
+  "same_preflight_run_directory": true,
+  "started_config_matches_actual_preflight": true,
+  "gpu": {
+    "hostname": "rwkv-260304",
+    "physical_index": 3,
+    "uuid": "GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0"
+  },
+  "verified_preflight_results": {
+    "status": "PREFLIGHT_COMPLETE",
+    "optimizer_updates": 0,
+    "model_forward_calls": 1,
+    "backward_calls": 1,
+    "elapsed_seconds": 181.93648551777005,
+    "target_only_loss": 2.2381017208099365,
+    "state_layers_finite_nonzero": 32,
+    "base_tensors_equal": 1062,
+    "base_gradients_present": 0,
+    "state_unchanged_zero": true,
+    "dev_or_heldout_content_read": false,
+    "base_integrity_sha256": "9277aba5d12442ad958e4ab0f705728f8993eccb6b1c1fd7f3910a107956ba6c",
+    "gradients_sha256": "32978d7b0adeb787a195247edde4aec68f0b3922c5c4b4a6ab6ced270c10e08a"
+  },
+  "unchanged_training_evaluation_contract": {
+    "train_examples": 21,
+    "optimizer_updates": 11,
+    "epochs": 1,
+    "training_wall_seconds": 1800,
+    "dev_inputs": 11,
+    "state_steps": [
+      0,
+      11
+    ],
+    "generation_records": 22,
+    "max_output_tokens": 32,
+    "forward_cap": 704,
+    "evaluation_wall_seconds": 900
+  },
+  "bindings_verified": {
+    "code_bindings": 17,
+    "scoring_bindings": 2,
+    "train_export_sha256": "4ddc2ac1343cee0f5916c8c2847b87a52cb08f68237503db6b8e799d62f217d3",
+    "original_code_review_sha256": "3a930e34ba31e0c0009758c64d5543fb68d7e686fc219e1672659d6b00d27b96",
+    "original_four_runtime_files_unchanged": true,
+    "test_fixture_migration": {
+      "path": "llamaindex-retrieval/tests/test_state_pilot.py",
+      "sha256": "fafc73e7412e13e9426a36298f1731ceeed87c3a2de13f5ca93223124f75efbb",
+      "only_change": "测试PILOT fixture路径由reader-v3-pilot-20260909改到reader-v3-gpu3-20260910；反向替换后SHA与原CODE-REVIEW完全一致。"
+    }
+  },
+  "findings": [],
+  "remaining_findings": [],
+  "limitations": [
+    "仅从本地回收收据和文件验证一致性；没有独立重新执行GPU预检。",
+    "未验证实时GPU空闲状态；训练启动仍须执行host_guard及固定时限。",
+    "PASS不代表11步训练已完成或模型质量已提升。"
+  ],
+  "gpu_calls": 0,
+  "network_calls": 0,
+  "source_or_config_modified": false
+}

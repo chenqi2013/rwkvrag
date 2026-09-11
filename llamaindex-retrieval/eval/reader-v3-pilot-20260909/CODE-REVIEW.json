@@ -1,0 +1,105 @@
+{
+  "status": "PASS",
+  "independent": true,
+  "reviewer": {
+    "identity": "Codex independent subagent /root/v3_semantic_review",
+    "code_author": false,
+    "date": "2026-09-09",
+    "skill": "/mnt/c/Users/chase/.codex/skills/.system/review-agent/SKILL.md"
+  },
+  "scope": "仅此次新增四个执行源码和tests/test_state_pilot.py；读取调用依赖、实际PILOT配置、证书及预检收据作上下文。未修改源码或冻结数据。",
+  "reviewed_files_sha256": {
+    "llamaindex-retrieval/statetune/pilot_runtime.py": "08431a0587d5f1e2df17f9160fd1e2e7c93e9c11084a722da646854eb0f0141a",
+    "llamaindex-retrieval/statetune/train_state.py": "bac719d6ede507cc86706ca9f7a75ded03a6de0120e33e8e0444d1903379a54c",
+    "llamaindex-retrieval/statetune/evaluate_state.py": "a073c4acd46743a63884a62951d280f99b09526cb06edaa96a3b680e774e11f2",
+    "llamaindex-retrieval/statetune/score_state.py": "a91895378564c6af8e0d4175fa406f6e0e46fe9d7be2c8d11a095e538cc47e6a",
+    "llamaindex-retrieval/tests/test_state_pilot.py": "2dd318ce0220f44fc17a19ff02ba50b03e265811b06953ec46b2e2721cbfbdc0"
+  },
+  "pilot_config_sha256": "0c856d856e28e53cd01d7bc00611db1abb8311f03b7667904415d1ceb23920da",
+  "dataset_frozen_sha256": "b823b630ffab8a1401d2151c26ac08477c8327477bb6e62db682f9911c740135",
+  "resolved_findings": [
+    {
+      "id": "R1",
+      "priority": "P1",
+      "title": "完整语义审查泄漏dev/heldout标签到执行进程",
+      "status": "RESOLVED",
+      "file": "llamaindex-retrieval/statetune/train_state.py",
+      "line": 46,
+      "resolution": "实际配置仅pin SEMANTIC-CERTIFICATE.json；校验器仅接受精确6个元数据字段，不再向训练/生成提供逐题gold、问题或理由。证书的report SHA与完整本地审查报告一致。",
+      "verification": "实际配置门禁通过；附加cases字段被拒绝。"
+    },
+    {
+      "id": "R2",
+      "priority": "P2",
+      "title": "训练、生成、评分收据未绑定当前配置与state",
+      "status": "RESOLVED",
+      "file": "llamaindex-retrieval/statetune/evaluate_state.py",
+      "line": 58,
+      "resolution": "训练COMPLETED写config SHA；生成端比较同一SHA，完成收据传递训练receipt SHA；评分端核验配置与两级收据链并核验每条原始生成的state SHA。",
+      "verification": "CPU模拟错误训练config在host_guard前被拒绝；CPU模拟外来state记录在gold读取前被拒绝。"
+    },
+    {
+      "id": "R3",
+      "priority": "P2",
+      "title": "无效负例输出绕过heldout负例退化门槛",
+      "status": "RESOLVED",
+      "file": "llamaindex-retrieval/statetune/score_state.py",
+      "line": 31,
+      "resolution": "heldout_eligible同时要求negative_correct不下降；无EOS和格式错误均不能算正确拒答。",
+      "verification": "原反例zero正确拒答4题、final正例正确5题但负例全错，现heldout_eligible=False；回归测试通过。"
+    },
+    {
+      "id": "R4",
+      "priority": "P2",
+      "title": "实际配置scoring_bindings未执行校验",
+      "status": "RESOLVED",
+      "file": "llamaindex-retrieval/statetune/score_state.py",
+      "line": 46,
+      "resolution": "评分入口在读取生成记录和gold之前，校验score_state及生产parser的实际源码SHA。",
+      "verification": "实际配置两条scoring SHA匹配；CPU模拟错误SHA被拒绝，未进入生成或gold读取。"
+    }
+  ],
+  "remaining_findings": [],
+  "checked_behaviors": [
+    "21条train一次访问，累积2条一组；最后单例按len(group)=1归一化，每条target+EOS先取平均交叉熵。",
+    "底座1062参数全冻结并排除优化器，运行后逐张量CPU精确比较；仅32层(40,64,64) FP32 state可训练与保存。",
+    "state保存采用H,V,K轴，固定PEFT-FLA桥接代码transpose(1,2)转换；训练与生成使用同一桥接。",
+    "从零state开始并分别评估step0和step11；生成不做输出修补，实际EOS、UTF-8和cap决定有效性。",
+    "训练仅读训练导出及元数据证书；生成只读dev inputs，评分全部22条原始记录核验完成后才读dev gold。",
+    "预检STARTED与当前训练数据SHA、count、checkpoint、PEFT源、packages、dataset freeze及原有代码绑定一致。",
+    "训练固定11次optimizer更新与1800秒SIGALRM；生成固定22题、704前向上限与900秒SIGALRM；异常不自动恢复。",
+    "实际PILOT的17条code_bindings、2条scoring_bindings及3份前置收据哈希均与本地文件一致。"
+  ],
+  "validation": {
+    "local_pytest": {
+      "command": "rtk proxy env PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest tests/test_state_pilot.py -q -p no:cacheprovider",
+      "result": "4 passed, 1 skipped in 0.69s",
+      "skipped_reason": "本地未安装Torch，实际autograd参考测试跳过。"
+    },
+    "independent_cpu_checks": [
+      "精简证书通过且含cases被拒绝",
+      "其他配置训练收据在GPU host guard前被拒绝",
+      "外来state生成记录在gold读取前被拒绝",
+      "负例全部退化反例不能进入heldout",
+      "错误scoring源码SHA在生成/gold读取前被拒绝"
+    ],
+    "server_autograd_receipt": {
+      "path": "llamaindex-retrieval/eval/reader-v3-pilot-20260909/CPU-GRADIENT-TEST.json",
+      "sha256": "380444b25aad2364c95a4c5dfe5bed6659a9eefbea5fead274ff67ad3afb24bc",
+      "reported_result": "1 passed in 2.40s",
+      "reported_cuda_visible_devices": "",
+      "independently_rerun_by_this_reviewer": false,
+      "receipt_inspected": true,
+      "extracted_test_ast_identical_to_reviewed_test": true
+    }
+  },
+  "limitations": [
+    "这是静态代码和CPU审查PASS，不是GPU训练或模型质量PASS。",
+    "本审查未执行网络或GPU调用；未验证服务器当前资源状态。",
+    "进程级硬截止依赖作者明确的timeout --signal=TERM --kill-after=15s启动方式；本次未执行该启动器。",
+    "独立审查不等于blind heldout；完整语义报告留在本地审查侧，执行器仅使用精简证书。"
+  ],
+  "network_calls": 0,
+  "gpu_calls": 0,
+  "production_promoted": false
+}

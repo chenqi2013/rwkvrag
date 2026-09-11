@@ -1,0 +1,48 @@
+{
+  "base_model": "rwkv7-g1j-2.9b-20260831-ctx16384.pth",
+  "base_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239",
+  "states": [
+    {
+      "name": "writer-1400",
+      "path": "data/experiments/trace-training-20260911-run1/writer-1400/train/state-step-700.pth",
+      "sha256": "ac5b8e4e15efb73fb67ef2374b9db50c5de94f9f15c4312d49638ba5e4871594",
+      "step": 700,
+      "training_receipt": "llamaindex-retrieval/eval/trace-training-20260911/TRAINING-VERIFIED.json"
+    },
+    {
+      "name": "resolver-450",
+      "path": "data/experiments/trace-training-20260911-run1/resolver-450/train/state-step-225.pth",
+      "sha256": "02288c70e62f893613c4affbad2b93cf215d5fc73603fb22434d4cedaf42fe02",
+      "step": 225,
+      "training_receipt": "llamaindex-retrieval/eval/trace-training-20260911/TRAINING-VERIFIED.json"
+    },
+    {
+      "name": "planner-150",
+      "path": "data/experiments/trace-training-20260911-run1/planner-150/train/state-step-75.pth",
+      "sha256": "aa01fe7f0a9d6aaed469fcf513846fbb1ecba6c2f46606f14bf6c00cd3c0cc5b",
+      "step": 75,
+      "training_receipt": "llamaindex-retrieval/eval/trace-training-20260911/TRAINING-VERIFIED.json"
+    },
+    {
+      "name": "writer-100",
+      "path": "data/experiments/trace-training-20260911-run1/writer-100/train/state-step-50.pth",
+      "sha256": "c695d202db987713fca314b18fa99035afdfa422afaf04c51dc3db1546ec50dc",
+      "step": 50,
+      "training_receipt": "llamaindex-retrieval/eval/trace-training-20260911/TRAINING-VERIFIED.json"
+    },
+    {
+      "name": "writer-300",
+      "path": "data/experiments/trace-training-20260911-run1/writer-300/train/state-step-150.pth",
+      "sha256": "dd8bef92d8b3069881cd7e7ba8cf226a902a6e6dcc821658efb61b24e8db453e",
+      "step": 150,
+      "training_receipt": "llamaindex-retrieval/eval/trace-training-20260911/TRAINING-VERIFIED.json"
+    },
+    {
+      "name": "writer-600",
+      "path": "data/experiments/trace-training-20260911-run1/writer-600/train/state-step-300.pth",
+      "sha256": "473162cd58b91e734a0b5ddfd87510c1a38f16412ab41bebadec9c39c105f282",
+      "step": 300,
+      "training_receipt": "llamaindex-retrieval/eval/trace-training-20260911/TRAINING-VERIFIED.json"
+    }
+  ]
+}

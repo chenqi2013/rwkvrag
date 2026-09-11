@@ -1,79 +1,36 @@
 # RWKVRAG — RWKV 原生 RAG
 
-本分支从 [chenqi2013/rwkvrag:bm250820](https://github.com/chenqi2013/rwkvrag/tree/bm250820) 的 `2bbc406125e7e030eda98b11993dc13fc4534ca4` 开始修改，分支名为 `chase/rwkv-native-rag-rebuild`。
+基于 `bm250820` 的 `2bbc406125e7e030eda98b11993dc13fc4534ca4` 开发，当前优化分支为 `chase/rwkv-native-rag-rebuild`。
 
-**当前使用 RWKV7 G1j 2.9B 外部 batch API，已经完成完整 RAG 开发基线，质量尚未达标。** 在本机恢复的 5,000 篇 Wiki、45,960 个原文块上，8 题 / 29 项必要事实为 **0 正确、25 遗漏、4 错误**，正式完整通过 **0/8**。6 题规划格式失败，另 2 题没有选出证据。结果说明当前链路有明确问题，不能代表模型潜力上限。原始记录和分阶段实验见 [2.9B 评测归档](llamaindex-retrieval/eval/rwkvos-29b-20260909/README.md)。
+**RWKV 2.9B + OpenSearch BM25，不使用 embedding。** 模型负责问题规划、证据判断与回答；代码负责检索组织、传输、来源与格式校验。原始模型输出保持不变。
 
-9 月 9 日的后续诊断保留了 8 个有证据、8 个无证据的真实 Reader 输入。拆分任务、明确当前子问题、简化追踪元数据、开启思考、添加通用示例，五组候选的正例召回均为 **0/8**，没有合入无效改法。本机已核验的官方 2.9B 也在两条相同输入上漏选；短输入的 state 反向计算已跑通，但尚未更新参数。见 [Reader 与本机 state 验证](llamaindex-retrieval/eval/rwkvos-reader-followup-20260909/README.md)。
+## StateTune 实践
 
-推理优先使用 `api-3b.rwkvos.com`，本机 GPU 用于复现与 state 验证；本机资源不足时，最新授权允许使用 `rwkv-8222` 的 **GPU2**，仍使用 2.9B。本轮尚未启用该服务器，也没有自动故障切换。旧任务服务和自动启动此前已停用。数据库检索基线运行在本机 CPU，管理服务的生产部署验收尚未完成。详见 [接口与 state 合同](docs/rwkvos-api.md)。
+[StateTune经验总结](docs/statetune-experience.md)记录本轮如何从真实trace发现问题、生成2000条纠错数据、完成六组state训练，以及改善与失败。
 
-Python 主链路使用 **OpenSearch BM25 + MongoDB + RWKV 推理 API**。OpenSearch 负责搜索，MongoDB 保存知识库、导入任务和问答记录；两者使用 CPU、内存和磁盘。RWKV 推理使用 GPU。新链路不需要 Qdrant 或 embedding 服务。
+Reader在60道受控阅读挑战中从48/60提高到60/60。Writer明显减少失控重复；固定36题的独立抽样中，Writer300有据可用17/36，零state为10/36，扩大到1400条没有继续提高。Planner出现格式退步，空证据和冲突处理仍不可靠。这些结果不是全场景准确率，也不代表模型能力上限。
 
-```mermaid
-flowchart LR
-  D[Wiki / 上传文档] --> C[逐字切块与来源记录]
-  C --> B[OpenSearch BM25]
-  Q[最新问题与历史] --> P[RWKV 规划]
-  P --> B
-  B --> R[RWKV 并发读取各来源]
-  R --> E[原文选择与来源校验]
-  E --> W[RWKV 汇总作答]
-  W --> A[原始输出与完整 trace]
-  A --> M[MongoDB 问答记录]
-```
-
-## 当前实现
-
-- 新链路独立于旧规则服务，复用 `bm250820` 的 OpenSearch、管理接口和导入能力。
-- 两套独立传输：`native` 保留原 `/tokenize`、`/v1/completions` 合同；`rwkvos_batch` 使用 `contents[]` 和按 index 校验的输出。同参数调用合并为 batch，默认每批 8 项、全局并发 32。模板、原始字节和参数均进入 trace。
-- 不限制每文档两块，不按文档去重。BM25 返回完整块，支持 RRF 排序或按查询轮转取候选；总候选和总读取来源预算独立配置，未读候选在 trace 中可见。
-- Resolver 并发读取原文，支持按字段绑定证据或按当前任务选择原文编号。可将同一份模型生成的查询列表传给检索、阅读和作答，完整历史保留；代码只解析和验证编号，Writer 仅接收入选原文及其父级上下文。
-- 来源、整篇文本 SHA、块位置、选中片段位置与 SHA 可追溯。FineWiki 导入修复跨批次 ID 碰撞，保留页 ID、版本和语言。
-- RWKV 输出原样返回。外部 API 的 `stop` 不能证明自然结束，界面和 trace 明确记录终止原因未核验。`answer_span` 标出正文范围；不会补引用、删句、改答案或静默重试。
-- 问答支持历史；全部 Writer 来源返回，引用表不会因展示 `top_k` 被截断。历史摘要区分运行完成、部分失败和失败，不再把空答案超时误记为已回答。
+- [数据与训练入口](llamaindex-retrieval/statetune/README.md)
+- [原始实验记录、权重和恢复方式](docs/artifacts.md)
+- [最新训练核验](llamaindex-retrieval/eval/trace-training-20260911/TRAINING-VERIFIED.json)
+- [最新评测汇总](llamaindex-retrieval/eval/trace-eval-20260911/RESULTS.md)
 
 ## 使用
 
-详见 [Python 服务说明](llamaindex-retrieval/README.md)。填写示例配置中的实际服务地址后启动：
+通用安装与接口见[Python服务说明](llamaindex-retrieval/README.md)，现有环境的管理方式见[本地部署说明](llamaindex-retrieval/deploy/local/README.md)。通过 `POST /v1/ask` 使用RAG；API接口文档为 `/docs`。当前项目只维护后端，前端已移除。
+
+仅使用指定的RWKV7 G1j 2.9B。训练后的state必须显式选择；训练完成不等于应用默认配置已经切换。2026-09-11测试结束后，按用户要求保留比较服务，没有恢复原问答服务。
+
+复杂多问、长历史、缺证据与引用仍有已知错误。服务可访问不代表所有场景已可靠。架构约束见[ARCHITECTURE_RULES.md](llamaindex-retrieval/ARCHITECTURE_RULES.md)。
+
+## 开发验证
 
 ```bash
 cd llamaindex-retrieval
 uv sync --frozen --extra dev
-cp .env.example .env
-uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
+uv run pytest -q
 ```
 
-示例配置启用 `RWKVRAG_RAG_PIPELINE=rwkv`。没有 `.env` 时保留 `existing` 兼容模式，便于旧接口回归；部署时请明确选择。
+历史实验的独立重放需要先按[归档说明](docs/artifacts.md)恢复相应文件；普通代码测试所需的小型固定材料保留在Git中。发布时的实际检查结果见 `artifacts/statetune-20260911/VALIDATION.json`。
 
-## 验证与边界
-
-先验证固定材料 Writer，再检查 Resolver、检索和 Wiki 端到端。开发 smoke 的完成率、事实正确率、引用支持率分别报告，不是生产准确率或新盲测成绩。
-
-外部 2.9B 固定材料 Writer 基线为 **19/28 事实正确、正式完整 0/8**；单独改成 EOS 停止没有测得质量收益。官方未闭合 fake-think 前缀候选达到 23/28，但产生新的无依据断言，未晋级。规划的单一子问题列表和要求后置对照也没有通过范围与格式联合检查。
-
-三档长输入测试均返回 HTTP 200：服务计数 **8,169 / 16,375 / 32,624 tokens**，各自答对 **3/3、0/3、1/3** 个事实。这是含 Wiki 干扰材料的合成距离测试，没有执行检索。能接受 32K 不等于能可靠保持其中的信息，也不能据此证明部署内部没有裁剪。当前如何分块、为什么没有跨调用 state、下一步的预算与读取结构见 [超长上下文说明](docs/long-context.md)。
-
-本轮 Python 回归为 **590 通过 / 114 失败**，失败 ID 与纯净基点一致、没有新增失败；前端 19 项测试及构建通过。完整日志见 [2.9B 评测归档](llamaindex-retrieval/eval/rwkvos-29b-20260909/README.md)。纯净基点的 114 项既有失败单列，不会用软件测试通过率替代模型答案质量。
-
-以下仅为已停止的旧服务器历史实验，使用 RWKV7 13.3B、16K 上下文和实际峰值 32 并发，对固定 **5,000 篇 Wiki、45,960 个逐字块**运行完整链路。以下是相同的 8 道已公开开发题、29 项必要事实，由 Codex 逐项检查正文和实际引用，并非人工盲测：
-
-| 条件 | 正确事实 | 事实完整且正式引用通过 | 每题中位耗时 |
-| --- | ---: | ---: | ---: |
-| v2：规划闭合 prefill，字段读取 | 2/29 | 0/8 | 77.84 秒 |
-| v3：闭合读取与任务原文选择 | 12/29 | 0/8 | 36.03 秒 |
-| v4：检索、阅读、作答共用 queries | 13/29 | 0/8 | 39.04 秒 |
-| v5：按查询轮转，总读取 24 来源 | 15/29 | 0/8 | 39.96 秒 |
-| v6：总读取增至 80 来源 | 16/29 | 1/8 | 98.88 秒 |
-
-v6 若额外接受明确可读但不符合正式语法的引用格式，完整通过为 2/8；该口径单列，不替换正式分数。唯一正式通过的列车题同时出现模型规划和检索候选变化，不能将通过隔离归因于增加来源。两题耗尽 2,048 输出预算；输入均未超 16K。来源数量增加没有解决引用错配、已提供证据仍遗漏、部分题目选不到证据的问题。
-
-13.3B 固定材料历史基线为 27/28。它与新的 2.9B 在模型、推理后端和模板上都不同，不能当成只改变参数量的对照。旧实验参数和原始 trace 保留在 [13.3B 后续报告](llamaindex-retrieval/eval/bm250820-followup-20260908/README.md)。
-
-字段规划、证据选择和最终引用分别评估；标签存在或 SHA 一致不代表语义正确。每次 Reader 独立调用，Writer 一次接收选中的逐字材料；应用层动态 RWKV state 续读尚未实现。statetune 初始 WKV state 也不是完整阅读状态。质量实验均为零 state；短输入只做了梯度检查，优化器更新为零。全零 state 的外部上传探针遇到连接中断，未取得 `state_id`，远端是否创建未知，尚未验证加载。
-
-旧分支实验说明，增加输出长度、取消分数阈值、加强提示词均不能直接推出质量提升。本分支保留开发测试与失败输出，后续改动需重新测量。
-
-## 其他代码
-
-早期 Go 原型说明移至 [Go 文档](docs/go-prototype.md)。`bm250820` 原有 Python 文档存档于 [旧服务说明](docs/previous-python-guide.md)。新的 RWKV 专属开发入口是上述 Python 链路。
+仓库保留维护中的代码、训练入口、正式数据和必要测试材料；原始调用、冻结源码与过时实验说明统一归档。旧Git提交保持不变。

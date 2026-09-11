@@ -1,0 +1,15 @@
+{
+  "files": {
+    "AUDIT.json": "fe98682cd877ae672353cffbe7e42c5099f32ec4ca68de067e5d1354f4b12f2d",
+    "LINEAGE.json": "e0b47ad63ce9675ba7876dc40d59395fcaea8576730f6dbebb70a7b17d44f683",
+    "TRAIN-EXPORT.json": "3b43d2bb2f6ed8a2c49a3a0e34aedd0874508ee33573d7ea8494bf2e2190e104",
+    "annotations.jsonl": "d8cf71d0f9538318817a1fa9449a590921ca4566a824458e3b0eb907fea93c6e",
+    "dataset/AUDIT.json": "fe98682cd877ae672353cffbe7e42c5099f32ec4ca68de067e5d1354f4b12f2d",
+    "dataset/dev.gold.jsonl": "f5d1881b08a4f01ee0ecf53a9904677174e75ce34577ea41d257912f442ef710",
+    "dataset/dev.inputs.jsonl": "cb6e19feb2c3b907880595b56f08966772c8059d33bf95f5e62c937231bb3b06",
+    "dataset/heldout.gold.jsonl": "de011772dc02ba1d1e0399ed5e9aad3d8544669ed33d8b1eb8c4216ab64341a4",
+    "dataset/heldout.inputs.jsonl": "05179f9839e3f733275a3d2fcb847db8b2d0fe04384a456358af3fbe674feb37",
+    "dataset/train.gold.jsonl": "d20b445f9fb926903accf6604ad7cf75ea07183fe1e79ee6b73020445620d8c9",
+    "dataset/train.inputs.jsonl": "e634adb33414d61c728307de98b779057f9558f9c5ca0d24fe84e9246e5f37e8"
+  }
+}

@@ -1,10 +1,8 @@
 from contextlib import asynccontextmanager
-from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse
-from fastapi.staticfiles import StaticFiles
 
 from .admin_service import (
     AdminConflictError,
@@ -42,6 +40,7 @@ async def lifespan(app: FastAPI):
         query_planner=LanguageModelQueryPlanner(settings),
         retrieval_agent=ActiveRetrievalAgent(settings),
         document_reranker=LanguageModelDocumentReranker(settings),
+        native_recorder=repository.record_model_http,
     )
     admin = AdminService(settings, repository, task_manager, lexical_index)
     app.state.repository = repository
@@ -74,16 +73,6 @@ app.include_router(public_router)
 app.include_router(admin_router)
 
 
-@app.middleware("http")
-async def disable_admin_cache(request: Request, call_next):
-    response = await call_next(request)
-    if request.url.path.startswith("/admin"):
-        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-        response.headers["Pragma"] = "no-cache"
-        response.headers["Expires"] = "0"
-    return response
-
-
 @app.exception_handler(AdminNotFoundError)
 async def not_found_handler(_: Request, error: AdminNotFoundError) -> JSONResponse:
     return JSONResponse(status_code=404, content={"detail": str(error)})
@@ -102,12 +91,4 @@ async def validation_handler(_: Request, error: AdminValidationError) -> JSONRes
 
 @app.get("/", include_in_schema=False)
 async def root() -> RedirectResponse:
-    return RedirectResponse("/admin/")
-
-
-static_directory = Path(__file__).resolve().parent / "static" / "admin"
-app.mount(
-    "/admin",
-    StaticFiles(directory=static_directory, html=True, check_dir=False),
-    name="admin",
-)
+    return RedirectResponse("/docs")

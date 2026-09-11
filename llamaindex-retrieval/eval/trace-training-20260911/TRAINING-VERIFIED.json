@@ -1,0 +1,261 @@
+{
+  "status": "VERIFIED_TRAINING_COMPLETE",
+  "jobs": [
+    {
+      "name": "writer-1400",
+      "rows": 1400,
+      "updates": 700,
+      "seconds": 1022.7256422154605,
+      "peak_gpu_gib": 7.858514785766602,
+      "base_tensors_unchanged": 1062,
+      "states": [
+        {
+          "step": 0,
+          "path": "state-step-00.pth",
+          "sha256": "f4503080abf4210de4240c9e58a7375001043e7fc3d1f3a8d5aceca6c3254fd3",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 0.0,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/writer-1400/train/state-step-00.pth",
+          "sha256_verified": true
+        },
+        {
+          "step": 700,
+          "path": "state-step-700.pth",
+          "sha256": "ac5b8e4e15efb73fb67ef2374b9db50c5de94f9f15c4312d49638ba5e4871594",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 2.2793485385254564,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/writer-1400/train/state-step-700.pth",
+          "sha256_verified": true
+        }
+      ],
+      "completed_utc": "2026-09-11T01:24:15.287482+00:00"
+    },
+    {
+      "name": "resolver-450",
+      "rows": 450,
+      "updates": 225,
+      "seconds": 442.85098364017904,
+      "peak_gpu_gib": 6.026976108551025,
+      "base_tensors_unchanged": 1062,
+      "states": [
+        {
+          "step": 0,
+          "path": "state-step-00.pth",
+          "sha256": "f4503080abf4210de4240c9e58a7375001043e7fc3d1f3a8d5aceca6c3254fd3",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 0.0,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/resolver-450/train/state-step-00.pth",
+          "sha256_verified": true
+        },
+        {
+          "step": 225,
+          "path": "state-step-225.pth",
+          "sha256": "02288c70e62f893613c4affbad2b93cf215d5fc73603fb22434d4cedaf42fe02",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 1.2769454332526555,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/resolver-450/train/state-step-225.pth",
+          "sha256_verified": true
+        }
+      ],
+      "completed_utc": "2026-09-11T01:34:41.202154+00:00"
+    },
+    {
+      "name": "planner-150",
+      "rows": 150,
+      "updates": 75,
+      "seconds": 267.70835702773184,
+      "peak_gpu_gib": 6.278017044067383,
+      "base_tensors_unchanged": 1062,
+      "states": [
+        {
+          "step": 0,
+          "path": "state-step-00.pth",
+          "sha256": "f4503080abf4210de4240c9e58a7375001043e7fc3d1f3a8d5aceca6c3254fd3",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 0.0,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/planner-150/train/state-step-00.pth",
+          "sha256_verified": true
+        },
+        {
+          "step": 75,
+          "path": "state-step-75.pth",
+          "sha256": "aa01fe7f0a9d6aaed469fcf513846fbb1ecba6c2f46606f14bf6c00cd3c0cc5b",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 1.031410522288826,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/planner-150/train/state-step-75.pth",
+          "sha256_verified": true
+        }
+      ],
+      "completed_utc": "2026-09-11T01:42:10.870038+00:00"
+    },
+    {
+      "name": "writer-100",
+      "rows": 100,
+      "updates": 50,
+      "seconds": 245.0522564360872,
+      "peak_gpu_gib": 7.700187683105469,
+      "base_tensors_unchanged": 1062,
+      "states": [
+        {
+          "step": 0,
+          "path": "state-step-00.pth",
+          "sha256": "f4503080abf4210de4240c9e58a7375001043e7fc3d1f3a8d5aceca6c3254fd3",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 0.0,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/writer-100/train/state-step-00.pth",
+          "sha256_verified": true
+        },
+        {
+          "step": 50,
+          "path": "state-step-50.pth",
+          "sha256": "c695d202db987713fca314b18fa99035afdfa422afaf04c51dc3db1546ec50dc",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 0.49009644990804463,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/writer-100/train/state-step-50.pth",
+          "sha256_verified": true
+        }
+      ],
+      "completed_utc": "2026-09-11T01:49:20.623327+00:00"
+    },
+    {
+      "name": "writer-300",
+      "rows": 300,
+      "updates": 150,
+      "seconds": 351.98192755132914,
+      "peak_gpu_gib": 7.769869327545166,
+      "base_tensors_unchanged": 1062,
+      "states": [
+        {
+          "step": 0,
+          "path": "state-step-00.pth",
+          "sha256": "f4503080abf4210de4240c9e58a7375001043e7fc3d1f3a8d5aceca6c3254fd3",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 0.0,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/writer-300/train/state-step-00.pth",
+          "sha256_verified": true
+        },
+        {
+          "step": 150,
+          "path": "state-step-150.pth",
+          "sha256": "dd8bef92d8b3069881cd7e7ba8cf226a902a6e6dcc821658efb61b24e8db453e",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 0.8820829108275239,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/writer-300/train/state-step-150.pth",
+          "sha256_verified": true
+        }
+      ],
+      "completed_utc": "2026-09-11T01:58:16.832476+00:00"
+    },
+    {
+      "name": "writer-600",
+      "rows": 600,
+      "updates": 300,
+      "seconds": 545.3653140263632,
+      "peak_gpu_gib": 7.795363426208496,
+      "base_tensors_unchanged": 1062,
+      "states": [
+        {
+          "step": 0,
+          "path": "state-step-00.pth",
+          "sha256": "f4503080abf4210de4240c9e58a7375001043e7fc3d1f3a8d5aceca6c3254fd3",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 0.0,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/writer-600/train/state-step-00.pth",
+          "sha256_verified": true
+        },
+        {
+          "step": 300,
+          "path": "state-step-300.pth",
+          "sha256": "473162cd58b91e734a0b5ddfd87510c1a38f16412ab41bebadec9c39c105f282",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "dtype": "float32",
+          "layers": 32,
+          "state_l2": 1.5195969651695445,
+          "remote_path": "/home/chase/rwkvrag/data/experiments/trace-training-20260911-run1/writer-600/train/state-step-300.pth",
+          "sha256_verified": true
+        }
+      ],
+      "completed_utc": "2026-09-11T02:10:27.989936+00:00"
+    }
+  ],
+  "total_backwards": 3000,
+  "total_updates": 1500,
+  "unique_training_rows": 2000,
+  "current_production_health": {
+    "ready": true,
+    "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+    "state_sha256": null,
+    "calls": 0
+  },
+  "quality_evaluation_completed": false
+}

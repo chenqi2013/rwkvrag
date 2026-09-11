@@ -1,0 +1,7 @@
+{
+  "returncode": 1,
+  "summary": "114 failed, 618 passed, 1 skipped, 1 warning in 7.39s",
+  "new_failures": [],
+  "fixed_failures": [],
+  "node_id_normalization": "invocation-directory prefix normalized"
+}

@@ -1,76 +1,12 @@
-# 原生 RWKV 固定材料开发 smoke
+# 固定材料回归
 
-> 下文原有成绩为 13.3B 历史实验。当前 2.9B 外部 API 的独立基线、失败和长输入结果见 [2026-09-09 归档](../rwkvos-29b-20260909/README.md)。重放旧结果使用原冻结源码；本任务不再使用旧服务器。
+`fixtures.jsonl`保存8道开发题、原始材料与独立判据。`run_smoke.py`调用固定材料Writer，不运行BM25检索；gold不发送给模型。题目包含已经暴露的旧题和人工场景，不能当作新盲测。
 
+从 `llamaindex-retrieval` 目录执行离线检查：
 
-这是基于 chenqi2013/rwkvrag 的 bm250820 基点 2bbc406 开发的 **Writer 固定材料测试**。运行器调用 RWKVPipeline.ask_materials，不访问数据库，不执行 BM25 检索或 Resolver 选择。8 题包含 4 道已公开 Wiki 旧题和 4 道合成夹具，共 28 项必要事实；不是新盲测或生产准确率。
+```bash
+python eval/native-smoke/run_smoke.py --validate-only
+python eval/native-smoke/run_smoke.py --self-test
+```
 
-截至 2026-09-08，原生传输已实际跑通。资料标签加方括号的单变量候选没有满足预登记采用条件，已恢复原来的裸标签值；失败结果完整保留。
-
-## 已完成结果
-
-| 运行 | 实际生成 | 正常结束 / length | 必要事实：正确 / 遗漏 / 错误 | API 字面引用格式完整通过 | 人读明确引用完整通过 |
-| --- | ---: | ---: | --- | ---: | ---: |
-| v1：本地 SSH 转发 | 0 | 不适用 | 不评语义 | 不评语义 | 不评语义 |
-| v2：服务器本机直连 | 8 | 8 / 0 | 27 / 0 / 1 | 1/8 | 2/8 |
-| v3：仅资料标签加方括号 | 8 | 7 / 1 | 24 / 4 / 0 | 3/8 | 3/8 |
-
-v1 的 SSH 转发连接断开，8 次请求全部在 /tokenize 阶段发生 ReadError，没有发送 /completions。运行摘要的 model_calls=8 表示客户端入口调用次数，不能解释为 8 次模型生成。
-
-v2 与 v3 分别使用服务器独立源码目录、锁定依赖和用户 systemd 任务，各完整运行一次。每轮均有 8 次分词、8 次生成请求，全部 HTTP 200，无模型重试。v2 约 43.06 秒，v3 约 46.93 秒；这些是单次运行记录，不是独立吞吐基准。两轮使用相同材料、完整历史、采样设置、模型、16,384 token 上下文、2,048 token 输出上限、600 秒超时和 8 并发。
-
-两种引用口径分开报告：
-
-- **API 字面格式**要求最终答案使用 [资料 N]，且引用片段实际支持结论。解析到编号本身不证明支持关系。
-- **人读明确引用**也接受能清楚绑定结论的裸“资料N”或圆括号“（资料 N）”。这不代表 API 已识别该语法，也不改变事实、范围和额外错误要求。
-
-两种口径都要求全部必要事实正确、每个事实有实际支持的引用、没有关键额外错误或不支持结论的额外引用。空材料下正确说明资料不足不需要编造正向引用。审阅仅使用原生 trace 的 envelope.answer_span，不从 thinking 补答案或引用；API 原始输出不被清洗、改写或补引用。
-
-v2 的主要发现：
-
-- 多文档题的部分额外来源号不支持其所附结论；同一个“资料7”在不同结论下分别可能支持或不支持。
-- 305 系总编组 6 辆答对，但把动力车答成 2 辆，并错引另一车型片段；实际材料明确为 4 辆动力车。
-- 同一文档 6 块的全部事实和圆括号来源绑定均正确，因此该题在人读口径通过。
-- 长历史、更正、尾部证据及单位/否定题的事实正确，但最终答案缺少引用。
-
-v3 只把 Writer 输入 JSON 中的标签值由“资料 N”改为“[资料 N]”，源码其余部分和每个请求的其余内容均核验一致。它修正了该次列车题的事实及来源，但多文档题耗尽 2,048 token，且没有有效最终答案区间，4 项事实全部计遗漏。4 道题的最终答案与 v2 逐字相同。
-
-v3 的 Ghost 题三项事实本身正确，末句却把“所有数据”的单位概括为英镑，其中包含已正确写出的 29 天。主表单列额外单位概括错误；若将末句理解为仅说明两笔金额的单位，人读完整通过为 4/8。该敏感性不影响采用结论：v3 在两种解释下都未达到“8 题全部正常结束、至少 27/28 事实正确”等预登记条件。
-
-## 题目与判据
-
-[fixtures.jsonl](fixtures.jsonl) 固定了问题、材料、完整历史及单独保存的 expected_facts / expected_decision。这些判据不发送给模型。
-
-| 题目 | 覆盖内容 |
-| --- | --- |
-| smoke_001 | 四份 IEC 标准，多文档事实与来源绑定 |
-| smoke_002 | 不同列车、指定线路、同主题错误片段 |
-| smoke_003 | 完整长历史中的 Ghost 筹款三字段 |
-| smoke_004 | Windows NT 3.51 → 3.5、服务器版 → 工作站版更正 |
-| smoke_005 | 同一说明书的 6 个材料块 |
-| smoke_006 | 必要证据位于正文第 1430 字符之后 |
-| smoke_007 | 不同对象和年份的单位、离线支持与否定 |
-| smoke_008 | 空材料下明确资料不足 |
-
-4 道 Wiki 题的材料直接取自已公开旧运行的实际返回片段，正文没有清洗或截断；夹具保存来源文件哈希及材料身份。支持引文带有原片段中的 Unicode 字符偏移。其他实际片段若能等价支持同一事实，也可在审阅中明确登记，不能用“同篇文章”代替具体支持。
-
-完整记录保存在本轮实验目录 rwkvrag-bm-rebuild-20260908/ 的 materials-smoke-v1/、materials-smoke-v2/、materials-smoke-v3/；逐题审阅位于 review/materials-smoke-v2/review.json 和 review/materials-smoke-v3/review.json，配对汇总为 MATERIALS-LABEL-RESULTS.json。本目录中的题目和运行器可独立用于新建一次运行。
-
-## 运行与验证
-
-在 llamaindex-retrieval 目录中离线验证：
-
-    rtk proxy .venv/bin/python eval/native-smoke/run_smoke.py --validate-only
-    rtk proxy .venv/bin/python eval/native-smoke/run_smoke.py --self-test
-
-离线自检通过真实 pipeline/native client 加进程内 MockTransport 验证材料与历史完整传入、判据不入请求、原始字节哈希、发送前持久收据、失败不重试、length 原文保留、取消后的全分母记录及禁止覆盖。它不调用外部模型。
-
-显式执行一次实际运行：
-
-    rtk proxy .venv/bin/python eval/native-smoke/run_smoke.py --base-url http://127.0.0.1:18421/v1 --model rwkv7-g1j-13.3b-zero-state-capability-ctx16384 --output /absolute/path/to/a-new-run --concurrency 8 --max-output-tokens 2048 --timeout-seconds 600
-
-输出目录必须不存在；没有自动恢复、重试或挑题功能。运行保存输入、完整源码快照、首次调用收据、每个 HTTP 的发送前正文与响应字节、完整模型 trace 和最终响应。API key 可通过 RWKVRAG_NATIVE_API_KEY 提供，其值及请求头不写入记录。语义判断须按固定判据逐题审阅，运行器不会通过关键词自动判答案正确。
-
-测试基线也必须如实区分：原始 2bbc406 独立归档为 **176 passed / 114 failed**；当前新分支为 **338 passed / 114 failed**，新增 162 项通过，没有新增失败。上游既有 114 项失败仍保留，不能声称整个模块测试全绿。
-
-真实 Wiki 的索引、检索与多阶段验证另见 [native-wiki 目录](../native-wiki/)。其结果单独报告，不以本固定材料 smoke 的分数替代。
+真实调用参数见 `--help`，按目标2.9B服务填写；当前batch传输的完整评测执行器在[实验附件](../../../docs/artifacts.md)中。旧13.3B成绩和历史运行条件移入附件，不能计入2.9B结果。最新经验见[StateTune总结](../../../docs/statetune-experience.md)。

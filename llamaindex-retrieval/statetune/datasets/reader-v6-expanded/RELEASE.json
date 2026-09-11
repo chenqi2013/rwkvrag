@@ -1,0 +1,204 @@
+{
+  "schema": "rwkv_reader_release_v1",
+  "dataset_files": {
+    "train.inputs.jsonl": "91a2210d8e211f3c9b09816b9ea538a8157d63fba37d85e413a38970b76de8a2",
+    "train.gold.jsonl": "bec8e7b877f64cb3bf234551174de35ecc5f4d79c5e7caac46bc6927bfc86dcc",
+    "dev.inputs.jsonl": "28af37b5733043952e4c982a311d39356891b981eb275015ff5f6a34e4bc8977",
+    "dev.gold.jsonl": "ccd3adb0665fdcc123980e0abe9dd6ebfd305e4740c5cd053f266e1230b46297",
+    "heldout.inputs.jsonl": "b7f543462437485e3149b96e5adc68e08a7d340d06e52acc5446b681d3f33688",
+    "heldout.gold.jsonl": "b976bf3b71a0d38729bb54315ad2d823a066b7c9dd7c2908fb451167b7e36b3c"
+  },
+  "review_sha256": "6b84dc23128b9ba73703c64b03cd21839726b08d3c787579b504f9e1f6433c9c",
+  "review": {
+    "reviewer": "/root/v3_semantic_review",
+    "approved_cases": 110,
+    "independence_is_declared_not_authenticated": true,
+    "semantic_correctness_verified_by_code": false
+  },
+  "provenance": {
+    "manifest_sha256": "35563fa6e5d7c9205cea3d9e1cd5476b01774f11a292dafcfed82fe4d8256ced",
+    "sources": [
+      {
+        "document_id": "zhwiki/3238689",
+        "page_id": "3238689",
+        "sha256": "2065a28d987d0e1d5c456c00e5d86412b78c21821b773d3d2450283db2ad23ea",
+        "text_path": "texts/3238689.md"
+      },
+      {
+        "document_id": "zhwiki/8024544",
+        "page_id": "8024544",
+        "sha256": "1483ebe379e69b4dd4b7c079944af8501afcd217178a917c7a903f1c8849b7c1",
+        "text_path": "texts/8024544.md"
+      },
+      {
+        "document_id": "zhwiki/6124888",
+        "page_id": "6124888",
+        "sha256": "8f7fdbdd2669ee3d3aa6484b598b2c2ecaac6de7d22df9fc97944f072e08043f",
+        "text_path": "texts/6124888.md"
+      },
+      {
+        "document_id": "zhwiki/5452404",
+        "page_id": "5452404",
+        "sha256": "3fdc3d6bf3a6bd402589d52373ad08e89170d96f09c063d457b59e21582a4253",
+        "text_path": "texts/5452404.md"
+      },
+      {
+        "document_id": "zhwiki/7133379",
+        "page_id": "7133379",
+        "sha256": "4e05e335477b2f55c1ff18f3e146294f43adc7aaecd527707eaeeb763ade1a05",
+        "text_path": "texts/7133379.md"
+      },
+      {
+        "document_id": "zhwiki/7340228",
+        "page_id": "7340228",
+        "sha256": "21eb6e0d7ab363e4f4f64327e607afed361701279c4a1e48397061bd0ac8854a",
+        "text_path": "texts/7340228.md"
+      },
+      {
+        "document_id": "zhwiki/8468551",
+        "page_id": "8468551",
+        "sha256": "bf2e829cf5901069d77e4c938c8d859fae7bb1ec69a32e6ba1f68a2422c03fe5",
+        "text_path": "texts/8468551.md"
+      },
+      {
+        "document_id": "zhwiki/8753422",
+        "page_id": "8753422",
+        "sha256": "3e400882df4e9f876aa0bde3cff9697e3e03b28d5718813d339c5d5319db08d9",
+        "text_path": "texts/8753422.md"
+      },
+      {
+        "document_id": "zhwiki/370260",
+        "page_id": "370260",
+        "sha256": "40c5a65709584a5a8c048f3950e76b7cd84d4aefebc796e46b3261fb0e039d43",
+        "text_path": "texts/370260.md"
+      },
+      {
+        "document_id": "zhwiki/4271857",
+        "page_id": "4271857",
+        "sha256": "330a480004ba0909b9d6bbabcc4d76dc11649885e537b820bfb5d984c0610b03",
+        "text_path": "texts/4271857.md"
+      },
+      {
+        "document_id": "zhwiki/3667615",
+        "page_id": "3667615",
+        "sha256": "bda62f3ec6e07ca3783c6e5891702a6f417bed42fa34046a8f8f51601f94b089",
+        "text_path": "texts/3667615.md"
+      },
+      {
+        "document_id": "zhwiki/14255",
+        "page_id": "14255",
+        "sha256": "f06eda8cdf37fc9ff1abd3478d18cad3d4b13048e440ca4eef6b7bb44afefb6a",
+        "text_path": "texts/14255.md"
+      },
+      {
+        "document_id": "zhwiki/8295659",
+        "page_id": "8295659",
+        "sha256": "a458ca001f950aa55cdb1f10cd1bd4b4d87a404ca983df7f6c25fae08bcdfc0e",
+        "text_path": "texts/8295659.md"
+      },
+      {
+        "document_id": "zhwiki/6066934",
+        "page_id": "6066934",
+        "sha256": "5bc98d73b35e1c2f61dc00938433c54c1ae530ef2d203520eb6e1f730c8fa5ca",
+        "text_path": "texts/6066934.md"
+      },
+      {
+        "document_id": "zhwiki/100331",
+        "page_id": "100331",
+        "sha256": "46de9427aac0433b6a0ba236d8b1ac27fa5e026b32a8f6ae41837bf916273094",
+        "text_path": "texts/100331.md"
+      },
+      {
+        "document_id": "zhwiki/14253",
+        "page_id": "14253",
+        "sha256": "4cb38c34376f9956ce3931ba9c1ced3c2d594891f4da8833ec8ab6030db25a63",
+        "text_path": "texts/14253.md"
+      },
+      {
+        "document_id": "zhwiki/6477266",
+        "page_id": "6477266",
+        "sha256": "ab5565242beba0d8b37979fce327ee4c6a105f7f0f945431e94a45faa7db4b17",
+        "text_path": "texts/6477266.md"
+      },
+      {
+        "document_id": "zhwiki/5214431",
+        "page_id": "5214431",
+        "sha256": "f123ca02929ba7f2b79bea8d45abe9ea90f4ab7d6c8409cc3c7395adba24d6a5",
+        "text_path": "texts/5214431.md"
+      },
+      {
+        "document_id": "zhwiki/8647440",
+        "page_id": "8647440",
+        "sha256": "6f0de04013eb87ec4f0087c770ea9e91ec169964f8ef52e24d175c03bae0cb86",
+        "text_path": "texts/8647440.md"
+      },
+      {
+        "document_id": "zhwiki/102495",
+        "page_id": "102495",
+        "sha256": "3a4d52fe12a1ae30082eab337479548860ea4b6ef41e0b2e5a0264b1c5f858ea",
+        "text_path": "texts/102495.md"
+      },
+      {
+        "document_id": "zhwiki/3511317",
+        "page_id": "3511317",
+        "sha256": "d1c9c37c507a7b4aba39e1dd40b8c0f4e77378bd997779e25de82f9618f55499",
+        "text_path": "texts/3511317.md"
+      },
+      {
+        "document_id": "zhwiki/4007069",
+        "page_id": "4007069",
+        "sha256": "da9eb4eac597eda68b7ea3e5a53a0e190544b6c49a9ba2926fb6d5666d309681",
+        "text_path": "texts/4007069.md"
+      },
+      {
+        "document_id": "zhwiki/3927709",
+        "page_id": "3927709",
+        "sha256": "f1404223f50cd34d14641cf53c90f625d70f70669691d9cefbe21aef71792b3d",
+        "text_path": "texts/3927709.md"
+      },
+      {
+        "document_id": "zhwiki/7775972",
+        "page_id": "7775972",
+        "sha256": "e43d7e4f02d8652a7d50d64e2ba7027677fc40a5976be669166bf4aaf1951d5b",
+        "text_path": "texts/7775972.md"
+      }
+    ]
+  },
+  "vocabulary_sha256": "8324476023347dec2964625ccb2075c864d250a9c6d9a74f36daba628de8c008",
+  "max_sequence_tokens": 4096,
+  "max_generation_tokens": 32,
+  "prompt_protocol": "rwkv_g1j_no_think_v1",
+  "export": {
+    "splits": {
+      "train": {
+        "samples": 46,
+        "positive": 30,
+        "positive_without_E1": 18,
+        "positive_multiple_units": 6,
+        "three_or_more_units": 46,
+        "negative": 16,
+        "max_sequence_tokens": 4022
+      }
+    },
+    "checked_splits": [
+      "train"
+    ],
+    "cross_split_verified": false,
+    "document_disjoint_in_checked_splits": true,
+    "content_disjoint_in_checked_splits": true,
+    "semantic_labels_verified_by_code": false,
+    "scope": "integrity and protocol checks; source semantics require author review",
+    "exported": 46,
+    "sha256": "3a05af459b89af7771e9d8c40f4d4982a0b4269519a2088beb808cd628d1e752",
+    "teacher_forcing": "logits(input_ids[:-1]) predict labels[1:]; ignore=-100; EOS=0",
+    "evaluation_content_read": false
+  },
+  "input_layout": "task_last",
+  "files": {
+    "train.tokens.jsonl": "3a05af459b89af7771e9d8c40f4d4982a0b4269519a2088beb808cd628d1e752",
+    "AUDIT.json": "200d3ede3b0780c9b614497168fc871795d8d8ff21447ec835808d1e292122ae"
+  },
+  "training_data_admitted": true,
+  "model_quality_validated": false,
+  "production_promoted": false
+}

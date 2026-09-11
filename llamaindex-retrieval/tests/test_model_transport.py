@@ -92,3 +92,26 @@ def test_continuation_prefill_changes_only_final_prompt_character_and_body_bound
     assert not inspect_batch_envelope("答案", partial_prefill)["valid"]
     assert not inspect_batch_envelope(">尚未结束的思考", "<think")["valid"]
     assert inspect_batch_envelope(">先想一下</think>答案", "<think")["valid"]
+
+
+@pytest.mark.parametrize("overrides", [
+    {"rwkvos_reader_state_id": "reader-trained"},
+    {"rwkvos_reader_prompt_protocol": "rwkv_g1j_no_think_v1"},
+    {"rwkvos_reader_input_layout": "task_last"},
+])
+def test_reader_state_configuration_rejects_mismatched_pipeline(overrides):
+    with pytest.raises(ValueError):
+        Settings(_env_file=None, **overrides)
+
+
+def test_canonical_reader_configuration_routes_only_reader_options():
+    settings = Settings(_env_file=None, native_transport="rwkvos_batch",
+        native_resolver_protocol="task_units", native_resolver_prefill="<think></think",
+        rwkvos_reader_prompt_protocol="rwkv_g1j_no_think_v1", rwkvos_reader_state_id="reader-trained",
+        rwkvos_reader_input_layout="task_last", native_resolver_max_tokens=32)
+    options = model_client_options(settings)
+    assert options["state_id"] is None
+    assert options["reader_state_id"] == "reader-trained"
+    assert options["reader_prompt_protocol"] == "rwkv_g1j_no_think_v1"
+    assert options["reader_input_layout"] == "task_last"
+    assert settings.native_resolver_max_tokens == 32

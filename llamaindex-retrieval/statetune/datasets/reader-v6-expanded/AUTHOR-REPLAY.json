@@ -1,0 +1,17 @@
+{
+  "author_script_sha256": "7de2ad7dae148b39ebb72c8c105c3cebbc59f7d6bcc33e30cd89c70a1b79ad0c",
+  "annotations_sha256": "544aa17cc43970af3fafff01cc344e078ce42ec5ef99887c54a7f60747f77344",
+  "annotations_byte_identical": true,
+  "built_files_byte_identical": {
+    "heldout.inputs.jsonl": true,
+    "train.inputs.jsonl": true,
+    "dev.gold.jsonl": true,
+    "dev.inputs.jsonl": true,
+    "train.gold.jsonl": true,
+    "heldout.gold.jsonl": true,
+    "AUDIT.json": true
+  },
+  "replayed_cases": 110,
+  "model_calls": 0,
+  "optimizer_updates": 0
+}

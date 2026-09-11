@@ -1,0 +1,45 @@
+{
+  "schema": "reader-state-data-revision-plan-v2",
+  "at": "2026-09-09T02:44:15.113859+00:00",
+  "before_any_optimizer_update": true,
+  "reason": "Independent train-only semantic review found E2 omitted for state_train_021. Preserve v1 unchanged; reread all 16 complete train sources, all 32 conversations and every E unit before touching eval specs or source bodies.",
+  "changes": [
+    {
+      "id": "state_train_021",
+      "old_target": "E1",
+      "new_target": "E1,E2",
+      "reason": "E2评价段再次明确吴敬著书及景泰元年（1450年）；当前撤回的是版本目录要求，并未撤回作者和成书年份。原文末段书名写作‘详解’，作为同篇评价保留原样，不做书名纠正。即使仅含其中一项当前事实也必须入选，不能只凭预先列出的两条开头引句标 NONE。",
+      "new_support": {
+        "fact": "参数名可省略",
+        "quote": "第一个示例中的参数名称是可选的",
+        "quote_sha256": "c926d356f5a58c9ca37903b687bea3487554f8c361eac3cbeb932d903028688b",
+        "page_id": 6397635,
+        "document_id": "zhwiki/6397635",
+        "source_span": {
+          "start": 592,
+          "end": 607,
+          "unit": "unicode_code_points"
+        },
+        "page_span": {
+          "start": 592,
+          "end": 607,
+          "unit": "unicode_code_points"
+        },
+        "unit_relative_span": {
+          "start": 592,
+          "end": 607,
+          "unit": "unicode_code_points"
+        },
+        "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+      }
+    }
+  ],
+  "other_train_inputs_and_targets_unchanged": true,
+  "evaluation_policy": "Keep the pre-registered dev8/heldout16 document buckets, 242 exposure exclusions and design-control categories. Finalize train before reading evaluation sources; no labels or wording adapted to model/evaluation outputs.",
+  "budget": {
+    "maximum_prompt_plus_separate_target_plus_eos_tokens": 4096,
+    "eos_token": 0,
+    "overflow": "reject whole sample; never truncate"
+  },
+  "authorship_caveat": "Semantic labels are manually reasoned by the Codex assistant. No target RWKV inference, model-generated pseudo-label pipeline, retrieval run or GPU use during data revision. Eval is author-known and not a blind random benchmark."
+}

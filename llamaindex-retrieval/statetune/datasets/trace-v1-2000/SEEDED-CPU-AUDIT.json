@@ -1,0 +1,16 @@
+{
+  "seed_builder_import_no_writes": true,
+  "seed_builder_refuses_overwrite": true,
+  "seed_content_unchanged": true,
+  "descendant_rows": 2000,
+  "all_parent_bindings_valid": true,
+  "citation_first_answer_positions": {
+    "1": 42,
+    "2": 42,
+    "3": 42,
+    "4": 42,
+    "5": 41,
+    "6": 41
+  },
+  "gpu_training_started": false
+}

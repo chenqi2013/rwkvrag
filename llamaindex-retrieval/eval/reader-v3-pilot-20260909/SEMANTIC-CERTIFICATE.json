@@ -1,0 +1,8 @@
+{
+  "independent": true,
+  "status": "PASS",
+  "reviewed_count": 43,
+  "dataset_frozen_sha256": "b823b630ffab8a1401d2151c26ac08477c8327477bb6e62db682f9911c740135",
+  "schema": "reader-semantic-certificate-v1",
+  "review_report_sha256": "88b9278c97db18e37f622269dfe3237da0428b9b963089644d518f0e98388cdd"
+}

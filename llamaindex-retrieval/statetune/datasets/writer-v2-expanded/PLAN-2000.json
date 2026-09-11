@@ -1,0 +1,39 @@
+{
+  "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+  "embedding": false,
+  "train_target": 2000,
+  "evaluation_target": 200,
+  "train_source_groups": {
+    "wiki_infobox": 277,
+    "wiki_prose": 63,
+    "synthetic_scenarios": 60
+  },
+  "evaluation_source_groups": {
+    "wiki_infobox": 19,
+    "wiki_prose": 11,
+    "synthetic_scenarios": 10
+  },
+  "tasks_per_group": 5,
+  "sizes": [
+    100,
+    300,
+    600,
+    2000
+  ],
+  "seed": 20260911,
+  "epochs": 1,
+  "learning_rate": 1e-05,
+  "accumulation": 2,
+  "max_sequence_tokens": 8192,
+  "generation_cap": 2048,
+  "independent_review_required": true,
+  "test_not_used_to_select_state": true,
+  "old_48_role": "exposed regression development",
+  "source_separation": "document/page/title and text hashes; paired/distractor sources stay within split",
+  "synthetic_disclosure": "fictional source documents for controlled version/date/units/conflict cases; not real-world corpus evidence",
+  "scale_limitation": "600 instruction rows are 120 source groups, not 600 independent documents; one epoch changes both sample count and update count",
+  "promotion": "no automatic promotion; retain raw zero and each state outputs, compare paired facts/citations/refusals/EOS",
+  "amendment_reason": "User explicitly requested 2000 training rows; add 280 new train source groups with five tasks each. Keep existing600 train,200 evaluation and their splits/contents unchanged except independently required corrections.",
+  "evaluation_generation_cap": 512,
+  "evaluation_generation_cap_reason": "New short-answer evaluation: largest authored target110 tokens; fixed512 cap applies to all four states before any run.2048 remains training context reserve and old-dev protocol. Truncation remains failure."
+}

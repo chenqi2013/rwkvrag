@@ -126,6 +126,7 @@ class SearchService:
         retrieval_agent: ActiveRetrievalAgent | None = None,
         evidence_extractor: LanguageModelEvidenceExtractor | None = None,
         document_reranker: LanguageModelDocumentReranker | None = None,
+        native_recorder=None,
     ) -> None:
         self.settings = settings
         self.index = index
@@ -138,7 +139,7 @@ class SearchService:
         self.native_pipeline = None
         if settings.rag_pipeline == "rwkv":
             from .rwkv_pipeline import RWKVPipeline
-            self.native_pipeline = RWKVPipeline(settings, index)
+            self.native_pipeline = RWKVPipeline(settings, index, recorder=native_recorder)
 
     async def aclose(self) -> None:
         if self.native_pipeline is not None:

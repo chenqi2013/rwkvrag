@@ -1,0 +1,70 @@
+{
+  "seed_file_sha256": "41d28fe2bbfe114db53f72097362dbe43adc921654e3dd5e74ed13409e44d798",
+  "seed_count": 17,
+  "training_admitted": false,
+  "independent_semantic_and_mechanism_review_required": true,
+  "counts": {
+    "writer": 1400,
+    "resolver": 450,
+    "planner": 150
+  },
+  "families": {
+    "citation_binding": 250,
+    "entity_field_binding": 300,
+    "units_and_qualifiers": 150,
+    "missing_evidence": 300,
+    "multi_part_coverage": 150,
+    "history_correction": 150,
+    "bounded_answer_eos": 100,
+    "reader_false_negative": 150,
+    "reader_relative_absolute": 300,
+    "planner_contract": 150
+  },
+  "real_source_pool": 313,
+  "excluded_additional_source_pages": [
+    "1242328",
+    "1342454",
+    "1582169",
+    "1801266",
+    "1843007",
+    "2902073",
+    "2902194",
+    "2902705",
+    "3129465",
+    "3421480",
+    "42975",
+    "5025689",
+    "5092943",
+    "5318762",
+    "5348332",
+    "5569750",
+    "5685512",
+    "5955009",
+    "6056596",
+    "6521659",
+    "6852237",
+    "7482864",
+    "7704166",
+    "8240574",
+    "8747776",
+    "8890062",
+    "9042749"
+  ],
+  "max_prompt_tokens": 4974,
+  "max_target_tokens": 386,
+  "files": {
+    "writer.tokens.jsonl": "04685fa0ec635556a30332d0802417bdaa17750f3231f86fd77fea0c47163ee8",
+    "planner.drafts.jsonl": "d1415233e5b971668dfbc22f619569106a749ac83ef52efdb38e686fdbfab35d",
+    "resolver.tokens.jsonl": "ee9f26ff4bed480aab8fa44f5fa2873073bfecbe8f00e70c5c14ca7a405189f1",
+    "planner.tokens.jsonl": "f5f9dc655a59044742e1ed3f5a9731281593d7309b6e668253317b1800619773",
+    "writer.drafts.jsonl": "dad1ce1e2d09a82b50e4a332e89702b1b3523a5ec0411d10bc72482aa49d74ae",
+    "resolver.drafts.jsonl": "0e85e9fe3f0fc7c2845c9cb6943cc39b46c494518a3da704cec922f839b98188"
+  },
+  "limitations": [
+    "synthetic controlled contrast scenarios are labeled, not real observed questions",
+    "source semantic approval does not establish defect mechanism coverage",
+    "all prompts use production stage format but benchmark inference still required",
+    "seed variants remain authored templates; real long-history improvement requires independent challenge evaluation",
+    "Reader version/field controls and unrelated-object Writer cases are preventive extensions, not exact observed failures"
+  ]
+}

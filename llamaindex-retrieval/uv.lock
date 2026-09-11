@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.11, <3.14"
 resolution-markers = [
     "python_full_version >= '3.13'",
@@ -1697,6 +1697,7 @@ dependencies = [
 
 [package.optional-dependencies]
 dev = [
+    { name = "jinja2" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
     { name = "ruff" },
@@ -1707,6 +1708,7 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.115,<1" },
     { name = "httpx", specifier = ">=0.28,<1" },
     { name = "jieba", specifier = ">=0.42,<1" },
+    { name = "jinja2", marker = "extra == 'dev'", specifier = ">=3.1,<4" },
     { name = "llama-index-core", specifier = ">=0.13,<0.15" },
     { name = "opencc-python-reimplemented", specifier = ">=0.1.7,<1" },
     { name = "opensearch-py", specifier = ">=2.8,<4" },

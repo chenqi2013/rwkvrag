@@ -1,0 +1,13 @@
+{
+  "step": 11,
+  "path": "state-step-11.pth",
+  "sha256": "a27d2d28147a7c0da4e7f9d037d10268195fed049d3ad45ecda26a007cd9d1e5",
+  "axes": [
+    "head",
+    "value",
+    "key"
+  ],
+  "dtype": "float32",
+  "layers": 32,
+  "state_l2": 8.990855882645043
+}

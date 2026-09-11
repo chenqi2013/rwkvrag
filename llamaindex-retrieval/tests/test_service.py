@@ -548,14 +548,14 @@ class FakeComparisonIndex:
 
 @pytest.mark.asyncio
 async def test_definition_question_uses_document_lead_and_direct_answer() -> None:
-    service = SearchService(Settings(), cast(Any, FakeDefinitionIndex()), generator=cast(Any, FakeFailingGenerator()))
+    service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeDefinitionIndex()), generator=cast(Any, FakeFailingGenerator()))
     response = await service.ask(SearchRequest(question="示例是什么？", top_k=1))
     assert response.answer == "示例是用于测试的条目。 [资料 1]"
     assert response.generation["answer_strategy"] == "direct_extract"
 
 
 def test_adaptive_evidence_top_k_uses_question_complexity() -> None:
-    service = SearchService(Settings(max_top_k=20), cast(Any, None))
+    service = SearchService(Settings(rag_pipeline="existing", max_top_k=20), cast(Any, None))
 
     cases = {
         "中国的首都是哪里？": (5, "simple_fact"),
@@ -572,7 +572,7 @@ def test_adaptive_evidence_top_k_uses_question_complexity() -> None:
 
 
 def test_adaptive_evidence_top_k_keeps_larger_display_request() -> None:
-    service = SearchService(Settings(max_top_k=20), cast(Any, None))
+    service = SearchService(Settings(rag_pipeline="existing", max_top_k=20), cast(Any, None))
 
     top_k, policy = service._adaptive_evidence_top_k(
         "中国的首都是哪里？",
@@ -586,7 +586,7 @@ def test_adaptive_evidence_top_k_keeps_larger_display_request() -> None:
 
 @pytest.mark.asyncio
 async def test_comparison_question_decomposes_and_merges_subject_searches() -> None:
-    service = SearchService(Settings(), cast(Any, FakeComparisonIndex()))
+    service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeComparisonIndex()))
     response = await service.search(SearchRequest(question="尺八和长笛有什么区别？", top_k=5))
 
     assert [item.title for item in response.results] == ["尺八", "长笛"]
@@ -674,7 +674,7 @@ class FakeGreatWallPassIndex:
 
 def test_select_results_deduplicates_documents_and_filters_low_scores() -> None:
     service = SearchService(
-        Settings(relative_score_threshold=0.55),
+        Settings(rag_pipeline="existing", relative_score_threshold=0.55),
         cast(Any, None),
     )
     selected = service._select_results(
@@ -899,7 +899,7 @@ async def test_model_relation_searches_inside_exact_page_before_top_k_cutoff() -
 
     index = AchievementIndex()
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, index),
         query_planner=cast(Any, AchievementPlanner()),
     )
@@ -940,7 +940,7 @@ def test_rank_fusion_prefers_route_page_for_endpoint_description() -> None:
 
 def test_lexical_index_searches_chinese_and_titles() -> None:
     client = FakeOpenSearch()
-    index = LexicalIndex(Settings(), client=cast(Any, client))
+    index = LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, client))
     results = index.search("中国首都在哪里", candidate_k=5)
     assert results
     assert results[0].document_id == "capital"
@@ -970,7 +970,7 @@ def test_entity_bigrams_preserve_chinese_entity_boundaries() -> None:
 
 
 def test_index_mapping_contains_alias_and_entity_fallback_fields() -> None:
-    index = LexicalIndex(Settings(), client=cast(Any, FakeOpenSearch()))
+    index = LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, FakeOpenSearch()))
     properties = index.index_definition()["mappings"]["properties"]
 
     assert properties["alias_tokens"]["type"] == "text"
@@ -1001,7 +1001,7 @@ def test_query_normalization_corrects_common_chinese_typos() -> None:
 @pytest.mark.asyncio
 async def test_service_searches_with_normalized_question() -> None:
     client = FakeOpenSearch()
-    service = SearchService(Settings(), LexicalIndex(Settings(), client=cast(Any, client)))
+    service = SearchService(Settings(rag_pipeline="existing", ), LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, client)))
 
     response = await service.search(SearchRequest(question="中国有多少个名族", top_k=1))
 
@@ -1015,7 +1015,7 @@ async def test_service_searches_with_normalized_question() -> None:
 @pytest.mark.asyncio
 async def test_ask_reports_subject_anchor_mismatch() -> None:
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeMismatchIndex()),
         generator=cast(Any, FakeInsufficientGenerator()),
     )
@@ -1033,7 +1033,7 @@ async def test_ask_reports_subject_anchor_mismatch() -> None:
 async def test_cause_question_expands_sibling_chunks_from_same_section() -> None:
     index = FakeCauseIndex()
     service = SearchService(
-        Settings(max_chunks_per_document=1),
+        Settings(rag_pipeline="existing", max_chunks_per_document=1),
         cast(Any, index),
         generator=cast(Any, FakeCauseGenerator()),
     )
@@ -1055,7 +1055,7 @@ async def test_cause_question_expands_sibling_chunks_from_same_section() -> None
 @pytest.mark.asyncio
 async def test_non_cause_question_does_not_expand_cause_context() -> None:
     index = FakeCauseIndex()
-    service = SearchService(Settings(), cast(Any, index))
+    service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, index))
 
     response = await service.search(SearchRequest(question="明朝灭亡于哪一年", top_k=5))
 
@@ -1067,7 +1067,7 @@ async def test_non_cause_question_does_not_expand_cause_context() -> None:
 @pytest.mark.asyncio
 async def test_cause_question_falls_back_to_grounded_excerpts_when_model_refuses() -> None:
     service = SearchService(
-        Settings(max_chunks_per_document=1),
+        Settings(rag_pipeline="existing", max_chunks_per_document=1),
         cast(Any, FakeCauseIndex()),
         generator=cast(Any, FakeRefusingCauseGenerator()),
     )
@@ -1084,7 +1084,7 @@ async def test_cause_question_falls_back_to_grounded_excerpts_when_model_refuses
 @pytest.mark.asyncio
 async def test_cause_question_repairs_empty_model_answer_before_caching() -> None:
     service = SearchService(
-        Settings(max_chunks_per_document=1),
+        Settings(rag_pipeline="existing", max_chunks_per_document=1),
         cast(Any, FakeCauseIndex()),
         generator=cast(Any, FakeEmptyCauseGenerator()),
     )
@@ -1101,7 +1101,7 @@ async def test_cause_question_repairs_empty_model_answer_before_caching() -> Non
 @pytest.mark.asyncio
 async def test_cause_question_repairs_legacy_empty_cached_answer() -> None:
     service = SearchService(
-        Settings(max_chunks_per_document=1),
+        Settings(rag_pipeline="existing", max_chunks_per_document=1),
         cast(Any, FakeCauseIndex()),
         generator=cast(Any, FakeFailingGenerator()),
     )
@@ -1121,7 +1121,7 @@ async def test_cause_question_repairs_legacy_empty_cached_answer() -> None:
 
 
 def test_answer_cache_key_includes_task_contract() -> None:
-    service = SearchService(Settings(), cast(Any, FakeCauseIndex()))
+    service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeCauseIndex()))
     response = SearchResponse(
         results=[SourceItem(
             id="journey-west",
@@ -1197,7 +1197,7 @@ def test_deterministic_evidence_uses_relation_synonyms_and_section_context() -> 
 async def test_relation_question_searches_inside_exact_subject_document() -> None:
     index = FakeDocumentRelationIndex()
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, index),
         generator=cast(Any, FakeFailingGenerator()),
     )
@@ -1217,7 +1217,7 @@ async def test_relation_question_searches_inside_exact_subject_document() -> Non
 async def test_ordinal_question_searches_equivalent_first_relation_phrases() -> None:
     index = FakeOrdinalIndex()
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, index),
         generator=cast(Any, FakeOrdinalGenerator()),
     )
@@ -1242,7 +1242,7 @@ async def test_ordinal_question_searches_equivalent_first_relation_phrases() -> 
 @pytest.mark.asyncio
 async def test_ungrounded_definition_does_not_extract_unrelated_heading() -> None:
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeMismatchIndex()),
         generator=cast(Any, FakeInsufficientGenerator()),
     )
@@ -1265,7 +1265,7 @@ def test_focus_bonus_reranks_chunks_by_non_title_query_terms() -> None:
 
 
 def test_search_merges_page_and_selects_best_passage() -> None:
-    index = LexicalIndex(Settings(), client=cast(Any, FakeOpenSearchWithPassages()))
+    index = LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, FakeOpenSearchWithPassages()))
 
     results = index.search("深圳地铁一号线有哪些站点", candidate_k=2)
 
@@ -1276,7 +1276,7 @@ def test_search_merges_page_and_selects_best_passage() -> None:
 
 def test_search_strongly_boosts_title_entities() -> None:
     client = FakeOpenSearch()
-    index = LexicalIndex(Settings(), client=cast(Any, client))
+    index = LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, client))
     index.search("深圳地铁一号线有哪些站点", candidate_k=5)
 
     title_boosts = [
@@ -1294,7 +1294,7 @@ def test_search_strongly_boosts_title_entities() -> None:
 
 def test_title_entity_extraction_stops_before_question_predicate() -> None:
     client = FakeOpenSearch()
-    index = LexicalIndex(Settings(), client=cast(Any, client))
+    index = LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, client))
     index.search("秦始皇有哪些丰功伟绩", candidate_k=5)
 
     title_boosts = [
@@ -1307,7 +1307,7 @@ def test_title_entity_extraction_stops_before_question_predicate() -> None:
 
 def test_list_queries_allow_multiple_chunks_from_one_document() -> None:
     service = SearchService(
-        Settings(max_chunks_per_document=1, list_query_max_chunks_per_document=3),
+        Settings(rag_pipeline="existing", max_chunks_per_document=1, list_query_max_chunks_per_document=3),
         cast(Any, None),
     )
     document_limit = service._max_chunks_per_document("深圳地铁一号线有哪些站点")
@@ -1333,7 +1333,7 @@ def test_list_queries_allow_multiple_chunks_from_one_document() -> None:
 
 
 def test_opensearch_record_contains_pretokenized_fields() -> None:
-    index = LexicalIndex(Settings(), client=cast(Any, FakeOpenSearch()))
+    index = LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, FakeOpenSearch()))
     record = index._record(
         TextNode(
             text="中华人民共和国的首都是北京。",
@@ -1345,7 +1345,7 @@ def test_opensearch_record_contains_pretokenized_fields() -> None:
 
 
 def test_opensearch_record_contains_structure_fields() -> None:
-    index = LexicalIndex(Settings(), client=cast(Any, FakeOpenSearch()))
+    index = LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, FakeOpenSearch()))
     record = index._record(
         TextNode(
             text="型号：A；容量：10",
@@ -1412,7 +1412,7 @@ def test_source_item_cleans_wiki_reference_marks() -> None:
 @pytest.mark.asyncio
 async def test_ask_extracts_complete_structured_list_without_model_call() -> None:
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeStructuredListIndex()),
         generator=cast(Any, FakeFailingGenerator()),
     )
@@ -1429,7 +1429,7 @@ async def test_ask_extracts_complete_structured_list_without_model_call() -> Non
 @pytest.mark.asyncio
 async def test_ask_extracts_station_rows_for_short_station_wording() -> None:
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeStructuredRowsIndex()),
         generator=cast(Any, FakeFailingGenerator()),
     )
@@ -1443,7 +1443,7 @@ async def test_ask_extracts_station_rows_for_short_station_wording() -> None:
 @pytest.mark.asyncio
 async def test_ask_extracts_capital_answer_without_model_call() -> None:
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeCapitalIndex()),
         generator=cast(Any, FakeFailingGenerator()),
     )
@@ -1457,7 +1457,7 @@ async def test_ask_extracts_capital_answer_without_model_call() -> None:
 @pytest.mark.asyncio
 async def test_semantic_list_render_does_not_reuse_model_cache() -> None:
     service = SearchService(
-        Settings(
+        Settings(rag_pipeline="existing",
             semantic_pipeline_enabled=True,
             active_retrieval_enabled=False,
         ),
@@ -1533,7 +1533,7 @@ async def test_ask_uses_active_bm25_search_when_initial_evidence_is_wrong() -> N
 
     agent = FakeActiveAgent()
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeRecoveryIndex()),
         generator=cast(Any, FakeFailingGenerator()),
         retrieval_agent=cast(Any, agent),
@@ -1559,7 +1559,7 @@ async def test_ask_skips_active_retrieval_when_initial_evidence_is_sufficient() 
             raise AssertionError("direct evidence must not add extraction latency")
 
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeCapitalIndex()),
         generator=cast(Any, FakeFailingGenerator()),
         retrieval_agent=cast(Any, UnexpectedActiveAgent()),
@@ -1581,7 +1581,7 @@ async def test_ask_skips_active_retrieval_when_initial_evidence_is_sufficient() 
 @pytest.mark.asyncio
 async def test_ask_extracts_capital_answer_for_colloquial_wording() -> None:
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeCapitalIndex()),
         generator=cast(Any, FakeFailingGenerator()),
     )
@@ -1595,7 +1595,7 @@ async def test_ask_extracts_capital_answer_for_colloquial_wording() -> None:
 @pytest.mark.asyncio
 async def test_ask_extracts_capital_answer_for_national_capital_wording() -> None:
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeCapitalIndex()),
         generator=cast(Any, FakeFailingGenerator()),
     )
@@ -1609,7 +1609,7 @@ async def test_ask_extracts_capital_answer_for_national_capital_wording() -> Non
 @pytest.mark.asyncio
 async def test_ask_extracts_capital_decision_and_ignores_possible_future_capital() -> None:
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeCapitalDecisionIndex()),
         generator=cast(Any, FakeFailingGenerator()),
     )
@@ -1623,7 +1623,7 @@ async def test_ask_extracts_capital_decision_and_ignores_possible_future_capital
 @pytest.mark.asyncio
 async def test_ask_uses_more_internal_evidence_than_displayed_sources() -> None:
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeCapitalDecisionIndex()),
         generator=cast(Any, FakeFailingGenerator()),
     )
@@ -1641,7 +1641,7 @@ async def test_ask_uses_more_internal_evidence_than_displayed_sources() -> None:
 @pytest.mark.asyncio
 async def test_ask_extracts_bullet_list_with_specific_context() -> None:
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeGreatWallPassIndex()),
         generator=cast(Any, FakeFailingGenerator()),
     )
@@ -1655,7 +1655,7 @@ async def test_ask_extracts_bullet_list_with_specific_context() -> None:
 @pytest.mark.asyncio
 async def test_ask_extracts_bullet_list_for_list_instruction_wording() -> None:
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, FakeGreatWallPassIndex()),
         generator=cast(Any, FakeFailingGenerator()),
     )
@@ -1717,7 +1717,7 @@ async def test_list_query_expands_all_chunks_from_the_matching_structure() -> No
             assert parent_id == "station-table"
             return siblings
 
-    service = SearchService(Settings(), cast(Any, FakeStructureIndex()))
+    service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeStructureIndex()))
     expanded, did_expand = await service._expand_structured_results(
         "测试线路有哪些车站",
         [result("metro", 1.0), misleading, anchor, result("other", 0.5)],
@@ -1759,7 +1759,7 @@ async def test_search_uses_normalized_question_for_structured_list_expansion() -
             assert parent_id == "dialog-parent"
             return [list_chunk]
 
-    service = SearchService(Settings(), cast(Any, FakeNormalizedListIndex()))
+    service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeNormalizedListIndex()))
     response = await service.search(
         SearchRequest(question="测试班机事故在与空管的对话方面都包括什么？", top_k=5)
     )
@@ -1832,7 +1832,7 @@ async def test_model_list_relations_do_not_override_structured_evidence() -> Non
 
     index = FakeListIndex()
     service = SearchService(
-        Settings(),
+        Settings(rag_pipeline="existing", ),
         cast(Any, index),
         query_planner=cast(Any, FakeModelPlanner()),
     )
@@ -1908,7 +1908,7 @@ async def test_list_query_prefers_station_list_over_station_name_issue() -> None
             assert parent_id == "station-list"
             return station_siblings
 
-    service = SearchService(Settings(), cast(Any, FakeStructureIndex()))
+    service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeStructureIndex()))
     expanded, did_expand = await service._expand_structured_results(
         "深圳地铁1号线有哪些站点",
         [result("metro", 1.0), station_issue],
@@ -1956,7 +1956,7 @@ async def test_station_wording_with_count_expands_companion_list_page() -> None:
             assert kwargs["document_id"] == "station-list"
             return chunks
 
-    service = SearchService(Settings(), cast(Any, FakeCompanionIndex()))
+    service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeCompanionIndex()))
     expanded, did_expand = await service._expand_structured_results(
         "深圳地铁1号线有哪几个站",
         [route, companion],
@@ -1994,7 +1994,7 @@ async def test_station_summary_without_parent_adds_repair_context() -> None:
             assert term == "瑞"
             return [summary, context]
 
-    service = SearchService(Settings(), cast(Any, FakeStationRepairIndex()))
+    service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeStationRepairIndex()))
     expanded, did_expand = await service._expand_structured_results(
         "深圳地铁1号线有哪些站点",
         [summary],
@@ -2433,7 +2433,7 @@ async def test_semantic_pipeline_reranks_then_extracts_immutable_evidence() -> N
     extractor = ModelExtractor()
     generator = ModelGenerator()
     service = SearchService(
-        Settings(
+        Settings(rag_pipeline="existing",
             semantic_pipeline_enabled=True,
             document_reranking_enabled=True,
         ),
@@ -2506,7 +2506,7 @@ async def test_semantic_pipeline_never_generates_without_field_evidence() -> Non
 
     extractor = EmptyExtractor()
     service = SearchService(
-        Settings(semantic_pipeline_enabled=True),
+        Settings(rag_pipeline="existing", semantic_pipeline_enabled=True),
         cast(Any, FakeCapitalIndex()),
         generator=cast(Any, FakeFailingGenerator()),
         evidence_extractor=cast(Any, extractor),
@@ -2557,7 +2557,7 @@ async def test_semantic_pipeline_uses_raw_retrieval_when_extraction_errors() -> 
             )
 
     service = SearchService(
-        Settings(semantic_pipeline_enabled=True),
+        Settings(rag_pipeline="existing", semantic_pipeline_enabled=True),
         cast(Any, FakeCapitalIndex()),
         generator=cast(Any, RawEvidenceGenerator()),
         evidence_extractor=cast(Any, FailedExtractor()),
@@ -2609,7 +2609,7 @@ async def test_immutable_pipeline_writer_only_receives_resolver_spans() -> None:
 
     writer = Writer()
     service = SearchService(
-        Settings(generation_output_mode="immutable"),
+        Settings(rag_pipeline="existing", generation_output_mode="immutable"),
         cast(Any, FakeCapitalIndex()),
         generator=cast(Any, writer),
         evidence_extractor=cast(Any, Resolver()),
@@ -2655,7 +2655,7 @@ async def test_immutable_answer_point_fanout_records_branch_trace() -> None:
             return "北京。[资料 1]"
 
     service = SearchService(
-        Settings(
+        Settings(rag_pipeline="existing",
             generation_output_mode="immutable",
             answer_point_fanout_enabled=True,
             model_query_planning_enabled=False,
@@ -2703,7 +2703,7 @@ async def test_immutable_pipeline_blocks_writer_for_mismatched_subject() -> None
             raise AssertionError("writer must not run without subject evidence")
 
     service = SearchService(
-        Settings(
+        Settings(rag_pipeline="existing",
             generation_output_mode="immutable",
             model_query_planning_enabled=False,
         ),
@@ -2780,7 +2780,7 @@ async def test_immutable_pipeline_reopens_selected_documents_for_passages() -> N
             return "罗湖、国贸、老街、大剧院、科学馆、华强路。[资料 1]"
 
     service = SearchService(
-        Settings(
+        Settings(rag_pipeline="existing",
             generation_output_mode="immutable",
             model_query_planning_enabled=False,
         ),

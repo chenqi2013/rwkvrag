@@ -1,0 +1,54 @@
+--- v1/state_train_021.gold
++++ v2/state_train_021.gold
+@@ -2,9 +2,10 @@
+   "id": "state_train_021",
+   "split": "train",
+   "label": "positive",
+-  "target": "E1",
++  "target": "E1,E2",
+   "expected_unit_ids": [
+-    "E1"
++    "E1",
++    "E2"
+   ],
+   "unit_judgments": [
+     {
+@@ -64,10 +65,34 @@
+     },
+     {
+       "unit_id": "E2",
+-      "supported": false,
+-      "support_scope": "none_of_current_requested_facts",
+-      "reason": "该单元不含当前所求的具体事实；其他主题、版本背景或只有名称的文本不能据此选入。",
+-      "evidence": [],
++      "supported": true,
++      "support_scope": "at_least_one_current_requested_fact",
++      "reason": "E2评价段再次明确吴敬著书及景泰元年（1450年）；当前撤回的是版本目录要求，并未撤回作者和成书年份。原文末段书名写作‘详解’，作为同篇评价保留原样，不做书名纠正。即使仅含其中一项当前事实也必须入选，不能只凭预先列出的两条开头引句标 NONE。",
++      "evidence": [
++        {
++          "fact": "评价段重述作者和成书年份",
++          "quote": "景泰元年（1450年）吴敬所著《九章详解比类算法大全》",
++          "quote_sha256": "a83a3a61bbd2c4dea6c8ded440ce38badcddb8d7b03f281ef431d88ffb5a22d6",
++          "page_id": 4003468,
++          "document_id": "zhwiki/4003468",
++          "source_span": {
++            "start": 1235,
++            "end": 1262,
++            "unit": "unicode_code_points"
++          },
++          "page_span": {
++            "start": 1235,
++            "end": 1262,
++            "unit": "unicode_code_points"
++          },
++          "unit_relative_span": {
++            "start": 237,
++            "end": 264,
++            "unit": "unicode_code_points"
++          },
++          "basis": "Independent complete-source/current-conversation semantic reread before any optimizer update; no target RWKV labeling or evaluation output used."
++        }
++      ],
+       "unit_sha256": "ca181c4b94b451c919ce788a71e852099ba2a72c89d57f95c370d22521c3c9fc"
+     }
+   ],

@@ -1,0 +1,77 @@
+{
+  "config": {
+    "limits": {
+      "optimizer_updates": 0,
+      "model_forward_calls": 1,
+      "backward_calls": 1,
+      "max_sequence_tokens": 4096,
+      "wall_seconds": 1800
+    },
+    "train_tokens": "data/statetune/reader-v3-pilot-train.jsonl",
+    "train_sha256": "4ddc2ac1343cee0f5916c8c2847b87a52cb08f68237503db6b8e799d62f217d3",
+    "train_count": 21,
+    "longest_id": "reader_v3_6124888_03",
+    "longest_tokens": 3432,
+    "checkpoint": "data/experiments/state-protocol-20260909/checkpoints/rwkv7-g1j-2.9b-20260831-ctx16384.pth",
+    "peft_source": "data/experiments/state-protocol-20260909/training-v2/execution-source",
+    "packages": {
+      "torch": "2.9.0",
+      "triton": "3.5.0",
+      "rwkv-fla": "0.7.202508221413",
+      "deepspeed": "0.18.1",
+      "einops": "0.8.1",
+      "numpy": "2.3.4"
+    },
+    "code_bindings": {
+      "llamaindex-retrieval/statetune/preflight_state.py": "9d6dff7cabc007d78b40205649a05a5404e262349ad88db9df2c7c7fe58a20b1",
+      "llamaindex-retrieval/src/llamaindex_retrieval/state_training.py": "3a3d3118295e90032c96f502a43c663421154518b5dbf40d94fd8f7c3c6ee155",
+      "llamaindex-retrieval/src/llamaindex_retrieval/state_tokens.py": "6c496d3061abd6d764881b71f1b2c06f4bb85b44a3c6763e2807b313b17da882",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/SOURCE-MANIFEST.json": "ccdbb113427dad96e90d7cdef285f80eacb27dd02dedb63517fc7c903fc916ca",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/rwkvt/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/rwkvt/infctx_module.py": "0b709d59cc94ae8d0e3f5c8a12cf3b8101e43867383a095707b69d66243530cc",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/rwkvt/operator/rwkvop.py": "2614652ded9b57e3086a2767283847a1745259a5102c8fd913d42d991dfd6b82",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/rwkvt/rwkv7/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/rwkvt/rwkv7/model.py": "980c478acea496055e9ffef5fb9cc6418e3f5e3d22fe0751bb6ab1c9994dc6c5",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/rwkvt/rwkv7/block.py": "e3bfaae25872b83e192701ce94529b539a45dcafe7f18396d17a0f5b94ed2535",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/rwkvt/rwkv7/att.py": "ae9765c714e4c1f1e80ff010933ff32a10c3fcbe17fb8539a1e3b98b9b195923",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/rwkvt/rwkv7/ffn.py": "26fb4f15d0fad05aeb4018804d61fa106c4d0d094d4df876bda235bccd7cbfa6",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/rwkv_vocab_v20230424.txt": "8324476023347dec2964625ccb2075c864d250a9c6d9a74f36daba628de8c008"
+    },
+    "dataset_frozen_manifest_sha256": "b823b630ffab8a1401d2151c26ac08477c8327477bb6e62db682f9911c740135",
+    "independent_semantic_review_complete": false,
+    "purpose": "No-update computational preflight; no claim about label or answer quality"
+  },
+  "config_sha256": "ba1d6d792c4c43303176d06353ec34393e09c7957f40c45c39d27f856a30b5b1",
+  "gpu": {
+    "hostname": "rwkv-260304",
+    "physical_index": 2,
+    "uuid": "GPU-5d61943c-0955-e221-92a8-318915f5a3a0",
+    "memory_used_mib_before": 15
+  },
+  "packages": {
+    "torch": "2.9.0",
+    "triton": "3.5.0",
+    "rwkv-fla": "0.7.202508221413",
+    "deepspeed": "0.18.1",
+    "einops": "0.8.1",
+    "numpy": "2.3.4"
+  },
+  "environment": {
+    "WKV": "fla",
+    "RWKV_MY_TESTING": "x070",
+    "RWKV_TRAIN_TYPE": "state",
+    "FUSED_KERNEL": "0",
+    "RWKV_HEAD_SIZE_A": "64",
+    "RWKV_JIT_ON": "0",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "WANDB_MODE": "disabled",
+    "TORCH_FORCE_WEIGHTS_ONLY_LOAD": "1",
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "TRITON_CACHE_DIR": "/home/chase/rwkvrag/data/experiments/reader-v3-preflight-20260909/cache/triton",
+    "TORCH_EXTENSIONS_DIR": "/home/chase/rwkvrag/data/experiments/reader-v3-preflight-20260909/cache/extensions",
+    "XDG_CACHE_HOME": "/home/chase/rwkvrag/data/experiments/reader-v3-preflight-20260909/cache/xdg"
+  }
+}

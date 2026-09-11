@@ -1,0 +1,20 @@
+{
+  "checkpoint_hashes_match": true,
+  "updates": 11,
+  "unique_examples": 21,
+  "loss_divisors": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1
+  ],
+  "all1062_base_tensors_unchanged": true,
+  "peak_allocated_gib": 7.751072406768799
+}

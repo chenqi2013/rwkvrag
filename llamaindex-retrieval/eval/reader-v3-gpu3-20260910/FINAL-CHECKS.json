@@ -1,0 +1,10 @@
+{
+  "frozen_dataset_files_verified": 20,
+  "runtime_code_bindings_verified": 17,
+  "scoring_bindings_verified": 2,
+  "raw_generation_hashes_verified": 22,
+  "config_preflight_train_generation_hash_chain_matches": true,
+  "source_snapshot_files": 9,
+  "local_markdown_links_valid": true,
+  "git_diff_check_passed": true
+}

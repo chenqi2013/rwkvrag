@@ -1,0 +1,38 @@
+{
+  "schema": "rwkv_released_training_v1",
+  "mode": "train",
+  "release": "data/statetune/reader-v6-expanded-release/RELEASE.json",
+  "release_sha256": "73e9919d12c95f979e2f5f0935fc3ebfc8868f0cb205294e0c8d25540a2e79a0",
+  "runtime": {
+    "checkpoint": "data/experiments/state-protocol-20260909/checkpoints/rwkv7-g1j-2.9b-20260831-ctx16384.pth",
+    "peft_source": "data/experiments/state-protocol-20260909/training-v2/execution-source"
+  },
+  "packages": {
+    "torch": "2.9.0",
+    "triton": "3.5.0",
+    "rwkv-fla": "0.7.202508221413",
+    "deepspeed": "0.18.1",
+    "einops": "0.8.1",
+    "numpy": "2.3.4"
+  },
+  "bindings": {
+    "llamaindex-retrieval/statetune/train_released_state.py": "621894df872f10f9bda10d9035daf9451312205e907868dbf1853e9b051d625c",
+    "llamaindex-retrieval/statetune/preflight_state.py": "d6edbdc99c95fde6c67161456c1da07f953eb6b58f4e8e73cc48aaa2eeaace10",
+    "llamaindex-retrieval/statetune/pilot_runtime.py": "08431a0587d5f1e2df17f9160fd1e2e7c93e9c11084a722da646854eb0f0141a",
+    "llamaindex-retrieval/src/llamaindex_retrieval/state_training.py": "3a3d3118295e90032c96f502a43c663421154518b5dbf40d94fd8f7c3c6ee155",
+    "llamaindex-retrieval/src/llamaindex_retrieval/state_tokens.py": "6c496d3061abd6d764881b71f1b2c06f4bb85b44a3c6763e2807b313b17da882",
+    "data/experiments/state-protocol-20260909/training-v2/execution-source/SOURCE-MANIFEST.json": "ccdbb113427dad96e90d7cdef285f80eacb27dd02dedb63517fc7c903fc916ca"
+  },
+  "wall_seconds": 3600,
+  "deadline_utc": "2026-09-09T21:15:48+00:00",
+  "training": {
+    "epochs": 6,
+    "learning_rate": 3e-05,
+    "accumulation": 2,
+    "seed": 20260909
+  },
+  "preflight": {
+    "path": "llamaindex-retrieval/statetune/datasets/reader-v6-expanded/run/preflight/COMPLETED.json",
+    "sha256": "7c6baba411fc4fb4e6291c2a87f2cfe32d3adf10986d34c449f2cdd571e72b8b"
+  }
+}

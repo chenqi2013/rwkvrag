@@ -1,0 +1,58 @@
+{
+  "schema": "reader-state-data-full-integrity-checks-v2",
+  "status": "PASS_STRUCTURAL_AND_AUTHOR_SEMANTIC_REVIEW_PENDING_INDEPENDENT_AUDIT",
+  "at": "2026-09-09T02:49:25.184795+00:00",
+  "counts": {
+    "train": {
+      "samples": 32,
+      "documents": 16,
+      "positive": 16,
+      "negative": 16,
+      "history_positive": 8,
+      "history_negative": 6,
+      "single_active_task_positive": 5,
+      "positive_multi_unit": 8,
+      "multi_unit_inputs": 20
+    },
+    "dev": {
+      "samples": 8,
+      "documents": 4,
+      "positive": 4,
+      "negative": 4,
+      "history_positive": 2,
+      "history_negative": 2,
+      "single_active_task_positive": 2,
+      "positive_multi_unit": 1,
+      "multi_unit_inputs": 2
+    },
+    "heldout": {
+      "samples": 16,
+      "documents": 8,
+      "positive": 8,
+      "negative": 8,
+      "history_positive": 4,
+      "history_negative": 4,
+      "single_active_task_positive": 4,
+      "positive_multi_unit": 2,
+      "multi_unit_inputs": 4
+    }
+  },
+  "all_56_prompts_original_sources_offsets_context_headings_and_gold_bindings_pass": true,
+  "all_28_documents_and_text_sha256_disjoint": true,
+  "exposed_pages_excluded": 242,
+  "v1_files_unchanged": 41,
+  "all_prior_v2_freezes_still_match": true,
+  "revision_metadata_correction_verified": true,
+  "training_changes_only": [
+    "state_train_021 E1 -> E1,E2"
+  ],
+  "max_training_tokens_with_eos": 2479,
+  "limits": [
+    "Bounded source-level Reader pilot; no retrieval or Writer evaluation.",
+    "Small manually authored samples, not population-random or blind.",
+    "Most selected articles fit one or two production evidence units; this is not a long-context memory test.",
+    "All positive evaluation targets include E1; sparse non-E1 target diversity limits generalization conclusions.",
+    "Original source errors are retained; facts outside the fixed text cannot be supplied from external knowledge.",
+    "Review author is the Codex assistant; no target RWKV pseudo-label calls."
+  ]
+}

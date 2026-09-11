@@ -1,0 +1,10 @@
+{
+  "frozen_dataset_files_verified": 20,
+  "code_bindings_verified": 14,
+  "source_snapshot_files_verified": 4,
+  "configuration_sha256_verified": true,
+  "train_export_sha256_verified": true,
+  "markdown_files_checked": 4,
+  "missing_local_links": [],
+  "git_diff_check_passed": true
+}

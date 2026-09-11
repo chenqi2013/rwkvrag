@@ -1,0 +1,504 @@
+{
+  "independent": true,
+  "status": "PASS",
+  "dataset_frozen_sha256": "b823b630ffab8a1401d2151c26ac08477c8327477bb6e62db682f9911c740135",
+  "reviewed_count": 43,
+  "split_counts": {
+    "train": 21,
+    "dev": 11,
+    "heldout": 11
+  },
+  "distinct_source_count": 8,
+  "reviewer": {
+    "identity": "Codex independent subagent /root/v3_semantic_review",
+    "dataset_author": false,
+    "date": "2026-09-09",
+    "independence_scope": "独立于本批数据作者的语义复核；不是独立模型实验，不是blind heldout。"
+  },
+  "method": {
+    "input_first": true,
+    "procedure": [
+      "先读取实际Reader prompt协议，再阅读全部43题question/history，按最新更正确定当前任务。",
+      "完整阅读8篇不同源文档的全部单元，包括重叠边界；程序确认同源各题source/units一致，单元联合覆盖完整source.snippet。",
+      "根据当前子问独立记录全部43题expected_unit_ids及理由；在首次读取gold前保存独立判断。",
+      "之后读取全部train/dev/heldout gold，逐题比较独立选择与gold，并核对gold target和逐单元supported一致。",
+      "核验所有FROZEN.json列出的文件哈希及prompt绑定。"
+    ],
+    "criterion": "单元直接支持至少一个有效当前子问即选；仅同主题或仅提及对象不选。保留对象、年份、范围与单位；部分可回答任务可选E而非NONE。",
+    "external_sources_used": false,
+    "network_calls": 0,
+    "gpu_calls": 0,
+    "gold_read_after_independent_judgments": true,
+    "prior_exposure": "初始结构探索读取了README摘要、FROZEN、SOURCE-BINDINGS和annotations首条的源文档/单元前部；未读取该条unit_judgments。README已透露覆盖设计与部分负例类型，所以不宣称完全盲审。"
+  },
+  "blind_heldout": false,
+  "limitations": [
+    "本审查实际读取了heldout题目、文档与标签，不能称blind heldout。",
+    "43题来自8篇文档，同源问题相关；PASS表示本地Reader协议下标签一致，不表示训练或模型质量提升。",
+    "不验证源文档事实在现实世界中的真实性，仅判断给定输入是否支持当前问题。"
+  ],
+  "frozen_files_verified": 20,
+  "frozen_file_hash_mismatches": [],
+  "ambiguities": [],
+  "mismatched_case_ids": [],
+  "cases": [
+    {
+      "id": "reader_v3_3238689_01",
+      "split": "train",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "gold_unit_ids": [
+        "E1"
+      ],
+      "verdict": "PASS",
+      "reason": "E1明确说以弗拉基米尔·列宁命名；E2、E3没有命名人物。"
+    },
+    {
+      "id": "reader_v3_3238689_02",
+      "split": "train",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "gold_unit_ids": [
+        "E2"
+      ],
+      "verdict": "PASS",
+      "reason": "E2给出至1958年停产共制造1541台VL22M；E1的37台属于VL22，E3无所问产量。"
+    },
+    {
+      "id": "reader_v3_3238689_03",
+      "split": "train",
+      "expected_unit_ids": [
+        "E3"
+      ],
+      "gold_unit_ids": [
+        "E3"
+      ],
+      "verdict": "PASS",
+      "reason": "最新更正仅问VL22I全部报废年份，E3明确为1980年；E2生产数量和E1的VL22报废年代均不支持当前要求。"
+    },
+    {
+      "id": "reader_v3_3238689_04",
+      "split": "train",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "全文涉及电动机功率、型号和设计改良，未提供平均无故障运行里程；同主题不构成证据。"
+    },
+    {
+      "id": "reader_v3_3238689_05",
+      "split": "train",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "最新问题替代报废年份，要求VL22I单台改造卢布费用；E2、E3有改造经过但全文无费用。"
+    },
+    {
+      "id": "reader_v3_3238689_06",
+      "split": "train",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "gold_unit_ids": [
+        "E2"
+      ],
+      "verdict": "PASS",
+      "reason": "E2的1541台直接回答第一个子问；改造费用全文缺失，仍保留部分可回答的E2。"
+    },
+    {
+      "id": "reader_v3_8024544_01",
+      "split": "train",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "gold_unit_ids": [
+        "E1"
+      ],
+      "verdict": "PASS",
+      "reason": "E1说明OO取自法语ou（或是）的发音；其他单元无名称释义。"
+    },
+    {
+      "id": "reader_v3_8024544_02",
+      "split": "train",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "gold_unit_ids": [
+        "E2"
+      ],
+      "verdict": "PASS",
+      "reason": "E2表中同愛一家对应2020年5月20日；E1、E3没有该记录。"
+    },
+    {
+      "id": "reader_v3_8024544_03",
+      "split": "train",
+      "expected_unit_ids": [
+        "E2",
+        "E3"
+      ],
+      "gold_unit_ids": [
+        "E2",
+        "E3"
+      ],
+      "verdict": "PASS",
+      "reason": "最新任务同时问两片日期；E2支持同愛一家2020年5月20日，E3支持日光樹影2021年12月17日；旧名称问题被替换。"
+    },
+    {
+      "id": "reader_v3_8024544_04",
+      "split": "train",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "E3仅有酷蓋爸爸第2季的上架日期，全文未给拍摄天数。"
+    },
+    {
+      "id": "reader_v3_8024544_05",
+      "split": "train",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "更正只问2021年订阅收入；原文有订阅覆盖与作品日期，无收入金额，历史中的上架问题不再有效。"
+    },
+    {
+      "id": "reader_v3_6124888_01",
+      "split": "train",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "gold_unit_ids": [
+        "E1"
+      ],
+      "verdict": "PASS",
+      "reason": "E1地质背景直接列出欧亚大陆、北美洲、太平洋、菲律宾四板块；E2、E3不提供这份名单。"
+    },
+    {
+      "id": "reader_v3_6124888_02",
+      "split": "train",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "gold_unit_ids": [
+        "E2"
+      ],
+      "verdict": "PASS",
+      "reason": "E2明确大田市50处避难所接纳至少171人；其他人口或伤者数字不是所问。"
+    },
+    {
+      "id": "reader_v3_6124888_03",
+      "split": "train",
+      "expected_unit_ids": [
+        "E3"
+      ],
+      "gold_unit_ids": [
+        "E3"
+      ],
+      "verdict": "PASS",
+      "reason": "更正后只问住宅修复补助预算，E3给出2亿日元；历史避难人数失效。"
+    },
+    {
+      "id": "reader_v3_6124888_04",
+      "split": "train",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "E2描述石见银山多处受损与景点关闭，但全部单元均未量化其财产损失总额。"
+    },
+    {
+      "id": "reader_v3_6124888_05",
+      "split": "train",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "当前要求每户最高补助，E3的2亿日元是全县总预算；全文没有每户上限。"
+    },
+    {
+      "id": "reader_v3_5452404_01",
+      "split": "train",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "gold_unit_ids": [
+        "E1"
+      ],
+      "verdict": "PASS",
+      "reason": "E1赛制规定先上下半场各15分钟加时，仍平则互射十二码；E2、E3比赛结果不能代替这一赛制规定。"
+    },
+    {
+      "id": "reader_v3_5452404_02",
+      "split": "train",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "gold_unit_ids": [
+        "E2"
+      ],
+      "verdict": "PASS",
+      "reason": "E2的SS02记录直接给出九巴元朗0–1和富大埔，其他单元无该场比分。"
+    },
+    {
+      "id": "reader_v3_5452404_03",
+      "split": "train",
+      "expected_unit_ids": [
+        "E3"
+      ],
+      "gold_unit_ids": [
+        "E3"
+      ],
+      "verdict": "PASS",
+      "reason": "当前只问SS10，E3给出傑志2–1東方龍獅、香港大球場；E2的SS02旧任务失效。"
+    },
+    {
+      "id": "reader_v3_5452404_04",
+      "split": "train",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "E2有SS01的比分、点球、场地与入场人数，全文没有双方控球率。"
+    },
+    {
+      "id": "reader_v3_5452404_05",
+      "split": "train",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "更正后只问傑志主教练月薪；文档所有单元均无薪酬，SS10比分不再是有效子问。"
+    },
+    {
+      "id": "reader_v3_1279264_01",
+      "split": "dev",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "gold_unit_ids": [
+        "E1"
+      ],
+      "verdict": "PASS",
+      "reason": "E1概况明确校训为奋进求是；其他单元没有校训。"
+    },
+    {
+      "id": "reader_v3_1279264_02",
+      "split": "dev",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "gold_unit_ids": [
+        "E2"
+      ],
+      "verdict": "PASS",
+      "reason": "E2分别给出1971年首批382名与3年学制；2020名是截至1976年累计，其他单元无所问信息。"
+    },
+    {
+      "id": "reader_v3_1279264_03",
+      "split": "dev",
+      "expected_unit_ids": [
+        "E3"
+      ],
+      "gold_unit_ids": [
+        "E3"
+      ],
+      "verdict": "PASS",
+      "reason": "最新问题要求学院转设校名及持有公司，E3直接给出兰州信息科技学院、北京爱因生教育投资有限责任公司；旧招生人数不再有效。"
+    },
+    {
+      "id": "reader_v3_1279264_04",
+      "split": "dev",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "E2写温州研究生分院成立，E3有地址及全校博士点数，全文未给该分院首届博士录取人数。"
+    },
+    {
+      "id": "reader_v3_1279264_05",
+      "split": "dev",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "最新要求2017年科研经费总额；E1固定资产、E3共建事件等均非该指标，全文无该年科研经费。"
+    },
+    {
+      "id": "reader_v3_5706573_01",
+      "split": "dev",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "gold_unit_ids": [
+        "E1"
+      ],
+      "verdict": "PASS",
+      "reason": "E1的1月21日条目明确撤销宝山县与吴淞区并建立宝山区；其他单元不提供该合并结果。"
+    },
+    {
+      "id": "reader_v3_5706573_02",
+      "split": "dev",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "gold_unit_ids": [
+        "E2"
+      ],
+      "verdict": "PASS",
+      "reason": "E2的5月11日条目给出首次无偿献血周1754人；其他单元无该人数。"
+    },
+    {
+      "id": "reader_v3_5706573_03",
+      "split": "dev",
+      "expected_unit_ids": [
+        "E2",
+        "E3"
+      ],
+      "gold_unit_ids": [
+        "E2",
+        "E3"
+      ],
+      "verdict": "PASS",
+      "reason": "更正后的两个子问分别由E2的1754人和E3的10月31日全线通车支持；E1宝山区旧问题已被替换。"
+    },
+    {
+      "id": "reader_v3_5706573_04",
+      "split": "dev",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "E3只给沪嘉高速昼夜可通6万辆的容量，未给通车首日实际车辆数，全文无实测流量。"
+    },
+    {
+      "id": "reader_v3_5706573_05",
+      "split": "dev",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "更正只问1988年桑塔纳单价；E3每天装配200辆是产能，全文没有售价。"
+    },
+    {
+      "id": "reader_v3_5706573_06",
+      "split": "dev",
+      "expected_unit_ids": [
+        "E3"
+      ],
+      "gold_unit_ids": [
+        "E3"
+      ],
+      "verdict": "PASS",
+      "reason": "E3的10月31日全线通车回答首个子问；首日实际流量未提供，容量不能作实际流量，但部分支持仍选择E3。"
+    },
+    {
+      "id": "reader_v3_1618999_01",
+      "split": "heldout",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "gold_unit_ids": [
+        "E1"
+      ],
+      "verdict": "PASS",
+      "reason": "E1开头明确周一至周五19:00–21:00播映电视剧；E2至E4为具体节目日期，不给该固定周时段。"
+    },
+    {
+      "id": "reader_v3_1618999_02",
+      "split": "heldout",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "gold_unit_ids": [
+        "E2"
+      ],
+      "verdict": "PASS",
+      "reason": "E2的2011年梦想高飞条目给出2011年8月3日至8月11日；E3的2015年重播不符合年份且无起止日期。"
+    },
+    {
+      "id": "reader_v3_1618999_03",
+      "split": "heldout",
+      "expected_unit_ids": [
+        "E3"
+      ],
+      "gold_unit_ids": [
+        "E3"
+      ],
+      "verdict": "PASS",
+      "reason": "更正后问2014年秘密花園重播，E3给出2014年7月25日至8月6日；E2的2011年播出记录不符合年份。"
+    },
+    {
+      "id": "reader_v3_1618999_04",
+      "split": "heldout",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "E2给出2011年梦想高飞播出日期，E1的顶级收视强档是定性宣传，四个单元均无该剧平均收视率。"
+    },
+    {
+      "id": "reader_v3_1618999_05",
+      "split": "heldout",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "最新任务只问想你播映权购买金额；E2有播出日期及全国独家首播说明，但四个单元均无版权费用。"
+    },
+    {
+      "id": "reader_v3_4397431_01",
+      "split": "heldout",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "gold_unit_ids": [
+        "E1"
+      ],
+      "verdict": "PASS",
+      "reason": "E1直接说白鹭引擎基于TypeScript语言开发；E2、E3其他工具和功能不提供核心引擎开发语言。"
+    },
+    {
+      "id": "reader_v3_4397431_02",
+      "split": "heldout",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "gold_unit_ids": [
+        "E2"
+      ],
+      "verdict": "PASS",
+      "reason": "E2明确截至2017年Runtime累计接入设备5亿台；其他单元无该指标。"
+    },
+    {
+      "id": "reader_v3_4397431_03",
+      "split": "heldout",
+      "expected_unit_ids": [
+        "E2",
+        "E3"
+      ],
+      "gold_unit_ids": [
+        "E2",
+        "E3"
+      ],
+      "verdict": "PASS",
+      "reason": "最新要求两个子问：E2支持截至2017年5亿台，E3支持Native通过QuickSDK生成渠道包；旧开发语言任务失效。"
+    },
+    {
+      "id": "reader_v3_4397431_04",
+      "split": "heldout",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "E2只介绍Egret Wing功能，E1核心引擎自由开源及E2的Lakeshore免费不能推出Wing在2017年标准版售价。"
+    },
+    {
+      "id": "reader_v3_4397431_05",
+      "split": "heldout",
+      "expected_unit_ids": [],
+      "gold_unit_ids": [],
+      "verdict": "PASS",
+      "reason": "更正只问Texture Merger每秒处理图片实测吞吐量；E3只有功能和性能改善描述，全文无实测数量。"
+    },
+    {
+      "id": "reader_v3_4397431_06",
+      "split": "heldout",
+      "expected_unit_ids": [
+        "E3"
+      ],
+      "gold_unit_ids": [
+        "E3"
+      ],
+      "verdict": "PASS",
+      "reason": "E3直接提供QuickSDK名称，回答首个子问；全文未提供SDK当年授权费，仍保留有部分支持的E3。"
+    }
+  ]
+}

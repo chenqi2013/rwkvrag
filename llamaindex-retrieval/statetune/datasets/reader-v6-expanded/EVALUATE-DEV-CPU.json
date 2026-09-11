@@ -1,0 +1,35 @@
+{
+  "schema": "rwkv_released_evaluation_v1",
+  "release": "data/statetune/reader-v6-expanded-release/RELEASE.json",
+  "release_sha256": "73e9919d12c95f979e2f5f0935fc3ebfc8868f0cb205294e0c8d25540a2e79a0",
+  "official_runtime": "data/experiments/state-protocol-20260909/runtime-source-v1",
+  "checkpoint": "data/experiments/state-protocol-20260909/checkpoints/rwkv7-g1j-2.9b-20260831-ctx16384.pth",
+  "wall_seconds": 3600,
+  "deadline_utc": "2026-09-09T21:15:48+00:00",
+  "bindings": {
+    "llamaindex-retrieval/statetune/evaluate_released_state.py": "a24a60094eae61313dcbcfda2c06c5ecce35cbf12fec8350400faaae5cf296ec",
+    "llamaindex-retrieval/statetune/preflight_state.py": "d6edbdc99c95fde6c67161456c1da07f953eb6b58f4e8e73cc48aaa2eeaace10",
+    "llamaindex-retrieval/statetune/evaluate_state.py": "a073c4acd46743a63884a62951d280f99b09526cb06edaa96a3b680e774e11f2",
+    "llamaindex-retrieval/statetune/train_state.py": "bac719d6ede507cc86706ca9f7a75ded03a6de0120e33e8e0444d1903379a54c",
+    "llamaindex-retrieval/statetune/pilot_runtime.py": "08431a0587d5f1e2df17f9160fd1e2e7c93e9c11084a722da646854eb0f0141a",
+    "llamaindex-retrieval/src/llamaindex_retrieval/state_tokens.py": "6c496d3061abd6d764881b71f1b2c06f4bb85b44a3c6763e2807b313b17da882",
+    "llamaindex-retrieval/src/llamaindex_retrieval/state_training.py": "3a3d3118295e90032c96f502a43c663421154518b5dbf40d94fd8f7c3c6ee155",
+    "data/experiments/state-protocol-20260909/runtime-source-v1/RUNTIME-SOURCE.json": "8aa4c2cd14c793febc365420f3ab26090c1b9526e03a41570453d26d7fbd1474"
+  },
+  "evaluation": {
+    "split": "dev",
+    "count": 32,
+    "max_output_tokens": 32,
+    "inputs": "llamaindex-retrieval/statetune/datasets/reader-v6-expanded/dataset/dev.inputs.jsonl",
+    "inputs_sha256": "28af37b5733043952e4c982a311d39356891b981eb275015ff5f6a34e4bc8977",
+    "gold_sha256": "ccd3adb0665fdcc123980e0abe9dd6ebfd305e4740c5cd053f266e1230b46297",
+    "states": [
+      {
+        "name": "zero",
+        "path": "data/experiments/reader-v5-stability-20260910/train-1e4/state-step-00.pth",
+        "sha256": "f4503080abf4210de4240c9e58a7375001043e7fc3d1f3a8d5aceca6c3254fd3"
+      }
+    ]
+  },
+  "purpose": "CPU input/runtime validation only in this preparation phase; future trained snapshots require a newly frozen configuration before generation."
+}

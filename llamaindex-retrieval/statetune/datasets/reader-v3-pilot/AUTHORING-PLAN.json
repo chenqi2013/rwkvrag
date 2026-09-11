@@ -1,0 +1,34 @@
+{
+  "scope": "data preparation only; no model inference, training, candidate selection or external labeling API",
+  "author": "Codex, same agent author and self-review; not independent or blind",
+  "documents": {
+    "train": [
+      "3238689",
+      "8024544",
+      "6124888",
+      "5452404"
+    ],
+    "dev": [
+      "1279264",
+      "5706573"
+    ],
+    "heldout": [
+      "1618999",
+      "4397431"
+    ]
+  },
+  "selection_reason": "First bounded authoring batch from the existing deterministic drafts, with complete-source token headroom and prose/table variety; no model results used. Other drafts remain deferred.",
+  "max_samples": 48,
+  "planned_samples": 43,
+  "max_sequence_tokens": 4096,
+  "per_document": [
+    "early evidence",
+    "middle evidence",
+    "late/history evidence or multi-unit",
+    "missing field",
+    "history correction to missing field"
+  ],
+  "additional_partial_support_cases": 3,
+  "training_start_authorized_in_this_plan": false,
+  "source_documents_already_read_by_author": true
+}

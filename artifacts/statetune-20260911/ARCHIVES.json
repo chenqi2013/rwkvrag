@@ -1,0 +1,33 @@
+{
+  "release": "https://github.com/chenqi2013/rwkvrag/releases/tag/statetune-2.9b-20260911",
+  "archives": [
+    {
+      "asset": "statetune-records-20260911.tar.gz",
+      "bytes": 281162879,
+      "sha256": "a7b6f3a0c729242c21f90c67590e0b8b06710088b9de3dd5c490d226102fab9d",
+      "manifest": "artifacts/statetune-20260911/statetune-records-20260911.manifest.jsonl",
+      "manifest_sha256": "ded788edc337b41d88a6c8a331ac40d141fbe7d0258d18a693745f56e5f3832f",
+      "member_count": 47362,
+      "uncompressed_bytes": 1093518370,
+      "all_members_stream_verified": true
+    },
+    {
+      "asset": "statetune-states-20260911.tar.gz",
+      "bytes": 116292030,
+      "sha256": "4c3c9dba98d33a154338330eff25706602c005b98fbc7a673ec5307ffece7053",
+      "manifest": "artifacts/statetune-20260911/statetune-states-20260911.manifest.jsonl",
+      "manifest_sha256": "429702f3ed0ed7d44ed7913e84325a333d4225563dfd3196be1122c96127bd37",
+      "member_count": 6,
+      "uncompressed_bytes": 125887890,
+      "all_members_stream_verified": true
+    }
+  ],
+  "source_scan_secret_pattern_matches": 0,
+  "exclusions": [
+    "base model weights",
+    "Python/CUDA environments",
+    "live database/index storage",
+    "historical states listed in EXCLUDED-STATES.json",
+    "ignored caches"
+  ]
+}

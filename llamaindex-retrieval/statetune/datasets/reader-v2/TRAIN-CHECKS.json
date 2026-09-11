@@ -1,0 +1,16 @@
+{
+  "schema": "reader-train-integrity-checks-v2",
+  "status": "PASS",
+  "samples": 32,
+  "documents": 16,
+  "positive": 16,
+  "negative": 16,
+  "exposed_pages_excluded": 242,
+  "max_prompt_tokens": 2475,
+  "max_training_tokens_with_eos": 2479,
+  "positive_multiple_selected_units": 8,
+  "source_bytes_unmodified": true,
+  "inputs_bytes_identical_v1": true,
+  "all_offsets_hashes_windows_prompts_and_targets_verified": true,
+  "model_api_gpu_calls": 0
+}

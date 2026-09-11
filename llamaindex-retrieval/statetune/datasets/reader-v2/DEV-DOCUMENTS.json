@@ -1,0 +1,62 @@
+{
+  "documents": [
+    {
+      "page_id": 6257302,
+      "document_id": "zhwiki/6257302",
+      "split": "dev",
+      "title": "ONNX",
+      "domain": "ml_interoperability",
+      "source_text_sha256": "d44c09c7a229649da99d935da53c8468357600ded030c253183a59f06d9e86db",
+      "bytes": 2160,
+      "unicode_characters": 1056,
+      "unit_count": 1,
+      "all_original_characters_covered": true,
+      "source_caveat": "Linux基金会接纳项目的译文存在可疑用词，本对不以该句作目标证据。",
+      "split_digest": "55991eb8e66f51694da9a7c970990a5784d447c80ebc1babaad8e2850535b2b9"
+    },
+    {
+      "page_id": 88736,
+      "document_id": "zhwiki/88736",
+      "split": "dev",
+      "title": "中石器時代",
+      "domain": "archaeology",
+      "source_text_sha256": "580d79e22f0d5e28ac1c3b8b6d290f6d9ff346e4e1b6041b8f2fae1d785c9eac",
+      "bytes": 2316,
+      "unicode_characters": 840,
+      "unit_count": 1,
+      "all_original_characters_covered": true,
+      "source_caveat": null,
+      "split_digest": "7d1940004343db20c485e392c1cd74f8b3d974611344c443b3b746362bea25fa"
+    },
+    {
+      "page_id": 7190936,
+      "document_id": "zhwiki/7190936",
+      "split": "dev",
+      "title": "兰州博文科技学院",
+      "domain": "higher_education",
+      "source_text_sha256": "26df099ed4576b8e2f0ec90010a4747f15bfc40d7683d8b314ef8225dcb9f054",
+      "bytes": 2327,
+      "unicode_characters": 813,
+      "unit_count": 1,
+      "all_original_characters_covered": true,
+      "source_caveat": null,
+      "split_digest": "9b04bf7950c9459f54f2a716ca4c8a47f8ede5dc953e2858643eaa9ef102c396"
+    },
+    {
+      "page_id": 4774597,
+      "document_id": "zhwiki/4774597",
+      "split": "dev",
+      "title": "8 字符",
+      "domain": "architecture",
+      "source_text_sha256": "6e9c43a00d6022b81be6a6f25961a052708d8f30fcc3bc47244715453e6de733",
+      "bytes": 4134,
+      "unicode_characters": 2077,
+      "unit_count": 2,
+      "all_original_characters_covered": true,
+      "source_caveat": null,
+      "split_digest": "a4b146ed90bbd13b98a05c2b9b68ea7a14a8faf2c02d7bcd2dcec3a77c4ac135"
+    }
+  ],
+  "split": "dev",
+  "distinct_documents": 4
+}

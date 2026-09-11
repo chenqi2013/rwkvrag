@@ -1,0 +1,20 @@
+{
+  "configs": [
+    {
+      "config": "TRAIN-1E4-PREPARED.json",
+      "sha256": "2ef8e00b4bd5c58f1b0e348b9136341ab442afae3c95ee3df26e0521b523b12b",
+      "samples": 46,
+      "updates_per_epoch": 23,
+      "preflight_identity_matched": true
+    },
+    {
+      "config": "TRAIN-3E5-PREPARED.json",
+      "sha256": "be024b15424417f739696f85c05a0ab546327dad75be9891ed6997cb6a9cff89",
+      "samples": 46,
+      "updates_per_epoch": 23,
+      "preflight_identity_matched": true
+    }
+  ],
+  "model_calls": 0,
+  "optimizer_updates": 0
+}

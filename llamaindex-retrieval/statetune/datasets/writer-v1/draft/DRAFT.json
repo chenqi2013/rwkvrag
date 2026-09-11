@@ -1,0 +1,35 @@
+{
+  "schema": "rwkv_writer_draft_v1",
+  "training_data_admitted": false,
+  "independent_writer_review_required": true,
+  "quality_evaluated": false,
+  "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+  "model_checkpoint_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239",
+  "source_train_sha256": "91a2210d8e211f3c9b09816b9ea538a8157d63fba37d85e413a38970b76de8a2",
+  "targets_sha256": "b501776782d5a63635dbbf22f0a71520260b9231575a1d9956c274f0c421143d",
+  "vocabulary_sha256": "8324476023347dec2964625ccb2075c864d250a9c6d9a74f36daba628de8c008",
+  "writer_prompt": "writer_prompt_v2",
+  "transport_protocol": "rwkv_g1j_no_think_v1",
+  "train_count": 54,
+  "documents": 8,
+  "all_units": 46,
+  "empty_evidence": 8,
+  "history_rows": 11,
+  "max_sequence_tokens": 8192,
+  "max_generation_tokens": 2048,
+  "max_prompt_tokens": 4633,
+  "max_actual_sequence_tokens": 4720,
+  "dev_or_heldout_content_read": false,
+  "files": {
+    "train.drafts.jsonl": "41a6064c571864ded76305fc5753210105d2ba30cf5216780c10894805988e6b",
+    "train.draft.tokens.jsonl": "fe159f5f6fe655d52017c251c15127c1b0a965f4d6cdddd022e3a3e0fe6c4118"
+  },
+  "limitations": [
+    "8 single-document sources, no cross-document reasoning coverage",
+    "short histories only",
+    "all-units inputs are a Writer curriculum, not actual Reader outputs",
+    "empty-evidence variants reuse their parent's train identity; no extra documents",
+    "Reader semantic approval does not approve Writer targets",
+    "old 4096-token Reader preflight and training entry are not applicable"
+  ]
+}

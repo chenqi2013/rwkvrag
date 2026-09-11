@@ -1,0 +1,101 @@
+{
+  "status": "GENERATION_COMPLETE",
+  "records": [
+    {
+      "path": "step-00-reader_v3_1279264_01.json",
+      "sha256": "5f48f0ad7b05e2214577e9552e301892a784fde0b59c73aaf6de7e1637deb40c"
+    },
+    {
+      "path": "step-00-reader_v3_1279264_02.json",
+      "sha256": "20b02e779500c9a0aa0fbd7816330d8bcfc95d139756fd7370e7edce15e02f98"
+    },
+    {
+      "path": "step-00-reader_v3_1279264_03.json",
+      "sha256": "8ce43ce21e86f5fb801b8a4c20eb9a7a827df6aff45525aef2af313963a88a89"
+    },
+    {
+      "path": "step-00-reader_v3_1279264_04.json",
+      "sha256": "d14b6f00a4ad81619135b8f6c4200ac8e484f7794f31ca75dccb69786403eeaf"
+    },
+    {
+      "path": "step-00-reader_v3_1279264_05.json",
+      "sha256": "aee3bddcdfd5e88e00d94d7927572a846d9e9fbdf997e8038d83e8994c96bc13"
+    },
+    {
+      "path": "step-00-reader_v3_5706573_01.json",
+      "sha256": "619306d3e0a01a6d8915422f21ae9cd2074ceb8ba0deb8c8c571b3476461eb92"
+    },
+    {
+      "path": "step-00-reader_v3_5706573_02.json",
+      "sha256": "faa4aaa0fd862be67fc93304af1397db373075a22fe57944ed4da2d551b90188"
+    },
+    {
+      "path": "step-00-reader_v3_5706573_03.json",
+      "sha256": "e4b6311eaf8693ff1152ec5521ac052002b83cefdd5200b98453ca618a57776d"
+    },
+    {
+      "path": "step-00-reader_v3_5706573_04.json",
+      "sha256": "135b4002926a336e248862f8663002c6f17604f9ff1329db6b3c234464edbb18"
+    },
+    {
+      "path": "step-00-reader_v3_5706573_05.json",
+      "sha256": "02e5a1bb213191fa5932f7f90938fc8d1fefa4eeac41394109e1061db12046ad"
+    },
+    {
+      "path": "step-00-reader_v3_5706573_06.json",
+      "sha256": "ad32d79bc5c4fe3e260a111043f159bc5f4696d6c2da29456b93494b82b71663"
+    },
+    {
+      "path": "step-11-reader_v3_1279264_01.json",
+      "sha256": "d925829b5b3c633940cb5ec4c382de28c19739103b0d2954c6165b459bd6a1de"
+    },
+    {
+      "path": "step-11-reader_v3_1279264_02.json",
+      "sha256": "7ea459c84d70863b0d024f23ac7b45d0b1dec3f63f1aa717f1d766c21c7cf2a4"
+    },
+    {
+      "path": "step-11-reader_v3_1279264_03.json",
+      "sha256": "3b506031c1d0202fc721bad76d7f290d8a2ea53b52f142bf0180ff318bcf3e5a"
+    },
+    {
+      "path": "step-11-reader_v3_1279264_04.json",
+      "sha256": "4fd0553c21f3640b9adb0987450970c79b629c52b593b475d0d7191a867232c2"
+    },
+    {
+      "path": "step-11-reader_v3_1279264_05.json",
+      "sha256": "bf515b723dbc95e88dbfd1bc51f11471c276066ca97330097ebff29fd2b151cd"
+    },
+    {
+      "path": "step-11-reader_v3_5706573_01.json",
+      "sha256": "15de643b01735081850698a52e415fe338cec5c9244b3aca670ab0db05182584"
+    },
+    {
+      "path": "step-11-reader_v3_5706573_02.json",
+      "sha256": "7cdeb11557293d120036903fdc30353300ecbf2bc3a8847f65f174e92689e003"
+    },
+    {
+      "path": "step-11-reader_v3_5706573_03.json",
+      "sha256": "3c106aa99e3ed636e80606507ac2ebeb14635ea9105a5d73af575b5ed56d3ceb"
+    },
+    {
+      "path": "step-11-reader_v3_5706573_04.json",
+      "sha256": "2616216d13aa9c18a13b90a1e50ab9143e7ef9a80d4dc8d73664a3f4be3e285c"
+    },
+    {
+      "path": "step-11-reader_v3_5706573_05.json",
+      "sha256": "0521254e4375584c060ef066e400f287235b2149c1c372bc7f7641bfc519d445"
+    },
+    {
+      "path": "step-11-reader_v3_5706573_06.json",
+      "sha256": "63f051a1dbc0f1cbd00223eeb682de34379529b2e4640affa15e8f9448ee7ef0"
+    }
+  ],
+  "config_sha256": "8a7ad960b1e744cb8cdc26b5f013eb9b07743316ab95f1380ac5fb4b1f882837",
+  "training_receipt_sha256": "08c4c6504403cbb757a0e8726152d5fa1b824c4e229e1a9758a4c1f6f025eaec",
+  "forward_calls": 345,
+  "gold_opened": false,
+  "heldout_read": false,
+  "optimizer_updates": 0,
+  "seconds": 146.0182374380529,
+  "peak_allocated_bytes": 6874432000
+}

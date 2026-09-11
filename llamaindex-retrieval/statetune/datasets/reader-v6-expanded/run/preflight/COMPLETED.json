@@ -1,0 +1,40 @@
+{
+  "status": "PREFLIGHT_COMPLETE",
+  "optimizer_updates": 0,
+  "backward_calls": 1,
+  "loss": 1.5644773244857788,
+  "gradient_l2": 37.16370658525476,
+  "identity": {
+    "release_sha256": "73e9919d12c95f979e2f5f0935fc3ebfc8868f0cb205294e0c8d25540a2e79a0",
+    "train_sha256": "3a05af459b89af7771e9d8c40f4d4982a0b4269519a2088beb808cd628d1e752",
+    "train_count": 46,
+    "runtime": {
+      "checkpoint": "data/experiments/state-protocol-20260909/checkpoints/rwkv7-g1j-2.9b-20260831-ctx16384.pth",
+      "peft_source": "data/experiments/state-protocol-20260909/training-v2/execution-source"
+    },
+    "bindings": {
+      "llamaindex-retrieval/statetune/train_released_state.py": "621894df872f10f9bda10d9035daf9451312205e907868dbf1853e9b051d625c",
+      "llamaindex-retrieval/statetune/preflight_state.py": "d6edbdc99c95fde6c67161456c1da07f953eb6b58f4e8e73cc48aaa2eeaace10",
+      "llamaindex-retrieval/statetune/pilot_runtime.py": "08431a0587d5f1e2df17f9160fd1e2e7c93e9c11084a722da646854eb0f0141a",
+      "llamaindex-retrieval/src/llamaindex_retrieval/state_training.py": "3a3d3118295e90032c96f502a43c663421154518b5dbf40d94fd8f7c3c6ee155",
+      "llamaindex-retrieval/src/llamaindex_retrieval/state_tokens.py": "6c496d3061abd6d764881b71f1b2c06f4bb85b44a3c6763e2807b313b17da882",
+      "data/experiments/state-protocol-20260909/training-v2/execution-source/SOURCE-MANIFEST.json": "ccdbb113427dad96e90d7cdef285f80eacb27dd02dedb63517fc7c903fc916ca"
+    },
+    "packages": {
+      "torch": "2.9.0",
+      "triton": "3.5.0",
+      "rwkv-fla": "0.7.202508221413",
+      "deepspeed": "0.18.1",
+      "einops": "0.8.1",
+      "numpy": "2.3.4"
+    },
+    "longest_id": "reader_v6_7133379_05",
+    "longest_tokens": 4022
+  },
+  "config_sha256": "c130a40ec6f1d404d2194e575d59ce9d9a97b2d6469b7abdaa5e1927441fc3f2",
+  "base_tensors_unchanged": 1062,
+  "seconds": 179.04673322290182,
+  "peak_allocated_bytes": 8181217792,
+  "dev_or_heldout_content_read": false,
+  "production_promoted": false
+}

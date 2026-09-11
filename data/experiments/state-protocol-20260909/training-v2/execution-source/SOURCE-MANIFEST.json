@@ -1,0 +1,83 @@
+{
+  "schema": "peft-state-execution-source-v2",
+  "files": {
+    "LICENSE": {
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "original_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "origin": "exact member of frozen PEFT SOURCE-MANIFEST.json"
+    },
+    "rwkvt/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "exact member of frozen PEFT SOURCE-MANIFEST.json"
+    },
+    "rwkvt/infctx_module.py": {
+      "bytes": 1762,
+      "sha256": "0b709d59cc94ae8d0e3f5c8a12cf3b8101e43867383a095707b69d66243530cc",
+      "original_sha256": "0b709d59cc94ae8d0e3f5c8a12cf3b8101e43867383a095707b69d66243530cc",
+      "origin": "exact member of frozen PEFT SOURCE-MANIFEST.json"
+    },
+    "rwkvt/operator/rwkvop.py": {
+      "bytes": 36727,
+      "sha256": "2614652ded9b57e3086a2767283847a1745259a5102c8fd913d42d991dfd6b82",
+      "original_sha256": "2614652ded9b57e3086a2767283847a1745259a5102c8fd913d42d991dfd6b82",
+      "origin": "exact member of frozen PEFT SOURCE-MANIFEST.json"
+    },
+    "rwkvt/rwkv7/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "exact member of frozen PEFT SOURCE-MANIFEST.json"
+    },
+    "rwkvt/rwkv7/model.py": {
+      "bytes": 4806,
+      "sha256": "980c478acea496055e9ffef5fb9cc6418e3f5e3d22fe0751bb6ab1c9994dc6c5",
+      "original_sha256": "980c478acea496055e9ffef5fb9cc6418e3f5e3d22fe0751bb6ab1c9994dc6c5",
+      "origin": "exact member of frozen PEFT SOURCE-MANIFEST.json"
+    },
+    "rwkvt/rwkv7/block.py": {
+      "bytes": 1982,
+      "sha256": "e3bfaae25872b83e192701ce94529b539a45dcafe7f18396d17a0f5b94ed2535",
+      "original_sha256": "e3bfaae25872b83e192701ce94529b539a45dcafe7f18396d17a0f5b94ed2535",
+      "origin": "exact member of frozen PEFT SOURCE-MANIFEST.json"
+    },
+    "rwkvt/rwkv7/att.py": {
+      "bytes": 13408,
+      "sha256": "ae9765c714e4c1f1e80ff010933ff32a10c3fcbe17fb8539a1e3b98b9b195923",
+      "original_sha256": "ae9765c714e4c1f1e80ff010933ff32a10c3fcbe17fb8539a1e3b98b9b195923",
+      "origin": "exact member of frozen PEFT SOURCE-MANIFEST.json"
+    },
+    "rwkvt/rwkv7/ffn.py": {
+      "bytes": 3662,
+      "sha256": "26fb4f15d0fad05aeb4018804d61fa106c4d0d094d4df876bda235bccd7cbfa6",
+      "original_sha256": "26fb4f15d0fad05aeb4018804d61fa106c4d0d094d4df876bda235bccd7cbfa6",
+      "origin": "exact member of frozen PEFT SOURCE-MANIFEST.json"
+    },
+    "rwkv_vocab_v20230424.txt": {
+      "bytes": 1159262,
+      "sha256": "8324476023347dec2964625ccb2075c864d250a9c6d9a74f36daba628de8c008",
+      "original_sha256": "8324476023347dec2964625ccb2075c864d250a9c6d9a74f36daba628de8c008",
+      "origin": "exact frozen rwkv 0.8.30 runtime vocabulary"
+    }
+  },
+  "parent_manifest_sha256": "aff56d707b53e2af754703dcb577747e70f784ed3b9a529cdb68861d0ce81ce4",
+  "parent_source_head": "5704c39f8ab1d2ac63936ab392aadb6ba526e1a5",
+  "parent_source_dirty": true,
+  "source_modified": false,
+  "executed_configuration": {
+    "WKV": "fla",
+    "RWKV_MY_TESTING": "x070",
+    "RWKV_TRAIN_TYPE": "state",
+    "FUSED_KERNEL": "0"
+  },
+  "excluded": "All files outside this exact 10-member import closure, license, vocabulary; no historical launch scripts, tokenizers, unrelated model families, CUDA sources or training wrappers are transferred.",
+  "external_packages": [
+    "torch",
+    "deepspeed",
+    "einops",
+    "rwkv-fla",
+    "triton"
+  ]
+}

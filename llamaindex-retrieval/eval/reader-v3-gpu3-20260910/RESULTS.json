@@ -1,0 +1,18 @@
+{
+  "status": "COMPLETE_NO_PROMOTION",
+  "physical_gpu": 3,
+  "preflight_optimizer_updates": 0,
+  "training_optimizer_updates": 11,
+  "train_examples": 21,
+  "dev_generations": 22,
+  "dev_zero_correct": 4,
+  "dev_trained_correct": 0,
+  "dev_count": 11,
+  "dev_trained_invalid": 11,
+  "selected_step": 0,
+  "heldout_run": false,
+  "production_promoted": false,
+  "gpu_released": true,
+  "automatic_retry": false,
+  "stop_reason": "trained state regressed and failed frozen dev gate"
+}

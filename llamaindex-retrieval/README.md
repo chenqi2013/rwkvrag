@@ -1,8 +1,12 @@
 # RWKV 原生检索问答服务
 
-从 `bm250820@2bbc406` 重建。`rwkv_pipeline.py` 编排检索、原文选择和作答，`model_client.py` 选择原生或外部 batch 传输，`verbatim_chunking.py` 保留原文。约束见 [ARCHITECTURE_RULES.md](ARCHITECTURE_RULES.md)。
+从 `bm250820@2bbc406` 重建。`rwkv_pipeline.py` 编排检索、原文选择和作答，`model_client.py` 选择传输，`verbatim_chunking.py` 保留原文。约束见 [ARCHITECTURE_RULES.md](ARCHITECTURE_RULES.md)。
 
-当前主模型 **RWKV7 G1j 2.9B**，外部 API 适配和完整 Wiki 开发基线已完成，但质量尚未达标：8 题 / 29 事实为 0 正确、25 遗漏、4 错误，正式完整 0/8。固定材料 Writer 为 19/28。详见 [2.9B 评测](eval/rwkvos-29b-20260909/README.md) 和 [接口/state 合同](../docs/rwkvos-api.md)。此前 13.3B 是独立历史条件。
+通过 `POST /v1/ask` 调用 **RWKV7 G1j 2.9B + OpenSearch BM25 + MongoDB**，不使用embedding。前端源码与静态页面已移除；API交互文档在 `/docs`，文件、知识库、历史和trace仍由后端接口管理。
+
+本轮2000条数据与六组state训练、评测已完成，见[StateTune经验](../docs/statetune-experience.md)及[最新结果](eval/trace-eval-20260911/RESULTS.md)。Reader和Writer部分能力有改善，Planner出现格式退步；不同题组结果不能合成全场景准确率。训练state需要显式选择，应用配置以本机配置文件为准。
+
+实验原始输出、旧方案、模型与源码依赖按[归档说明](../docs/artifacts.md)恢复。2026-09-11测试后保留比较推理服务，未恢复旧问答模型服务；不要将历史部署说明当成当前加载状态。
 
 ## 依赖与启动
 
@@ -10,10 +14,10 @@
 | --- | --- | --- |
 | OpenSearch | BM25 原文块检索 | CPU、内存、磁盘 |
 | MongoDB | 知识库、文件、任务、问答及 trace | CPU、内存、磁盘 |
-| RWKV API | 规划、逐来源阅读、作答 | 当前外部 2.9B，备用本机 GPU |
+| RWKV API | 规划、逐来源阅读、作答 | 当前本地部署使用 rwkv-8222 GPU3 的2.9B |
 | FastAPI | 编排、导入、管理接口 | CPU |
 
-不需要 Qdrant 或 embedding 服务。以下启动完整应用还需自行配置 OpenSearch 和 MongoDB；本轮本机基线只验证了索引与检索链路，并非管理服务部署验收。本机已跑通官方 2.9B 短输入推理及 state 梯度检查，尚未部署为备用 API，也没有自动故障切换。本机资源不足时可按最新授权使用 `rwkv-8222` 的 GPU2，仍使用 2.9B；本轮尚未启用服务器。最新质量与兼容性结果见 [后续验证](eval/rwkvos-reader-followup-20260909/README.md)。
+不需要Qdrant或embedding服务。当前WSL环境已经安装MongoDB、OpenSearch、API及独立SSH隧道，使用[本地部署说明](deploy/local/README.md)。以下为其他环境的通用配置和启动步骤。
 
 ```bash
 uv sync --frozen --extra dev
@@ -22,19 +26,23 @@ cp .env.example .env
 uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 ```
 
-示例明确启用 `RAG_PIPELINE=rwkv` 和 `NATIVE_TRANSPORT=rwkvos_batch`，采用已测零 state、complete 闭合前缀、EOS 停止、queries/tasks 原文选择、80 总来源配置。它是可复核的开发基线，没有通过质量验收。没有 .env 时保留 `existing` 及 `native` 兼容默认，不能用省略配置代替选择部署方案。
+示例明确启用 `RAG_PIPELINE=rwkv` 和 `NATIVE_TRANSPORT=rwkvos_batch`，采用已测零 state、complete 闭合前缀、EOS 停止、queries/tasks 原文选择、80 总来源配置。它是可复核的开发基线，没有通过质量验收。没有 .env 时也默认走 `rwkv`，传输仍默认 `native`；`existing` 只可显式选择用于旧回归。实际服务地址仍须配置。
 
 ## 主要参数
 
-表中参数均加 `RWKVRAG_` 前缀。软件默认保留回归兼容；示例配置选择本轮外部基线。
+表中参数均加 `RWKVRAG_` 前缀。软件默认启用 RWKV 管线；示例传输配置选择已测外部基线。
 
 | 参数 | 软件默认 | 意义 |
 | --- | --- | --- |
+| `RAG_PIPELINE` | `rwkv` | `existing` 仅用于旧回归 |
 | `NATIVE_TRANSPORT` | `native` | 外部选 `rwkvos_batch` |
 | `NATIVE_BASE_URL` | 本机 18421/v1 | 外部示例 `https://api-3b.rwkvos.com/v1` |
 | `NATIVE_MODEL` | `rwkv7-g1j-2.9b-20260831-ctx16384` | 服务身份校验 |
 | `RWKVOS_CF_ACCESS_CLIENT_ID` / `RWKVOS_CF_ACCESS_CLIENT_SECRET` | 空 | 只在本机配置，不进入 trace |
 | `RWKVOS_STATE_ID` | 省略 | 仅使用有效且模型兼容的 state |
+| `RWKVOS_READER_STATE_ID` | 省略 | 可仅覆盖 Reader；省略时继承全局 state，零对照须两者均为空 |
+| `RWKVOS_READER_PROMPT_PROTOCOL` | `batch_complete_v1` | 显式 canonical 候选为 `rwkv_g1j_no_think_v1` |
+| `RWKVOS_READER_INPUT_LAYOUT` | `original` | `task_last` 与数据渲染共用实现，仅可搭配 canonical Reader |
 | `RWKVOS_BATCH_SIZE` / `RWKVOS_BATCH_WAIT_MS` | 8 / 5 | 同参数调用合批 |
 | `NATIVE_MAX_CONCURRENCY` | 32 | 进程内所有阶段共享项数 |
 | `RWKVOS_PREFILL_MODE` | `complete` | `continuation` 省略前缀末尾 >，未晋级候选 |
@@ -84,9 +92,17 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 - `planner_failed`、`retrieval_failed` 明确指出停止阶段。
 - `resolver_partial_failure` 表示部分读取或解析失败，即便 Writer 返回也不标整链路成功。
 
-`generation.model_calls` 保存 prompt、字节、SHA、输入来源及阶段耗时；共享 batch 按唯一 ID 统计，计数 HTTP 单列。`retrieval.candidates`、读取来源和预算排除项均可查；sources 与 citation_map 覆盖 Writer 全部资料。片段、原文块及父级上下文携带 Unicode 坐标和 SHA。
+`generation.model_calls` 保存本项 prompt、原始输出、SHA、输入来源及阶段耗时。多项共享 batch 的完整 HTTP 字节只进入私有 `model_receipts` GridFS bucket，每批每事件一次；公开 trace 使用 `payload_scope=single_item_projection` 和 `private_receipt_id`，不会带出其他调用的内容。单项请求仍可保留自身原始字节。共享 batch 按唯一 ID 统计，计数 HTTP 单列。`retrieval.candidates`、读取来源和预算排除项均可查；sources 与 citation_map 覆盖 Writer 全部资料。片段、原文块及父级上下文携带 Unicode 坐标和 SHA。
 
 原始输出不增删、不补引用、不静默重试。citation_audit 只检查标签，semantic_support_verified 保持 false。模型自己生成的“证据”列表不能替代真实输入来源。
+
+超过 8 MiB 的问答/请求完整内容保存到 `rag_payloads` GridFS bucket，Mongo 集合保存摘要和引用，历史读取自动还原。原始回答不会为了入库被删节。数据库备份必须包含这两个 bucket 的 `files` 和 `chunks` 集合；它们没有公开读取 API，访问由数据库权限控制。
+
+## StateTune数据与训练
+
+本轮从真实trace的17个纠错种子生成2000条数据，已完成六组训练与对照。[数据管线](statetune/README.md)提供入口、格式和正式训练包；旧草稿及阶段运行记录按[附件说明](../docs/artifacts.md)恢复。
+
+`rwkvrag-state-data`提供 `prepare / build / audit / export`，`rwkvrag-state-release`管理独立复核后的训练发布。数据导出、格式通过和loss下降均不能代替实际问答测试。
 
 ## 验证
 
@@ -94,4 +110,4 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 uv run pytest -q tests/test_native_rwkv.py tests/test_rwkvos_batch.py tests/test_model_transport.py tests/test_rwkv_pipeline.py tests/test_native_integration.py tests/test_verbatim_chunking.py tests/test_ingest.py
 ```
 
-本轮完整回归与原始日志见 [2.9B 归档](eval/rwkvos-29b-20260909/README.md)，基点 114 项失败单列比较。前端测试与构建也单独验证。真实模型开发题、源码快照、失败输出和引用语义审阅全部保留；软件测试不证明模型答案正确。旧 13.3B 记录见 [历史报告](eval/bm250820-followup-20260908/README.md)，基点部署说明见 [存档](../docs/previous-python-guide.md)。
+发布验证见 [VALIDATION.json](../artifacts/statetune-20260911/VALIDATION.json)。完整回归仍有114项历史失败；没有删除这些测试或将其改成跳过。软件测试不证明模型答案正确。历史日志与失败集对照保存在实验附件中。

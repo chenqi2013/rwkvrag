@@ -2,6 +2,7 @@ import asyncio
 import base64
 from hashlib import sha256
 import json
+from pathlib import Path
 
 import httpx
 import pytest
@@ -96,8 +97,12 @@ async def test_real_batch_reordered_indices_original_bytes_unknown_termination_a
         assert t["messages"] == MESSAGES
         assert t["raw_text_sha256"] == sha256(result.text.encode()).hexdigest()
         assert t["elapsed_ms"] >= t["queue_ms"] >= 0
-        assert_bytes(t["http"][0], "request")
-        assert_bytes(t["http"][0], "response")
+        assert t["http"][0]["payload_scope"] == "single_item_projection"
+        assert t["http"][0]["payload"]["contents"] == [t["prompt"]]
+        assert "request_body_base64" not in t["http"][0]
+        assert "response_body_base64" not in t["http"][0]
+    assert_bytes(recorded[-1][1], "request")
+    assert_bytes(recorded[-1][1], "response")
     assert "credential-secret" not in json.dumps([r.trace for r in answers])
     assert "credential-secret" not in json.dumps(recorded)
 
@@ -127,6 +132,9 @@ async def test_distinct_parameters_never_share_http_and_batch_capacity_is_real()
                                         "unknown_finish", "non_string_finish", "surrogate", "missing_content", "wrong_model", "error"])
 async def test_malformed_batch_never_silently_reassigns_or_retries(mutation):
     calls = []
+    recorded = []
+    async def recorder(event, record):
+        recorded.append((event, record))
     def handler(request):
         calls.append(request)
         data = response(["A", "B"])
@@ -150,12 +158,15 @@ async def test_malformed_batch_never_silently_reassigns_or_retries(mutation):
         else:
             data = {"error": "provider error"}
         return httpx.Response(200, json=data)
-    async with client(handler) as model:
+    async with client(handler, recorder=recorder) as model:
         results = await asyncio.gather(model.complete(MESSAGES), model.complete(MESSAGES))
     assert len(calls) == 1
     assert all(r.status == "invalid_response" for r in results)
     assert all(r.raw_text is None for r in results)
-    assert all(assert_bytes(r.trace["http"][0], "response") for r in results)
+    assert all(r.trace["http"][0]["response_body_sha256"] for r in results)
+    assert all("response_body_base64" not in r.trace["http"][0] for r in results)
+    assert_bytes(recorded[-1][1], "response")
+    assert "response_json" not in recorded[-1][1]
 
 
 @pytest.mark.parametrize("body", [b'{"model":"a","model":"b"}', b'{"bad":NaN}', b'\xff', b'[]'])
@@ -353,3 +364,78 @@ async def test_stop_configuration_is_copied_and_distinct_parameters_cannot_coale
         await asyncio.gather(first, second)
     assert [row["stop_tokens"] for row in seen] == [[0], []]
     assert all(len(row["contents"]) == 1 for row in seen)
+
+
+@pytest.mark.parametrize("global_state", [None, "global-style"])
+async def test_reader_state_and_canonical_prompt_are_isolated_from_planner_writer(global_state):
+    payloads = []
+    def handler(request):
+        payload = json.loads(request.content)
+        payloads.append(payload)
+        return httpx.Response(200, json=response([" E1 \n"]*len(payload["contents"])))
+    async with client(handler, state_id=global_state, reader_state_id="reader-trained",
+                      reader_prompt_protocol="rwkv_g1j_no_think_v1") as model:
+        results = await asyncio.gather(*(model.complete(MESSAGES, stage=stage)
+                                        for stage in ["resolver", "planner", "writer"]))
+    assert len(payloads) == 2
+    reader = next(p for p in payloads if p.get("state_id") == "reader-trained")
+    others = next(p for p in payloads if p.get("state_id") != "reader-trained")
+    legacy, _ = render_batch_prompt(MESSAGES, "<think></think>")
+    assert reader["contents"] == [legacy + "\n"]
+    assert others["contents"] == [legacy, legacy]
+    assert others.get("state_id") == global_state
+    assert [r.trace["state_id"] for r in results] == ["reader-trained", global_state, global_state]
+    assert all(r.raw_text == " E1 \n" for r in results)
+
+
+async def test_zero_state_reader_uses_same_canonical_prompt_without_state_parameter():
+    payloads = []
+    def handler(request):
+        payloads.append(json.loads(request.content))
+        return httpx.Response(200, json=response(["NONE"]))
+    async with client(handler, reader_prompt_protocol="rwkv_g1j_no_think_v1") as model:
+        result = await model.complete(MESSAGES, stage="resolver")
+    assert "state_id" not in payloads[0]
+    assert payloads[0]["contents"][0].endswith("Assistant: <think></think>\n")
+    assert result.raw_text == "NONE"
+
+
+async def test_canonical_reader_rejects_incompatible_prefill_before_http():
+    def handler(request):
+        raise AssertionError("invalid protocol must not reach provider")
+    async with client(handler, reader_prompt_protocol="rwkv_g1j_no_think_v1") as model:
+        result = await model.complete(MESSAGES, stage="resolver", assistant_prefill="<think")
+    assert result.status == "invalid_request"
+
+
+async def test_task_last_api_matches_frozen_input_and_only_reorders_reader():
+    root = Path(__file__).resolve().parents[1]
+    original = json.loads((root / "statetune/datasets/reader-v4-canonical/dataset/dev.inputs.jsonl").read_text().splitlines()[0])
+    expected = json.loads((root / "eval/reader-v5-stability-20260910/question-last/dev.inputs.jsonl").read_text().splitlines()[0])
+    content = original["prompt"].removeprefix("User: ").removesuffix("\n\nAssistant: <think></think>\n")
+    messages = [{"role": "user", "content": content}]
+    payloads = []
+    def handler(request):
+        payload = json.loads(request.content);payloads.append(payload)
+        return httpx.Response(200, json=response([" E3 \n"] * len(payload["contents"])))
+    async with client(handler, reader_state_id="reader-trained",
+                      reader_prompt_protocol="rwkv_g1j_no_think_v1", reader_input_layout="task_last") as model:
+        results = await asyncio.gather(*(model.complete(messages, stage=stage)
+                                        for stage in ["resolver", "planner", "writer"]))
+    selected = next(p for p in payloads if p.get("state_id") == "reader-trained")
+    ordinary = next(p for p in payloads if "state_id" not in p)
+    assert selected["contents"] == [expected["prompt"]]
+    assert ordinary["contents"] == [original["prompt"][:-1]] * 2
+    assert results[0].trace["prompt_sha256"] == expected["prompt_sha256"]
+    assert results[0].trace["reader_input_layout"] == "task_last"
+    assert results[0].trace["messages"] == messages
+    assert all(r.raw_text == " E3 \n" for r in results)
+
+
+async def test_task_last_rejects_unknown_message_structure_before_http():
+    def handler(request):
+        raise AssertionError("invalid layout must not reach provider")
+    async with client(handler, reader_prompt_protocol="rwkv_g1j_no_think_v1",
+                      reader_input_layout="task_last") as model:
+        result = await model.complete(MESSAGES, stage="resolver")
+    assert result.status == "invalid_request"

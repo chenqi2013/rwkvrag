@@ -1,0 +1,42 @@
+{
+  "schema": "rwkv_reader_next_trial_plan_v1",
+  "status": "PREPARED_NOT_EXECUTED",
+  "release_sha256": "73e9919d12c95f979e2f5f0935fc3ebfc8868f0cb205294e0c8d25540a2e79a0",
+  "train_count": 46,
+  "train_documents": 8,
+  "dev_count": 32,
+  "heldout_count": 32,
+  "input_layout": "task_last",
+  "prompt_protocol": "rwkv_g1j_no_think_v1",
+  "independent_review": "INDEPENDENT-REVIEW.json",
+  "preflight_passed": true,
+  "preflight_sha256": "7c6baba411fc4fb4e6291c2a87f2cfe32d3adf10986d34c449f2cdd571e72b8b",
+  "trial_order": [
+    {
+      "learning_rate": 0.0001,
+      "epochs": 6,
+      "updates": 138
+    },
+    {
+      "learning_rate": 3e-05,
+      "epochs": 6,
+      "updates": 138
+    }
+  ],
+  "maximum_new_training_updates": 276,
+  "current_new_training_updates": 0,
+  "all_start_from_zero": true,
+  "dev_checkpoints_steps": [
+    0,
+    46,
+    92,
+    138
+  ],
+  "primary_dev_backend": "official rwkv0.8.30 recurrent",
+  "candidate_gate": "Total/positive correct strictly improve over zero; negative correct does not decrease; negative false positives do not increase; invalid=0. Filter eligibility before rank, ties earlier trial/step.",
+  "heldout_protocol": "Freeze one candidate based only on dev; official task_last zero+candidate,64 raw generations complete and integrity verified before first gold score. No post-heldout candidate reselection or training.",
+  "heldout_generations_so_far": 0,
+  "v5_candidate_and_metrics_unchanged": true,
+  "execution_schedule": "Future run must use a newly pinned deadline covering training and complete natural-generation dev/heldout evaluations. Prepared configs retain current expiring deadline and cannot silently auto-resume. No scheduled/background job remains.",
+  "release_is_not_model_quality": true
+}

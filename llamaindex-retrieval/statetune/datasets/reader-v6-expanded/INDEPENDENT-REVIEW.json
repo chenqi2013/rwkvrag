@@ -1,0 +1,38 @@
+{
+  "reviewer": "/root/v3_semantic_review",
+  "recorded_by": "/root",
+  "source": "Independent agent final message after read-only review of all110 cases; this receipt is transcribed by root, not an authenticated signature.",
+  "decision": "approve_all110",
+  "counts": {
+    "train": 46,
+    "dev": 32,
+    "heldout": 32,
+    "unit_judgments": 359,
+    "literal_quotes": 70,
+    "source_documents": 24
+  },
+  "bindings": {
+    "annotations.jsonl": "544aa17cc43970af3fafff01cc344e078ce42ec5ef99887c54a7f60747f77344",
+    "dataset/train.inputs.jsonl": "91a2210d8e211f3c9b09816b9ea538a8157d63fba37d85e413a38970b76de8a2",
+    "dataset/train.gold.jsonl": "bec8e7b877f64cb3bf234551174de35ecc5f4d79c5e7caac46bc6927bfc86dcc",
+    "dataset/dev.inputs.jsonl": "28af37b5733043952e4c982a311d39356891b981eb275015ff5f6a34e4bc8977",
+    "dataset/dev.gold.jsonl": "ccd3adb0665fdcc123980e0abe9dd6ebfd305e4740c5cd053f266e1230b46297",
+    "dataset/heldout.inputs.jsonl": "b7f543462437485e3149b96e5adc68e08a7d340d06e52acc5446b681d3f33688",
+    "dataset/heldout.gold.jsonl": "b976bf3b71a0d38729bb54315ad2d823a066b7c9dd7c2908fb451167b7e36b3c"
+  },
+  "max_generation_context_tokens": 4047,
+  "fixed_finding": "Marathon participant-count question had ambiguous partial table support; replaced with explicit date/distance question before release. Rechecked E1-only.",
+  "checks": [
+    "all64 new case semantics independently read against full sources",
+    "old46 semantic content and labels unchanged except input layout",
+    "all canonical LF + task_last rendered prompts",
+    "document/page/content hash cross-split isolation",
+    "exact full corpus bytes and quote spans",
+    "4096 target and32-generation budgets"
+  ],
+  "unresolved_findings": [],
+  "model_calls": 0,
+  "optimizer_updates": 0,
+  "is_blind_human_benchmark": false,
+  "semantic_correctness_verified_by_code": false
+}

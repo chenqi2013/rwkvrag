@@ -1,0 +1,6 @@
+# Preserve byte-exact fixtures, vocabularies and receipts used by SHA bindings.
+data/experiments/** -text -whitespace
+llamaindex-retrieval/statetune/assets/** -text -whitespace
+llamaindex-retrieval/statetune/datasets/** -text -whitespace
+llamaindex-retrieval/eval/** -text -whitespace
+artifacts/**/*.log -text -whitespace

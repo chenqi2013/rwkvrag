@@ -1,0 +1,41 @@
+{
+  "splits": {
+    "train": {
+      "samples": 46,
+      "positive": 30,
+      "positive_without_E1": 18,
+      "positive_multiple_units": 6,
+      "three_or_more_units": 46,
+      "negative": 16,
+      "max_sequence_tokens": 4022
+    },
+    "dev": {
+      "samples": 32,
+      "positive": 16,
+      "positive_without_E1": 13,
+      "positive_multiple_units": 0,
+      "three_or_more_units": 32,
+      "negative": 16,
+      "max_sequence_tokens": 3569
+    },
+    "heldout": {
+      "samples": 32,
+      "positive": 16,
+      "positive_without_E1": 11,
+      "positive_multiple_units": 2,
+      "three_or_more_units": 32,
+      "negative": 16,
+      "max_sequence_tokens": 3262
+    }
+  },
+  "checked_splits": [
+    "train",
+    "dev",
+    "heldout"
+  ],
+  "cross_split_verified": true,
+  "document_disjoint_in_checked_splits": true,
+  "content_disjoint_in_checked_splits": true,
+  "semantic_labels_verified_by_code": false,
+  "scope": "integrity and protocol checks; source semantics require author review"
+}

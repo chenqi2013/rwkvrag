@@ -1,0 +1,13 @@
+{
+  "step": 11,
+  "ids": [
+    "reader_v3_3238689_03"
+  ],
+  "loss_divisor": 1,
+  "sample_losses": [
+    6.483307361602783
+  ],
+  "mean_loss": 6.483307361602783,
+  "gradient_l2_before_clip": 206.1756591796875,
+  "seconds": 0.5948717594146729
+}

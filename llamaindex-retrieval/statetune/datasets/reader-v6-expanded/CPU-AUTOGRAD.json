@@ -1,0 +1,87 @@
+{
+  "status": "CPU_AUTOGRAD_CHECK_PASSED",
+  "torch": "2.9.0+cu128",
+  "cuda_visible_devices": "",
+  "gpu_model_calls": 0,
+  "full_rwkv_model_loaded": false,
+  "scope": "Real CPU autograd/Adam on one scalar parameter; confirms released runner preflight and odd final accumulation accounting, not RWKV GPU correctness.",
+  "preflight": {
+    "status": "PREFLIGHT_COMPLETE",
+    "optimizer_updates": 0,
+    "backward_calls": 1,
+    "loss": 1.0,
+    "gradient_l2": 2.0
+  },
+  "synthetic_training": {
+    "status": "TRAIN_COMPLETE",
+    "optimizer_updates": 4,
+    "backward_calls": 6,
+    "checkpoints": [
+      {
+        "step": 0
+      },
+      {
+        "step": 2
+      },
+      {
+        "step": 4
+      }
+    ]
+  },
+  "final_scalar": 0.00039999998989515007,
+  "records": [
+    {
+      "step": 1,
+      "epoch": 1,
+      "ids": [
+        "1",
+        "2"
+      ],
+      "sample_losses": [
+        4.0,
+        9.0
+      ],
+      "loss_divisor": 2,
+      "gradient_l2_before_clip": 5.0
+    },
+    {
+      "step": 2,
+      "epoch": 1,
+      "ids": [
+        "0"
+      ],
+      "sample_losses": [
+        0.9997999668121338
+      ],
+      "loss_divisor": 1,
+      "gradient_l2_before_clip": 1.9997999668121338
+    },
+    {
+      "step": 3,
+      "epoch": 2,
+      "ids": [
+        "2",
+        "1"
+      ],
+      "sample_losses": [
+        8.998800277709961,
+        3.999199867248535
+      ],
+      "loss_divisor": 2,
+      "gradient_l2_before_clip": 4.999599933624268
+    },
+    {
+      "step": 4,
+      "epoch": 2,
+      "ids": [
+        "0"
+      ],
+      "sample_losses": [
+        0.9994001388549805
+      ],
+      "loss_divisor": 1,
+      "gradient_l2_before_clip": 1.999400019645691
+    }
+  ],
+  "runner_sha256": "5386afb62006eff8b74590aed9161ba8921605f91e31b704fb88b7fd55cad4fe"
+}

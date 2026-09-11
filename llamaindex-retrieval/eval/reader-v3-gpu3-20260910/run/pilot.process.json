@@ -1,0 +1,7 @@
+{
+  "exit_code": 0,
+  "seconds": 347.0499183097854,
+  "mode": "train_then_dev",
+  "gpu_index": 3,
+  "automatic_retry": false
+}

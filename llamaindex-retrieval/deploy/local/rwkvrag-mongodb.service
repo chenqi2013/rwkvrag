@@ -1,0 +1,11 @@
+[Unit]
+Description=RWKVRAG local MongoDB
+
+[Service]
+ExecStart=/home/chase/GitHub/rwkvrag/data/services/mongodb/runtime/mongodb-linux-x86_64-ubuntu2204-8.0.30/bin/mongod --dbpath /home/chase/GitHub/rwkvrag/data/services/mongodb/data --logpath /home/chase/GitHub/rwkvrag/data/services/mongodb/logs/mongod.log --bind_ip 127.0.0.1 --port 18439 --wiredTigerCacheSizeGB 0.5
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=120
+
+[Install]
+WantedBy=default.target

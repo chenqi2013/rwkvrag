@@ -1,0 +1,42 @@
+[
+  {
+    "id": "reader-3238689",
+    "split": "train",
+    "sha256": "2065a28d987d0e1d5c456c00e5d86412b78c21821b773d3d2450283db2ad23ea"
+  },
+  {
+    "id": "reader-8024544",
+    "split": "train",
+    "sha256": "1483ebe379e69b4dd4b7c079944af8501afcd217178a917c7a903f1c8849b7c1"
+  },
+  {
+    "id": "reader-6124888",
+    "split": "train",
+    "sha256": "8f7fdbdd2669ee3d3aa6484b598b2c2ecaac6de7d22df9fc97944f072e08043f"
+  },
+  {
+    "id": "reader-5452404",
+    "split": "train",
+    "sha256": "3fdc3d6bf3a6bd402589d52373ad08e89170d96f09c063d457b59e21582a4253"
+  },
+  {
+    "id": "reader-1279264",
+    "split": "dev",
+    "sha256": "cf9b73e3072500dba7c2bc75f0a3ebfc60ccfd4333fa6f0eb9e77bd64e3f4fb9"
+  },
+  {
+    "id": "reader-5706573",
+    "split": "dev",
+    "sha256": "13eba391928258ed729fa196db2e0a9378eff9b57a8087d58721616d514af72d"
+  },
+  {
+    "id": "reader-1618999",
+    "split": "heldout",
+    "sha256": "ea698e0d51cfd315f5c5f2803f85eab448fe956fcfe4cb19f44802414b3a2449"
+  },
+  {
+    "id": "reader-4397431",
+    "split": "heldout",
+    "sha256": "07209af2609f03a8b7704949f85d4babc26d7f2203c55359233d199bda2fd1ab"
+  }
+]

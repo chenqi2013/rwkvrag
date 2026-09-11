@@ -1,0 +1,3070 @@
+[
+  {
+    "page_id": "1278962",
+    "title": "ICO小組",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "公司類型",
+        "索尼互動娛樂日本工作室内部團隊"
+      ],
+      [
+        "成立",
+        "1997"
+      ],
+      [
+        "结束",
+        "2011"
+      ]
+    ],
+    "document_id": "zhwiki/1278962",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=55872878",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "c845cc83c4cf740e7f3fe0cca05cac0c57a55322401ef5eae35e9f05289791b7",
+    "raw_row_sha256": "e0d3669e35085d65b515fde51512ed0cdd80ce39115ca95e3a56725514b1ee29",
+    "source_row": 3670,
+    "split": "train"
+  },
+  {
+    "page_id": "2899819",
+    "title": "五諸侯增一 (井宿)",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "星座",
+        "雙子座"
+      ],
+      [
+        "赤經",
+        "7h 24m 33.4s"
+      ],
+      [
+        "赤緯",
+        "+27° 38′ 17″"
+      ]
+    ],
+    "document_id": "zhwiki/2899819",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=63246791",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "292808d86a649eb8968e30776718f52843ebdd27560b8a98ce218c0df8c8b8bc",
+    "raw_row_sha256": "d84a4ce5cdf7cffb9bfd240a316a64924e364c744543d6ef1d8b56c411f620fd",
+    "source_row": 1546,
+    "split": "train"
+  },
+  {
+    "page_id": "2948343",
+    "title": "2040年11月4日日食",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "性質",
+        "日偏食"
+      ],
+      [
+        "伽瑪",
+        "1.0993"
+      ],
+      [
+        "食分",
+        "0.8074"
+      ]
+    ],
+    "document_id": "zhwiki/2948343",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=63929082",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "4aa131a83767dc68b506b5c6e9ae606c41c5bcb14f0d1b0ec39800497be52893",
+    "raw_row_sha256": "0801795be4c697d0ddd1aeddb93a72fea8eaeb47fbc14dfe8216e403af17ba08",
+    "source_row": 928,
+    "split": "train"
+  },
+  {
+    "page_id": "2896898",
+    "title": "HD 6953",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "赤經",
+        "1h 10m 19.4s"
+      ],
+      [
+        "赤緯",
+        "+25° 27′ 28″"
+      ],
+      [
+        "視星等（V）",
+        "5.8"
+      ]
+    ],
+    "document_id": "zhwiki/2896898",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=70564769",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "0beee70417f36172d215b981795c415b89ee4b6561f0a08d86cfc2be435ecba9",
+    "raw_row_sha256": "db8059d7978f1857d2330888db9feab2d90578eefb1d0eed7e47718e61e20fab",
+    "source_row": 3659,
+    "split": "train"
+  },
+  {
+    "page_id": "8990656",
+    "title": "2025年土耳其滑雪中心酒店火灾",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "日期",
+        "2025年1月21日"
+      ],
+      [
+        "會場",
+        "卡尔塔尔大酒店 (Grand Kartal Hotel)"
+      ],
+      [
+        "地点",
+        "土耳其博卢省"
+      ]
+    ],
+    "document_id": "zhwiki/8990656",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85870229",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "e65b143b548179261d5770e2f3be15b798da1963103b096f23009caf98e6af6b",
+    "raw_row_sha256": "ae3a261637add6fc2dc8719f7ba56934fb1f2b5c67a815f90cf4eea74940fb90",
+    "source_row": 4268,
+    "split": "train"
+  },
+  {
+    "page_id": "8219369",
+    "title": "Ungoogled-chromium",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "開發者",
+        "Eloston和其他爱好者们"
+      ],
+      [
+        "首次发布",
+        "2015年12月14日"
+      ],
+      [
+        "当前版本",
+        "134.0.6998.88-1（2025年3月13日，43小時前）"
+      ]
+    ],
+    "document_id": "zhwiki/8219369",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=75658178",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "29fbbc38089ac836fd4a584ce8c4e9e2420df2d2d2f1498d3071ae0beaddc3ce",
+    "raw_row_sha256": "d25bef81ccdda0327f1fb1a36c6655f287141adad1d2c40341a0a2f7d197352a",
+    "source_row": 4697,
+    "split": "train"
+  },
+  {
+    "page_id": "3142132",
+    "title": "三峰新異鱂",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "界：",
+        "动物界 Animalia"
+      ],
+      [
+        "门：",
+        "脊索动物门 Chordata"
+      ],
+      [
+        "纲：",
+        "綱 Actinopteri"
+      ]
+    ],
+    "document_id": "zhwiki/3142132",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=64517795",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "eb86e678ddf96a75695cb9c120ba393c40870b10198476c8c40fa1d58eb1264a",
+    "raw_row_sha256": "e6c96160f1384d052571cf40c3b61098795abf9e13bf3fc6e6cbb9fde952226d",
+    "source_row": 4900,
+    "split": "train"
+  },
+  {
+    "page_id": "3274043",
+    "title": "光稃羊茅",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "界：",
+        "植物界 Plantae"
+      ],
+      [
+        "目：",
+        "禾本目 Poales"
+      ],
+      [
+        "科：",
+        "禾本科 Poaceae"
+      ]
+    ],
+    "document_id": "zhwiki/3274043",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=70993080",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "eb5156f9c9b3f26854a08a38c11e65510a7a7fada0421995f006b6a9662ece12",
+    "raw_row_sha256": "86ef6784069dd07e9898d46ee791428edd69fcb55783611535a6439d5ace86bd",
+    "source_row": 2936,
+    "split": "train"
+  },
+  {
+    "page_id": "575165",
+    "title": "伯尼斯鱷屬",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "界：",
+        "动物界 Animalia"
+      ],
+      [
+        "门：",
+        "脊索动物门 Chordata"
+      ],
+      [
+        "纲：",
+        "Reptilia"
+      ]
+    ],
+    "document_id": "zhwiki/575165",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=80999852",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "09b1f3e2f204bec9ac6f253c5fd08d97f54c3659271f7a155d72fd46805cc486",
+    "raw_row_sha256": "ab199cf2f3589a43342579f71010253379788eea0037a0315d24c991116ddc14",
+    "source_row": 2682,
+    "split": "train"
+  },
+  {
+    "page_id": "72314",
+    "title": "三國無雙",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "类型",
+        "格鬥"
+      ],
+      [
+        "平台",
+        "PlayStation"
+      ],
+      [
+        "开发商",
+        "光荣"
+      ]
+    ],
+    "document_id": "zhwiki/72314",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85884416",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "c5d767e2525caa3a52a2dcdf37a879bda3f39ab680b76f6e95e4002600499e47",
+    "raw_row_sha256": "806d52a94f56b26e1edb9fd6f2e36bb14888e5b2d43caddb6e7066136c929868",
+    "source_row": 1737,
+    "split": "train"
+  },
+  {
+    "page_id": "2902623",
+    "title": "HD 186619",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "光谱分类",
+        "M0IIIab"
+      ],
+      [
+        "U−B 色指数",
+        "1.99"
+      ],
+      [
+        "B−V 色指数",
+        "1.57"
+      ]
+    ],
+    "document_id": "zhwiki/2902623",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=71607045",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "d6cc837ac9a7bff89299962d5d1751fc63c0e51e9fd56500324b5a4be444fd24",
+    "raw_row_sha256": "0eb3260dfdff680f8c68d8fba3290e421744c4b594a3f0a2c3a6aa3f4c8e60db",
+    "source_row": 4725,
+    "split": "train"
+  },
+  {
+    "page_id": "2867476",
+    "title": "GAMESS (美国版)",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "開發者",
+        "爱荷华州立大学量子化学小组"
+      ],
+      [
+        "当前版本",
+        "- 2019 R1 Public Release（2019年6月30日）"
+      ],
+      [
+        "操作系统",
+        "Linux, FreeBSD, Unix和类Unix操作系统, Microsoft Windows, Mac OS X"
+      ]
+    ],
+    "document_id": "zhwiki/2867476",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=81778895",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "5baa4c8c05f342afab90f71fb8e4cfd1873480c13c8b280c343c84e3da0ff7ff",
+    "raw_row_sha256": "baf053fe2b2ff0a9b954bfe3d51ba3b65b86e57c35efbcb2a70f5564751f352c",
+    "source_row": 4144,
+    "split": "train"
+  },
+  {
+    "page_id": "300697",
+    "title": "NGC 6",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "星座",
+        "仙女座"
+      ],
+      [
+        "赤经",
+        "00h 09m 32.8s"
+      ],
+      [
+        "赤纬",
+        "+33° 18′ 31″"
+      ]
+    ],
+    "document_id": "zhwiki/300697",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=61967021",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "b6bb19c77dc30ebed1b2bbea8a0b9e0570069188308c80b739a25f2fff3028ba",
+    "raw_row_sha256": "18f78caab4ecbdb348f6a77c6cafd4e0e389116c146a81d8f2651f5b3a6eb7b4",
+    "source_row": 1305,
+    "split": "train"
+  },
+  {
+    "page_id": "2975814",
+    "title": "伊萬尼察楓樹足球俱樂部",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "全名",
+        "Фудбалски клуб Јавор Матис Ивањица · Fudbalski klub Javor Ivanjica"
+      ],
+      [
+        "成立",
+        "1912年"
+      ],
+      [
+        "主場",
+        "枫树体育场"
+      ]
+    ],
+    "document_id": "zhwiki/2975814",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=84399305",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "d125246f16bb474f5e49d41549079a938d4e855aa9a27e906db892dd3bfa6b84",
+    "raw_row_sha256": "4a837c2fe3f470b475574769b2c2d685384c20cfdfd7eadd1d8abd3cad47b348",
+    "source_row": 2179,
+    "split": "train"
+  },
+  {
+    "page_id": "983305",
+    "title": "偏花关木通",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "界：",
+        "植物界 Plantae"
+      ],
+      [
+        "目：",
+        "胡椒目 Piperales"
+      ],
+      [
+        "科：",
+        "马兜铃科 Aristolochiaceae"
+      ]
+    ],
+    "document_id": "zhwiki/983305",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=79999029",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "7e564f324d33fc7d6b5065fe5aedc5ae9dbdf595f54ca383991e88e42a7fa05d",
+    "raw_row_sha256": "05676e55512b55d767baf621b308c8e29afc8ce6efbbad7d047b6950cdd6f56b",
+    "source_row": 3168,
+    "split": "train"
+  },
+  {
+    "page_id": "2899841",
+    "title": "HD 74148",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "赤經",
+        "8h 39m 13.2s"
+      ],
+      [
+        "赤緯",
+        "-60° 19′ 2″"
+      ],
+      [
+        "視星等（V）",
+        "6.36"
+      ]
+    ],
+    "document_id": "zhwiki/2899841",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=70565043",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "2236ebdde68223db4278bb4ab06e64da94654df30448bc938157a58fae5be2e1",
+    "raw_row_sha256": "4fd15fa72184ff8290b6094f78828d68576a58a10140df33ee873396687d0e3a",
+    "source_row": 4004,
+    "split": "train"
+  },
+  {
+    "page_id": "7026649",
+    "title": "休斯敦 (伊利諾伊州)",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "國家",
+        "美国"
+      ],
+      [
+        "州份",
+        "伊利諾伊州"
+      ],
+      [
+        "海拔",
+        "130 公尺（427 英尺）"
+      ]
+    ],
+    "document_id": "zhwiki/7026649",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=63304381",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "b1308899ade5a3e3d65a928fc3941bf706c5fbd9b94adb5e75dfb58498503cac",
+    "raw_row_sha256": "aaed5cab30b6cb90d0dc8ffddcbb52f8385f4008c9a854cee775673580eea207",
+    "source_row": 2262,
+    "split": "train"
+  },
+  {
+    "page_id": "3088073",
+    "title": "克赖沙",
+    "kind": "wiki_infobox",
+    "box_index": 3,
+    "fields": [
+      [
+        "时区",
+        "CET（UTC+1）"
+      ],
+      [
+        "邮政编码",
+        "01737"
+      ],
+      [
+        "车辆号牌",
+        "PIR, DW, FTL, SEB"
+      ]
+    ],
+    "document_id": "zhwiki/3088073",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=70993679",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "b9173b52d2c1df523589004563f26a8beb654b456d644bdcda30bcce722c553a",
+    "raw_row_sha256": "4b2d7b6ce0b08e4b1133701196e4afdd30a1e44feb89220da8deabfed7b82942",
+    "source_row": 2764,
+    "split": "train"
+  },
+  {
+    "page_id": "9042075",
+    "title": "萨罗尼科斯",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "国家",
+        "希腊"
+      ],
+      [
+        "大区",
+        "阿提卡大區"
+      ],
+      [
+        "专区",
+        "东阿提卡专区"
+      ]
+    ],
+    "document_id": "zhwiki/9042075",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=86497496",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "8acdebe5eae715b89f1a7b48caf0c6435f103b6ee78c0e7ab570fd43aa40e09a",
+    "raw_row_sha256": "d697951335f395f92ec2cc523c08abe2ba2ee0c528805e65412c5b412b492c8a",
+    "source_row": 109,
+    "split": "train"
+  },
+  {
+    "page_id": "7985587",
+    "title": "1985年巴西總統選舉",
+    "kind": "wiki_prose",
+    "document_id": "zhwiki/7985587",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=86508651",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "6ed0f2281e9e83ba549d5b1a517f16e93257b7eabb2e378aa73e24f584feb969",
+    "raw_row_sha256": "ff8e31598a1222b4376f3fb46ceea3653f5c795635951d2263e606a3681d4fc1",
+    "source_row": 296,
+    "split": "train",
+    "text": "# 1985年巴西總統選舉\n1985年巴西總統選舉于1985年1月15日在巴西举行，这是巴西最后一次由選舉人團參與投票的總統選舉，也是巴西軍政府时期的最后一次總統選舉。\n",
+    "authored_facts_required": true
+  },
+  {
+    "page_id": "5644670",
+    "title": "FC東京 (排球)",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "簡稱",
+        "FC東京"
+      ],
+      [
+        "創立",
+        "1948"
+      ],
+      [
+        "主場",
+        "日本江東區 · 東京燃氣體育館"
+      ]
+    ],
+    "document_id": "zhwiki/5644670",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=79410269",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "d277d4def4cd44fa47b7c626e54d2e98c69026ef7a84300b8549e0a62800e421",
+    "raw_row_sha256": "b03a17afe9ec1b28373bd2a71def9a251de8eadc440cc88c77ff543ea02f6fa0",
+    "source_row": 4939,
+    "split": "train"
+  },
+  {
+    "page_id": "1814359",
+    "title": "Baby Baby Love",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "B面",
+        "やさしき日々"
+      ],
+      [
+        "发行日期",
+        "2010年11月3日"
+      ],
+      [
+        "格式",
+        "單曲"
+      ]
+    ],
+    "document_id": "zhwiki/1814359",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=82257810",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "83ecae1fea49d14010872d2a0a895bf07f02315f0e3fd439370f029a6586b38e",
+    "raw_row_sha256": "13e4cbee287a9bd9a9cb4874a3e05bdf9c7e7013aa5fcdac429d4e6198bcaa45",
+    "source_row": 4514,
+    "split": "train"
+  },
+  {
+    "page_id": "5905945",
+    "title": "2006年中太平洋氣旋",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "形成",
+        "2006年10月28日"
+      ],
+      [
+        "消散時間",
+        "2006年11月4日"
+      ],
+      [
+        "最高風速",
+        "- 1分鐘持續: · 100公里/小時(65英里/小時)"
+      ]
+    ],
+    "document_id": "zhwiki/5905945",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=67034709",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "db91673f73f433c4a38ac26e2336a379aa6314166062cd0ee8286e61c03b11b6",
+    "raw_row_sha256": "003e7b927d8edb61e13fab91677199c4c8e6f2ee26bb0a86576b8798df48f2df",
+    "source_row": 3604,
+    "split": "train"
+  },
+  {
+    "page_id": "7670931",
+    "title": "Loser (张天赋歌曲)",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "发行日期",
+        "2021年8月26日"
+      ],
+      [
+        "格式",
+        "線上下載 串流媒體"
+      ],
+      [
+        "类型",
+        "粵語流行 節奏藍調"
+      ]
+    ],
+    "document_id": "zhwiki/7670931",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83294499",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "af17bbde9251795c0f219a79cb55d252e45790c3b8731bbee459b0bfe57caa5f",
+    "raw_row_sha256": "16e28f28c4c4ed88b914d16b0689d725e827499ecbc498527ea3e58fe3933e44",
+    "source_row": 4611,
+    "split": "train"
+  },
+  {
+    "page_id": "6601599",
+    "title": "GNU可移植线程库",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "原作者",
+        "Ralf S. Engelschall"
+      ],
+      [
+        "首次发布",
+        "1999年7月16日"
+      ],
+      [
+        "当前版本",
+        "2.0.7（2006年6月8日）"
+      ]
+    ],
+    "document_id": "zhwiki/6601599",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=80574420",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "6ff2ddeeb7c08594b61aff900ca0c63b6fa9ceb7baf2335d0be8a1d08ee10950",
+    "raw_row_sha256": "6348fc3b87beb88fa041a5cc001ec2188ab31085dad6f225f12004993b07a9bc",
+    "source_row": 3933,
+    "split": "train"
+  },
+  {
+    "page_id": "2902079",
+    "title": "HD 163245",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "光谱分类",
+        "A4V"
+      ],
+      [
+        "U−B 色指数",
+        "0.05"
+      ],
+      [
+        "B−V 色指数",
+        "0.05"
+      ]
+    ],
+    "document_id": "zhwiki/2902079",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=64142642",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "86e2c630acf5b61f6ac392cd2eb3c6ed9743101f1e5e68566f90324a545ac7aa",
+    "raw_row_sha256": "46238b5fdea0af8b93462d2000aaea9ba598314b1b15825cb1b8b513beede3f2",
+    "source_row": 3980,
+    "split": "train"
+  },
+  {
+    "page_id": "1017632",
+    "title": "F-102三角剑战斗机",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "類型",
+        "攔截機"
+      ],
+      [
+        "乘員",
+        "F-102：1人 · TF-102：2人"
+      ],
+      [
+        "首飛",
+        "1953年10月24日"
+      ]
+    ],
+    "document_id": "zhwiki/1017632",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85173679",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "80106891fa10517aa41881acefb1bb2a31023090693b825538098463992bc358",
+    "raw_row_sha256": "d715c0bff1747441d59654c44e4d7f01c6daba6d3adc64bd599a3f2039a77a62",
+    "source_row": 3983,
+    "split": "train"
+  },
+  {
+    "page_id": "7871757",
+    "title": "Volga Ukraine",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "成立",
+        "2010年"
+      ],
+      [
+        "代表人物",
+        "谢尔盖·埃尔绍夫"
+      ],
+      [
+        "總部",
+        "乌克兰"
+      ]
+    ],
+    "document_id": "zhwiki/7871757",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=76759214",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "4c352fc05ee1326820c5a101511749d8065948f4e2b4623eb92a1e21cb533adf",
+    "raw_row_sha256": "13b88de26a4c876bd14f044c8a46743d8dd3c28e07e76786b9796c4ccfe71965",
+    "source_row": 1384,
+    "split": "train"
+  },
+  {
+    "page_id": "6497228",
+    "title": "2-氟乙醇",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "CAS号",
+        "371-62-0"
+      ],
+      [
+        "PubChem",
+        "9737"
+      ],
+      [
+        "ChemSpider",
+        "9354"
+      ]
+    ],
+    "document_id": "zhwiki/6497228",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=80347175",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "9eda0c8ff390e3a1e6398b4ac5e55485017893622d57e44529be40af6dd35acb",
+    "raw_row_sha256": "520239c7434b969f7dcbd83265eb4a8c1e3487760eb4c086258a5733c1cff5ad",
+    "source_row": 4068,
+    "split": "train"
+  },
+  {
+    "page_id": "8412639",
+    "title": "仇成墓",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "位置",
+        "中国（亚洲和太平洋地区）"
+      ],
+      [
+        "標準",
+        "文化：(i)(ii)(iii)(iv)(vi)"
+      ],
+      [
+        "参考编码",
+        "1004ter-007"
+      ]
+    ],
+    "document_id": "zhwiki/8412639",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85458657",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "84d521589a3d67a10a77ebda5f875171f212ca6074b5a7098929d07f1e05635d",
+    "raw_row_sha256": "9e82f5d1515d595b5dd056d95d085afe0f215883c383bc51b536cb27b07c0a9b",
+    "source_row": 2733,
+    "split": "train"
+  },
+  {
+    "page_id": "4006083",
+    "title": "Yogo蓝宝石",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "顏色",
+        "矢车菊蓝到紫色"
+      ],
+      [
+        "晶体惯态",
+        "六角形、菱形、棱形或双锥形"
+      ],
+      [
+        "晶系",
+        "六方晶系 · Symbol (32/m) · 空间群 R3c"
+      ]
+    ],
+    "document_id": "zhwiki/4006083",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=78985799",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "905ef04e01e9183d0873ddc480d8e453ad3f4df977b7075938a5daebf3f0dc1c",
+    "raw_row_sha256": "6c432078e0ae1305aae4527d02ca3a8ad74c704ab44e19e2469fa2820430a297",
+    "source_row": 4776,
+    "split": "train"
+  },
+  {
+    "page_id": "1549825",
+    "title": "2012年夏季奧林匹克運動會擊劍比賽",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "比賽場館",
+        "倫敦展覽中心"
+      ],
+      [
+        "日期",
+        "7月28日-8月5日"
+      ],
+      [
+        "参赛选手",
+        "212位選手"
+      ]
+    ],
+    "document_id": "zhwiki/1549825",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83959566",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "04fe39e0f6e119504d705c9d906c59abfd0c3e9a4630e716b263e9c32b8c9498",
+    "raw_row_sha256": "f9eb2361c0fa0e145551d931302625b1563d395ad00ef9bc6fcb4ae1f575ede5",
+    "source_row": 4269,
+    "split": "train"
+  },
+  {
+    "page_id": "3030341",
+    "title": "丰塔尼瓦",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "国家",
+        "義大利"
+      ],
+      [
+        "大区",
+        "威尼托大区"
+      ],
+      [
+        "省份或广域市",
+        "帕多瓦省"
+      ]
+    ],
+    "document_id": "zhwiki/3030341",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=37497811",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "b039c297dc51fd4c96141ea9387df7bcac241d995e2ec0d8589bdab55dcb4cad",
+    "raw_row_sha256": "f5c7348d0cad195bbe3a6a41582b628d78d11c3d061253a3b6da2f5040516cc5",
+    "source_row": 1398,
+    "split": "train"
+  },
+  {
+    "page_id": "1660881",
+    "title": "WISE 1405+5534",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "星座",
+        "大熊座"
+      ],
+      [
+        "赤經",
+        "14h 05m 18.27s"
+      ],
+      [
+        "赤緯",
+        "55° 34′ 21.22″"
+      ]
+    ],
+    "document_id": "zhwiki/1660881",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=76460605",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "40fc62d3a59ac9d59be165a33b4a3350bc3f5e679793881af565d91dd8fd0551",
+    "raw_row_sha256": "e51c1d3f7a660353d2cfef444aceb029740a5d3064bf4dd34e3d16aefc89bdd6",
+    "source_row": 4722,
+    "split": "train"
+  },
+  {
+    "page_id": "7759860",
+    "title": "利安德水鼩",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "界：",
+        "动物界 Animalia"
+      ],
+      [
+        "门：",
+        "脊索动物门 Chordata"
+      ],
+      [
+        "纲：",
+        "哺乳纲 Mammalia"
+      ]
+    ],
+    "document_id": "zhwiki/7759860",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=72020750",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "d2f9a49873d56fbad545a12f2dcdec3f2fe03d003dc09e40902a536f362cf9e4",
+    "raw_row_sha256": "9807ebd4ebb16e17a7d154d6498692f545326778c888d277a0993f678e103602",
+    "source_row": 3073,
+    "split": "train"
+  },
+  {
+    "page_id": "555840",
+    "title": "222",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "小寫",
+        "二百二十二"
+      ],
+      [
+        "大寫",
+        "貳佰貳拾貳"
+      ],
+      [
+        "序數詞",
+        "第二百二十二 · two hundred and twenty-second"
+      ]
+    ],
+    "document_id": "zhwiki/555840",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=75006215",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "46a006738ed14130765e6e4fc57f826c99232a45d46504880abf38580434a931",
+    "raw_row_sha256": "643e169faef268a99fae8dfec6b169df251d527a68121a249e4d590f907cd8b4",
+    "source_row": 4381,
+    "split": "train"
+  },
+  {
+    "page_id": "7750319",
+    "title": "1-二十七烷醇",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "CAS号",
+        "2004-39-9"
+      ],
+      [
+        "PubChem",
+        "74822"
+      ],
+      [
+        "ChemSpider",
+        "67388"
+      ]
+    ],
+    "document_id": "zhwiki/7750319",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=71404235",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "b000a4d40f5dadace71a3be100c204962f1d9e36f6a1f190672ee29fa80f311c",
+    "raw_row_sha256": "72f5c13b21f5d351c4d3794c04462c20e5c30e294a1e978d38d3513a2d2c140e",
+    "source_row": 3426,
+    "split": "train"
+  },
+  {
+    "page_id": "2861720",
+    "title": "凉伞站",
+    "kind": "wiki_prose",
+    "document_id": "zhwiki/2861720",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83661913",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "e5274ea9b4c55264c563002473d34f0f1b53724d81acec40af91c0a810ed22db",
+    "raw_row_sha256": "943dfbee3004bfa5066296a7c407df53a3d94a3812f15924303b0a4b7425195b",
+    "source_row": 3267,
+    "split": "train",
+    "text": "# 凉伞站\n凉伞站位于福建省南平市延平区太平镇，建于1986年。距来舟站64公里，距福州站130公里。曾为五等站，现已撤销。客运办理旅客乘降、行李托运，不办理包裹托运；不办理货运业务。\n",
+    "authored_facts_required": true
+  },
+  {
+    "page_id": "2900871",
+    "title": "HD 110073",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "光谱分类",
+        "B8II/III"
+      ],
+      [
+        "U−B 色指数",
+        "-0.42"
+      ],
+      [
+        "B−V 色指数",
+        "-0.08"
+      ]
+    ],
+    "document_id": "zhwiki/2900871",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83163848",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "63f3fb4e6cd50835ec3a1281e2de05206202f5e3b0d845606f21f2b57a592ac3",
+    "raw_row_sha256": "f723ad8820bbdc3b218940938d6f513b5ffae7223c2e2a91f601b3d34f9f388a",
+    "source_row": 3411,
+    "split": "train"
+  },
+  {
+    "page_id": "941383",
+    "title": "丁业华",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "全名",
+        "丁业华"
+      ],
+      [
+        "出生日期",
+        "1981年11月11日"
+      ],
+      [
+        "出生地點",
+        "中国上海"
+      ]
+    ],
+    "document_id": "zhwiki/941383",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85636062",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "4e1527eec4d8ebcd43fc460ed005fba068a71ce125dce90cc788b3f90f23cd7a",
+    "raw_row_sha256": "b347f5e6c7fa74b824e089d48500d2eb58bf72e72181ef2178e0a32f499fb4d6",
+    "source_row": 1638,
+    "split": "train"
+  },
+  {
+    "page_id": "9006952",
+    "title": "JWH-197",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "化学式",
+        "C26H29NO"
+      ],
+      [
+        "摩尔质量",
+        "371.51 g·mol−1"
+      ],
+      [
+        "性质",
+        "若非注明，所有数据均出自标准状态（25 ℃，100 kPa）下。"
+      ]
+    ],
+    "document_id": "zhwiki/9006952",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85999839",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "1f5940232a2f338fbe7e8be219d07742278bea4f8bcec97ca8cb56b483769a02",
+    "raw_row_sha256": "653763d734ad4c651c422ee1dc45938a8a10acfac67b4b6f3180e0b4636fbef2",
+    "source_row": 4888,
+    "split": "train"
+  },
+  {
+    "page_id": "2897768",
+    "title": "HD 26677",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "赤經",
+        "4h 13m 31.3s"
+      ],
+      [
+        "赤緯",
+        "+8° 53′ 26″"
+      ],
+      [
+        "視星等（V）",
+        "6.51"
+      ]
+    ],
+    "document_id": "zhwiki/2897768",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=64148032",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "aa041573f6355bb6f2c434c3c9d07d1b52ec9864b9fdbcb83f3db4201b0d0aec",
+    "raw_row_sha256": "eda8d1f13a079d0a3c9d32959d796aff85dda1c0807c1637f9c5c0fc4d5dbf08",
+    "source_row": 707,
+    "split": "train"
+  },
+  {
+    "page_id": "6046662",
+    "title": "Netscape公眾授權條款",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "作者",
+        "Netscape"
+      ],
+      [
+        "版本",
+        "1.1"
+      ],
+      [
+        "发布者",
+        "Netscape"
+      ]
+    ],
+    "document_id": "zhwiki/6046662",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=63141790",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "adfb2450e58aca7aafe61e3144332afb96475943edf1253b82beea1838894319",
+    "raw_row_sha256": "6e88ee90346efb7b808199346ce6dd7f8e1847259e10cd27b25c5ff95c303f0f",
+    "source_row": 4563,
+    "split": "train"
+  },
+  {
+    "page_id": "3928881",
+    "title": "205级潜艇",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "建造者",
+        "Howaldtswerke, Kiel · Copenhagen Naval Dockyard"
+      ],
+      [
+        "使用者",
+        "德國聯邦國防軍海軍 · 丹麦皇家海军"
+      ],
+      [
+        "前级",
+        "201级潜艇"
+      ]
+    ],
+    "document_id": "zhwiki/3928881",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=79868638",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "531dd4cec0556717f12ec31afb19e13ed20acc70c5053b6d5d672fde9d8ab575",
+    "raw_row_sha256": "7eb0ddbef8dd4ebf3b7f048731c137c8f0e43716e11ba86ea2bd494beea2158b",
+    "source_row": 4683,
+    "split": "train"
+  },
+  {
+    "page_id": "8832352",
+    "title": "1-重氮-2-氧代-2-苯乙基膦酸二甲酯",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "CAS号",
+        "60190-80-9"
+      ],
+      [
+        "PubChem",
+        "71374237"
+      ],
+      [
+        "SMILES",
+        "- COP(=O)(C(=[N+]=[N-])C(=O)C1=CC=CC=C1)OC"
+      ]
+    ],
+    "document_id": "zhwiki/8832352",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83815225",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "2a05ff75fc6e0f4db5e0e6d81bce2f01ee00e174ae868bb2603e5ab12331fb5e",
+    "raw_row_sha256": "231242ef1b86c4809d295b8a811863dbb8c0e9d50f7db54e663b192972af3371",
+    "source_row": 455,
+    "split": "train"
+  },
+  {
+    "page_id": "1026509",
+    "title": "A Film for ××",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "发行日期",
+        "1999年9月15日"
+      ],
+      [
+        "类型",
+        "J-POP"
+      ],
+      [
+        "唱片公司",
+        "avex trax"
+      ]
+    ],
+    "document_id": "zhwiki/1026509",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=73418553",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "5cb3e1205c93341a0d3aa85a8a263ea555f0bd645f3a4dfb3e41db673cdf9443",
+    "raw_row_sha256": "3087632374354432e10e5830ff03a790f0244ab9876c799437f062612d48eaa2",
+    "source_row": 4489,
+    "split": "train"
+  },
+  {
+    "page_id": "7394900",
+    "title": "亚历山德拉·茨尔文达基奇",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "出生",
+        "1996年3月17日 · 南斯拉夫洛兹尼察"
+      ],
+      [
+        "國籍",
+        "塞爾維亞"
+      ],
+      [
+        "登錄身高",
+        "6英尺2英寸（188）"
+      ]
+    ],
+    "document_id": "zhwiki/7394900",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=75315013",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "8139e8ae455eab8bfbac323ec156d82caf0d0ec6153185eb3174bba0b9587740",
+    "raw_row_sha256": "6118ac1de4a433768a860852b6a6e547e86ff37fa8ad6e3f4edfb87f559bcd62",
+    "source_row": 2264,
+    "split": "train"
+  },
+  {
+    "page_id": "1588487",
+    "title": "DIAMOND WAVE",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "发行日期",
+        "2006年8月2日"
+      ],
+      [
+        "类型",
+        "J-Pop"
+      ],
+      [
+        "时长",
+        "47:49"
+      ]
+    ],
+    "document_id": "zhwiki/1588487",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=81844873",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "42f0ac621bd45dc4add71c344d89ce55723be64af8fcb451bf8629c421b017a7",
+    "raw_row_sha256": "768a932760a8b121df85ed7c6cbe7f787edac15e2353d4e5b4b4bc2659f7a33e",
+    "source_row": 4626,
+    "split": "train"
+  },
+  {
+    "page_id": "555841",
+    "title": "223",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "小寫",
+        "二百二十三"
+      ],
+      [
+        "大寫",
+        "貳佰貳拾參"
+      ],
+      [
+        "序數詞",
+        "第二百二十三 · two hundred and twenty-third"
+      ]
+    ],
+    "document_id": "zhwiki/555841",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=76438363",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "a96334d88349b260d58787779026639ca2d2cf8100aaf4f9b1648bdef0858276",
+    "raw_row_sha256": "52389faa463fd4aca929006c66cf359798e23c0ec02c310d93dd3d964e5d9f94",
+    "source_row": 4292,
+    "split": "train"
+  },
+  {
+    "page_id": "2901031",
+    "title": "HD 117043",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "赤經",
+        "13h 25m 59.9s"
+      ],
+      [
+        "赤緯",
+        "+63° 15′ 40″"
+      ],
+      [
+        "視星等（V）",
+        "6.5"
+      ]
+    ],
+    "document_id": "zhwiki/2901031",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=72327753",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "9e1f612861701c6700491424d8f3e0c8a1c70056d612e43ba4bc6bab82d21032",
+    "raw_row_sha256": "96bf3ad7c6fb3d07f6e5562255058ca2c63356d6be6118eb707c01a7382632f1",
+    "source_row": 3785,
+    "split": "train"
+  },
+  {
+    "page_id": "8867019",
+    "title": "1,3-二氟苯",
+    "kind": "wiki_infobox",
+    "box_index": 2,
+    "fields": [
+      [
+        "化学式",
+        "C6H4F2"
+      ],
+      [
+        "摩尔质量",
+        "114.09 g·mol−1"
+      ],
+      [
+        "密度",
+        "1.163 g/mL"
+      ]
+    ],
+    "document_id": "zhwiki/8867019",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=84271141",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "1c890618063bd3e29ab54b9eea83f7b8038c2c95619d44c8d27968cb59c7af5c",
+    "raw_row_sha256": "203a68569f7f9d30eaeebd571074353a39886f4c96f8e2b58f0a1f408fa781fc",
+    "source_row": 3491,
+    "split": "train"
+  },
+  {
+    "page_id": "367976",
+    "title": "2006年太平洋颶風季",
+    "kind": "wiki_infobox",
+    "box_index": 2,
+    "fields": [
+      [
+        "熱帶低氣壓數",
+        "25"
+      ],
+      [
+        "風暴數",
+        "19"
+      ],
+      [
+        "颶風數",
+        "11"
+      ]
+    ],
+    "document_id": "zhwiki/367976",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=79605929",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "cc61fdf0cb2d429e4cac9257bf5f20ca2991da146e3c92ce0e8c5b049c7ba74b",
+    "raw_row_sha256": "e7d5e69f31f92cb15264d514513ce30ca5ecc25bafecf49adc7a3bd81bc122df",
+    "source_row": 318,
+    "split": "train"
+  },
+  {
+    "page_id": "873232",
+    "title": "1923年中华民国宪法",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "司法轄區",
+        "中華民國"
+      ],
+      [
+        "批准",
+        "1923年（民國12年）10月8日"
+      ],
+      [
+        "生效",
+        "1923年（民國12年）10月10日"
+      ]
+    ],
+    "document_id": "zhwiki/873232",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85903568",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "71f2f27ddd3b4d67a24e33d50b892eb9e62d02eed141d2050bf74a14a11ba7e2",
+    "raw_row_sha256": "bfd9ed204b069d2cd7cc3e1dd3db79385ff66f97c83721d9068f0e3d6d6b5b3d",
+    "source_row": 598,
+    "split": "train"
+  },
+  {
+    "page_id": "5576408",
+    "title": "Artec 3D",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "公司類型",
+        "私有"
+      ],
+      [
+        "總部",
+        "盧森堡"
+      ],
+      [
+        "产业",
+        "3D打印相關軟件與硬件"
+      ]
+    ],
+    "document_id": "zhwiki/5576408",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=70742747",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "541c9e23d6ae18291dd7cc373e66caeccd90803c7d49bcd49e387e17769d7747",
+    "raw_row_sha256": "3f44a83fdd307aa4ee863df54808f6e267d5a06060d8fc66ca03d5538cabe78a",
+    "source_row": 4442,
+    "split": "train"
+  },
+  {
+    "page_id": "9042751",
+    "title": "瓦里-武拉-武利亚格迈尼",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "国家",
+        "希腊"
+      ],
+      [
+        "大区",
+        "阿提卡大區"
+      ],
+      [
+        "专区",
+        "东阿提卡专区"
+      ]
+    ],
+    "document_id": "zhwiki/9042751",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=86506518",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "9204a2c797b1ceb35081f6a49489ecce461b6c79a3f01fc78de615f6ed69af58",
+    "raw_row_sha256": "3eb5008bd278e7f8a819d0bc002b0d862cb769fbe75848b06147f4dd72b1399b",
+    "source_row": 63,
+    "split": "train"
+  },
+  {
+    "page_id": "8312064",
+    "title": "丙型线形病毒科",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "域：",
+        "核糖病毒域 Riboviria"
+      ],
+      [
+        "界：",
+        "正核糖病毒界 Orthornavirae"
+      ],
+      [
+        "门：",
+        "黃色病毒門 Kitrinoviricota"
+      ]
+    ],
+    "document_id": "zhwiki/8312064",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=78518397",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "ffbe182586aeaa0fe8e2e5547367ad7ca2a5fba03558edc5084f43afb0f72351",
+    "raw_row_sha256": "e8898de19b405564342fcaeab450d918cd8ea3205e57b17ac8e5835f952cb620",
+    "source_row": 1869,
+    "split": "train"
+  },
+  {
+    "page_id": "8415586",
+    "title": "3,4-亚甲二氧基-N-异丙基苯丙胺",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "CAS号",
+        "74698-37-6"
+      ],
+      [
+        "PubChem",
+        "3057996"
+      ],
+      [
+        "ChemSpider",
+        "2319184"
+      ]
+    ],
+    "document_id": "zhwiki/8415586",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=80547009",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "4fcae0bf81d582bf822314be7396dc9f29db702f38a113c27ea970c7ed31ccdc",
+    "raw_row_sha256": "832dc090c7abb645d20c6fe3a6984f805b6e6fc9d2617c795d4f2b4283e76c22",
+    "source_row": 3233,
+    "split": "train"
+  },
+  {
+    "page_id": "620733",
+    "title": "丁觀鵬",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "出生",
+        "康熙末期 · 顺天府（今北京市及周边）"
+      ],
+      [
+        "逝世",
+        "乾隆中期"
+      ],
+      [
+        "国籍",
+        "大清帝國"
+      ]
+    ],
+    "document_id": "zhwiki/620733",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=78690968",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "491e0615aeca8a29d9dd813940c0eb51687d565ebf9b1e5b094b03554993d8bd",
+    "raw_row_sha256": "072795084352c6cd9980fec6bbccc3a5a516c2092ba8788278715d56d5bed079",
+    "source_row": 1358,
+    "split": "train"
+  },
+  {
+    "page_id": "2788648",
+    "title": "则拉乡",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "国家",
+        "中华人民共和国"
+      ],
+      [
+        "上级行政区",
+        "甘洛县"
+      ],
+      [
+        "村级区划单位数",
+        "4 - 0社区 - 4行政村"
+      ]
+    ],
+    "document_id": "zhwiki/2788648",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83000456",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "3e190497ddc0ade00b1651328c98ec937a30b710542952f4ea815259c3dc4e85",
+    "raw_row_sha256": "7864f5bcafa9f9efd932b6ab5efeace1680f2b9ead27237557ed6a3d3a7472b1",
+    "source_row": 3349,
+    "split": "train"
+  },
+  {
+    "page_id": "3417329",
+    "title": "东胡纳潟湖县",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "国家",
+        "冰島"
+      ],
+      [
+        "地区",
+        "西北区"
+      ],
+      [
+        "时区",
+        "GMT（UTC+0）"
+      ]
+    ],
+    "document_id": "zhwiki/3417329",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85162940",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "8dc4e472ccea7e181455cf80a88f6409167111dc64b7906a1feb01654d794ce5",
+    "raw_row_sha256": "53c07195398169c66bd2422fbe0bf51f4eae163cd040f97aa211be0300888bb1",
+    "source_row": 2045,
+    "split": "train"
+  },
+  {
+    "page_id": "1539161",
+    "title": "中国人民警察大学广州校区",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "创办时间",
+        "2019年3月"
+      ],
+      [
+        "学校类型",
+        "公安警察院校分校区"
+      ],
+      [
+        "党委书记",
+        "潘慈平一级警监"
+      ]
+    ],
+    "document_id": "zhwiki/1539161",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83524388",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "83bb4082c220dfcdd4ee2fdb07ebc97dbc4f788a1a0372e9f9fe6d1620a85824",
+    "raw_row_sha256": "caed0bc05f6a2ed740378471ea6ac86ccad42f121d48f03ffa508d5699041964",
+    "source_row": 1690,
+    "split": "train"
+  },
+  {
+    "page_id": "8608384",
+    "title": "倫納德 (密歇根州)",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "國家",
+        "美国"
+      ],
+      [
+        "州份",
+        "密歇根州"
+      ],
+      [
+        "鎮區",
+        "艾迪生鎮區"
+      ]
+    ],
+    "document_id": "zhwiki/8608384",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=84599822",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "2febbc14cd8a48bd50c416d07ee6eba03d6b519d6d7faab3b1ec0e82d05acc25",
+    "raw_row_sha256": "d13e37435a5fc468fd4187430de9a0cf5966ce89a183407d975a7872edd7cced",
+    "source_row": 2746,
+    "split": "train"
+  },
+  {
+    "page_id": "7427419",
+    "title": "三國界碑",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "材料",
+        "混凝土"
+      ],
+      [
+        "完工",
+        "1926年"
+      ],
+      [
+        "紀念",
+        "瑞典、挪威、芬蘭三國交界處的界碑"
+      ]
+    ],
+    "document_id": "zhwiki/7427419",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85023156",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "634f3c5f66799ba0fbdf7d5b7cd2718dc20342538ce54cbb67d54e1c88032d4f",
+    "raw_row_sha256": "194eb38ee67beca8dd1aa8ff514015030dd87160f8377c49d13a7c98a96987e2",
+    "source_row": 1684,
+    "split": "train"
+  },
+  {
+    "page_id": "3790333",
+    "title": "中國雅樂",
+    "kind": "wiki_prose",
+    "document_id": "zhwiki/3790333",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=82995370",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "bcf694ce5703355608220bc5927ae177cd76fbd948b561fd8f96982794d562c2",
+    "raw_row_sha256": "95305da23c73e50664278e5a352c2348eca747243fa65d01fbd4ece00ff655a6",
+    "source_row": 1943,
+    "split": "train",
+    "text": "# 中國雅樂\n雅乐是华夏天子祭天地、祖先及朝贺、宴享等大典所用的乐舞，也是東亞各地雅樂的共同祖先。雅乐是汉文化禮樂文明的一部分，也是六艺之一，以西周以来的祭祀音乐为主，是周礼吉礼的组成部分。孔子曰：「安上治民，莫善於禮；移風易俗，莫善於樂。」雅乐的体系在西周初年制定，与周礼共同构成了华夏禮樂文明的内外支柱，分别载于礼经和乐经。雅乐相当于《诗经》中的大雅和颂。诗经三百五篇，孔子皆弦歌之，以求合《韶》、《武》、《雅》、《颂》之音。礼乐自此可得而述，以备王道、成六艺。正因为借《诗经》之便，而恢复了古代「韶乐」、「武乐」、「雅乐」与「颂乐」，才使「礼乐」教化成为现实，其「王道」才得以完备，「六艺」才趋于齐备。《咸池》（黄帝乐）、《六莖》（颛顼乐）、《五英》（帝喾乐）、《大章》（尧乐）、 《大韶》（舜乐）、《大夏》（禹乐）、《大濩》（汤乐）等,皆被儒者奉为雅乐的典范。历代华夏王朝设太常，司礼乐教化，内有雅乐部，从事祭祀演奏。儒家经学和二十四史《礼乐志》是研究雅乐的基础。\n\n## 歷史\n周武王建立周朝不久，就命周公旦制礼作乐，建立各种贵族生活中的礼仪和典礼音乐。这一部分乐舞就是所谓的“雅乐”。它包含了始自远古的图腾及巫术等宗教活动中的乐舞及祭祀音乐。黄帝的《云门》、尧帝的《大咸》、舜帝的《九韶》、禹帝的《大夏》、商汤的《大燕》,配上周朝的《大武》,合称六代之乐,构成了祭祀天地山川、先妣、先祖的完整的祭祀系统。\"雅\"就是\"正\"的意思, \"雅樂\"就是\"正樂\" ,這是對於地方之樂而説的。《诗经》二雅所收之詩, 多爲西周王畿以内的詩歌。周天子建都的王城，此外还仿照这些雅乐，制作了一系列的雅颂诗乐，就是《诗经》的大雅和三頌。\n《周礼》所记载的西周和春秋时期的各种贵族礼仪，其中与雅乐有关的有：\n- 郊杜：祭天地神明的祭典；\n- 尝禘：贵族祭其祖先的祭典；\n- 食飨：政治上外交上的宴会等；包括大飨、燕礼、大射、养老等等。\n- 乡射：乡里中官僚和地主们比射的集会；\n- 王师大献：战争胜利时举行的凯旋庆典；\n- 行军田役：用于军事演习性质的狩猎。\n\n礼乐教化中乐舞的地位和作用也被提到了前所未有的高度。\n在周朝的礼仪活动中，严格的规定不同的场面使用不同的音乐。它的主要目的是使参加典礼的贵族受到伦礼教育的感化，造成一种庄严、肃穆、安静、和谐的气氛。 各种主要典礼音乐的歌词，大都载于《诗经》中的「大雅」、「小雅」、「颂」；少数属于「南」。\n随着周朝的衰落和社会的发展，民间音乐逐步代替了雅乐。贵族们对雅乐渐感厌烦而去欣赏俗乐，如《乐记》所载，魏文侯“端冕而听古乐，则唯恐卧：听郑、卫之音，则不知倦。”因此孔子曾感叹地说：“礼崩乐坏”。《颂》、《雅》、二《南》原为雅乐,可以弦歌;但在春秋之时,礼坏乐崩,不能尽合,孔子正之。故曰: \"吾自卫反鲁,然后乐正,《雅》《颂》各得其所。儒家把\"乐\"作为君子必修的六艺之一,推崇\"雅乐\"。孔子对音乐就极有研究,他精通乐理韵律,善于咏唱弹奏。《诗经》中的风、雅、颂, 很多是周代雅乐曲目,秦、汉以后的雅乐,除袭用周代雅乐(如《韶》、《武》)之外,或另有创作,或自民间俗乐加以改造。汉代以来，太常寺太樂署執掌雅樂,樂府執掌俗樂。三国时杜费仍能演奏诗经雅乐，曹操令他创制雅乐。\n南宋淳熙年間，禮部太常寺編纂《中興禮書》，其中存有律呂譜記載的雅樂，為保存至今最早且完整者。至明代，雅樂由隸屬禮部的教坊司負責，後來負責俗樂的鐘鼓司取代了教坊司的職能，內廷俗樂成為宮廷用樂的主導和主流，這時雅樂用的音樂已被俗樂取代。\n\n## 乐器編制\n雅乐的主要乐器是編鐘和编磬。两者皆分上下两层悬挂，大小不同的钟与磬，敲击可传高低乐音。 雅乐悉在宫调。徵、羽、角,自为俗音。\n一般雅樂編制包括如下樂器：\n- 鐘（金）ㄓㄨㄥˉ：編鐘，分為鎛鐘、鈕鐘、甬鐘。\n- 磬（石）ㄑㄧㄥˋ：編磬。\n- 琴（絲）ㄑㄧㄣˊ：七絃琴，傳統上以蠶絲製絃。\n- 瑟（絲）ㄙㄜˋ：琴的伴奏樂器，絃數不等。\n- 簫（竹）ㄒㄧㄠˉ：直吹的竹管樂器。\n- 篪（竹）ㄔˊ：橫吹的竹管樂器。\n- 籥（竹）ㄩㄝˋ：即排簫。\n- 笙（匏）ㄕㄥˉ：簧樂器，能吹奏自身的和聲，因此又稱作「和」；大型的笙也稱作「竽」。\n- 鼓（革）ㄍㄨˇ：即中式大鼓。\n- 搏（革）ㄅㄛˊ：又稱「搏拊」，雙面小鼓\n- 埙（土）ㄙㄨㄣˉ：形如柚子般的圆形陶瓷乐器，表面有孔，口吹即可发音。\n- 柷（木）ㄔㄨˋ：形方如斗，上廣下狹，以槌击之可发声；聲音類似今日的木魚。\n- 敔（木）ㄩˇ：虎型木雕乐器，背上凹凸处，刷过就会发出乐音；類似西洋的刮葫（英语：）。\n\n周朝的乐器制作工艺已达到相当高的水平。1978年，在湖北省随州擂鼓墩发掘的曾侯乙墓(大約葬於戰國初期)，出土的古乐器有一百二十四件之多，其中五十六件为一套的编钟制作尤为精美。\n\n## 乐谱\n《礼记·投壶》中的鼓谱是现存最早的乐谱。南宋淳熙年間成書的《中興禮書》則記載了以律呂譜記錄的雅樂樂譜。朱熹《仪礼经传通解》收录了南宋所传《风雅十二诗谱》的雅乐乐谱，用律吕字谱记写，是传世最早的诗经乐谱。《乐星图谱》用俗字谱符号说明八十四调音阶，并对照排列雅乐燕乐调名。宋末熊朋来撰《瑟谱》载有瑟的历史，演奏技法，《诗旧谱》，《诗新谱》，《孔子庙释奠乐章谱》以及制作瑟的《瑟谱后录》。明代《乐律全书》也收录了很多雅乐乐谱。刘民悦辑《文庙礼乐全书》，明末避乱日本的魏双候四世孙魏鹄《魏氏乐谱》。清代有《律音汇考》。\n\n### 风雅十二诗谱\n《风雅十二诗谱》中包括了12首诗经国风和小雅的乐谱。这12首诗是《鹿鸣》、《四牡》、《皇皇者华》、《鱼丽》、《南有嘉鱼》、《南山有台》、《关雎》、《葛覃》、《卷耳》、《鹊巢》、《采蘩》、《采蘋》。用律吕字谱记写，每字一音。\n\n## 影響\n雅樂影響到漢字文化圈周邊國家，包括日本、朝鮮半島、越南、琉球，但這些地區的雅樂所用的樂曲與樂器與周朝的不盡相同。\n\n## 延伸閱讀\n- 《明代朱載堉〈六代小舞譜〉音樂舞蹈復原》，楊春薇主編，時代新媒體出版社，2021，ISBN 978-7-88868-851-3（參與團隊：中國音樂學院雅樂團）\n\n",
+    "authored_facts_required": true
+  },
+  {
+    "page_id": "2897654",
+    "title": "HD 21563",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "赤經",
+        "3h 24m 2.5s"
+      ],
+      [
+        "赤緯",
+        "-69° 37′ 29″"
+      ],
+      [
+        "視星等（V）",
+        "6.15"
+      ]
+    ],
+    "document_id": "zhwiki/2897654",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=64146771",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "ac5b19d4a09be564f08f7283caf5cd9f1eb0533b781e262ad765d3c1c41e3701",
+    "raw_row_sha256": "a50c5185560ea7f81178be5f8409f2a1dda3a2bf72e2e775cd5baca69ade457c",
+    "source_row": 4428,
+    "split": "train"
+  },
+  {
+    "page_id": "935118",
+    "title": "OFK貝爾格萊德",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "全名",
+        "Омладински фудбалски клуб Београд · Omladinski Fudbalski Klub Beograd"
+      ],
+      [
+        "綽號",
+        "Romantičari（浪漫主义者） · Plavo-beli（蓝白军团）"
+      ],
+      [
+        "成立",
+        "1911年11月9日"
+      ]
+    ],
+    "document_id": "zhwiki/935118",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83824821",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "609f00269ae113840872900524cb33ff90f48a2cb4a86697e543546ea2559f2c",
+    "raw_row_sha256": "2387ebeb703b4c70f3241c0ea826471b24661f8d528f46c6c6b0b655b1c8f82f",
+    "source_row": 1317,
+    "split": "train"
+  },
+  {
+    "page_id": "8879542",
+    "title": "2024年蘭盧加火燒車事故",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "日期",
+        "2024-10-01"
+      ],
+      [
+        "时间",
+        "12:29 ICT (UTC+07:00)"
+      ],
+      [
+        "地点",
+        "泰國巴吞他尼府兰卢加县威拍哇麗蘭室路"
+      ]
+    ],
+    "document_id": "zhwiki/8879542",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=86094179",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "0cd3b2582aad7a1de435f983fa483e472f76d5b771c547844c5771544d70910a",
+    "raw_row_sha256": "bb3fa17422439b43817e557457cc6aab71393b769a81fd61c77353fef4a3f360",
+    "source_row": 802,
+    "split": "train"
+  },
+  {
+    "page_id": "2757326",
+    "title": "侨港镇",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "国家",
+        "中华人民共和国"
+      ],
+      [
+        "上级行政区",
+        "银海区"
+      ],
+      [
+        "建立",
+        "1979年6月2日"
+      ]
+    ],
+    "document_id": "zhwiki/2757326",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=86225089",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "3f1fe5a221b4b6339dcbb187c7fc70d460a9d86870adac6a6f3ee51e803ae133",
+    "raw_row_sha256": "cde6cf2eee25608171e18e922d490f1e5b139c6c3e521ebe75016b27bef3c567",
+    "source_row": 2796,
+    "split": "train"
+  },
+  {
+    "page_id": "2788381",
+    "title": "倮格乡",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "国家",
+        "中华人民共和国"
+      ],
+      [
+        "上级行政区",
+        "宁南县"
+      ],
+      [
+        "村级区划单位数",
+        "5 - 0社区 - 5行政村"
+      ]
+    ],
+    "document_id": "zhwiki/2788381",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83003495",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "f30758712e813412f9b1cf278fb6c0c58791ecf2fb80653999cd5ed7313af365",
+    "raw_row_sha256": "1bc3065c73b1c629ff70a12d1275763354793dfd51f368db19adc48c2814fbb6",
+    "source_row": 2992,
+    "split": "train"
+  },
+  {
+    "page_id": "7716323",
+    "title": "Yogscast",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "公司類型",
+        "Private company limited by shares"
+      ],
+      [
+        "成立",
+        "在網上活動: 2008年 · 成立公司: 2011年5月3日"
+      ],
+      [
+        "創辦人",
+        "- Lewis Brindley - Simon Lane"
+      ]
+    ],
+    "document_id": "zhwiki/7716323",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=80241724",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "5dfe8827f918a482d2447d1c4f7aaa785d90641acc680f0cf47d87e216b03786",
+    "raw_row_sha256": "34d6a61ad14fc51a740e317bb74922bd8d8b3219a0d79dd6e29307dd6850e164",
+    "source_row": 4769,
+    "split": "train"
+  },
+  {
+    "page_id": "7386508",
+    "title": "1998年12月14日阿尔巴尼亚—南斯拉夫边境冲突",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "日期",
+        "1998年12月14日"
+      ],
+      [
+        "地点",
+        "阿尔巴尼亚-南斯拉夫边界42°16′32″N 20°32′15″E﻿ / ﻿42.2756°N 20.5375°E"
+      ],
+      [
+        "结果",
+        "南斯拉夫胜利 - 科索沃解放军的武器运输被查获 - 科索沃解放军誓言报复"
+      ]
+    ],
+    "document_id": "zhwiki/7386508",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=76790582",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "b188722a66d7dbb01eeb993ae5a22f4007d4c0da0ed7094fa7d3edd4a7c39083",
+    "raw_row_sha256": "fcf2bca58e0487bf0e523f66fb94a9960d9c9a9b710f78bafb7e5b20a1fddfcc",
+    "source_row": 3572,
+    "split": "train"
+  },
+  {
+    "page_id": "3088926",
+    "title": "伦费尔德",
+    "kind": "wiki_infobox",
+    "box_index": 2,
+    "fields": [
+      [
+        "时区",
+        "CET（UTC+01:00）"
+      ],
+      [
+        "邮政编码",
+        "98660"
+      ],
+      [
+        "市镇编码",
+        "16069026"
+      ]
+    ],
+    "document_id": "zhwiki/3088926",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=67288499",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "3efef62c16c35dd99ee9f226f20408f79cd2e9e770d7332c60f40778bd5ad3a8",
+    "raw_row_sha256": "78d642c49f5d717e18ca60400fc50dea542e8b727ae63bc34103f137aeb70a89",
+    "source_row": 2637,
+    "split": "train"
+  },
+  {
+    "page_id": "5452860",
+    "title": "1945年12月19日月食",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "日期",
+        "1945年12月19日"
+      ],
+      [
+        "伽馬",
+        "-0.284"
+      ],
+      [
+        "食分",
+        "半影食分：2.355 · 全影食分：1.348"
+      ]
+    ],
+    "document_id": "zhwiki/5452860",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=73339572",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "09f6d740998f059ecbf0f8c7eb856199fe28ca1067f2dacd42fa59a1f9e547eb",
+    "raw_row_sha256": "9c4d8a679bffaaedb7531a658808ab19a5e8b891f08a56cf01e8d9eda8c06019",
+    "source_row": 3906,
+    "split": "train"
+  },
+  {
+    "page_id": "5641518",
+    "title": "京津冀协同发展领导小组",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "上级机构",
+        "中华人民共和国国务院"
+      ],
+      [
+        "机构类型",
+        "国务院议事协调机构"
+      ],
+      [
+        "办事机构",
+        "京津冀协同发展领导小组办公室（设在国家发展改革委地区经济司）"
+      ]
+    ],
+    "document_id": "zhwiki/5641518",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=79916342",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "291567b6699f1aeeffeec17a51da030fb59dfd3a7fef234ad0404134d867092c",
+    "raw_row_sha256": "7d1701d2ac183133e991985c6f768af4fb58c8f495173d68cd2f56ae8aafff48",
+    "source_row": 2458,
+    "split": "train"
+  },
+  {
+    "page_id": "4716659",
+    "title": "1955年麥克阿瑟機場聯合航空空難",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "日期",
+        "1955年4月4日"
+      ],
+      [
+        "摘要",
+        "機員失誤"
+      ],
+      [
+        "地點",
+        "美國紐約州艾斯利普鎮朗肯科瑪區長島麥克阿瑟機場 · 40°47′43″N 073°06′01″W﻿ / ﻿40.79528°N 73.10028°W"
+      ]
+    ],
+    "document_id": "zhwiki/4716659",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=84910007",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "e3277bf495ae3e9e365aefca062fb6a2b49833729e6fa93d3df71ac17cb9160a",
+    "raw_row_sha256": "2d8ed89734f7150a88915fff0d8f896008a4b30359b4d53f948a83e537ec5bc8",
+    "source_row": 3612,
+    "split": "train"
+  },
+  {
+    "page_id": "7973193",
+    "title": "凹甲蝉虾属",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "界：",
+        "动物界 Animalia"
+      ],
+      [
+        "门：",
+        "节肢动物门 Arthropoda"
+      ],
+      [
+        "亚门：",
+        "甲殼亞門 Crustacea"
+      ]
+    ],
+    "document_id": "zhwiki/7973193",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=71988123",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "6c31f3d53507b12b4692be0d1a3e51e9d6a78ef9589c3b733bce3882748d37e5",
+    "raw_row_sha256": "27360b7edb4b039c960c817772d0c160c8e0170cc94ba3ec68b1b764efd04b30",
+    "source_row": 3261,
+    "split": "train"
+  },
+  {
+    "page_id": "2899714",
+    "title": "五諸侯二 (井宿)",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "星座",
+        "雙子座"
+      ],
+      [
+        "星官",
+        "五诸侯 (井宿)"
+      ],
+      [
+        "赤經",
+        "7h 11m 8.4s"
+      ]
+    ],
+    "document_id": "zhwiki/2899714",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=70975006",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "5049e029f1133bcf1502e7c0e5db7266fec6615ef8c477a376855c9eba91069b",
+    "raw_row_sha256": "b335533d8445b7c1d71503367ed327b34e7133e2064388263ff76d19fe87d90d",
+    "source_row": 1539,
+    "split": "train"
+  },
+  {
+    "page_id": "7902762",
+    "title": "克里斯·雅各布斯",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "出生",
+        "1964年9月25日 （60歲）"
+      ],
+      [
+        "母校",
+        "- 得克薩斯大學奧斯汀分校 - Newark Academy"
+      ],
+      [
+        "职业",
+        "游泳运动员"
+      ]
+    ],
+    "document_id": "zhwiki/7902762",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=82494190",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "9d377c1804dbd7d267890b941c4be59e5f1ad3a2823fa623cf4fc64fb8369a0c",
+    "raw_row_sha256": "2819da1b3767f52ccdf127b8020b2224c7d62bed1603f0772064d41ce61284b4",
+    "source_row": 2336,
+    "split": "train"
+  },
+  {
+    "page_id": "7632585",
+    "title": "1950他们正年轻",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "导演",
+        "宋坤儒"
+      ],
+      [
+        "制片",
+        "陈志国"
+      ],
+      [
+        "编剧",
+        "宋坤儒 · 李牧"
+      ]
+    ],
+    "document_id": "zhwiki/7632585",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85626889",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "f4b7a307f4f09d54c84baf411cd78b279c057a7487594cf95d5ef9d53735732f",
+    "raw_row_sha256": "1cb6f92fe10d25088cc82ac83a60ce946f502c179f7cd0a5edca9f2b766c4d77",
+    "source_row": 482,
+    "split": "train"
+  },
+  {
+    "page_id": "8779117",
+    "title": "1-甲基-4-(2-肼基乙基)哌嗪",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "化学式",
+        "C7H18N4"
+      ],
+      [
+        "摩尔质量",
+        "158.24 g·mol−1"
+      ],
+      [
+        "沸点",
+        "74~75 °C（0.15 mmHg）"
+      ]
+    ],
+    "document_id": "zhwiki/8779117",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83394060",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "6059439882f1b29299d8460451ca6508b135898a3cc12fad8935d77765ccd7d6",
+    "raw_row_sha256": "e74a7512b36f4a31124c68c29666100608be47b8bc49e5655a4aa33606257fbc",
+    "source_row": 3223,
+    "split": "train"
+  },
+  {
+    "page_id": "1777847",
+    "title": "TG16型柴油机车",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "类型",
+        "柴油机车"
+      ],
+      [
+        "原产国",
+        "苏联"
+      ],
+      [
+        "生产商",
+        "柳季诺沃内燃机车制造厂"
+      ]
+    ],
+    "document_id": "zhwiki/1777847",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=61986991",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "855c19f6d0da261c0177ac00756a39ca1f48f638a99308bdaa91d9352565fa60",
+    "raw_row_sha256": "4d5b69147e416c6c9b8a4dff5f42181ef2a724b8669172ade04e99b7010b5a68",
+    "source_row": 1349,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "7071789",
+    "title": "五氟化铂",
+    "kind": "wiki_infobox",
+    "box_index": 2,
+    "fields": [
+      [
+        "化学式",
+        "F5Pt"
+      ],
+      [
+        "外观",
+        "红色固体"
+      ],
+      [
+        "熔点",
+        "75-76 °C（348-349 K）"
+      ]
+    ],
+    "document_id": "zhwiki/7071789",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=76139659",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "0c5e227f84dc0e65747a27d0d29672c4cdc52ddc9c8d6f998ecf9e7098d44bf9",
+    "raw_row_sha256": "cd23ef8aeb64f0f901ce9ebe94437052727d6eea5b80bc05530d24610319bdbb",
+    "source_row": 2310,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "2897060",
+    "title": "HD 10362",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "光谱分类",
+        "B7II"
+      ],
+      [
+        "U−B 色指数",
+        "-0.45"
+      ],
+      [
+        "B−V 色指数",
+        "0.01"
+      ]
+    ],
+    "document_id": "zhwiki/2897060",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=64139527",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "24de966d268bad1910e855b66be99815553d917bb5146ab1f5b0a10b545b215e",
+    "raw_row_sha256": "8193f45e0790d2d1a8553159dab9a399b5c433482158b3ee3c81fd563c8ca648",
+    "source_row": 679,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "2972976",
+    "title": "85式装甲输送车",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "研发日期",
+        "1984年 ~ 1988年"
+      ],
+      [
+        "生产商",
+        "中国北方车辆"
+      ],
+      [
+        "生产日期",
+        "20世纪80年代中期"
+      ]
+    ],
+    "document_id": "zhwiki/2972976",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=84318360",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "275c7172785433c985a38cc43cbf3502999f463398a306e052d2714db0c20cde",
+    "raw_row_sha256": "ff25d33816bf0a3624b1bda0c5feccd4213d234934d3ffb9d2ed7914095f0404",
+    "source_row": 3485,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "3575267",
+    "title": "三田 (目黑區)",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "國家",
+        "日本"
+      ],
+      [
+        "都道府縣",
+        "東京都"
+      ],
+      [
+        "特別區",
+        "目黑區"
+      ]
+    ],
+    "document_id": "zhwiki/3575267",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85262562",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "5f678605937b77026e9c691afe984ff792d15f3b5e7f57970f7ba67feb3a8eb9",
+    "raw_row_sha256": "7218c39cb1a934eda39e0f7ad6160a7b73e09ab66b23d829e02558c6272adbd0",
+    "source_row": 4964,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "1514911",
+    "title": "上海市科学技术委员会",
+    "kind": "wiki_infobox",
+    "box_index": 2,
+    "fields": [
+      [
+        "业务上级机构",
+        "中华人民共和国科学技术部"
+      ],
+      [
+        "组织上级机构",
+        "上海市人民政府"
+      ],
+      [
+        "机构类型",
+        "直辖市人民政府组成部门"
+      ]
+    ],
+    "document_id": "zhwiki/1514911",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=84440710",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "e05ab276d9323d7d470fb13599ee664240e15f8cb5374255bdb98f5684396fe9",
+    "raw_row_sha256": "2fc29e2cbf574e61e1d7e71ca72eca4ec1c1bba9d2095df3a762da75f5a4491b",
+    "source_row": 1107,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "6069162",
+    "title": "2018年3月",
+    "kind": "wiki_prose",
+    "document_id": "zhwiki/6069162",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=82716238",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "60c7c45ce0683a618c1b6867a5135dbd3e4f2a6cf64fe6331114e2549b14383c",
+    "raw_row_sha256": "18d855aecee89efa621820f141210feb7cbb4b1084eeef01a5f5e92492838b64",
+    "source_row": 398,
+    "split": "evaluation",
+    "text": "# 2018年3月\n\n## 3月1日\n- 美国总统唐纳德·特朗普宣布计划对钢铁和铝进口征收关税，导致道琼斯工业平均指数下挫超过400点[1][2]。\n- 挪威奥斯陆警方表示美国联邦调查局正协助调查唐纳德·特朗普两项伪造的诺贝尔和平奖提名。冒领者据称两度使用同一被盗的身份[3][4]。\n\n\n## 3月2日\n- 布基纳法索首都瓦加杜古的法国大使馆等地点遭到极端武装分子袭击[5]。\n- 阿塞拜疆首都巴库市区一处戒毒中心突发大火，造成至少26人死亡，4人受伤。[6]\n- 美国GV男優比利·海灵顿车祸身亡，终年48岁。[7][8][9][10]\n\n\n## 3月3日\n- 第38屆金酸莓獎公佈得獎名單[11]。\n\n\n## 3月4日\n- 2018年義大利大選進行投票[12]。\n- 第90屆奧斯卡金像獎頒獎典禮在美國加州洛杉磯好萊塢的杜比剧院舉行[13]。\n- 一支沉船搜尋隊在珊瑚海海底找到1942年珊瑚海海战中沉沒的列星頓號航空母艦殘骸[14]。\n- 英國前俄羅斯間諜毒殺案，在2010年美俄交換間諜協議中獲釋的前俄羅斯上校謝爾蓋·斯克里帕爾與其到來探親的女兒於英國索爾茲伯里中毒昏迷[15]。\n\n\n## 3月6日\n- 俄羅斯一架安托諾夫An-26運輸機在叙利亚赫梅明空军基地降落時墜毀，機上39人無人生還[16]。\n\n\n## 3月7日\n- 2018年塞拉利昂大選進行投票[17]。\n\n\n## 3月8日\n- 美國總統特朗普簽署兩項並行的宣告，對進口鋼鐵徵收25%的关税，對進口鋁徵收10%的關稅，將於15天後實施，而加拿大和墨西哥則獲得豁免[18]\n- 11國簽署《跨太平洋夥伴全面進展協定》[19]。\n- 欧洲联盟委员会指英國過往縱容進口貨品以不實申報逃避關稅，宣佈已向英國發出通知，追討27億歐元稅款[20]。\n\n\n## 3月11日\n- 2018年哥倫比亞國會選舉進行投票[21]。\n- 古巴舉行國家級及省級議會選舉[22]。\n\n\n## 3月12日\n- 孟加拉國US-Bangla航空公司一架載有71人的客機在尼泊爾加德滿都特里布万国际机场降落時在機場附近墜毀，多人遇難[23]。\n- 美國總統特朗普簽署行政命令，禁止博通有限收購高通[24]。\n\n\n## 3月13日\n- 美國總統特朗普通過推特宣佈，解除提勒森美國國務卿職務，並委派現任中情局局長蓬佩奧接任該職[25]。\n\n\n## 3月14日\n- 英国物理学家、宇宙学家史蒂芬·霍金于当地时间3月14日凌晨在其位于剑桥的家中去世，享壽76岁。[26]\n- 安格拉·默克爾在德国联邦议院以364票支持和315票反對，成功連任德国总理。[27]\n- 英國首相特里莎·梅宣佈一系列制裁俄羅斯的措施，以回應其未能對在前俄諜毒殺案中出現的疑似俄製毒劑做出解釋，英國外交部表示已要求聯合國安理會召開緊急會議討論該案[28]。\n- 森友学园被曝出购地相关文件被篡改，多名日本在野党人士要求安倍晋三辞去内阁总理大臣。[29]\n\n\n## 3月16日\n- 美国迈阿密佛罗里达国际大学一座施工中的行人天桥倒塌，至少造成6人死亡，8辆路过的车辆受损[30]。\n- 白俄罗斯駐北京大使館發表聲明，表示其國名在中文應譯為「白羅斯」[31]。\n\n\n## 3月17日\n- 中共中央总书记习近平在第十三届全国人民代表大会第一次全体会议上以2970赞成票，全票再次当选国家主席和国家军委主席；中共第十八届中央政治局常委王岐山以2969赞成票，1票反对票，当选国家副主席；中共第十九届中央政治局常委栗战书以2970赞成票，全票当选全国人大常委会委员长。[32]\n\n\n## 3月18日\n- 中国第十三届全国人民代表大会第一次会议通过李克强为国务院总理；杨晓渡为首任国家监察委员会主任。[33]\n- 2018年俄罗斯总统选举進行投票。[34]\n- 台湾学者、政论家李敖在台北逝世，享壽82岁。[35]\n- 土耳其軍隊及其支持的「自由敘利亞軍」攻佔敘利亞西北部庫爾德人重鎮阿夫林的市中心。[36]\n- 優步一輛自動駕駛汽車在美國亞利桑那州坦佩市進行測試時撞死一名橫過馬路的49歲女性，是世界上首宗自動駕駛汽車造成車外人死亡的交通事故。[37]\n\n\n## 3月19日\n- 土耳其媒體報道該國警方在首都安卡拉搜獲1.4公斤據稱是人工合成放射性元素锎的物質，4人被扣查，[38]當局其後表示該等物質其實是一種聚磺苯乙烯（英语：）。[39]\n- 地球上最後一頭雄性北白犀在肯尼亚逝世。[40]\n- 美國總統唐納·川普簽署行政命令，禁止受美國司法管轄的個人或公司參與委內瑞拉石油币交易，即時生效。[41]\n\n\n## 3月20日\n- 前法国总统尼古拉·萨科齐被指在2007年大选期间接受利比亚领导人穆阿迈尔·卡扎菲5000万英镑的竞选资金，被楠泰尔警方扣留48小时，接受调查[42][43]。\n\n\n## 3月21日\n- 缅甸总统廷觉宣布辭去總統職務[44]。\n- 秘魯總統佩德罗·巴勃罗·库琴斯基宣佈辭去總統職務[45]。\n- Facebook创始人兼CEO马克·扎克伯格在其Facebook主页上发表声明，就5000万美国Facebook用户个人信息遭数据公司剑桥分析（Cambridge Analytica）盗用并滥用丑闻，承认“犯错”，破坏了 Facebook 与用户之间的信任，承诺将进行一系列改革，使得用户信息难以被其他应用程序收集[46]。\n- 在美国德州奥斯汀策划连环爆炸案的主犯马克安东尼康迪特在被奥斯汀警方（英语：）追逐时，引爆车上的炸弹自杀身亡。警察局长提醒居民，虽然嫌犯已身亡，但他死前可能还安置了其他炸弹，需要多加小心[47]。\n- 非洲44國在盧安達首都吉佳利簽署《非洲大陸自由貿易協定》，承諾降低各國關稅與貿易壁壘，促成區域單一市場，是非洲經濟史上的重要里程碑。[48]\n\n\n## 3月23日\n- 西班牙最高法院以煽動叛亂罪，起訴13名加泰羅尼亞爭取獨立的人士，其中五名獨派政黨領袖包括加泰自治區主席的候選人圖魯尼被扣押，不准保釋。法庭同時發出6張國際通緝令，對象包括身在比利時的前加泰自治區主席普伊格蒙特。支持加泰獨立民眾不滿此舉晚間在巴塞羅那上街抗議，與警員爆發衝突[49][50]。\n- 法国南部城镇特雷贝和卡尔卡松發生恐怖袭击，連同1名襲擊者在內共有5人喪生[51]。\n\n\n## 3月24日\n- 韩国统一部表示，北韩同意南韩提出双边举行高级别会谈的建议，将于本月29日在板门店举行，以商讨有关南北韩首脑会谈的准备事宜[52]。\n\n\n## 3月25日\n- 也门胡塞武装组织向沙特阿拉伯首都利雅得及另外3個城市發射共7枚導彈，雖然全數被沙特方面攔截，但碎片仍在利雅得造成1名埃及公民喪生[53]。\n- 俄罗斯西西伯利亞南部城市克麥羅沃的一個商場發生火災，造成至少64人喪生[54]。\n- 最高領導人、朝鮮勞動黨委員長金正恩於3月25日至28日訪問中國，並與中共中央總書記兼中國國家主席習近平進行會談，李克強、王滬寧、王岐山等領導人亦參與見面[55]。\n\n\n## 3月26日\n- 2018年埃及總統選舉開始投票[56]。\n- 针对发生在英国的前俄罗斯间谍毒杀案，美国总统特朗普下令驱逐60名俄罗斯外交官和关闭俄驻西雅图领事馆。同时欧盟表示，至少有14个欧盟国家采取了同样的驱逐俄外交官的行动[57]。\n- 美國聯邦通信委員會主席表示其將提出新的提案，以禁止使用政府資金購買可能威脅美國通訊安全的通訊設備。聯邦通訊委員會將於4月17日對這份提案進行表決[58]。\n\n\n## 3月28日\n- 溫敏當選缅甸总统[59]。\n- 耶魯大學天文學者彼得·范道肯（英语：）研究團隊發現，超稀疏星系NGC 1052-DF2與眾不同地缺乏暗物質[60]。\n- 委內瑞拉巴伦西亚市一間警署發生暴亂並起火，造成至少68人喪生[61]。\n\n\n## 3月29日\n- 歷來最年輕的諾貝爾和平獎得主馬拉拉返回巴基斯坦，在總理辦公室發表全國電視演說[62]。\n\n\n## 3月30日\n- 巴勒斯坦民眾在加沙與以色列接壤的邊境，舉行紀念土地日42週年和平示威遊行，同時要求以色列當局讓1948年第一次中東戰爭下的巴勒斯坦難民返回原居地。抗議行動據稱會持續六個星期。是日活動以色列軍隊發射催淚彈驅散示威者，部分巴勒斯坦人投擲燃燒彈和石塊還擊，據報以軍現場有部署上百名狙擊手。衝突造成至少17名巴勒斯坦人被殺，超過1400人傷。死者中包括在示威發生之前一名正在自己農田工作時被以軍射殺的男子。巴勒斯坦政府宣佈3月31日為全國哀悼日。聯合國安全理事會在事發當日召開緊急會議商討加沙局勢，未就事件採取任何行動。巴勒斯坦代表點名批評美國從中阻撓。[63][64][65]\n\n",
+    "authored_facts_required": true
+  },
+  {
+    "page_id": "997682",
+    "title": "丽江牛皮消",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "界：",
+        "植物界 Plantae"
+      ],
+      [
+        "目：",
+        "龙胆目 Gentianales"
+      ],
+      [
+        "科：",
+        "夹竹桃科 Apocynaceae"
+      ]
+    ],
+    "document_id": "zhwiki/997682",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=79994697",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "ff92928dafa1e202d91564d523a5f056e5c56aaa8677803121fcdf0094f32830",
+    "raw_row_sha256": "da7352e83b917d8d12b7e7f011f59744f00290b66da004f7faa73ff79bb6e972",
+    "source_row": 2041,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "2898448",
+    "title": "HD 42818",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "赤經",
+        "6h 18m 50.8s"
+      ],
+      [
+        "赤緯",
+        "+69° 19′ 11″"
+      ],
+      [
+        "視星等（V）",
+        "4.8"
+      ]
+    ],
+    "document_id": "zhwiki/2898448",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=72382873",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "abb0087319bbf6b20bfaae089d24da765d839af00e1cb1fcbc6e529ffdf7a50b",
+    "raw_row_sha256": "64d84a5b6faf89287b06eec9c3010bb2e3b0ccfbaf8cbe7c2cb2a1bb901697c8",
+    "source_row": 4240,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "8716488",
+    "title": "丙氨肽素",
+    "kind": "wiki_infobox",
+    "box_index": 1,
+    "fields": [
+      [
+        "CAS号",
+        "1397-84-8 [NIH]"
+      ],
+      [
+        "PubChem CID",
+        "- 5486654"
+      ],
+      [
+        "ChemSpider",
+        "- 16735646"
+      ]
+    ],
+    "document_id": "zhwiki/8716488",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85949796",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "fa5ed48d2e4f9cce7bdb21c59503159f082ade05bc98d43f32fe36069208b6d3",
+    "raw_row_sha256": "3408269287e37cf6f844e1b1c270286fef25f99f5f6220134a9b981cbb635c5c",
+    "source_row": 1876,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "7486819",
+    "title": "二托虫囊菌科",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "界：",
+        "真菌界 Fungi"
+      ],
+      [
+        "门：",
+        "子囊菌门 Ascomycota"
+      ],
+      [
+        "纲：",
+        "蟲囊菌綱 Laboulbeniomycetes"
+      ]
+    ],
+    "document_id": "zhwiki/7486819",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=74023726",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "492e96bacc7e0654a014a8cdcee55f0562510fb2b6eb85fcdca879e43e460671",
+    "raw_row_sha256": "e7a7584695f336cd3cee189d6725b85c0dd908c24ed680bf61595cb9ef1e96a2",
+    "source_row": 2108,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "7540190",
+    "title": "Animation x Paralympic：谁是你的英雄？",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "製作",
+        "NHK企业"
+      ],
+      [
+        "播放電視台",
+        "NHK综合频道、NHK教育频道、NHK BS1、NHK World Premium、NHK World-Japan"
+      ],
+      [
+        "播放期間",
+        "2017年11月10日—播放中"
+      ]
+    ],
+    "document_id": "zhwiki/7540190",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=80729117",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "527a41e00a3a410e4794c067ce6a13443bc6c08a82504a4ec43dd79316cb8e66",
+    "raw_row_sha256": "9166761840185ad75908919142b4cd728e81320c4aba210c52dc107caebd27b0",
+    "source_row": 986,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "3279741",
+    "title": "假鬃尾草",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "界：",
+        "植物界 Plantae"
+      ],
+      [
+        "目：",
+        "唇形目 Lamiales"
+      ],
+      [
+        "科：",
+        "唇形科 Lamiaceae"
+      ]
+    ],
+    "document_id": "zhwiki/3279741",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=80010051",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "a70827b83a9e0e70e588f0ff43a844d69869660a9d10e5e12ecfd815523a0513",
+    "raw_row_sha256": "a94f1857c911dff1e3c5f7eb391604e40d827897cd92b6fcd455570fae738a3d",
+    "source_row": 2216,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "2902065",
+    "title": "HD 162734",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "赤經",
+        "17h 51m 58.5s"
+      ],
+      [
+        "赤緯",
+        "+15° 19′ 33″"
+      ],
+      [
+        "視星等（V）",
+        "6.46"
+      ]
+    ],
+    "document_id": "zhwiki/2902065",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=71606121",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "d59c43e8cf126066e66c924b8a028294cc478286d1e697267bd011fc778350eb",
+    "raw_row_sha256": "755c506b98290e1d72738ff043733ec0cd0d0b7982344bdc031cab0044df443e",
+    "source_row": 4978,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "1889967",
+    "title": "三星镇 (上海市)",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "国家",
+        "中华人民共和国"
+      ],
+      [
+        "上级行政区",
+        "崇明区"
+      ],
+      [
+        "村级区划单位数",
+        "22 - 1社区 - 21行政村"
+      ]
+    ],
+    "document_id": "zhwiki/1889967",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=49428326",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "ba782073ae0ba59791a2f1a94043d08b4ba249e9214e5aa78bc01147e219ee96",
+    "raw_row_sha256": "d11095d4243dacecdf4a022109f68d33d4f966988bb79f216f8142914262a486",
+    "source_row": 1556,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "6688538",
+    "title": "中森智佳子",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "出生",
+        "1967年4月11日 （57歲）"
+      ],
+      [
+        "母校",
+        "- 愛知淑德高等學校 - 愛知教育大學 - 东京大学"
+      ],
+      [
+        "职业",
+        "游泳运动员"
+      ]
+    ],
+    "document_id": "zhwiki/6688538",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=84938816",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "fb0738a3ef31e25cb8520e72bfb4b05b18da47da773ea62a1c623d165c0a3a63",
+    "raw_row_sha256": "d5fbfd6fa8d6da7606ec47836efd0fe0db21cc5f70acda313edd83fab07468a3",
+    "source_row": 1990,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "2862417",
+    "title": "ACM计算概观",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "学科",
+        "计算机科学"
+      ],
+      [
+        "语言",
+        "英语"
+      ],
+      [
+        "主编",
+        "薩爾塔吉·沙尼（Sartaj K Sahni）"
+      ]
+    ],
+    "document_id": "zhwiki/2862417",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83954258",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "d0c2e9f48fef0f26599c05a34a1ae7a6cb1353f5660520ea4e319dcf5b152059",
+    "raw_row_sha256": "1f5d8113003efe7528f8052de6ca2d15e50bcffd046da4abba1c99d4ac974db5",
+    "source_row": 562,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "8504074",
+    "title": "1,3-脱氢金刚烷",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "CAS号",
+        "24569-89-9"
+      ],
+      [
+        "PubChem",
+        "141122"
+      ],
+      [
+        "ChemSpider",
+        "124482"
+      ]
+    ],
+    "document_id": "zhwiki/8504074",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=78877488",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "a01fa8175c1713b533b7691a0e81543f1cae0c5502ff0c05c6082bd281f26170",
+    "raw_row_sha256": "46e9b7df54e4395276839a9f6f57620c8505afd7bb0fd96a30d192c0c105dc28",
+    "source_row": 4116,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "1388705",
+    "title": "GNU social",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "原作者",
+        "Evan Prodromou"
+      ],
+      [
+        "開發者",
+        "Evan Prodromou、Matt Lee、Mikael Nordfeldth和GNU social开发者"
+      ],
+      [
+        "当前版本",
+        "1.1.1（2013年7月16日）"
+      ]
+    ],
+    "document_id": "zhwiki/1388705",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85784353",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "71af143ab0d23314aebbd84f8c76a503b3be75e388d3a679e1cedb04f738e74b",
+    "raw_row_sha256": "47852b0e2a4d3a9f0977351b9cef2d5f9696734cb3253c38b8e5fec774544a43",
+    "source_row": 3727,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "804590",
+    "title": "中美洲統合體",
+    "kind": "wiki_infobox",
+    "box_index": 0,
+    "fields": [
+      [
+        "組織總部",
+        "聖薩爾瓦多"
+      ],
+      [
+        "官方语言",
+        "西班牙語"
+      ],
+      [
+        "类型",
+        "超國家聯盟"
+      ]
+    ],
+    "document_id": "zhwiki/804590",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=79854191",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "62f9f9061cc565b665a23eb69eaec43de1f76d73a2f743197f23f33f8a5120f4",
+    "raw_row_sha256": "8afd3e391f0b05c5f96e5b2a2eeac41033174cee69d95b2c71a6b341c12311bc",
+    "source_row": 2050,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "6288815",
+    "title": "二線二星 (第七序列)",
+    "kind": "wiki_prose",
+    "text": "# 二線二星 (第七序列)\n二線二星（第七序列）。為中華民國警察職務階级之一，初階警察幹部，佩階二線二星，官等列「警佐一階至警正三階」，同一般公務員委任第五職至薦任第七職等。相當於軍職中尉至少校軍階。上级為二線三星，下級為二線二星 (第八序列)。\n\n## 概要\n經公務人員特種考試（一般）警察人員考試考試及格，並經中央警察大學畢業或訓練合格，依法任職。\n\n## 主要職稱\n- 警政署本部\n- 警政署所屬機關\n  - 台灣警察專科學校：中隊長、訓導\n  - 保警總隊：中隊長、警官大隊長、督察員、副中隊長\n  - 港警總隊：副隊長、督察員\n  - 鐵路警局：警備隊中隊長\n  - 航警局：警備隊長\n  - 國道警局：保安警察中隊長\n  - 鐵路警局：股長\n- 刑事警察單位\n  - 保警總隊：偵查隊長、偵查隊副隊長\n- 地方警察局本部\n  - 縣市：股長、督察員、科長、\n- 地方警察局所屬機關、警察分局所屬機關.組長、中隊長\n  - 直轄市：分局警備隊長、中隊長、督察員\n\n縣市：分局警備中隊長\n\n## 相等職級\n- 海洋委員會海巡署二線三星\n- 警部（日本警察）\n\n\n## 有名之虛構人物\n- 臺灣電視劇《台灣靈異事件》：唐隊長\n- 臺灣電視劇《［阿爸的願望］》： 吳旺 局長\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/6288815",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85477586",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "dc5bd54d740b0e9c32ae5d8c351bea25b0156fb0d510eb9bf78f4827d70c09c7",
+    "raw_row_sha256": "29a555b3040a8ec4f34eca0fe54a1b448c1cf5651fbc07a13be3a770c3187d6b",
+    "source_row": 2294,
+    "split": "train"
+  },
+  {
+    "page_id": "1758686",
+    "title": "2003年網球大師盃賽",
+    "kind": "wiki_prose",
+    "text": "# 2003年網球大師盃賽\n2003年網球大師盃賽於2003年11月8日至11月16日在美國休斯頓西城網球俱樂部舉行。\n\n## 冠軍得主\n\n### 單打\n羅傑·費達拿 擊敗  安德烈·阿加西（6–0、6–0、6–4）\n- 羅傑·費達拿奪得今年第9座單打冠軍，也是職業生涯第17座ATP單打冠軍，。\n\n\n### 雙打\n鮑勃·布賴恩 /  邁克·布賴恩 擊敗  米卡埃爾·洛德拉 /  法布里斯·桑托羅（66–7、6–3、3–6、7–63、6–4）\n\n## 外部連結\n- 官方網站（页面存档备份，存于）\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/1758686",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=86074064",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "95ac73664b6bc31ec3a918c0ba14e3e266990366d9009e39ad8b22def0130ecb",
+    "raw_row_sha256": "100b59dc1bec6ba7edcdab9c0d7898621ba7df2a0d2afff87aabcdfa9e6afed2",
+    "source_row": 617,
+    "split": "train"
+  },
+  {
+    "page_id": "413530",
+    "title": "RASA工業",
+    "kind": "wiki_prose",
+    "text": "# RASA工業\nRASA工業（、RASA Industries, LTD）為日本的一個化學製造廠商。\n參予產業包括化學肥料、非鐵金屬煉製、石炭開採、硫酸製造、採礦機械製造工業的事業。除了擁有日本沖繩縣大東群島的沖大東島以外，經營的礦區還包括岩手縣的田老礦山、宮崎縣見立礦山、山形縣田川煤礦。 \n最初的肥料製造事業已於1983年分割給關係企業Co-op化學股份有限公司，並退出採礦、煉製和硫酸製造等事業，轉型為製造機械和電子材料，目前為全世界最大的晶圓（wafer）再生製造商。\n現於台灣臺中市梧棲區投資有子公司理盛精密科技股份有限公司，生產半導体和液晶用高純度磷酸。\n\n## 社名由來\n社名「RASA」（）即來自於琉球列島大東群島的沖大東島，沖大東島的別名為「RASA島」（島，讀音「拉薩」）；1911年為了在沖大東島上開採磷礦生產肥料，而成立了以該島別名所命名的「RASA島磷礦合資公司」，即為Rasa工業之前身，於1937年沖大東島全島區域成為RASA工業私有土地。目前雖然已暫停在該島開採磷礦時，但沖大東島全島目前仍屬於RASA工業的私有土地。\n\n## 沿革\n- 1911年：RASA島磷礦合資公司成立。（日文原名：）\n- 1913年：成立RASA島磷礦股份有限公司。（日文原名：）\n- 1934年：改名為RASA工業股份有限公司。（日文原名：）\n- 1937年：沖大東島（）由日本國有轉讓為Rasa工業所有。\n- 1983年：肥料部門分割轉給關係企業Co-op化學股份有限公司。\n- 1984年：進入晶圓（Wafer）再生製造產業。\n\n\n## 工廠\n- 宮古工廠（岩手縣宮古市）\n- 三本木工廠（宮城縣大崎市）\n- 仙台工廠（宮城縣岩沼市）\n- 伊勢崎工廠（群馬縣伊勢崎市）\n- 野田工廠（千葉縣野田市）\n- 大阪工廠（大阪府大阪市大正區）\n- 羽犬塚工廠（福岡縣筑後市）\n\n\n## 外部連結\n- RASA工業（页面存档备份，存于）\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/413530",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=79027375",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "bee6f7815c72602d17868d5ad931e53fe26450ddc10485fb45a3315c32e42ac8",
+    "raw_row_sha256": "9236e74e10cd4c910917d5370e30f5bd4777f070e8997653543f05117968d252",
+    "source_row": 1368,
+    "split": "train"
+  },
+  {
+    "page_id": "13867",
+    "title": "479年",
+    "kind": "wiki_prose",
+    "text": "# 479年\n| 千纪： | 1千纪                                                                                           |\n| 世纪： | 4世纪 \\| 5世纪 \\| 6世纪                                                                         |\n| 年代： | 440年代 \\| 450年代 \\| 460年代 \\| 470年代 \\| 480年代 \\| 490年代 \\| 500年代                       |\n| 年份： | 474年 \\| 475年 \\| 476年 \\| 477年 \\| 478年 \\| 479年 \\| 480年 \\| 481年 \\| 482年 \\| 483年 \\| 484年 |\n| 纪年： | 己未年（羊年）；北魏太和三年；南朝宋昇明三年；柔然永康十六年；南朝齐建元元年                    |\n\n\n## 大事记\n- 中国\n  - 南朝宋為齊高帝蕭道成所代，南齊開國。\n\n\n## 出生\n- 苏小小，中国南北朝時期，生活在钱塘的著名歌妓。\n\n\n## 逝世\n- 劉準，南朝宋末任皇帝\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/13867",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=74504178",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "53f6478f7fb27029dccd0bf253399c4839e58d06fa64e559024bc7501b163b68",
+    "raw_row_sha256": "6ce57ae74a9494bd21b677d651b5783f0fcd8fc8bd0ebc08fe185db3d16ccc68",
+    "source_row": 830,
+    "split": "train"
+  },
+  {
+    "page_id": "7853868",
+    "title": "佛罗里达街",
+    "kind": "wiki_prose",
+    "text": "# 佛罗里达街\n佛罗里达街（西班牙語：）是阿根廷布宜诺斯艾利斯市中心的一条熱門的购物街。自1971年辟为步行街。\n步行段从秘鲁街和五月大道的交叉口开始，即五月广场以北一个街区；秘鲁街穿过里瓦达维亚大道，成为佛罗里达街。佛罗里达街向北约一公里到雷蒂罗区的圣马丁广场。它与布宜诺斯艾利斯另一条步行街拉瓦莱街，相交于前电影院区的中心。\n佛罗里达街是布宜诺斯艾利斯主要的旅游景点之一。由于靠近金融区，到处都是购物者、小贩和上班族。到了晚上，节奏放松，街头艺人涌入该地区，包括探戈歌手和舞者，活雕像和喜剧表演。外国游客和商务旅行者，对它的各种零售店、购物商场和餐厅，非常感兴趣。\n\n## 分段\n\n### 里瓦达维亚大道到佩隆街\n佛罗里达街的南端开始于里瓦达维亚大道。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/7853868",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=83685128",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "da0207083d2ac296abfaa90281dbc5c431c63d06d5cd5317ebe0d6fe4a6d1179",
+    "raw_row_sha256": "be20180f0a7e940d4d8dfaa4714b3b04abfd5bb6c39c31218fa184845667d109",
+    "source_row": 2930,
+    "split": "train"
+  },
+  {
+    "page_id": "6589770",
+    "title": "Gallop",
+    "kind": "wiki_prose",
+    "text": "# Gallop\nGallop是演奏傳統重金屬歌曲，通常所使用的節拍或節:八分-十六分-十六分的結構（）。可以在節奏吉他或鼓組（彈撥或鼓點）演奏，大多使用雙大鼓。\nGallop通常圍繞這個結構形成：\n```\nH- x---x---x---x---|\nS- ----o-------o---|\nB- o-ooo-ooo-ooo-oo|\n```\n\n播放ⓘ\n\n\n\n這種節奏模式可能使用於手掌強力和弦悶音，作節奏吉他伴奏的固定音型(播放例子ⓘ）， 。這可以在不同作品聽到。例如深紫的“ Highway Star ”的前奏， 以及他們的“ Hard Lovin'Man ”，萬聖節樂團的“ Halloween ”，以及黑色安息日的 \"Children of the Grave\" 和 \"Air Dance\"， 也是Metallica的\" Motorbreath \"，\" Battery \"，\" Hardwired \"，更著名的是\"The Four Horsemen\"，以及Slayer的\" Raining Blood \"和由Megadeth的 \"Holy Wars... The Punishment Due\" 。該節奏模式也被Iron Maiden，Judas Priest和King Diamond等團體使用。Gallop有不同變奏，包括三連音gallop的節奏。(播放ⓘ).\n這種節奏模式也被用於許多非金屬歌曲中。一個典型的例子是1967年發布的Scott Walker單曲“ Jacky ”以及1977年發行的Heart單曲“ Barracuda ”。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/6589770",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=64135587",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "dfb1ef0eb8cfd54dc06f1999ab8c2661be37855b9e9b46bcdb1049bca4ec0826",
+    "raw_row_sha256": "cb81ca767727ab98d8da9cbffb24dfb6d2d5b5999bd698373c2df6fe572f94de",
+    "source_row": 3731,
+    "split": "train"
+  },
+  {
+    "page_id": "5921353",
+    "title": "余仁華",
+    "kind": "wiki_prose",
+    "text": "# 余仁華\n余仁華，香港舞蹈家，東邊舞蹈團創辦人及藝術總監。畢業於香港演藝學院，曾加入城市當代舞蹈團為舞者，並為雲門舞集、城市當代舞蹈團、廣東現代舞團及香港演藝學院編舞。\n\n## 獎項\n- 亞洲文化協會利希慎獎學金 (1990)\n- 香港舞蹈年獎 (2006)\n- 民政事務局嘉許獎狀 (2012)\n- 香港藝術發展獎年度最佳藝術家 (舞蹈) (2015)\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/5921353",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=70234788",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "8644462fce75b55bbf312d77d7c38c3c182ef0e889fc9dfa57e68d24d2e363bc",
+    "raw_row_sha256": "ef8e070b9817d15b0bad9f8a9b1d1b9ecb78ed3ceae3fa8c2bd5f4d8ce9d8e9f",
+    "source_row": 2341,
+    "split": "train"
+  },
+  {
+    "page_id": "4388194",
+    "title": "丛文景",
+    "kind": "wiki_prose",
+    "text": "# 丛文景\n从文景（1962年12月—），男，安徽凤台人，中华人民共和国政治人物。中国共产党党员。武汉大学工程硕士研究生。曾任江西省新余市人民政府市长，2014年11月29日，被中纪委带走调查。\n\n## 生平\n1962年，从文景出生在安徽省凤台县。1983年8月，参加工作。2001年7月，出任景德镇市人民政府副市长；2004年6月，调任中共新余市委常委、宣传部部长。2006年11月，调职中共新余市委常委、政法委书记。2010年7月，升任中共新余市委副书记，兼任市委党校校长、高新区党工委第一书记。2013年8月，担任新余市人民政府副市长、代市长。2013年9月23日，担任新余市人民政府市长。2014年11月29日，被中纪委带走调查，或参与苏荣腐败案件。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/4388194",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=68236211",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "c5121b74fc1b592b447a4a257ba498e685e5ad81a775be95685a0c4433b51756",
+    "raw_row_sha256": "1203723826d5568cc532f16f360eac8f478d6c5d2a6d5bab3b8b7a1350b3dbe3",
+    "source_row": 1867,
+    "split": "train"
+  },
+  {
+    "page_id": "8305726",
+    "title": "EVITA",
+    "kind": "wiki_prose",
+    "text": "# EVITA\nEVITA是E-Safety Vehicle Intrusion Protected Applications的簡稱，是歐盟資助，各歐洲車廠參與，有關汽車網路安全的聯盟計劃，時間是2008年至2011年。\n此一計畫有提供網路安全風險評估的方式，也將硬體安全模塊區分為Full, medium, light三種等級，有各自不同的要求。\n\n## 外部連結\n- E-safety Vehicle Intrision proTected Application （页面存档备份，存于）\n- 在車聯網時代實施安全解決方案 （页面存档备份，存于）\n- 汽车信息安全风险评估标准需求研究报告\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/8305726",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=77638212",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "6761c8332123f5ca0604e5e6311b50fcdc735e7537e7086d3949128504c320c8",
+    "raw_row_sha256": "f3e5b063b20b4feac993a361eb7aec4e01ac43def0369298e8144a7273cf4139",
+    "source_row": 3913,
+    "split": "train"
+  },
+  {
+    "page_id": "5759475",
+    "title": "UFC 193",
+    "kind": "wiki_prose",
+    "text": "# UFC 193\nUFC 193：鲁西对霍尔姆（UFC 193: Rousey vs. Holm）是终极格斗冠军赛（UFC）主办的一场综合格斗赛事，于2015年11月15日在澳大利亚墨尔本的海港新区体育场（Docklands Stadium）举行。共有56214名观众现场观看了本次赛事，创造了UFC历史上参与人数的纪录。此次比赛中，龙达·鲁西职业生涯首尝败绩。\n\n## 结果\n1. ↑  UFC女子雏量级冠军战\n2. ↑  UFC女子草量级冠军战\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/5759475",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=71413792",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "2e594811dece779c3ab23eb60d0324c5d1133159e8b27da9d5d9479a40933f88",
+    "raw_row_sha256": "bf4e9bb3834f43ec2181f2bc1d69617a05f9b3a1c382ff636a9268ae5a1c3d42",
+    "source_row": 4949,
+    "split": "train"
+  },
+  {
+    "page_id": "6843152",
+    "title": "东方美谷",
+    "kind": "wiki_prose",
+    "text": "# 东方美谷\n東方美谷（英語：The Oriental Beauty Valley）是位於中國上海市奉賢區的生物科技园区，原為奉贤现代农业园区，成立于2001年。园区地处奉贤区中部，北起大叶公路、南至浦南运河、西起沪金高速公路，东至金汇港，占地18.49平方公里，以化妝品生產、生物医药产业和生产性服务为主导产业。東方美谷是长三角地区最大规模的健康美丽产业集群，云集了上海25%的化妆品产业和40%以上产值，生產中國四分之一的面膜。\n奉贤现代农业园区時期，園區以農產品加工為主，後來轉型為上海奉贤经济开发区生物科技园区，引入生物醫藥產業。生物科技园区則分为生产型服务业功能区和生物医药产业功能区两大板块，于2009年分别被国家发改委和中华人民共和国商务部及中华人民共和国科学技术部列为“国家生物产业基地”以及“国家科技兴贸创新基地(生物医药)”。2015年，奉賢區正式提出東方美谷品牌，並開始大力發展美丽健康产业。2017年，东方美谷被中国轻工业联合会与中国香料香精化妆品工业协会授予中國唯一的“中国化妆品产业之都”称号。\n2020年3月17日，资生堂在东方美谷设立研发机构，这是首家落戶东方美谷的世界巨型化妆品企业。2018年起，東方美谷每年都會舉辦东方美谷国际化妆品大会。2020年11月13日，总建筑面积约3.7万平方米的美谷美购广场開業。\n\n## 外部連結\n- 東方美谷（页面存档备份，存于）\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/6843152",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=76771158",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "9f9982a6a4ae181b6e7e8dd7e19d1154c88284bf6be2c2aba0c128a647befdfe",
+    "raw_row_sha256": "e5b3d546ee54b10d2c8a309714dcebbe08de6bcabebc165fa16c1e68586dc9dc",
+    "source_row": 1917,
+    "split": "train"
+  },
+  {
+    "page_id": "5514737",
+    "title": "乌古论谊",
+    "kind": "wiki_prose",
+    "text": "# 乌古论谊\n乌古论谊（？—1213年），本名雄名，乌古论氏。金朝大臣，金太祖外孙乌古论元忠和金世宗女鲁国大长公主的儿子。\n\n## 生平\n乌古论谊先辈是金上京独拔古人，金世宗大定八年（1168年），乌古论谊娶完颜亮女为妻。妻子去世后，大定二十一年（1181年），继娶太子完颜允恭女广平郡主。为人粗犷豪放，历仕宫卫，大定二十六年（1186年），担任同知澄州军州事。大定二十九年（1189年），完颜允恭之子金章宗即位，广平郡主进封邺国长公主，乌古论谊改任顺天军节度副使，加驸马都尉。承安元年（1196年），任秘书监兼吏部侍郎，历任刑部侍郎、工部尚书。泰和三年（1203年），转任知东平府、真定府事。泰和六年（1206年），官居元帅左都监，随军伐南宋。次年为左监军。泰和八年（1208年），任御史大夫，大安年间，知大名府事。至宁元年（1213年），在知大名府任上，以谋逆罪被杀。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/5514737",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=71215233",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "d664227c2e09f288c3d4a5b10c2291fec3a5f5c1f484626f25e7cbff5259d19b",
+    "raw_row_sha256": "00269996c6d0fd0711d0ea49625f4f420cd7fa4d37cb096227eebeddac2e2c29",
+    "source_row": 2180,
+    "split": "train"
+  },
+  {
+    "page_id": "8600295",
+    "title": "1949—1956年巴勒斯坦人的驱逐",
+    "kind": "wiki_prose",
+    "text": "# 1949—1956年巴勒斯坦人的驱逐\n1949—1956年巴勒斯坦人的驱逐是指1949停战协议签署后以色列繼續從自己實際控制的領土上驱逐巴勒斯坦人，1949年至1950年间，以色列驱逐了30,000至40,000名巴勒斯坦人和貝都因人。 绿线沿线和以色列—黎巴嫩边境地区的许多阿拉伯人村庄空無人煙，這些村莊隨後被犹太人和复员的以色列军人佔據。 同時仍然有大量巴勒斯坦人主動從以色列境內逃到其他地區。 这一时期的巴勒斯坦人逃亡最终成為第二次中东战争的導火索之一。 \n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/8600295",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=80212911",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "24a3cb5055a63d6fa8e12020147bdf345dfea1d8f0f010ec46fc2e3a4d45bd29",
+    "raw_row_sha256": "eb6cf38700f93fe626a77c3ded76a3f251bd3d1765563f7e9e42bb7e31aa97da",
+    "source_row": 2880,
+    "split": "train"
+  },
+  {
+    "page_id": "14285",
+    "title": "760年",
+    "kind": "wiki_prose",
+    "text": "# 760年\n| 千纪： | 1千纪                                                                                                      |\n| 世纪： | 7世纪 \\| 8世纪 \\| 9世纪                                                                                    |\n| 年代： | 730年代 \\| 740年代 \\| 750年代 \\| 760年代 \\| 770年代 \\| 780年代 \\| 790年代                                  |\n| 年份： | 755年 \\| 756年 \\| 757年 \\| 758年 \\| 759年 \\| 760年 \\| 761年 \\| 762年 \\| 763年 \\| 764年 \\| 765年            |\n| 纪年： | 庚子年（鼠年）；唐乾元三年，上元元年；南诏赞普钟九年；史思明顺天二年；日本天平宝字四年；渤海国大興二十三年 |\n\n\n## 大事记\n- 宋州刺史刘展调为淮南东、江南西、浙西三道节度。刘展疑唐廷此举，遂起宋州兵七千。\n\n\n## 逝世\n- 3月16日：菩提僊那，印度僧人。736年，跟隨唐朝僧人道璿等東渡日本。(704年)\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/14285",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=66995159",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "dc9f1894455b8406ec0a1e9a8e02cf6d0c8b722c81804af235bc59f3884dd5f2",
+    "raw_row_sha256": "15c553865ae58fbfd0e79ec18074cdab4c99b1c59950e7ce0ea3ab90efa38df4",
+    "source_row": 550,
+    "split": "train"
+  },
+  {
+    "page_id": "1244988",
+    "title": "且弥",
+    "kind": "wiki_prose",
+    "text": "# 且弥\n且弥，西域古国。位于今新疆乌鲁木齐附近。分为东西二国。\n西且弥国的治所在天山东于大谷，离长安8670里。西汉时332户，1926口，兵士738人。属官西且弥侯、左右将、左右骑君各一人。西南至都护治所乌垒1487里。\n东且弥国的治所在天山东兑虚谷，离长安8250里，洛阳9250里。西汉时191户，1948口，兵士572人。东汉时三千户，五千口，兵士两千人。属官东且弥侯、左右都尉各一人。西南至都护治所乌垒1587里，东至长史所居海头800里。住在庐帐，逐水草而居，也种田。三国以后，成为车师的属地。\n\n## 外部連結\n[在维基数据编辑]\n 《欽定古今圖書集成·方輿彙編·邊裔典·且彌部》，出自陈梦雷《古今圖書集成》\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/1244988",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=81792949",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "e46ced630c52e1d8288f47a0e88c2449f66691c4ca8db413e0331b54dc4ecf17",
+    "raw_row_sha256": "b3f33a53625da4f40efa2f6c3fe3b951d70d1a565ac714c99cfba3461efdf982",
+    "source_row": 1159,
+    "split": "train"
+  },
+  {
+    "page_id": "8850846",
+    "title": "2024年图林根州议会选举",
+    "kind": "wiki_prose",
+    "text": "# 2024年图林根州议会选举\n2024年图林根州议会选举于2024年9月1日在图林根举行第八届图林根州议会议员选举。 本次选举与2024年萨克森州议会选举同时进行。\n德国选择党以33%的得票率首次在州级选举层面成为第一大党。左翼党和社会民主党得票率暴跌。绿党和自由民主党失去所有席位。基民盟得票率增加位居第二大党。新成立的莎拉·瓦根克内希特联盟以16%的得票率位居第三大党。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/8850846",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85034874",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "068f94c7f31259ea7434caec6873cb00ecf4753e9eeee0bd9bf0ba6d6791c0c4",
+    "raw_row_sha256": "cd8344c791c7ad5b3f94aeb3c2751c358a0f1a10317c226cd2afc673726da84d",
+    "source_row": 3927,
+    "split": "train"
+  },
+  {
+    "page_id": "1437239",
+    "title": "2009年東亞運動會火炬接力傳遞",
+    "kind": "wiki_prose",
+    "text": "# 2009年東亞運動會火炬接力傳遞\n2009年東亞運動會火炬接力傳遞是配合香港2009年東亞運動會而舉行，為期100天的倒數火炬接力傳遞活動，以「活力迎東亞」為主題。\n火炬接力於2009年8月29日開始舉行，當日聖火將由65名火炬手由九龍公園出發，途經尖沙咀、維多利亞港以及灣仔區；最後抵達金紫荊廣場並點燃火盆。當晚在將軍澳電視廣播城舉行倒數100日晚會。9月至11月全港500多間學校舉行學校火炬接力。\n\n## 火炬設計\n2009年東亞運動會火炬由香港著名設計師靳埭強設計，火炬是一個上方下圓的弧線柱體，形狀恰似牛角，令人聯想到第五屆東亞運是在2009年牛年舉辦。\n火炬分上、下兩部分，中間的英文字「e」和「a」分別代表著East和Asia，象徵東亞運中「東」、「亞」二字，兩個英文字造出祥雲圖案，表達陰陽互融的意念，亦象徵香港是一個中西文化交匯的地方。 \n火炬上半部利用東亞運象徵煙花連環綻放的標誌拼砌出米點通花圖案，除了能凸顯東亞運的形象外，還能在火炬燃點時產生所需的氧氣流動。 \n從上方看，火炬頂部構成一個「亞」字，而底部則刻有英文字「e」的圖案；整支火炬採用了富現代感的啞銀色，而向上和向下的兩面則塗上充滿東方色彩的紅色，表現出中國傳統文化內涵和現代設計的互相融合。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/1437239",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=76353165",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "0d4cb04e8c44b2cd9fd471d31dfc560ea10f5d9f696eea1bbf2599c7ce65467e",
+    "raw_row_sha256": "56bff155880183576e9aa9d57d177bbc31b4d998d3c13cf2cb29872c6a7c8269",
+    "source_row": 3752,
+    "split": "train"
+  },
+  {
+    "page_id": "8533196",
+    "title": "2006年巴勒斯坦立法选举",
+    "kind": "wiki_prose",
+    "text": "# 2006年巴勒斯坦立法选举\n2006年巴勒斯坦立法選舉是2006年1月25日在巴勒斯坦领土上举行的巴勒斯坦立法委员会的选举。哈马斯获得44.45%的选票，赢得了巴勒斯坦立法委员会132个議席中的74个議席，而法塔赫获得41.43%的选票，赢得45个議席。 \n新一屆巴勒斯坦立法委员会於2006年2月18日首次召開會議。總理艾哈迈德·库赖於2006年1月26日提出辭呈，但應巴勒斯坦總統马哈茂德·阿巴斯的請求，库赖暫任臨時總理。2月20日，哈馬斯領袖伊斯梅尔·哈尼亚被提名組建新政府。3月29日，以伊斯梅尔·哈尼亚為總理的新政府宣誓就職。這是2007年哈馬斯接管加薩地帶前舉行的最後一次選舉，至今巴勒斯坦未曾舉行一次自由選舉。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/8533196",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85095075",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "be9135b9dffa22d47c3b5090d8d916e2776250497fc787fd0d1dc038aae08f65",
+    "raw_row_sha256": "4e2c85ccb3cc2a1956c628f3405ddf00240ad4246720effa3acd9cbb5ad3805d",
+    "source_row": 4087,
+    "split": "train"
+  },
+  {
+    "page_id": "14353",
+    "title": "828年",
+    "kind": "wiki_prose",
+    "text": "# 828年\n| 千纪： | 1千纪                                                                                           |\n| 世纪： | 8世纪 \\| 9世纪 \\| 10世纪                                                                        |\n| 年代： | 790年代 \\| 800年代 \\| 810年代 \\| 820年代 \\| 830年代 \\| 840年代 \\| 850年代                       |\n| 年份： | 823年 \\| 824年 \\| 825年 \\| 826年 \\| 827年 \\| 828年 \\| 829年 \\| 830年 \\| 831年 \\| 832年 \\| 833年 |\n| 纪年： | 戊申年（猴年）；唐大和二年；南诏保和五年；吐蕃彝泰十四年；日本天長五年；渤海国建兴十年          |\n\n\n## 大事记\n- 在巴格达成立了一个科学院。\n- 在梅里達爆发反对阿拉伯人的起义。\n- 阿尔卡莫建城。\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/14353",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85395665",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "c6c863ba3fa32d89a1cefc687911238723f150c6275acf18cf872bb24966ec07",
+    "raw_row_sha256": "a5353d97983f777afa822383f3aff66a8a060ecf7d1b32400aef8817d0a82688",
+    "source_row": 4303,
+    "split": "train"
+  },
+  {
+    "page_id": "677893",
+    "title": "La 628-E8",
+    "kind": "wiki_prose",
+    "text": "# La 628-E8\n《La 628－E8》是法国作家奥克塔夫·米尔博（1848-1917）于1907年发表的一部介于游记、幻想、文化批评等诸文体之间的“类小说”。\n「628－E8」实际上是米尔博的车牌号。米尔波驾着他的“魔幻般的野兽”，驰骋在半是现实半是虚构的欧洲大陆上（比利时、荷兰、德国）。\n\"这就是我为什么热爱我的车。她已经成为我生活的一部分；她就是我的生活，我的艺术和精神生活。她和我的房子一样——或比它还要——重要。她那么丰富，而且永不间断地更新，这不用花任何代价，只需在每个瞬间捕捉到那稍纵即逝的愉悦，这儿，那儿，不论我的狂想和探索的欲望驱驶我行到哪儿。这里，在我的车里，我感受到事物和存在都被激活了：以一种高能量的活动，经由一种极端的释放，远不是事物被抹除掉，而是速度生发了出来。她远比我的图书馆更亲切、有用、和富于教益；她远胜过我那些睡在架子上的书本，胜过我那些绘画，那些只会把死物陈列到墙上的绘画，它们只会用固定的天空、树木、水、和人物…把我包围起来。而在我的车里，我拥有一切，而且远胜过一切，因为一切都在移动、涌动、闪过、变幻、无限、永远…我可以毫不困难地设想我失去书本、绘画和艺术品，但我无法忍受这个想法：有一天，我不再拥有这魔幻般的野兽，这伴随着我的美妙的独角兽。她，没有任何颠簸地，通过自然之美、生活的多样性、和人性的冲突，赋予我更自由的大脑，更热切的眼光。\"\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/677893",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=71636468",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "129838eab185b43fcb29f0da6c25c641326e7d55132605e040f8f287af7145fb",
+    "raw_row_sha256": "de6c150e65cd3a9b3425cb0a08306403ef7bb0fcbb3d751a1e2619bac29b944b",
+    "source_row": 4728,
+    "split": "train"
+  },
+  {
+    "page_id": "8051473",
+    "title": "伟大十月镇",
+    "kind": "wiki_prose",
+    "text": "# 伟大十月镇\n伟大十月镇（俄语：，羅馬化：Velikooktyabrʹskiy）是俄罗斯特维尔州的市级镇，为该州菲罗沃区第二大聚居地。地处特维尔州中北部，位于涅瓦河流域茨纳河畔，在区行政中心菲罗沃东南、州府特维尔西北方。距离最近的铁路车站位于区行政中心菲罗沃镇。附近城市有上沃洛乔克、博洛戈耶、库夫希诺沃。\n该地2022年人口有1,732人；2010年人口2,273；2002年人口2,659；1989年人口3,019。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/8051473",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=72737438",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "94dfb0934968071eeda8be5f7415861fc5cad21cd05a569fcc95d416c6ee0c74",
+    "raw_row_sha256": "c49e9f897b3d62797961651014c6e4aae8c19b63d54c8280dbdc2cfa2ba6616d",
+    "source_row": 2544,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "8313714",
+    "title": "2012年夏季残疾人奥林匹克运动会吉布提代表团",
+    "kind": "wiki_prose",
+    "text": "# 2012年夏季残疾人奥林匹克运动会吉布提代表团\n吉布提于8月29日至9月9日在英国伦敦举行的2012年夏季残疾人奥林匹克运动会上首次参加残奥会。该国只派出一名中长跑运动员侯赛因·阿曼·哈桑（）参加残奥会，而他也成为了该国第一位残奥会选手。由于脚踝受伤，哈桑在预赛中表现不佳，最终未能赢得奖牌，但在所有运动员都冲过终点线后，哈桑独自在赛道上坚持完成了最后两圈，赢得了观众的起立致敬。\n\n## 背景\n2012年5月，吉布提國家帕拉林匹克委員會主席阿朴杜勒-卡德尔·雅各布（）參加了在羅安達舉辦的第10届非洲残奥会委员会大会暨非洲残奥会体育发展会议，证实吉布提将参加2012年夏季残疾人奥林匹克运动会，这也是吉布提首次参加残奥会。\n\n## 田径\n侯赛因·阿曼·哈桑（）是一名右臂截肢者，参与男子1,500米T46级比赛。他作为吉布提参赛的唯一运动员在开幕式上担任旗手。\n哈桑以11分23秒50的成绩完赛，几乎是冠军成绩的三倍。哈桑在熱身時脚踝受伤，雖然被建議退賽，但身為吉布提唯一的出賽成員，他决心完成比赛。在其他所有运动员都冲过终点线后，哈桑独自在跑道上坚持完成最后两圈半，在这最后的7分钟里，他每经过体育场的一个区域时，那里的观众都向他起立致敬。冲过终点时，他获得的掌声比冠军还要热烈。比賽結束後，由于哈桑不會說英語，他指着後腳跟表明自己跟腱有问题，隨後被帶離治療。哈桑在接受采访时表示，“我想过要停下来，但我一直在坚持，因为我想完成比赛。”\n| 运动员           | 项目            | 预赛     | 预赛 | 决赛   | 决赛   |\n| 运动员           | 项目            | 成绩     | 排名 | 成绩   | 排名   |\n| ---------------- | --------------- | -------- | ---- | ------ | ------ |\n| 侯赛因·阿曼·哈桑 | 男子1500米T46级 | 11:23.50 | 8    | 未晋级 | 未晋级 |\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/8313714",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=77386560",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "fc9b890007ad4c6ff4dde32814561a514054eda1a1bd18ee6c842eb1047cedea",
+    "raw_row_sha256": "b91b7369cae28dab6f680501fff9014daa3dd06f2b26e63ff5e19cb1f58b5452",
+    "source_row": 620,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "1242294",
+    "title": "2006年太平洋生命公開賽",
+    "kind": "wiki_prose",
+    "text": "# 2006年太平洋生命公開賽\n2006年太平洋生命公開賽于2006年3月6日至3月19日在美國印第安維爾斯舉行，是第30屆賽事，也稱印地安泉大師賽，ATP是大師系列賽，WTA是一級錦標賽。\n\n## 冠軍\n单打列出冠亚军以及决赛比分，双打列出冠军组合。\n\n### 男子單打\n決賽： 羅傑·費德勒 擊敗  詹姆斯·布雷克（7–5, 6–3, 6–0）\n- 這是羅傑·費德勒職業生涯第37個單打冠軍。\n\n\n### 女子單打\n決賽： 玛丽亚·莎拉波娃 擊敗  耶莲娜·德门蒂耶娃（6–1, 6–2）\n- 這是玛丽亚·莎拉波娃職業生涯第11個單打冠軍。\n\n\n### 男子雙打\n決賽： 马克·诺尔斯 /  丹尼尔·内斯特\n\n### 女子雙打\n決賽： 麗莎·雷蒙德 /  萨曼莎·斯托瑟\n\n## 外部連結\n- 官方網站\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/1242294",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=86080539",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "2c89f41e2e3f73997cdf0cd5045f31f15fe5acc46d9ae4c16be3f94c0f860c58",
+    "raw_row_sha256": "10864b26481587439fb807492e99db3c2f5df5bc3ec74d1370c977319828bb22",
+    "source_row": 621,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "924568",
+    "title": "佩蒂翁维尔学校倒塌事故",
+    "kind": "wiki_prose",
+    "text": "# 佩蒂翁维尔学校倒塌事故\n佩蒂翁维尔学校倒塌事故发生于2008年11月7日，一间位于海地首都太子港郊区佩蒂翁维尔（）的名为“诺言学院”（The Evangelic Promise）的教会学校的教学大楼在当地时间早上10:00左右突然倒塌。事故导致超过500名学生和多名教师活埋在瓦砾之下；至今已造成至少93死150伤，估计死亡人数会持续上升。\n\n## 倒塌\n教学大楼的一楼被二楼和三楼紧紧压在下面，教学楼的倒塌还压倒了附近的几所民居。而学生主要分布在一楼和二楼，也有部分学生当时在操场上。倒塌的原因尚未正式公布，但是海地总统勒内·普雷瓦尔8日视察完现场后表示，学校为混凝土构造，建筑质量低劣，没有使用任何钢筋，以及有关部门监督不力为倒塌的主要原因。这所学校在2000年也曾经试过一次小规模的倒塌，后来重建了。而此次倒塌的时候，教学楼的三楼还正在建造。\n\n## 责任\n学校的负责人福尔廷·奥古斯廷牧师承认，这所学校全部由他设计建造，建造期间没有雇用任何建筑工程师。他于11月8日被捕，被控过失杀人。\n\n## 救援\n多个国家和组织都对此次事故表示关切和哀悼。海地的邻国多米尼加共和国、法国的马提尼克、无国界医生、联合国驻海地维和部队、红十字会、美国国际开发署等都派救援队伍前往协助救援。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/924568",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=86377754",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "f471313b69f23667fd6864d82d46342e7655d249eaf4c59f58e5522ab358df18",
+    "raw_row_sha256": "0dca351f1733b6aeb6dabe02f71ecbf85eadda846c2392043a6e225ea85c1230",
+    "source_row": 2836,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "223830",
+    "title": "2003年法国网球公开赛",
+    "kind": "wiki_prose",
+    "text": "# 2003年法国网球公开赛\n2003年法国网球公开赛。\n\n## 冠军\n单打列出冠亚军以及决赛比分，双打列出冠军组合。\n\n### 男子单打\n主条目：2003年法國網球公開賽男子單打比賽\n胡安·卡洛斯·费雷罗（西班牙）6-1 6-3 6-2 馬汀·佛寇克（荷兰）\n\n### 女子单打\n主条目：2003年法國網球公開賽女子單打比賽\n海宁-哈登（比利时）6-0 6-4 金·克莱斯特尔斯（比利时）\n\n### 男子双打\n主条目：2003年法國網球公開賽男子雙打比賽\n鲍勃·布赖恩（美国）/迈克·布赖恩（美国）\n\n### 女子双打\n主条目：2003年法國網球公開賽女子雙打比賽\n金·克莱斯特尔斯（比利时）/杉山爱（日本）\n\n### 混合双打\n主条目：2003年法國網球公開賽混合雙打比賽\n迈克·布赖恩（美国）/麗莎·雷蒙德（美国）\n| 前任： 2002年法国网球公开赛     | 法国网球公开赛 2003年 | 繼任： 2004年法国网球公开赛     |\n| 前任： 2003年澳大利亚网球公开赛 | 网球大满贯 2003年     | 繼任： 2003年温布尔登网球锦标赛 |\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/223830",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=30700736",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "11127f93091a9e87ebb371410e8c236043e0f9b6044bb5499776a74078691f86",
+    "raw_row_sha256": "64085077be67b72a995276d8c0b396a338f642c74eb9c0c4dd68814d5e2eed8f",
+    "source_row": 315,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "3234125",
+    "title": "Ado定理",
+    "kind": "wiki_prose",
+    "text": "# Ado定理\n在抽象代數中，Ado定理指出每一個有限維的，在一個零特徵的域{\\displaystyle K}上的李代數{\\displaystyle L}都可被看作是一個用交換子李括號定義的關於方塊矩陣的李代數。更為準確地說，定理指出{\\displaystyle L}在{\\displaystyle K}上有一個在有限維向量空間{\\displaystyle V}上的忠實線性表示，使得{\\displaystyle L}與一個{\\displaystyle V}自同态的子代數同構。\n雖然對於典型群的李代數而言，這個結果並不特別，但對於一般情況這則是一個深刻的結果。在應用到一個李群{\\displaystyle G}的實李代數上時，該定理並不指出{\\displaystyle G}有一個忠實的線性表示（這一般是不正確的），而是指出{\\displaystyle G}總是有一個線性表示與一個線性群局部同構。定理于1935年由喀山国立大学的Igor Dmitrievich Ado（Nikolai Chebotaryov的學生）所證明。\n定理中對於特徵的限制則與後來由岩泽健吉和Harish-Chandra除去。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/3234125",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=68715243",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "beaee66db383ce226a97c25419fb21d12af900d2a2e77c8709eac87fd2c472e7",
+    "raw_row_sha256": "adf287225f2282415684f6a7abcdbf740ae019ba6f4424851ee38f7ff4104b46",
+    "source_row": 4718,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "1270249",
+    "title": "中美洲议会",
+    "kind": "wiki_prose",
+    "text": "# 中美洲议会\n中美洲议会（西班牙語：，缩写为Parlacen）是中美洲統合體的立法机关，成立于1991年10月28日，设于危地马拉城。中美洲议会有120名议员，由直接选举产生。\n\n## 成員國\n- 薩爾瓦多\n- 尼加拉瓜\n- 巴拿马[1]\n\n\n## 常驻觀察員\n- 中华人民共和国\n- 墨西哥\n- 委內瑞拉\n- 波多黎各\n- 摩洛哥\n\n\n### 前常驻观察員\n- 中華民國 （1999年—2023年8月22日）[2][3][4]\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/1270249",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=85949909",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "1e55b7489f052739b943853bf8232fe2734b7e3bd6e67eeb50bdfe6e9df26d6d",
+    "raw_row_sha256": "4a4e9755837e1f855882f55c1eb8c0b776226f2f08e8af132c2373379bc8c1a1",
+    "source_row": 2185,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "9042440",
+    "title": "肯尼斯·勞倫斯",
+    "kind": "wiki_prose",
+    "text": "# 肯尼斯·勞倫斯\n肯尼斯·勞倫斯（Kenneth J. Lawrence）是一位美國天文學家，也是小行星的發現者。\n\n## 貢獻\n1989年至1994年間，肯尼斯·勞倫斯發現了32顆編號小行星，被小行星中心認可。他也與其他人共同發現了木星族週期彗星152P/赫琳-勞倫斯彗星。他也是帕洛瑪行星穿越小行星調查的參與者。\n主帶小行星4969由埃莉諾·赫林於1986年發現，並以他的名字命名。命名引文於1992年7月14日發布。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/9042440",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=86501878",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "9c650b09579b1d4f1c91f31435bf15a4c488e6bb29790d0014df8c1bafe14bb3",
+    "raw_row_sha256": "84dfb706c6d7c5609a41ed2315f01bbf3d2b2326c586009cdd15e2b3cce9c2d5",
+    "source_row": 231,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "8903072",
+    "title": "C7H9N3O2",
+    "kind": "wiki_prose",
+    "text": "# C7H9N3O2\n化学式C7H9N3O2（摩尔质量：167.17 g/mol）可以指：\n- 2,6-二氨基-4-硝基甲苯，CAS号：59229-75-3\n- 4-氨基水杨酰肼，CAS号：6946-29-8\n\n|  | 这个同类索引页列出了具有相同分子式的化学物（即同分異構體）条目。 除非您是有意链接至本页，否则应将相应条目的内部链接指向正确的条目。 |\n\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/8903072",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=84710239",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "dd85bc94a6ed04597b07db83a42c79bb7de3e96f41248179bad9e8eaf194fade",
+    "raw_row_sha256": "6c76fac5093b4f990e0de44846ce7e5fb6411910c67844472baeee2a11f466a3",
+    "source_row": 601,
+    "split": "evaluation"
+  },
+  {
+    "page_id": "2794356",
+    "title": "八旗选秀",
+    "kind": "wiki_prose",
+    "text": "# 八旗选秀\n八旗选秀，是清朝政府为清朝皇帝选择嬪妃的一种制度。由户部主持，理論上为三年一选，在八旗女子中挑选皇帝的妃嬪及其他皇族宗室的妻妾。因此，清朝皇帝的妃嫔主要来自八旗选秀。\n雖然理論上外八旗所有旗人都能參加外八旗選秀，但隨著旗人的數量愈來愈多，旗人內的階級亦越來越複雜，外八旗秀女參選於乾隆年間開始有了些門檻。不過選秀另有一些禁例，如皇帝乳母之女、有殘疾的女子等不許參選；特定家族的人士也不參加選秀，例如覺爾察氏達海的女性後代。\n清初的外八旗選秀是在臘月中下旬舉行，至雍正初年依然遵循此例，雍正十一年臘月原定要舉行外八族選秀，惟雍正帝下旨改明年開春舉行。自此，在春季舉行外八旗選秀成為慣例。第一次在春季舉行的外八期選秀中，世宗指定了泰州知州武柱國之女武氏為寧妃，崔奇哲之女被指婚為和親王側福晉，佐領訥爾布之女輝發那拉氏被指婚為寶親王側福晉。\n若被指定為內廷主位，宮廷會下達類似「指定嬪貴人至家內應派護衞人員」的旨意。新封的嫔妃进宫前一天，内务府会先派人去其本家将嬪妃本人的私人物品抬送到宫中，有些物品則由内务府為嬪妃置辦於其寢宫中。在清朝後期，嬪妃的妝奩由宮中提供或賞予銀兩置辦尋常衣服，不允許由嬪妃的娘家置辦，為的是削弱嬪妃與娘家的聯繫。\n",
+    "authored_facts_required": true,
+    "document_id": "zhwiki/2794356",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=79599978",
+    "license": "CC-BY-SA-4.0",
+    "text_sha256": "f560ed62dc88a9ef44b09f893927d639eb73a037ccc18559b14c316ce9059849",
+    "raw_row_sha256": "5da9082416ef09c485980be00abc0a7906fb403da070861f56b19eecee3393ba",
+    "source_row": 2934,
+    "split": "evaluation"
+  }
+]

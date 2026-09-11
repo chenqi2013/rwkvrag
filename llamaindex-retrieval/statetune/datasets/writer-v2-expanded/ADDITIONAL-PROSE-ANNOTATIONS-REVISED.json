@@ -1,0 +1,1322 @@
+[
+  {
+    "page_id": "5231102",
+    "author": "root",
+    "facts": [
+      {
+        "field": "当年天皇",
+        "value": "明仁",
+        "quote": "天皇：明仁",
+        "start": 19,
+        "end": 24,
+        "context_spans": []
+      },
+      {
+        "field": "当年内阁总理大臣",
+        "value": "海部俊樹",
+        "quote": "內閣總理大臣：海部俊樹",
+        "start": 27,
+        "end": 38,
+        "context_spans": []
+      },
+      {
+        "field": "明仁即位礼月日",
+        "value": "11月12日",
+        "quote": "11月12日，舉行天皇明仁的即位禮。",
+        "start": 334,
+        "end": 352,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "2811505",
+    "author": "root",
+    "facts": [
+      {
+        "field": "认定机构",
+        "value": "上海市科学技术委员会",
+        "quote": "是指由上海市科学技术委员会认定的",
+        "start": 40,
+        "end": 56,
+        "context_spans": []
+      },
+      {
+        "field": "截至2024年的基地总数",
+        "value": "305家",
+        "quote": "截至2024年，上海市科普基地共305家",
+        "start": 99,
+        "end": 119,
+        "context_spans": []
+      },
+      {
+        "field": "增设综合性科普场馆的年份",
+        "value": "2014年",
+        "quote": "2014年，增设综合性科普场馆。",
+        "start": 387,
+        "end": 403,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "756262",
+    "author": "root",
+    "facts": [
+      {
+        "field": "肯塔基打比冠军",
+        "value": "Clyde Van Dusen",
+        "quote": "5月18日－Clyde Van Dusen 贏得肯塔基打比冠軍。",
+        "start": 85,
+        "end": 117,
+        "context_spans": []
+      },
+      {
+        "field": "谢周三足球俱乐部联赛积分",
+        "value": "52分",
+        "quote": "英格兰足球联赛 – 谢周三足球俱乐部 52分",
+        "start": 164,
+        "end": 186,
+        "context_spans": []
+      },
+      {
+        "field": "足总杯决赛比分",
+        "value": "2–0",
+        "quote": "1929年足總杯決賽（英语：） – 博尔顿足球俱乐部 2–0 朴茨茅斯足球俱乐部",
+        "start": 255,
+        "end": 295,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "7324709",
+    "author": "root",
+    "facts": [
+      {
+        "field": "率新模范军入侵爱尔兰的时间",
+        "value": "1649年8月",
+        "quote": "1649年8月，奥利弗·克伦威尔以英国残缺议会的名義率领他的新模范军入侵爱尔兰。",
+        "start": 199,
+        "end": 239,
+        "context_spans": []
+      },
+      {
+        "field": "议会军击败联盟并占领爱尔兰的时间",
+        "value": "1652年5月",
+        "quote": "1652年5月，克伦威尔的议会军队在爱尔兰打败了邦联和骑士党的联盟，並占领了爱尔兰。",
+        "start": 239,
+        "end": 281,
+        "context_spans": []
+      },
+      {
+        "field": "随后游击战持续时间",
+        "value": "一年",
+        "quote": "然而，游击战又持续了一年。",
+        "start": 281,
+        "end": 294,
+        "context_spans": [
+          {
+            "text": "1652年5月，克伦威尔的议会军队在爱尔兰打败了邦联和骑士党的联盟，並占领了爱尔兰。",
+            "start": 239,
+            "end": 281,
+            "sha256": "76df069e86202f7fcdc41b30cc272b0ddec863a71f99605db393ad4ee7b21260",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "page_id": "1229619",
+    "author": "root",
+    "facts": [
+      {
+        "field": "男子单打冠军",
+        "value": "馬拉特·薩芬",
+        "quote": "### 男子单打\n主条目：2000年美國網球公開賽男子單打比賽\n馬拉特·薩芬（俄羅斯）6-4 6-3 6-3 皮特·桑普拉斯（美国）",
+        "start": 61,
+        "end": 127,
+        "context_spans": [
+          {
+            "text": "## 冠军\n单打列出冠亚军以及决赛比分，双打列出冠军组合。",
+            "start": 30,
+            "end": 59,
+            "sha256": "6a7e927d7af25dff8d17eef4f426a0da83092202e2dda85d9b82326d25ce07b8",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      },
+      {
+        "field": "女子单打冠军",
+        "value": "大威廉姆斯",
+        "quote": "### 女子单打\n主条目：2000年美國網球公開賽女子單打比賽\n大威廉姆斯（美国）6-2 6-4 林賽·達文波特（美国）",
+        "start": 129,
+        "end": 189,
+        "context_spans": [
+          {
+            "text": "## 冠军\n单打列出冠亚军以及决赛比分，双打列出冠军组合。",
+            "start": 30,
+            "end": 59,
+            "sha256": "6a7e927d7af25dff8d17eef4f426a0da83092202e2dda85d9b82326d25ce07b8",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      },
+      {
+        "field": "男子双打冠军组合",
+        "value": "萊頓·休伊特（澳洲）/马克斯·米尔内（白俄罗斯）",
+        "quote": "### 男子双打\n主条目：2000年美國網球公開賽男子雙打比賽\n萊頓·休伊特（澳洲）/马克斯·米尔内（白俄罗斯）",
+        "start": 191,
+        "end": 247,
+        "context_spans": [
+          {
+            "text": "## 冠军\n单打列出冠亚军以及决赛比分，双打列出冠军组合。",
+            "start": 30,
+            "end": 59,
+            "sha256": "6a7e927d7af25dff8d17eef4f426a0da83092202e2dda85d9b82326d25ce07b8",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "page_id": "8720525",
+    "author": "root",
+    "facts": [
+      {
+        "field": "率先爆发骚乱的月日",
+        "value": "12月11日",
+        "quote": "12月11日，悉尼克罗纳拉率先爆發騷亂",
+        "start": 51,
+        "end": 70,
+        "context_spans": []
+      },
+      {
+        "field": "最初救生员争执发生日期",
+        "value": "2005年12月4日",
+        "quote": "2005年12月4日，一群中东长相的年轻人（黎巴嫩裔澳大利亞人）和海滩上的澳大利亚白人救生員发生争执",
+        "start": 85,
+        "end": 135,
+        "context_spans": []
+      },
+      {
+        "field": "警方逮捕人数下限",
+        "value": "至少104人",
+        "quote": "警方至少逮捕104人。",
+        "start": 217,
+        "end": 228,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "8783550",
+    "author": "root",
+    "facts": [
+      {
+        "field": "摩尔质量",
+        "value": "200.08 g/mol",
+        "quote": "化学式C8H10BrN（摩尔质量：200.08 g/mol）",
+        "start": 11,
+        "end": 41,
+        "context_spans": []
+      },
+      {
+        "field": "2-溴-N,N-二甲基苯胺的CAS号",
+        "value": "698-00-0",
+        "quote": "2-溴-N,N-二甲基苯胺，CAS号：698-00-0",
+        "start": 78,
+        "end": 105,
+        "context_spans": []
+      },
+      {
+        "field": "4-溴-N,N-二甲基苯胺的CAS号",
+        "value": "586-77-6",
+        "quote": "4-溴-N,N-二甲基苯胺，CAS号：586-77-6",
+        "start": 108,
+        "end": 135,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "8215225",
+    "author": "root",
+    "facts": [
+      {
+        "field": "Facebook公司更名后的名称",
+        "value": "Meta Platforms",
+        "quote": "Facebook公司更名為Meta Platforms。",
+        "start": 136,
+        "end": 164,
+        "context_spans": []
+      },
+      {
+        "field": "诺贝尔物理学奖得主",
+        "value": "真鍋淑郎、克勞斯·哈塞爾曼、喬治·帕里西",
+        "quote": "物理學：真鍋淑郎、克勞斯·哈塞爾曼、喬治·帕里西",
+        "start": 178,
+        "end": 202,
+        "context_spans": [
+          {
+            "text": "### 诺贝尔奖",
+            "start": 167,
+            "end": 175,
+            "sha256": "f04044e80619bf10409d7f62b265a9603e54219a9ace8f20f158d9476258aeef",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      },
+      {
+        "field": "诺贝尔化学奖得主",
+        "value": "本亞明·利斯特、戴维·麦克米伦",
+        "quote": "化學： 本亞明·利斯特、戴维·麦克米伦",
+        "start": 205,
+        "end": 224,
+        "context_spans": [
+          {
+            "text": "### 诺贝尔奖",
+            "start": 167,
+            "end": 175,
+            "sha256": "f04044e80619bf10409d7f62b265a9603e54219a9ace8f20f158d9476258aeef",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "page_id": "6709555",
+    "author": "root",
+    "facts": [
+      {
+        "field": "密度",
+        "value": "1.16克/厘米3",
+        "quote": "密度为1.16克/厘米3，比普通冰高26%。",
+        "start": 74,
+        "end": 96,
+        "context_spans": []
+      },
+      {
+        "field": "晶格类型",
+        "value": "四方晶格",
+        "quote": "它具有四方晶格",
+        "start": 66,
+        "end": 73,
+        "context_spans": []
+      },
+      {
+        "field": "由冰三制备的降温范围",
+        "value": "从208 K快速冷却到165 K",
+        "quote": "它是通过将冰三从208 K快速冷却到165 K（以避免形成冰二）所形成",
+        "start": 96,
+        "end": 131,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "8981251",
+    "author": "root",
+    "facts": [
+      {
+        "field": "分布海域",
+        "value": "西印度洋馬爾地夫海域",
+        "quote": "分布於西印度洋馬爾地夫海域",
+        "start": 54,
+        "end": 67,
+        "context_spans": []
+      },
+      {
+        "field": "栖息深度",
+        "value": "55至66公尺",
+        "quote": "深度55至66公尺",
+        "start": 68,
+        "end": 77,
+        "context_spans": []
+      },
+      {
+        "field": "体长上限",
+        "value": "5.2公分",
+        "quote": "體長可達5.2公分",
+        "start": 255,
+        "end": 264,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "6563502",
+    "author": "root",
+    "facts": [
+      {
+        "field": "第一步识别正常流量的方法",
+        "value": "定义“流量模式”",
+        "quote": "DDoS缓解的第一步是通过定义“流量模式”来识别网络流量的正常情况",
+        "start": 112,
+        "end": 145,
+        "context_spans": []
+      },
+      {
+        "field": "需要区分的流量来源",
+        "value": "真实人类、机器人及被劫持Web浏览器",
+        "quote": "DDoS缓解还需要识别传入流量，以将真实人类产生的流量与机器人（如爬虫）产生的流量，以及被劫持Web浏览器的流量区分开。",
+        "start": 160,
+        "end": 220,
+        "context_spans": []
+      },
+      {
+        "field": "检查的四类流量属性",
+        "value": "IP地址、Cookie变体、HTTP头字段和JavaScript足迹",
+        "quote": "包括IP地址、Cookie变体、HTTP头字段和JavaScript足迹。",
+        "start": 243,
+        "end": 280,
+        "context_spans": [
+          {
+            "text": "该过程通过比较签名和检查流量的不同属性来完成，",
+            "start": 220,
+            "end": 243,
+            "sha256": "fe42ae0c43e7d802fd0e6cfd21d943cbc652297536a0f8845e1a2725a35f4989",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "page_id": "13961",
+    "author": "root",
+    "facts": [
+      {
+        "field": "教宗若望二世即位月日",
+        "value": "1月2日",
+        "quote": "1月2日——Mercurius成爲教宗若望二世，是第一位即位使用王號的教宗。",
+        "start": 477,
+        "end": 515,
+        "context_spans": []
+      },
+      {
+        "field": "阿德底斯姆战役月日",
+        "value": "9月13日",
+        "quote": "9月13日——拜占庭帝國名將貝利撒留在阿德底斯姆戰役擊敗了汪達爾-阿蘭王國蓋利摩的軍隊",
+        "start": 594,
+        "end": 637,
+        "context_spans": []
+      },
+      {
+        "field": "东罗马帝国向何国宣战",
+        "value": "汪達爾-阿蘭王國",
+        "quote": "於是東羅馬帝國向汪達爾-阿蘭王國宣戰，爆發汪達爾戰爭。",
+        "start": 564,
+        "end": 591,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "6487535",
+    "author": "root",
+    "facts": [
+      {
+        "field": "当年天皇",
+        "value": "裕仁",
+        "quote": "天皇：裕仁",
+        "start": 19,
+        "end": 24,
+        "context_spans": []
+      },
+      {
+        "field": "自卫队成立月日",
+        "value": "7月1日",
+        "quote": "7月1日：自衛隊成立。",
+        "start": 68,
+        "end": 79,
+        "context_spans": []
+      },
+      {
+        "field": "洞爷丸事故月日",
+        "value": "9月26日",
+        "quote": "9月26日：青函聯絡船洞爺丸沉沒於津輕海峽，史稱「洞爺丸事故」。",
+        "start": 82,
+        "end": 114,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "14317",
+    "author": "root",
+    "facts": [
+      {
+        "field": "发生大暴乱的地区",
+        "value": "萨克森",
+        "quote": "查理曼统治下的萨克森发生大暴乱。",
+        "start": 477,
+        "end": 493,
+        "context_spans": []
+      },
+      {
+        "field": "出生栏目中的唐朝官员",
+        "value": "白敏中",
+        "quote": "白敏中，唐朝官员",
+        "start": 504,
+        "end": 512,
+        "context_spans": [
+          {
+            "text": "## 出生",
+            "start": 496,
+            "end": 501,
+            "sha256": "93831d75469dde26122341fc8648dfa569ddc33a391f64948a27f2ea74719a6e",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      },
+      {
+        "field": "逝世栏目中的唐朝宗室",
+        "value": "李皋",
+        "quote": "李皋，唐朝宗室",
+        "start": 573,
+        "end": 580,
+        "context_spans": [
+          {
+            "text": "## 逝世",
+            "start": 543,
+            "end": 548,
+            "sha256": "31b54fa3cfce24726feac69316d4b881f4bb1779c84ee51cf8b3d1e0200035a1",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "page_id": "8634209",
+    "author": "root",
+    "facts": [
+      {
+        "field": "被禁止的年份",
+        "value": "1995年",
+        "quote": "該黨於1995年被禁止",
+        "start": 87,
+        "end": 98,
+        "context_spans": []
+      },
+      {
+        "field": "重新成立的年份",
+        "value": "2004年",
+        "quote": "該黨在2004年重新成立並於2008年註冊",
+        "start": 110,
+        "end": 131,
+        "context_spans": []
+      },
+      {
+        "field": "宣布解散日期",
+        "value": "2023年4月14日",
+        "quote": "該黨發表聲明，宣佈於2023年4月14日解散。",
+        "start": 185,
+        "end": 208,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "2767238",
+    "author": "root",
+    "facts": [
+      {
+        "field": "阿扎里亚·帕里什的军衔",
+        "value": "少将",
+        "quote": "阿扎里亚·帕里什（）\n梅塔特隆的指挥官，官拜少将。",
+        "start": 103,
+        "end": 128,
+        "context_spans": [
+          {
+            "text": "除非另有说明，以下只以小说版本为主。",
+            "start": 61,
+            "end": 79,
+            "sha256": "a8dfacec1062530ad74cbfaede208556bd915db62fd2c50de3417011c326fcb3",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      },
+      {
+        "field": "格伦·柯迪尔的军衔",
+        "value": "上校",
+        "quote": "格伦·柯迪尔（）\n梅塔特隆所属上校。",
+        "start": 500,
+        "end": 518,
+        "context_spans": [
+          {
+            "text": "除非另有说明，以下只以小说版本为主。",
+            "start": 61,
+            "end": 79,
+            "sha256": "a8dfacec1062530ad74cbfaede208556bd915db62fd2c50de3417011c326fcb3",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      },
+      {
+        "field": "乌尔·尤里安的军衔",
+        "value": "少尉",
+        "quote": "乌尔·尤里安（）\n宇宙MHA所属少尉机师。",
+        "start": 559,
+        "end": 580,
+        "context_spans": [
+          {
+            "text": "除非另有说明，以下只以小说版本为主。",
+            "start": 61,
+            "end": 79,
+            "sha256": "a8dfacec1062530ad74cbfaede208556bd915db62fd2c50de3417011c326fcb3",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "page_id": "195855",
+    "author": "root",
+    "facts": [
+      {
+        "field": "会议日期范围",
+        "value": "1999年11月30日至12月3日",
+        "quote": "在1999年11月30日至12月3日於美國西雅圖舉行。",
+        "start": 49,
+        "end": 76,
+        "context_spans": []
+      },
+      {
+        "field": "会外发起示威的人群",
+        "value": "非政府組織及反全球化人士",
+        "quote": "非政府組織及反全球化人士在場外發動多次示威遊行",
+        "start": 87,
+        "end": 110,
+        "context_spans": []
+      },
+      {
+        "field": "是否启动新一轮多边贸易谈判",
+        "value": "未能啟動",
+        "quote": "最終未能達成協議，亦未能啟動新一輪多邊貿易談判。",
+        "start": 148,
+        "end": 172,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "8204615",
+    "author": "root",
+    "facts": [
+      {
+        "field": "索引文件数量下限",
+        "value": "超过 800 万个",
+        "quote": "其索引包括超过 800 万个 torrent 文件",
+        "start": 149,
+        "end": 174,
+        "context_spans": []
+      },
+      {
+        "field": "英国高等法院屏蔽判决年份",
+        "value": "2014年",
+        "quote": "torrentproject.com 网站是2014年英国高等法院判决的一部分，该判决命令将其屏蔽。",
+        "start": 226,
+        "end": 276,
+        "context_spans": []
+      },
+      {
+        "field": "网站关闭日期",
+        "value": "2017年9月4日",
+        "quote": "该网站自2017年9月4日起关闭。",
+        "start": 355,
+        "end": 372,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "3676884",
+    "author": "root",
+    "facts": [
+      {
+        "field": "所在岛屿",
+        "value": "利文斯頓島",
+        "quote": "位於南設得蘭群島的利文斯頓島的瓦爾納半島",
+        "start": 69,
+        "end": 89,
+        "context_spans": []
+      },
+      {
+        "field": "海拔高度",
+        "value": "500米",
+        "quote": "海拔高度500米",
+        "start": 101,
+        "end": 109,
+        "context_spans": []
+      },
+      {
+        "field": "相对多斯帕特峰的位置",
+        "value": "以北0.93公里",
+        "quote": "處於多斯帕特峰以北0.93公里。",
+        "start": 110,
+        "end": 126,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "5988834",
+    "author": "root",
+    "facts": [
+      {
+        "field": "美国历史月活动开始年份",
+        "value": "1994年",
+        "quote": "1994年開始，美國每年都舉辦LGBT歷史月活動",
+        "start": 122,
+        "end": 146,
+        "context_spans": []
+      },
+      {
+        "field": "国家出柜日月日",
+        "value": "10月11日",
+        "quote": "10月11日的國家出櫃日也是這一活動的一部分。",
+        "start": 199,
+        "end": 222,
+        "context_spans": []
+      },
+      {
+        "field": "英国纪念历史的活动月份",
+        "value": "二月",
+        "quote": "在英國，二月有紀念LGBT歷史的活動",
+        "start": 222,
+        "end": 240,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "598837",
+    "author": "root",
+    "facts": [
+      {
+        "field": "文中界定的文学时期起止年份",
+        "value": "1234年至1368年",
+        "quote": "元代文學是指蒙古滅金（1234年）至朱元璋推翻元順帝（1368年）的一段時期內的文學。",
+        "start": 7,
+        "end": 50,
+        "context_spans": []
+      },
+      {
+        "field": "元杂剧又称",
+        "value": "北曲",
+        "quote": "元雜劇又稱北曲",
+        "start": 284,
+        "end": 291,
+        "context_spans": []
+      },
+      {
+        "field": "散曲主要功能",
+        "value": "抒情",
+        "quote": "散曲是元代流行的歌曲，以抒情為主",
+        "start": 387,
+        "end": 403,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "14822",
+    "author": "root",
+    "facts": [
+      {
+        "field": "征讨敏象王国的元军人数",
+        "value": "12000人",
+        "quote": "率元軍12000人征討敏象王國",
+        "start": 569,
+        "end": 584,
+        "context_spans": []
+      },
+      {
+        "field": "元明宗和世㻋出生月日",
+        "value": "12月22日",
+        "quote": "12月22日 - 元明宗和世㻋",
+        "start": 631,
+        "end": 646,
+        "context_spans": [
+          {
+            "text": "## 出生",
+            "start": 623,
+            "end": 628,
+            "sha256": "93831d75469dde26122341fc8648dfa569ddc33a391f64948a27f2ea74719a6e",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      },
+      {
+        "field": "伯蓝也怯赤逝世月日",
+        "value": "3月1日",
+        "quote": "3月1日 - 伯藍也怯赤一名闊闊真",
+        "start": 657,
+        "end": 674,
+        "context_spans": [
+          {
+            "text": "## 逝世",
+            "start": 649,
+            "end": 654,
+            "sha256": "31b54fa3cfce24726feac69316d4b881f4bb1779c84ee51cf8b3d1e0200035a1",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "page_id": "1860760",
+    "author": "root",
+    "facts": [
+      {
+        "field": "所在城市",
+        "value": "锡耶纳",
+        "quote": "是意大利中部城市锡耶纳的一座历史建筑",
+        "start": 92,
+        "end": 110,
+        "context_spans": []
+      },
+      {
+        "field": "府邸主人",
+        "value": "潘多尔福·彼得鲁奇",
+        "quote": "潘多尔福·彼得鲁奇（Pandolfo Petrucci）的府邸",
+        "start": 111,
+        "end": 142,
+        "context_spans": []
+      },
+      {
+        "field": "始建年份",
+        "value": "1508年",
+        "quote": "他的宫殿始建于1508年",
+        "start": 308,
+        "end": 320,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "3557760",
+    "author": "root",
+    "facts": [
+      {
+        "field": "编程语言类别",
+        "value": "关系型编程语言",
+        "quote": "miniKanren是一类关系型编程语言。",
+        "start": 14,
+        "end": 35,
+        "context_spans": []
+      },
+      {
+        "field": "所用搜索方法",
+        "value": "搜索树",
+        "quote": "miniKanren通过“搜索树”的办法来搜索所有可能的输入变量。",
+        "start": 116,
+        "end": 149,
+        "context_spans": []
+      },
+      {
+        "field": "evalo调用写法",
+        "value": "(evalo q q)",
+        "quote": "在miniKanren中调用evalo的方法是：(evalo q q)。",
+        "start": 242,
+        "end": 278,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "8593437",
+    "author": "root",
+    "facts": [
+      {
+        "field": "摩尔质量",
+        "value": "112.15 g/mol",
+        "quote": "化学式C4H4N2S（摩尔质量：112.15 g/mol）",
+        "start": 10,
+        "end": 39,
+        "context_spans": []
+      },
+      {
+        "field": "2-巯基嘧啶的CAS号",
+        "value": "1450-85-7",
+        "quote": "2-巯基嘧啶，CAS号：1450-85-7",
+        "start": 46,
+        "end": 67,
+        "context_spans": []
+      },
+      {
+        "field": "2-巯基吡嗪的CAS号",
+        "value": "38521-06-1",
+        "quote": "2-巯基吡嗪，CAS号：38521-06-1",
+        "start": 70,
+        "end": 92,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "7548529",
+    "author": "root",
+    "facts": [
+      {
+        "field": "成为永谢布部领主的年份",
+        "value": "1470年",
+        "quote": "1470年，亦思马勒游牧在河套，成为永谢布部的领主。",
+        "start": 155,
+        "end": 181,
+        "context_spans": []
+      },
+      {
+        "field": "继任太师的年份",
+        "value": "1479年",
+        "quote": "1479年，联合满都鲁可汗的部下脱罗等人杀死太师癿加思兰，继任太师。",
+        "start": 181,
+        "end": 215,
+        "context_spans": []
+      },
+      {
+        "field": "被击杀的年份",
+        "value": "1486年",
+        "quote": "1486年，达延汗派遣郭尔罗斯部领主托郭齐少师将他击杀。",
+        "start": 301,
+        "end": 329,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "6454161",
+    "author": "root",
+    "facts": [
+      {
+        "field": "成田机场启用月日",
+        "value": "5月20日",
+        "quote": "5月20日——成田機場啟用。",
+        "start": 98,
+        "end": 112,
+        "context_spans": []
+      },
+      {
+        "field": "中日和平友好条约签署月日",
+        "value": "8月12日",
+        "quote": "8月12日——簽署《中日和平友好條約》",
+        "start": 196,
+        "end": 215,
+        "context_spans": []
+      },
+      {
+        "field": "大平正芳接任首相月日",
+        "value": "12月7日",
+        "quote": "12月7日——福田赳夫卸任首相職務，由大平正芳接任。",
+        "start": 228,
+        "end": 254,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "1842814",
+    "author": "root",
+    "facts": [
+      {
+        "field": "出生年份",
+        "value": "1832年",
+        "quote": "丁丙（1832年—1899年）",
+        "start": 5,
+        "end": 20,
+        "context_spans": []
+      },
+      {
+        "field": "与丁申聚书的数量",
+        "value": "八万卷",
+        "quote": "丁丙与兄丁申以二十年之功，聚書八万卷，藏於“八千卷楼”。",
+        "start": 79,
+        "end": 107,
+        "context_spans": []
+      },
+      {
+        "field": "将所得书送还文澜阁年份",
+        "value": "1880年",
+        "quote": "光绪六年（1880年），浙江巡抚谭钟麟重建文澜阁，丁丙将所得书送還文澜阁。",
+        "start": 207,
+        "end": 244,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "6402360",
+    "author": "root",
+    "facts": [
+      {
+        "field": "柏林至伊斯坦堡列车首次开行月日",
+        "value": "1月15日",
+        "quote": "1月15日：柏林－伊斯坦堡列車首次開行。",
+        "start": 52,
+        "end": 72,
+        "context_spans": []
+      },
+      {
+        "field": "南浔铁路通车月份",
+        "value": "5月",
+        "quote": "5月：南潯鐵路通車。",
+        "start": 84,
+        "end": 94,
+        "context_spans": []
+      },
+      {
+        "field": "纽约地狱门大桥完工月日",
+        "value": "9月30日",
+        "quote": "9月30日：紐約市地獄門大橋完工。",
+        "start": 226,
+        "end": 243,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "4324123",
+    "author": "root",
+    "facts": [
+      {
+        "field": "公路起讫城市",
+        "value": "莱蒂西亚到米图",
+        "quote": "从亚马逊省的莱蒂西亚到沃佩斯省的米图。",
+        "start": 35,
+        "end": 54,
+        "context_spans": []
+      },
+      {
+        "field": "莱蒂西亚到塔拉帕卡段规划长度",
+        "value": "164公里",
+        "quote": "预计建成从莱蒂西亚到塔拉帕卡164公里的一段公路",
+        "start": 135,
+        "end": 159,
+        "context_spans": []
+      },
+      {
+        "field": "未完成的两个原因",
+        "value": "成本高昂、途经地区人口密度低",
+        "quote": "惟基於成本高昂及途經地区的人口密度低的原因，这条路线并未修建完成",
+        "start": 85,
+        "end": 117,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "3725626",
+    "author": "root",
+    "facts": [
+      {
+        "field": "开发年份",
+        "value": "1998年",
+        "quote": "Adobe RGB色彩空间是一种由Adobe Systems于1998年开发的色彩空间。",
+        "start": 16,
+        "end": 60,
+        "context_spans": []
+      },
+      {
+        "field": "显示器白色点亮度",
+        "value": "160cd/m2",
+        "quote": "显示器上白色点的亮度也应该被指定为160cd/m2",
+        "start": 306,
+        "end": 331,
+        "context_spans": []
+      },
+      {
+        "field": "显示器周围环境照度",
+        "value": "32lx",
+        "quote": "显示器周围环境照度为32lx。",
+        "start": 366,
+        "end": 381,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "6126808",
+    "author": "root",
+    "facts": [
+      {
+        "field": "成立年份",
+        "value": "2015年",
+        "quote": "该联盟成立于2015年。",
+        "start": 56,
+        "end": 68,
+        "context_spans": []
+      },
+      {
+        "field": "总部城市",
+        "value": "巴塞罗那",
+        "quote": "该联盟的总部位于巴塞罗那。",
+        "start": 190,
+        "end": 203,
+        "context_spans": []
+      },
+      {
+        "field": "政治立场",
+        "value": "左翼至极左翼",
+        "quote": "该联盟的政治立场是左翼至极左翼。",
+        "start": 174,
+        "end": 190,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "3968403",
+    "author": "root",
+    "facts": [
+      {
+        "field": "在美国开播年月",
+        "value": "2012年2月",
+        "quote": "DOGTV，是一个于2012年2月在美国开播的数字电视付费频道",
+        "start": 8,
+        "end": 39,
+        "context_spans": []
+      },
+      {
+        "field": "创办人",
+        "value": "罗恩·李维",
+        "quote": "由罗恩·李维（Ron Levi）创办",
+        "start": 40,
+        "end": 58,
+        "context_spans": []
+      },
+      {
+        "field": "每个节目片段时长",
+        "value": "约3—6分钟",
+        "quote": "电视节目中每一个片段时常大约为3—6分钟。",
+        "start": 116,
+        "end": 137,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "13963",
+    "author": "root",
+    "facts": [
+      {
+        "field": "宇文泰拥立的西魏皇帝",
+        "value": "元寶炬",
+        "quote": "宇文泰宇文泰弒殺投奔自己的北魏孝武帝，擁立元寶炬為帝，正式建立西魏。",
+        "start": 517,
+        "end": 551,
+        "context_spans": []
+      },
+      {
+        "field": "贝利萨留攻占的岛屿",
+        "value": "西西里島",
+        "quote": "派將軍貝利薩留攻占西西里島。",
+        "start": 600,
+        "end": 614,
+        "context_spans": []
+      },
+      {
+        "field": "若望二世去世月日",
+        "value": "5月8日",
+        "quote": "5月8日——若望二世，教宗",
+        "start": 705,
+        "end": 718,
+        "context_spans": [
+          {
+            "text": "## 逝世",
+            "start": 647,
+            "end": 652,
+            "sha256": "31b54fa3cfce24726feac69316d4b881f4bb1779c84ee51cf8b3d1e0200035a1",
+            "offset_unit": "unicode_characters_in_original_text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "page_id": "1053686",
+    "author": "root",
+    "facts": [
+      {
+        "field": "二执分别指什么",
+        "value": "我执和法执",
+        "quote": "分别指“我执”和“法执”。",
+        "start": 26,
+        "end": 39,
+        "context_spans": []
+      },
+      {
+        "field": "我执又名",
+        "value": "人我执",
+        "quote": "我执又名人我执",
+        "start": 39,
+        "end": 46,
+        "context_spans": []
+      },
+      {
+        "field": "法执的两种分类",
+        "value": "俱生法执与分别法执",
+        "quote": "法执分为“俱生法执”与“分别法执”二种。",
+        "start": 260,
+        "end": 280,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "2965315",
+    "author": "root",
+    "facts": [
+      {
+        "field": "赛事开始日期",
+        "value": "2011年11月19日",
+        "quote": "本届赛事开始于2011年11月19日，结束于2012年4月。",
+        "start": 74,
+        "end": 104,
+        "context_spans": []
+      },
+      {
+        "field": "参赛球队数",
+        "value": "8支",
+        "quote": "参赛球队为亚美尼亚足球甲级联赛的8支球队。",
+        "start": 53,
+        "end": 74,
+        "context_spans": []
+      },
+      {
+        "field": "冠军球队",
+        "value": "希拉克足球俱乐部",
+        "quote": "希拉克足球俱乐部获得冠军。",
+        "start": 104,
+        "end": 117,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "1930099",
+    "author": "root",
+    "facts": [
+      {
+        "field": "所属地级市",
+        "value": "南阳市",
+        "quote": "河南省南阳市南召县下辖的一个乡镇级行政单位。",
+        "start": 24,
+        "end": 46,
+        "context_spans": []
+      },
+      {
+        "field": "所属县",
+        "value": "南召县",
+        "quote": "河南省南阳市南召县下辖的一个乡镇级行政单位。",
+        "start": 24,
+        "end": 46,
+        "context_spans": []
+      },
+      {
+        "field": "老城村入选中国传统村落年月",
+        "value": "2013年8月",
+        "quote": "2013年8月，老城村被评为第二批中国传统村落。",
+        "start": 218,
+        "end": 242,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "80830",
+    "author": "root",
+    "facts": [
+      {
+        "field": "正式批准授牌机构",
+        "value": "中华人民共和国国土资源部",
+        "quote": "由中华人民共和国国土资源部正式批准授牌的地质公园。",
+        "start": 51,
+        "end": 76,
+        "context_spans": []
+      },
+      {
+        "field": "建立申报和评审机制年月",
+        "value": "2000年8月",
+        "quote": "中华人民共和国国土资源部在2000年8月正式建立國家地質公園的申報和評審機制。",
+        "start": 244,
+        "end": 283,
+        "context_spans": []
+      },
+      {
+        "field": "资料快照记载的大陆已批准数量",
+        "value": "138处",
+        "quote": "到目前为止，中国大陸已批准建立国家地质公园138处。",
+        "start": 283,
+        "end": 309,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "7594043",
+    "author": "root",
+    "facts": [
+      {
+        "field": "孟买至加尔各答铁路全线通车月日",
+        "value": "3月7日",
+        "quote": "3月7日：大印度半島鐵路（英语：）與東印度鐵路公司（英语：）接軌，孟買至加爾各答的鐵路自始全線通車。",
+        "start": 44,
+        "end": 94,
+        "context_spans": []
+      },
+      {
+        "field": "伦敦塔地铁通车月日",
+        "value": "8月2日",
+        "quote": "8月2日：倫敦塔地鐵（英语：）通車",
+        "start": 147,
+        "end": 164,
+        "context_spans": []
+      },
+      {
+        "field": "里希迈基至圣彼得堡铁路通车月日",
+        "value": "9月12日",
+        "quote": "9月12日：里希邁基－聖彼得堡鐵路通車。",
+        "start": 201,
+        "end": 221,
+        "context_spans": []
+      }
+    ]
+  },
+  {
+    "page_id": "657218",
+    "author": "root",
+    "facts": [
+      {
+        "field": "村民委员会数量",
+        "value": "21个",
+        "quote": "辖区下设21个村民委员会和1个居民委员會",
+        "start": 67,
+        "end": 87,
+        "context_spans": []
+      },
+      {
+        "field": "居民委员会数量",
+        "value": "1个",
+        "quote": "辖区下设21个村民委员会和1个居民委员會",
+        "start": 67,
+        "end": 87,
+        "context_spans": []
+      },
+      {
+        "field": "叶剑英的母校",
+        "value": "丙村中学",
+        "quote": "丙村镇唯一一所完全中学——丙村中学为十大元帅之一叶剑英的母校。",
+        "start": 121,
+        "end": 152,
+        "context_spans": []
+      }
+    ]
+  }
+]

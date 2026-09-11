@@ -1,0 +1,14 @@
+{
+  "parent_frozen_sha256": "b823b630ffab8a1401d2151c26ac08477c8327477bb6e62db682f9911c740135",
+  "semantic_labels_changed": false,
+  "source_documents_changed": false,
+  "new_prompt_protocol": "rwkv_g1j_no_think_v1",
+  "changes": [
+    "id prefix v3 to v4",
+    "explicit prompt protocol",
+    "one LF before answer",
+    "recomputed prompt and token bindings"
+  ],
+  "official_revision": "c6202c9e1b5de80640fa487b112da621067967ad",
+  "independent_template_review_pending": true
+}

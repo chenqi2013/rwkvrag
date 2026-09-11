@@ -13,7 +13,7 @@ class ConversationMessage(BaseModel):
 
 
 class SearchRequest(BaseModel):
-    question: str
+    question: str = Field(max_length=10_000)
     top_k: int | None = Field(default=None, ge=1, le=100)
     candidate_k: int | None = Field(default=None, ge=5, le=200)
     min_score: float | None = None
@@ -53,7 +53,7 @@ class AskResponse(BaseModel):
 
 
 class MaterialAskRequest(BaseModel):
-    question: str
+    question: str = Field(max_length=10_000)
     materials: list[SourceItem] = Field(min_length=1, max_length=20)
     history: list[ConversationMessage] = Field(default_factory=list, max_length=64)
 

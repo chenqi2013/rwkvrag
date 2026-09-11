@@ -1,4 +1,6 @@
 from functools import lru_cache
+import json
+import os
 from pathlib import Path
 from typing import Literal
 
@@ -36,16 +38,21 @@ class Settings(BaseSettings):
     min_relevance_score: float = 0
 
     # The existing pipeline remains available for regression comparisons.
-    rag_pipeline: str = Field(default="existing", pattern="^(existing|rwkv)$")
+    rag_pipeline: str = Field(default="rwkv", pattern="^(existing|rwkv)$")
     native_base_url: str = "http://127.0.0.1:18421/v1"
     native_model: str = "rwkv7-g1j-2.9b-20260831-ctx16384"
     native_api_key: str = ""
     native_transport: Literal["native", "rwkvos_batch"] = "native"
     native_writer_prefill: Literal["<think", "<think></think"] = "<think"
+    native_writer_prompt_protocol: Literal["task_first", "evidence_first"] = "task_first"
     rwkvos_cf_access_client_id: SecretStr = SecretStr("")
     rwkvos_cf_access_client_secret: SecretStr = SecretStr("")
     rwkvos_prefill_mode: Literal["complete", "continuation"] = "complete"
     rwkvos_state_id: str | None = None
+    rwkvos_reader_state_id: str | None = None
+    rwkvos_reader_prompt_protocol: Literal["legacy", "rwkv_g1j_no_think_v1"] = "legacy"
+    rwkvos_writer_prompt_protocol: Literal["legacy", "rwkv_g1j_no_think_v1"] = "legacy"
+    rwkvos_reader_input_layout: Literal["original", "task_last"] = "original"
     rwkvos_stop_tokens: list[StrictInt] | None = None
     rwkvos_count_input_tokens: bool = False
     rwkvos_input_token_limit: StrictInt | None = Field(default=None, ge=1)
@@ -57,12 +64,17 @@ class Settings(BaseSettings):
     native_planner_prefill: Literal["<think", "<think></think"] = "<think"
     native_plan_protocol: Literal["queries_fields", "shared_tasks"] = "queries_fields"
     native_resolver_prefill: Literal["<think", "<think></think"] = "<think"
-    native_resolver_protocol: Literal["fields", "task_units"] = "fields"
+    native_resolver_protocol: Literal["fields", "task_units", "binary_query"] = "fields"
+    native_resolver_task_grouping: Literal["joint", "individual"] = "joint"
+    native_resolver_format_repair: bool = False
     native_task_source: Literal["fields", "queries"] = "fields"
     native_candidate_order: Literal["rrf", "query_round_robin"] = "rrf"
     native_planner_max_tokens: int = Field(default=1024, ge=64, le=4096)
-    native_resolver_max_tokens: int = Field(default=1024, ge=64, le=4096)
+    native_resolver_max_tokens: int = Field(default=1024, ge=32, le=4096)
     native_resolver_sources: int = Field(default=24, ge=1, le=200)
+    native_resolver_budget_scope: Literal["global", "per_query"] = "global"
+    native_retrieval_scope: Literal["chunks", "documents"] = "chunks"
+    native_document_limit: int = Field(default=5, ge=1, le=20)
     native_resolver_window_characters: int = Field(default=1200, ge=256, le=8000)
     native_resolver_overlap_characters: int = Field(default=180, ge=1, le=2000)
     native_resolver_batch_characters: int = Field(default=6000, ge=1000, le=48000)
@@ -81,6 +93,41 @@ class Settings(BaseSettings):
     generation_output_mode: str = Field(default="legacy", pattern="^(immutable|legacy)$")
     answer_point_fanout_enabled: bool = False
     answer_point_fanout_concurrency: int = Field(default=3, ge=1, le=8)
+
+    @model_validator(mode="after")
+    def validate_reader_state_protocol(self) -> "Settings":
+        if self.native_resolver_budget_scope == "per_query" and (
+                self.native_task_source != "queries"
+                or self.native_resolver_task_grouping != "individual"
+                or self.native_resolver_protocol not in {"task_units", "binary_query"}):
+            raise ValueError("Per-query Reader budget requires individual task selection and query tasks")
+        if self.native_resolver_protocol == "binary_query" and (
+                self.native_task_source != "queries"
+                or self.native_resolver_task_grouping != "individual"
+                or self.rwkvos_reader_input_layout != "original"
+                or self.rwkvos_reader_state_id is not None
+                or self.rwkvos_state_id is not None):
+            raise ValueError("Binary Reader requires individual query tasks, original layout and no legacy state")
+        if self.native_resolver_format_repair and self.native_resolver_protocol != "task_units":
+            raise ValueError("Reader format repair requires task_units")
+        if self.rwkvos_writer_prompt_protocol == "rwkv_g1j_no_think_v1":
+            if (self.native_transport != "rwkvos_batch" or self.rwkvos_prefill_mode != "complete"
+                    or self.native_writer_prefill != "<think></think"):
+                raise ValueError("Canonical Writer protocol requires batch and complete no-think")
+        if (self.rwkvos_reader_input_layout != "original"
+                and self.rwkvos_reader_prompt_protocol != "rwkv_g1j_no_think_v1"):
+            raise ValueError("Reader task_last layout requires canonical prompt protocol")
+        if self.rwkvos_reader_state_id is not None:
+            if not self.rwkvos_reader_state_id.strip():
+                raise ValueError("rwkvos_reader_state_id must be nonempty")
+            if self.rwkvos_reader_prompt_protocol != "rwkv_g1j_no_think_v1":
+                raise ValueError("Reader state requires its canonical prompt protocol")
+        if self.rwkvos_reader_prompt_protocol == "rwkv_g1j_no_think_v1":
+            if (self.native_transport != "rwkvos_batch" or self.rwkvos_prefill_mode != "complete"
+                    or self.native_resolver_prefill != "<think></think"
+                    or self.native_resolver_protocol not in {"task_units", "binary_query"}):
+                raise ValueError("Canonical Reader protocol requires batch, complete no-think and supported selection protocol")
+        return self
 
     @model_validator(mode="after")
     def validate_chunk_overlap(self) -> "Settings":
@@ -146,4 +193,6 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
+    if filename := os.environ.get("RWKVRAG_SETTINGS_FILE"):
+        return Settings(_env_file=None, **json.loads(Path(filename).read_text()))
     return Settings()

@@ -1,0 +1,11 @@
+[Unit]
+Description=RWKVRAG loopback tunnel to GPU3 inference
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/ssh -N -o ControlMaster=no -o ControlPath=none -o BatchMode=yes -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -L 127.0.0.1:18423:127.0.0.1:18423 rwkv-8222
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,11 @@
+{
+  "rows": 17,
+  "supervision": "corrected_output plus EOS only; prompt mask -100",
+  "original_prompt_not_truncated": true,
+  "max_prompt_tokens": 6428,
+  "max_target_tokens_with_eos": 150,
+  "exceeds_training8192": [],
+  "tokens_sha256": "5509fa4015f798d96d86f74931e7539f0f9ba7946998359c6bf0d0813cb6a22a",
+  "role": "seed inspection and development; not included in 2000 new-source training rows",
+  "gpu_training_started": false
+}

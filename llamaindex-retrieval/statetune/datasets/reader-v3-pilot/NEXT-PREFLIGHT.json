@@ -1,0 +1,30 @@
+{
+  "status": "DATA_PREPARED_NO_GPU_RUN",
+  "next_action": "adapt trainer input and run one no-update longest-training-sequence preflight",
+  "model_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239",
+  "dataset": "statetune/datasets/reader-v3-pilot/dataset",
+  "train_export": "data/statetune/reader-v3-pilot-train.jsonl",
+  "train_count": 21,
+  "train_positive": 13,
+  "train_negative": 8,
+  "max_sequence_tokens": 4096,
+  "preflight_case_id": "reader_v3_6124888_03",
+  "preflight_forward_calls": 1,
+  "preflight_backward_calls": 1,
+  "optimizer_updates": 0,
+  "gpu_host": "rwkv-8222",
+  "gpu_uuid": "GPU-5d61943c-0955-e221-92a8-318915f5a3a0",
+  "base_weights_frozen": true,
+  "trainable_state_only": true,
+  "wall_seconds": 1800,
+  "training_budget_increase": false,
+  "read_dev_or_heldout_in_training_process": false,
+  "current_trainer_incompatibility": "Historical v2 runner pins exactly 32 train rows with 16 positive/negative pairs. Do not substitute this 21-row dataset without adapting and checking count, ordering and final partial-batch normalization.",
+  "before_optimizer_training": [
+    "independent semantic review of pilot labels",
+    "bind an adapter that consumes only the exported train tokens",
+    "verify no-update full-length state gradients and unchanged base weights",
+    "freeze optimizer schedule and dev selection criteria separately; this preparation plan permits no updates"
+  ],
+  "failure_policy": "record and stop; no retries, truncation, local GPU fallback or automatic larger budget"
+}

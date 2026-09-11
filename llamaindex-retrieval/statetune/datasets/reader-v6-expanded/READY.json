@@ -1,0 +1,35 @@
+{
+  "dataset": "reader-v6-expanded",
+  "training_data_admitted": true,
+  "train_tokens": "data/statetune/reader-v6-expanded-release/train.tokens.jsonl",
+  "train_tokens_sha256": "3a05af459b89af7771e9d8c40f4d4982a0b4269519a2088beb808cd628d1e752",
+  "release_sha256": "73e9919d12c95f979e2f5f0935fc3ebfc8868f0cb205294e0c8d25540a2e79a0",
+  "case_counts": {
+    "train": 46,
+    "dev": 32,
+    "heldout": 32
+  },
+  "document_counts": {
+    "train": 8,
+    "dev": 8,
+    "heldout": 8
+  },
+  "input_layout": "task_last",
+  "prompt_protocol": "rwkv_g1j_no_think_v1",
+  "max_generation_context_tokens": 4047,
+  "optimizer_updates": 0,
+  "model_quality_validated": false,
+  "gpu_preflight_pending": false,
+  "old_v5_runner_supports_new_count": false,
+  "new_runner": "llamaindex-retrieval/statetune/train_released_state.py",
+  "review_receipt": "INDEPENDENT-REVIEW.json",
+  "semantic_coverage_limit": "dev has no multi-unit gold; heldout multi-unit cases are overlap duplication. This expansion does not yet measure arbitrary multi-hop reasoning.",
+  "preparation_only": true,
+  "gpu_preflight_passed": true,
+  "gpu_preflight_receipt": "llamaindex-retrieval/statetune/datasets/reader-v6-expanded/run/preflight/COMPLETED.json",
+  "gpu_preflight_sha256": "7c6baba411fc4fb4e6291c2a87f2cfe32d3adf10986d34c449f2cdd571e72b8b",
+  "gpu3_released": true,
+  "gpu3_memory_used_mib_after": 15,
+  "full_training_started": false,
+  "new_evaluator": "llamaindex-retrieval/statetune/evaluate_released_state.py"
+}

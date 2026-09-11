@@ -1,0 +1,1040 @@
+{
+  "schema": "reader-state-evaluation-author-semantic-review-v2",
+  "status": "PASS_AUTHOR_REVIEW_PENDING_INDEPENDENT_AUDIT",
+  "reviewer": "Codex data_revision",
+  "at": "2026-09-09T02:49:25.183995+00:00",
+  "train_freeze_before_eval_read": true,
+  "all_12_complete_eval_sources_and_24_conversations_and_all_units_reread": true,
+  "eval_questions_histories_and_support_specs_identical_to_v1_preexisting_specs": true,
+  "train_changed_from_eval": false,
+  "model_api_gpu_calls": 0,
+  "rows": [
+    {
+      "id": "state_dev_001",
+      "split": "dev",
+      "page_id": 6257302,
+      "target": "E1",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "最初名称",
+              "quote": "ONNX最初被命名为Toffee",
+              "quote_sha256": "01f0380834f88ac13055b44e3b802fc015c0a733f9704dd045ac4e357afbf4a9",
+              "page_id": 6257302,
+              "document_id": "zhwiki/6257302",
+              "source_span": {
+                "start": 275,
+                "end": 291,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 275,
+                "end": 291,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 275,
+                "end": 291,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "d44c09c7a229649da99d935da53c8468357600ded030c253183a59f06d9e86db"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_dev_002",
+      "split": "dev",
+      "page_id": 6257302,
+      "target": "NONE",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "全文只有首版2017年及生态沿革，没有1.16.0的发布日期；首个正式版本年份不能归到1.16.0。",
+          "evidence": [],
+          "unit_sha256": "d44c09c7a229649da99d935da53c8468357600ded030c253183a59f06d9e86db"
+        }
+      ],
+      "negative_reason": "全文只有首版2017年及生态沿革，没有1.16.0的发布日期；首个正式版本年份不能归到1.16.0。"
+    },
+    {
+      "id": "state_dev_003",
+      "split": "dev",
+      "page_id": 88736,
+      "target": "E1",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "两词根及含义",
+              "quote": "Mesolithic是從希臘文的mesos和lithos結合而來，Mesos意思為中間，lithos意思為石頭。",
+              "quote_sha256": "6eac91fd781d86b7f0f74446bb0b2c69f893b88f67c50a3520be4e0179388d13",
+              "page_id": 88736,
+              "document_id": "zhwiki/88736",
+              "source_span": {
+                "start": 127,
+                "end": 183,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 127,
+                "end": 183,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 127,
+                "end": 183,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "580d79e22f0d5e28ac1c3b8b6d290f6d9ff346e4e1b6041b8f2fae1d785c9eac"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_dev_004",
+      "split": "dev",
+      "page_id": 88736,
+      "target": "NONE",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "完整原文解释词根、时代及文化，没有首创术语的学者或发表年份；史前起止年代不是术语发表年。",
+          "evidence": [],
+          "unit_sha256": "580d79e22f0d5e28ac1c3b8b6d290f6d9ff346e4e1b6041b8f2fae1d785c9eac"
+        }
+      ],
+      "negative_reason": "完整原文解释词根、时代及文化，没有首创术语的学者或发表年份；史前起止年代不是术语发表年。"
+    },
+    {
+      "id": "state_dev_005",
+      "split": "dev",
+      "page_id": 7190936,
+      "target": "E1",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "最初成立年",
+              "quote": "2002年由兰州交通大学申办",
+              "quote_sha256": "6156978270e02e68e200dd0a2be8d1eee6f87c41e1582493011d7cb611d70201",
+              "page_id": 7190936,
+              "document_id": "zhwiki/7190936",
+              "source_span": {
+                "start": 70,
+                "end": 84,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 70,
+                "end": 84,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 70,
+                "end": 84,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            },
+            {
+              "fact": "学士授予权年月",
+              "quote": "2012年5月，增列为学士学位授予权单位。",
+              "quote_sha256": "5003637ec999a3299f452996570801a15ad4d3e0aaef719203cb0e5003ae5dff",
+              "page_id": 7190936,
+              "document_id": "zhwiki/7190936",
+              "source_span": {
+                "start": 162,
+                "end": 183,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 162,
+                "end": 183,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 162,
+                "end": 183,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            },
+            {
+              "fact": "转设日期与对象",
+              "quote": "2021年2月2日，经中华人民共和国教育部批准，原属兰州交通大学管理的独立学院兰州交通大学博文学院脱离该校管理，并转设为民办普通高等学校兰州博文科技学院",
+              "quote_sha256": "f05db70ca4e0fda1abe549a7ea6be199418236a156d7767497a9a3b348ab8572",
+              "page_id": 7190936,
+              "document_id": "zhwiki/7190936",
+              "source_span": {
+                "start": 259,
+                "end": 335,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 259,
+                "end": 335,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 259,
+                "end": 335,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "26df099ed4576b8e2f0ec90010a4747f15bfc40d7683d8b314ef8225dcb9f054"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_dev_006",
+      "split": "dev",
+      "page_id": 7190936,
+      "target": "NONE",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "正文2012年5月对应博文学院学士授予权，母校仅是申办/管理背景；没有兰州交通大学本校博士授予权时间。",
+          "evidence": [],
+          "unit_sha256": "26df099ed4576b8e2f0ec90010a4747f15bfc40d7683d8b314ef8225dcb9f054"
+        }
+      ],
+      "negative_reason": "正文2012年5月对应博文学院学士授予权，母校仅是申办/管理背景；没有兰州交通大学本校博士授予权时间。"
+    },
+    {
+      "id": "state_dev_007",
+      "split": "dev",
+      "page_id": 4774597,
+      "target": "E1,E2",
+      "unit_count": 2,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "建造年份",
+              "quote": "8 字符建於2010年",
+              "quote_sha256": "87ab85e8cc402e3b8c1fc62c7732755cbb3a165dabe98b3ca6b085bf9f743325",
+              "page_id": 4774597,
+              "document_id": "zhwiki/4774597",
+              "source_span": {
+                "start": 366,
+                "end": 377,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 366,
+                "end": 377,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 366,
+                "end": 377,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            },
+            {
+              "fact": "坡式楼顶面积",
+              "quote": "8 字符擁有約1,700平方米的坡式樓頂",
+              "quote_sha256": "9701482c10a691d9d191cdc790110f4b7df8f0045d33b47457ec5d1dc8676625",
+              "page_id": 4774597,
+              "document_id": "zhwiki/4774597",
+              "source_span": {
+                "start": 602,
+                "end": 622,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 602,
+                "end": 622,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 602,
+                "end": 622,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            },
+            {
+              "fact": "2012AIA奖项",
+              "quote": "美國建築師學會（AIA）：2012建築榮譽獎",
+              "quote_sha256": "83bed0fd7f14838d8e7dd97958e208dd3060b97bb0a35565786d654bd6a76af9",
+              "page_id": 4774597,
+              "document_id": "zhwiki/4774597",
+              "source_span": {
+                "start": 1041,
+                "end": 1063,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 1041,
+                "end": 1063,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 1041,
+                "end": 1063,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "24e521b2558cf59b327c1038958204865bba61b115bd49e11105bf7597cd9036"
+        },
+        {
+          "unit_id": "E2",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "2012AIA奖项",
+              "quote": "美國建築師學會（AIA）：2012建築榮譽獎",
+              "quote_sha256": "83bed0fd7f14838d8e7dd97958e208dd3060b97bb0a35565786d654bd6a76af9",
+              "page_id": 4774597,
+              "document_id": "zhwiki/4774597",
+              "source_span": {
+                "start": 1041,
+                "end": 1063,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 1041,
+                "end": 1063,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 127,
+                "end": 149,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "8d22c7a09378374e770c2572a63d365cf36b68bee122e976795bd028c3a9c354"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_dev_008",
+      "split": "dev",
+      "page_id": 4774597,
+      "target": "NONE",
+      "unit_count": 2,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "全文含绿色设计、面积与奖项，没有2018年实测年度节电量；面积或目标不可转成能源统计。",
+          "evidence": [],
+          "unit_sha256": "24e521b2558cf59b327c1038958204865bba61b115bd49e11105bf7597cd9036"
+        },
+        {
+          "unit_id": "E2",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "全文含绿色设计、面积与奖项，没有2018年实测年度节电量；面积或目标不可转成能源统计。",
+          "evidence": [],
+          "unit_sha256": "8d22c7a09378374e770c2572a63d365cf36b68bee122e976795bd028c3a9c354"
+        }
+      ],
+      "negative_reason": "全文含绿色设计、面积与奖项，没有2018年实测年度节电量；面积或目标不可转成能源统计。"
+    },
+    {
+      "id": "state_heldout_001",
+      "split": "heldout",
+      "page_id": 5197292,
+      "target": "E1",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "BSD授权",
+              "quote": "以BSD授權條款開放原始碼",
+              "quote_sha256": "15b626a8fca38d3b92b075a51d322891c16076e67df010f28becf77ed09ac12e",
+              "page_id": 5197292,
+              "document_id": "zhwiki/5197292",
+              "source_span": {
+                "start": 79,
+                "end": 92,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 79,
+                "end": 92,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 79,
+                "end": 92,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "392dc72cd4da36b24fd502c8e7d818568e53017b6fa01118c6d964b04a876d93"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_heldout_002",
+      "split": "heldout",
+      "page_id": 5197292,
+      "target": "NONE",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "正文提1.2版功能变化但没有2.0发布事件或日期；格式开发/废弃描述不能回答版本日期。",
+          "evidence": [],
+          "unit_sha256": "392dc72cd4da36b24fd502c8e7d818568e53017b6fa01118c6d964b04a876d93"
+        }
+      ],
+      "negative_reason": "正文提1.2版功能变化但没有2.0发布事件或日期；格式开发/废弃描述不能回答版本日期。"
+    },
+    {
+      "id": "state_heldout_003",
+      "split": "heldout",
+      "page_id": 3636651,
+      "target": "E1",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "名称含义",
+              "quote": "蒙古语“乌素图”意为“在水一方”。",
+              "quote_sha256": "c21ab6f1c1d922a583b53e5ae2602093193b2c56e1877615538df518358aff5e",
+              "page_id": 3636651,
+              "document_id": "zhwiki/3636651",
+              "source_span": {
+                "start": 121,
+                "end": 138,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 121,
+                "end": 138,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 121,
+                "end": 138,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "3da47699493c1133e082c1d9b9a5664f4db2c3073f17bf0bed759b4df4688fbd"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_heldout_004",
+      "split": "heldout",
+      "page_id": 3636651,
+      "target": "NONE",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "全文是地理、名称和寺庙沿革，没有2024门票价格，不能推断免票或收费。",
+          "evidence": [],
+          "unit_sha256": "3da47699493c1133e082c1d9b9a5664f4db2c3073f17bf0bed759b4df4688fbd"
+        }
+      ],
+      "negative_reason": "全文是地理、名称和寺庙沿革，没有2024门票价格，不能推断免票或收费。"
+    },
+    {
+      "id": "state_heldout_005",
+      "split": "heldout",
+      "page_id": 6722585,
+      "target": "E1",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "平凡依赖条件",
+              "quote": "一个函数依赖FD: X → Y是平凡的，如果Y是X的子集。",
+              "quote_sha256": "83c239dd1f67b218f44836c123459baf22fd25cef9120caeb7a9fd6ddf1849ce",
+              "page_id": 6722585,
+              "document_id": "zhwiki/6722585",
+              "source_span": {
+                "start": 276,
+                "end": 305,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 276,
+                "end": 305,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 276,
+                "end": 305,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "01cc00734585e278a0f0a01b15a2a9227c5673a90f3c9159d79c3c488389725a"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_heldout_006",
+      "split": "heldout",
+      "page_id": 6722585,
+      "target": "NONE",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "全文只命名阿姆斯特朗公理系统并说可靠完备，没有逐条列基本规则名称；不能从外部知识补齐。",
+          "evidence": [],
+          "unit_sha256": "01cc00734585e278a0f0a01b15a2a9227c5673a90f3c9159d79c3c488389725a"
+        }
+      ],
+      "negative_reason": "全文只命名阿姆斯特朗公理系统并说可靠完备，没有逐条列基本规则名称；不能从外部知识补齐。"
+    },
+    {
+      "id": "state_heldout_007",
+      "split": "heldout",
+      "page_id": 4554642,
+      "target": "E1",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "改名年月",
+              "quote": "2015年2月，经教育部批准，兰州商学院更名为兰州财经大学。",
+              "quote_sha256": "2704aa533ec69595318e470072bd93f42191cf6543e47225b46783cb25a68ed6",
+              "page_id": 4554642,
+              "document_id": "zhwiki/4554642",
+              "source_span": {
+                "start": 59,
+                "end": 89,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 59,
+                "end": 89,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 59,
+                "end": 89,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "aa8c9f8f6c02b187309d098f3909e799702ac7360dc83b14cbc93da5935f3799"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_heldout_008",
+      "split": "heldout",
+      "page_id": 4554642,
+      "target": "NONE",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "完整原文给学校规模、院系及沿革，没有2023该省科类专业录取分数，学生人数/专业数不是分数。",
+          "evidence": [],
+          "unit_sha256": "aa8c9f8f6c02b187309d098f3909e799702ac7360dc83b14cbc93da5935f3799"
+        }
+      ],
+      "negative_reason": "完整原文给学校规模、院系及沿革，没有2023该省科类专业录取分数，学生人数/专业数不是分数。"
+    },
+    {
+      "id": "state_heldout_009",
+      "split": "heldout",
+      "page_id": 5255071,
+      "target": "E1",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "大小质量形成速度",
+              "quote": "GN-z11的大小是銀河系的1⁄25（4%），質量是銀河系的1％，且形成新恆星的速度大約是銀河系的20倍。",
+              "quote_sha256": "f1feffdceaf2ad31515a16ad92caf7e137c5b36b82bb5ea7502936abd08af835",
+              "page_id": 5255071,
+              "document_id": "zhwiki/5255071",
+              "source_span": {
+                "start": 561,
+                "end": 614,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 561,
+                "end": 614,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 561,
+                "end": 614,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "70edff7d1f3ecf38d2388ea8d34843b96b85affe88fe1566d99b225670209d3b"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_heldout_010",
+      "split": "heldout",
+      "page_id": 5255071,
+      "target": "NONE",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "EGSY8p7仅作为先前记录保持者出现并有相对出现时间，大小4%/质量1%属于GN-z11，不能移到EGSY8p7。",
+          "evidence": [],
+          "unit_sha256": "70edff7d1f3ecf38d2388ea8d34843b96b85affe88fe1566d99b225670209d3b"
+        }
+      ],
+      "negative_reason": "EGSY8p7仅作为先前记录保持者出现并有相对出现时间，大小4%/质量1%属于GN-z11，不能移到EGSY8p7。"
+    },
+    {
+      "id": "state_heldout_011",
+      "split": "heldout",
+      "page_id": 232159,
+      "target": "E1,E2",
+      "unit_count": 2,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "免费空间",
+              "quote": "为每个用户免费提供100MB空间",
+              "quote_sha256": "40f76fa6915a59bf11b7e1efec790c207a8fbc83cf07523d32cb7158b36b69e1",
+              "page_id": 232159,
+              "document_id": "zhwiki/232159",
+              "source_span": {
+                "start": 327,
+                "end": 343,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 327,
+                "end": 343,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 327,
+                "end": 343,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "0b6f40624b60f263860f7a8341e3f248094827ca961a9407a3b630a95938db81"
+        },
+        {
+          "unit_id": "E2",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "网页上限",
+              "quote": "Google Page Creator限制使用者的網頁數量不超出100。",
+              "quote_sha256": "153f4fe96cd10258cb2894de90aaa521d757c78ac7011fdd6419bca99a47042c",
+              "page_id": 232159,
+              "document_id": "zhwiki/232159",
+              "source_span": {
+                "start": 1226,
+                "end": 1262,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 1226,
+                "end": 1262,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 74,
+                "end": 110,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "8d8c3770ef3784b3f8cdf19308b06c949d91c57ac364688b67ee99857215f524"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_heldout_012",
+      "split": "heldout",
+      "page_id": 232159,
+      "target": "NONE",
+      "unit_count": 2,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "文章说迁移至Google Sites，但100MB/100页均为旧Page Creator限制，没有2025 Sites配额。",
+          "evidence": [],
+          "unit_sha256": "0b6f40624b60f263860f7a8341e3f248094827ca961a9407a3b630a95938db81"
+        },
+        {
+          "unit_id": "E2",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "文章说迁移至Google Sites，但100MB/100页均为旧Page Creator限制，没有2025 Sites配额。",
+          "evidence": [],
+          "unit_sha256": "8d8c3770ef3784b3f8cdf19308b06c949d91c57ac364688b67ee99857215f524"
+        }
+      ],
+      "negative_reason": "文章说迁移至Google Sites，但100MB/100页均为旧Page Creator限制，没有2025 Sites配额。"
+    },
+    {
+      "id": "state_heldout_013",
+      "split": "heldout",
+      "page_id": 3887457,
+      "target": "E1,E2",
+      "unit_count": 2,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "VNC协议",
+              "quote": "MirrorLink 還使用了 VNC 為基本的通訊協定來在車用娛樂系統上顯示行動裝置上的應用程式畫面，並將使用者的指令輸入送回行動裝置上。",
+              "quote_sha256": "9de3751d52292a7aedb70583be31e3fa8427e572986d5f5bc14c24d626ab9d35",
+              "page_id": 3887457,
+              "document_id": "zhwiki/3887457",
+              "source_span": {
+                "start": 216,
+                "end": 286,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 216,
+                "end": 286,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 216,
+                "end": 286,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "b94b1b6b9390efbc256e5d36c0ce65f3b8e4bb079414dff72ed5b43126cb1b85"
+        },
+        {
+          "unit_id": "E2",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "更名完整日期",
+              "quote": "在 2011 年 9 月 12 日 Terminal Mode 被改名為 MirrorLink",
+              "quote_sha256": "06a3b62587d8f4da5878946f1e7b83b2a6c75d7fd2b5cfa5cd6f4f849a9e7346",
+              "page_id": 3887457,
+              "document_id": "zhwiki/3887457",
+              "source_span": {
+                "start": 1705,
+                "end": 1752,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 1705,
+                "end": 1752,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 521,
+                "end": 568,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "f0a4f04bb9427ff00fab961b06e9c16ba0623314394ba85b4199f44159760000"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_heldout_014",
+      "split": "heldout",
+      "page_id": 3887457,
+      "target": "NONE",
+      "unit_count": 2,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "全文只讨论MirrorLink/Terminal Mode，VNC等技术不能当作Apple CarPlay的协议证据，没有CarPlay所求信息。",
+          "evidence": [],
+          "unit_sha256": "b94b1b6b9390efbc256e5d36c0ce65f3b8e4bb079414dff72ed5b43126cb1b85"
+        },
+        {
+          "unit_id": "E2",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "全文只讨论MirrorLink/Terminal Mode，VNC等技术不能当作Apple CarPlay的协议证据，没有CarPlay所求信息。",
+          "evidence": [],
+          "unit_sha256": "f0a4f04bb9427ff00fab961b06e9c16ba0623314394ba85b4199f44159760000"
+        }
+      ],
+      "negative_reason": "全文只讨论MirrorLink/Terminal Mode，VNC等技术不能当作Apple CarPlay的协议证据，没有CarPlay所求信息。"
+    },
+    {
+      "id": "state_heldout_015",
+      "split": "heldout",
+      "page_id": 1261376,
+      "target": "E1",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": true,
+          "support_scope": "at_least_one_current_requested_fact",
+          "reason": "该完整单元直接包含至少一项当前要求的原文事实；无需独自覆盖全部问题。",
+          "evidence": [
+            {
+              "fact": "主打歌作曲编曲",
+              "quote": "作詞：坂井泉水　作曲：織田哲郎　編曲：明石昌夫",
+              "quote_sha256": "66ba430c31bb8eee2e7a928a83a5bcac79a981969fe41f23586234242e807d94",
+              "page_id": 1261376,
+              "document_id": "zhwiki/1261376",
+              "source_span": {
+                "start": 467,
+                "end": 490,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 467,
+                "end": 490,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 467,
+                "end": 490,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            },
+            {
+              "fact": "B面作曲",
+              "quote": "作詞：坂井泉水　作曲：栗林誠一郎（日语：）　編曲：ZARD・寺尾廣（日语：）",
+              "quote_sha256": "5fecb982b67c0fdb7ca81b2c43bacffacd2cc9af5d7517c16d88b0ed0b5c3320",
+              "page_id": 1261376,
+              "document_id": "zhwiki/1261376",
+              "source_span": {
+                "start": 560,
+                "end": 598,
+                "unit": "unicode_code_points"
+              },
+              "page_span": {
+                "start": 560,
+                "end": 598,
+                "unit": "unicode_code_points"
+              },
+              "unit_relative_span": {
+                "start": 560,
+                "end": 598,
+                "unit": "unicode_code_points"
+              },
+              "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+            }
+          ],
+          "unit_sha256": "1cdc74f8269c16457f123b1ed9a7b0cd644e5069c267c7ef7da437e21bf9c6e8"
+        }
+      ],
+      "negative_reason": null
+    },
+    {
+      "id": "state_heldout_016",
+      "split": "heldout",
+      "page_id": 1261376,
+      "target": "NONE",
+      "unit_count": 1,
+      "current_history_scope_reviewed": true,
+      "complete_source_and_each_unit_read": true,
+      "support_interpretation": "at least one current requested fact per selected unit; all-fields answer completeness not assessed",
+      "unit_judgments": [
+        {
+          "unit_id": "E1",
+          "supported": false,
+          "support_scope": "none_of_current_requested_facts",
+          "reason": "完整页面给单曲1991年2月10日及排行，也提到同名第一张专辑，但没有专辑发行日期或首周销量；单曲日期和名次不能代用。",
+          "evidence": [],
+          "unit_sha256": "1cdc74f8269c16457f123b1ed9a7b0cd644e5069c267c7ef7da437e21bf9c6e8"
+        }
+      ],
+      "negative_reason": "完整页面给单曲1991年2月10日及排行，也提到同名第一张专辑，但没有专辑发行日期或首周销量；单曲日期和名次不能代用。"
+    }
+  ]
+}

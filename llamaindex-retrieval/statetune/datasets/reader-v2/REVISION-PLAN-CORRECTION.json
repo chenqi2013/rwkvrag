@@ -1,0 +1,57 @@
+{
+  "schema": "reader-state-revision-plan-correction-v1",
+  "at": "2026-09-09T02:46:05.503109+00:00",
+  "original_path": "REVISION-PLAN.json",
+  "original_sha256": "55aa301198fde5711e482e7a0069e0a3f16e08da6f2dbc1aa8b49e6fc77fa6e3",
+  "field": "/changes/0/new_support",
+  "incorrect_value": {
+    "fact": "参数名可省略",
+    "quote": "第一个示例中的参数名称是可选的",
+    "quote_sha256": "c926d356f5a58c9ca37903b687bea3487554f8c361eac3cbeb932d903028688b",
+    "page_id": 6397635,
+    "document_id": "zhwiki/6397635",
+    "source_span": {
+      "start": 592,
+      "end": 607,
+      "unit": "unicode_code_points"
+    },
+    "page_span": {
+      "start": 592,
+      "end": 607,
+      "unit": "unicode_code_points"
+    },
+    "unit_relative_span": {
+      "start": 592,
+      "end": 607,
+      "unit": "unicode_code_points"
+    },
+    "basis": "Author read the complete article and current requested fields; these exact quotes bind the explicit semantic judgment, not automatic keyword labels."
+  },
+  "correct_value": {
+    "fact": "评价段重述作者和成书年份",
+    "quote": "景泰元年（1450年）吴敬所著《九章详解比类算法大全》",
+    "quote_sha256": "a83a3a61bbd2c4dea6c8ded440ce38badcddb8d7b03f281ef431d88ffb5a22d6",
+    "page_id": 4003468,
+    "document_id": "zhwiki/4003468",
+    "source_span": {
+      "start": 1235,
+      "end": 1262,
+      "unit": "unicode_code_points"
+    },
+    "page_span": {
+      "start": 1235,
+      "end": 1262,
+      "unit": "unicode_code_points"
+    },
+    "unit_relative_span": {
+      "start": 237,
+      "end": 264,
+      "unit": "unicode_code_points"
+    },
+    "basis": "Independent complete-source/current-conversation semantic reread before any optimizer update; no target RWKV labeling or evaluation output used."
+  },
+  "reason": "build_reader_data_v2_train.py reused the name evidence in the later integrity-check loop, so the final metadata dump referenced the last checked train quote. The already-written state_train_021 gold unit judgment and diff correctly contain the Wu Jing/1450 quote; only this explanatory metadata field was wrong.",
+  "train_inputs_gold_and_labels_unchanged": true,
+  "discovered_by": "root independent inspection; no dev/heldout outcome used",
+  "original_frozen_files_preserved": true
+}

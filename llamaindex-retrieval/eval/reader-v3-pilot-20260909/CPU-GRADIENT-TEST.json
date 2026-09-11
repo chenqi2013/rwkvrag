@@ -1,0 +1,8 @@
+{
+  "host": "rwkv-260304",
+  "CUDA_VISIBLE_DEVICES": "",
+  "gpu_used": false,
+  "result": "1 passed in 2.40s",
+  "test": "test_cpu_gradient.py",
+  "purpose": "actual torch autograd: accumulated per-example loss agrees with mean-of-group reference, singleton denominator1, frozen base unchanged"
+}

@@ -1,0 +1,239 @@
+{
+  "scores": [
+    {
+      "step": 0,
+      "count": 11,
+      "correct": 4,
+      "positive_correct": 0,
+      "negative_correct": 4,
+      "invalid": 1,
+      "negative_false_positives": 0,
+      "cases": [
+        {
+          "id": "reader_v3_1279264_01",
+          "valid": true,
+          "selected": [],
+          "expected": [
+            "E1"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_1279264_02",
+          "valid": true,
+          "selected": [],
+          "expected": [
+            "E2"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_1279264_03",
+          "valid": true,
+          "selected": [],
+          "expected": [
+            "E3"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_1279264_04",
+          "valid": true,
+          "selected": [],
+          "expected": [],
+          "correct": true,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_1279264_05",
+          "valid": true,
+          "selected": [],
+          "expected": [],
+          "correct": true,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_01",
+          "valid": true,
+          "selected": [],
+          "expected": [
+            "E1"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_02",
+          "valid": true,
+          "selected": [],
+          "expected": [
+            "E2"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_03",
+          "valid": true,
+          "selected": [],
+          "expected": [
+            "E2",
+            "E3"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_04",
+          "valid": true,
+          "selected": [],
+          "expected": [],
+          "correct": true,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_05",
+          "valid": true,
+          "selected": [],
+          "expected": [],
+          "correct": true,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_06",
+          "valid": false,
+          "selected": [],
+          "expected": [
+            "E3"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        }
+      ]
+    },
+    {
+      "step": 11,
+      "count": 11,
+      "correct": 0,
+      "positive_correct": 0,
+      "negative_correct": 0,
+      "invalid": 11,
+      "negative_false_positives": 0,
+      "cases": [
+        {
+          "id": "reader_v3_1279264_01",
+          "valid": false,
+          "selected": [],
+          "expected": [
+            "E1"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_1279264_02",
+          "valid": false,
+          "selected": [],
+          "expected": [
+            "E2"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_1279264_03",
+          "valid": false,
+          "selected": [],
+          "expected": [
+            "E3"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_1279264_04",
+          "valid": false,
+          "selected": [],
+          "expected": [],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_1279264_05",
+          "valid": false,
+          "selected": [],
+          "expected": [],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_01",
+          "valid": false,
+          "selected": [],
+          "expected": [
+            "E1"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_02",
+          "valid": false,
+          "selected": [],
+          "expected": [
+            "E2"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_03",
+          "valid": false,
+          "selected": [],
+          "expected": [
+            "E2",
+            "E3"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_04",
+          "valid": false,
+          "selected": [],
+          "expected": [],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_05",
+          "valid": false,
+          "selected": [],
+          "expected": [],
+          "correct": false,
+          "negative_false_positive": false
+        },
+        {
+          "id": "reader_v3_5706573_06",
+          "valid": false,
+          "selected": [],
+          "expected": [
+            "E3"
+          ],
+          "correct": false,
+          "negative_false_positive": false
+        }
+      ]
+    }
+  ],
+  "selected_step": 0,
+  "heldout_eligible": false,
+  "production_promoted": false,
+  "gold_opened_after_durable_raw": true,
+  "heldout_read": false,
+  "independent_dataset_author_review": true,
+  "blind_benchmark": false
+}

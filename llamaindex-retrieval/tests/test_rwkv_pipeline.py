@@ -129,6 +129,31 @@ def test_completed_native_protocol_is_interpreted_without_mutating_raw_text():
     assert result.raw_text == raw
 
 
+def test_fenced_plan_is_interpreted_without_changing_the_model_output():
+    raw = '> 原样思考 </think>\n```json\n{"queries":["q"],"fields":["f"]}\n```'
+    result = native_result("planner", raw)
+    assert parse_plan(structured_body(result), settings()) == {"queries": ["q"], "fields": ["f"]}
+    assert result.raw_text == raw
+
+
+@pytest.mark.parametrize("raw", [
+    '说明\n```json\n{"queries":["q"],"fields":["f"]}\n```',
+    '```json\n{"queries":["q"],"fields":["f"]}\n```\n额外说明',
+    '```json\n{"queries":["q"],"fields":["f"]}\n```\n```json\n{}\n```',
+    '```python\n{"queries":["q"],"fields":["f"]}\n```',
+    '```json\n{"queries":[],"fields":["f"]}\n```',
+])
+def test_fenced_plan_does_not_admit_prose_multiple_blocks_or_invalid_schema(raw):
+    with pytest.raises(ValueError):
+        parse_plan(raw, settings())
+
+
+def test_fenced_plan_preserves_query_budget():
+    raw = "```json\n" + json.dumps({"queries": ["q"] * 7, "fields": ["f"]}) + "\n```"
+    with pytest.raises(ValueError, match="invalid query count"):
+        parse_plan(raw, settings(native_max_queries=6))
+
+
 @pytest.mark.parametrize("status", ["length", "budget_exceeded", "http_error", "timeout"])
 def test_unfinished_model_output_cannot_be_used_as_structured_selection(status):
     with pytest.raises(ValueError):
@@ -431,16 +456,27 @@ async def test_writer_failure_is_reported_without_crashing_or_pretending_complet
 
 
 @pytest.mark.asyncio
-async def test_planner_length_failure_never_starts_retrieval_or_writer():
+@pytest.mark.parametrize("status,raw", [
+    ("length", '>thinking</think>{"queries":["q"],"fields":["f"]}'),
+    ("completed", '>thinking</think>not JSON'),
+    ("completed", '>thinking</think>' + json.dumps({"queries": [str(i) for i in range(7)], "fields": ["f"]})),
+    ("timeout", None),
+])
+async def test_failed_plan_retrieves_original_question_and_keeps_history(status, raw):
     model = FakeModel(planner_result=native_result(
-        "planner", '>thinking</think>{"queries":["q"],"fields":["f"]}', "length",
+        "planner", raw, status,
     ))
-    index = FakeIndex({})
-    response = await RWKVPipeline(settings(), index, model).ask(SearchRequest(question="问题"))
-    assert index.calls == [] and len(model.calls) == 1
-    assert response.generation["status"] == "planner_failed"
-    assert response.answer == ""
-    assert response.generation["model_calls"][0]["status"] == "length"
+    index = FakeIndex({"问题": [hit("fallback-source", "正确证据。", "fallback-doc")]})
+    history = [ConversationMessage(role="user", content="先前的完整对象与更正")]
+    response = await RWKVPipeline(settings(), index, model).ask(
+        SearchRequest(question="问题", history=history, knowledge_base_id="kb"))
+    assert index.calls == [("问题", settings().candidate_k, "kb")]
+    assert [c["stage"] for c in model.calls] == ["planner", "resolver", "writer"]
+    assert response.retrieval["plan"]["fallback"] == "original_question"
+    assert response.generation["model_calls"][0]["status"] == status
+    assert response.generation["model_calls"][0]["parse_error"]
+    assert response.answer == model.last_writer_raw
+    assert "先前的完整对象与更正" in model.calls[-1]["prompt"]
 
 
 @pytest.mark.asyncio

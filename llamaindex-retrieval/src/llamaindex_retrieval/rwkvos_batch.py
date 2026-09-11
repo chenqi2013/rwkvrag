@@ -78,6 +78,22 @@ def inspect_batch_envelope(raw: str, prefill: str) -> dict:
         "raw_text_modified": False}
 
 
+def render_reader_layout(prompt: str, layout: str = "original") -> str:
+    """Apply the measured task-line permutation without changing source bytes."""
+    if layout == "original":
+        return prompt
+    if layout != "task_last":
+        raise ValueError("unsupported Reader input layout")
+    suffix = "\n\nAssistant: <think></think>\n"
+    if not prompt.endswith(suffix):
+        raise ValueError("task_last requires canonical no-think boundary")
+    lines = prompt[:-len(suffix)].split("\n")
+    prefixes = ("User: ", "任务：", "子问题：", "来源：", "原文父级上下文：", "原文：")
+    if len(lines) != 6 or any(not line.startswith(prefix) for line, prefix in zip(lines, prefixes)):
+        raise ValueError("task_last requires the six-line task_units Reader input")
+    return "\n".join(lines[i] for i in (0, 3, 4, 5, 1, 2)) + suffix
+
+
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
@@ -130,6 +146,9 @@ class RwkvosBatchClient:
         timeout_seconds: float = 120, context_window_tokens: int = 16384,
         max_concurrency: int = 32, transport: httpx.AsyncBaseTransport | None = None,
         batch_size: int = 8, batch_wait_ms: float = 5, state_id: str | None = None,
+        reader_state_id: str | None = None, reader_prompt_protocol: str = "legacy",
+        reader_input_layout: str = "original",
+        writer_prompt_protocol: str = "legacy",
         prefill_mode: str = "complete",
         recorder: Callable | None = None, alpha_decay: float = .99, chunk_size: int = 8,
         stop_tokens: list[int] | None = None,
@@ -151,6 +170,20 @@ class RwkvosBatchClient:
                 raise ValueError(f"{name} must be a positive integer")
         if state_id is not None and (not isinstance(state_id, str) or not state_id.strip()):
             raise ValueError("state_id must be a nonempty string or None")
+        if reader_state_id is not None and (
+            not isinstance(reader_state_id, str) or not reader_state_id.strip()
+        ):
+            raise ValueError("reader_state_id must be a nonempty string or None")
+        if reader_prompt_protocol not in {"legacy", "rwkv_g1j_no_think_v1"}:
+            raise ValueError("unsupported Reader prompt protocol")
+        if writer_prompt_protocol not in {"legacy", "rwkv_g1j_no_think_v1"}:
+            raise ValueError("unsupported Writer prompt protocol")
+        if reader_state_id is not None and reader_prompt_protocol != "rwkv_g1j_no_think_v1":
+            raise ValueError("Reader state requires its canonical prompt protocol")
+        if reader_input_layout not in {"original", "task_last"}:
+            raise ValueError("unsupported Reader input layout")
+        if reader_input_layout != "original" and reader_prompt_protocol != "rwkv_g1j_no_think_v1":
+            raise ValueError("Reader task_last layout requires canonical prompt protocol")
         if type(count_input_tokens) is not bool:
             raise ValueError("count_input_tokens must be boolean")
         if input_token_limit is not None and (
@@ -186,6 +219,10 @@ class RwkvosBatchClient:
             raise ValueError("unsupported prefill mode")
         self.prefill_mode = prefill_mode
         self.state_id = state_id
+        self.reader_state_id = reader_state_id
+        self.reader_prompt_protocol = reader_prompt_protocol
+        self.reader_input_layout = reader_input_layout
+        self.writer_prompt_protocol = writer_prompt_protocol
         self.alpha_decay = alpha_decay
         self.chunk_size = chunk_size
         self.stop_tokens = deepcopy(stop_tokens)
@@ -360,8 +397,11 @@ class RwkvosBatchClient:
     ) -> NativeRWKVResult:
         started = perf_counter()
         record = trace if trace is not None else {}
+        reader_stage = stage in ("reader", "resolver")
+        state_id = (self.reader_state_id if reader_stage and self.reader_state_id is not None
+                    else self.state_id)
         record.update(call_id=str(uuid4()), transport="rwkvos_batch", stage=stage, model=self.model,
-                      state_id=self.state_id, messages=deepcopy(messages), evidence_ids=list(evidence_ids),
+                      state_id=state_id, messages=deepcopy(messages), evidence_ids=list(evidence_ids),
                       started_at=_now(), status="pending", http=[], raw_text=None, finish_reason=None,
                       completion_attempted=False, usage=None, termination="unknown",
                       termination_verified=False, provider_finish_reason=None,
@@ -379,6 +419,15 @@ class RwkvosBatchClient:
             if self._closed:
                 raise ValueError("client is closed")
             prompt, prefill = render_batch_prompt(messages, assistant_prefill, self.prefill_mode)
+            if reader_stage and self.reader_prompt_protocol == "rwkv_g1j_no_think_v1":
+                if prefill != "<think></think>" or self.prefill_mode != "complete":
+                    raise ValueError("Canonical Reader protocol requires complete no-think prefill")
+                prompt += "\n"
+                prompt = render_reader_layout(prompt, self.reader_input_layout)
+            if stage == "writer" and self.writer_prompt_protocol == "rwkv_g1j_no_think_v1":
+                if prefill != "<think></think>" or self.prefill_mode != "complete":
+                    raise ValueError("Canonical Writer protocol requires complete no-think prefill")
+                prompt += "\n"
             if type(max_tokens) is not int or max_tokens < 1:
                 raise ValueError("max_tokens must be positive")
             if type(top_k) is not int or top_k < 0:
@@ -396,9 +445,12 @@ class RwkvosBatchClient:
                           "stream": False}
             if self.stop_tokens is not None:
                 parameters["stop_tokens"] = deepcopy(self.stop_tokens)
-            if self.state_id is not None:
-                parameters["state_id"] = self.state_id
+            if state_id is not None:
+                parameters["state_id"] = state_id
             record.update(prompt=prompt, prompt_sha256=sha256(prompt.encode()).hexdigest(),
+                          reader_prompt_protocol=(self.reader_prompt_protocol if reader_stage else None),
+                          reader_input_layout=(self.reader_input_layout if reader_stage else None),
+                          writer_prompt_protocol=(self.writer_prompt_protocol if stage == "writer" else None),
                           requested_prefill=assistant_prefill, prefill=prefill, prefill_mode=self.prefill_mode,
                           requested_temperature=temperature, parameters=deepcopy(parameters))
             call.parameters, call.prefill, call.prompt = parameters, prefill, prompt
@@ -502,7 +554,9 @@ class RwkvosBatchClient:
             call.trace.update(batch_id=batch_id, batch_index=index, batch_size=len(batch),
                               queue_ms=(began - call.started) * 1000,
                               provider_item_latency_ms=None, latency_scope="shared_batch_round_trip")
-            call.trace["http"].append(entry)
+            # A shared HTTP body contains other callers' prompts and answers.
+            # Keep exact wire bytes in the private recorder, never in their API traces.
+            call.trace["http"].append(entry if len(batch) == 1 else {})
         status, choices, response = "transport_error", None, None
         chunks: list[bytes] = []
         try:
@@ -531,8 +585,8 @@ class RwkvosBatchClient:
                 response.raise_for_status()
                 data = json.loads(b"".join(chunks).decode("utf-8"), object_pairs_hook=_json_object,
                                   parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite JSON")))
-                entry["response_json"] = data
                 choices = self._choices(data, len(batch), self.model)
+                entry["response_json"] = data
                 entry["items"] = []
                 for index, (call, choice) in enumerate(zip(batch, choices, strict=True)):
                     envelope = inspect_batch_envelope(choice["message"]["content"], call.prefill)
@@ -575,6 +629,21 @@ class RwkvosBatchClient:
                 status = "transport_error"
             entry["status"] = status
             for index, call in enumerate(batch):
+                if len(batch) > 1:
+                    call.trace["http"][-1].update({
+                        key: entry[key] for key in (
+                            "batch_id", "stage", "url", "started_at", "ended_at", "elapsed_ms",
+                            "http_attempted", "http_status", "response_body_complete", "status",
+                            "request_body_sha256", "response_body_sha256", "error_type",
+                            "recorder_error_type",
+                        ) if key in entry
+                    })
+                    call.trace["http"][-1].update(
+                        batch_index=index, payload_scope="single_item_projection",
+                        payload={**call.parameters, "contents": [call.prompt]},
+                        private_receipt_id=(f"{batch_id}:batch_completed"
+                                            if self._recorder is not None else None),
+                    )
                 call.trace["active_ms"] = (perf_counter() - began) * 1000
                 if status == "completed" and choices is not None:
                     choice = choices[index]

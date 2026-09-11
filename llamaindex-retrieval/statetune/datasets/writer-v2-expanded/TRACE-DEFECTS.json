@@ -1,0 +1,204 @@
+{
+  "schema": "rwkv_trace_defect_curriculum_v1",
+  "status": "design_pending_independent_trace_attribution_review",
+  "author": "root",
+  "train_target": 2000,
+  "checkpoint": "rwkv7-g1j-2.9b-20260831-ctx16384",
+  "current_training_stage": "writer",
+  "retrieval_and_planner_not_mixed_into_writer_labels": true,
+  "quota_basis": "pretraining engineering allocation from diagnosed failure mechanisms, not estimated population frequency",
+  "existing_600_status": "semantically approved generic drafts; require defect-specific admission, not automatically all retained",
+  "additional_1400_status": "source candidates only, no training admission",
+  "fixed_evaluation_200": "retain isolated generic regression; add separately identified trace-mechanism challenges before drawing defect-repair conclusions",
+  "rows": [
+    {
+      "id": "citation_binding",
+      "owner_stage": "writer",
+      "train_target": 350,
+      "observed_symptom": "事实正确但引用错绑或不存在",
+      "anchor": {
+        "request": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/smoke_007.request.json",
+          "sha256": "adbddcead219ee7883de75b41c0501cc1d95c431dae41631af4965a63b112779"
+        },
+        "response": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/smoke_007.response.bytes",
+          "sha256": "54a522ae4c1fbbda4d0764a5f7ff692e51af5b3219b1cf8bc310c6e0d1d18f51"
+        },
+        "independent_review": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/E1-FIXED8-INDEPENDENT-REVIEW.json",
+          "sha256": "126b3cb8c6b9a0f89e2e2eb3dffe9a49390f371e53e497b12e5bb77543074bc5"
+        }
+      },
+      "sample_admission_requirement": "Sources contain required facts; source label order differs from question/answer order; distractors included. Preserve one correct supporting citation per fact."
+    },
+    {
+      "id": "entity_field_binding",
+      "owner_stage": "writer",
+      "train_target": 400,
+      "observed_symptom": "把不同对象、版本和日期拼在一起",
+      "anchor": {
+        "request": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/started/held_021.json",
+          "sha256": "3ffbdf573de63a388e3d54e45f2710288af9e79dab436e2344cc13c10457969c"
+        },
+        "response": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/completed/held_021.json",
+          "sha256": "5ce920426c1c21de7dee3c690ba0da2258a741920183c571efcac8166121ba9d"
+        },
+        "independent_review": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero-INDEPENDENT-REVIEW.json",
+          "sha256": "675230f7bfe13045efa56f179f4de29472e9a0cbd954645c1c4a696dffc2f0bb"
+        }
+      },
+      "sample_admission_requirement": "Competing objects or versions must be visible together, with intact row headers/context. Merely asking an isolated key-value is insufficient."
+    },
+    {
+      "id": "units_and_qualifiers",
+      "owner_stage": "writer",
+      "train_target": 200,
+      "observed_symptom": "单位矛盾或丢失适用范围",
+      "anchor": {
+        "request": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/started/held_004.json",
+          "sha256": "1318426e97057c372840421ceb5110a43589023dbd12cc928764b884d4af001d"
+        },
+        "response": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/completed/held_004.json",
+          "sha256": "139f6cbb07a30d533855273e6b3ac0ca756c1220dd1af200e57a019438320a7c"
+        },
+        "independent_review": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero-INDEPENDENT-REVIEW.json",
+          "sha256": "675230f7bfe13045efa56f179f4de29472e9a0cbd954645c1c4a696dffc2f0bb"
+        }
+      },
+      "sample_admission_requirement": "Evidence must contain meaningful units, scope, negation or quantified restriction; target preserves it without guessing or conversion."
+    },
+    {
+      "id": "missing_evidence",
+      "owner_stage": "writer",
+      "train_target": 400,
+      "observed_symptom": "资料缺失却编造数字、事实和引用",
+      "anchor": {
+        "request": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_370260_03_all_units.request.json",
+          "sha256": "abb90b8456a9082fac4826fc80ffc199cec0524d6b3462c73767bd15b8b6f77c"
+        },
+        "response": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_370260_03_all_units.response.bytes",
+          "sha256": "87a21141a336caaf99a67ad0185d7f54bf6dfd1320e69e9e110b5994a53c6793"
+        },
+        "independent_review": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/ZERO-DEV-INDEPENDENT-REVIEW.json",
+          "sha256": "135d226a105bde0ce47d4982eb0c521f522f121e4f220bb408b5534f94333be5"
+        }
+      },
+      "sample_admission_requirement": "Cover empty, unrelated and partially answerable inputs. Independently verify absence relative to all presented evidence, not reality."
+    },
+    {
+      "id": "multi_part_coverage",
+      "owner_stage": "writer",
+      "train_target": 250,
+      "observed_symptom": "多问漏答或列表遗漏",
+      "anchor": {
+        "request": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/smoke_002.request.json",
+          "sha256": "d5a923a6b1a9fd2f430db67224928181ae0a2feba0b518b14e211f64c5d42279"
+        },
+        "response": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/smoke_002.response.bytes",
+          "sha256": "6752843bae2643605f79a8f5525712ba7ce7f6e45b8c9992241757bba8688341"
+        },
+        "independent_review": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/E1-FIXED8-INDEPENDENT-REVIEW.json",
+          "sha256": "126b3cb8c6b9a0f89e2e2eb3dffe9a49390f371e53e497b12e5bb77543074bc5"
+        }
+      },
+      "sample_admission_requirement": "At least four independently requested facts or a complete explicit list; multiple sources and all facts must be retained. Three isolated field copying alone is insufficient."
+    },
+    {
+      "id": "history_correction",
+      "owner_stage": "writer",
+      "train_target": 250,
+      "observed_symptom": "回答撤回要求，增加不相关断言",
+      "anchor": {
+        "request": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/smoke_004.request.json",
+          "sha256": "b6292a9a55651a78a355c03bc4f557d9203490173c24cad75a0ccd0142411156"
+        },
+        "response": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/smoke_004.response.bytes",
+          "sha256": "52b135438fc4b05a4fb3ffa3de0107d722d18b1711232aea442d01984daf3bd2"
+        },
+        "independent_review": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/ZERO-FIXED8-INDEPENDENT-REVIEW.json",
+          "sha256": "2fb7c0924874175dc3c6d17a41e55c1db1ea7ca8d0bee770ca37585ff10fc0e4"
+        }
+      },
+      "sample_admission_requirement": "Several competing requests and explicit later corrections; judge only active requirements, keep real task history. Two-turn explicit field swap is only introductory coverage."
+    },
+    {
+      "id": "bounded_answer_eos",
+      "owner_stage": "writer",
+      "train_target": 150,
+      "observed_symptom": "答对后继续扩写或重复到截断",
+      "anchor": {
+        "request": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_4271857_02_all_units.request.json",
+          "sha256": "b52acf496e246215cb53b93f23be145a4761dea3b6c618d1353830d91a4a2426"
+        },
+        "response": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_4271857_02_all_units.response.bytes",
+          "sha256": "4d108c8b68b83bc8dc953fe4b9b1dbcb324633cf03c1f701b97c35df804d54c5"
+        },
+        "independent_review": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/ZERO-DEV-INDEPENDENT-REVIEW.json",
+          "sha256": "135d226a105bde0ce47d4982eb0c521f522f121e4f220bb408b5534f94333be5"
+        }
+      },
+      "sample_admission_requirement": "Substantial distracting evidence, narrow active question, complete concise answer with actual EOS; a short training label alone does not establish termination improvement."
+    },
+    {
+      "id": "planner_contract",
+      "owner_stage": "planner",
+      "train_target": 0,
+      "observed_symptom": "模型生成7条queries越界",
+      "anchor": {
+        "request": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/started/held_019.json",
+          "sha256": "f6415f43be5fefa4ca95ffb9af822626e5078737cb504884d3a9a824cd2eb8fb"
+        },
+        "response": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/completed/held_019.json",
+          "sha256": "68352a9b7bf8e027f40dc623e51489994e1d1a59ec513689660334011c8a164e"
+        },
+        "independent_review": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero-INDEPENDENT-REVIEW.json",
+          "sha256": "675230f7bfe13045efa56f179f4de29472e9a0cbd954645c1c4a696dffc2f0bb"
+        }
+      },
+      "sample_admission_requirement": "Keep exact Planner input/output and query contract. Engineering original-question fallback first; any Planner state dataset is separate from Writer training."
+    },
+    {
+      "id": "query_clause_expansion",
+      "owner_stage": "retrieval_code",
+      "train_target": 0,
+      "observed_symptom": "完整历史检索展开超过OpenSearch子句数",
+      "anchor": {
+        "request": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-original-bm-zero/started/held_019.json",
+          "sha256": "eb2d283ce21fc5d44f17cff775bd1082b44c869f8182c2500793ed4a1dc401b1"
+        },
+        "response": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-original-bm-zero/completed/held_019.json",
+          "sha256": "2da3eb7e5f99894163d7688ac0b3ac8a50ea060f552f6e6cfd72e79a97006457"
+        },
+        "independent_review": {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-original-bm-zero-INDEPENDENT-REVIEW.json",
+          "sha256": "85204311db79dc56578d28267a9bd34e8f1e14df176424fd9d01775d46f84c4a"
+        }
+      },
+      "sample_admission_requirement": "Fix lexical execution/expansion and verify full token preservation and recall; do not claim Writer training fixes an OpenSearch exception."
+    }
+  ]
+}

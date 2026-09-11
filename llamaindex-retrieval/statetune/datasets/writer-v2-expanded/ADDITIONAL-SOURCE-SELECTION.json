@@ -1,0 +1,11 @@
+{
+  "counts": {
+    "train_wiki_infobox": 200,
+    "train_wiki_prose": 40
+  },
+  "source_groups": 240,
+  "sources_sha256": "492e89c720d2d12330255da01f834929037d9a94a13569027618a4dad4cc03db",
+  "task_templates_not_independent_sources": true,
+  "corpus_original_rows_sha256": "e7bced2af6051d7359a8e8272505967eda9be5de6948a812a55b709379151fa1",
+  "independent_semantic_review_pending": true
+}

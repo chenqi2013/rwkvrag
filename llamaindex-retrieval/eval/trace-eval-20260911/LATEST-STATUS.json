@@ -1,0 +1,16 @@
+{
+  "status": "INFERENCE_NATIVE_AND_GENERIC_SAMPLE_REVIEW_COMPLETE",
+  "direct_successes": 1281,
+  "direct_errors": 0,
+  "native_cases": 75,
+  "original_bm_cases": 4,
+  "model_calls_verified": 2713,
+  "original_bm_retrieval_exceptions": 2,
+  "service_policy": "retain_comparison_service",
+  "original_service_restoration_requested": false,
+  "updated_unix": 1789103116.7901192,
+  "native_independent_reviews": 79,
+  "generic_sample_root_reviews": 180,
+  "generic_sample_independent_review_pending": false,
+  "generic_sample_independent_reviews": 180
+}

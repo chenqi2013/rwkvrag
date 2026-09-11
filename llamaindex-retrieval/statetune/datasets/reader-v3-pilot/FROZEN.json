@@ -1,0 +1,27 @@
+{
+  "status": "AUTHOR_REVIEWED_DATA_FROZEN_NO_GPU_RUN",
+  "files": {
+    "AUTHOR-REVIEW.json": "e1091c3df054f4c67841fc3f4777fa2eb76808affb883eb085d29cf596712fa4",
+    "AUTHOR-SPECS.json": "c5333bd842c03a37444dc46132af44cab7b970b9ca73b1fe0eb31f9528e287f3",
+    "AUTHORING-PLAN.json": "256c98319c859b778b10a31ca5e7f037947ffb141b796f082efb98bc304cda72",
+    "COVERAGE-AUDIT.json": "14cc974d8ca61bd60ce5c756b457ffb762c8232fba008be26349d09a7e63fafb",
+    "NEXT-PREFLIGHT.json": "163e1948d6f0a20d53e570d3c2f741d7561b7ecb62aa37e8c6a81297e06a5491",
+    "PRIOR-DATA-DISJOINT.json": "e8bc47967cc685d55d15a7183ca9608bc5a15fb593e806d50f8b6208bb4ecdda",
+    "README.md": "fe7a923f3c7bb2acb007bcfbf0628aa00008cdb7639e04fc2425dc3ff5396885",
+    "SOURCE-BINDINGS.json": "53757ec5950c9816881b6238dbe1b64803c21353b05c24d45002a7193cc33fc2",
+    "TRAIN-EXPORT.json": "87a1d586a86bcd12a20b8cea6e5ac53756166424e512e87c80a4f1e10f1e0efa",
+    "annotations.jsonl": "03e55f3bced42489233cbe0274ca61b2528b578e8a6f7f714b503048e846c119",
+    "author_specs.py": "e3133ccb28b8280de0541292886fb0b6ff555fecdbee7def48aca9d83600de89",
+    "dataset/AUDIT.json": "14cc974d8ca61bd60ce5c756b457ffb762c8232fba008be26349d09a7e63fafb",
+    "dataset/EXCLUSIONS.json": "eadf5e39836a558444cee0cb0341987057b9c13e5b469a22870ebb26bd5f094c",
+    "dataset/dev.gold.jsonl": "f01b63495b92f0eb0112396c31a22e77dd43b4c2d8c20875467c55af83ed0b87",
+    "dataset/dev.inputs.jsonl": "05525bf2f5834c9ea1fc2e99957e1389ea01e1094394089cd9d72280c3063ac8",
+    "dataset/heldout.gold.jsonl": "3393edb7ce7c37ec65a688d28790f1adb64858d52087e1a4e761a850ae4fe91e",
+    "dataset/heldout.inputs.jsonl": "ae6772314b51ce4bfbd28330b6374570a7b3f7c9e898780506faea4fc6b273db",
+    "dataset/train.gold.jsonl": "828f20a06e3a2518c42f42e79fc4fbea5d6f5c245c7afdab9318d8efa8793da5",
+    "dataset/train.inputs.jsonl": "355d290d0b4afb4800cff23453fea9a5a4793fe7495f8b47a012d099cfeabd95",
+    "source-drafts.jsonl": "717219ab26bcc0a69197c15252543205dc6f52ab44d347a151db46e1ba0d6208"
+  },
+  "authoring_reproduction_byte_identical": true,
+  "vocab_sha256": "8324476023347dec2964625ccb2075c864d250a9c6d9a74f36daba628de8c008"
+}

@@ -26,6 +26,10 @@ def model_client_options(settings, **overrides):
             if value.get_secret_value():
                 headers[name] = value.get_secret_value()
         options.update(headers=headers, state_id=settings.rwkvos_state_id,
+                       reader_state_id=settings.rwkvos_reader_state_id,
+                       reader_prompt_protocol=settings.rwkvos_reader_prompt_protocol,
+                       reader_input_layout=settings.rwkvos_reader_input_layout,
+                       writer_prompt_protocol=settings.rwkvos_writer_prompt_protocol,
                        stop_tokens=settings.rwkvos_stop_tokens, prefill_mode=settings.rwkvos_prefill_mode,
                        count_input_tokens=settings.rwkvos_count_input_tokens,
                        input_token_limit=settings.rwkvos_input_token_limit,

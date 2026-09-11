@@ -1,0 +1,18 @@
+{
+  "id": "reader_v3_5706573_05",
+  "step": 0,
+  "prompt_sha256": "94c23d7f4809e619fe39fb3445a1c41a500cb3614b3c5ef7db4839b7b6777f9c",
+  "state_sha256": "f4503080abf4210de4240c9e58a7375001043e7fc3d1f3a8d5aceca6c3254fd3",
+  "output": {
+    "token_ids": [
+      23947,
+      0
+    ],
+    "raw_hex": "4e4f4e45",
+    "raw_text": "NONE",
+    "utf8_valid": true,
+    "eos_observed": true,
+    "cap_reached": false,
+    "gold_opened": false
+  }
+}

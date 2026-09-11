@@ -1,0 +1,12 @@
+{
+  "authorization": "用户：那就使用3",
+  "old_gpu_index": 2,
+  "new_gpu_index": 3,
+  "new_gpu_uuid": "GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0",
+  "training_hyperparameters_changed": false,
+  "dataset_changed": false,
+  "model_changed": false,
+  "old_preflight_source_sha256": "9d6dff7cabc007d78b40205649a05a5404e262349ad88db9df2c7c7fe58a20b1",
+  "new_preflight_source_sha256": "d6edbdc99c95fde6c67161456c1da07f953eb6b58f4e8e73cc48aaa2eeaace10",
+  "original_pilot_config_sha256": "0c856d856e28e53cd01d7bc00611db1abb8311f03b7667904415d1ceb23920da"
+}

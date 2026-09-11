@@ -1,0 +1,11 @@
+{
+  "configuration_verified": true,
+  "config_sha256": "0c856d856e28e53cd01d7bc00611db1abb8311f03b7667904415d1ceb23920da",
+  "model_imported": false,
+  "optimizer_updates_this_pilot": 0,
+  "automatic_queue_installed": false,
+  "gpu_available": false,
+  "reason": "GPU2 already has a compute process; no automatic retry",
+  "gpu2_status": "GPU-5d61943c-0955-e221-92a8-318915f5a3a0, 7583 MiB, 0 %",
+  "compute_processes": "GPU-1faf7f09-25f4-2515-b707-6e0766aa841d, 2372127, VLLM::EngineCore\nGPU-5d61943c-0955-e221-92a8-318915f5a3a0, 2529706, /home/chase/GitHub/RWKV-LH/data/runtime/engines/vllm-rwkv-67f0c5996c50/.venv/bin/python"
+}

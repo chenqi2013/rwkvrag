@@ -1,0 +1,25 @@
+{
+  "splits": {
+    "train": {
+      "samples": 21,
+      "positive": 13,
+      "positive_without_E1": 9,
+      "positive_multiple_units": 1,
+      "three_or_more_units": 21,
+      "negative": 8,
+      "max_sequence_tokens": 3432
+    }
+  },
+  "checked_splits": [
+    "train"
+  ],
+  "cross_split_verified": false,
+  "document_disjoint_in_checked_splits": true,
+  "content_disjoint_in_checked_splits": true,
+  "semantic_labels_verified_by_code": false,
+  "scope": "integrity and protocol checks; source semantics require author review",
+  "exported": 21,
+  "sha256": "4ddc2ac1343cee0f5916c8c2847b87a52cb08f68237503db6b8e799d62f217d3",
+  "teacher_forcing": "logits(input_ids[:-1]) predict labels[1:]; ignore=-100; EOS=0",
+  "evaluation_content_read": false
+}

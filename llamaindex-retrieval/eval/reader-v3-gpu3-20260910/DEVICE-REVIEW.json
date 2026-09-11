@@ -1,0 +1,121 @@
+{
+  "status": "PASS",
+  "independent": true,
+  "reviewer": "Codex independent subagent /root/v3_semantic_review",
+  "date": "2026-09-10",
+  "scope": "GPU2到用户明确授权GPU3的最小设备迁移；仅本地源码/配置比较与完全模拟的CPU门禁测试。",
+  "authorized_device": {
+    "hostname": "rwkv-260304",
+    "ssh_alias": "rwkv-8222",
+    "physical_index": 3,
+    "uuid": "GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0"
+  },
+  "source_comparison": {
+    "baseline_path": "llamaindex-retrieval/eval/reader-v3-preflight-20260909/source/preflight_state.py",
+    "baseline_sha256": "9d6dff7cabc007d78b40205649a05a5404e262349ad88db9df2c7c7fe58a20b1",
+    "current_path": "llamaindex-retrieval/statetune/preflight_state.py",
+    "current_sha256": "d6edbdc99c95fde6c67161456c1da07f953eb6b58f4e8e73cc48aaa2eeaace10",
+    "only_changes": [
+      "GPU2文案改GPU3",
+      "唯一允许UUID改GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0",
+      "返回/校验物理index由2改3"
+    ],
+    "model_computation_changed": false,
+    "device_permission_broadened": false
+  },
+  "preflight_configuration": {
+    "path": "llamaindex-retrieval/eval/reader-v3-gpu3-20260910/PREFLIGHT.json",
+    "sha256": "67d3e11e3d5a1a8dcf652a8a5df112e2ac06e798b7c39fd6bbe655023b9f54c4",
+    "baseline_sha256": "ba1d6d792c4c43303176d06353ec34393e09c7957f40c45c39d27f856a30b5b1",
+    "binding_count": 14,
+    "only_changed_binding": "llamaindex-retrieval/statetune/preflight_state.py",
+    "other_config_fields_identical": true,
+    "all_current_code_bindings_verified": true,
+    "optimizer_updates": 0,
+    "model_forward_calls": 1,
+    "backward_calls": 1,
+    "max_sequence_tokens": 4096,
+    "wall_seconds": 1800
+  },
+  "previous_code_review": {
+    "path": "llamaindex-retrieval/eval/reader-v3-pilot-20260909/CODE-REVIEW.json",
+    "sha256": "3a930e34ba31e0c0009758c64d5543fb68d7e686fc219e1672659d6b00d27b96",
+    "all_reviewed_files_unchanged": {
+      "llamaindex-retrieval/statetune/pilot_runtime.py": true,
+      "llamaindex-retrieval/statetune/train_state.py": true,
+      "llamaindex-retrieval/statetune/evaluate_state.py": true,
+      "llamaindex-retrieval/statetune/score_state.py": true,
+      "llamaindex-retrieval/tests/test_state_pilot.py": true
+    },
+    "remains_applicable_to_unchanged_code": true
+  },
+  "mocked_host_guard_tests": [
+    {
+      "case": "correct_host_exact_gpu3_uuid_idle",
+      "result": "ACCEPTED",
+      "mock_subprocess_calls": 2
+    },
+    {
+      "case": "old_gpu2_uuid",
+      "result": "REJECTED",
+      "message": "only rwkv-8222 physical GPU3 is allowed",
+      "mock_subprocess_calls": 0
+    },
+    {
+      "case": "numeric_ordinal_instead_of_uuid",
+      "result": "REJECTED",
+      "message": "only rwkv-8222 physical GPU3 is allowed",
+      "mock_subprocess_calls": 0
+    },
+    {
+      "case": "multiple_visible_devices",
+      "result": "REJECTED",
+      "message": "only rwkv-8222 physical GPU3 is allowed",
+      "mock_subprocess_calls": 0
+    },
+    {
+      "case": "wrong_hostname",
+      "result": "REJECTED",
+      "message": "only rwkv-8222 physical GPU3 is allowed",
+      "mock_subprocess_calls": 0
+    },
+    {
+      "case": "uuid_physical_index_mismatch",
+      "result": "REJECTED",
+      "message": "GPU index/UUID mismatch",
+      "mock_subprocess_calls": 1
+    },
+    {
+      "case": "gpu3_already_occupied",
+      "result": "REJECTED",
+      "message": "GPU3 already has a compute process; no automatic retry",
+      "mock_subprocess_calls": 2
+    }
+  ],
+  "findings": [],
+  "remaining_findings": [],
+  "future_pilot_config": {
+    "reviewed": false,
+    "reason": "DEVICE-REVIEW生成时GPU3新PILOT.json尚未提供；本报告不声称已验证未来文件或尚未完成的预检。",
+    "required_migration_changes": [
+      "仅更新preflight_state.py代码binding",
+      "仅更新preflight/preflight_started的路径与真实SHA"
+    ],
+    "must_preserve": [
+      "其余训练、评估和scoring源码bindings",
+      "全部模型/数据/后端/超参数",
+      "11次训练更新",
+      "dev22个生成结果，cap32和704次前向上限"
+    ],
+    "same_preflight_completed_and_started_run_required": true
+  },
+  "limitations": [
+    "未调用真实nvidia-smi、GPU或网络；不证明GPU3当前空闲或预检已完成。",
+    "本报告为设备迁移代码审查PASS，不是GPU预检或训练质量PASS。",
+    "GPU3新PILOT配置需要在预检完成后另行核验实际receipt及脚本SHA绑定。"
+  ],
+  "gpu_calls": 0,
+  "network_calls": 0,
+  "real_subprocess_calls_in_guard_tests": 0,
+  "source_or_config_modified": false
+}

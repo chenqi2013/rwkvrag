@@ -1,0 +1,28 @@
+{
+  "user_correction": "All data must be based on defects in actual test traces",
+  "supersedes_for_training_admission": [
+    "PLAN.json",
+    "PLAN-v2.json",
+    "PLAN-2000.json"
+  ],
+  "preserves_source_identity_and_split": true,
+  "no_training_executed_on_expansion": true,
+  "required_row_fields": [
+    "failure_family",
+    "anchor_trace_request_sha256",
+    "anchor_trace_response_sha256",
+    "causal_setup",
+    "source_origins",
+    "evidence",
+    "active_requirements",
+    "target",
+    "independent_review"
+  ],
+  "sizes": [
+    100,
+    300,
+    600,
+    2000
+  ],
+  "no_old_failure_answers_in_training": true
+}

@@ -1,0 +1,45 @@
+{
+  "checks": [
+    {
+      "stage": "writer",
+      "count": 100,
+      "exact_approved_token_bytes": true,
+      "prompt_mask_and_eos": true
+    },
+    {
+      "stage": "writer",
+      "count": 300,
+      "exact_approved_token_bytes": true,
+      "prompt_mask_and_eos": true
+    },
+    {
+      "stage": "writer",
+      "count": 600,
+      "exact_approved_token_bytes": true,
+      "prompt_mask_and_eos": true
+    },
+    {
+      "stage": "writer",
+      "count": 1400,
+      "exact_approved_token_bytes": true,
+      "prompt_mask_and_eos": true
+    },
+    {
+      "stage": "resolver",
+      "count": 450,
+      "exact_approved_token_bytes": true,
+      "prompt_mask_and_eos": true
+    },
+    {
+      "stage": "planner",
+      "count": 150,
+      "exact_approved_token_bytes": true,
+      "prompt_mask_and_eos": true
+    }
+  ],
+  "all_passed": true,
+  "writer_subsets_nested": true,
+  "independent_seed_count": 17,
+  "final_training_count": 2000,
+  "gpu_training_started": false
+}

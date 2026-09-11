@@ -1,0 +1,27 @@
+{
+  "author": "Codex",
+  "independent_review": false,
+  "model_generations_used": 0,
+  "source_documents_read_in_full": 8,
+  "cases": 43,
+  "semantic_review": {
+    "positive": "Author selected explicit units from full article and supplied literal supporting quotes. Overlapping units judged individually.",
+    "negative": "Author checked complete articles for absent requested fields; existing dates, capacities, aggregate budgets and names do not answer missing prices, actual traffic, per-household limits or audience metrics.",
+    "history": "Later corrections supersede older requests; older answerable questions do not justify selecting evidence for the newer unsupported request.",
+    "partial": "A unit supporting one subquestion remains positive even when another subquestion lacks support."
+  },
+  "author_tag_counts": {
+    "history_correction": 16,
+    "partial_support": 3,
+    "multi_unit": 3,
+    "aggregate_is_not_per_household": 1,
+    "capacity_is_not_actual_traffic": 2,
+    "rebroadcast_scope": 1
+  },
+  "limits": [
+    "Same author selected and reviewed every split; not a blind or independent evaluation.",
+    "Only 8 documents; multiple questions on each document are correlated.",
+    "Source-grounded labels describe the frozen article, not independently verified external facts.",
+    "No GPU runs or demonstrated semantic improvement."
+  ]
+}

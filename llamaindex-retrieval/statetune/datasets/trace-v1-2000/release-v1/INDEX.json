@@ -1,0 +1,45 @@
+{
+  "final_combined_training_rows": 2000,
+  "seeds_excluded_from_training_count": 17,
+  "writer_subsets_nested": true,
+  "stage_states_separate": true,
+  "training_started": false,
+  "releases": [
+    {
+      "stage": "writer",
+      "count": 100,
+      "release": "release-v1/writer-100/RELEASE.json",
+      "sha256": "77f3bc284a079e445750de70120e584b48d963618ce2b454d5b8655b3c4f3437"
+    },
+    {
+      "stage": "writer",
+      "count": 300,
+      "release": "release-v1/writer-300/RELEASE.json",
+      "sha256": "8d4a76818f4362619458328bd095483c1df21b839020409f845c0068a888a911"
+    },
+    {
+      "stage": "writer",
+      "count": 600,
+      "release": "release-v1/writer-600/RELEASE.json",
+      "sha256": "edf7653472e32c2ed7bec76deb40883ac5dd12550925e31a730eb7166b173296"
+    },
+    {
+      "stage": "writer",
+      "count": 1400,
+      "release": "release-v1/writer-1400/RELEASE.json",
+      "sha256": "7b16b5420d0578dc792147191bb4b6a8adf00764991fd2a67b213649c9af4a85"
+    },
+    {
+      "stage": "resolver",
+      "count": 450,
+      "release": "release-v1/resolver-450/RELEASE.json",
+      "sha256": "c5e271cfb877d6c041bf5f5a5001337633aa971172ee8d5418b0b526e61d7cd3"
+    },
+    {
+      "stage": "planner",
+      "count": 150,
+      "release": "release-v1/planner-150/RELEASE.json",
+      "sha256": "dede4554223abfd7cbfdf28122e7da980337a0a570d6a09b7a84b21ab25dce63"
+    }
+  ]
+}

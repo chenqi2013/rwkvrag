@@ -1,0 +1,21 @@
+{
+  "reviewer": "/root/v3_semantic_review",
+  "recorded_by": "/root",
+  "final_result": "No findings. Lean already. Ship.",
+  "bindings": {
+    "llamaindex-retrieval/statetune/train_released_state.py": "621894df872f10f9bda10d9035daf9451312205e907868dbf1853e9b051d625c",
+    "llamaindex-retrieval/statetune/evaluate_released_state.py": "a24a60094eae61313dcbcfda2c06c5ecce35cbf12fec8350400faaae5cf296ec"
+  },
+  "fixed_findings": [
+    "Pin complete PEFT manifest SHA, not only whatever files a manifest lists.",
+    "Convert SIGTERM into durable FAILED receipt and restore handlers."
+  ],
+  "review_scope": "Train/released evaluation code and CPU input validation; no GPU or model quality review.",
+  "tests": {
+    "training_cpu_passed": 15,
+    "training_cpu_skipped_missing_torch": 1,
+    "combined_training_and_evaluation_passed": 26,
+    "combined_skipped_missing_torch": 1
+  },
+  "frozen_v5_sources_unchanged": true
+}

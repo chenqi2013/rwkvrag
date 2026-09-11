@@ -4,6 +4,9 @@ from datetime import UTC, datetime
 from typing import Any
 from uuid import uuid4
 
+from bson import BSON
+from bson.codec_options import CodecOptions
+from gridfs import AsyncGridFSBucket
 from pymongo import ASCENDING, DESCENDING, AsyncMongoClient, ReturnDocument, UpdateOne
 from pymongo.errors import DuplicateKeyError
 
@@ -91,6 +94,33 @@ class MongoRepository:
         self.jobs = self.database["jobs"]
         self.search_tests = self.database["search_tests"]
         self.search_test_runs = self.database["search_test_runs"]
+        self.payloads = AsyncGridFSBucket(self.database, bucket_name="rag_payloads")
+        self.model_receipts = AsyncGridFSBucket(self.database, bucket_name="model_receipts")
+
+    async def record_model_http(self, event: str, record: dict) -> None:
+        """Private, exact wire receipts. Never exposed through question history."""
+        identity = record.get("batch_id") or record["count_id"]
+        await self.model_receipts.upload_from_stream_with_id(
+            f"{identity}:{event}", event + ".bson", BSON.encode(record),
+        )
+
+    async def _store_large_payload(self, value: dict) -> str | None:
+        raw = BSON.encode(value)
+        # Leave headroom below MongoDB's 16 MiB limit for record metadata.
+        if len(raw) <= 8 * 1024 * 1024:
+            return None
+        identity = uuid4().hex
+        await self.payloads.upload_from_stream_with_id(identity, identity + ".bson", raw)
+        return identity
+
+    async def _load_payload(self, identity: str) -> dict:
+        stream = await self.payloads.open_download_stream(identity)
+        return BSON(await stream.read()).decode(codec_options=CodecOptions(tz_aware=True))
+
+    async def _restore_run(self, run: dict) -> dict:
+        if run.get("payload_ref"):
+            return await self._load_payload(run["payload_ref"])
+        return run
 
     async def connect(self) -> None:
         await self.client.admin.command("ping")
@@ -294,11 +324,16 @@ class MongoRepository:
     ) -> dict[str, Any] | None:
         """Append an immutable execution result to a question's test history."""
         now = utc_now()
+        request_ref = await self._store_large_payload(request)
+        stored_request = ({"question": str(request.get("question") or "")[:10000],
+                           "knowledge_base_id": request.get("knowledge_base_id")}
+                          if request_ref else request)
         if test_id:
             test = await self.search_tests.find_one_and_update(
                 {"id": test_id},
                 {
-                    "$set": {"request": request, "updated_at": now},
+                    "$set": {"request": stored_request, "request_payload_ref": request_ref,
+                             "updated_at": now},
                     "$inc": {"run_count": 1},
                 },
                 return_document=ReturnDocument.AFTER,
@@ -317,13 +352,16 @@ class MongoRepository:
 	                        "knowledge_base_id": knowledge_base_id,
 	                        "created_at": now,
 	                    },
-                    "$set": {"request": request, "updated_at": now},
+                    "$set": {"request": stored_request, "request_payload_ref": request_ref,
+                             "updated_at": now},
                     "$inc": {"run_count": 1},
                 },
                 upsert=True,
                 return_document=ReturnDocument.AFTER,
             )
         if test is None:
+            if request_ref:
+                await self.payloads.delete(request_ref)
             return None
 
         run = {
@@ -333,8 +371,27 @@ class MongoRepository:
             "request": request,
             "response": response,
             "created_at": now,
+            "request_payload_ref": request_ref,
         }
-        await self.search_test_runs.insert_one(run)
+        payload_ref = await self._store_large_payload(run)
+        stored_run = run
+        if payload_ref:
+            generation = response.get("generation") or {}
+            stored_run = {**run, "payload_ref": payload_ref, "request": stored_request,
+                          "response": {
+                              "answer": (response.get("answer", "")
+                                         if len(response.get("answer", "")) <= 65536 else ""),
+                              "sources": [], "retrieval": {},
+                              "generation": {key: generation[key] for key in (
+                                  "pipeline", "status", "model", "failure_category", "failure_reason",
+                              ) if key in generation},
+                          }}
+        try:
+            await self.search_test_runs.insert_one(stored_run)
+        except BaseException:
+            if payload_ref:
+                await self.payloads.delete(payload_ref)
+            raise
         await self.search_tests.update_one(
             {"id": test["id"]},
             {
@@ -382,8 +439,10 @@ class MongoRepository:
             if latest_run_ids
             else []
         )
-        runs_by_id = {run["id"]: run for run in latest_runs}
+        runs_by_id = {run["id"]: await self._restore_run(run) for run in latest_runs}
         for test in tests:
+            if test.get("request_payload_ref"):
+                test["request"] = await self._load_payload(test["request_payload_ref"])
             latest_run_id = test.get("latest_run_id")
             test["latest_run"] = runs_by_id.get(latest_run_id)
         return {
@@ -442,10 +501,12 @@ class MongoRepository:
         test = await self.search_tests.find_one({"id": test_id}, {"_id": 0})
         if test is None:
             return None
+        if test.get("request_payload_ref"):
+            test["request"] = await self._load_payload(test["request_payload_ref"])
         cursor = self.search_test_runs.find({"test_id": test_id}, {"_id": 0}).sort(
             "run_number", ASCENDING
         )
-        test["runs"] = await cursor.to_list(length=None)
+        test["runs"] = [await self._restore_run(run) for run in await cursor.to_list(length=None)]
         return test
 
     @staticmethod

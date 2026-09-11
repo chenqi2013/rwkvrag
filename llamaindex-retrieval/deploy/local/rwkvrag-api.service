@@ -1,0 +1,14 @@
+[Unit]
+Description=RWKVRAG local document question answering
+Wants=rwkvrag-mongodb.service rwkvrag-opensearch.service rwkvrag-tunnel.service
+After=rwkvrag-mongodb.service rwkvrag-opensearch.service rwkvrag-tunnel.service
+
+[Service]
+WorkingDirectory=/home/chase/GitHub/rwkvrag
+ExecStart=/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/bin/python /home/chase/GitHub/rwkvrag/llamaindex-retrieval/deploy/local/start_api.py
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=120
+
+[Install]
+WantedBy=default.target

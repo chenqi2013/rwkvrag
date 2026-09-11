@@ -1,0 +1,42 @@
+{
+  "jobs": [
+    {
+      "name": "writer-1400",
+      "config": "llamaindex-retrieval/eval/trace-training-20260911/PREFLIGHT-writer-1400.json",
+      "sha256": "4dc21d6ae4b8fe8276fe15dd2ae60540d57b97d7d17b271ebe6991def178e8e7"
+    },
+    {
+      "name": "resolver-450",
+      "config": "llamaindex-retrieval/eval/trace-training-20260911/PREFLIGHT-resolver-450.json",
+      "sha256": "79602b253460cc29dfc50b70efda0bfe5b5435a3f891bf405a8b29232585885b"
+    },
+    {
+      "name": "planner-150",
+      "config": "llamaindex-retrieval/eval/trace-training-20260911/PREFLIGHT-planner-150.json",
+      "sha256": "271b78b8dc5942a700fe99f0e8a866e1573ce73bab7070ff925a6a6c9aa7647d"
+    },
+    {
+      "name": "writer-100",
+      "config": "llamaindex-retrieval/eval/trace-training-20260911/PREFLIGHT-writer-100.json",
+      "sha256": "8117adcf68c228cc4f6b3c79f31e1ac90f7350f0434cb438b998342ffc42111e"
+    },
+    {
+      "name": "writer-300",
+      "config": "llamaindex-retrieval/eval/trace-training-20260911/PREFLIGHT-writer-300.json",
+      "sha256": "9eef3ddd5df776fec6b8e330d62a6cade9daf7140c1b9ab0da07e1e96e890db0"
+    },
+    {
+      "name": "writer-600",
+      "config": "llamaindex-retrieval/eval/trace-training-20260911/PREFLIGHT-writer-600.json",
+      "sha256": "d5b61ce95e46807bdc70796fa83cbac20548cf44444d46d077e151478a4774d7"
+    }
+  ],
+  "entry": "llamaindex-retrieval/statetune/train_trace_state.py",
+  "entry_sha256": "3b1fbf5c51081bb3acad481b1bf82007eaec48696968ea34922ae6e50849c46e",
+  "output": "data/experiments/trace-training-20260911-run1",
+  "python": "/home/chase/chase/RWKV-PEFT/.venv/bin/python",
+  "gpu": "GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0",
+  "restore_manager": "llamaindex-retrieval/deploy/local/manage_gpu3.py",
+  "restore_manager_sha256": "96bbeb13ef1d89e887397e7a1bc3f9cdb81d01df3f425b2bd6bcdb88692ffd5b",
+  "production_settings_sha256": "397615981de29749893e0c4170418bed95195c20534ebba42ca93ec547b15552"
+}

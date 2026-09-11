@@ -1,0 +1,222 @@
+{
+  "status": "PREFLIGHT_COMPLETE",
+  "optimizer_updates": 0,
+  "model_forward_calls": 1,
+  "backward_calls": 1,
+  "gradient_checkpointing_internal_recomputation": true,
+  "train_count": 21,
+  "longest_id": "reader_v3_6124888_03",
+  "longest_sequence_tokens": 3432,
+  "state_layers_with_finite_nonzero_gradients": 32,
+  "all_base_weights_equal": true,
+  "state_unchanged_zero": true,
+  "dev_or_heldout_content_read": false,
+  "seconds": 181.93648551777005,
+  "gpu_uuid": "GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0",
+  "probe": {
+    "id": "reader_v3_6124888_03",
+    "sequence_tokens": 3432,
+    "forward_tokens": 3431,
+    "supervised_tokens": 3,
+    "target_only_loss": 2.2381017208099365,
+    "gradients": [
+      {
+        "name": "blocks.0.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 60.814815521240234
+      },
+      {
+        "name": "blocks.1.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 1.5173914432525635
+      },
+      {
+        "name": "blocks.2.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.6569966077804565
+      },
+      {
+        "name": "blocks.3.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 1.0931569337844849
+      },
+      {
+        "name": "blocks.4.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.3352575898170471
+      },
+      {
+        "name": "blocks.5.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.680217444896698
+      },
+      {
+        "name": "blocks.6.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.39824721217155457
+      },
+      {
+        "name": "blocks.7.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.1594817340373993
+      },
+      {
+        "name": "blocks.8.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.4643838405609131
+      },
+      {
+        "name": "blocks.9.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.16545633971691132
+      },
+      {
+        "name": "blocks.10.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.3157156705856323
+      },
+      {
+        "name": "blocks.11.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.2277650386095047
+      },
+      {
+        "name": "blocks.12.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.2967367172241211
+      },
+      {
+        "name": "blocks.13.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.3220805525779724
+      },
+      {
+        "name": "blocks.14.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.31284046173095703
+      },
+      {
+        "name": "blocks.15.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.5007190108299255
+      },
+      {
+        "name": "blocks.16.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.34499260783195496
+      },
+      {
+        "name": "blocks.17.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.3759145736694336
+      },
+      {
+        "name": "blocks.18.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.4222760796546936
+      },
+      {
+        "name": "blocks.19.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.3616243600845337
+      },
+      {
+        "name": "blocks.20.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.34460094571113586
+      },
+      {
+        "name": "blocks.21.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.9374011158943176
+      },
+      {
+        "name": "blocks.22.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.14124895632266998
+      },
+      {
+        "name": "blocks.23.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.2969050407409668
+      },
+      {
+        "name": "blocks.24.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.33140650391578674
+      },
+      {
+        "name": "blocks.25.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.21974919736385345
+      },
+      {
+        "name": "blocks.26.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.195787250995636
+      },
+      {
+        "name": "blocks.27.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.8180620670318604
+      },
+      {
+        "name": "blocks.28.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 1.149945616722107
+      },
+      {
+        "name": "blocks.29.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 1.9218199253082275
+      },
+      {
+        "name": "blocks.30.att.time_state",
+        "finite": true,
+        "nonzero": 163840,
+        "l2": 0.30876073241233826
+      },
+      {
+        "name": "blocks.31.att.time_state",
+        "finite": true,
+        "nonzero": 147456,
+        "l2": 0.011447576805949211
+      }
+    ],
+    "seconds": 154.73094168305397,
+    "peak_allocated_bytes": 8344384512,
+    "peak_reserved_bytes": 8845787136
+  },
+  "quality_evaluated": false,
+  "production_promoted": false
+}

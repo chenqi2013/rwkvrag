@@ -1,0 +1,787 @@
+{
+  "schema": "rwkv_reader_review_v1",
+  "reviewer": "/root/v3_semantic_review",
+  "independent_of_authors": true,
+  "dataset_files": {
+    "train.inputs.jsonl": "91a2210d8e211f3c9b09816b9ea538a8157d63fba37d85e413a38970b76de8a2",
+    "train.gold.jsonl": "bec8e7b877f64cb3bf234551174de35ecc5f4d79c5e7caac46bc6927bfc86dcc",
+    "dev.inputs.jsonl": "28af37b5733043952e4c982a311d39356891b981eb275015ff5f6a34e4bc8977",
+    "dev.gold.jsonl": "ccd3adb0665fdcc123980e0abe9dd6ebfd305e4740c5cd053f266e1230b46297",
+    "heldout.inputs.jsonl": "b7f543462437485e3149b96e5adc68e08a7d340d06e52acc5446b681d3f33688",
+    "heldout.gold.jsonl": "b976bf3b71a0d38729bb54315ad2d823a066b7c9dd7c2908fb451167b7e36b3c"
+  },
+  "cases": [
+    {
+      "id": "reader_v4_3238689_01",
+      "input_sha256": "8257202e4b44ab6ae7d5611422eb752e14306ff321c7475f89e8b8d11253b89b",
+      "gold_sha256": "9052272e01e40508954249ebe5248125d39dfad5829223d0293567a7b49703dc",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_3238689_02",
+      "input_sha256": "87454a2c29ec7d21c474e3217043ecfdf222082d8083066a9b1d53ca1ed09be0",
+      "gold_sha256": "36a34e0aa9a9c3b97a84345dc53d7aec63e852b5e8b4be363950de90f8e9b9c5",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_3238689_03",
+      "input_sha256": "4a63120af38dba5259bfc62d570f5696eb6d66a720839990b6db814fc2f2e2f5",
+      "gold_sha256": "cc7b9ce92972668f744cacbe55168343137195ae05c161389dd62d115151dc51",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_3238689_04",
+      "input_sha256": "08b6a2356f55fb2fab1df1f24b2c2dc83eb34b1efd76f77352f3dc4c6e73046e",
+      "gold_sha256": "79af29534e9d4b22b76022bdc48ccf5daad91565352462853483cb93aac035e3",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_3238689_05",
+      "input_sha256": "282c01fc23d55fcf52ac3869fa3359aec48b95022ea5836ae01bb243c34f183e",
+      "gold_sha256": "5d82a514080948d014cb7d4702aa6e99fa3ba2724831f0302f6efd955c8b350f",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_3238689_06",
+      "input_sha256": "05a0971e93a3179a52ce11fc1338d191330f74a17c37a3c90e95d237f1b98052",
+      "gold_sha256": "57ff5b058f117c87f2f181e343bdb4893c3e55a5204b72fb58c240a061754af5",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_8024544_01",
+      "input_sha256": "0a26d2353b069a9e8109f85040e56a5b8e7cf52e9ee1f3b9756be7776c7b72f0",
+      "gold_sha256": "e005de37c81278fb595ac07c118b0cc7e99bc9dc5d3c0f31775fb93bbda4618c",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_8024544_02",
+      "input_sha256": "1210516d7c2acfe96410157b357bd9e10579a651b1356e0d30fa18c2dd455045",
+      "gold_sha256": "d00edefafba3e243d4d844f7521ebe5bf67358f1d438f8983e523d0ec9b86bc7",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_8024544_03",
+      "input_sha256": "b8f32085653d5e7896714c60b15b3ba726d3912d6644c17943ae1b2cc83e7a7a",
+      "gold_sha256": "50d51580a14064de516fa289cd569af257013472e5259d515c86349001c2cc2e",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2,E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_8024544_04",
+      "input_sha256": "5cf1fc9b3cfb1e8f3ca7258417a7d74c1837e356de0a2d9ac03300fbe6e61479",
+      "gold_sha256": "95c98a696663af6e1018910bb0e4d0c9f7b072c2794c671bb374d953db8c143b",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_8024544_05",
+      "input_sha256": "959baa6c7746bf2e634040569e782d227eed20736e5d1367e8cb7b06daccaeb3",
+      "gold_sha256": "cc1a775749b06d4396055340fbd7d9dd340c38344f9aeff36e20bbec6474d5bf",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_6124888_01",
+      "input_sha256": "f6e479dacd6f2c89d01ba4de9438330ef63bf5476501240d759c4008833423cb",
+      "gold_sha256": "2e639cd0ed42489b368737fa3171d58b45d85f1933d850277a0491bffde94187",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_6124888_02",
+      "input_sha256": "0f1b3562bd5e579c6c2ee70adbd56dc2f3646d78699a2dc9530f2fbb8c792747",
+      "gold_sha256": "c9b112e927e70548296b950a1df125c79bc799e57ec5c5c5e5cd21eb001b93d8",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_6124888_03",
+      "input_sha256": "4fdd148f4e5b1a8f47a370b322356da79cfddde97d999233cb6f95b6b22c7cf7",
+      "gold_sha256": "9ac30f6616ece8679262c303f79ae15d03d88e5f238ac0c559ec7155d2e1c1d2",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_6124888_04",
+      "input_sha256": "dbf1c6fad7de85ca4768178f62417dc9c88ad0d799ebee4a55fbfa85912f5cfc",
+      "gold_sha256": "94876693e85209de7bff9323760f811d2a7611dcb4b9c96c50d7df9cb2c37c2a",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_6124888_05",
+      "input_sha256": "557deb0141714c9b1490c8dbfe7fa30b1acf3c09003f41b45f64b85ba23df326",
+      "gold_sha256": "6100bbf1f92adbb92dbc1713898381c9c94c65f2e61982d37669ade9bcf794de",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_5452404_01",
+      "input_sha256": "74afbc4d9e816dd4a46da04bc02f430d95ad693c93aa987a662faf6eecacdff3",
+      "gold_sha256": "32c1e03049c75731a32a2bfc32bfaa937dc6330ce053d7abcfe93c934c17f060",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_5452404_02",
+      "input_sha256": "ff3a43d2862d69bd0ec9d30153251a56485bca26c6483f3dbccc637a995f22c2",
+      "gold_sha256": "5a07afe247fdf9c04275f1841abca8beb4a9bf555045f741278d74253afede20",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_5452404_03",
+      "input_sha256": "f208b8ca0bfafdaca901a2cb936dc51a019689870640b5b6ccbac065b652d0ef",
+      "gold_sha256": "4627d2c6e86c2502affb038b518dc32b8fbad7dd5e79482eb28c22fa97165709",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_5452404_04",
+      "input_sha256": "45498d47a8de071a132ce7ae92ca7020f95ff2d1cef5f601de3b77a7679a218e",
+      "gold_sha256": "295781159fde7976979d61b2a141068bc9fdd84bfbe67a9e0c4ec4922f922b0e",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v4_5452404_05",
+      "input_sha256": "dfe0e60765d64be82824d713dbda294d24450ad9f02daceda5c193f9fdc4b4f8",
+      "gold_sha256": "ba2570ecf1cd74f6d6ffd5c2545915d6d172f84a9a80678b18eaa9fda3a31f24",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7133379_01",
+      "input_sha256": "cb7afbe533704a15b0184a0cd3c80d8aa216d5f94b0e4f4b7011f11b866b9b33",
+      "gold_sha256": "00b58208bf41dc62619046bade877c98a73019d5902feb3e8a8c77d1aec554b7",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7133379_02",
+      "input_sha256": "998b3ac9977f119d2d027a0bffa4c0f0fec96e43b791d0f2df24eb9728951a8f",
+      "gold_sha256": "a16c742010d45af0f778a54397e45ff2755d845b8fb3148a371fa5ccb4208d71",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7133379_03",
+      "input_sha256": "211de84d734bb902e258b6fdbef4ea05131038a018d3c058fad852e07d31d458",
+      "gold_sha256": "5bbb515b96f6084d8335191d0ecee9ed5d55ea4d6f3b61c6c108dcadfa3b556f",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7133379_04",
+      "input_sha256": "0144e8b577198a1ef7dd61184efe83ba752223f98284e25a049eb570eb606c9b",
+      "gold_sha256": "e85a03b7bd9b10c87ef569a8e68fbf680a586e5286ee55310a56444b6f5bfe69",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E4。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7133379_05",
+      "input_sha256": "ac409a8ca644c8f514e7197a134ec94b9b9a9f330a688c529a273838eae51efc",
+      "gold_sha256": "1173c2458f201e5043d7af912255e11ec76998c8119ddf8537d08d56b540f9fe",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1,E4。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7133379_06",
+      "input_sha256": "4e1f9aa1226ac13d5a8e9bd2eda8d7aea4fef4eecd1b7e7153b972029ae010ac",
+      "gold_sha256": "f28552ec1a1f62f6ffb2cdf420db214143ca6d635aa4498115983d82a3ec97e7",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7133379_07",
+      "input_sha256": "aee3624e597dce31c02be7939bf4205826ea400ebf07bfce48db9a8967b9dc15",
+      "gold_sha256": "f56206e146fdd680cd6ae8188557351a66954ecbe111eb9318579ec0980a13b3",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7340228_01",
+      "input_sha256": "b937d63be0b0a3521114e1e412cf4a8689d722bae5de0ec2fcac4f0a9a6fe484",
+      "gold_sha256": "5b567dad03467760d98047493451cdf96fc48d6c7c8b478e9c5832a154bbbf4c",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7340228_02",
+      "input_sha256": "b788ac09f3edfced4cdfcdc8ca111a93c5b810e3bee5b6e50c1f64a617048e4d",
+      "gold_sha256": "ec84b22db93f626bab20a45cc46b86d8abb191876c396811462bebdc7fd680bb",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7340228_03",
+      "input_sha256": "01be1a8d4b37588f47a4af8a62f82775abf666e87a6abdc1caebb0933f7d2f08",
+      "gold_sha256": "80e99f5276354683ce03175c10f3f55ea1f7956ff0c30f8afa54a009f957b73e",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2,E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7340228_04",
+      "input_sha256": "07746b790c7d7e501782959a065127cdb5f4b703007949bb7fb33f94492e666d",
+      "gold_sha256": "7def654b5b6ecfe415693541804bfe7ab3c54a52c8ef984f225e2b076f2304ad",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1,E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7340228_05",
+      "input_sha256": "92c3017030629b68d9b8fd8f271beab1d13aae5fa51c6cce4c8804b0af4068b8",
+      "gold_sha256": "8d207af0c8e48a57b5e7c2f3f360527d7a49fc252af46946ddcbf2a5a2ae6fcd",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_7340228_06",
+      "input_sha256": "429e6e8da20bc3acebbd98c9a8db4f57c97760fcc739decd517dacc9aa59f453",
+      "gold_sha256": "18990c827cc2ffe10a4b0df724c9d49553da3f7e28ad6926a4ce48229711b429",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8468551_01",
+      "input_sha256": "6f2384a0c78391f7a24418946bad3f09924b15e0f69da0b5c311fecfbdc68c03",
+      "gold_sha256": "14e406fc0ffb7f66ad5c4f559bec42f9c195dee76bb79ed3c9543383e3849fd6",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8468551_02",
+      "input_sha256": "6f849dc5580d9520f7330f169e72deb9d216f7c839c562bd066a2a281acc9398",
+      "gold_sha256": "34ac71c54da079eae78f78c5322773a9946183fb343eef4b227df1f720038c32",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8468551_03",
+      "input_sha256": "2e29d1fb70c0de1e9b9bec1752ae90a7153151964f53ce4e158c0a72f8789b99",
+      "gold_sha256": "755c04ba2e0e6824c9605d16a693d06b0fd5471bb341a0dbc7b4c3070e88855b",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8468551_04",
+      "input_sha256": "d9325d5021804cca4cc60f40ba48f842ca92e58aeff1ca47c1ec0e12ef61f1b9",
+      "gold_sha256": "162902406f84b92df28140cb3cc29378ccdfec926ca315059a70fdf8dabcc0b7",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1,E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8468551_05",
+      "input_sha256": "ad3cb15f42b25ecf7ba30cde38949f44f74d7c4dd005810cbded511b9fc59905",
+      "gold_sha256": "cb9ff3557e8b30587219b47870593bb2310a7bb459dc3c1308a99925a0cf43f8",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8468551_06",
+      "input_sha256": "0946715d5b6ed9241ac6a852a631b0abd87a201723e7044d7221688c2c310657",
+      "gold_sha256": "58b15bf69f713dbaffa7321d26fa5fd85ade05d72820cfc626f8abae2c1551a7",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8753422_01",
+      "input_sha256": "5885abaa81b9ec772dab520a39ee03153b499850e2882bd574fe6787ec3d00cf",
+      "gold_sha256": "19aa88d3292947936d87df84904fca93607cebdead31afa16e35d9bf33dcf6e1",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8753422_02",
+      "input_sha256": "766397568e3b4399b7b0432629ce859e07e5364148a24d3a4de045d089b2578f",
+      "gold_sha256": "8dc67629b26f6e5674cd2a59a2985901966d6a59144535f74624453f4e3c8987",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8753422_03",
+      "input_sha256": "3ef29bfd92fcb78755e23e081ff8efd70900011b5ed8cddafa5c06c42ea1ca1d",
+      "gold_sha256": "0a30a89e8cd1bc9536c6ab032f5768297ac2c81a4ed1e1d4e9aa333a850f48c9",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8753422_04",
+      "input_sha256": "16a08c586d10e979d36ded7680c126adf9146c9ecb81424286b50ccc768e765b",
+      "gold_sha256": "248fbd3b8f4cb362cbd16dbfc543ad8947c4da09d779d2e9f805d1a7658bb678",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1,E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8753422_05",
+      "input_sha256": "cc9c30c3f99da6d04f740794f7296f56e0d368d4b2bb01dcc4b54371792e899b",
+      "gold_sha256": "fcb2c12729626c267f0245f3f4260db4b777dcd15e26d88c42e19d6e3ec45e54",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_8753422_06",
+      "input_sha256": "1d4ca2f3f38c106619c4ded4b722481592a9ae9c5fa7f98296a3966e131a2ee7",
+      "gold_sha256": "9a7e42d09d7b6f01cd703429317c68f35bdd0fc80a0590bde86633a1f29ae12e",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_370260_01",
+      "input_sha256": "a61c79225dc14df365ba628543f3cd8be3ae482bbe9888a153a0b90d4948a6d1",
+      "gold_sha256": "ff60c12b46820aab025c162192825ebc665b0aefa00140448cb43d39f3b38fb5",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_370260_02",
+      "input_sha256": "69ccf2bd5e296ff532814025b36423dea370a043ffa55aa72ff6f520245f7a92",
+      "gold_sha256": "6612d25d667c0b2804e43b8ddffcba6012a48cec74a85f660239db10861b5c33",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_370260_03",
+      "input_sha256": "0a751399d4be57011994ff8b92dcf620a10c1df30834fa6df22711087eec350c",
+      "gold_sha256": "7d432fc292f95031cb8245f7f2cbe3f779f74932e13cc533caf32acc58004101",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_370260_04",
+      "input_sha256": "7bef069f76e14b2baf868a7cf04e7c358ec8096effa70cd8a6adf7d8d3962852",
+      "gold_sha256": "d732ef973fd13a9bbec006255ed185df2749990d2e1f6324d5b955fc654f8d8b",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_4271857_01",
+      "input_sha256": "c157e6eeb642f1392b2154fadb73180325ae3d9c477aad13ca395fc4e3b971ea",
+      "gold_sha256": "6fd7149621b663fd309aa87cc15a9a4941f5207e5fc0af0726245d8e631b95b7",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_4271857_02",
+      "input_sha256": "a51f0c580e97bae52efb2db41bfd551fc6b4dc289cad74ef08bee1f917d7318c",
+      "gold_sha256": "b5230d9c3cec16bd0bd872f5aa5e8ed58d04054dfd2b0266e9fee2e5728cb0d9",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_4271857_03",
+      "input_sha256": "7a73a3ddacd3393d4f8031eb0c1d8c993a0ad0d9022e78e0710259e9d4d51661",
+      "gold_sha256": "61f094e4feb00d7235e98c114a1fe8ea96499bf380832e40767604d3801caf4c",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_4271857_04",
+      "input_sha256": "b709519f637543f9cf2707c7325db68006ed8c6ba14f214dc54191dfd25f42cc",
+      "gold_sha256": "f9612b2c90ddabb0436d81db6c41e890eb6dfbc25d2b88aa583eaa1c496de0bb",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3667615_01",
+      "input_sha256": "064af0ac03698d6f867068570802fa8ee825099a42df6b25ea4f6d0ee21634d5",
+      "gold_sha256": "e6efbe7a3e168fb0c8d5bb1da21999ab7fcd2a89048fc3bb09a45ecc7234bc63",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3667615_02",
+      "input_sha256": "f69328d9030b2a20faf79b8b5ee49cf4d21f450ec28d213a3e0fcdf721815045",
+      "gold_sha256": "b68dfd02b73f5309dbb609e3a5208aec675c753fe56ef8c5cfc469f3334856d7",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3667615_03",
+      "input_sha256": "633d9a280368b809fd883c13d3855c7366b6837f5308496f4fa1382326ba9ce6",
+      "gold_sha256": "9b10dfc231fb899c3982022605fa21924149710ecb1ff4b1cf7343dabe84be13",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3667615_04",
+      "input_sha256": "ff9ec3d73c94ae232881d62ee685706526d6cfed53e3c854ffb9b154c90212fe",
+      "gold_sha256": "22972f8be9548db970641306923d3bca66918fc5c6a994641c998601badd7446",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_14255_01",
+      "input_sha256": "9504806938a94ad2ed3e8274221f4499e1b1311c1224d50e2b396cbf2090f27e",
+      "gold_sha256": "69aaf187d3eccf020faad35187eaa8b6e2b0540ad27cd1440b8a8979ccacfcc5",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_14255_02",
+      "input_sha256": "2f8cf50bbaf4e9f978169a824cd215e174007e598e95f7bf109f06c8a5903f07",
+      "gold_sha256": "e32816384ccace3dc3358d02139efad4da69db7c58eb44a508c3c8ea6516a382",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_14255_03",
+      "input_sha256": "2e5b247342bc8519bc302b4046a2a16ff68ebeef310d3ba0ae897476bbdcc1aa",
+      "gold_sha256": "ac4b1a2466abbbdff2a5f36adac387dff517d0b1d3eb35cba0685cc357e5531e",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_14255_04",
+      "input_sha256": "e5e8c788ef3bdc94c8dc64c2a04f8652976d2ef1a340d8f4b13af7fc4e4b3aea",
+      "gold_sha256": "5e3ad114f2b60ec147214d7373b10ed88ac509038cd5d736c84417e704564ba3",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_8295659_01",
+      "input_sha256": "c470739db6a00428e9728bfa19e1f9c2741e6b86748ddf2f83adabbf5e947b07",
+      "gold_sha256": "fdab9e22970b222acc8d45a65007691508d1e14a41502ab06432a020bc5a4831",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_8295659_02",
+      "input_sha256": "3ecbb8a9aaa38f683282551c5e2e7192f8ebe09e180b531e48a08193b9d8c11b",
+      "gold_sha256": "cefd6fd52858b0eae11bc788d763b3fbf261152091488d140a94d13d97072177",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_8295659_03",
+      "input_sha256": "601e6c1795ed1565523da5aaec1b1798612f30e785f54476be7d81db26097a0d",
+      "gold_sha256": "0949917e39c5fb399b02fd493856f22ca89ce78358e1e42a32973df66c8a7514",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_8295659_04",
+      "input_sha256": "94740d06d8b5a8189b5dd721e2aba847bf1ea3fce9063931eb878b771a2df0c9",
+      "gold_sha256": "31837bd2360b13f53a4030963672cb0c16fa3ca37f17893413b381f8b7877d4c",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_6066934_01",
+      "input_sha256": "f3c4cf7497dababab7583bbc1eb146edc8df6db497408fd4953e4fd93c6fffb6",
+      "gold_sha256": "a950bfe468df5d568a9cff0cc98c8b27204cf0c87ad6a1bdd603e8a14a21c459",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_6066934_02",
+      "input_sha256": "a46865bb7145961d1ec4eb42a9cc46156ff8ad52ded7d22d3d9370d1e3a062a6",
+      "gold_sha256": "6e7c8e6e2ba20d8e52062aa9edb36f8736579de5176c5ffbd785bed0ff7c0c97",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_6066934_03",
+      "input_sha256": "7a7dcb21af5e7c3afea6c10180c32b3bdfdacc2d32d205f1a17c1c1c6f3003bb",
+      "gold_sha256": "4d8df19f3af8cb3761f0c291c82ffc6c776868ed2fc4e304e403ad68fa4221dd",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_6066934_04",
+      "input_sha256": "d3057e1f3d457774f3fc9b15fb61ed8e9ac554e4dc445b3f0f77d92f7df80382",
+      "gold_sha256": "b236f540e8bd6c7d88bf76f82f3c2cb8d5668932d788bba0a253c34dd61088b0",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_100331_01",
+      "input_sha256": "0184cc8f79150ff20f1134e22acddcf84874dbdf8e1c2dfa08506760720e948c",
+      "gold_sha256": "eca19cb7f382d3fe6a69d0cafb76508c42f8c9f09a5829d31f25c35e02bdbfb0",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_100331_02",
+      "input_sha256": "94ec1ce168b0693ab93fbc4825ffa18e17359b820d3356a2fcef67b7a8e53997",
+      "gold_sha256": "68a8497ea2bdac619e016c0f6e3db00a883676ef693e129da46817fcd40c9415",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E4。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_100331_03",
+      "input_sha256": "5ca7677cf7a96726f39bc90df1a334f981d8d24cd65d3f1c8e6f8cfcb151da8b",
+      "gold_sha256": "9ca94f99176d511c35c6b76876d62d028b804a00b32c84463aca238f00f8dce1",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_100331_04",
+      "input_sha256": "94d58d7d8cd510d0037046d91e2a1ec6b193968ea10c6fc9f92c3b39cfb78dba",
+      "gold_sha256": "99496558666fb16ecc3a76e226e433159c76c2736a9a23ecd2c546a843f159dc",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_14253_01",
+      "input_sha256": "414bbc31d6949a06bf147ede4d5fbc5197642bfe105ec5bc2f408c18f0d52de8",
+      "gold_sha256": "92f62edaf024f6e985bff5ed8e2ead5cc467b21f8f1d5cf0c3d44ee4585119bf",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_14253_02",
+      "input_sha256": "cd098cd51f32d5306c1d941918431be14a0ce0965beaa954961fe2f7523f0e92",
+      "gold_sha256": "cd5309685842e4c3f00663713c440b74f6f37225d0140473e763eb45551aa5a1",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_14253_03",
+      "input_sha256": "75b84dbb0835cae4e17ffb867325acdf13dfaf6e6396a707c30761fe234093fa",
+      "gold_sha256": "125d206cdb174ec9a93d3b8be1f5a058097541f3593597df2c7b76f8b23999a2",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_14253_04",
+      "input_sha256": "bc201df81fa1162bcdf9667d8173848b79ab2bb7ea7ef9a1833138280cb4c3b2",
+      "gold_sha256": "dbe9cb4e6d37abf0de3d0f195b9739dd8b0679170cbce072324534e63873e171",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_6477266_01",
+      "input_sha256": "12af3d70934b96b33531ec58e2d426c3d059b14146d4ff995a041d3f5b2d5d38",
+      "gold_sha256": "7ee53d1eeb91952c5da22d9e79c2c8ac91bd4483e5ef2a70a64ddfa8220495e2",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_6477266_02",
+      "input_sha256": "5cb4bdc65bae16c090049dc7205ac4763f4b70edb354ab6293914bbb04545fdf",
+      "gold_sha256": "e80469b5fbf75833f58a641521eafe1c93b26e88ab8211f35f712f0ea2a3ce70",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_6477266_03",
+      "input_sha256": "7f7d732ba293d4999bcff30f8f339572db90bfd8ed639c2a7076914166e95c54",
+      "gold_sha256": "1d2f6098f0a879085103d8c1d9b777ff786641ae602367e75d519009aa4acea4",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_6477266_04",
+      "input_sha256": "9d301978d0bf805575b646765b482d04ce9a31677849323a45a02d7c859d5496",
+      "gold_sha256": "d3688efb6a316bba7269440a20e567494a29ac28f87bb026c2424c91c54b5f34",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_5214431_01",
+      "input_sha256": "d0c293b0045f50f113e0817e9bad49a7a68f6d38cf8926dd0e2760d4e6068c5e",
+      "gold_sha256": "850f0cf9fef582ba1a6b49c5590bce15150e5a50032cde144cc31d5d601583c2",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_5214431_02",
+      "input_sha256": "3a9e906ce2b66ea7044f14b7d336cc86294c788fc162628fe90756de159a718b",
+      "gold_sha256": "bef5a3a591244aef3cc54b4a83e991effa5be85f83ed6c2efe01566a576f45f3",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E4。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_5214431_03",
+      "input_sha256": "deb52b65196103417e111b89eb87052177439a997aa7a341a2c11ea6b1370ebd",
+      "gold_sha256": "b9fb1b795709b8d230918069d787ee01573334f5bc356301c8818fed4e05bd67",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_5214431_04",
+      "input_sha256": "8978f6bd8a575ca20a93f548b2e007a9a8363bcd16dbd9fb39e2adada6a9527d",
+      "gold_sha256": "7bca7acf434d15e25bc8ed8fbe65f21cc80a0ab75630182b218f93800e6447af",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_8647440_01",
+      "input_sha256": "123476486fa2c3d357ddbe0c40a327efa59936cf376c6e0081ec9cbe3f657a05",
+      "gold_sha256": "ddb648fe09adff0c53577bab87105db1de6075a1124082f5ac4f72f53c545d89",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_8647440_02",
+      "input_sha256": "648ab99dff1643d3b51ad57e3c64591f0c60e1e1809538607f76011f165953be",
+      "gold_sha256": "65415cdfcdbb72e59900c5f7087c840bb7961335296d88d734ed5d377119b5fd",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1,E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_8647440_03",
+      "input_sha256": "e1d5cae74dc9055f96e4404f32c1fcc5082292b6059cf4667b44be31ce17499f",
+      "gold_sha256": "6a3f6b146a1e3f9a4b47111229d2de8722841b92efcb4712f910e252f7a0be06",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_8647440_04",
+      "input_sha256": "7bb1f920962ae839979bd61ec22aa5573a348fda8d4978aa99ddde3c30d4c21b",
+      "gold_sha256": "84d377e1bb38a21617703295ee567c53de1924b00d7aaec5b54db8b776229a8c",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_102495_01",
+      "input_sha256": "68502b9db8605c2db6a7608288cbb5119fb0eaa218a25e1f8214d6ed750231af",
+      "gold_sha256": "9537f72d420a74ffe7a8d5bf6e05462f3c2df152930df3f158c2bef3723ecf86",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_102495_02",
+      "input_sha256": "b3f7a9d91da3a08d73184e54e0e5084c4b9fb95ab3c95a6749c07cf4b04ff83f",
+      "gold_sha256": "2e09231ed48222114e2a93285e6578a6cc09b78622db8073815ab9bd60bca9c6",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_102495_03",
+      "input_sha256": "8e34810970a6066176553f51327edd1aa7d6ff39c251fe20be04df1bd29e2632",
+      "gold_sha256": "be3968305bd48bc274ce71c3e75bc77a39e56926fee9c94502d2e609662c6b4d",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_102495_04",
+      "input_sha256": "110ec62b8bb0fe35469650bcfac36c5266a6fe8c4b4485689892875e2dee303d",
+      "gold_sha256": "cd4a6cdbe682348f80e47402f19e26964ce9f018c2d46dad09250f6a52509c09",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3511317_01",
+      "input_sha256": "a1c170318e239650f343312239cb63240a23e2fc4e74689add9967ee4fc55915",
+      "gold_sha256": "8fbb00abf362e9ca0adfb7dc8c16474a0497f4aafca0c051b9316af9b2a78c03",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3511317_02",
+      "input_sha256": "5517db87881b984fd546dc70ee98ea1d1b3074a393fcf510aba8296fa06d8ca7",
+      "gold_sha256": "14ff9dc244e859e39f43095dd87caf0d00c1a341aff7462760d2598022b40f82",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3511317_03",
+      "input_sha256": "5362680a38bf3a05e8f03e6d414005180195877fcab781ecbcc0d042613ebe20",
+      "gold_sha256": "7c9c8ab631b2967c70a37b46608af86c0ea243f1ab025f54bda9ae84dcc94306",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3511317_04",
+      "input_sha256": "f902f0619b489ce677e23d73cd1bd7ae845e35c8af13d08f6473e87ca77afe87",
+      "gold_sha256": "67fd83818168b398f4f847e3bf16498ec72c9821980594e84a16ed3cd0919c23",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_4007069_01",
+      "input_sha256": "98c5fab1fd8e073d66c0d945e321dce71b784d43bdd49d648ee6e92828994f42",
+      "gold_sha256": "2165c83b87a5d268cee27b938ff245591d5411c90f98402aa1d42910d5faccf7",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_4007069_02",
+      "input_sha256": "f59597480dfe90dc44dc4c38674b7ad5d088341a5bf6243dea2202e5521b5ede",
+      "gold_sha256": "c30b1dea8d8b9955885f5bcae15c6432ae15ccd444b8294c39c767df5bd7ab4f",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_4007069_03",
+      "input_sha256": "3836be0652192ac9b9ee101fbdc96cf65b050c893c951c7167273b0a45f395dc",
+      "gold_sha256": "32f4f7c793e2b86c349c778ff3186bb86c8c1a2aa5e3ca528fef80d978c89a02",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_4007069_04",
+      "input_sha256": "0eedfa0e84dfbbad2de8f05909db6f418935a63c67afde640e2bef799e213c3b",
+      "gold_sha256": "99b44eaff185602a059ac92da13e645b1de934309207d756fa1c0eaf9303ec8d",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3927709_01",
+      "input_sha256": "f1bda1f4d4b30191828d3bc86d9a0d2431d91e52687f1eda60ca07045d988bf0",
+      "gold_sha256": "19cb92cca6486613ac2e3ce17a8a6287fff490e59b8c5eb7ada30eedcf70a9dc",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3927709_02",
+      "input_sha256": "d8efb00befba673604ef7c6336eb2390e924b416d2232ec00acc2523d1e68723",
+      "gold_sha256": "16c65203720695b464e6d7ef4255b071c5db8b65a232305964bc1ea627d1566d",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E3。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3927709_03",
+      "input_sha256": "073d0a1ed3a6741ebd3ff2a34c69c89f5fc159a353a44e021e5b4ac138f73daf",
+      "gold_sha256": "9f140e1cc919b052b5e57039dc51696550f35377770d57dd7fded294bdb887c8",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_3927709_04",
+      "input_sha256": "88c6222a2079adbbc551ce29baa8dd5bb357c9011b8346932bafe93486006e33",
+      "gold_sha256": "44365600247c88d398c793f2242a84408a48ad98aff5e2732fdf5fff44d1070c",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_7775972_01",
+      "input_sha256": "0b373f81d4f034eb02bcfdb5b6ae2c3a436e17df5563f6d876439cb16820c54b",
+      "gold_sha256": "dbfd17c2384bb14819a24a5b517395a4ffa402924d2275d8ed375b57b84c1ed2",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_7775972_02",
+      "input_sha256": "9aa666d53b841a49274c0ee899efa740eefbcff063ae8889aa5763e698b89b86",
+      "gold_sha256": "978159cfae668715b9a22713b1e6d8d20bf0b2b3402ab7d669a16c2f4b875c48",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：E1,E2。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_7775972_03",
+      "input_sha256": "ce209e613eb3820a484099263f5b360f7f9865afd54283f947c348e3c27c4812",
+      "gold_sha256": "f618551ddd11e1e7806dd5f67f6ba171833e2e7ba3fb2bbe4b608c0308ac3c8a",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    },
+    {
+      "id": "reader_v6_eval_7775972_04",
+      "input_sha256": "4b198437d55fbb89ed806e7b35463d6ec794263cc3f744e9a5e62b253bdf4863",
+      "gold_sha256": "18aa18de029c4b355f6b6dfca4dcdbabe1549dc807dbaf2e92ccff16df66ba97",
+      "decision": "approve",
+      "notes": "独立代理逐条复核通过；最终输入、当前问题、各单元支持判断及逐字证据绑定一致。核对目标：NONE。完整批准及范围见 INDEPENDENT-REVIEW.json。"
+    }
+  ],
+  "recorded_by": "/root",
+  "review_basis": "INDEPENDENT-REVIEW.json; explicit independent approval of all110 final cases and six file hashes"
+}

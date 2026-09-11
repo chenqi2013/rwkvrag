@@ -1,0 +1,25 @@
+{
+  "scope": "Next-round CPU dataset preparation only; no GPU updates or candidate retuning after v5 heldout.",
+  "input_layout": "task_last",
+  "layout_basis": "Chosen from v5 dev before any v5 heldout gold read; fixes train/serving layout mismatch.",
+  "train_sources": "Frozen v4train21 plus independently approved v6train25, eight documents total.",
+  "dev_sources": "The eight hash-assigned dev documents from reader-v6-next-balanced-drafts.",
+  "heldout_sources": "The eight hash-assigned heldout documents from reader-v6-next-balanced-drafts.",
+  "case_target": {
+    "train": 46,
+    "dev": 32,
+    "heldout": 32
+  },
+  "evaluation_case_policy": "Four manually judged cases per document, normally two positive and two same-topic unsupported; no forced citation-only position labels.",
+  "independent_review_required": true,
+  "full_release_required": true,
+  "optimizer_updates": 0,
+  "training_ready": false,
+  "next_heldout_is_not_a_blind_human_benchmark": "Data author/reviewer see labels during construction; future model training/evaluation must keep heldout files outside training processes.",
+  "source_bindings": {
+    "llamaindex-retrieval/statetune/datasets/reader-v4-canonical/annotations.jsonl": "d8cf71d0f9538318817a1fa9449a590921ca4566a824458e3b0eb907fea93c6e",
+    "llamaindex-retrieval/statetune/datasets/reader-v6-train-drafts/annotations.jsonl": "a2fd2e7aa54c02d97d258bef3308ed90e3c3ee52ab5f47ccc412dea8a116505b",
+    "data/statetune/reader-v6-next-balanced-drafts/dev.drafts.jsonl": "0e0a564f84ea797155c8655a54ee2d8c106908dfc5d12e9b4313816b1a9371ef",
+    "data/statetune/reader-v6-next-balanced-drafts/heldout.drafts.jsonl": "cafa8350f5dde500c5cb98ca9af1c78de64ee6ed7096c8b8af6e181720392ac6"
+  }
+}

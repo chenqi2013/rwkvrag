@@ -1,0 +1,18 @@
+{
+  "provenance": "Root transcription of independent reviewer messages; not authenticated signature",
+  "reviewer": "/root/v3_semantic_review",
+  "training_entry_no_blocking_findings": true,
+  "six_cpu_configs_passed": true,
+  "cross_stage_budget_binding_preflight_negative_checks_passed": true,
+  "unique_train_rows": 2000,
+  "planned_backwards": 3000,
+  "planned_updates": 1500,
+  "planned_zero_update_preflights": 6,
+  "known_supervisor_issue": "run_training.py restoration timeout can exit0; live run left immutable, independent finalize_training.py checks restoration and final failure state",
+  "remote_settings_sha256": "397615981de29749893e0c4170418bed95195c20534ebba42ca93ec547b15552",
+  "local_settings_not_deployed": true,
+  "training_entry_sha256": "3b1fbf5c51081bb3acad481b1bf82007eaec48696968ea34922ae6e50849c46e",
+  "training_success_not_yet_claimed": true,
+  "outer_finalizer_independently_reviewed": true,
+  "outer_finalizer_mock_scenarios_passed": 5
+}

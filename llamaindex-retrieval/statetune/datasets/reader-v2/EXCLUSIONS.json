@@ -1,0 +1,1086 @@
+{
+  "excluded_page_ids": [
+    6578,
+    20078,
+    39908,
+    51222,
+    53153,
+    71445,
+    107617,
+    128503,
+    132690,
+    133038,
+    141541,
+    142539,
+    146089,
+    147360,
+    147371,
+    147376,
+    150134,
+    152262,
+    155794,
+    160266,
+    170356,
+    220657,
+    247149,
+    254349,
+    286381,
+    286383,
+    286386,
+    286494,
+    286573,
+    286585,
+    291402,
+    305635,
+    313864,
+    323466,
+    328847,
+    328852,
+    340099,
+    354856,
+    364672,
+    365208,
+    378313,
+    385425,
+    407714,
+    435301,
+    439874,
+    466265,
+    470497,
+    505590,
+    521389,
+    530321,
+    583930,
+    634458,
+    679229,
+    716252,
+    720674,
+    724582,
+    737630,
+    761451,
+    763356,
+    806802,
+    854886,
+    910485,
+    920849,
+    932787,
+    934235,
+    940231,
+    956643,
+    959759,
+    972754,
+    993602,
+    1043878,
+    1067323,
+    1070238,
+    1071234,
+    1081264,
+    1094293,
+    1112558,
+    1118177,
+    1159904,
+    1164951,
+    1175673,
+    1184823,
+    1205590,
+    1221282,
+    1252965,
+    1266599,
+    1287206,
+    1342169,
+    1391505,
+    1416012,
+    1457852,
+    1550601,
+    1577218,
+    1593361,
+    1602460,
+    1610390,
+    1627789,
+    1648785,
+    1666312,
+    1674322,
+    1711021,
+    1746601,
+    1769282,
+    1793631,
+    1805019,
+    1829917,
+    1893815,
+    2811375,
+    2839881,
+    2850889,
+    2873741,
+    2911820,
+    2912461,
+    3035610,
+    3043987,
+    3117844,
+    3243356,
+    3356884,
+    3493124,
+    3542233,
+    3675734,
+    3677287,
+    3789136,
+    3796269,
+    3803511,
+    3900926,
+    3939272,
+    3983260,
+    3994861,
+    4111517,
+    4119577,
+    4200732,
+    4209918,
+    4378948,
+    4528007,
+    4570193,
+    4659096,
+    4659204,
+    4687332,
+    4691736,
+    4729283,
+    4756675,
+    4781042,
+    4790407,
+    5040620,
+    5157662,
+    5193253,
+    5241488,
+    5258668,
+    5303678,
+    5319644,
+    5377094,
+    5383719,
+    5397602,
+    5402585,
+    5432201,
+    5472006,
+    5529088,
+    5545987,
+    5555035,
+    5557845,
+    5577579,
+    5645297,
+    5670546,
+    5708850,
+    5765582,
+    5911357,
+    5921313,
+    5935986,
+    5957892,
+    6002412,
+    6016235,
+    6022733,
+    6057529,
+    6069130,
+    6177371,
+    6349970,
+    6372575,
+    6428191,
+    6458943,
+    6483257,
+    6491607,
+    6575550,
+    6602366,
+    6995082,
+    7035429,
+    7052016,
+    7052033,
+    7052170,
+    7060023,
+    7070393,
+    7141397,
+    7142196,
+    7184195,
+    7211258,
+    7244916,
+    7246395,
+    7318899,
+    7321359,
+    7328055,
+    7343375,
+    7356771,
+    7373193,
+    7432305,
+    7432367,
+    7438076,
+    7465005,
+    7483286,
+    7523464,
+    7524415,
+    7570022,
+    7583642,
+    7658065,
+    7748637,
+    7792964,
+    7819288,
+    7913141,
+    7914308,
+    7918490,
+    7992603,
+    8045921,
+    8125693,
+    8131378,
+    8176507,
+    8249183,
+    8363287,
+    8402403,
+    8505154,
+    8544811,
+    8545674,
+    8545900,
+    8562883,
+    8669283,
+    8700902,
+    8738767,
+    8740375,
+    8765385,
+    8825898,
+    8858222,
+    8904482,
+    9015142,
+    9041818
+  ],
+  "origins": {
+    "932787": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "7658065": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "8131378": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "1666312": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "286381": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "286386": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "7913141": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "7914308": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "1067323": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "2850889": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "4691736": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "323466": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl"
+    ],
+    "286494": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "1112558": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "5432201": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "5557845": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "972754": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "6578": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "133038": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "305635": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "4209918": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "4200732": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "7432367": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "7432305": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "7918490": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "8249183": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "8545674": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "286573": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "286585": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "5935986": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "6022733": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "7583642": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "3994861": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "940231": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "505590": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json",
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "8176507": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "7343375": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "1164951": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "583930": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "142539": [
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "6016235": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl"
+    ],
+    "470497": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "1287206": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "1610390": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "5383719": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "5555035": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "1252965": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "530321": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "5765582": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "364672": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "155794": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "365208": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "53153": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "150134": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "6177371": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "354856": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "5157662": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "8904482": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "7373193": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "1070238": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "1071234": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "1221282": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "286383": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "6483257": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "4790407": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "4659096": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "5258668": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "5193253": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "6458943": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "6372575": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "1805019": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "313864": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "1094293": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "220657": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "1205590": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "716252": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "5402585": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "1416012": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "3243356": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "4570193": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "8125693": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "806802": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "3542233": [
+      "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl"
+    ],
+    "6575550": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "1550601": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "4687332": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "7035429": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl",
+      "explicit exposed Reader object"
+    ],
+    "1593361": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "679229": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "4756675": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "8700902": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "7052016": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "7052033": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "7052170": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "763356": [
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "5545987": [
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "1081264": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "1674322": [
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "1184823": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "1342169": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "8738767": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "328847": [
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "328852": [
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "7483286": [
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "4111517": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "170356": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "3493124": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "4659204": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json",
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "128503": [
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "3803511": [
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "20078": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "959759": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "1829917": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "8045921": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json",
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl",
+      "explicit exposed Reader object"
+    ],
+    "5708850": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json",
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl",
+      "explicit exposed Reader object"
+    ],
+    "5397602": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json",
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl",
+      "explicit exposed Reader object"
+    ],
+    "1118177": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json",
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl",
+      "explicit exposed Reader object"
+    ],
+    "146089": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "3675734": [
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "724582": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "9041818": [
+      "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "7792964": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "737630": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json",
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "8363287": [
+      "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl"
+    ],
+    "71445": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7438076": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7142196": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5911357": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "378313": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "6602366": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "2911820": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7184195": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5040620": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "993602": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7070393": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5319644": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "247149": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1043878": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1159904": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5377094": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5577579": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1627789": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1746601": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "3043987": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "8740375": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "439874": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1893815": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "8765385": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "934235": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7211258": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "720674": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "4378948": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "8402403": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "6428191": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "8858222": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "6057529": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5921313": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "8545900": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "4528007": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "3900926": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1793631": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7570022": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "3983260": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "147376": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1175673": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7748637": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "4781042": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1648785": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5529088": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7523464": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1711021": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "6995082": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7328055": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7060023": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "39908": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5472006": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "3789136": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "920849": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "3796269": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "8505154": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7141397": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "147360": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "761451": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "8669283": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7356771": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "3677287": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7819288": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "141541": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7465005": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "521389": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "132690": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1577218": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "2912461": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "6069130": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7321359": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7246395": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "147371": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1266599": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "8562883": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "107617": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "6349970": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "4119577": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "9015142": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "4729283": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7992603": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "51222": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "385425": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "2811375": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5303678": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5241488": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "466265": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "6002412": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "2873741": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "8544811": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "7318899": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "8825898": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "1602460": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "291402": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5645297": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "5957892": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json",
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "407714": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json"
+    ],
+    "3939272": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "1769282": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "7244916": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "634458": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "854886": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "5670546": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "7524415": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "340099": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "956643": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "152262": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "2839881": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "3035610": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "435301": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "3117844": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "160266": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "1457852": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "6491607": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "910485": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "1391505": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "254349": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ],
+    "3356884": [
+      "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json"
+    ]
+  },
+  "source_bindings": {
+    "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/development.jsonl": {
+      "bytes": 48402,
+      "sha256": "e05677bb59857078eb6655d99c5f6116d97979e2567d5f81d3a336a079e2102e"
+    },
+    "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/suite/holdout.jsonl": {
+      "bytes": 124794,
+      "sha256": "1856673b35a82517f12486a085893738ce5bc1a30cf20ccb0f4f348bf19b7ff0"
+    },
+    "/home/chase/GitHub/rwkvrag-wiki-iteration-20260908/suite/holdout.jsonl": {
+      "bytes": 166508,
+      "sha256": "cdb786986709f8422e8dedbc50562909a7b64c8d873b498bd0083c7ee8f60bf6"
+    },
+    "/home/chase/GitHub/rwkvrag-wiki-evidence-budget-20260908/suite/holdout.jsonl": {
+      "bytes": 202295,
+      "sha256": "50edd715fd81cdc545b3a7bd952f840d78ab6876d41496ab9d5a3d8f4938d0ca"
+    },
+    "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl": {
+      "bytes": 64395,
+      "sha256": "469dec3deb84115dceaec16af72a9f98f0ee51db503d4cfeeeed73e27e46a258"
+    },
+    "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_004.json": {
+      "bytes": 5504499,
+      "sha256": "7652543580eac4b9ca9576a151f974011ed0bf5440197bf751edc57bba283b47"
+    },
+    "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_010.json": {
+      "bytes": 26675,
+      "sha256": "f9007f425c43369b1df964e3411d1d614b0bb407f6af5d36edd9eb07fad8ae6e"
+    },
+    "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_012.json": {
+      "bytes": 26281,
+      "sha256": "9f6fc4e56cde390edd289ca6ca5411b857bce69c9629b5b13bbe9ab5cd228038"
+    },
+    "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_014.json": {
+      "bytes": 26047,
+      "sha256": "93953dc800abff3a1b8eeeb135d0a924ae51c226bb713c1110ee017317647cef"
+    },
+    "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_016.json": {
+      "bytes": 5447855,
+      "sha256": "98245972411a82951e5597dcd56d7f0c2b77338fb5b70c2b741b6b7a58260400"
+    },
+    "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_017.json": {
+      "bytes": 55393,
+      "sha256": "13b13a1a79316ce956c2e171ba565cd81547c2be2a1aaa2293b57fa36239c7f7"
+    },
+    "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_019.json": {
+      "bytes": 54800,
+      "sha256": "929d72cf5ce5284bbe20f1e0a9f1edc78f58f0048a54d2ff2d214d5b05fd0917"
+    },
+    "/home/chase/GitHub/rwkvrag-bm-29b-20260908/wiki-api-v1-eos/completed/held_021.json": {
+      "bytes": 71276,
+      "sha256": "73679987bc6cc35450c2c303b1c0057fbd256fbfbb2a9386da79778bf6ba6d8d"
+    },
+    "/home/chase/GitHub/rwkvrag-wiki-rag-20260908/corpus/finewiki-zh-5000/manifest.jsonl": {
+      "bytes": 5217102,
+      "sha256": "35563fa6e5d7c9205cea3d9e1cd5476b01774f11a292dafcfed82fe4d8256ced"
+    },
+    "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/src/llamaindex_retrieval/rwkv_pipeline.py": {
+      "bytes": 27272,
+      "sha256": "bf0f74e33bc5a5096809963dd9b075a3a13ef73cf2ef3ccd447df9d4e4e07067"
+    },
+    "/home/chase/GitHub/rwkvrag-bm250820/llamaindex-retrieval/src/llamaindex_retrieval/rwkvos_batch.py": {
+      "bytes": 32096,
+      "sha256": "8bbd6dbdf40d5da8e993f5a568cd4b07c8d08df218a4af424795cda3c7d87266"
+    }
+  }
+}

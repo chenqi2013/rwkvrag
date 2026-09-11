@@ -1,0 +1,41 @@
+{
+  "status": "TRAIN_COMPLETE",
+  "optimizer_updates": 11,
+  "config_sha256": "8a7ad960b1e744cb8cdc26b5f013eb9b07743316ab95f1380ac5fb4b1f882837",
+  "examples": 21,
+  "backward_calls": 21,
+  "base_tensors_unchanged": 1062,
+  "checkpoints": [
+    {
+      "step": 0,
+      "path": "state-step-00.pth",
+      "sha256": "f4503080abf4210de4240c9e58a7375001043e7fc3d1f3a8d5aceca6c3254fd3",
+      "axes": [
+        "head",
+        "value",
+        "key"
+      ],
+      "dtype": "float32",
+      "layers": 32,
+      "state_l2": 0.0
+    },
+    {
+      "step": 11,
+      "path": "state-step-11.pth",
+      "sha256": "a27d2d28147a7c0da4e7f9d037d10268195fed049d3ad45ecda26a007cd9d1e5",
+      "axes": [
+        "head",
+        "value",
+        "key"
+      ],
+      "dtype": "float32",
+      "layers": 32,
+      "state_l2": 8.990855882645043
+    }
+  ],
+  "seconds": 196.49980661831796,
+  "dev_or_heldout_content_read": false,
+  "peak_allocated_bytes": 8322650624,
+  "production_promoted": false,
+  "quality_evaluated": false
+}

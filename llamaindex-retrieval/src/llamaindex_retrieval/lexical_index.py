@@ -1,4 +1,5 @@
 import logging
+from copy import deepcopy
 import re
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -655,12 +656,48 @@ class LexicalIndex:
             for raw, chunk in merged
         ]
 
+    def _bounded_bm25(self, body: dict[str, Any]) -> dict[str, Any]:
+        """Keep all terms using 128-token searches and RRF for long queries.
+
+        Six whitespace-analyzed fields stay below the 1024-clause limit.
+        Ordinary queries retain their BM25 scores and one-request behavior.
+        """
+        match = body["query"]["bool"]["must"][0]["multi_match"]
+        tokens = match["query"].split()
+        if len(tokens) <= 128:
+            return self.client.search(index=self.index_name, body=body)
+        ranks: dict[str, float] = {}
+        hits: dict[str, dict[str, Any]] = {}
+        nodes: dict[str, dict[str, Any]] = {}
+        identity = "document_id" if body.get("collapse") else "node_id"
+        for start in range(0, len(tokens), 128):
+            batch = deepcopy(body)
+            batch["query"]["bool"]["must"][0]["multi_match"]["query"] = " ".join(tokens[start:start + 128])
+            response = self.client.search(index=self.index_name, body=batch)
+            seen = set()
+            for rank, hit in enumerate(response.get("hits", {}).get("hits", []), 1):
+                source = hit["_source"]
+                node = str(source["node_id"])
+                if node in nodes and nodes[node] != source:
+                    raise ValueError(f"conflicting source identity across query batches: {node}")
+                nodes[node] = source
+                key = str(hit["_source"][identity])
+                if key in seen:
+                    continue
+                seen.add(key)
+                ranks[key] = ranks.get(key, 0.0) + 1 / (60 + rank)
+                hits.setdefault(key, hit)
+        ordered = sorted(ranks, key=lambda key: (-ranks[key], key))[:body["size"]]
+        return {"hits": {"hits": [{**hits[key], "_score": ranks[key]} for key in ordered]}}
+
     def search_chunks(
         self,
         query: str,
         *,
         candidate_k: int,
         knowledge_base_id: str | None = None,
+        document_ids: list[str] | None = None,
+        collapse_documents: bool = False,
     ) -> list[LexicalResult]:
         """BM25 chunk ranking for the native pipeline, without document quotas.
 
@@ -674,7 +711,11 @@ class LexicalIndex:
             [{"term": {"knowledge_base_id": knowledge_base_id}}]
             if knowledge_base_id else []
         )
-        response = self.client.search(index=self.index_name, body={
+        if document_ids is not None:
+            if not document_ids:
+                return []
+            filters.append({"terms": {"document_id": document_ids}})
+        body = {
             "size": candidate_k,
             "track_total_hits": False,
             "_source": ["node_id", "document_id", "text", "metadata"],
@@ -683,11 +724,14 @@ class LexicalIndex:
                     "query": " ".join(tokens),
                     "fields": ["body_tokens", "title_tokens^3", "alias_tokens^3",
                                "tags_tokens^1.5", "section_tokens^2", "structure_tokens^1.5"],
-                    "type": "best_fields", "operator": "or",
+                    "type": "most_fields", "operator": "or",
                 }}],
                 "filter": filters,
             }},
-        })
+        }
+        if collapse_documents:
+            body["collapse"] = {"field": "document_id"}
+        response = self._bounded_bm25(body)
         return [LexicalResult(
             node_id=str(hit["_source"]["node_id"]),
             document_id=str(hit["_source"]["document_id"]),

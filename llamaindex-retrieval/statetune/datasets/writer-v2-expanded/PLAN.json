@@ -1,0 +1,35 @@
+{
+  "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+  "embedding": false,
+  "train_target": 600,
+  "evaluation_target": 200,
+  "train_source_groups": {
+    "wiki_infobox": 80,
+    "wiki_prose": 20,
+    "synthetic_scenarios": 20
+  },
+  "evaluation_source_groups": {
+    "wiki_infobox": 20,
+    "wiki_prose": 10,
+    "synthetic_scenarios": 10
+  },
+  "tasks_per_group": 5,
+  "sizes": [
+    100,
+    300,
+    600
+  ],
+  "seed": 20260911,
+  "epochs": 1,
+  "learning_rate": 1e-05,
+  "accumulation": 2,
+  "max_sequence_tokens": 8192,
+  "generation_cap": 2048,
+  "independent_review_required": true,
+  "test_not_used_to_select_state": true,
+  "old_48_role": "exposed regression development",
+  "source_separation": "document/page/title and text hashes; paired/distractor sources stay within split",
+  "synthetic_disclosure": "fictional source documents for controlled version/date/units/conflict cases; not real-world corpus evidence",
+  "scale_limitation": "600 instruction rows are 120 source groups, not 600 independent documents; one epoch changes both sample count and update count",
+  "promotion": "no automatic promotion; retain raw zero and each state outputs, compare paired facts/citations/refusals/EOS"
+}

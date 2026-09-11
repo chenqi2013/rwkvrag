@@ -1,0 +1,17 @@
+{
+  "schema": "rwkv_corrected_trace_seeds_v1",
+  "count": 17,
+  "seed_file_sha256": "41d28fe2bbfe114db53f72097362dbe43adc921654e3dd5e74ed13409e44d798",
+  "status": "pending_independent_review",
+  "author": "root",
+  "generation_order": [
+    "observed original input + wrong output",
+    "evidence-grounded correction",
+    "independent correction review",
+    "new-source variants preserving causal structure",
+    "independent row review"
+  ],
+  "training_target_policy": "corrected output only; wrong output retained only in audit metadata",
+  "evaluation_policy": "These exposed source cases and derivatives are development regressions; retain fresh disjoint sources for blind evaluation.",
+  "existing_draft_v4_status": "2000 labels reviewed, but not yet admitted as descendants of corrected seeds; do not relabel retroactively."
+}

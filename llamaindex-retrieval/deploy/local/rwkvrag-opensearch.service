@@ -1,0 +1,14 @@
+[Unit]
+Description=RWKVRAG local OpenSearch BM25
+
+[Service]
+WorkingDirectory=/home/chase/GitHub/rwkvrag
+Environment="OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+ExecStart=/home/chase/GitHub/rwkvrag/data/services/opensearch/runtime/opensearch-3.8.0/bin/opensearch
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=120
+LimitNOFILE=65535
+
+[Install]
+WantedBy=default.target

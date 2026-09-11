@@ -1,0 +1,261 @@
+{
+  "role": "corrected seed families and any descendants are development material, never blind evaluation",
+  "source_cases": [
+    {
+      "id": "correction_pump_citations",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/smoke_007.request.json",
+          "sha256": "adbddcead219ee7883de75b41c0501cc1d95c431dae41631af4965a63b112779"
+        },
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/smoke_007.response.bytes",
+          "sha256": "54a522ae4c1fbbda4d0764a5f7ff692e51af5b3219b1cf8bc310c6e0d1d18f51"
+        }
+      ],
+      "call_id": null
+    },
+    {
+      "id": "correction_reef_dates",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/completed/held_021.json",
+          "sha256": "5ce920426c1c21de7dee3c690ba0da2258a741920183c571efcac8166121ba9d"
+        }
+      ],
+      "call_id": "58e940ed-99db-44f6-9ebb-7b30ac46b455"
+    },
+    {
+      "id": "correction_release_reference_date",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_3667615_01_all_units.request.json",
+          "sha256": "589b762446cad98438a7e62438a2e69e3a1baae9283cdbb6043843f9062d682f"
+        },
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_3667615_01_all_units.response.bytes",
+          "sha256": "59870f38506a9f770d4a16c004956cbf8e9fa823e79d15f0e1aea246f1ca2af2"
+        }
+      ],
+      "call_id": null
+    },
+    {
+      "id": "correction_can_units",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/completed/held_004.json",
+          "sha256": "139f6cbb07a30d533855273e6b3ac0ca756c1220dd1af200e57a019438320a7c"
+        }
+      ],
+      "call_id": "fe4ca5e5-d6e7-4908-bfea-390f7cca78df"
+    },
+    {
+      "id": "correction_fee_scope",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_6066934_02_all_units.request.json",
+          "sha256": "0e8afe10fe999182a65830f458b4b616039a46c50b6bfaab04152318ae48cdb2"
+        },
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_6066934_02_all_units.response.bytes",
+          "sha256": "c733f1154c74d1b2cff55b0d7d73b124e0268778af1621e9ed77f9bf7c0f4ac0"
+        }
+      ],
+      "call_id": null
+    },
+    {
+      "id": "correction_missing_score",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_370260_03_all_units.request.json",
+          "sha256": "abb90b8456a9082fac4826fc80ffc199cec0524d6b3462c73767bd15b8b6f77c"
+        },
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_370260_03_all_units.response.bytes",
+          "sha256": "87a21141a336caaf99a67ad0185d7f54bf6dfd1320e69e9e110b5994a53c6793"
+        }
+      ],
+      "call_id": null
+    },
+    {
+      "id": "correction_planned_not_actual",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/writer_v6_eval_6066934_03_all_units.request.json",
+          "sha256": "7f2ca0c364f9c00c6f237001d60c6fb1760850ce9be2f06a1b4a66dd5f78df1f"
+        },
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/writer_v6_eval_6066934_03_all_units.response.bytes",
+          "sha256": "f7cd3a55cce273458f35f2c407825ee4039205d0e6891d73b2a50fe88a73798f"
+        }
+      ],
+      "call_id": null
+    },
+    {
+      "id": "correction_aggregate_not_each",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/writer_v6_eval_6066934_04_all_units.request.json",
+          "sha256": "9f53e46d9fff8934c778ece475a5fc274c1bba240e0b54e333efd0ba7dce03f7"
+        },
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/writer_v6_eval_6066934_04_all_units.response.bytes",
+          "sha256": "b8cfb7a3d745b4f38f2dad354c2a9c302fe6833ca372508bfc54175493e7b674"
+        }
+      ],
+      "call_id": null
+    },
+    {
+      "id": "correction_empty",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_370260_01_empty_evidence.request.json",
+          "sha256": "da2f07977a8b950ba3e88381f0f663f73fd830dbb91ec7445377329d2732e04a"
+        },
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_370260_01_empty_evidence.response.bytes",
+          "sha256": "0076b26c7455323ba8246645c7edf0e4a6c019f9beb23fa1d25a57db23c0db03"
+        }
+      ],
+      "call_id": null
+    },
+    {
+      "id": "correction_train_multipart",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/smoke_002.request.json",
+          "sha256": "d5a923a6b1a9fd2f430db67224928181ae0a2feba0b518b14e211f64c5d42279"
+        },
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-e1/smoke_002.response.bytes",
+          "sha256": "6752843bae2643605f79a8f5525712ba7ce7f6e45b8c9992241757bba8688341"
+        }
+      ],
+      "call_id": null
+    },
+    {
+      "id": "correction_history_active",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/smoke_004.request.json",
+          "sha256": "b6292a9a55651a78a355c03bc4f557d9203490173c24cad75a0ccd0142411156"
+        },
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/smoke_004.response.bytes",
+          "sha256": "52b135438fc4b05a4fb3ffa3de0107d722d18b1711232aea442d01984daf3bd2"
+        }
+      ],
+      "call_id": null
+    },
+    {
+      "id": "correction_stop_after_answer",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_4271857_02_all_units.request.json",
+          "sha256": "b52acf496e246215cb53b93f23be145a4761dea3b6c618d1353830d91a4a2426"
+        },
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/writer-zero/writer_v6_eval_4271857_02_all_units.response.bytes",
+          "sha256": "4d108c8b68b83bc8dc953fe4b9b1dbcb324633cf03c1f701b97c35df804d54c5"
+        }
+      ],
+      "call_id": null
+    },
+    {
+      "id": "correction_reader_books",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/completed/held_010.json",
+          "sha256": "665e834e613e69acff360a7e6abd9c246d4499f25e1b7f3bffc45d72090bd3f5"
+        }
+      ],
+      "call_id": "d68973a0-b809-4e19-b983-69839624782e"
+    },
+    {
+      "id": "correction_reader_stages",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/completed/held_010.json",
+          "sha256": "665e834e613e69acff360a7e6abd9c246d4499f25e1b7f3bffc45d72090bd3f5"
+        }
+      ],
+      "call_id": "23c0140c-df3e-4821-b98d-64507bd4a401"
+    },
+    {
+      "id": "correction_reader_relative",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/completed/held_004.json",
+          "sha256": "139f6cbb07a30d533855273e6b3ac0ca756c1220dd1af200e57a019438320a7c"
+        }
+      ],
+      "call_id": "3ba1aa83-f1e7-4fb9-bcc0-362a659bc520"
+    },
+    {
+      "id": "correction_writer_partial_after_reader",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/completed/held_010.json",
+          "sha256": "665e834e613e69acff360a7e6abd9c246d4499f25e1b7f3bffc45d72090bd3f5"
+        }
+      ],
+      "call_id": "7b99e4da-c66e-43a9-957d-90cd27773bf7"
+    },
+    {
+      "id": "correction_planner_history",
+      "trace": [
+        {
+          "path": "llamaindex-retrieval/eval/writer-training-20260910/wiki-chunks-zero/completed/held_019.json",
+          "sha256": "68352a9b7bf8e027f40dc623e51489994e1d1a59ec513689660334011c8a164e"
+        }
+      ],
+      "call_id": "74807d59-7751-4545-880c-cff36ebabeaa"
+    }
+  ],
+  "visible_seed_titles": [
+    "2008年夏季奧林匹克運動會擊劍比賽",
+    "2009—2010年澳洲地區熱帶氣旋季時間軸",
+    "2018年至2019年度香港政府財政預算案",
+    "A KITE",
+    "A款泵历史参数",
+    "B款泵历史参数",
+    "CAN FD",
+    "ICE-1列車",
+    "ICE-2列車",
+    "IEC 61131-3",
+    "IEC 61499",
+    "IEC 61508",
+    "IEC 62056",
+    "JR东日本651系电力动车组",
+    "JR九州305系電聯車",
+    "Marine Liner",
+    "Windows NT 3.5",
+    "Windows NT 3.51",
+    "紅級設標船"
+  ],
+  "visible_seed_uris": [
+    "https://zh.wikipedia.org/wiki/%E7%B4%85%E7%B4%9A%E8%A8%AD%E6%A8%99%E8%88%B9",
+    "https://zh.wikipedia.org/wiki/2008%E5%B9%B4%E5%A4%8F%E5%AD%A3%E5%A5%A7%E6%9E%97%E5%8C%B9%E5%85%8B%E9%81%8B%E5%8B%95%E6%9C%83%E6%93%8A%E5%8A%8D%E6%AF%94%E8%B3%BD",
+    "https://zh.wikipedia.org/wiki/2009%E2%80%942010%E5%B9%B4%E6%BE%B3%E6%B4%B2%E5%9C%B0%E5%8D%80%E7%86%B1%E5%B8%B6%E6%B0%A3%E6%97%8B%E5%AD%A3%E6%99%82%E9%96%93%E8%BB%B8",
+    "https://zh.wikipedia.org/wiki/2018%E5%B9%B4%E8%87%B32019%E5%B9%B4%E5%BA%A6%E9%A6%99%E6%B8%AF%E6%94%BF%E5%BA%9C%E8%B2%A1%E6%94%BF%E9%A0%90%E7%AE%97%E6%A1%88",
+    "https://zh.wikipedia.org/wiki/A_KITE",
+    "https://zh.wikipedia.org/wiki/CAN_FD",
+    "https://zh.wikipedia.org/wiki/ICE-1%E5%88%97%E8%BB%8A",
+    "https://zh.wikipedia.org/wiki/ICE-2%E5%88%97%E8%BB%8A",
+    "https://zh.wikipedia.org/wiki/IEC_61131-3",
+    "https://zh.wikipedia.org/wiki/IEC_61499",
+    "https://zh.wikipedia.org/wiki/IEC_61508",
+    "https://zh.wikipedia.org/wiki/IEC_62056",
+    "https://zh.wikipedia.org/wiki/JR%E4%B8%9C%E6%97%A5%E6%9C%AC651%E7%B3%BB%E7%94%B5%E5%8A%9B%E5%8A%A8%E8%BD%A6%E7%BB%84",
+    "https://zh.wikipedia.org/wiki/JR%E4%B9%9D%E5%B7%9E305%E7%B3%BB%E9%9B%BB%E8%81%AF%E8%BB%8A",
+    "https://zh.wikipedia.org/wiki/Marine_Liner",
+    "https://zh.wikipedia.org/wiki/Windows_NT_3.5",
+    "https://zh.wikipedia.org/wiki/Windows_NT_3.51"
+  ],
+  "train_real_pages": 313,
+  "fixed_generic_evaluation_pages": 30,
+  "train_evaluation_page_overlap": [],
+  "train_seed_title_overlap": [],
+  "evaluation_seed_title_or_uri_overlap": [],
+  "limitation": "No standalone trace-specific blind challenge set has been admitted yet; the frozen200 is generic regression only."
+}

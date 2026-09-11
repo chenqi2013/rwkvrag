@@ -1,0 +1,14 @@
+{
+  "status": "PREPARED_WAITING_FOR_GPU2",
+  "optimizer_updates_this_pilot": 0,
+  "config_sha256": "0c856d856e28e53cd01d7bc00611db1abb8311f03b7667904415d1ceb23920da",
+  "independent_semantic_review_sha256": "88b9278c97db18e37f622269dfe3237da0428b9b963089644d518f0e98388cdd",
+  "code_review_sha256": "3a930e34ba31e0c0009758c64d5543fb68d7e686fc219e1672659d6b00d27b96",
+  "frozen_dataset_files_verified": 20,
+  "runtime_bindings_verified": 17,
+  "scoring_bindings_verified": 2,
+  "local_links_checked": true,
+  "server_cpu_config_check": true,
+  "automatic_queue": false,
+  "blocking_condition": "GPU2 occupied by RWKV-LH PID2529706; must be released before launch"
+}

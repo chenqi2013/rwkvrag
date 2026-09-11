@@ -1,0 +1,206 @@
+{
+  "reviewer": "/root/v3_semantic_review",
+  "receipt_written_by": "root from independent agent final findings",
+  "annotations_sha256": "a2fd2e7aa54c02d97d258bef3308ed90e3c3ee52ab5f47ccc412dea8a116505b",
+  "cases": [
+    {
+      "id": "reader_v6_7133379_01",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "notes": "徽标奖金65000卢布明确。"
+    },
+    {
+      "id": "reader_v6_7133379_02",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "notes": "36项建设项目中6项正确记录。"
+    },
+    {
+      "id": "reader_v6_7133379_03",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E3"
+      ],
+      "notes": "该次会议推迟歌剧院、芭蕾舞剧院及医疗中心。"
+    },
+    {
+      "id": "reader_v6_7133379_04",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E4"
+      ],
+      "notes": "日期和远东联邦大学校园均完整，E3只有标题。"
+    },
+    {
+      "id": "reader_v6_7133379_05",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E1",
+        "E4"
+      ],
+      "notes": "2006年河内会议和提交宣言分别支持两个子问。"
+    },
+    {
+      "id": "reader_v6_7133379_06",
+      "decision": "approve",
+      "expected_unit_ids": [],
+      "notes": "全文没有开幕时实测气温。"
+    },
+    {
+      "id": "reader_v6_7133379_07",
+      "decision": "approve",
+      "expected_unit_ids": [],
+      "notes": "拨款总额不提供各企业分配比例。"
+    },
+    {
+      "id": "reader_v6_7340228_01",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "notes": "1925年8月15日启用有明确记录。"
+    },
+    {
+      "id": "reader_v6_7340228_02",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "notes": "2017年表格行提供54人，参考文献不提供数字。"
+    },
+    {
+      "id": "reader_v6_7340228_03",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E2",
+        "E3"
+      ],
+      "notes": "历史已更正，两处重叠正文都完整支持邻站。"
+    },
+    {
+      "id": "reader_v6_7340228_04",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E1",
+        "E2"
+      ],
+      "notes": "启用日期和2017年人数分别得到支持。"
+    },
+    {
+      "id": "reader_v6_7340228_05",
+      "decision": "approve",
+      "expected_unit_ids": [],
+      "notes": "路线方向不提供票价。"
+    },
+    {
+      "id": "reader_v6_7340228_06",
+      "decision": "approve",
+      "expected_unit_ids": [],
+      "notes": "乘车人数和停运历史不提供每日班次。"
+    },
+    {
+      "id": "reader_v6_8468551_01",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "notes": "明确提供地震深度10千米。"
+    },
+    {
+      "id": "reader_v6_8468551_02",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "notes": "8月15日标题与事件共同支持日期。"
+    },
+    {
+      "id": "reader_v6_8468551_03",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E3"
+      ],
+      "notes": "当前任务油轮人数17，不沿用历史大巴人数。"
+    },
+    {
+      "id": "reader_v6_8468551_04",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E1",
+        "E3"
+      ],
+      "notes": "分别支持震源深度与船上总人数。"
+    },
+    {
+      "id": "reader_v6_8468551_05",
+      "decision": "approve",
+      "expected_unit_ids": [],
+      "notes": "未提供该地震住宅损毁数量，其他灾害数字不适用。"
+    },
+    {
+      "id": "reader_v6_8468551_06",
+      "decision": "approve",
+      "expected_unit_ids": [],
+      "notes": "事故乘员与伤亡不提供撞击车速。"
+    },
+    {
+      "id": "reader_v6_8753422_01",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E1"
+      ],
+      "notes": "同时提供调性、122拍每分钟和3分35秒。"
+    },
+    {
+      "id": "reader_v6_8753422_02",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E2"
+      ],
+      "notes": "明确列出洪元基和沈智瀅。"
+    },
+    {
+      "id": "reader_v6_8753422_03",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E3"
+      ],
+      "notes": "当前任务日版CD，发行表提供公司。"
+    },
+    {
+      "id": "reader_v6_8753422_04",
+      "decision": "approve",
+      "expected_unit_ids": [
+        "E1",
+        "E3"
+      ],
+      "notes": "分别支持速度与日版唱片公司。"
+    },
+    {
+      "id": "reader_v6_8753422_05",
+      "decision": "approve",
+      "expected_unit_ids": [],
+      "notes": "未提供MV预算。"
+    },
+    {
+      "id": "reader_v6_8753422_06",
+      "decision": "approve",
+      "expected_unit_ids": [],
+      "notes": "日期和榜单排名不提供首日全球播放量。"
+    }
+  ],
+  "unit_judgments_checked": 88,
+  "quotes_checked": 22,
+  "max_prompt_tokens": 4016,
+  "max_sequence_tokens": 4022,
+  "max_generation_context": 4047,
+  "source_original_bytes_verified": true,
+  "dev_or_heldout_content_read": false,
+  "cross_split_verified": false,
+  "training_ready": false,
+  "scope": "Train annotation semantics approved; final rendered dataset and fresh evaluation split release still required."
+}
