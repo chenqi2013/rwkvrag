@@ -18,5 +18,79 @@
     "resolver": "reader-trace-450",
     "writer": "writer-trace-300"
   },
-  "scope": "Not an end-to-end optimum claim. Interactive and real-call checks follow deployment."
+  "scope": "Frontend and actual state routing verified, semantic error observed; no claim of reliable RAG or optimal stage combination.",
+  "interactive_trial": {
+    "status": 200,
+    "errors": [],
+    "question": "这轮StateTune的训练数据一共多少条？Writer、Reader和Planner分别多少条？",
+    "answer": "- 这轮StateTune的训练数据一共2000条。[资料 1](../llamaindex-retrieval/src/llamaindex_retrieval/statetune/datasets/trace-v1-2000/package_release.py)\n- Writer部分有155条。[资料 1](../llamaindex-retrieval/src/llamaindex_retrieval/statetune/datasets/trace-v1-2000/package_release.py)\n- Reader部分有48条。[资料 1](../llamaindex-retrieval/src/llamaindex_retrieval/statetune/datasets/trace-v1-2000/package_release.py)\n- Planner部分有36条。[资料 1](../llamaindex-retrieval/src/llamaindex_retrieval/statetune/datasets/trace-v1-2000/package_release.py)",
+    "generation": "completed",
+    "stages": [
+      {
+        "stage": "planner",
+        "state_id": null,
+        "status": "completed"
+      },
+      {
+        "stage": "resolver",
+        "state_id": "reader-trace-450",
+        "status": "completed"
+      },
+      {
+        "stage": "resolver",
+        "state_id": "reader-trace-450",
+        "status": "completed"
+      },
+      {
+        "stage": "resolver",
+        "state_id": "reader-trace-450",
+        "status": "completed"
+      },
+      {
+        "stage": "resolver",
+        "state_id": "reader-trace-450",
+        "status": "completed"
+      },
+      {
+        "stage": "resolver",
+        "state_id": "reader-trace-450",
+        "status": "completed"
+      },
+      {
+        "stage": "resolver",
+        "state_id": "reader-trace-450",
+        "status": "completed"
+      },
+      {
+        "stage": "resolver",
+        "state_id": "reader-trace-450",
+        "status": "completed"
+      },
+      {
+        "stage": "resolver",
+        "state_id": "reader-trace-450",
+        "status": "completed"
+      },
+      {
+        "stage": "writer",
+        "state_id": "writer-trace-300",
+        "status": "completed"
+      }
+    ],
+    "source_count": 6,
+    "semantic_correct": false,
+    "expected_counts": {
+      "total": 2000,
+      "writer": 1400,
+      "reader": 450,
+      "planner": 150
+    },
+    "failure": "Total correct, per-stage counts replaced by evaluation numbers; wrong citation links. Preserve original output.",
+    "knowledge_base_name": "StateTune 数据构建与训练方法",
+    "knowledge_base_id": "e5725a3b5f0b448589699b4a9141d216",
+    "browser_response_sha256": "c2e52d949b8906175926cd03e2b9dbed861cdd7704213e64680e94902a320c8f",
+    "frontend_url": "http://127.0.0.1:18440/admin/#/search",
+    "browser_page_errors": [],
+    "artifact_storage": "Full request/response, screenshots and import receipts retained under local data/publication/statetune-20260911/ui-trial; response also saved by API in history."
+  }
 }

@@ -50,3 +50,21 @@ ssh rwkv-8222 '/home/chase/chase/RWKV-PEFT/.venv/bin/python /home/chase/rwkvrag/
 Reader协议取决于选用的配置，合法输出仍可能选错原文，需结合来源核对。
 
 服务代码同时校验2.9B模型名、权重SHA及32层/40头布局，不能仅修改配置便换成其他模型。
+
+## 当前页面试用
+
+打开 <http://127.0.0.1:18440/admin/#/search>，知识库过滤选择“StateTune 数据构建与训练方法”。这里导入的是项目正式方法文档，模型仍需通过BM25检索、Reader判断和Writer生成；没有预置这些问题的答案。
+
+独立问题之间点击“开始新对话”；连续追问则保留当前会话。可以依次试：
+
+1. 这轮StateTune的训练数据一共多少条？Writer、Reader和Planner分别多少条？
+2. 实际使用哪个项目训练？正式入口脚本是什么？
+3. 纠错种子怎样从真实trace中生成？错误输出会进入训练target吗？
+4. Writer100、Writer300、Writer600、Writer1400各做了多少次优化器更新？
+5. 为什么只有“速度是传统CAN的5倍”不能回答绝对速率是多少Mbit/s？
+6. 本轮训练一共花了多少电费？
+7. 连续追问：先问“分别介绍Writer、Reader和Planner的输入与输出格式”；再问“更正，只保留Reader和Planner，不需要Writer，也不需要训练参数”。
+
+核对依据：第1题应为2000、1400、450、150；第2题应提到RWKV-PEFT与train_trace_state.py；第4题应为50、150、300、700；第6题没有资料依据，应明确不能确定。历史更正题应只保留最后要求的两个阶段。
+
+实际页面试用中，第1题总量答对，但分阶段数量错答成155、48、36，还生成了错误链接。该输出已保留，页面连通与state加载正确不代表答案正确。详见[UI-VALIDATION.json](../../../artifacts/statetune-20260911/UI-VALIDATION.json)。

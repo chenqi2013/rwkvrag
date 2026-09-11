@@ -1,0 +1,29 @@
+{
+  "url": "https://github.com/chenqi2013/rwkvrag/releases/tag/statetune-2.9b-20260911",
+  "release_id": 386805955,
+  "draft": false,
+  "sha256_verified_against_github_asset_digests": true,
+  "assets": [
+    {
+      "name": "SHA256SUMS",
+      "size": 199,
+      "digest": "sha256:ff7458002ead65d3b21fb07ec27eea493531afe45212c483ef16bcdbba0b93af",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/chenqi2013/rwkvrag/releases/download/statetune-2.9b-20260911/SHA256SUMS"
+    },
+    {
+      "name": "statetune-records-20260911.tar.gz",
+      "size": 281162879,
+      "digest": "sha256:a7b6f3a0c729242c21f90c67590e0b8b06710088b9de3dd5c490d226102fab9d",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/chenqi2013/rwkvrag/releases/download/statetune-2.9b-20260911/statetune-records-20260911.tar.gz"
+    },
+    {
+      "name": "statetune-states-20260911.tar.gz",
+      "size": 116292030,
+      "digest": "sha256:4c3c9dba98d33a154338330eff25706602c005b98fbc7a673ec5307ffece7053",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/chenqi2013/rwkvrag/releases/download/statetune-2.9b-20260911/statetune-states-20260911.tar.gz"
+    }
+  ]
+}
