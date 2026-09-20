@@ -1,6 +1,6 @@
 # 当前状态与下一步
 
-更新：2026-09-20 22:10（Asia/Shanghai）。旧阶段数值保留在Git历史与[历史报告索引](archive/README.md)，不再作为当前执行指令。
+更新：2026-09-20 22:25（Asia/Shanghai）。旧阶段数值保留在Git历史与[历史报告索引](archive/README.md)，不再作为当前执行指令。
 
 ## 1. 主目标与结论
 
@@ -18,14 +18,14 @@
 | 数据核对 | 2800条模板专用文本、数值、单位、范围与来源审计通过；实现者阅读87条代表记录，非独立评审 |
 | 实际模板 | 2000条真实服务分词完成，最长1071token，无截断；目标mask、前缀和EOS校验通过 |
 | 执行代码 | 55项数据、State客户端及执行边界检查通过；不是55项回答质量测试 |
-| 连续执行 | 原1938＋434＋8条回归及缓存前后零State桥接已通过；2000条训练包备份/上传和远端CPU校验完成，continuous-run3已启动GPU预检，随后自动训练和1600次zero/2K对照 |
-| 后续质量检查 | 已启动等待任务：160道完整固定材料题×zero/2K两组，共320次分层回答；另生成1600次单条件输出的非精确匹配复核队列，不能把不同措辞自动判错 |
+| 连续执行 | 原回归释放、缓存前后桥接、训练包备份/上传和远端CPU校验完成；GPU前向检查3/4前缀一致，1条有排版token差异，continuous-run3失败。precision-diagnostic-v1正在比较BF16/FP16及整段/逐步前向，未开始反向或优化器更新 |
+| 后续质量检查 | 160道固定材料题×zero/2K共320次整链及1600次单条件复核执行器已准备；前三次上游失败的依赖记录均保留0调用，修复预检后用新目录继续，不能把不同措辞自动判错 |
 | 限制 | 仅8222授权GPU3，2个epoch、学习率0.001、累积2、训练上限6小时；固定第二epoch评测，无自动上线 |
 | 尚未完成 | GPU预检结果、优化器更新、训练后质量验收；没有训练收益结论 |
 
 [2K冻结方案与执行脚本](https://github.com/chenqi2013/rwkvrag/tree/1e641e68/llamaindex-retrieval/eval/g1j72-assessment-state-2k-20260920)；[分词归档与准备证据](https://github.com/chenqi2013/rwkvrag/tree/fcaf2f02/artifacts/g1j72-assessment-state-2k-20260920)。独立分支 `chase/g1j72-statetune-20260920`，工作区 `/tmp/rwkvrag-g1j72-statetune-20260920`。
 
-实际运行记录：`data/quality-runs/g1j72-assessment-state-2k-20260920`，当前controller为continuous-run3。原v1因命令Path对象无法写JSON退出；v2在已备份训练包后因远端缺父目录退出，均未进行GPU预检或参数更新，完整失败记录保留。v3修复部署步骤并逐文件复用同一训练契约，7项控制测试通过；[冻结修正与边界](https://github.com/chenqi2013/rwkvrag/tree/098a684d/llamaindex-retrieval/eval/g1j72-state-execution-v3-20260920)，[已备份训练契约](https://github.com/chenqi2013/rwkvrag/tree/5a38d758/artifacts/g1j72-assessment-state-2k-20260920/pilot-v1-contract)。320次后续对照固定原160题及全部历史输入，只让ASSESS使用训练State，计划/阅读/写作协议不改；属于固定材料完整分层验证，不冒充真实检索或前端验收。[当前冻结执行器](https://github.com/chenqi2013/rwkvrag/tree/098a684d/llamaindex-retrieval/eval/g1j72-state-layered-2k-v3-20260920)，使用显式执行目录绑定continuous-run3，输出run3。原run1/run2因上游调度失败保留0调用记录；对应报告/成对材料导出已更新依赖，明确区分精确目标一致与语义正确。
+实际运行记录：`data/quality-runs/g1j72-assessment-state-2k-20260920`，最近controller为continuous-run3（已失败）；当前实际GPU任务为precision-diagnostic-v1。原v1因命令Path对象无法写JSON退出；v2在已备份训练包后因远端缺父目录退出，均未进行GPU预检或参数更新，完整失败记录保留。v3修复部署步骤并逐文件复用同一训练契约，7项控制测试通过；[冻结修正与边界](https://github.com/chenqi2013/rwkvrag/tree/098a684d/llamaindex-retrieval/eval/g1j72-state-execution-v3-20260920)，[已备份训练契约](https://github.com/chenqi2013/rwkvrag/tree/5a38d758/artifacts/g1j72-assessment-state-2k-20260920/pilot-v1-contract)。320次后续对照固定原160题及全部历史输入，只让ASSESS使用训练State，计划/阅读/写作协议不改；属于固定材料完整分层验证，不冒充真实检索或前端验收。[当前冻结执行器](https://github.com/chenqi2013/rwkvrag/tree/098a684d/llamaindex-retrieval/eval/g1j72-state-layered-2k-v3-20260920)，使用显式执行目录绑定continuous-run3，输出run3。原run1/run2/run3因上游失败保留0调用记录；对应报告/成对材料导出支持显式执行目录，明确区分精确目标一致与语义正确。
 
 BINDING只表示任务已启动，必须看每步日志和RESULT判断是否完成。合成样本共享底层技能，2000条不等于2000种独立能力。此State只训练单条件判断，不能自动修复检索、规划或Writer。
 
@@ -65,8 +65,10 @@ BINDING只表示任务已启动，必须看每步日志和RESULT判断是否完�
 ## 6. 执行顺序与阅读入口
 
 1. 全量回归已完成，保留全部错误和原始输出，继续核对并备份结果。
-2. 按已启动的2K执行链完成GPU预检、训练和zero/2K对照；失败保留现场并修具体原因。
+2. 完成正在运行的精度/前向路径诊断，查明BF16训练与FP16推理的一处排版前缀差异，再以独立版本通过预检并完成2K训练及对照。
 3. 逐类复核语义、引用和负向迁移，确认判断收益能否传递到固定材料及真实检索的最终回答。
 4. 通过实际体验验收后再接正式前端；不因loss下降或结构测试通过提前宣布商用。
 
 开发阅读：[架构规则](../llamaindex-retrieval/ARCHITECTURE_RULES.md)、[证据契约](EVIDENCE.md)、[可靠性主线](RELIABILITY_PLAN.md)。实验阅读：[变量控制](EXPERIMENTS.md)、[旧题保留规则](REGRESSION_POLICY.md)。文档历史路径见[迁移表](archive/MIGRATION-20260920.json)。
+
+[前缀失败原始记录](https://github.com/chenqi2013/rwkvrag/tree/b51d8480/artifacts/g1j72-assessment-state-2k-20260920/controller-v3-failure)，[数值诊断冻结方案](https://github.com/chenqi2013/rwkvrag/tree/08b28d88/llamaindex-retrieval/eval/g1j72-precision-diagnostic-20260920)。诊断没有优化器，也不修改2K训练/开发/留出数据。
