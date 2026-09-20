@@ -1,0 +1,44 @@
+ERROR: found no collectors for /home/chase/GitHub/rwkvrag/llamaindex-retrieval/tests/test_released_training.py::test_real_autograd_preflight_and_partial_accumulation
+
+ERROR: found no collectors for /home/chase/GitHub/rwkvrag/llamaindex-retrieval/tests/test_state_pilot.py::test_training_accumulation_matches_reference_and_preserves_base
+
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/test_released_training.py _______________
+ImportError while importing test module '/home/chase/GitHub/rwkvrag/llamaindex-retrieval/tests/test_released_training.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+llamaindex-retrieval/tests/test_released_training.py:13: in <module>
+    from llamaindex_retrieval import state_release
+llamaindex-retrieval/src/llamaindex_retrieval/state_release.py:13: in <module>
+    from .statetune import SPLITS, audit, digest, export_training, rows, write_json
+llamaindex-retrieval/src/llamaindex_retrieval/statetune.py:16: in <module>
+    from .rwkv_pipeline import evidence_units, parse_task_selections, task_resolver_prompt
+llamaindex-retrieval/src/llamaindex_retrieval/rwkv_pipeline.py:16: in <module>
+    from .lexical_index import LexicalIndex, LexicalResult
+llamaindex-retrieval/src/llamaindex_retrieval/lexical_index.py:8: in <module>
+    import jieba
+E   ModuleNotFoundError: No module named 'jieba'
+__________________ ERROR collecting tests/test_state_pilot.py __________________
+ImportError while importing test module '/home/chase/GitHub/rwkvrag/llamaindex-retrieval/tests/test_state_pilot.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+llamaindex-retrieval/tests/test_state_pilot.py:10: in <module>
+    from score_state import score_case, select_state
+llamaindex-retrieval/statetune/score_state.py:9: in <module>
+    from llamaindex_retrieval.rwkv_pipeline import parse_task_selections
+llamaindex-retrieval/src/llamaindex_retrieval/rwkv_pipeline.py:16: in <module>
+    from .lexical_index import LexicalIndex, LexicalResult
+llamaindex-retrieval/src/llamaindex_retrieval/lexical_index.py:8: in <module>
+    import jieba
+E   ModuleNotFoundError: No module named 'jieba'
+=========================== short test summary info ============================
+ERROR llamaindex-retrieval/tests/test_released_training.py
+ERROR llamaindex-retrieval/tests/test_state_pilot.py
+2 errors in 0.25s

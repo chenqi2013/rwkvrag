@@ -1,0 +1,9 @@
+{
+  "same_failure_ids": true,
+  "normalized_messages_identical": 118,
+  "total_failed": 119,
+  "different_messages": [
+    "tests.test_service::test_search_strongly_boosts_title_entities"
+  ],
+  "normalization": "memory addresses only"
+}

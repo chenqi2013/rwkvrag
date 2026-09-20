@@ -1,0 +1,25 @@
+{
+  "files": {
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-reader-20260920/HISTORY-RETENTION.json": "6d7dcbb1f0019a818d19752a8874c6e4f975dedb277f6d537c671fba00186cad",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-reader-20260920/schedule.json": "211bfce14908125a9c78da5960a9b48790527d9bcd6580dcc7779829893454ae",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-reader-20260920/prepare.py": "54cb0a602704ae18fd73cb90f09579716addb243e605bb03430bd1e3d6cc7496",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-reader-20260920/protocol.py": "f35acab992f0d241924d4d4fae084732d18a7e8719e880e4fe0090802ee22da9",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-reader-20260920/analysis.py": "60d934df3855447a908739d61f77857d722de58440f4121bf6f4822cea3b5733",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-reader-20260920/build_cases.py": "6a8b6e691de7d536e6c5ec3316f5ddc43586785f233b9667ea2424d9b8c6be18",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-reader-20260920/inputs.json": "8847407e257e5cbd3e3b60e7a228db4d8f087c23a5ba6a0cd2a1275223153c66",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-reader-20260920/README.md": "71050ddf69017e1f4d881e220006665b9449dddebbf0d761247d203f0c782bda",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-reader-20260920/ORIGINS.json": "cc6e7c879fb42d51f6a96a645a298c934b4a52f965b80b929d58415146782f87",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-reader-20260920/run.py": "244eade6492c7f679f714d77248aa3c8447f019978fb6f5baa56f0b34c0f8ca5",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-reader-20260920/cases.json": "7e9b938c8cf1487b2fd2b8c76cf8eff0fcaa0f24e08fd30b32b02540e3b0e867",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-presentation-20260920/protocol.py": "bb6276c1b88148b9666b401736cdc2ca0d40f5e44ca43c5dba84d216d1845e25",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/vllm-decoding-20260920/protocol.py": "5a4c1eeacc11ab5b2ded64b8c26bd8e806ee7a328ff9186485ef1c808b272980",
+    "/home/chase/GitHub/rwkvrag/artifacts/vllm-decoding-20260920/ROWS.json": "99509ce573e6732c53243b2bd4dccc8869e913b2bf452be5f0893c5cd6ee1609",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-20260920/protocol.py": "d15d4f82e8f19b26dbcdf8510edaec5a5820f96e83a7fd987895bcfdd86766c3",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/evidence-support-20260920/protocol.py": "a6c1f39919bb087e86fd4886e23238541d62e85e3fc1ff6f4ffefea2c91fc957"
+  },
+  "git_commit": "65b4166c27cef6031304f5c827af049d339a4f0b",
+  "started_at": "2026-09-20T07:17:50.050490+00:00",
+  "scheduled_calls": 4896,
+  "seen_cases": 1224,
+  "source": "local optimized vllm-rwkv; exact deployment binding separately attached"
+}

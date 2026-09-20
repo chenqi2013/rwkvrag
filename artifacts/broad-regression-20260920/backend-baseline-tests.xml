@@ -1,0 +1,2594 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="119" skipped="0" tests="274" time="2.712" timestamp="2026-09-20T15:24:01.085199+08:00" hostname="DESKTOP-BGGJLMG"><testcase classname="tests.test_document_retrieval" name="test_document_votes_deduplicate_then_reopen_only_winning_documents" time="0.003" /><testcase classname="tests.test_document_retrieval" name="test_empty_document_selection_does_not_query_all_documents" time="0.001" /><testcase classname="tests.test_document_retrieval" name="test_expansion_refuses_a_document_outside_filter" time="0.001" /><testcase classname="tests.test_document_retrieval" name="test_opensearch_document_filter_and_collapse_do_not_change_query_fields" time="0.002"><failure message="AttributeError: 'Client' object has no attribute 'indices'">def test_opensearch_document_filter_and_collapse_do_not_change_query_fields():
+        class Client:
+            requests = []
+            def search(self, **kwargs):
+                self.requests.append(kwargs["body"])
+                return {"hits": {"hits": []}}
+        client = Client()
+        class ExistingIndex(LexicalIndex):
+            def ensure_index(self):
+                pass
+&gt;       index = ExistingIndex(Settings(), client=client)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+llamaindex-retrieval/tests/test_document_retrieval.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+llamaindex-retrieval/src/llamaindex_retrieval/lexical_index.py:235: in __init__
+    self.versions.initialize()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;llamaindex_retrieval.index_versions.IndexVersions object at 0x7ae6e4d0d7f0&gt;
+
+    def initialize(self):
+&gt;       if self.client.indices.exists_alias(name=self.alias):
+           ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Client' object has no attribute 'indices'
+
+llamaindex-retrieval/src/llamaindex_retrieval/index_versions.py:57: AttributeError</failure></testcase><testcase classname="tests.test_document_retrieval" name="test_long_queries_keep_tail_tokens_filters_and_unique_rank_votes[False]" time="0.002"><failure message="AttributeError: 'Client' object has no attribute 'indices'">collapse = False
+
+    @pytest.mark.parametrize("collapse", [False, True])
+    def test_long_queries_keep_tail_tokens_filters_and_unique_rank_votes(collapse):
+        class Client:
+            def __init__(self): self.requests = []
+            def search(self, **kwargs):
+                body = kwargs["body"]; self.requests.append(body)
+                assert len(body["query"]["bool"]["must"][0]["multi_match"]["query"].split()) &lt;= 128
+                n = len(self.requests)
+                def result(node, doc):
+                    return {"_source": {"node_id": node, "document_id": doc, "text": "完整证据", "metadata": {}}, "_score": 99}
+                return {"hits": {"hits": [result("shared", "shared-doc"), result(f"tail-{n}", f"tail-doc-{n}")]}}
+        class ExistingIndex(LexicalIndex):
+            def ensure_index(self): pass
+&gt;       client = Client(); index = ExistingIndex(Settings(), client=client)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+llamaindex-retrieval/tests/test_document_retrieval.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+llamaindex-retrieval/src/llamaindex_retrieval/lexical_index.py:235: in __init__
+    self.versions.initialize()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;llamaindex_retrieval.index_versions.IndexVersions object at 0x7ae6e52f4cd0&gt;
+
+    def initialize(self):
+&gt;       if self.client.indices.exists_alias(name=self.alias):
+           ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Client' object has no attribute 'indices'
+
+llamaindex-retrieval/src/llamaindex_retrieval/index_versions.py:57: AttributeError</failure></testcase><testcase classname="tests.test_document_retrieval" name="test_long_queries_keep_tail_tokens_filters_and_unique_rank_votes[True]" time="0.002"><failure message="AttributeError: 'Client' object has no attribute 'indices'">collapse = True
+
+    @pytest.mark.parametrize("collapse", [False, True])
+    def test_long_queries_keep_tail_tokens_filters_and_unique_rank_votes(collapse):
+        class Client:
+            def __init__(self): self.requests = []
+            def search(self, **kwargs):
+                body = kwargs["body"]; self.requests.append(body)
+                assert len(body["query"]["bool"]["must"][0]["multi_match"]["query"].split()) &lt;= 128
+                n = len(self.requests)
+                def result(node, doc):
+                    return {"_source": {"node_id": node, "document_id": doc, "text": "完整证据", "metadata": {}}, "_score": 99}
+                return {"hits": {"hits": [result("shared", "shared-doc"), result(f"tail-{n}", f"tail-doc-{n}")]}}
+        class ExistingIndex(LexicalIndex):
+            def ensure_index(self): pass
+&gt;       client = Client(); index = ExistingIndex(Settings(), client=client)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+llamaindex-retrieval/tests/test_document_retrieval.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+llamaindex-retrieval/src/llamaindex_retrieval/lexical_index.py:235: in __init__
+    self.versions.initialize()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;llamaindex_retrieval.index_versions.IndexVersions object at 0x7ae6e52f5310&gt;
+
+    def initialize(self):
+&gt;       if self.client.indices.exists_alias(name=self.alias):
+           ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Client' object has no attribute 'indices'
+
+llamaindex-retrieval/src/llamaindex_retrieval/index_versions.py:57: AttributeError</failure></testcase><testcase classname="tests.test_document_retrieval" name="test_long_query_rejects_conflicting_node_identity[False]" time="0.002"><failure message="AttributeError: 'Client' object has no attribute 'indices'">collapse = False
+
+    @pytest.mark.parametrize('collapse', [False, True])
+    def test_long_query_rejects_conflicting_node_identity(collapse):
+        class Client:
+            calls = 0
+            def search(self, **kwargs):
+                self.calls += 1
+                return {'hits': {'hits': [{'_source': {'node_id': 'same', 'document_id': 'doc',
+                    'text': f'version-{self.calls}', 'metadata': {}}, '_score': 1}]}}
+        class ExistingIndex(LexicalIndex):
+            def ensure_index(self): pass
+&gt;       index = ExistingIndex(Settings(), client=Client())
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+llamaindex-retrieval/tests/test_document_retrieval.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+llamaindex-retrieval/src/llamaindex_retrieval/lexical_index.py:235: in __init__
+    self.versions.initialize()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;llamaindex_retrieval.index_versions.IndexVersions object at 0x7ae6e4ce9480&gt;
+
+    def initialize(self):
+&gt;       if self.client.indices.exists_alias(name=self.alias):
+           ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Client' object has no attribute 'indices'
+
+llamaindex-retrieval/src/llamaindex_retrieval/index_versions.py:57: AttributeError</failure></testcase><testcase classname="tests.test_document_retrieval" name="test_long_query_rejects_conflicting_node_identity[True]" time="0.002"><failure message="AttributeError: 'Client' object has no attribute 'indices'">collapse = True
+
+    @pytest.mark.parametrize('collapse', [False, True])
+    def test_long_query_rejects_conflicting_node_identity(collapse):
+        class Client:
+            calls = 0
+            def search(self, **kwargs):
+                self.calls += 1
+                return {'hits': {'hits': [{'_source': {'node_id': 'same', 'document_id': 'doc',
+                    'text': f'version-{self.calls}', 'metadata': {}}, '_score': 1}]}}
+        class ExistingIndex(LexicalIndex):
+            def ensure_index(self): pass
+&gt;       index = ExistingIndex(Settings(), client=Client())
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+llamaindex-retrieval/tests/test_document_retrieval.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+llamaindex-retrieval/src/llamaindex_retrieval/lexical_index.py:235: in __init__
+    self.versions.initialize()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;llamaindex_retrieval.index_versions.IndexVersions object at 0x7ae6e4ce8770&gt;
+
+    def initialize(self):
+&gt;       if self.client.indices.exists_alias(name=self.alias):
+           ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Client' object has no attribute 'indices'
+
+llamaindex-retrieval/src/llamaindex_retrieval/index_versions.py:57: AttributeError</failure></testcase><testcase classname="tests.test_evidence_extraction" name="test_selected_local_index_is_resolved_before_attaching_source_identity" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_binding_rejects_identity_or_complete_source_changes[changed0]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_binding_rejects_identity_or_complete_source_changes[changed1]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_binding_rejects_identity_or_complete_source_changes[changed2]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_binding_rejects_identity_or_complete_source_changes[changed3]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_binding_rejects_identity_or_complete_source_changes[changed4]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_binding_rejects_identity_or_complete_source_changes[changed5]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_invalid_candidate_indexes_cannot_use_python_negative_indexing[-1]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_invalid_candidate_indexes_cannot_use_python_negative_indexing[True]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_invalid_candidate_indexes_cannot_use_python_negative_indexing[1]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_binding_checks_exact_quote_and_quote_hash[Exact evidence.-0000000000000000000000000000000000000000000000000000000000000000]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_binding_checks_exact_quote_and_quote_hash[Invented evidence.-5876ca318408102ed61cc29fbfd20e6a13f273f229ba4f4ea6dc929a9e1ab2d3]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_binding_checks_exact_quote_and_quote_hash[-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855]" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_duplicate_source_identity_is_rejected_instead_of_picking_last_match" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_remapping_keeps_only_valid_surviving_sources" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_legacy_unbound_result_requires_exact_evidence_at_original_position" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_extraction_uses_total_budget_without_per_document_quota[single_fact-6]" time="0.006" /><testcase classname="tests.test_evidence_extraction" name="test_extraction_uses_total_budget_without_per_document_quota[summary-6]" time="0.004" /><testcase classname="tests.test_evidence_extraction" name="test_extraction_uses_total_budget_without_per_document_quota[list-8]" time="0.005" /><testcase classname="tests.test_evidence_extraction" name="test_subject_match_rejects_longer_unrelated_name_prefix" time="0.000"><failure message="AssertionError: assert False is True&#10; +  where False = &lt;function LanguageModelEvidenceExtractor._source_contains_subject at 0x7ae6e58b5d00&gt;(QueryPlan(original_question='马斯克创办了哪几家公司？', normalized_question='马斯克创办了哪几家公司？', analysis=QuestionAnalysis(intent='fact...askField(field_id='f1', question='马斯克创办了哪几家公司？', relations=()),), answer_shape='single_fact', set_semantics='specific'), SourceItem(id='elon', document_id='elon', source='finewiki-zh', title='埃隆·马斯克', uri=None, score=1.0, snippet='马斯克是SpaceX创始人。', metadata={}))&#10; +    where &lt;function LanguageModelEvidenceExtractor._source_contains_subject at 0x7ae6e58b5d00&gt; = LanguageModelEvidenceExtractor._source_contains_subject">def test_subject_match_rejects_longer_unrelated_name_prefix() -&gt; None:
+        plan = build_query_plan("马斯克创办了哪几家公司？")
+        elon = SourceItem(
+            id="elon",
+            document_id="elon",
+            source="finewiki-zh",
+            title="埃隆·马斯克",
+            score=1.0,
+            snippet="马斯克是SpaceX创始人。",
+        )
+        place = SourceItem(
+            id="muskadine",
+            document_id="muskadine",
+            source="finewiki-zh",
+            title="马斯克丁 (阿拉巴马州)",
+            score=0.9,
+            snippet="马斯克丁是美国的一处非建制地区。",
+        )
+    
+&gt;       assert LanguageModelEvidenceExtractor._source_contains_subject(plan, elon) is True
+E       AssertionError: assert False is True
+E        +  where False = &lt;function LanguageModelEvidenceExtractor._source_contains_subject at 0x7ae6e58b5d00&gt;(QueryPlan(original_question='马斯克创办了哪几家公司？', normalized_question='马斯克创办了哪几家公司？', analysis=QuestionAnalysis(intent='fact...askField(field_id='f1', question='马斯克创办了哪几家公司？', relations=()),), answer_shape='single_fact', set_semantics='specific'), SourceItem(id='elon', document_id='elon', source='finewiki-zh', title='埃隆·马斯克', uri=None, score=1.0, snippet='马斯克是SpaceX创始人。', metadata={}))
+E        +    where &lt;function LanguageModelEvidenceExtractor._source_contains_subject at 0x7ae6e58b5d00&gt; = LanguageModelEvidenceExtractor._source_contains_subject
+
+llamaindex-retrieval/tests/test_evidence_extraction.py:245: AssertionError</failure></testcase><testcase classname="tests.test_evidence_extraction" name="test_comparison_accepts_each_subject_page_independently" time="0.000"><failure message="AssertionError: assert 'fact' == 'comparison'&#10;  &#10;  - comparison&#10;  + fact">def test_comparison_accepts_each_subject_page_independently() -&gt; None:
+        plan = build_query_plan("尺八和长笛有什么区别？")
+        shakuhachi = SourceItem(
+            id="shakuhachi",
+            document_id="shakuhachi",
+            source="finewiki-zh",
+            title="尺八",
+            score=1.0,
+            snippet="尺八是竖吹乐器，竹制，音色苍凉。",
+        )
+        flute = SourceItem(
+            id="flute",
+            document_id="flute",
+            source="finewiki-zh",
+            title="长笛",
+            score=1.0,
+            snippet="长笛是横吹乐器，现代多使用金属材质。",
+        )
+    
+&gt;       assert plan.analysis.intent == "comparison"
+E       AssertionError: assert 'fact' == 'comparison'
+E         
+E         - comparison
+E         + fact
+
+llamaindex-retrieval/tests/test_evidence_extraction.py:268: AssertionError</failure></testcase><testcase classname="tests.test_evidence_extraction" name="test_single_fact_rejects_title_only_unrelated_chunk" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_semantic_parser_accepts_compact_sentence_selection" time="0.001" /><testcase classname="tests.test_evidence_extraction" name="test_compact_sentence_selection_rejects_explanatory_prose" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_compact_sentence_selection_accepts_shared_field_prefix" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_adjudication_parser_accepts_compact_field_evidence_pairs" time="0.001" /><testcase classname="tests.test_evidence_extraction" name="test_adjudication_parser_ignores_explanatory_prose" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_semantic_extractor_adjudicates_candidates_across_chunks" time="0.283" /><testcase classname="tests.test_evidence_extraction" name="test_adjudication_prioritizes_causal_relation_over_event_only_sentence" time="0.002"><failure message="AssertionError: assert '导致国力衰退' in '某王朝灭亡。'&#10; +  where '某王朝灭亡。' = _EvidenceUnit(source_index=0, span='某王朝灭亡。', content_hash='9a043f139deae5eb6feec03cc15b4daef0e8c4339a81927837661464dfcf708d', score=5.114155080968937).span">def test_adjudication_prioritizes_causal_relation_over_event_only_sentence() -&gt; None:
+        extractor = LanguageModelEvidenceExtractor(Settings(semantic_pipeline_enabled=True))
+        plan = replace(
+            build_query_plan("某王朝灭亡的原因是什么？"),
+            subject="某王朝",
+            relations=("原因", "灭亡"),
+            fields=(TaskField("f1", "某王朝灭亡的原因是什么？", ("原因", "灭亡")),),
+            answer_shape="summary",
+        )
+        source_item = SourceItem(
+            id="dynasty",
+            document_id="dynasty",
+            source="wiki",
+            title="某王朝",
+            score=1.0,
+            snippet="某王朝灭亡。政治腐败导致国力衰退，最终爆发民变。",
+        )
+        units = extractor._adjudication_units(plan, [source_item], [])
+    
+&gt;       assert "导致国力衰退" in units[0].span
+E       AssertionError: assert '导致国力衰退' in '某王朝灭亡。'
+E        +  where '某王朝灭亡。' = _EvidenceUnit(source_index=0, span='某王朝灭亡。', content_hash='9a043f139deae5eb6feec03cc15b4daef0e8c4339a81927837661464dfcf708d', score=5.114155080968937).span
+
+llamaindex-retrieval/tests/test_evidence_extraction.py:462: AssertionError</failure></testcase><testcase classname="tests.test_evidence_extraction" name="test_extractor_keeps_only_verbatim_spans" time="0.003"><failure message="AssertionError: assert [] == ['2016年，宇树科技创...og，随后创办宇树科技。']&#10;  &#10;  Right contains one more item: '2016年，宇树科技创始人王兴兴开发了XDog，随后创办宇树科技。'&#10;  Use -v to get more diff">@pytest.mark.asyncio
+    async def test_extractor_keeps_only_verbatim_spans() -&gt; None:
+        snippet = "2016年，宇树科技创始人王兴兴开发了XDog，随后创办宇树科技。"
+    
+        async def handler(_: httpx.Request) -&gt; httpx.Response:
+            return stream_response(json.dumps({
+                "candidates": [
+                    {"field_id": "f1", "sentence_id": "s1"},
+                    {"field_id": "f1", "sentence_id": "s99"},
+                ]
+            }, ensure_ascii=False))
+    
+        settings = Settings(
+            generation_password="secret",
+            generation_base_url="https://generation.example/v1",
+        )
+        extractor = LanguageModelEvidenceExtractor(
+            settings,
+            transport=httpx.MockTransport(handler),
+        )
+        plan = replace(
+            build_query_plan("宇树科技创始人是谁？"),
+            answer_shape="summary",
+        )
+        result = await extractor.extract(
+            "宇树科技创始人是谁？",
+            plan,
+            [source(snippet)],
+        )
+    
+        assert result.available is True
+&gt;       assert [candidate.span for candidate in result.candidates] == [
+            snippet,
+        ]
+E       AssertionError: assert [] == ['2016年，宇树科技创...og，随后创办宇树科技。']
+E         
+E         Right contains one more item: '2016年，宇树科技创始人王兴兴开发了XDog，随后创办宇树科技。'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_evidence_extraction.py:496: AssertionError</failure></testcase><testcase classname="tests.test_evidence_extraction" name="test_extractor_distinguishes_no_candidate_from_transport_failure" time="0.003" /><testcase classname="tests.test_evidence_extraction" name="test_extractor_rejects_verbatim_value_from_unrelated_source" time="0.003" /><testcase classname="tests.test_evidence_extraction" name="test_narrative_event_extractor_rejects_value_without_relation_span" time="0.000"><failure message="IndexError: tuple index out of range">def test_narrative_event_extractor_rejects_value_without_relation_span() -&gt; None:
+        plan = build_query_plan("水浒传里赤手空拳打死老虎的是谁？")
+        evidence = SourceItem(
+            id="water-margin",
+            document_id="water-margin",
+            source="finewiki-zh",
+            title="水浒传",
+            score=1.0,
+            snippet="宋江代表的动物是老虎；武松在景阳冈打死老虎。",
+        )
+        value_only = json.dumps({
+            "candidates": [{"field_id": "f1", "span": "宋江"}]
+        }, ensure_ascii=False)
+        direct_fact = json.dumps({
+            "candidates": [{"field_id": "f1", "span": "武松在景阳冈打死老虎。"}]
+        }, ensure_ascii=False)
+    
+        assert LanguageModelEvidenceExtractor._parse(value_only, plan, 0, evidence) == ()
+&gt;       assert LanguageModelEvidenceExtractor._parse(direct_fact, plan, 0, evidence)[0].span == (
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            "武松在景阳冈打死老虎。"
+        )
+E       IndexError: tuple index out of range
+
+llamaindex-retrieval/tests/test_evidence_extraction.py:592: IndexError</failure></testcase><testcase classname="tests.test_evidence_extraction" name="test_sentence_selection_does_not_require_literal_relation_alias" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_extractor_accepts_metadata_fields_alongside_candidates" time="0.000"><failure message="IndexError: tuple index out of range">def test_extractor_accepts_metadata_fields_alongside_candidates() -&gt; None:
+        sentence = "宇树科技创始人王兴兴在2016年创办了宇树科技。"
+        evidence = SourceItem(
+            id="unitree",
+            document_id="unitree",
+            source="finewiki-zh",
+            title="宇树科技",
+            score=1.0,
+            snippet=sentence,
+        )
+        plan = replace(
+            build_query_plan("宇树科技老板是谁？"),
+            subject="宇树科技",
+            relations=("老板",),
+            fields=(TaskField("f1", "宇树科技的老板是谁？", ("老板",)),),
+        )
+        raw = json.dumps({
+            "candidates": [{"field_id": "f1", "sentence_id": "s1"}],
+            "confidence": 0.98,
+        }, ensure_ascii=False)
+    
+        result = LanguageModelEvidenceExtractor._parse(
+            raw,
+            plan,
+            0,
+            evidence,
+            sentence_units=(sentence,),
+        )
+    
+&gt;       assert result[0].span == sentence
+               ^^^^^^^^^
+E       IndexError: tuple index out of range
+
+llamaindex-retrieval/tests/test_evidence_extraction.py:657: IndexError</failure></testcase><testcase classname="tests.test_evidence_extraction" name="test_sentence_selection_rejects_relationless_heading" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_summary_selection_rejects_unrelated_subject_mention" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_list_evidence_falls_back_to_direct_relation_sentence" time="0.000" /><testcase classname="tests.test_evidence_extraction" name="test_station_companion_page_is_valid_subject_evidence" time="0.000"><failure message="AssertionError: assert False is True&#10; +  where False = &lt;function LanguageModelEvidenceExtractor._source_contains_subject at 0x7ae6e58b5d00&gt;(QueryPlan(original_question='深圳地铁1号线有哪几个站', normalized_question='深圳地铁1号线有哪几个站', analysis=QuestionAnalysis(intent='fact...askField(field_id='f1', question='深圳地铁1号线有哪几个站', relations=()),), answer_shape='single_fact', set_semantics='specific'), SourceItem(id='station-list', document_id='station-list', source='finewiki-zh', title='深圳地铁车站列表', uri=None, score=1.0, snippet='1号线沿途共设30个车站：罗湖站、国贸站、老街站。', metadata={}))&#10; +    where &lt;function LanguageModelEvidenceExtractor._source_contains_subject at 0x7ae6e58b5d00&gt; = LanguageModelEvidenceExtractor._source_contains_subject">def test_station_companion_page_is_valid_subject_evidence() -&gt; None:
+        plan = build_query_plan("深圳地铁1号线有哪几个站")
+        evidence = SourceItem(
+            id="station-list",
+            document_id="station-list",
+            source="finewiki-zh",
+            title="深圳地铁车站列表",
+            score=1.0,
+            snippet="1号线沿途共设30个车站：罗湖站、国贸站、老街站。",
+        )
+    
+&gt;       assert LanguageModelEvidenceExtractor._source_contains_subject(plan, evidence) is True
+E       AssertionError: assert False is True
+E        +  where False = &lt;function LanguageModelEvidenceExtractor._source_contains_subject at 0x7ae6e58b5d00&gt;(QueryPlan(original_question='深圳地铁1号线有哪几个站', normalized_question='深圳地铁1号线有哪几个站', analysis=QuestionAnalysis(intent='fact...askField(field_id='f1', question='深圳地铁1号线有哪几个站', relations=()),), answer_shape='single_fact', set_semantics='specific'), SourceItem(id='station-list', document_id='station-list', source='finewiki-zh', title='深圳地铁车站列表', uri=None, score=1.0, snippet='1号线沿途共设30个车站：罗湖站、国贸站、老街站。', metadata={}))
+E        +    where &lt;function LanguageModelEvidenceExtractor._source_contains_subject at 0x7ae6e58b5d00&gt; = LanguageModelEvidenceExtractor._source_contains_subject
+
+llamaindex-retrieval/tests/test_evidence_extraction.py:759: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_requires_subject_and_explicit_ordinal_relation" time="0.001"><failure message="AssertionError: assert '第一个' in ()&#10; +  where () = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4d0f230&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).matched_relation_terms">def test_gate_requires_subject_and_explicit_ordinal_relation() -&gt; None:
+        question = "中国历史上第一个皇帝是谁？"
+        analysis = analyze_question(question)
+    
+        passed = evaluate_evidence_gate(
+            question,
+            analysis,
+            [source("皇帝", "在中国历史中，嬴政成为中原第一个皇帝。")],
+        )
+        failed = evaluate_evidence_gate(
+            question,
+            analysis,
+            [source("中国历史", "明光宗继承皇位，后来由天启帝继承皇位。")],
+        )
+    
+        assert passed.passed is True
+&gt;       assert "第一个" in passed.matched_relation_terms
+E       AssertionError: assert '第一个' in ()
+E        +  where () = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4d0f230&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).matched_relation_terms
+
+llamaindex-retrieval/tests/test_evidence_gate.py:40: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_ordinal_scope_match_rejects_narrower_scope_claim" time="0.000"><failure message="AssertionError: assert True is False&#10; +  where True = ordinal_scope_match('中国历史上第一个皇帝是谁？', '蒙古使用皇帝作为君主头衔，元世祖成为大蒙古国首位使用汉制的皇帝称号。')">def test_ordinal_scope_match_rejects_narrower_scope_claim() -&gt; None:
+        question = "中国历史上第一个皇帝是谁？"
+        assert ordinal_scope_match(
+            question,
+            "在中国历史中，嬴政成为中原第一个皇帝，称始皇帝。",
+        ) is True
+&gt;       assert ordinal_scope_match(
+            question,
+            "蒙古使用皇帝作为君主头衔，元世祖成为大蒙古国首位使用汉制的皇帝称号。",
+        ) is False
+E       AssertionError: assert True is False
+E        +  where True = ordinal_scope_match('中国历史上第一个皇帝是谁？', '蒙古使用皇帝作为君主头衔，元世祖成为大蒙古国首位使用汉制的皇帝称号。')
+
+llamaindex-retrieval/tests/test_evidence_gate.py:51: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_rejects_ordinal_evidence_from_narrower_scope" time="0.001"><failure message="AssertionError: assert True is False&#10; +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e52f6710&gt;, relation_terms=('第一个', '第一位', '首位', '最早'), matched_relation_terms=('首位',), passed=True, issues=()).passed">def test_gate_rejects_ordinal_evidence_from_narrower_scope() -&gt; None:
+        result = evaluate_evidence_gate(
+            "中国历史上第一个皇帝是谁？",
+            analyze_question("中国历史上第一个皇帝是谁？"),
+            [source(
+                "皇帝",
+                "蒙古使用皇帝作为君主头衔，元世祖成为大蒙古国首位使用汉制的皇帝称号。",
+            )],
+            subject="中国 皇帝",
+            relations=("第一个", "第一位", "首位", "最早"),
+            field_evidence_available=True,
+            field_candidate_count=1,
+        )
+&gt;       assert result.passed is False
+E       AssertionError: assert True is False
+E        +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e52f6710&gt;, relation_terms=('第一个', '第一位', '首位', '最早'), matched_relation_terms=('首位',), passed=True, issues=()).passed
+
+llamaindex-retrieval/tests/test_evidence_gate.py:70: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_title_identity_accepts_event_wording_variants" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_arabic_and_chinese_number_entity_variants" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_explicit_person_role_relation" time="0.000"><failure message="AssertionError: assert '创始人' in ()&#10; +  where () = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4ce8510&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).matched_relation_terms">def test_gate_accepts_explicit_person_role_relation() -&gt; None:
+        question = "宇树科技创始人是谁？"
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [source("宇树科技", "2016年，宇树科技创始人王兴兴创办了宇树科技。")],
+            subject="宇树科技",
+        )
+    
+        assert result.passed is True
+&gt;       assert "创始人" in result.matched_relation_terms
+E       AssertionError: assert '创始人' in ()
+E        +  where () = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4ce8510&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).matched_relation_terms
+
+llamaindex-retrieval/tests/test_evidence_gate.py:102: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_field_evidence_bypasses_brittle_title_string_matching" time="0.001"><failure message="AssertionError: assert False is True&#10; +  where False = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae713dfc950&gt;, relation_terms=('首都',), matched_relation_terms=('首都',), passed=False, issues=('subject_mismatch',)).passed">def test_field_evidence_bypasses_brittle_title_string_matching() -&gt; None:
+        question = "中国的首都在哪里"
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [source("中国首都", "北京自1949年后定为中华人民共和国首都。")],
+            subject="中国",
+            relations=("首都",),
+            field_evidence_available=True,
+            field_candidate_count=1,
+        )
+    
+&gt;       assert result.passed is True
+E       AssertionError: assert False is True
+E        +  where False = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae713dfc950&gt;, relation_terms=('首都',), matched_relation_terms=('首都',), passed=False, issues=('subject_mismatch',)).passed
+
+llamaindex-retrieval/tests/test_evidence_gate.py:117: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_field_evidence_does_not_match_partial_multiword_subject" time="0.001" /><testcase classname="tests.test_evidence_gate" name="test_gate_uses_dynamic_planner_relation_outside_builtin_vocabulary" time="0.001"><failure message="assert True is False&#10; +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e58a0f30&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed">def test_gate_uses_dynamic_planner_relation_outside_builtin_vocabulary() -&gt; None:
+        question = "火星计划由谁负责？"
+        evidence = [source("火星计划", "火星计划首席科学家张三承担总体研究工作。")]
+    
+        without_dynamic_relation = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            evidence,
+            subject="火星计划",
+        )
+        with_dynamic_relation = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            evidence,
+            subject="火星计划",
+            relations=("首席科学家",),
+        )
+    
+&gt;       assert without_dynamic_relation.passed is False
+E       assert True is False
+E        +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e58a0f30&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed
+
+llamaindex-retrieval/tests/test_evidence_gate.py:154: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_rejects_partial_definition_entity_match" time="0.000"><failure message="assert True is False&#10; +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4db0a50&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed">def test_gate_rejects_partial_definition_entity_match() -&gt; None:
+        question = "阿尔法泽是谁？"
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [source("阿尔法岛", "阿尔法岛是南极洲的岛屿。")],
+        )
+    
+&gt;       assert result.passed is False
+E       assert True is False
+E        +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4db0a50&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed
+
+llamaindex-retrieval/tests/test_evidence_gate.py:168: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_uses_structured_anchor_when_rule_subject_is_unavailable" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_embedded_definition_on_related_page" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_rejects_bare_field_name_as_embedded_definition" time="0.000"><failure message="assert True is False&#10; +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4d22890&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed">def test_gate_rejects_bare_field_name_as_embedded_definition() -&gt; None:
+        question = "CPUID指的是什么？"
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [source("处理器", "表格字段：核心代号、CPUID、步进、处理器插座。")],
+            subject="CPUID",
+        )
+    
+&gt;       assert result.passed is False
+E       assert True is False
+E        +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4d22890&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed
+
+llamaindex-retrieval/tests/test_evidence_gate.py:206: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_rejects_longer_entity_as_embedded_definition" time="0.000"><failure message="assert True is False&#10; +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae713dea350&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed">def test_gate_rejects_longer_entity_as_embedded_definition() -&gt; None:
+        question = "东平是谁？"
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [source("东平县", "东平县是中国山东省泰安市下辖的一个县。")],
+            subject="东平",
+        )
+    
+&gt;       assert result.passed is False
+E       assert True is False
+E        +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae713dea350&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed
+
+llamaindex-retrieval/tests/test_evidence_gate.py:218: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_rejects_wrong_page_for_complete_list" time="0.001"><failure message="assert True is False&#10; +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4cfbe10&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed">def test_gate_rejects_wrong_page_for_complete_list() -&gt; None:
+        question = "深圳地铁1号线有哪些站点？"
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [source("深圳地铁17号线", "深圳地铁17号线设有多个车站。")],
+            subject="深圳地铁1号线",
+        )
+    
+&gt;       assert result.passed is False
+E       assert True is False
+E        +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4cfbe10&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed
+
+llamaindex-retrieval/tests/test_evidence_gate.py:230: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_complete_list_route_alias" time="0.001" /><testcase classname="tests.test_evidence_gate" name="test_gate_ignores_parenthetical_title_base_as_an_alias" time="0.000"><failure message="assert True is False&#10; +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4c5f4d0&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed">def test_gate_ignores_parenthetical_title_base_as_an_alias() -&gt; None:
+        question = "秦始皇有哪些伟大成就？"
+        qualified_source = source(
+            "秦始皇 (歌剧)",
+            "《秦始皇》是一部以秦始皇为原型的英语歌剧。",
+        ).model_copy(update={"metadata": {"aliases": ["秦始皇"]}})
+    
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [qualified_source],
+            subject="秦始皇",
+        )
+    
+&gt;       assert result.passed is False
+E       assert True is False
+E        +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e4c5f4d0&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed
+
+llamaindex-retrieval/tests/test_evidence_gate.py:265: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_route_identified_by_endpoints" time="0.001" /><testcase classname="tests.test_evidence_gate" name="test_gate_allows_partial_list_from_parent_topic_page" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_rejects_partial_location_page_title" time="0.000"><failure message="assert True is False&#10; +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6dc308b90&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed">def test_gate_rejects_partial_location_page_title() -&gt; None:
+        question = "昌平区位于哪里？"
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [source("昌平区中西医结合医院", "医院位于北京市昌平区。")],
+            subject="昌平区",
+        )
+    
+&gt;       assert result.passed is False
+E       assert True is False
+E        +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6dc308b90&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed
+
+llamaindex-retrieval/tests/test_evidence_gate.py:302: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_rejects_related_but_different_cause_page" time="0.000"><failure message="assert True is False&#10; +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6dc308f50&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed">def test_gate_rejects_related_but_different_cause_page() -&gt; None:
+        question = "明朝为什么灭亡？"
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [source("明朝经济", "明朝经济发展经历了不同阶段。")],
+            subject="明朝",
+        )
+    
+&gt;       assert result.passed is False
+E       assert True is False
+E        +  where True = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6dc308f50&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).passed
+
+llamaindex-retrieval/tests/test_evidence_gate.py:315: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_subject_plus_event_cause_page" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_subject_plus_event_time_and_list_pages" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_normalized_world_cup_title" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_rejects_evidence_without_requested_year" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_time_gate_accepts_explicit_date_for_end_question" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_agent_relation_synonym_on_exact_topic_page" time="0.000"><failure message="AssertionError: assert '出使' in ()&#10; +  where () = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e59011d0&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).matched_relation_terms">def test_gate_accepts_agent_relation_synonym_on_exact_topic_page() -&gt; None:
+        question = "中国历史上开启丝绸之路的是谁？"
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [source("丝绸之路", "汉武帝派张骞出使西域，史称凿空。")],
+            subject="丝绸之路",
+        )
+    
+        assert result.passed is True
+&gt;       assert "出使" in result.matched_relation_terms
+E       AssertionError: assert '出使' in ()
+E        +  where () = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae6e59011d0&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).matched_relation_terms
+
+llamaindex-retrieval/tests/test_evidence_gate.py:396: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_maps_colloquial_owner_to_creator_relation" time="0.000"><failure message="AssertionError: assert False is True&#10; +  where False = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae713e04050&gt;, relation_terms=('老板',), matched_relation_terms=(), passed=False, issues=('relation_mismatch',)).passed">def test_gate_maps_colloquial_owner_to_creator_relation() -&gt; None:
+        question = "宇树科技老板是谁？"
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [source("宇树科技", "宇树科技创始人王兴兴在2016年创办了宇树科技。")],
+            subject="宇树科技",
+            relations=("老板",),
+        )
+    
+&gt;       assert result.passed is True
+E       AssertionError: assert False is True
+E        +  where False = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae713e04050&gt;, relation_terms=('老板',), matched_relation_terms=(), passed=False, issues=('relation_mismatch',)).passed
+
+llamaindex-retrieval/tests/test_evidence_gate.py:409: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_allows_broad_scope_prefix_for_exact_page" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_allows_historical_scope_question_for_exact_page" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_relation_evidence_on_parent_topic_page" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_creator_question_when_evidence_says_created" time="0.000"><failure message="AssertionError: assert '创作' in ()&#10; +  where () = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae713e04590&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).matched_relation_terms">def test_gate_accepts_creator_question_when_evidence_says_created() -&gt; None:
+        question = "渭水春风的创作者是谁？"
+        result = evaluate_evidence_gate(
+            question,
+            analyze_question(question),
+            [source("渭水春风", "该音乐剧由音乐时代剧场创作，并由多人共同编剧。")],
+            subject="渭水春风",
+        )
+    
+        assert result.passed is True
+&gt;       assert "创作" in result.matched_relation_terms
+E       AssertionError: assert '创作' in ()
+E        +  where () = EvidenceGateResult(assessment=&lt;llamaindex_retrieval.generation.EvidenceAssessment object at 0x7ae713e04590&gt;, relation_terms=(), matched_relation_terms=(), passed=True, issues=()).matched_relation_terms
+
+llamaindex-retrieval/tests/test_evidence_gate.py:459: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_gate_accepts_current_office_on_exact_topic_page" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_answer_support_uses_only_cited_evidence" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_refusal_answer_always_passes_support_gate" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_answer_support_includes_cited_document_sibling_chunks" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_answer_support_does_not_treat_descriptive_words_as_entities" time="0.000"><failure message="AssertionError: assert 'unsupported_entity_term' not in ('weak_answer_evidence_overlap', 'unsupported_entity_term')&#10; +  where ('weak_answer_evidence_overlap', 'unsupported_entity_term') = AnswerSupportResult(passed=False, coverage=0.2857142857142857, supported_terms=('党争', '腐败'), unsupported_terms=('十分', '十分激烈', '朝政', '激烈', '长期'), issues=('weak_answer_evidence_overlap', 'unsupported_entity_term')).issues">def test_answer_support_does_not_treat_descriptive_words_as_entities() -&gt; None:
+        result = evaluate_answer_support(
+            "朝政长期腐败，党争十分激烈。[资料 1]",
+            [source("明朝", "朝廷党争不断，政治日益腐败。")],
+        )
+    
+&gt;       assert "unsupported_entity_term" not in result.issues
+E       AssertionError: assert 'unsupported_entity_term' not in ('weak_answer_evidence_overlap', 'unsupported_entity_term')
+E        +  where ('weak_answer_evidence_overlap', 'unsupported_entity_term') = AnswerSupportResult(passed=False, coverage=0.2857142857142857, supported_terms=('党争', '腐败'), unsupported_terms=('十分', '十分激烈', '朝政', '激烈', '长期'), issues=('weak_answer_evidence_overlap', 'unsupported_entity_term')).issues
+
+llamaindex-retrieval/tests/test_evidence_gate.py:518: AssertionError</failure></testcase><testcase classname="tests.test_evidence_gate" name="test_answer_support_checks_only_facts_added_beyond_the_question" time="0.000" /><testcase classname="tests.test_evidence_gate" name="test_repair_answer_citations_maps_comparison_clauses_to_sources" time="0.001" /><testcase classname="tests.test_evidence_gate" name="test_repair_answer_citations_points_to_exact_sibling_chunk" time="0.000" /><testcase classname="tests.test_generation" name="test_cause_prompt_forbids_post_event_and_external_causes" time="0.002"><failure message="assert '不得使用模型常识补充资料未出现的原因' in 'system:\n知识库问答助手；只能依据资料；资料不足时说明；关键结论标注对应资料编号。\n\nuser:\n问题：明朝为什么灭亡？\n任务契约：{&quot;subject&quot;: &quot;明朝为什么灭亡？&quot;, &quot;relations&quot;: [], &quot;q...1&quot;, &quot;question&quot;: &quot;明朝为什么灭亡？&quot;, &quot;relations&quot;: []}]}\n资料：\n[资料 1] 标题：首都\n中华人民共和国的首都是北京。\n请只依据资料回答；资料不足时明确说明。\n\nassistant:\n'">def test_cause_prompt_forbids_post_event_and_external_causes() -&gt; None:
+        generator = EvidenceAnswerGenerator(Settings())
+    
+        prompt = generator._prompt("明朝为什么灭亡？", [source()])
+    
+&gt;       assert "不得使用模型常识补充资料未出现的原因" in prompt
+E       assert '不得使用模型常识补充资料未出现的原因' in 'system:\n知识库问答助手；只能依据资料；资料不足时说明；关键结论标注对应资料编号。\n\nuser:\n问题：明朝为什么灭亡？\n任务契约：{"subject": "明朝为什么灭亡？", "relations": [], "q...1", "question": "明朝为什么灭亡？", "relations": []}]}\n资料：\n[资料 1] 标题：首都\n中华人民共和国的首都是北京。\n请只依据资料回答；资料不足时明确说明。\n\nassistant:\n'
+
+llamaindex-retrieval/tests/test_generation.py:40: AssertionError</failure></testcase><testcase classname="tests.test_generation" name="test_fact_prompt_does_not_add_cause_only_instruction" time="0.002" /><testcase classname="tests.test_generation" name="test_capital_answer_prefers_current_explicit_capital_sentence" time="0.001" /><testcase classname="tests.test_generation" name="test_counted_list_extracts_inline_encyclopedia_enumeration" time="0.000"><failure message="AssertionError: assert None == '四大名著包括：《三国演义》、《西游记》、《水浒传》、《红楼梦》。[资料 1]'&#10; +  where None = structured_list_answer('中国四大名著是哪四个？', [SourceItem(id='four-classics', document_id='four-classics', source='finewiki-zh', title='四大名著', uri=None, score=1.0, snippet='四大名著，即四大小说名著，是指《三国演义》《西游记》《水浒传》《红楼梦》4部中国古典章回小说。', metadata={})])">def test_counted_list_extracts_inline_encyclopedia_enumeration() -&gt; None:
+        evidence = SourceItem(
+            id="four-classics",
+            document_id="four-classics",
+            source="finewiki-zh",
+            title="四大名著",
+            score=1.0,
+            snippet=(
+                "四大名著，即四大小说名著，是指《三国演义》《西游记》"
+                "《水浒传》《红楼梦》4部中国古典章回小说。"
+            ),
+        )
+    
+&gt;       assert structured_list_answer("中国四大名著是哪四个？", [evidence]) == (
+            "四大名著包括：《三国演义》、《西游记》、《水浒传》、《红楼梦》。[资料 1]"
+        )
+E       AssertionError: assert None == '四大名著包括：《三国演义》、《西游记》、《水浒传》、《红楼梦》。[资料 1]'
+E        +  where None = structured_list_answer('中国四大名著是哪四个？', [SourceItem(id='four-classics', document_id='four-classics', source='finewiki-zh', title='四大名著', uri=None, score=1.0, snippet='四大名著，即四大小说名著，是指《三国演义》《西游记》《水浒传》《红楼梦》4部中国古典章回小说。', metadata={})])
+
+llamaindex-retrieval/tests/test_generation.py:85: AssertionError</failure></testcase><testcase classname="tests.test_generation" name="test_uncounted_list_extracts_inline_quoted_enumeration" time="0.000" /><testcase classname="tests.test_generation" name="test_author_answer_does_not_treat_mingzhu_as_authorship_relation" time="0.005" /><testcase classname="tests.test_generation" name="test_author_answer_prefers_attribution_over_bibliography" time="0.001" /><testcase classname="tests.test_generation" name="test_list_prompt_requires_all_evidence_and_role_distinction" time="0.002"><failure message="assert '必须检查全部资料' in 'system:\n知识库问答助手；只能依据资料；资料不足时说明；关键结论标注对应资料编号。\n\nuser:\n问题：2030年世界杯由哪些国家主办？\n任务契约：{&quot;subject&quot;: &quot;2030年世界杯由哪些国家主办？&quot;, &quot;re...stion&quot;: &quot;2030年世界杯由哪些国家主办？&quot;, &quot;relations&quot;: []}]}\n资料：\n[资料 1] 标题：首都\n中华人民共和国的首都是北京。\n请只依据资料回答；资料不足时明确说明。\n\nassistant:\n'">def test_list_prompt_requires_all_evidence_and_role_distinction() -&gt; None:
+        generator = EvidenceAnswerGenerator(Settings())
+    
+        prompt = generator._prompt("2030年世界杯由哪些国家主办？", [source()])
+    
+&gt;       assert "必须检查全部资料" in prompt
+E       assert '必须检查全部资料' in 'system:\n知识库问答助手；只能依据资料；资料不足时说明；关键结论标注对应资料编号。\n\nuser:\n问题：2030年世界杯由哪些国家主办？\n任务契约：{"subject": "2030年世界杯由哪些国家主办？", "re...stion": "2030年世界杯由哪些国家主办？", "relations": []}]}\n资料：\n[资料 1] 标题：首都\n中华人民共和国的首都是北京。\n请只依据资料回答；资料不足时明确说明。\n\nassistant:\n'
+
+llamaindex-retrieval/tests/test_generation.py:165: AssertionError</failure></testcase><testcase classname="tests.test_generation" name="test_prompt_includes_structured_relation_contract" time="0.002"><failure message="assert '每个“对象—关系—具体值”必须由同一条资料中的同一句或相邻句直接支持' in 'system:\n知识库问答助手；只能依据资料；资料不足时说明；关键结论标注对应资料编号。\n\nuser:\n问题：马斯克创办了哪几家公司？\n任务契约：{&quot;subject&quot;: &quot;马斯克&quot;, &quot;relations&quot;: [&quot;创办&quot;, ...: &quot;马斯克创办了哪几家公司？&quot;, &quot;relations&quot;: [&quot;创办&quot;, &quot;创立&quot;]}]}\n资料：\n[资料 1] 标题：首都\n中华人民共和国的首都是北京。\n请只依据资料回答；资料不足时明确说明。\n\nassistant:\n'">def test_prompt_includes_structured_relation_contract() -&gt; None:
+        generator = EvidenceAnswerGenerator(Settings())
+    
+        prompt = generator._prompt(
+            "马斯克创办了哪几家公司？",
+            [source()],
+            subject="马斯克",
+            relations=("创办", "创立"),
+        )
+    
+        assert '"subject": "马斯克"' in prompt
+        assert '"relations": ["创办", "创立"]' in prompt
+&gt;       assert "每个“对象—关系—具体值”必须由同一条资料中的同一句或相邻句直接支持" in prompt
+E       assert '每个“对象—关系—具体值”必须由同一条资料中的同一句或相邻句直接支持' in 'system:\n知识库问答助手；只能依据资料；资料不足时说明；关键结论标注对应资料编号。\n\nuser:\n问题：马斯克创办了哪几家公司？\n任务契约：{"subject": "马斯克", "relations": ["创办", ...: "马斯克创办了哪几家公司？", "relations": ["创办", "创立"]}]}\n资料：\n[资料 1] 标题：首都\n中华人民共和国的首都是北京。\n请只依据资料回答；资料不足时明确说明。\n\nassistant:\n'
+
+llamaindex-retrieval/tests/test_generation.py:182: AssertionError</failure></testcase><testcase classname="tests.test_generation" name="test_prompt_treats_evaluative_words_as_selection_not_required_quotes" time="0.002"><failure message="assert '不要求资料逐字出现该评价词' in 'system:\n知识库问答助手；只能依据资料；资料不足时说明；关键结论标注对应资料编号。\n\nuser:\n问题：秦始皇有哪些伟大成就？\n任务契约：{&quot;subject&quot;: &quot;秦始皇有哪些伟大成就？&quot;, &quot;relations&quot;: ...question&quot;: &quot;秦始皇有哪些伟大成就？&quot;, &quot;relations&quot;: []}]}\n资料：\n[资料 1] 标题：秦始皇\n秦始皇统一六国，并推行书同文。\n请只依据资料回答；资料不足时明确说明。\n\nassistant:\n'">def test_prompt_treats_evaluative_words_as_selection_not_required_quotes() -&gt; None:
+        generator = EvidenceAnswerGenerator(Settings())
+        evidence = source().model_copy(
+            update={
+                "title": "秦始皇",
+                "snippet": "秦始皇统一六国，并推行书同文。",
+            }
+        )
+    
+        prompt = generator._prompt("秦始皇有哪些伟大成就？", [evidence])
+    
+&gt;       assert "不要求资料逐字出现该评价词" in prompt
+E       assert '不要求资料逐字出现该评价词' in 'system:\n知识库问答助手；只能依据资料；资料不足时说明；关键结论标注对应资料编号。\n\nuser:\n问题：秦始皇有哪些伟大成就？\n任务契约：{"subject": "秦始皇有哪些伟大成就？", "relations": ...question": "秦始皇有哪些伟大成就？", "relations": []}]}\n资料：\n[资料 1] 标题：秦始皇\n秦始皇统一六国，并推行书同文。\n请只依据资料回答；资料不足时明确说明。\n\nassistant:\n'
+
+llamaindex-retrieval/tests/test_generation.py:197: AssertionError</failure></testcase><testcase classname="tests.test_generation" name="test_ordinal_prompt_requires_explicit_first_relation" time="0.002"><failure message="assert '只能依据资料中明确出现的“第一个、第一位、首位或最早”关系作答' in 'system:\n知识库问答助手；只能依据资料；资料不足时说明；关键结论标注对应资料编号。\n\nuser:\n问题：中国历史上第一个皇帝是谁？\n任务契约：{&quot;subject&quot;: &quot;中国历史上第一个皇帝是谁？&quot;, &quot;relation...question&quot;: &quot;中国历史上第一个皇帝是谁？&quot;, &quot;relations&quot;: []}]}\n资料：\n[资料 1] 标题：首都\n中华人民共和国的首都是北京。\n请只依据资料回答；资料不足时明确说明。\n\nassistant:\n'">def test_ordinal_prompt_requires_explicit_first_relation() -&gt; None:
+        generator = EvidenceAnswerGenerator(Settings())
+    
+        prompt = generator._prompt("中国历史上第一个皇帝是谁？", [source()])
+    
+&gt;       assert "只能依据资料中明确出现的“第一个、第一位、首位或最早”关系作答" in prompt
+E       assert '只能依据资料中明确出现的“第一个、第一位、首位或最早”关系作答' in 'system:\n知识库问答助手；只能依据资料；资料不足时说明；关键结论标注对应资料编号。\n\nuser:\n问题：中国历史上第一个皇帝是谁？\n任务契约：{"subject": "中国历史上第一个皇帝是谁？", "relation...question": "中国历史上第一个皇帝是谁？", "relations": []}]}\n资料：\n[资料 1] 标题：首都\n中华人民共和国的首都是北京。\n请只依据资料回答；资料不足时明确说明。\n\nassistant:\n'
+
+llamaindex-retrieval/tests/test_generation.py:206: AssertionError</failure></testcase><testcase classname="tests.test_generation" name="test_semantic_writer_puts_evidence_before_question_with_minimal_controls" time="0.002" /><testcase classname="tests.test_generation" name="test_agent_answer_extracts_explicit_founder_role" time="0.002" /><testcase classname="tests.test_generation" name="test_ordinal_answer_extracts_explicit_first_relation_sentence" time="0.001" /><testcase classname="tests.test_generation" name="test_time_answer_derives_fixed_term_end_from_grounded_dates" time="0.000" /><testcase classname="tests.test_generation" name="test_definition_grounding_requires_complete_entity_name" time="0.000"><failure message="AssertionError: assert set() == {'阿尔法泽'}&#10;  &#10;  Extra items in the right set:&#10;  '阿尔法泽'&#10;  Use -v to get more diff">def test_definition_grounding_requires_complete_entity_name() -&gt; None:
+        evidence = SourceItem(
+            id="alpha-island",
+            document_id="alpha-island",
+            source="finewiki-zh",
+            title="阿尔法岛",
+            score=1.0,
+            snippet="阿尔法岛是南极洲的岛屿。",
+        )
+    
+        assessment = EvidenceAnswerGenerator.assess_evidence("阿尔法泽是谁？", [evidence])
+    
+&gt;       assert assessment.anchors == {"阿尔法泽"}
+E       AssertionError: assert set() == {'阿尔法泽'}
+E         
+E         Extra items in the right set:
+E         '阿尔法泽'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_generation.py:292: AssertionError</failure></testcase><testcase classname="tests.test_generation" name="test_structured_subject_rejects_partial_entity_overlap" time="0.000" /><testcase classname="tests.test_generation" name="test_structured_subject_matches_tokenized_entity_and_metadata_alias" time="0.001" /><testcase classname="tests.test_generation" name="test_definition_answer_extracts_embedded_definition_sentence" time="0.001" /><testcase classname="tests.test_generation" name="test_definition_answer_does_not_use_longer_entity_name" time="0.000" /><testcase classname="tests.test_generation" name="test_definition_answer_prefers_earlier_identity_over_shorter_detail" time="0.000" /><testcase classname="tests.test_generation" name="test_introduction_extends_a_short_definition_but_ignores_later_relation_word" time="0.000" /><testcase classname="tests.test_generation" name="test_definition_extraction_rejects_time_and_agent_questions" time="0.000" /><testcase classname="tests.test_generation" name="test_station_list_rejects_train_fleet_list" time="0.001" /><testcase classname="tests.test_generation" name="test_long_bullet_rows_are_extracted_from_exact_section" time="0.001" /><testcase classname="tests.test_generation" name="test_location_prefers_sentence_whose_subject_is_the_page_title" time="0.000" /><testcase classname="tests.test_generation" name="test_location_ignores_ascii_question_mark_inside_name_annotation" time="0.000" /><testcase classname="tests.test_generation" name="test_population_data_is_extracted_without_using_density" time="0.001" /><testcase classname="tests.test_generation" name="test_station_list_repairs_truncated_single_character_name_from_context" time="0.001" /><testcase classname="tests.test_generation" name="test_station_list_repairs_name_after_conjunction" time="0.000" /><testcase classname="tests.test_generation" name="test_flattened_station_table_extracts_only_complete_station_rows" time="0.001" /><testcase classname="tests.test_generation" name="test_dynasty_table_aggregates_dynasty_field_without_confusing_other_columns" time="0.000" /><testcase classname="tests.test_generation" name="test_time_and_agent_answers_select_relevant_evidence_sentences" time="0.002" /><testcase classname="tests.test_generation" name="test_birth_year_prefers_lead_lifespan_over_later_activity_year" time="0.000" /><testcase classname="tests.test_generation" name="test_death_year_does_not_use_relative_lifespan" time="0.000" /><testcase classname="tests.test_generation" name="test_year_question_does_not_prefer_later_month_precision" time="0.001" /><testcase classname="tests.test_generation" name="test_entity_origin_precedes_later_subsidiary_creation" time="0.001" /><testcase classname="tests.test_generation" name="test_entity_origin_accepts_year_before_established_verb" time="0.001" /><testcase classname="tests.test_generation" name="test_coordinated_time_answer_extracts_each_subject" time="0.001" /><testcase classname="tests.test_generation" name="test_coordinated_time_answer_is_not_validated_as_generic_list" time="0.001" /><testcase classname="tests.test_generation" name="test_agent_origin_prefers_initial_actor_over_later_reopening" time="0.002" /><testcase classname="tests.test_generation" name="test_agent_origin_combines_start_location_for_compound_question" time="0.005" /><testcase classname="tests.test_generation" name="test_generator_removes_bracketed_chat_protocol_markers" time="0.000" /><testcase classname="tests.test_generation" name="test_detects_periodic_parser_garbage_without_rejecting_normal_prose" time="0.000" /><testcase classname="tests.test_generation" name="test_generator_removes_bracketed_thinking_and_answer_markers" time="0.000" /><testcase classname="tests.test_generation" name="test_generator_removes_stray_blockquote_markers" time="0.000" /><testcase classname="tests.test_generation" name="test_generator_extracts_answer_after_echoed_evidence_block" time="0.000" /><testcase classname="tests.test_generation" name="test_generator_rejects_protocol_payloads_and_evidence_echo" time="0.000" /><testcase classname="tests.test_generation" name="test_generator_uses_evidence_and_truncates_rwkv_continuation" time="0.003" /><testcase classname="tests.test_generation" name="test_generator_cleans_echoed_evidence_from_model_output" time="0.003" /><testcase classname="tests.test_generation" name="test_semantic_generator_does_not_rewrite_model_answer" time="0.002" /><testcase classname="tests.test_generation" name="test_generator_skips_model_call_without_sources" time="0.002" /><testcase classname="tests.test_generation" name="test_generator_skips_model_call_when_evidence_does_not_cover_question" time="0.003"><failure message="Failed: the generation model must not be called for unrelated evidence">@pytest.mark.asyncio
+    async def test_generator_skips_model_call_when_evidence_does_not_cover_question() -&gt; None:
+        async def handler(_: httpx.Request) -&gt; httpx.Response:
+            pytest.fail("the generation model must not be called for unrelated evidence")
+    
+        generator = EvidenceAnswerGenerator(
+            Settings(generation_password="test-password"),
+            transport=httpx.MockTransport(handler),
+        )
+    
+&gt;       answer = await generator.generate(
+            "中国有多少个民族，分别是哪些？",
+            [
+                SourceItem(
+                    id="china-1",
+                    document_id="china",
+                    source="finewiki-zh",
+                    title="中国",
+                    score=1.0,
+                    snippet="中华人民共和国是位于东亚的国家。",
+                )
+            ],
+        )
+
+llamaindex-retrieval/tests/test_generation.py:1079: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+llamaindex-retrieval/src/llamaindex_retrieval/generation.py:122: in generate
+    result = await self.generate_with_trace(
+llamaindex-retrieval/src/llamaindex_retrieval/generation.py:185: in generate_with_trace
+    async with client.stream("POST", endpoint, json=payload) as response:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/httpx/_client.py:1583: in stream
+    response = await self.send(
+/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/httpx/_client.py:1629: in send
+    response = await self._send_handling_auth(
+/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/httpx/_client.py:1657: in _send_handling_auth
+    response = await self._send_handling_redirects(
+/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/httpx/_client.py:1694: in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/httpx/_client.py:1730: in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/httpx/_transports/mock.py:41: in handle_async_request
+    response = await response
+               ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_ = &lt;Request('POST', 'http://192.168.0.125:8002/v1/chat/completions')&gt;
+
+    async def handler(_: httpx.Request) -&gt; httpx.Response:
+&gt;       pytest.fail("the generation model must not be called for unrelated evidence")
+E       Failed: the generation model must not be called for unrelated evidence
+
+llamaindex-retrieval/tests/test_generation.py:1072: Failed</failure></testcase><testcase classname="tests.test_generation" name="test_generator_skips_model_call_when_subject_anchor_is_absent" time="0.002" /><testcase classname="tests.test_generation" name="test_legacy_generator_adds_citation_when_model_omits_one" time="0.003" /><testcase classname="tests.test_generation" name="test_legacy_generator_repairs_invalid_citation" time="0.002" /><testcase classname="tests.test_generation" name="test_immutable_generator_returns_byte_exact_model_output_and_trace" time="0.002" /><testcase classname="tests.test_generation" name="test_generator_reads_current_model_from_models_endpoint" time="0.002" /><testcase classname="tests.test_generation" name="test_generator_allows_model_list_failure" time="0.002" /><testcase classname="tests.test_generation" name="test_list_evidence_extracts_heading_rows_and_enumerated_sentence" time="0.001" /><testcase classname="tests.test_qa_analysis" name="test_analyzes_comparison_and_list_intents" time="0.000"><failure message="AssertionError: assert None == ('CPUID', 'GPU')&#10; +  where None = comparison_subjects('CPUID和GPU有什么区别？')">def test_analyzes_comparison_and_list_intents() -&gt; None:
+&gt;       assert comparison_subjects("CPUID和GPU有什么区别？") == ("CPUID", "GPU")
+E       AssertionError: assert None == ('CPUID', 'GPU')
+E        +  where None = comparison_subjects('CPUID和GPU有什么区别？')
+
+llamaindex-retrieval/tests/test_qa_analysis.py:26: AssertionError</failure></testcase><testcase classname="tests.test_qa_analysis" name="test_reverse_agent_relations_preserve_full_subject" time="0.000"><failure message="AssertionError: assert 'fact' == 'agent'&#10;  &#10;  - agent&#10;  + fact">def test_reverse_agent_relations_preserve_full_subject() -&gt; None:
+        cases = {
+            "说下渭水春風背后的創作者。": "渭水春风",
+            "说下W創作社背后的創辦者。": "w创作社",
+            "西北岁月的创作者是谁？": "西北岁月",
+        }
+        for question, expected_subject in cases.items():
+            plan = build_query_plan(question)
+&gt;           assert plan.analysis.intent == "agent"
+E           AssertionError: assert 'fact' == 'agent'
+E             
+E             - agent
+E             + fact
+
+llamaindex-retrieval/tests/test_qa_analysis.py:112: AssertionError</failure></testcase><testcase classname="tests.test_qa_analysis" name="test_cleans_colloquial_introduction_shell" time="0.000"><failure message="AssertionError: assert 'fact' == 'definition'&#10;  &#10;  - definition&#10;  + fact">def test_cleans_colloquial_introduction_shell() -&gt; None:
+        plan = build_query_plan("介绍下宇树科技")
+    
+&gt;       assert plan.analysis.intent == "definition"
+E       AssertionError: assert 'fact' == 'definition'
+E         
+E         - definition
+E         + fact
+
+llamaindex-retrieval/tests/test_qa_analysis.py:120: AssertionError</failure></testcase><testcase classname="tests.test_qa_analysis" name="test_cause_plan_searches_exact_subject_event_title_first" time="0.000"><failure message="AssertionError: assert '' == '美国'&#10;  &#10;  - 美国">def test_cause_plan_searches_exact_subject_event_title_first() -&gt; None:
+        plan = build_query_plan("美国为什么会走向衰落？")
+    
+&gt;       assert plan.subject == "美国"
+E       AssertionError: assert '' == '美国'
+E         
+E         - 美国
+
+llamaindex-retrieval/tests/test_qa_analysis.py:127: AssertionError</failure></testcase><testcase classname="tests.test_qa_analysis" name="test_detects_only_real_ambiguity_candidates" time="0.000"><failure message="AssertionError: assert [] == ['马昂 (演员)', '马昂 (明朝人物)']&#10;  &#10;  Right contains 2 more items, first extra item: '马昂 (演员)'&#10;  Use -v to get more diff">def test_detects_only_real_ambiguity_candidates() -&gt; None:
+        candidates = ambiguity_candidates(
+            "马昂是谁？",
+            [source("马昂 (演员)", "演员。"), source("马昂 (明朝人物)", "官员。")],
+        )
+&gt;       assert candidates == ["马昂 (演员)", "马昂 (明朝人物)"]
+E       AssertionError: assert [] == ['马昂 (演员)', '马昂 (明朝人物)']
+E         
+E         Right contains 2 more items, first extra item: '马昂 (演员)'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_qa_analysis.py:136: AssertionError</failure></testcase><testcase classname="tests.test_qa_analysis" name="test_validates_citations_and_unsupported_numbers" time="0.000"><failure message="AssertionError: assert '示例是一个组织。[资料 ...于2001年。[资料 1]' == '示例是一个组织。[资料 1]'&#10;  &#10;  - 示例是一个组织。[资料 1]&#10;  + 示例是一个组织。[资料 1]成立于2001年。[资料 1]">def test_validates_citations_and_unsupported_numbers() -&gt; None:
+        sources = [source("示例", "示例成立于1994年，有3名成员。")]
+        valid = validate_grounding("示例成立于1994年。[资料 1]", sources)
+        assert valid.valid is True
+    
+        invalid = validate_grounding("示例成立于2001年，共5人。[资料 2]", sources)
+        assert set(invalid.issues) == {"invalid_citation", "unsupported_number"}
+        assert invalid.unsupported_numbers == ("2001", "5")
+&gt;       assert remove_unsupported_number_sentences(
+            "示例是一个组织。[资料 1]成立于2001年。[资料 1]",
+            ("2001",),
+        ) == "示例是一个组织。[资料 1]"
+E       AssertionError: assert '示例是一个组织。[资料 ...于2001年。[资料 1]' == '示例是一个组织。[资料 1]'
+E         
+E         - 示例是一个组织。[资料 1]
+E         + 示例是一个组织。[资料 1]成立于2001年。[资料 1]
+
+llamaindex-retrieval/tests/test_qa_analysis.py:152: AssertionError</failure></testcase><testcase classname="tests.test_qa_analysis" name="test_detects_incomplete_list_against_explicit_evidence_count" time="0.000"><failure message="assert None is False&#10; +  where None = ListValidation(complete=None, expected_count=None, answer_count=None, issues=()).complete">def test_detects_incomplete_list_against_explicit_evidence_count() -&gt; None:
+        sources = [source("线路", "线路共有5站：甲站、乙站、丙站、丁站、戊站。")]
+        result = validate_list_answer("列出线路所有站点", "包括：甲站、乙站、丙站。[资料 1]", sources)
+&gt;       assert result.complete is False
+E       assert None is False
+E        +  where None = ListValidation(complete=None, expected_count=None, answer_count=None, issues=()).complete
+
+llamaindex-retrieval/tests/test_qa_analysis.py:161: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_builds_general_cause_plan_with_subject_and_relation_queries" time="0.000"><failure message="AssertionError: assert 'fact' == 'cause'&#10;  &#10;  - cause&#10;  + fact">def test_builds_general_cause_plan_with_subject_and_relation_queries() -&gt; None:
+        plan = build_query_plan("明朝是因为什么原因走上了灭亡？")
+    
+&gt;       assert plan.analysis.intent == "cause"
+E       AssertionError: assert 'fact' == 'cause'
+E         
+E         - cause
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:7: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_builds_ordinal_plan_with_equivalent_queries" time="0.000"><failure message="AssertionError: assert 'fact' == 'ordinal'&#10;  &#10;  - ordinal&#10;  + fact">def test_builds_ordinal_plan_with_equivalent_queries() -&gt; None:
+        plan = build_query_plan("中国历史上第一个皇帝是谁？")
+    
+&gt;       assert plan.analysis.intent == "ordinal"
+E       AssertionError: assert 'fact' == 'ordinal'
+E         
+E         - ordinal
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:19: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_cause_question_with_list_wording_still_uses_cause_pipeline" time="0.000"><failure message="AssertionError: assert 'fact' == 'cause'&#10;  &#10;  - cause&#10;  + fact">def test_cause_question_with_list_wording_still_uses_cause_pipeline() -&gt; None:
+        plan = build_query_plan("明朝走向灭亡的主要原因有哪些？")
+    
+&gt;       assert plan.analysis.intent == "cause"
+E       AssertionError: assert 'fact' == 'cause'
+E         
+E         - cause
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:43: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_cause_query_keeps_concrete_event_phrase" time="0.000"><failure message="AssertionError: assert '' == '诸葛亮'&#10;  &#10;  - 诸葛亮">def test_cause_query_keeps_concrete_event_phrase() -&gt; None:
+        plan = build_query_plan("诸葛亮为什么要挥泪斩马谡")
+    
+&gt;       assert plan.subject == "诸葛亮"
+E       AssertionError: assert '' == '诸葛亮'
+E         
+E         - 诸葛亮
+
+llamaindex-retrieval/tests/test_query_planning.py:51: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_list_plan_extracts_general_requested_relation" time="0.000"><failure message="AssertionError: assert 'fact' == 'list'&#10;  &#10;  - list&#10;  + fact">def test_list_plan_extracts_general_requested_relation() -&gt; None:
+        plan = build_query_plan("秦始皇有哪些伟大成就？")
+    
+&gt;       assert plan.analysis.intent == "list"
+E       AssertionError: assert 'fact' == 'list'
+E         
+E         - list
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:59: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_query_plan_recognizes_colloquial_multi_item_answer_shape" time="0.000"><failure message="AssertionError: assert 'fact' == 'list'&#10;  &#10;  - list&#10;  + fact">def test_query_plan_recognizes_colloquial_multi_item_answer_shape() -&gt; None:
+        plan = build_query_plan("马斯克创办了哪几家公司")
+    
+&gt;       assert plan.analysis.intent == "list"
+E       AssertionError: assert 'fact' == 'list'
+E         
+E         - list
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:67: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_generic_possessive_question_becomes_subject_and_field" time="0.000"><failure message="AssertionError: assert ('', (), 'fact') == ('宇树科技', ('老板',), 'agent')&#10;  &#10;  At index 0 diff: '' != '宇树科技'&#10;  Use -v to get more diff">def test_generic_possessive_question_becomes_subject_and_field() -&gt; None:
+        owner = build_query_plan("宇树科技的老板是谁")
+        capital = build_query_plan("中国的首都在哪里")
+        ending = build_query_plan("三国演义最后的结局是什么？")
+    
+&gt;       assert (owner.subject, owner.relations, owner.analysis.intent) == (
+            "宇树科技", ("老板",), "agent",
+        )
+E       AssertionError: assert ('', (), 'fact') == ('宇树科技', ('老板',), 'agent')
+E         
+E         At index 0 diff: '' != '宇树科技'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_query_planning.py:79: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_compact_role_question_preserves_company_subject" time="0.000"><failure message="AssertionError: assert '' == '宇树科技'&#10;  &#10;  - 宇树科技">def test_compact_role_question_preserves_company_subject() -&gt; None:
+        plan = build_query_plan("宇树科技老板是谁？")
+    
+&gt;       assert plan.subject == "宇树科技"
+E       AssertionError: assert '' == '宇树科技'
+E         
+E         - 宇树科技
+
+llamaindex-retrieval/tests/test_query_planning.py:96: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_nominal_question_without_interrogative_keeps_search_anchor" time="0.000"><failure message="AssertionError: assert '' == '中国四大名著'&#10;  &#10;  - 中国四大名著">def test_nominal_question_without_interrogative_keeps_search_anchor() -&gt; None:
+        plan = build_query_plan("中国四大名著？")
+    
+&gt;       assert plan.subject == "中国四大名著"
+E       AssertionError: assert '' == '中国四大名著'
+E         
+E         - 中国四大名著
+
+llamaindex-retrieval/tests/test_query_planning.py:104: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_builds_definition_and_procedure_plans_without_specific_entities" time="0.000"><failure message="AssertionError: assert '' == '硝酸'&#10;  &#10;  - 硝酸">def test_builds_definition_and_procedure_plans_without_specific_entities() -&gt; None:
+        definition = build_query_plan("硝酸是什么？")
+        procedure = build_query_plan("宇航员如何进行舱外活动训练？")
+    
+&gt;       assert definition.subject == "硝酸"
+E       AssertionError: assert '' == '硝酸'
+E         
+E         - 硝酸
+
+llamaindex-retrieval/tests/test_query_planning.py:113: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_cleans_colloquial_cause_subject" time="0.000"><failure message="AssertionError: assert 'fact' == 'cause'&#10;  &#10;  - cause&#10;  + fact">def test_cleans_colloquial_cause_subject() -&gt; None:
+        plan = build_query_plan("明朝究竟为何一步步走向覆亡了？")
+    
+&gt;       assert plan.analysis.intent == "cause"
+E       AssertionError: assert 'fact' == 'cause'
+E         
+E         - cause
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:123: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_builds_action_agent_and_current_office_queries" time="0.000"><failure message="AssertionError: assert 'fact' == 'agent'&#10;  &#10;  - agent&#10;  + fact">def test_builds_action_agent_and_current_office_queries() -&gt; None:
+        silk_road = build_query_plan("中国历史上开启丝绸之路的是谁？")
+        current_office = build_query_plan("现在美国副总统是谁？")
+    
+&gt;       assert silk_road.analysis.intent == "agent"
+E       AssertionError: assert 'fact' == 'agent'
+E         
+E         - agent
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:132: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_builds_non_current_office_and_founder_queries_without_crashing" time="0.000"><failure message="AssertionError: assert '' == '美国'&#10;  &#10;  - 美国">def test_builds_non_current_office_and_founder_queries_without_crashing() -&gt; None:
+        vice_president = build_query_plan("美国的副总统是谁？")
+        founder = build_query_plan("唐朝的开国皇帝是谁")
+        president = build_query_plan("美国的总统是谁")
+    
+&gt;       assert vice_president.subject == "美国"
+E       AssertionError: assert '' == '美国'
+E         
+E         - 美国
+
+llamaindex-retrieval/tests/test_query_planning.py:154: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_builds_role_agent_plan_with_role_equivalents" time="0.000"><failure message="AssertionError: assert 'fact' == 'agent'&#10;  &#10;  - agent&#10;  + fact">def test_builds_role_agent_plan_with_role_equivalents() -&gt; None:
+        plan = build_query_plan("宇树科技创始人是谁？")
+    
+&gt;       assert plan.analysis.intent == "agent"
+E       AssertionError: assert 'fact' == 'agent'
+E         
+E         - agent
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:165: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_agent_query_focuses_on_nearest_relational_object" time="0.000"><failure message="AssertionError: assert 'fact' == 'agent'&#10;  &#10;  - agent&#10;  + fact">def test_agent_query_focuses_on_nearest_relational_object() -&gt; None:
+        plan = build_query_plan("现代主义建筑发展所依赖的安全电梯由谁发明？")
+    
+&gt;       assert plan.analysis.intent == "agent"
+E       AssertionError: assert 'fact' == 'agent'
+E         
+E         - agent
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:173: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_builds_definition_subject_without_copula" time="0.000"><failure message="AssertionError: assert '' == '山科友里'&#10;  &#10;  - 山科友里">def test_builds_definition_subject_without_copula() -&gt; None:
+        plan = build_query_plan("请简要介绍山科友里")
+    
+&gt;       assert plan.subject == "山科友里"
+E       AssertionError: assert '' == '山科友里'
+E         
+E         - 山科友里
+
+llamaindex-retrieval/tests/test_query_planning.py:187: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_decomposes_coordinated_time_question" time="0.000"><failure message="AssertionError: assert 'fact' == 'time'&#10;  &#10;  - time&#10;  + fact">def test_decomposes_coordinated_time_question() -&gt; None:
+        plan = build_query_plan("香港和澳门分别是哪一年回归的？")
+    
+&gt;       assert plan.analysis.intent == "time"
+E       AssertionError: assert 'fact' == 'time'
+E         
+E         - time
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:194: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_cleans_list_and_location_subjects" time="0.000"><failure message="AssertionError: assert '' == '2030年世界杯'&#10;  &#10;  - 2030年世界杯">def test_cleans_list_and_location_subjects() -&gt; None:
+        host = build_query_plan("2030年世界杯由哪些国家主办？")
+        venue = build_query_plan("2026年世界杯决赛在哪个球场举行？")
+    
+&gt;       assert host.subject == "2030年世界杯"
+E       AssertionError: assert '' == '2030年世界杯'
+E         
+E         - 2030年世界杯
+
+llamaindex-retrieval/tests/test_query_planning.py:203: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_builds_counted_enumeration_as_complete_list" time="0.000"><failure message="AssertionError: assert 'fact' == 'list'&#10;  &#10;  - list&#10;  + fact">def test_builds_counted_enumeration_as_complete_list() -&gt; None:
+        plan = build_query_plan("中国四大名著是哪四个？")
+    
+&gt;       assert plan.analysis.intent == "list"
+E       AssertionError: assert 'fact' == 'list'
+E         
+E         - list
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:211: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_builds_role_attribution_from_question_grammar" time="0.000"><failure message="AssertionError: assert 'fact' == 'agent'&#10;  &#10;  - agent&#10;  + fact">def test_builds_role_attribution_from_question_grammar() -&gt; None:
+        author = build_query_plan("西游记是哪个作者写的？")
+        director = build_query_plan("流浪地球是哪位导演拍的？")
+    
+&gt;       assert author.analysis.intent == "agent"
+E       AssertionError: assert 'fact' == 'agent'
+E         
+E         - agent
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:234: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_outcome_question_requires_summary_answer" time="0.000"><failure message="AssertionError: assert 'single_fact' == 'summary'&#10;  &#10;  - summary&#10;  + single_fact">def test_outcome_question_requires_summary_answer() -&gt; None:
+        plan = build_query_plan("三国演义最后的结局是什么？")
+    
+&gt;       assert plan.answer_shape == "summary"
+E       AssertionError: assert 'single_fact' == 'summary'
+E         
+E         - summary
+E         + single_fact
+
+llamaindex-retrieval/tests/test_query_planning.py:246: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_terminal_and_passive_agent_questions_build_relation_contracts" time="0.000"><failure message="AssertionError: assert 'fact' == 'agent'&#10;  &#10;  - agent&#10;  + fact">def test_terminal_and_passive_agent_questions_build_relation_contracts() -&gt; None:
+        memorial = build_query_plan("端午节的由来，是为了纪念谁？")
+        victim = build_query_plan("岳飞是被谁害死的")
+    
+&gt;       assert memorial.analysis.intent == "agent"
+E       AssertionError: assert 'fact' == 'agent'
+E         
+E         - agent
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:253: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_transit_list_plan_cleans_actions_and_adds_companion_page_query" time="0.000"><failure message="AssertionError: assert 'fact' == 'list'&#10;  &#10;  - list&#10;  + fact">def test_transit_list_plan_cleans_actions_and_adds_companion_page_query() -&gt; None:
+        plan = build_query_plan("深圳地铁一号线都经过哪些车站？")
+    
+&gt;       assert plan.analysis.intent == "list"
+E       AssertionError: assert 'fact' == 'list'
+E         
+E         - list
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:264: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_list_question_with_earliest_word_is_not_misclassified_as_ordinal" time="0.000"><failure message="AssertionError: assert 'fact' == 'list'&#10;  &#10;  - list&#10;  + fact">def test_list_question_with_earliest_word_is_not_misclassified_as_ordinal() -&gt; None:
+        plan = build_query_plan("深圳最早开通的地铁线路经过哪些站？")
+    
+&gt;       assert plan.analysis.intent == "list"
+E       AssertionError: assert 'fact' == 'list'
+E         
+E         - list
+E         + fact
+
+llamaindex-retrieval/tests/test_query_planning.py:278: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_endpoint_description_adds_focused_route_query" time="0.000"><failure message="AssertionError: assert '连接罗湖和机场东的深圳地铁线路有哪些车站？' == '罗湖 机场东'&#10;  &#10;  - 罗湖 机场东&#10;  + 连接罗湖和机场东的深圳地铁线路有哪些车站？">def test_endpoint_description_adds_focused_route_query() -&gt; None:
+        plan = build_query_plan("连接罗湖和机场东的深圳地铁线路有哪些车站？")
+    
+&gt;       assert plan.queries[0] == "罗湖 机场东"
+E       AssertionError: assert '连接罗湖和机场东的深圳地铁线路有哪些车站？' == '罗湖 机场东'
+E         
+E         - 罗湖 机场东
+E         + 连接罗湖和机场东的深圳地铁线路有哪些车站？
+
+llamaindex-retrieval/tests/test_query_planning.py:286: AssertionError</failure></testcase><testcase classname="tests.test_query_planning" name="test_cleans_common_conversational_question_shells" time="0.000"><failure message="AssertionError: assert '' == '山西博物院'&#10;  &#10;  - 山西博物院">def test_cleans_common_conversational_question_shells() -&gt; None:
+&gt;       assert build_query_plan("请简要介绍一下山西博物院。").subject == "山西博物院"
+E       AssertionError: assert '' == '山西博物院'
+E         
+E         - 山西博物院
+
+llamaindex-retrieval/tests/test_query_planning.py:292: AssertionError</failure></testcase><testcase classname="tests.test_semantic_query_planning" name="test_model_planner_uses_structured_queries_and_keeps_original_question" time="0.003" /><testcase classname="tests.test_semantic_query_planning" name="test_deterministic_planner_handles_role_attribution_without_model" time="0.003"><failure message="AssertionError: assert 'model' == 'deterministic_fallback'&#10;  &#10;  - deterministic_fallback&#10;  + model">@pytest.mark.asyncio
+    async def test_deterministic_planner_handles_role_attribution_without_model() -&gt; None:
+        async def handler(_: httpx.Request) -&gt; httpx.Response:
+            return stream_response(json.dumps({
+                "subject": "西游记",
+                "intent": "fact",
+                "answer_shape": "single_fact",
+                "set_semantics": "specific",
+                "fields": [{
+                    "field_id": "f1",
+                    "question": "西游记的作者是谁？",
+                    "relations": ["作者", "作者姓名"],
+                }],
+                "queries": [
+                    "西游记的作者是谁？",
+                    "西游记的作者是哪位作家？",
+                    "西游记的作者是谁？",
+                ],
+            }, ensure_ascii=False))
+    
+        settings = Settings(
+            generation_password="secret",
+            generation_base_url="https://generation.example/v1",
+        )
+        planner = LanguageModelQueryPlanner(settings, transport=httpx.MockTransport(handler))
+        fallback = build_query_plan("西游记是哪个作者写的？")
+    
+        result = await planner.plan("西游记是哪个作者写的？", fallback)
+    
+&gt;       assert result.strategy == "deterministic_fallback"
+E       AssertionError: assert 'model' == 'deterministic_fallback'
+E         
+E         - deterministic_fallback
+E         + model
+
+llamaindex-retrieval/tests/test_semantic_query_planning.py:123: AssertionError</failure></testcase><testcase classname="tests.test_semantic_query_planning" name="test_semantic_pipeline_uses_model_for_structured_role_question" time="0.002" /><testcase classname="tests.test_semantic_query_planning" name="test_model_planner_repairs_answer_used_as_subject" time="0.002" /><testcase classname="tests.test_semantic_query_planning" name="test_model_planner_preserves_structural_list_constraint[\u4e2d\u56fd\u56db\u5927\u540d\u8457\u662f\u54ea\u56db\u4e2a\uff1f]" time="0.002"><failure message="AssertionError: assert 'definition' == 'list'&#10;  &#10;  - list&#10;  + definition">question = '中国四大名著是哪四个？'
+
+    @pytest.mark.parametrize(
+        "question",
+        (
+            "中国四大名著是哪四个？",
+            "中国历史上的四大名著是哪四个？",
+        ),
+    )
+    @pytest.mark.asyncio
+    async def test_model_planner_preserves_structural_list_constraint(question: str) -&gt; None:
+        async def handler(_: httpx.Request) -&gt; httpx.Response:
+            return stream_response(json.dumps({
+                "subject": "四大名著",
+                "intent": "definition",
+                "answer_shape": "single_fact",
+                "set_semantics": "specific",
+                "fields": [{
+                    "field_id": "f1",
+                    "question": "四大名著的具体名称",
+                    "relations": ["四大名著的名称", "完整列表"],
+                }],
+                "queries": [
+                    "中国四大名著的全称是什么",
+                    "中国四大名著的完整列表是什么",
+                    "中国四大名著的标准名称有哪些",
+                ],
+            }, ensure_ascii=False))
+    
+        settings = Settings(
+            generation_password="secret",
+            generation_base_url="https://generation.example/v1",
+        )
+        planner = LanguageModelQueryPlanner(settings, transport=httpx.MockTransport(handler))
+        fallback = build_query_plan(question)
+    
+        result = await planner.plan(question, fallback)
+    
+        assert result.strategy == "model"
+&gt;       assert result.plan.analysis.intent == "list"
+E       AssertionError: assert 'definition' == 'list'
+E         
+E         - list
+E         + definition
+
+llamaindex-retrieval/tests/test_semantic_query_planning.py:257: AssertionError</failure></testcase><testcase classname="tests.test_semantic_query_planning" name="test_model_planner_preserves_structural_list_constraint[\u4e2d\u56fd\u5386\u53f2\u4e0a\u7684\u56db\u5927\u540d\u8457\u662f\u54ea\u56db\u4e2a\uff1f]" time="0.003"><failure message="AssertionError: assert 'definition' == 'list'&#10;  &#10;  - list&#10;  + definition">question = '中国历史上的四大名著是哪四个？'
+
+    @pytest.mark.parametrize(
+        "question",
+        (
+            "中国四大名著是哪四个？",
+            "中国历史上的四大名著是哪四个？",
+        ),
+    )
+    @pytest.mark.asyncio
+    async def test_model_planner_preserves_structural_list_constraint(question: str) -&gt; None:
+        async def handler(_: httpx.Request) -&gt; httpx.Response:
+            return stream_response(json.dumps({
+                "subject": "四大名著",
+                "intent": "definition",
+                "answer_shape": "single_fact",
+                "set_semantics": "specific",
+                "fields": [{
+                    "field_id": "f1",
+                    "question": "四大名著的具体名称",
+                    "relations": ["四大名著的名称", "完整列表"],
+                }],
+                "queries": [
+                    "中国四大名著的全称是什么",
+                    "中国四大名著的完整列表是什么",
+                    "中国四大名著的标准名称有哪些",
+                ],
+            }, ensure_ascii=False))
+    
+        settings = Settings(
+            generation_password="secret",
+            generation_base_url="https://generation.example/v1",
+        )
+        planner = LanguageModelQueryPlanner(settings, transport=httpx.MockTransport(handler))
+        fallback = build_query_plan(question)
+    
+        result = await planner.plan(question, fallback)
+    
+        assert result.strategy == "model"
+&gt;       assert result.plan.analysis.intent == "list"
+E       AssertionError: assert 'definition' == 'list'
+E         
+E         - list
+E         + definition
+
+llamaindex-retrieval/tests/test_semantic_query_planning.py:257: AssertionError</failure></testcase><testcase classname="tests.test_semantic_query_planning" name="test_model_planner_cannot_change_list_question_into_single_fact" time="0.003"><failure message="AssertionError: assert 'fact' == 'list'&#10;  &#10;  - list&#10;  + fact">@pytest.mark.asyncio
+    async def test_model_planner_cannot_change_list_question_into_single_fact() -&gt; None:
+        async def handler(_: httpx.Request) -&gt; httpx.Response:
+            return stream_response(json.dumps({
+                "subject": "秦始皇",
+                "intent": "fact",
+                "answer_shape": "single_fact",
+                "set_semantics": "specific",
+                "fields": [{
+                    "field_id": "f1",
+                    "question": "秦始皇的主要功绩是什么",
+                    "relations": ["功绩"],
+                }],
+                "relations": ["功绩"],
+                "queries": ["秦始皇的主要功绩是什么"],
+            }, ensure_ascii=False))
+    
+        planner = LanguageModelQueryPlanner(
+            Settings(generation_password="secret"),
+            transport=httpx.MockTransport(handler),
+        )
+        fallback = build_query_plan("秦始皇有哪些丰功伟绩")
+    
+        result = await planner.plan(fallback.original_question, fallback)
+    
+&gt;       assert result.plan.analysis.intent == "list"
+E       AssertionError: assert 'fact' == 'list'
+E         
+E         - list
+E         + fact
+
+llamaindex-retrieval/tests/test_semantic_query_planning.py:290: AssertionError</failure></testcase><testcase classname="tests.test_semantic_query_planning" name="test_model_planner_cannot_downgrade_narrative_request" time="0.002"><failure message="AssertionError: assert 'single_fact' == 'narrative'&#10;  &#10;  - narrative&#10;  + single_fact">@pytest.mark.asyncio
+    async def test_model_planner_cannot_downgrade_narrative_request() -&gt; None:
+        async def handler(_: httpx.Request) -&gt; httpx.Response:
+            return stream_response(json.dumps({
+                "subject": "草船借箭",
+                "intent": "fact",
+                "answer_shape": "single_fact",
+                "set_semantics": "specific",
+                "fields": [{
+                    "field_id": "f1",
+                    "question": "草船借箭的经过",
+                    "relations": ["经过", "过程"],
+                }],
+                "relations": ["经过", "过程"],
+                "queries": ["草船借箭 经过", "草船借箭 过程"],
+            }, ensure_ascii=False))
+    
+        settings = Settings(
+            generation_password="secret",
+            generation_base_url="https://generation.example/v1",
+        )
+        planner = LanguageModelQueryPlanner(settings, transport=httpx.MockTransport(handler))
+        fallback = build_query_plan("讲讲草船借箭的故事")
+    
+        result = await planner.plan("讲讲草船借箭的故事", fallback)
+    
+&gt;       assert result.plan.answer_shape == "narrative"
+E       AssertionError: assert 'single_fact' == 'narrative'
+E         
+E         - narrative
+E         + single_fact
+
+llamaindex-retrieval/tests/test_semantic_query_planning.py:322: AssertionError</failure></testcase><testcase classname="tests.test_semantic_query_planning" name="test_model_planner_falls_back_when_response_is_not_valid_json" time="0.002" /><testcase classname="tests.test_semantic_query_planning" name="test_immutable_planner_fallback_keeps_deterministic_subject" time="0.002" /><testcase classname="tests.test_semantic_query_planning" name="test_model_planner_can_be_disabled" time="0.002" /><testcase classname="tests.test_semantic_query_planning" name="test_model_planner_rejects_a_guessed_answer_as_subject" time="0.000" /><testcase classname="tests.test_semantic_query_planning" name="test_list_planner_keeps_specific_fallback_subject" time="0.000"><failure message="AssertionError: assert False is True&#10; +  where False = _prefer_fallback_subject('中国有哪些著名的长城关隘？', QueryPlan(original_question='中国有哪些著名的长城关隘？', normalized_question='中国有哪些著名的长城关隘？', analysis=QuestionAnalysis(intent='fa...skField(field_id='f1', question='中国有哪些著名的长城关隘？', relations=()),), answer_shape='single_fact', set_semantics='specific'), '中国')&#10; +    where _prefer_fallback_subject = LanguageModelQueryPlanner._prefer_fallback_subject">def test_list_planner_keeps_specific_fallback_subject() -&gt; None:
+        question = "中国有哪些著名的长城关隘？"
+        fallback = build_query_plan(question)
+    
+&gt;       assert LanguageModelQueryPlanner._prefer_fallback_subject(
+            question,
+            fallback,
+            "中国",
+        ) is True
+E       AssertionError: assert False is True
+E        +  where False = _prefer_fallback_subject('中国有哪些著名的长城关隘？', QueryPlan(original_question='中国有哪些著名的长城关隘？', normalized_question='中国有哪些著名的长城关隘？', analysis=QuestionAnalysis(intent='fa...skField(field_id='f1', question='中国有哪些著名的长城关隘？', relations=()),), answer_shape='single_fact', set_semantics='specific'), '中国')
+E        +    where _prefer_fallback_subject = LanguageModelQueryPlanner._prefer_fallback_subject
+
+llamaindex-retrieval/tests/test_semantic_query_planning.py:388: AssertionError</failure></testcase><testcase classname="tests.test_semantic_query_planning" name="test_list_planner_keeps_model_canonical_alias_when_fallback_is_noisy" time="0.000" /><testcase classname="tests.test_semantic_query_planning" name="test_narrative_agent_relation_still_uses_model_query_expansion" time="0.000"><failure message="AssertionError: assert False is True&#10; +  where False = &lt;function LanguageModelQueryPlanner._fallback_contract_is_sufficient at 0x7ae6e5a06de0&gt;(QueryPlan(original_question='宇树科技创始人是谁？', normalized_question='宇树科技创始人是谁？', analysis=QuestionAnalysis(intent='fact', e...(TaskField(field_id='f1', question='宇树科技创始人是谁？', relations=()),), answer_shape='single_fact', set_semantics='specific'))&#10; +    where &lt;function LanguageModelQueryPlanner._fallback_contract_is_sufficient at 0x7ae6e5a06de0&gt; = LanguageModelQueryPlanner._fallback_contract_is_sufficient">def test_narrative_agent_relation_still_uses_model_query_expansion() -&gt; None:
+        simple = build_query_plan("宇树科技创始人是谁？")
+        narrative = build_query_plan("水浒传里赤手空拳打死老虎的是谁？")
+    
+&gt;       assert LanguageModelQueryPlanner._fallback_contract_is_sufficient(simple) is True
+E       AssertionError: assert False is True
+E        +  where False = &lt;function LanguageModelQueryPlanner._fallback_contract_is_sufficient at 0x7ae6e5a06de0&gt;(QueryPlan(original_question='宇树科技创始人是谁？', normalized_question='宇树科技创始人是谁？', analysis=QuestionAnalysis(intent='fact', e...(TaskField(field_id='f1', question='宇树科技创始人是谁？', relations=()),), answer_shape='single_fact', set_semantics='specific'))
+E        +    where &lt;function LanguageModelQueryPlanner._fallback_contract_is_sufficient at 0x7ae6e5a06de0&gt; = LanguageModelQueryPlanner._fallback_contract_is_sufficient
+
+llamaindex-retrieval/tests/test_semantic_query_planning.py:415: AssertionError</failure></testcase><testcase classname="tests.test_semantic_query_planning" name="test_model_planner_requires_specific_hypothesis_for_event_agent_question" time="0.000" /><testcase classname="tests.test_service" name="test_verification_chunk_collapse_prefers_informative_document_chunk" time="0.001" /><testcase classname="tests.test_service" name="test_field_evidence_quote_fallback_keeps_explicit_roles" time="0.000" /><testcase classname="tests.test_service" name="test_field_evidence_quote_fallback_uses_terminal_outcome_markers" time="0.000" /><testcase classname="tests.test_service" name="test_definition_question_uses_document_lead_and_direct_answer" time="0.004"><failure message="AssertionError: assert '示例是用于测试的条目。 [资料 2]' == '示例是用于测试的条目。 [资料 1]'&#10;  &#10;  - 示例是用于测试的条目。 [资料 1]&#10;  ?                 ^&#10;  + 示例是用于测试的条目。 [资料 2]&#10;  ?                 ^">@pytest.mark.asyncio
+    async def test_definition_question_uses_document_lead_and_direct_answer() -&gt; None:
+        service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeDefinitionIndex()), generator=cast(Any, FakeFailingGenerator()))
+        response = await service.ask(SearchRequest(question="示例是什么？", top_k=1))
+&gt;       assert response.answer == "示例是用于测试的条目。 [资料 1]"
+E       AssertionError: assert '示例是用于测试的条目。 [资料 2]' == '示例是用于测试的条目。 [资料 1]'
+E         
+E         - 示例是用于测试的条目。 [资料 1]
+E         ?                 ^
+E         + 示例是用于测试的条目。 [资料 2]
+E         ?                 ^
+
+llamaindex-retrieval/tests/test_service.py:561: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_adaptive_evidence_top_k_uses_question_complexity" time="0.002"><failure message="assert 5 == 12">def test_adaptive_evidence_top_k_uses_question_complexity() -&gt; None:
+        service = SearchService(Settings(rag_pipeline="existing", max_top_k=20), cast(Any, None))
+    
+        cases = {
+            "中国的首都是哪里？": (5, "simple_fact"),
+            "秦始皇有哪些伟大成就？": (12, "complete_list"),
+            "明朝为什么灭亡？": (10, "cause"),
+            "尺八和长笛有什么区别？": (10, "comparison"),
+            "深圳地铁1号线全部站点有哪些？": (12, "complete_list"),
+        }
+        for question, (expected_top_k, expected_reason) in cases.items():
+            top_k, policy = service._adaptive_evidence_top_k(question, display_top_k=1)
+&gt;           assert top_k == expected_top_k
+E           assert 5 == 12
+
+llamaindex-retrieval/tests/test_service.py:577: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_adaptive_evidence_top_k_keeps_larger_display_request" time="0.002" /><testcase classname="tests.test_service" name="test_comparison_question_decomposes_and_merges_subject_searches" time="0.003"><failure message="AssertionError: assert ['尺八和长笛有什么区别？'] == ['尺八', '长笛']&#10;  &#10;  At index 0 diff: '尺八和长笛有什么区别？' != '尺八'&#10;  Right contains one more item: '长笛'&#10;  Use -v to get more diff">@pytest.mark.asyncio
+    async def test_comparison_question_decomposes_and_merges_subject_searches() -&gt; None:
+        service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeComparisonIndex()))
+        response = await service.search(SearchRequest(question="尺八和长笛有什么区别？", top_k=5))
+    
+&gt;       assert [item.title for item in response.results] == ["尺八", "长笛"]
+E       AssertionError: assert ['尺八和长笛有什么区别？'] == ['尺八', '长笛']
+E         
+E         At index 0 diff: '尺八和长笛有什么区别？' != '尺八'
+E         Right contains one more item: '长笛'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_service.py:600: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_select_results_deduplicates_documents_and_filters_low_scores" time="0.002" /><testcase classname="tests.test_service" name="test_rank_fusion_prefers_an_exact_page_alias" time="0.001"><failure message="AssertionError: assert 'other' == 'line-1'&#10;  &#10;  - line-1&#10;  + other">def test_rank_fusion_prefers_an_exact_page_alias() -&gt; None:
+        plan = build_query_plan("罗宝线有哪些站点？")
+        unrelated = LexicalResult(
+            node_id="other-node",
+            document_id="other",
+            text="其他地铁线路也设有多个车站。",
+            metadata={"title": "其他地铁线路"},
+            score=1.0,
+        )
+        aliased = LexicalResult(
+            node_id="line-1-node",
+            document_id="line-1",
+            text="深圳地铁1号线设有罗湖站等车站。",
+            metadata={"title": "深圳地铁1号线", "aliases": ["罗宝线"]},
+            score=0.8,
+        )
+    
+        merged = SearchService._merge_rank_fusion(
+            ([unrelated, aliased], [unrelated, aliased]),
+            plan=plan,
+        )
+    
+&gt;       assert merged[0].document_id == "line-1"
+E       AssertionError: assert 'other' == 'line-1'
+E         
+E         - line-1
+E         + other
+
+llamaindex-retrieval/tests/test_service.py:723: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_rank_fusion_prefers_exact_page_and_relation_chunk_over_qualified_pages" time="0.001"><failure message="AssertionError: assert ['opera', 'family'] == ['achievements', 'family']&#10;  &#10;  At index 0 diff: 'opera' != 'achievements'&#10;  Use -v to get more diff">def test_rank_fusion_prefers_exact_page_and_relation_chunk_over_qualified_pages() -&gt; None:
+        plan = build_query_plan("秦始皇有哪些伟大成就？")
+        opera = LexicalResult(
+            node_id="opera",
+            document_id="opera",
+            text="《秦始皇》是一部英语歌剧。",
+            metadata={"title": "秦始皇 (歌剧)", "aliases": ["秦始皇"]},
+            score=1.0,
+        )
+        family = LexicalResult(
+            node_id="family",
+            document_id="emperor",
+            text="异母弟为长安君成蟜。",
+            metadata={"title": "秦始皇", "section": "家庭成员"},
+            score=1.0,
+        )
+        achievements = LexicalResult(
+            node_id="achievements",
+            document_id="emperor",
+            text="统一天下后推行书同文，并统一度量衡。",
+            metadata={"title": "秦始皇", "section": "政治成就"},
+            score=0.7,
+        )
+    
+        merged = SearchService._merge_rank_fusion(
+            (
+                [opera, family, achievements],
+                [opera, family, achievements],
+            ),
+            plan=plan,
+        )
+    
+&gt;       assert [item.node_id for item in merged[:2]] == ["achievements", "family"]
+E       AssertionError: assert ['opera', 'family'] == ['achievements', 'family']
+E         
+E         At index 0 diff: 'opera' != 'achievements'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_service.py:758: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_rank_fusion_prefers_direct_event_evidence_over_repeated_title_hits" time="0.001"><failure message="AssertionError: assert 'water-margin' == 'yanggu'&#10;  &#10;  - yanggu&#10;  + water-margin">def test_rank_fusion_prefers_direct_event_evidence_over_repeated_title_hits() -&gt; None:
+        plan = build_query_plan("水浒传里赤手空拳打死老虎的是谁？")
+        title_hit = LexicalResult(
+            node_id="water-margin-overview",
+            document_id="water-margin",
+            text="《水浒传》讲述梁山好汉的故事，宋江代表的动物是老虎。",
+            metadata={"title": "水浒传"},
+            score=1.0,
+        )
+        direct_fact = LexicalResult(
+            node_id="yanggu-wusong",
+            document_id="yanggu",
+            text="武松是《水浒传》人物，在景阳冈打死老虎，为民除害。",
+            metadata={"title": "阳谷县"},
+            score=0.8,
+        )
+    
+        merged = SearchService._merge_rank_fusion(
+            (
+                [title_hit],
+                [title_hit],
+                [title_hit],
+                [title_hit, direct_fact],
+            ),
+            plan=plan,
+        )
+    
+&gt;       assert merged[0].document_id == "yanggu"
+E       AssertionError: assert 'water-margin' == 'yanggu'
+E         
+E         - yanggu
+E         + water-margin
+
+llamaindex-retrieval/tests/test_service.py:788: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_rank_fusion_prefers_list_subject_over_broad_scope_page" time="0.001"><failure message="AssertionError: assert 'china' == 'great-wall'&#10;  &#10;  - great-wall&#10;  + china">def test_rank_fusion_prefers_list_subject_over_broad_scope_page() -&gt; None:
+        plan = build_query_plan("中国有哪些著名的长城关隘？")
+        china = LexicalResult(
+            node_id="china-overview",
+            document_id="china",
+            text="中国历史悠久，疆域辽阔。",
+            metadata={"title": "中国"},
+            score=1.0,
+        )
+        passes = LexicalResult(
+            node_id="great-wall-passes",
+            document_id="great-wall",
+            text="长城著名关隘包括山海关、嘉峪关、居庸关。",
+            metadata={"title": "长城", "section": "关隘 &gt; 著名关城"},
+            score=0.7,
+        )
+    
+        merged = SearchService._merge_rank_fusion(
+            ([china, passes], [china, passes], [china, passes]),
+            plan=plan,
+        )
+    
+&gt;       assert merged[0].document_id == "great-wall"
+E       AssertionError: assert 'china' == 'great-wall'
+E         
+E         - great-wall
+E         + china
+
+llamaindex-retrieval/tests/test_service.py:813: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_summary_evidence_fallback_prefers_terminal_outcome" time="0.001"><failure message="AssertionError: assert False is True&#10; +  where False = EvidenceExtractionResult(candidates=(), attempted_sources=2, completed_sources=0, errors=('extractor response does not contain a JSON object',), source_signatures=(), strategy='model', trace_events=(), source_identities=()).has_candidates">def test_summary_evidence_fallback_prefers_terminal_outcome() -&gt; None:
+        plan = build_query_plan("三国演义最后的结局是什么？")
+        middle = SourceItem(
+            id="middle",
+            document_id="romance",
+            source="wiki",
+            title="三国演义",
+            score=1.0,
+            snippet="最终，诸葛亮三气周瑜，周瑜呕血而死。",
+            metadata={"chunk_order": 24},
+        )
+        ending = SourceItem(
+            id="ending",
+            document_id="romance",
+            source="wiki",
+            title="三国演义",
+            score=0.9,
+            snippet="经过近百年战乱，三国时代终结。司马氏三分归一，建立西晋统一天下。",
+            metadata={"chunk_order": 32},
+        )
+        failed = EvidenceExtractionResult(
+            (),
+            attempted_sources=2,
+            completed_sources=0,
+            errors=("extractor response does not contain a JSON object",),
+        )
+    
+        extracted = SearchService._deterministic_structured_evidence(
+            failed,
+            plan,
+            [middle, ending],
+        )
+    
+&gt;       assert extracted.has_candidates is True
+E       AssertionError: assert False is True
+E        +  where False = EvidenceExtractionResult(candidates=(), attempted_sources=2, completed_sources=0, errors=('extractor response does not contain a JSON object',), source_signatures=(), strategy='model', trace_events=(), source_identities=()).has_candidates
+
+llamaindex-retrieval/tests/test_service.py:849: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_model_relation_searches_inside_exact_page_before_top_k_cutoff" time="0.005" /><testcase classname="tests.test_service" name="test_rank_fusion_prefers_route_page_for_endpoint_description" time="0.001"><failure message="AssertionError: assert 'station' == 'route'&#10;  &#10;  - route&#10;  + station">def test_rank_fusion_prefers_route_page_for_endpoint_description() -&gt; None:
+        plan = build_query_plan("连接罗湖和机场东的深圳地铁线路有哪些车站？")
+        station = LexicalResult(
+            node_id="station",
+            document_id="station",
+            text="罗湖站可以换乘多条线路，交通接驳包括机场站。",
+            metadata={"title": "罗湖站 (深圳地铁)"},
+            score=1.0,
+        )
+        route = LexicalResult(
+            node_id="route",
+            document_id="route",
+            text="深圳地铁1号线由罗湖站至机场东站，全线共设30座车站。",
+            metadata={"title": "深圳地铁1号线"},
+            score=0.8,
+        )
+    
+        merged = SearchService._merge_rank_fusion(
+            ([station, route], [station, route]),
+            plan=plan,
+        )
+    
+&gt;       assert merged[0].document_id == "route"
+E       AssertionError: assert 'station' == 'route'
+E         
+E         - route
+E         + station
+
+llamaindex-retrieval/tests/test_service.py:946: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_lexical_index_searches_chinese_and_titles" time="0.002" /><testcase classname="tests.test_service" name="test_entity_bigrams_preserve_chinese_entity_boundaries" time="0.000" /><testcase classname="tests.test_service" name="test_index_mapping_contains_alias_and_entity_fallback_fields" time="0.002" /><testcase classname="tests.test_service" name="test_transit_line_numbers_are_normalized" time="0.000"><failure message="AssertionError: assert ['深圳', '地铁', ...有', '哪些', ...] == ['1', '深圳', '...有', '哪些', ...]&#10;  &#10;  At index 0 diff: '深圳' != '1'&#10;  Use -v to get more diff">def test_transit_line_numbers_are_normalized() -&gt; None:
+&gt;       assert lexical_tokens("深圳地铁一号线有哪些站点") == lexical_tokens(
+            "深圳地铁1号线有哪些站点"
+        )
+E       AssertionError: assert ['深圳', '地铁', ...有', '哪些', ...] == ['1', '深圳', '...有', '哪些', ...]
+E         
+E         At index 0 diff: '深圳' != '1'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_service.py:989: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_query_normalization_corrects_common_chinese_typos" time="0.000"><failure message="AssertionError: assert '中国有多少个名族' == '中国有多少个民族'&#10;  &#10;  - 中国有多少个民族&#10;  ?       ^&#10;  + 中国有多少个名族&#10;  ?       ^">def test_query_normalization_corrects_common_chinese_typos() -&gt; None:
+&gt;       assert normalize_query_text("中国有多少个名族") == "中国有多少个民族"
+E       AssertionError: assert '中国有多少个名族' == '中国有多少个民族'
+E         
+E         - 中国有多少个民族
+E         ?       ^
+E         + 中国有多少个名族
+E         ?       ^
+
+llamaindex-retrieval/tests/test_service.py:999: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_service_searches_with_normalized_question" time="0.006"><failure message="AssertionError: assert '民族' in '中国 有 多少 个 名族'">@pytest.mark.asyncio
+    async def test_service_searches_with_normalized_question() -&gt; None:
+        client = FakeOpenSearch()
+        service = SearchService(Settings(rag_pipeline="existing", ), LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, client)))
+    
+        response = await service.search(SearchRequest(question="中国有多少个名族", top_k=1))
+    
+        query = client.search_bodies[0]["query"]["bool"]["must"][0]["bool"]["should"][0]["multi_match"]["query"]
+&gt;       assert "民族" in query
+E       AssertionError: assert '民族' in '中国 有 多少 个 名族'
+
+llamaindex-retrieval/tests/test_service.py:1017: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_ask_reports_subject_anchor_mismatch" time="0.004"><failure message="AssertionError: assert '秦始皇' in []">@pytest.mark.asyncio
+    async def test_ask_reports_subject_anchor_mismatch() -&gt; None:
+        service = SearchService(
+            Settings(rag_pipeline="existing", ),
+            cast(Any, FakeMismatchIndex()),
+            generator=cast(Any, FakeInsufficientGenerator()),
+        )
+    
+        response = await service.ask(SearchRequest(question="秦始皇有哪些丰功伟绩？", top_k=1))
+    
+        assert response.answer == "根据检索到的资料，无法确定。"
+        assert response.generation["evidence_grounded"] is False
+        assert response.generation["blocked_reason"] == "insufficient_evidence"
+&gt;       assert "秦始皇" in response.generation["evidence_anchors"]
+E       AssertionError: assert '秦始皇' in []
+
+llamaindex-retrieval/tests/test_service.py:1036: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_cause_question_expands_sibling_chunks_from_same_section" time="0.004"><failure message="AssertionError: assert 1 == 3&#10; +  where 1 = len([SourceItem(id='ming-fall-2', document_id='ming', source='finewiki-zh', title='明朝', uri=None, score=1.0, snippet='李自成攻...a={'document_id': 'ming', 'section': '明朝 &gt; 历史 &gt; 灭亡', 'parent_id': 'ming-fall', 'structure_size': 3, 'chunk_order': 2})])">@pytest.mark.asyncio
+    async def test_cause_question_expands_sibling_chunks_from_same_section() -&gt; None:
+        index = FakeCauseIndex()
+        service = SearchService(
+            Settings(rag_pipeline="existing", max_chunks_per_document=1),
+            cast(Any, index),
+            generator=cast(Any, FakeCauseGenerator()),
+        )
+    
+&gt;       response = await service.ask(
+            SearchRequest(question="明朝是因为什么原因走上了灭亡", top_k=1)
+        )
+
+llamaindex-retrieval/tests/test_service.py:1049: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+llamaindex-retrieval/src/llamaindex_retrieval/service.py:1446: in ask
+    answer = await self._generate_answer(
+llamaindex-retrieval/src/llamaindex_retrieval/service.py:2723: in _generate_answer
+    return await asyncio.wait_for(generate(), timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/tasks.py:507: in wait_for
+    return await fut
+           ^^^^^^^^^
+llamaindex-retrieval/src/llamaindex_retrieval/service.py:2718: in generate
+    return await self.generator.generate(question, sources)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;test_service.FakeCauseGenerator object at 0x7ae6e4d0d6a0&gt;
+question = '明朝是因为什么原因走上了灭亡'
+sources = [SourceItem(id='ming-fall-2', document_id='ming', source='finewiki-zh', title='明朝', uri=None, score=1.0, snippet='李自成攻...a={'document_id': 'ming', 'section': '明朝 &gt; 历史 &gt; 灭亡', 'parent_id': 'ming-fall', 'structure_size': 3, 'chunk_order': 2})]
+
+    async def generate(self, question: str, sources: Any) -&gt; str:
+&gt;       assert len(sources) == 3
+E       AssertionError: assert 1 == 3
+E        +  where 1 = len([SourceItem(id='ming-fall-2', document_id='ming', source='finewiki-zh', title='明朝', uri=None, score=1.0, snippet='李自成攻...a={'document_id': 'ming', 'section': '明朝 &gt; 历史 &gt; 灭亡', 'parent_id': 'ming-fall', 'structure_size': 3, 'chunk_order': 2})])
+
+llamaindex-retrieval/tests/test_service.py:272: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_non_cause_question_does_not_expand_cause_context" time="0.003"><failure message="AssertionError: assert 'fact' == 'time'&#10;  &#10;  - time&#10;  + fact">@pytest.mark.asyncio
+    async def test_non_cause_question_does_not_expand_cause_context() -&gt; None:
+        index = FakeCauseIndex()
+        service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, index))
+    
+        response = await service.search(SearchRequest(question="明朝灭亡于哪一年", top_k=5))
+    
+        assert index.structure_calls == 0
+&gt;       assert response.retrieval["intent"] == "time"
+E       AssertionError: assert 'fact' == 'time'
+E         
+E         - time
+E         + fact
+
+llamaindex-retrieval/tests/test_service.py:1071: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_cause_question_falls_back_to_grounded_excerpts_when_model_refuses" time="0.004"><failure message="AssertionError: assert '党争' in '根据检索到的资料，无法确定。'&#10; +  where '根据检索到的资料，无法确定。' = AskResponse(answer='根据检索到的资料，无法确定。', sources=[SourceItem(id='ming-fall-2', document_id='ming', source='finewiki-zh', t...']}], 'failure_category': 'generation_failed', 'failure_reason': 'answer_not_grounded', 'failure_stage': 'generation'}).answer">@pytest.mark.asyncio
+    async def test_cause_question_falls_back_to_grounded_excerpts_when_model_refuses() -&gt; None:
+        service = SearchService(
+            Settings(rag_pipeline="existing", max_chunks_per_document=1),
+            cast(Any, FakeCauseIndex()),
+            generator=cast(Any, FakeRefusingCauseGenerator()),
+        )
+    
+        response = await service.ask(
+            SearchRequest(question="明朝究竟为何一步步走向覆亡了?", top_k=1)
+        )
+    
+&gt;       assert "党争" in response.answer
+E       AssertionError: assert '党争' in '根据检索到的资料，无法确定。'
+E        +  where '根据检索到的资料，无法确定。' = AskResponse(answer='根据检索到的资料，无法确定。', sources=[SourceItem(id='ming-fall-2', document_id='ming', source='finewiki-zh', t...']}], 'failure_category': 'generation_failed', 'failure_reason': 'answer_not_grounded', 'failure_stage': 'generation'}).answer
+
+llamaindex-retrieval/tests/test_service.py:1087: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_cause_question_repairs_empty_model_answer_before_caching" time="0.008"><failure message="AssertionError: assert '党争' in '根据检索到的资料，无法确定。'&#10; +  where '根据检索到的资料，无法确定。' = AskResponse(answer='根据检索到的资料，无法确定。', sources=[SourceItem(id='ming-fall-2', document_id='ming', source='finewiki-zh', t...}], 'failure_category': 'generation_failed', 'failure_reason': 'answer_support_failed', 'failure_stage': 'generation'}).answer">@pytest.mark.asyncio
+    async def test_cause_question_repairs_empty_model_answer_before_caching() -&gt; None:
+        service = SearchService(
+            Settings(rag_pipeline="existing", max_chunks_per_document=1),
+            cast(Any, FakeCauseIndex()),
+            generator=cast(Any, FakeEmptyCauseGenerator()),
+        )
+    
+        first = await service.ask(SearchRequest(question="明朝灭亡的原因有哪些？", top_k=1))
+        second = await service.ask(SearchRequest(question="明朝灭亡的原因有哪些？", top_k=1))
+    
+&gt;       assert "党争" in first.answer
+E       AssertionError: assert '党争' in '根据检索到的资料，无法确定。'
+E        +  where '根据检索到的资料，无法确定。' = AskResponse(answer='根据检索到的资料，无法确定。', sources=[SourceItem(id='ming-fall-2', document_id='ming', source='finewiki-zh', t...}], 'failure_category': 'generation_failed', 'failure_reason': 'answer_support_failed', 'failure_stage': 'generation'}).answer
+
+llamaindex-retrieval/tests/test_service.py:1103: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_cause_question_repairs_legacy_empty_cached_answer" time="0.005"><failure message="AssertionError: assert '党争' in '根据检索到的资料，无法确定。'&#10; +  where '根据检索到的资料，无法确定。' = AskResponse(answer='根据检索到的资料，无法确定。', sources=[SourceItem(id='ming-fall-2', document_id='ming', source='finewiki-zh', t...}], 'failure_category': 'generation_failed', 'failure_reason': 'answer_support_failed', 'failure_stage': 'generation'}).answer">@pytest.mark.asyncio
+    async def test_cause_question_repairs_legacy_empty_cached_answer() -&gt; None:
+        service = SearchService(
+            Settings(rag_pipeline="existing", max_chunks_per_document=1),
+            cast(Any, FakeCauseIndex()),
+            generator=cast(Any, FakeFailingGenerator()),
+        )
+        request = SearchRequest(question="明朝灭亡的原因有哪些？", top_k=1)
+        evidence = await service.search(request.model_copy(update={"top_k": 5}))
+        question = str(evidence.retrieval.get("normalized_question") or request.question)
+        plan = service._answer_plan(question, evidence.retrieval)
+        key = service._answer_cache_key(question, evidence, plan)
+        service._store_cached_answer(key, "根据资料，导致明朝灭亡的原因有：[资料 1]")
+    
+        response = await service.ask(request)
+    
+&gt;       assert "党争" in response.answer
+E       AssertionError: assert '党争' in '根据检索到的资料，无法确定。'
+E        +  where '根据检索到的资料，无法确定。' = AskResponse(answer='根据检索到的资料，无法确定。', sources=[SourceItem(id='ming-fall-2', document_id='ming', source='finewiki-zh', t...}], 'failure_category': 'generation_failed', 'failure_reason': 'answer_support_failed', 'failure_stage': 'generation'}).answer
+
+llamaindex-retrieval/tests/test_service.py:1125: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_answer_cache_key_includes_task_contract" time="0.002" /><testcase classname="tests.test_service" name="test_deterministic_evidence_rejects_title_only_span" time="0.000" /><testcase classname="tests.test_service" name="test_deterministic_evidence_uses_relation_synonyms_and_section_context" time="0.000"><failure message="AssertionError: assert False is True&#10; +  where False = EvidenceExtractionResult(candidates=(), attempted_sources=1, completed_sources=0, errors=('invalid JSON',), source_signatures=(), strategy='model', trace_events=(), source_identities=()).has_candidates">def test_deterministic_evidence_uses_relation_synonyms_and_section_context() -&gt; None:
+        plan = build_query_plan("秦始皇有哪些丰功伟绩")
+        original = EvidenceExtractionResult((), 1, 0, ("invalid JSON",))
+        sources = [SourceItem(
+            id="qin-achievements",
+            document_id="qin",
+            source="wiki",
+            title="秦始皇",
+            score=1.0,
+            snippet=(
+                "评价\n秦始皇一生并天下、称皇帝、废分封、置郡县、征百越、"
+                "逐匈奴、修长城、书同文、统一度量衡。"
+            ),
+            metadata={"section": "秦始皇 &gt; 评价", "content_type": "prose"},
+        )]
+    
+        result = SearchService._deterministic_structured_evidence(
+            original,
+            plan,
+            sources,
+        )
+    
+&gt;       assert result.has_candidates is True
+E       AssertionError: assert False is True
+E        +  where False = EvidenceExtractionResult(candidates=(), attempted_sources=1, completed_sources=0, errors=('invalid JSON',), source_signatures=(), strategy='model', trace_events=(), source_identities=()).has_candidates
+
+llamaindex-retrieval/tests/test_service.py:1199: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_relation_question_searches_inside_exact_subject_document" time="0.004"><failure message="AssertionError: assert '张骞' in '班超后来再次打通了荒废已久的丝绸之路。 [资料 1]'&#10; +  where '班超后来再次打通了荒废已久的丝绸之路。 [资料 1]' = AskResponse(answer='班超后来再次打通了荒废已久的丝绸之路。 [资料 1]', sources=[SourceItem(id='silk-lead', document_id='silk-road', source='...ge': 'writer', 'source_ids': ['silk-lead']}], 'failure_category': None, 'failure_reason': None, 'failure_stage': None}).answer">@pytest.mark.asyncio
+    async def test_relation_question_searches_inside_exact_subject_document() -&gt; None:
+        index = FakeDocumentRelationIndex()
+        service = SearchService(
+            Settings(rag_pipeline="existing", ),
+            cast(Any, index),
+            generator=cast(Any, FakeFailingGenerator()),
+        )
+    
+        response = await service.ask(
+            SearchRequest(question="中国历史上开启丝绸之路的是谁？", top_k=2)
+        )
+    
+&gt;       assert "张骞" in response.answer
+E       AssertionError: assert '张骞' in '班超后来再次打通了荒废已久的丝绸之路。 [资料 1]'
+E        +  where '班超后来再次打通了荒废已久的丝绸之路。 [资料 1]' = AskResponse(answer='班超后来再次打通了荒废已久的丝绸之路。 [资料 1]', sources=[SourceItem(id='silk-lead', document_id='silk-road', source='...ge': 'writer', 'source_ids': ['silk-lead']}], 'failure_category': None, 'failure_reason': None, 'failure_stage': None}).answer
+
+llamaindex-retrieval/tests/test_service.py:1217: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_ordinal_question_searches_equivalent_first_relation_phrases" time="0.004"><failure message="AssertionError: assert 'fact' == 'ordinal'&#10;  &#10;  - ordinal&#10;  + fact">@pytest.mark.asyncio
+    async def test_ordinal_question_searches_equivalent_first_relation_phrases() -&gt; None:
+        index = FakeOrdinalIndex()
+        service = SearchService(
+            Settings(rag_pipeline="existing", ),
+            cast(Any, index),
+            generator=cast(Any, FakeOrdinalGenerator()),
+        )
+    
+        response = await service.ask(
+            SearchRequest(question="中国历史上第一个皇帝是谁？", top_k=1)
+        )
+    
+        assert response.answer == (
+            "在中国历史中，嬴政创建皇帝制度，成为中原第一个皇帝，称始皇帝。 [资料 1]"
+        )
+        assert response.generation["answer_strategy"] == "direct_extract"
+&gt;       assert response.retrieval["intent"] == "ordinal"
+E       AssertionError: assert 'fact' == 'ordinal'
+E         
+E         - ordinal
+E         + fact
+
+llamaindex-retrieval/tests/test_service.py:1241: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_ungrounded_definition_does_not_extract_unrelated_heading" time="0.004" /><testcase classname="tests.test_service" name="test_focus_bonus_reranks_chunks_by_non_title_query_terms" time="0.000" /><testcase classname="tests.test_service" name="test_search_merges_page_and_selects_best_passage" time="0.003"><failure message="AssertionError: assert ['metro-line-...metro-line-1'] == ['metro-line-...metro-line-2']&#10;  &#10;  At index 0 diff: 'metro-line-2' != 'metro-line-1'&#10;  Use -v to get more diff">def test_search_merges_page_and_selects_best_passage() -&gt; None:
+        index = LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, FakeOpenSearchWithPassages()))
+    
+        results = index.search("深圳地铁一号线有哪些站点", candidate_k=2)
+    
+&gt;       assert [item.document_id for item in results] == ["metro-line-1", "metro-line-2"]
+E       AssertionError: assert ['metro-line-...metro-line-1'] == ['metro-line-...metro-line-2']
+E         
+E         At index 0 diff: 'metro-line-2' != 'metro-line-1'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_service.py:1280: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_search_strongly_boosts_title_entities" time="0.002"><failure message="AssertionError: assert {'深圳 地铁 一号 一号线 有 哪些 站点'} == {'1 深圳 地铁 号线', '深圳 地铁 一号 一号线'}&#10;  &#10;  Extra items in the left set:&#10;  '深圳 地铁 一号 一号线 有 哪些 站点'&#10;  Extra items in the right set:&#10;  '1 深圳 地铁 号线'&#10;  '深圳 地铁 一号 一号线'&#10;  Use -v to get more diff">def test_search_strongly_boosts_title_entities() -&gt; None:
+        client = FakeOpenSearch()
+        index = LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, client))
+        index.search("深圳地铁一号线有哪些站点", candidate_k=5)
+    
+        title_boosts = [
+            item["match"]["title_tokens"]
+            for item in client.search_body["query"]["bool"]["should"]
+            if "match" in item
+        ]
+&gt;       assert {item["query"] for item in title_boosts} == {
+            "1 深圳 地铁 号线",
+            "深圳 地铁 一号 一号线",
+        }
+E       AssertionError: assert {'深圳 地铁 一号 一号线 有 哪些 站点'} == {'1 深圳 地铁 号线', '深圳 地铁 一号 一号线'}
+E         
+E         Extra items in the left set:
+E         '深圳 地铁 一号 一号线 有 哪些 站点'
+E         Extra items in the right set:
+E         '1 深圳 地铁 号线'
+E         '深圳 地铁 一号 一号线'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_service.py:1295: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_title_entity_extraction_stops_before_question_predicate" time="0.002"><failure message="AssertionError: assert ['始皇 秦始皇 有 哪些 丰功 伟绩 丰功伟绩'] == ['始皇 秦始皇']&#10;  &#10;  At index 0 diff: '始皇 秦始皇 有 哪些 丰功 伟绩 丰功伟绩' != '始皇 秦始皇'&#10;  Use -v to get more diff">def test_title_entity_extraction_stops_before_question_predicate() -&gt; None:
+        client = FakeOpenSearch()
+        index = LexicalIndex(Settings(rag_pipeline="existing", ), client=cast(Any, client))
+        index.search("秦始皇有哪些丰功伟绩", candidate_k=5)
+    
+        title_boosts = [
+            item["match"]["title_tokens"]
+            for item in client.search_body["query"]["bool"]["should"]
+            if "match" in item
+        ]
+&gt;       assert [item["query"] for item in title_boosts] == ["始皇 秦始皇"]
+E       AssertionError: assert ['始皇 秦始皇 有 哪些 丰功 伟绩 丰功伟绩'] == ['始皇 秦始皇']
+E         
+E         At index 0 diff: '始皇 秦始皇 有 哪些 丰功 伟绩 丰功伟绩' != '始皇 秦始皇'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_service.py:1313: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_list_queries_allow_multiple_chunks_from_one_document" time="0.002"><failure message="assert 1 == 10">def test_list_queries_allow_multiple_chunks_from_one_document() -&gt; None:
+        service = SearchService(
+            Settings(rag_pipeline="existing", max_chunks_per_document=1, list_query_max_chunks_per_document=3),
+            cast(Any, None),
+        )
+        document_limit = service._max_chunks_per_document("深圳地铁一号线有哪些站点")
+        requested_limit = service._max_chunks_per_document(
+            "中国从古至今总共经历了哪些朝代？", top_k=10
+        )
+&gt;       assert requested_limit == 10
+E       assert 1 == 10
+
+llamaindex-retrieval/tests/test_service.py:1325: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_opensearch_record_contains_pretokenized_fields" time="0.002" /><testcase classname="tests.test_service" name="test_opensearch_record_contains_structure_fields" time="0.002" /><testcase classname="tests.test_service" name="test_source_item_returns_complete_qa_answer" time="0.000" /><testcase classname="tests.test_service" name="test_source_item_cleans_wiki_reference_marks" time="0.000" /><testcase classname="tests.test_service" name="test_ask_extracts_complete_structured_list_without_model_call" time="0.004" /><testcase classname="tests.test_service" name="test_ask_extracts_station_rows_for_short_station_wording" time="0.004"><failure message="AssertionError: structured list answers should not call the model">@pytest.mark.asyncio
+    async def test_ask_extracts_station_rows_for_short_station_wording() -&gt; None:
+        service = SearchService(
+            Settings(rag_pipeline="existing", ),
+            cast(Any, FakeStructuredRowsIndex()),
+            generator=cast(Any, FakeFailingGenerator()),
+        )
+    
+&gt;       response = await service.ask(SearchRequest(question="深圳地铁1号线有哪些站？", top_k=2))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+llamaindex-retrieval/tests/test_service.py:1445: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+llamaindex-retrieval/src/llamaindex_retrieval/service.py:1446: in ask
+    answer = await self._generate_answer(
+llamaindex-retrieval/src/llamaindex_retrieval/service.py:2723: in _generate_answer
+    return await asyncio.wait_for(generate(), timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/tasks.py:507: in wait_for
+    return await fut
+           ^^^^^^^^^
+llamaindex-retrieval/src/llamaindex_retrieval/service.py:2718: in generate
+    return await self.generator.generate(question, sources)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;test_service.FakeFailingGenerator object at 0x7ae6e4ceb360&gt;
+question = '深圳地铁1号线有哪些站？'
+sources = [SourceItem(id='metro-transfer', document_id='metro', source='finewiki-zh', title='深圳地铁1号线', uri=None, score=1.0, snippet='- 机场东站：轉乘20号线。\n- 老街站：轉乘17号线。', metadata={'document_id': 'metro', 'content_type': 'list'})]
+
+    async def generate(self, question: str, sources: Any) -&gt; str:
+&gt;       raise AssertionError("structured list answers should not call the model")
+E       AssertionError: structured list answers should not call the model
+
+llamaindex-retrieval/tests/test_service.py:262: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_ask_extracts_capital_answer_without_model_call" time="0.004" /><testcase classname="tests.test_service" name="test_semantic_list_render_does_not_reuse_model_cache" time="0.006"><failure message="AssertionError: assert '长城的相关条目包括：山海关。[资料 1]' == '长城的著名关城包括：虎山...、萧关、阳关。[资料 1]'&#10;  &#10;  - 长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 1]&#10;  + 长城的相关条目包括：山海关。[资料 1]">@pytest.mark.asyncio
+    async def test_semantic_list_render_does_not_reuse_model_cache() -&gt; None:
+        service = SearchService(
+            Settings(rag_pipeline="existing",
+                semantic_pipeline_enabled=True,
+                active_retrieval_enabled=False,
+            ),
+            cast(Any, FakeGreatWallPassIndex()),
+            generator=cast(Any, FakeFailingGenerator()),
+        )
+        request = SearchRequest(question="中国有哪些著名的长城关隘？", top_k=1)
+        evidence = await service.search(request.model_copy(update={"top_k": 8}))
+        question = str(evidence.retrieval.get("normalized_question") or request.question)
+        plan = service._answer_plan(question, evidence.retrieval)
+        key = service._answer_cache_key(question, evidence, plan)
+        service._store_cached_answer(key, "长城的相关条目包括：山海关。[资料 1]")
+    
+        response = await service.ask(request)
+    
+&gt;       assert response.answer == (
+            "长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 1]"
+        )
+E       AssertionError: assert '长城的相关条目包括：山海关。[资料 1]' == '长城的著名关城包括：虎山...、萧关、阳关。[资料 1]'
+E         
+E         - 长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 1]
+E         + 长城的相关条目包括：山海关。[资料 1]
+
+llamaindex-retrieval/tests/test_service.py:1484: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_ask_uses_active_bm25_search_when_initial_evidence_is_wrong" time="0.004"><failure message="AssertionError: structured list answers should not call the model">@pytest.mark.asyncio
+    async def test_ask_uses_active_bm25_search_when_initial_evidence_is_wrong() -&gt; None:
+        class FakeRecoveryIndex:
+            def search(self, question: str, **kwargs: Any) -&gt; list[LexicalResult]:
+                if "中华人民共和国 首都" in question:
+                    return [
+                        LexicalResult(
+                            node_id="capital-node",
+                            document_id="capital",
+                            text="中华人民共和国的首都是北京。",
+                            metadata={
+                                "document_id": "capital",
+                                "title": "首都",
+                                "source": "finewiki-zh",
+                            },
+                            score=1.0,
+                        )
+                    ]
+                return [
+                    LexicalResult(
+                        node_id="henan-node",
+                        document_id="henan",
+                        text="河南省位于中国中部。",
+                        metadata={
+                            "document_id": "henan",
+                            "title": "河南省",
+                            "source": "finewiki-zh",
+                        },
+                        score=1.0,
+                    )
+                ]
+    
+        class FakeActiveAgent:
+            calls = 0
+    
+            async def decide(
+                self,
+                question: str,
+                sources: Any,
+                **kwargs: Any,
+            ) -&gt; ActiveRetrievalResult:
+                self.calls += 1
+                assert sources == []
+                return ActiveRetrievalResult(
+                    ActiveRetrievalDecision(
+                        "bm25_search",
+                        ("中华人民共和国 首都 城市",),
+                        "当前证据对象错误",
+                    )
+                )
+    
+        agent = FakeActiveAgent()
+        service = SearchService(
+            Settings(rag_pipeline="existing", ),
+            cast(Any, FakeRecoveryIndex()),
+            generator=cast(Any, FakeFailingGenerator()),
+            retrieval_agent=cast(Any, agent),
+        )
+    
+&gt;       response = await service.ask(SearchRequest(question="中国的首都是哪个城市？", top_k=1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+llamaindex-retrieval/tests/test_service.py:1550: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+llamaindex-retrieval/src/llamaindex_retrieval/service.py:1446: in ask
+    answer = await self._generate_answer(
+llamaindex-retrieval/src/llamaindex_retrieval/service.py:2723: in _generate_answer
+    return await asyncio.wait_for(generate(), timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/tasks.py:507: in wait_for
+    return await fut
+           ^^^^^^^^^
+llamaindex-retrieval/src/llamaindex_retrieval/service.py:2718: in generate
+    return await self.generator.generate(question, sources)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;test_service.FakeFailingGenerator object at 0x7ae6e4e1b350&gt;
+question = '中国的首都是哪个城市？'
+sources = [SourceItem(id='henan-node', document_id='henan', source='finewiki-zh', title='河南省', uri=None, score=1.0, snippet='河南省位于中国中部。', metadata={'document_id': 'henan'})]
+
+    async def generate(self, question: str, sources: Any) -&gt; str:
+&gt;       raise AssertionError("structured list answers should not call the model")
+E       AssertionError: structured list answers should not call the model
+
+llamaindex-retrieval/tests/test_service.py:262: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_ask_skips_active_retrieval_when_initial_evidence_is_sufficient" time="0.004" /><testcase classname="tests.test_service" name="test_ask_extracts_capital_answer_for_colloquial_wording" time="0.004" /><testcase classname="tests.test_service" name="test_ask_extracts_capital_answer_for_national_capital_wording" time="0.003" /><testcase classname="tests.test_service" name="test_ask_extracts_capital_decision_and_ignores_possible_future_capital" time="0.004" /><testcase classname="tests.test_service" name="test_ask_uses_more_internal_evidence_than_displayed_sources" time="0.004" /><testcase classname="tests.test_service" name="test_ask_extracts_bullet_list_with_specific_context" time="0.005"><failure message="AssertionError: assert '长城的著名关城包括：虎山...、萧关、阳关。[资料 2]' == '长城的著名关城包括：虎山...、萧关、阳关。[资料 1]'&#10;  &#10;  - 长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 1]&#10;  ?                                      ^&#10;  + 长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 2]&#10;  ?                                      ^">@pytest.mark.asyncio
+    async def test_ask_extracts_bullet_list_with_specific_context() -&gt; None:
+        service = SearchService(
+            Settings(rag_pipeline="existing", ),
+            cast(Any, FakeGreatWallPassIndex()),
+            generator=cast(Any, FakeFailingGenerator()),
+        )
+    
+        response = await service.ask(SearchRequest(question="中国有哪些著名的长城关隘?", top_k=2))
+    
+&gt;       assert response.answer == "长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 1]"
+E       AssertionError: assert '长城的著名关城包括：虎山...、萧关、阳关。[资料 2]' == '长城的著名关城包括：虎山...、萧关、阳关。[资料 1]'
+E         
+E         - 长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 1]
+E         ?                                      ^
+E         + 长城的著名关城包括：虎山长城、山海关、嘉峪关、玉门关、萧关、阳关。[资料 2]
+E         ?                                      ^
+
+llamaindex-retrieval/tests/test_service.py:1659: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_ask_extracts_bullet_list_for_list_instruction_wording" time="0.005" /><testcase classname="tests.test_service" name="test_list_query_expands_all_chunks_from_the_matching_structure" time="0.002"><failure message="assert False is True">@pytest.mark.asyncio
+    async def test_list_query_expands_all_chunks_from_the_matching_structure() -&gt; None:
+        anchor = LexicalResult(
+            node_id="table-2",
+            document_id="metro",
+            text="部分车站",
+            metadata={
+                "document_id": "metro",
+                "title": "测试线路",
+                "section": "测试线路 &gt; 车站",
+                "parent_id": "station-table",
+                "content_type": "table",
+                "chunk_order": 2,
+            },
+            score=0.9,
+        )
+        misleading = LexicalResult(
+            node_id="transfer-list",
+            document_id="metro",
+            text="换乘车站",
+            metadata={
+                "document_id": "metro",
+                "title": "测试线路",
+                "section": "测试线路 &gt; 车站 &gt; 换乘说明",
+                "parent_id": "transfer-list",
+                "content_type": "list",
+                "chunk_order": 0,
+            },
+            score=0.95,
+        )
+        siblings = [
+            LexicalResult(
+                node_id=f"table-{index}",
+                document_id="metro",
+                text=f"表格片段{index}",
+                metadata={
+                    "document_id": "metro",
+                    "parent_id": "station-table",
+                    "content_type": "table_summary" if index == 0 else "table",
+                    "chunk_order": index,
+                },
+                score=0.9,
+            )
+            for index in range(4)
+        ]
+    
+        class FakeStructureIndex:
+            def structure_chunks(self, parent_id: str, **kwargs: Any) -&gt; list[LexicalResult]:
+                assert parent_id == "station-table"
+                return siblings
+    
+        service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeStructureIndex()))
+        expanded, did_expand = await service._expand_structured_results(
+            "测试线路有哪些车站",
+            [result("metro", 1.0), misleading, anchor, result("other", 0.5)],
+            knowledge_base_id=None,
+            top_k=5,
+        )
+    
+&gt;       assert did_expand is True
+E       assert False is True
+
+llamaindex-retrieval/tests/test_service.py:1736: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_search_uses_normalized_question_for_structured_list_expansion" time="0.004"><failure message="AssertionError: assert '测试班机事故在与空管的对话方面都包括什么？' == '测试班机事故有哪些与空管的对话？'&#10;  &#10;  - 测试班机事故有哪些与空管的对话？&#10;  + 测试班机事故在与空管的对话方面都包括什么？">@pytest.mark.asyncio
+    async def test_search_uses_normalized_question_for_structured_list_expansion() -&gt; None:
+        list_chunk = LexicalResult(
+            node_id="dialog-list",
+            document_id="flight",
+            text="事故 &gt; 与空管的对话\n- 飞行员：失去所有引擎。\n- 空管：请重复。",
+            metadata={
+                "document_id": "flight",
+                "title": "测试班机事故",
+                "section": "测试班机事故 &gt; 与空管的对话",
+                "parent_id": "dialog-parent",
+                "content_type": "list",
+                "chunk_order": 0,
+            },
+            score=1.0,
+        )
+    
+        class FakeNormalizedListIndex:
+            def search(self, question: str, **kwargs: Any) -&gt; list[LexicalResult]:
+                return [list_chunk]
+    
+            def structure_chunks(self, parent_id: str, **kwargs: Any) -&gt; list[LexicalResult]:
+                assert parent_id == "dialog-parent"
+                return [list_chunk]
+    
+        service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeNormalizedListIndex()))
+        response = await service.search(
+            SearchRequest(question="测试班机事故在与空管的对话方面都包括什么？", top_k=5)
+        )
+    
+&gt;       assert response.retrieval["normalized_question"] == "测试班机事故有哪些与空管的对话？"
+E       AssertionError: assert '测试班机事故在与空管的对话方面都包括什么？' == '测试班机事故有哪些与空管的对话？'
+E         
+E         - 测试班机事故有哪些与空管的对话？
+E         + 测试班机事故在与空管的对话方面都包括什么？
+
+llamaindex-retrieval/tests/test_service.py:1775: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_model_list_relations_do_not_override_structured_evidence" time="0.005"><failure message="AssertionError: assert 'line-prose' == 'station-summary'&#10;  &#10;  - station-summary&#10;  + line-prose">@pytest.mark.asyncio
+    async def test_model_list_relations_do_not_override_structured_evidence() -&gt; None:
+        prose = LexicalResult(
+            node_id="line-prose",
+            document_id="line",
+            text="线路建设期间曾调整部分车站名称。",
+            metadata={
+                "document_id": "line",
+                "title": "某线路",
+                "content_type": "prose",
+            },
+            score=1.0,
+        )
+        structure_anchor = LexicalResult(
+            node_id="station-summary",
+            document_id="line",
+            text="车站列表：甲站、乙站、丙站。",
+            metadata={
+                "document_id": "line",
+                "title": "某线路",
+                "section": "某线路 &gt; 车站列表",
+                "parent_id": "station-table",
+                "content_type": "table_summary",
+                "chunk_order": 0,
+            },
+            score=0.9,
+        )
+    
+        class FakeListIndex:
+            relation_calls = 0
+    
+            def search(self, question: str, **kwargs: Any) -&gt; list[LexicalResult]:
+                return [prose]
+    
+            def document_relation_candidates(self, *args: Any, **kwargs: Any) -&gt; list[LexicalResult]:
+                self.relation_calls += 1
+                return [prose]
+    
+            def document_structure_candidates(self, *args: Any, **kwargs: Any) -&gt; list[LexicalResult]:
+                return [structure_anchor]
+    
+            def structure_chunks(self, parent_id: str, **kwargs: Any) -&gt; list[LexicalResult]:
+                assert parent_id == "station-table"
+                return [structure_anchor]
+    
+            def document_lead_chunk(self, *args: Any, **kwargs: Any) -&gt; None:
+                return None
+    
+        class FakeModelPlanner:
+            async def plan(self, question: str, fallback: Any) -&gt; QueryPlanningResult:
+                return QueryPlanningResult(
+                    replace(
+                        fallback,
+                        queries=("某线路全部车站", "某线路站点列表", question),
+                        subject="某线路",
+                        relations=("所有站点",),
+                    ),
+                    "model",
+                    model_queries=("某线路全部车站", "某线路站点列表"),
+                )
+    
+        index = FakeListIndex()
+        service = SearchService(
+            Settings(rag_pipeline="existing", ),
+            cast(Any, index),
+            query_planner=cast(Any, FakeModelPlanner()),
+        )
+    
+        response = await service.search(SearchRequest(question="某线路所有站点", top_k=1))
+    
+&gt;       assert response.results[0].id == "station-summary"
+E       AssertionError: assert 'line-prose' == 'station-summary'
+E         
+E         - station-summary
+E         + line-prose
+
+llamaindex-retrieval/tests/test_service.py:1850: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_list_query_prefers_station_list_over_station_name_issue" time="0.002"><failure message="assert False is True">@pytest.mark.asyncio
+    async def test_list_query_prefers_station_list_over_station_name_issue() -&gt; None:
+        station_issue = LexicalResult(
+            node_id="station-name-issue",
+            document_id="metro",
+            text="站名問題：續建工程機場段其中兩個車站曾同時出現兩個站名。",
+            metadata={
+                "document_id": "metro",
+                "title": "深圳地铁1号线",
+                "section": "深圳地铁1号线 &gt; 历史 &gt; 續建工程",
+                "parent_id": "station-name-issue",
+                "content_type": "list",
+                "chunk_order": 0,
+            },
+            score=0.98,
+        )
+        station_list = LexicalResult(
+            node_id="station-list-summary",
+            document_id="metro",
+            text="车站列表：罗湖、国贸、老街、大剧院、科学馆、华强路。",
+            metadata={
+                "document_id": "metro",
+                "title": "深圳地铁1号线",
+                "section": "深圳地铁1号线 &gt; 车站列表",
+                "parent_id": "station-list",
+                "content_type": "table_summary",
+                "chunk_order": 0,
+                "keywords": ["表格", "列表", "全部"],
+            },
+            score=0.82,
+        )
+        station_siblings = [
+            LexicalResult(
+                node_id="station-list-expanded",
+                document_id="metro",
+                text="车站列表：罗湖、国贸、老街、大剧院、科学馆、华强路。",
+                metadata={
+                    "document_id": "metro",
+                    "parent_id": "station-list",
+                    "content_type": "table_summary",
+                    "chunk_order": 0,
+                },
+                score=0.82,
+            )
+        ]
+    
+        class FakeStructureIndex:
+            def document_structure_candidates(
+                self,
+                question: str,
+                *,
+                document_id: str,
+                content_types: Any,
+                knowledge_base_id: str | None,
+                limit: int,
+            ) -&gt; list[LexicalResult]:
+                assert document_id == "metro"
+                return [station_list]
+    
+            def structure_chunks(self, parent_id: str, **kwargs: Any) -&gt; list[LexicalResult]:
+                assert parent_id == "station-list"
+                return station_siblings
+    
+        service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeStructureIndex()))
+        expanded, did_expand = await service._expand_structured_results(
+            "深圳地铁1号线有哪些站点",
+            [result("metro", 1.0), station_issue],
+            knowledge_base_id=None,
+            top_k=3,
+        )
+    
+&gt;       assert did_expand is True
+E       assert False is True
+
+llamaindex-retrieval/tests/test_service.py:1927: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_station_wording_with_count_expands_companion_list_page" time="0.002"><failure message="assert False is True">@pytest.mark.asyncio
+    async def test_station_wording_with_count_expands_companion_list_page() -&gt; None:
+        route = LexicalResult(
+            node_id="route",
+            document_id="route",
+            text="深圳地铁1号线由罗湖站至机场东站。",
+            metadata={"title": "深圳地铁1号线"},
+            score=1.0,
+        )
+        companion = LexicalResult(
+            node_id="companion",
+            document_id="station-list",
+            text="深圳地铁车站列表",
+            metadata={"title": "深圳地铁车站列表"},
+            score=0.6,
+        )
+        chunks = [
+            LexicalResult(
+                node_id=f"line-{index}",
+                document_id="station-list",
+                text=text,
+                metadata={"title": "深圳地铁车站列表", "chunk_order": index},
+                score=1.0,
+            )
+            for index, text in enumerate((
+                "1号线沿途共设30个车站：罗湖站、国贸站、老街站。",
+                "大剧院站、科学馆站、机场东站。",
+            ), start=1)
+        ]
+    
+        class FakeCompanionIndex:
+            def document_line_section_chunks(self, line: str, **kwargs: Any) -&gt; list[LexicalResult]:
+                assert line == "1号线"
+                assert kwargs["document_id"] == "station-list"
+                return chunks
+    
+        service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeCompanionIndex()))
+        expanded, did_expand = await service._expand_structured_results(
+            "深圳地铁1号线有哪几个站",
+            [route, companion],
+            knowledge_base_id=None,
+            top_k=5,
+        )
+    
+&gt;       assert did_expand is True
+E       assert False is True
+
+llamaindex-retrieval/tests/test_service.py:1975: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_station_summary_without_parent_adds_repair_context" time="0.002"><failure message="assert False is True">@pytest.mark.asyncio
+    async def test_station_summary_without_parent_adds_repair_context() -&gt; None:
+        summary = LexicalResult(
+            node_id="station-summary",
+            document_id="metro",
+            text="站名/1号线列表：罗湖、固戍、瑞、机场东。",
+            metadata={
+                "document_id": "metro",
+                "title": "深圳地铁1号线",
+                "content_type": "table_summary",
+            },
+            score=1.0,
+        )
+        context = LexicalResult(
+            node_id="station-context",
+            document_id="metro",
+            text="机场东站和后瑞站为高架车站。",
+            metadata={"document_id": "metro", "title": "深圳地铁1号线"},
+            score=1.0,
+        )
+    
+        class FakeStationRepairIndex:
+            def document_term_candidates(self, term: str, **kwargs: Any) -&gt; list[LexicalResult]:
+                assert term == "瑞"
+                return [summary, context]
+    
+        service = SearchService(Settings(rag_pipeline="existing", ), cast(Any, FakeStationRepairIndex()))
+        expanded, did_expand = await service._expand_structured_results(
+            "深圳地铁1号线有哪些站点",
+            [summary],
+            knowledge_base_id=None,
+            top_k=5,
+        )
+    
+&gt;       assert did_expand is True
+E       assert False is True
+
+llamaindex-retrieval/tests/test_service.py:2013: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_cause_evidence_trims_content_after_target_event" time="0.000" /><testcase classname="tests.test_service" name="test_focus_sources_keeps_only_exact_subject_document" time="0.000"><failure message="AssertionError: assert ['football', 'cricket'] == ['football']&#10;  &#10;  Left contains one more item: 'cricket'&#10;  Use -v to get more diff">def test_focus_sources_keeps_only_exact_subject_document() -&gt; None:
+        plan = build_query_plan("2030年世界杯由哪些国家主办？")
+        sources = [
+            SourceItem(
+                id="football",
+                document_id="football",
+                source="wiki",
+                title="2030年国际足协世界杯",
+                score=1.0,
+                snippet="赛事由多个国家共同主办。",
+            ),
+            SourceItem(
+                id="cricket",
+                document_id="cricket",
+                source="wiki",
+                title="男子T20世界杯",
+                score=0.9,
+                snippet="2030年赛事由多个国家共同主办。",
+            ),
+        ]
+    
+        focused = SearchService._focus_sources_on_subject(plan, sources)
+    
+&gt;       assert [source.document_id for source in focused] == ["football"]
+E       AssertionError: assert ['football', 'cricket'] == ['football']
+E         
+E         Left contains one more item: 'cricket'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_service.py:2061: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_focus_sources_prefers_compound_topic_page_over_suffix_page" time="0.000"><failure message="AssertionError: assert {'broad', 'wall'} == {'wall'}&#10;  &#10;  Extra items in the left set:&#10;  'broad'&#10;  Use -v to get more diff">def test_focus_sources_prefers_compound_topic_page_over_suffix_page() -&gt; None:
+        plan = build_query_plan("中国有哪些著名的长城关隘？")
+        sources = [
+            SourceItem(
+                id="broad",
+                document_id="broad",
+                source="wiki",
+                title="关隘",
+                score=1.0,
+                snippet="历史上著名关卡包括函谷关、潼关、嘉峪关。",
+            ),
+            SourceItem(
+                id="wall",
+                document_id="wall",
+                source="wiki",
+                title="长城",
+                score=0.9,
+                snippet="著名长城关隘包括山海关、嘉峪关、居庸关。",
+            ),
+        ]
+    
+        focused = SearchService._focus_sources_on_subject(plan, sources)
+    
+&gt;       assert {source.document_id for source in focused} == {"wall"}
+E       AssertionError: assert {'broad', 'wall'} == {'wall'}
+E         
+E         Extra items in the left set:
+E         'broad'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_service.py:2087: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_focus_sources_keeps_only_agent_relation_document" time="0.000"><failure message="AssertionError: assert ['elevator', 'invention'] == ['elevator']&#10;  &#10;  Left contains one more item: 'invention'&#10;  Use -v to get more diff">def test_focus_sources_keeps_only_agent_relation_document() -&gt; None:
+        plan = build_query_plan("安全电梯由谁发明？")
+        sources = [
+            SourceItem(
+                id="elevator",
+                document_id="elevator",
+                source="wiki",
+                title="电梯",
+                score=1.0,
+                snippet="安全电梯使用的安全钳由奥的斯发明。",
+            ),
+            SourceItem(
+                id="invention",
+                document_id="invention",
+                source="wiki",
+                title="发明",
+                score=0.8,
+                snippet="发明是创造新事物的过程。",
+            ),
+        ]
+    
+        focused = SearchService._focus_sources_on_subject(plan, sources)
+    
+&gt;       assert [source.document_id for source in focused] == ["elevator"]
+E       AssertionError: assert ['elevator', 'invention'] == ['elevator']
+E         
+E         Left contains one more item: 'invention'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_service.py:2113: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_focus_sources_keeps_alias_route_and_matching_list_chunks" time="0.000"><failure message="AssertionError: assert ['line-1', 's...e-2-stations'] == ['line-1', 's... 'stations-2']&#10;  &#10;  Left contains one more item: 'line-2-stations'&#10;  Use -v to get more diff">def test_focus_sources_keeps_alias_route_and_matching_list_chunks() -&gt; None:
+        plan = build_query_plan("罗宝线沿途停靠哪些站？")
+        sources = [
+            SourceItem(
+                id="line-1",
+                document_id="line-1",
+                source="wiki",
+                title="深圳地铁1号线",
+                score=1.0,
+                snippet="深圳地铁1号线曾称罗宝线，由罗湖站至机场东站。",
+                metadata={"aliases": ["罗宝线"], "chunk_order": 0},
+            ),
+            SourceItem(
+                id="stations-1",
+                document_id="station-list",
+                source="wiki",
+                title="深圳地铁车站列表",
+                score=0.9,
+                snippet="1号线前称罗宝线，沿途共设30个车站。罗湖站、国贸站。",
+                metadata={"chunk_order": 1},
+            ),
+            SourceItem(
+                id="stations-2",
+                document_id="station-list",
+                source="wiki",
+                title="深圳地铁车站列表",
+                score=0.9,
+                snippet="香蜜湖站、车公庙站、机场东站。",
+                metadata={"chunk_order": 2},
+            ),
+            SourceItem(
+                id="line-2-stations",
+                document_id="station-list",
+                source="wiki",
+                title="深圳地铁车站列表",
+                score=0.8,
+                snippet="2号线前称蛇口线，沿途共设32个车站。",
+                metadata={"chunk_order": 3},
+            ),
+        ]
+    
+        focused = SearchService._focus_sources_on_subject(plan, sources)
+    
+&gt;       assert [source.id for source in focused] == ["line-1", "stations-1", "stations-2"]
+E       AssertionError: assert ['line-1', 's...e-2-stations'] == ['line-1', 's... 'stations-2']
+E         
+E         Left contains one more item: 'line-2-stations'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_service.py:2159: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_focus_sources_uses_route_endpoints_instead_of_first_station" time="0.001"><failure message="AssertionError: assert ['route', 'station'] == ['route']&#10;  &#10;  Left contains one more item: 'station'&#10;  Use -v to get more diff">def test_focus_sources_uses_route_endpoints_instead_of_first_station() -&gt; None:
+        plan = build_query_plan("连接罗湖和机场东的深圳地铁线路有哪些车站？")
+        sources = [
+            SourceItem(
+                id="route",
+                document_id="line-1",
+                source="wiki",
+                title="深圳地铁1号线",
+                score=1.0,
+                snippet="深圳地铁1号线由罗湖站至机场东站，全线共设30座车站。",
+                metadata={"aliases": ["罗宝线"], "chunk_order": 0},
+            ),
+            SourceItem(
+                id="station",
+                document_id="luohu",
+                source="wiki",
+                title="罗湖站 (深圳地铁)",
+                score=0.9,
+                snippet="罗湖站位于罗湖口岸附近。",
+            ),
+        ]
+    
+        focused = SearchService._focus_sources_on_subject(plan, sources)
+    
+&gt;       assert [source.id for source in focused] == ["route"]
+E       AssertionError: assert ['route', 'station'] == ['route']
+E         
+E         Left contains one more item: 'station'
+E         Use -v to get more diff
+
+llamaindex-retrieval/tests/test_service.py:2186: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_complete_list_evidence_focus_keeps_comparable_documents" time="0.000" /><testcase classname="tests.test_service" name="test_verified_structured_render_requires_proven_complete_list" time="0.000" /><testcase classname="tests.test_service" name="test_verified_structured_render_accepts_partial_list_when_source_is_explicit" time="0.001" /><testcase classname="tests.test_service" name="test_extraction_coverage_rejects_unrelated_summary_candidates" time="0.000" /><testcase classname="tests.test_service" name="test_answer_contract_rejects_echo_citation_shell_and_repetition" time="0.001" /><testcase classname="tests.test_service" name="test_semantic_pipeline_reranks_then_extracts_immutable_evidence" time="0.005"><failure message="AssertionError: assert '根据检索到的资料，无法确定。' == '中华人民共和国的首都是北京。[资料 1]'&#10;  &#10;  - 中华人民共和国的首都是北京。[资料 1]&#10;  + 根据检索到的资料，无法确定。">@pytest.mark.asyncio
+    async def test_semantic_pipeline_reranks_then_extracts_immutable_evidence() -&gt; None:
+        question = "中国的首都是哪个城市？"
+        evidence_span = "中华人民共和国的首都是北京。"
+    
+        class SemanticIndex:
+            def search(self, query: str, **kwargs: Any) -&gt; list[LexicalResult]:
+                return [
+                    LexicalResult(
+                        node_id="henan-node",
+                        document_id="henan",
+                        text="河南省位于中国中部。",
+                        metadata={
+                            "document_id": "henan",
+                            "title": "河南省",
+                            "source": "finewiki-zh",
+                        },
+                        score=1.0,
+                    ),
+                    LexicalResult(
+                        node_id="capital-node",
+                        document_id="capital",
+                        text=evidence_span,
+                        metadata={
+                            "document_id": "capital",
+                            "title": "首都",
+                            "source": "finewiki-zh",
+                        },
+                        score=0.8,
+                    ),
+                ]
+    
+        class ModelPlanner:
+            async def plan(self, value: str, fallback: Any) -&gt; QueryPlanningResult:
+                assert value == question
+                plan = replace(
+                    fallback,
+                    queries=("中华人民共和国 首都 城市",),
+                    subject="中国",
+                    relations=("首都", "国都"),
+                    fields=(replace(fallback.fields[0], relations=("首都", "国都")),),
+                )
+                return QueryPlanningResult(
+                    plan,
+                    "model",
+                    model_queries=plan.queries,
+                )
+    
+        class ModelReranker:
+            async def rerank(
+                self,
+                value: str,
+                plan: Any,
+                sources: list[SourceItem],
+            ) -&gt; DocumentRerankResult:
+                assert value == question
+                assert [source.document_id for source in sources] == ["capital", "henan"]
+                relevant = next(
+                    source for source in sources if source.document_id == "capital"
+                )
+                return DocumentRerankResult(
+                    (relevant,),
+                    (
+                        DocumentDecision("henan", False, 0, "对象不匹配"),
+                        DocumentDecision("capital", True, 3, "直接回答首都"),
+                    ),
+                )
+    
+        class ModelExtractor:
+            calls = 0
+    
+            async def extract(
+                self,
+                value: str,
+                plan: Any,
+                sources: list[SourceItem],
+            ) -&gt; EvidenceExtractionResult:
+                self.calls += 1
+                assert value == question
+                assert [source.document_id for source in sources] == ["capital"]
+                source = sources[0]
+                return EvidenceExtractionResult(
+                    candidates=(
+                        EvidenceSpan(
+                            field_id="f1",
+                            source_index=0,
+                            span=evidence_span,
+                            content_hash=sha256(evidence_span.encode("utf-8")).hexdigest(),
+                        ),
+                    ),
+                    attempted_sources=1,
+                    completed_sources=1,
+                    source_signatures=((
+                        source.id,
+                        sha256(source.snippet.encode("utf-8")).hexdigest(),
+                    ),),
+                )
+    
+        class ModelGenerator:
+            calls = 0
+            source_batches: list[list[str]] = []
+    
+            async def generate(self, value: str, sources: list[SourceItem]) -&gt; str:
+                self.calls += 1
+                self.source_batches.append([source.document_id for source in sources])
+                assert value == question
+                return "中华人民共和国的首都是北京。[资料 1]"
+    
+            async def current_model(self) -&gt; str:
+                return "test-model"
+    
+        extractor = ModelExtractor()
+        generator = ModelGenerator()
+        service = SearchService(
+            Settings(rag_pipeline="existing",
+                semantic_pipeline_enabled=True,
+                document_reranking_enabled=True,
+            ),
+            cast(Any, SemanticIndex()),
+            generator=cast(Any, generator),
+            query_planner=cast(Any, ModelPlanner()),
+            evidence_extractor=cast(Any, extractor),
+            document_reranker=cast(Any, ModelReranker()),
+        )
+    
+        response = await service.ask(SearchRequest(question=question, top_k=1))
+    
+&gt;       assert response.answer == "中华人民共和国的首都是北京。[资料 1]"
+E       AssertionError: assert '根据检索到的资料，无法确定。' == '中华人民共和国的首都是北京。[资料 1]'
+E         
+E         - 中华人民共和国的首都是北京。[资料 1]
+E         + 根据检索到的资料，无法确定。
+
+llamaindex-retrieval/tests/test_service.py:2457: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_semantic_pipeline_never_generates_without_field_evidence" time="0.003" /><testcase classname="tests.test_service" name="test_semantic_pipeline_uses_raw_retrieval_when_extraction_errors" time="0.004" /><testcase classname="tests.test_service" name="test_immutable_pipeline_writer_only_receives_resolver_spans" time="0.003" /><testcase classname="tests.test_service" name="test_immutable_answer_point_fanout_records_branch_trace" time="0.003" /><testcase classname="tests.test_service" name="test_immutable_pipeline_blocks_writer_for_mismatched_subject" time="0.004"><failure message="AssertionError: assert 'generation_failed' == 'evidence_blocked'&#10;  &#10;  - evidence_blocked&#10;  + generation_failed">@pytest.mark.asyncio
+    async def test_immutable_pipeline_blocks_writer_for_mismatched_subject() -&gt; None:
+        class Resolver:
+            async def extract(
+                self,
+                value: str,
+                plan: Any,
+                sources: list[SourceItem],
+            ) -&gt; EvidenceExtractionResult:
+                span = sources[0].snippet
+                return EvidenceExtractionResult(
+                    candidates=(EvidenceSpan(
+                        field_id="f1",
+                        source_index=0,
+                        span=span,
+                        content_hash=sha256(span.encode("utf-8")).hexdigest(),
+                    ),),
+                    attempted_sources=1,
+                    completed_sources=1,
+                    source_signatures=((
+                        sources[0].id,
+                        sha256(sources[0].snippet.encode("utf-8")).hexdigest(),
+                    ),),
+                )
+    
+        class Writer:
+            async def generate(self, value: str, sources: list[SourceItem]) -&gt; str:
+                raise AssertionError("writer must not run without subject evidence")
+    
+        service = SearchService(
+            Settings(rag_pipeline="existing",
+                generation_output_mode="immutable",
+                model_query_planning_enabled=False,
+            ),
+            cast(Any, FakeMismatchIndex()),
+            generator=cast(Any, Writer()),
+            evidence_extractor=cast(Any, Resolver()),
+        )
+    
+        response = await service.ask(
+            SearchRequest(question="武汉有哪些有名的小吃？", top_k=1)
+        )
+    
+        assert response.answer == "根据检索到的资料，无法确定。"
+&gt;       assert response.generation["answer_strategy"] == "evidence_blocked"
+E       AssertionError: assert 'generation_failed' == 'evidence_blocked'
+E         
+E         - evidence_blocked
+E         + generation_failed
+
+llamaindex-retrieval/tests/test_service.py:2728: AssertionError</failure></testcase><testcase classname="tests.test_service" name="test_immutable_pipeline_reopens_selected_documents_for_passages" time="0.004" /></testsuite></testsuites>

@@ -1,0 +1,189 @@
+[
+  {
+    "case_id": "historical160:6f52b2db04868ff8",
+    "arm": "multiline",
+    "semantic_changed": false,
+    "r1": ">{\"answer\": \"INSUFFICIENT\"}",
+    "r2": ">{\"answer\":\"INSUFFICIENT\"}",
+    "expected": false,
+    "q": "栖湾 C18的2026年6月版本允许同时连接几台设备？",
+    "text": "栖湾 C18的2025年6月版本允许同时连接48台设备。",
+    "family": "historical160:date_scope"
+  },
+  {
+    "case_id": "new:item_membership:1:1",
+    "arm": "json",
+    "semantic_changed": false,
+    "r1": ">{\"answer\": \"ANSWERABLE\"}",
+    "r2": ">{\"answer\":\"ANSWERABLE\"}",
+    "expected": true,
+    "q": "请根据提供的材料回答：新岑19-01支持的文件格式中是否包含PNG？",
+    "text": "新岑19-01支持且仅支持TXT、PNG和CSV。",
+    "family": "item_membership"
+  },
+  {
+    "case_id": "new:negative_qa:10:1",
+    "arm": "multiline",
+    "semantic_changed": true,
+    "r1": ">{\"answer\":\"INSUFFICIENT\"}",
+    "r2": ">{\"answer\":\"ANSWERABLE\"}",
+    "expected": true,
+    "q": "请根据提供的材料回答：新岑15-10有没有内置扬声器？",
+    "text": "问：新岑15-10有没有内置扬声器？\n答：没有，只能连接外置扬声器。",
+    "family": "negative_qa"
+  },
+  {
+    "case_id": "new:location_vs_origin:6:1",
+    "arm": "multiline",
+    "semantic_changed": true,
+    "r1": ">{\"answer\":\"INSUFFICIENT\"}",
+    "r2": ">{\"answer\":\"ANSWERABLE\"}",
+    "expected": true,
+    "q": "新岑03-06设备当前安装在哪里？",
+    "text": "新岑03-06设备当前安装在北侧机房。",
+    "family": "location_vs_origin"
+  },
+  {
+    "case_id": "new:explicit_cause:7:1",
+    "arm": "json",
+    "semantic_changed": true,
+    "r1": ">{\"answer\": \"INSUFFICIENT\"}",
+    "r2": ">{\"answer\": \"ANSWERABLE\"}",
+    "expected": true,
+    "q": "请根据提供的材料回答：新岑22-07观测站为什么暂停开放？",
+    "text": "新岑22-07观测站因屋顶维修暂停开放。",
+    "family": "explicit_cause"
+  },
+  {
+    "case_id": "new:explicit_antecedent:3:1",
+    "arm": "json",
+    "semantic_changed": false,
+    "r1": ">{\"answer\":\"ANSWERABLE\"}",
+    "r2": ">{\"answer\": \"ANSWERABLE\"}",
+    "expected": true,
+    "q": "新岑36-03的容量是多少升？",
+    "text": "该设备的容量为34升。",
+    "family": "explicit_antecedent"
+  },
+  {
+    "case_id": "new:item_membership:2:1",
+    "arm": "json",
+    "semantic_changed": false,
+    "r1": ">{\"answer\": \"ANSWERABLE\"}",
+    "r2": ">{\"answer\":\"ANSWERABLE\"}",
+    "expected": true,
+    "q": "我想确认一下，新岑19-02支持的文件格式中是否包含PNG？",
+    "text": "新岑19-02支持且仅支持TXT、PNG和CSV。",
+    "family": "item_membership"
+  },
+  {
+    "case_id": "new:ordered_steps:2:1",
+    "arm": "multiline",
+    "semantic_changed": true,
+    "r1": ">{\"answer\":\"INSUFFICIENT\"}",
+    "r2": ">{\"answer\":\"ANSWERABLE\"}",
+    "expected": true,
+    "q": "我想确认一下，新岑21-02更新记录的两个步骤按顺序是什么？",
+    "text": "新岑21-02更新记录共两步：先读取旧记录，再保存新记录。",
+    "family": "ordered_steps"
+  },
+  {
+    "case_id": "new:definition_explicit:0:1",
+    "arm": "multiline",
+    "semantic_changed": true,
+    "r1": ">{\"answer\":\"INSUFFICIENT\"}",
+    "r2": ">{\"answer\":\"ANSWERABLE\"}",
+    "expected": true,
+    "q": "新岑00-00是什么类型的装置？",
+    "text": "新岑00-00是一种空气湿度记录仪。",
+    "family": "definition_explicit"
+  },
+  {
+    "case_id": "new:report_both_records:7:1",
+    "arm": "multiline",
+    "semantic_changed": true,
+    "r1": ">{\"answer\":\"ANSWERABLE\"}",
+    "r2": ">{\"answer\":\"INSUFFICIENT\"}",
+    "expected": true,
+    "q": "请根据提供的材料回答：关于新岑31-07容量，记录甲与记录乙分别记载了什么数值？",
+    "text": "记录甲记载新岑31-07容量为62升；记录乙记载新岑31-07容量为178升，尚无统一更正。",
+    "family": "report_both_records"
+  },
+  {
+    "case_id": "new:term_meaning:10:0",
+    "arm": "json",
+    "semantic_changed": false,
+    "r1": ">{\"answer\": \"INSUFFICIENT\"}",
+    "r2": ">{\"answer\":\"INSUFFICIENT\"}",
+    "expected": false,
+    "q": "请根据提供的材料回答：本手册中“新岑01-10模式”指什么？",
+    "text": "本手册目录列有“新岑01-10模式”，该节正文未提供。",
+    "family": "term_meaning"
+  },
+  {
+    "case_id": "new:ordered_steps:1:1",
+    "arm": "multiline",
+    "semantic_changed": true,
+    "r1": ">{\"answer\":\"INSUFFICIENT\"}",
+    "r2": ">{\"answer\":\"ANSWERABLE\"}",
+    "expected": true,
+    "q": "请根据提供的材料回答：新岑21-01更新记录的两个步骤按顺序是什么？",
+    "text": "新岑21-01更新记录共两步：先读取旧记录，再保存新记录。",
+    "family": "ordered_steps"
+  },
+  {
+    "case_id": "new:negative_qa:3:1",
+    "arm": "json",
+    "semantic_changed": false,
+    "r1": ">{\"answer\":\"ANSWERABLE\"}",
+    "r2": ">{\"answer\": \"ANSWERABLE\"}",
+    "expected": true,
+    "q": "新岑15-03有没有内置扬声器？",
+    "text": "问：新岑15-03有没有内置扬声器？\n答：没有，只能连接外置扬声器。",
+    "family": "negative_qa"
+  },
+  {
+    "case_id": "new:matching_dimension:6:0",
+    "arm": "json",
+    "semantic_changed": false,
+    "r1": ">{\"answer\":\"INSUFFICIENT\"}",
+    "r2": ">{\"answer\": \"INSUFFICIENT\"}",
+    "expected": false,
+    "q": "新岑10-06的质量是多少克？",
+    "text": "新岑10-06的长度为55毫米。",
+    "family": "matching_dimension"
+  },
+  {
+    "case_id": "new:explicit_cause:8:1",
+    "arm": "json",
+    "semantic_changed": false,
+    "r1": ">{\"answer\": \"ANSWERABLE\"}",
+    "r2": ">{\"answer\":\"ANSWERABLE\"}",
+    "expected": true,
+    "q": "我想确认一下，新岑22-08观测站为什么暂停开放？",
+    "text": "新岑22-08观测站因屋顶维修暂停开放。",
+    "family": "explicit_cause"
+  },
+  {
+    "case_id": "historical64:a6cf5decf18b",
+    "arm": "multiline",
+    "semantic_changed": true,
+    "r1": ">{\"answer\":\"ANSWERABLE\"}",
+    "r2": ">{\"answer\":\"INSUFFICIENT\"}",
+    "expected": true,
+    "q": "岸青 R2 的容量是多少？",
+    "text": "岸青 R2 容量为 512 GB。",
+    "family": "historical64:injection"
+  },
+  {
+    "case_id": "historical160:257fc6eabc671b70",
+    "arm": "json",
+    "semantic_changed": false,
+    "r1": ">{\"answer\":\"ANSWERABLE\"}",
+    "r2": ">{\"answer\": \"ANSWERABLE\"}",
+    "expected": true,
+    "q": "Does 岑岳 B14 support scheduled backups?",
+    "text": "岑岳 B14 supports scheduled backups.",
+    "family": "historical160:english_feature"
+  }
+]

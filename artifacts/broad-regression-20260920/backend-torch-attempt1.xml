@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="2" failures="0" skipped="0" tests="2" time="0.250" timestamp="2026-09-20T15:24:02.345054+08:00" hostname="DESKTOP-BGGJLMG"><testcase classname="" name="tests.test_released_training" time="0.000"><error message="collection failure">ImportError while importing test module '/home/chase/GitHub/rwkvrag/llamaindex-retrieval/tests/test_released_training.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+llamaindex-retrieval/tests/test_released_training.py:13: in &lt;module&gt;
+    from llamaindex_retrieval import state_release
+llamaindex-retrieval/src/llamaindex_retrieval/state_release.py:13: in &lt;module&gt;
+    from .statetune import SPLITS, audit, digest, export_training, rows, write_json
+llamaindex-retrieval/src/llamaindex_retrieval/statetune.py:16: in &lt;module&gt;
+    from .rwkv_pipeline import evidence_units, parse_task_selections, task_resolver_prompt
+llamaindex-retrieval/src/llamaindex_retrieval/rwkv_pipeline.py:16: in &lt;module&gt;
+    from .lexical_index import LexicalIndex, LexicalResult
+llamaindex-retrieval/src/llamaindex_retrieval/lexical_index.py:8: in &lt;module&gt;
+    import jieba
+E   ModuleNotFoundError: No module named 'jieba'</error></testcase><testcase classname="" name="tests.test_state_pilot" time="0.000"><error message="collection failure">ImportError while importing test module '/home/chase/GitHub/rwkvrag/llamaindex-retrieval/tests/test_state_pilot.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+llamaindex-retrieval/tests/test_state_pilot.py:10: in &lt;module&gt;
+    from score_state import score_case, select_state
+llamaindex-retrieval/statetune/score_state.py:9: in &lt;module&gt;
+    from llamaindex_retrieval.rwkv_pipeline import parse_task_selections
+llamaindex-retrieval/src/llamaindex_retrieval/rwkv_pipeline.py:16: in &lt;module&gt;
+    from .lexical_index import LexicalIndex, LexicalResult
+llamaindex-retrieval/src/llamaindex_retrieval/lexical_index.py:8: in &lt;module&gt;
+    import jieba
+E   ModuleNotFoundError: No module named 'jieba'</error></testcase></testsuite></testsuites>

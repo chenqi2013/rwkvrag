@@ -1,0 +1,36 @@
+{"completed_requests": 10, "total": 478}
+{"completed_requests": 20, "total": 478}
+{"completed_requests": 30, "total": 478}
+{"completed_requests": 40, "total": 478}
+{"completed_requests": 50, "total": 478}
+{"completed_requests": 60, "total": 478}
+Traceback (most recent call last):
+  File "/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-qa-20260920/run.py", line 75, in main
+    await asyncio.gather(*(run(i,c) for i,c in enumerate(cases)))
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-qa-20260920/run.py", line 60, in run
+    async with semaphore:
+               ^^^^^^^^^
+  File "/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/locks.py", line 14, in __aenter__
+    await self.acquire()
+  File "/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/locks.py", line 407, in acquire
+    await fut
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/broad-qa-20260920/run.py", line 100, in <module>
+    if __name__=='__main__':asyncio.run(main())
+                            ~~~~~~~~~~~^^^^^^^^
+  File "/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt

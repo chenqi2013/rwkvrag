@@ -1,0 +1,41 @@
+{
+  "full_run": {
+    "passed": 945,
+    "failed": 119,
+    "skipped": 2
+  },
+  "baseline": "7e7d33c8",
+  "baseline_reproduction": {
+    "failed": 119,
+    "passed": 155,
+    "same_failed_test_ids": true,
+    "normalized_failure_messages_identical": 118
+  },
+  "torch_supplement": {
+    "attempt1": "collection failed: jieba missing in engine venv; artifacts preserved",
+    "attempt2": "2 passed in isolated Python3.12 environment, existing engine Torch reused, CUDA_VISIBLE_DEVICES empty",
+    "no_existing_environment_modified": true
+  },
+  "triage": [
+    {
+      "module": "test_document_retrieval",
+      "count": 5,
+      "observed_cause": "test Client stub lacks .indices used by current versioned-index lookup; underlying retrieval assertions not reached"
+    },
+    {
+      "modules": [
+        "test_evidence_extraction",
+        "test_evidence_gate",
+        "test_generation",
+        "test_qa_analysis",
+        "test_query_planning",
+        "test_semantic_query_planning",
+        "test_service"
+      ],
+      "count": 114,
+      "observed_cause": "Mixed old heuristic, rewriting, planning, evidence and service contracts; some now conflict with immutable/model-driven design, others assert capabilities still required. Not all individually adjudicated."
+    }
+  ],
+  "required_followup": "Retain original cases and failing results. Add model-driven capability equivalents before retiring any legacy implementation assertion. Do not restore per-entity heuristic patches or mark everything xfail to make the suite green.",
+  "production_quality_claim": false
+}

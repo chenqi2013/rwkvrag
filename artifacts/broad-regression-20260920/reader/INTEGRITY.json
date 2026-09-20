@@ -1,0 +1,19 @@
+{
+  "raw_calls": 4896,
+  "raw_archive_roundtrip_verified": true,
+  "history_files_unchanged": 352,
+  "artifact_sha256": {
+    "FAILURES.json": "3b210272809267497a51f5cca24e2017c05a1d2467269f2b9061b1a032611800",
+    "RUNTIME-AFTER.json": "30d106958c8e79b09d25b5e2925c4b379a9e63c11735fde8f4b9168d4e494c2c",
+    "raw-calls.tar.gz": "63e663d0967d67a94da7319b93f12675dffab4d60c184d4ff0d3cdc196b4f5f3",
+    "RAW-MANIFEST.json": "b97d38c614126fa48fa397f48c63dfe4bdd487d63572fdaa59dac7f557b6c7b8",
+    "SUMMARY.json": "5902bfb05010fcd7f9cf755acb54ca2c4e28cbffb3aed12728abfd48ac9b52b0",
+    "ROWS.json": "980eb85332410b1c73d40f05fae817fbd65d284c08b65e750b0f4192f490964a",
+    "CHANGES.json": "df11cd538486966e7ed4bba27e98243c4874c1f2a7f6f2b37c3ec54dd1e81728",
+    "execution.log": "e24b812ebd01d907af99f8ad0b216d8c809f52dfa388c71baa9ef7c5015d0a30",
+    "EXECUTION.json": "3aa69878e96ea84859f5e327cd9547c1fc50c3b67c72133479509a1bfe872eef",
+    "RUNTIME-BEFORE.json": "fb2ec01f5adb100333e4802272b7bff983f64c3246c93373db8ba5ed72673c2b",
+    "BINDINGS.json": "fd1a4277537f6870b345572d6f1532e0431777c26ceea30cc88698b2a88268bc",
+    "HEALTH-BEFORE.json": "56755dbfc01547f4ae029c4eff4ba3a993e5318846bb2a90925c1520306b821b"
+  }
+}

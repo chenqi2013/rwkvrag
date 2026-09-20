@@ -6,6 +6,7 @@
 
 | 报告 | 原路径 |
 | --- | --- |
+| [全题型 Reader 扩大回归：保留旧题，候选未通过](2026-09/broad-reader-results-20260920.md) | 4,896 次调用；40 个新增模板族 |
 | [Reader 呈现回归：表格改善与负向迁移](2026-09/reader-presentation-results-20260920.md) | 新主线回归报告，640 次调用 |
 | [本地 vllm-rwkv 更新与解码回归：未观察到采样收益](2026-09/vllm-decoding-results-20260920.md) | 新部署与 1,120 次回归报告 |
 | [表头重复修复与本地 vLLM 引擎核对](2026-09/atomic-context-dedup-20260920.md) | 新修复报告与只读引擎审查 |
