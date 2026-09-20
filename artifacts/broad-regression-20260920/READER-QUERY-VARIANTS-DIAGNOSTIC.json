@@ -1,0 +1,110 @@
+{
+  "case_id": "wiki_verified-0095",
+  "source_id": "verbatim-v1:0594314a8d8b0f5a326c65111752f7ea3805dc2803c6e8e42022ad01a0c8ca3f",
+  "source": {
+    "id": "verbatim-v1:0594314a8d8b0f5a326c65111752f7ea3805dc2803c6e8e42022ad01a0c8ca3f@0:17:7bc88d4c3bb0",
+    "document_id": "452c6744837d8a43bfca6d51",
+    "source": "finewiki-zh",
+    "title": "圣保罗使徒科学信息与技术大学",
+    "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+    "score": 0.11475409836065575,
+    "snippet": "# 圣保罗使徒科学信息与技术大学\n",
+    "metadata": {
+      "source_text_encoding": "utf-8",
+      "snapshot_id": "zhwiki/4805092@74523983@381e12a26e9b80f6",
+      "external_id": "zhwiki/4805092",
+      "chunker_version": "verbatim-v1",
+      "source": "finewiki-zh",
+      "chunk_order": 0,
+      "document_id": "452c6744837d8a43bfca6d51",
+      "title": "圣保罗使徒科学信息与技术大学",
+      "wikiname": "zhwiki",
+      "page_id": 4805092,
+      "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4805092-74523983-381e12a26e9b80f6.md",
+      "content_type": "heading",
+      "source_span": {
+        "unit": "unicode_code_points",
+        "sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+        "start": 0,
+        "end": 17
+      },
+      "context_spans": [],
+      "in_language": "zh",
+      "kind": "finewiki",
+      "chunk_text_sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+      "source_text_sha256": "6cc86c15560912ef97216387507948889e46d59cb199b3cab3b7db484ce56509",
+      "knowledge_base_id": "wiki-restored-20260920",
+      "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+      "version": 74523983,
+      "heading_path": [],
+      "file_id": "452c6744837d8a43bfca6d51",
+      "atomic": true,
+      "legacy_document_id": "993d9af5a360d8d21b925c37",
+      "retrieval_origin": "knowledge_base",
+      "indexed_text_sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+      "parent_source_id": "verbatim-v1:0594314a8d8b0f5a326c65111752f7ea3805dc2803c6e8e42022ad01a0c8ca3f",
+      "parent_text_sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+      "span_start": 0,
+      "span_end": 17,
+      "span_sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+      "offset_unit": "unicode_characters_in_indexed_chunk",
+      "selection_scope": "binary_query",
+      "field_ids": []
+    }
+  },
+  "raw_file": "data/quality-runs/restored-retrieval-v2-20260920/run1/calls/0051.json",
+  "raw_file_sha256": "6ba5674017b3841eaafc7f33d448b809cdbf58a87f700e6752ad29da9d8f5d25",
+  "question": "想去圣保罗使徒科学信息与技术大学，它的位置在哪里？",
+  "calls": [
+    {
+      "call_id": "93e35848-95e1-48f1-9d1e-6bbb4fd8c4ba",
+      "query": "[\"想去圣保罗使徒科学信息与技术大学，它的位置在哪里？\"]",
+      "decision": "NO",
+      "raw_text": "{\"answer\": \"NO\"}",
+      "prompt_sha256": "a45ff76df3ef479800a1b07bf524d6f0cf1d6989ccb38ddd6a9c01bab90b93c7"
+    },
+    {
+      "call_id": "b876d0c6-f4d4-4821-9b7b-2ef01129a15b",
+      "query": "[\"圣保罗使徒科学信息与技术大学 位置\"]",
+      "decision": "YES",
+      "raw_text": "{\"answer\": \"YES\"}",
+      "prompt_sha256": "70cc0f6b3955ea847515501bcdc268e5d8b395105091a8919652be3f82173625"
+    },
+    {
+      "call_id": "34a81cb8-508a-42fa-9f53-233f1800c3ac",
+      "query": "[\"圣保罗使徒科学信息与技术大学 地址\"]",
+      "decision": "NO",
+      "raw_text": "{\"answer\": \"NO\"}",
+      "prompt_sha256": "abef881434379010a9839ffa4401574d2c715dd8a323b9e43984762fcae516eb"
+    },
+    {
+      "call_id": "683c9968-f2da-4184-b9ba-dc6b000f1873",
+      "query": "[\"圣保罗使徒科学信息与技术大学 所在城市\"]",
+      "decision": "NO",
+      "raw_text": "{\"answer\": \"NO\"}",
+      "prompt_sha256": "6d0c454888d3c2c321a5cb1e54be1d709cf4e6ef5d5f1738c5b30189d35deb24"
+    },
+    {
+      "call_id": "ceb434a7-19d6-4733-91ad-b662dd4dbe0c",
+      "query": "[\"圣保罗使徒科学信息与技术大学 所在国家\"]",
+      "decision": "NO",
+      "raw_text": "{\"answer\": \"NO\"}",
+      "prompt_sha256": "eb314ab8b4e3dd64aa3aa6f451db8a9e4ca1715ba64c56ba183e96ee66636cb2"
+    },
+    {
+      "call_id": "19dd5052-66cb-4784-86a5-16b9f4f01b77",
+      "query": "[\"圣保罗使徒科学信息与技术大学 所在州\"]",
+      "decision": "NO",
+      "raw_text": "{\"answer\": \"NO\"}",
+      "prompt_sha256": "36ac055085c9dea48101dd75ce3c48b33988b489ec79b073896dfe0a4705448c"
+    },
+    {
+      "call_id": "d202c9e7-c62e-4ecf-90f4-e3bc5ff762fa",
+      "query": "[\"圣保罗使徒科学信息与技术大学 所在省\"]",
+      "decision": "NO",
+      "raw_text": "{\"answer\": \"NO\"}",
+      "prompt_sha256": "16cd6e1a9917409183ededb1219b44bd9d3cfc98ce599e645dd39c31f033eafe"
+    }
+  ],
+  "observation": "Bare title was NO for original question but YES for one search-keyword variant, and appears in final sources. This is one diagnostic, not an independently adjudicated false-positive rate."
+}
