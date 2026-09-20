@@ -1,0 +1,7198 @@
+{
+  "revision": "8bd13e72e6a002407649b3e898535f42ceb1aeb9",
+  "original_cases_sha256": "b9ce77eead63096183237bde9f9ffa78fd1243c28b49e68c48963d5c63411289",
+  "background_original_rows_sha256": "e7bced2af6051d7359a8e8272505967eda9be5de6948a812a55b709379151fa1",
+  "pages": 5573,
+  "background_pages": 5000,
+  "target_pages": 590,
+  "unique_article_ids": 5425,
+  "version_policy": "Keep every matching upstream version/row; collapse only byte-equivalent canonical rows and record all positions. Never choose a version because its answer matches gold.",
+  "requested_titles": 456,
+  "missing_titles": [
+    "CPUID",
+    "センラ",
+    "东平 (消歧义)",
+    "中华人民共和国各省级行政区人口列表",
+    "北京",
+    "单身",
+    "成县",
+    "深圳地铁车站列表",
+    "澳门回归",
+    "蒙古航空",
+    "阿波羅11號",
+    "陆贽",
+    "香港回归",
+    "马昂",
+    "马昂 (消歧义)",
+    "马昂 (演员)"
+  ],
+  "cases": [
+    {
+      "case_id": "wiki_verified-0161",
+      "expected_titles": [
+        "东晋"
+      ],
+      "found_titles": [
+        "东晋"
+      ],
+      "actual_document_ids": [
+        "85adf8c4056038eb44a2d52f"
+      ],
+      "original_document_id": "cbed99e56f107d1479048d1b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0014",
+      "expected_titles": [
+        "巴兹·奥尔德林",
+        "舱外活动"
+      ],
+      "found_titles": [
+        "巴兹·奥尔德林",
+        "舱外活动"
+      ],
+      "actual_document_ids": [
+        "6ddb97c7cc70027a05b70904",
+        "db896ee299418fb2ee937a4b"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0135",
+      "expected_titles": [
+        "Getmii"
+      ],
+      "found_titles": [
+        "Getmii"
+      ],
+      "actual_document_ids": [
+        "25630be8ba243693010c342e"
+      ],
+      "original_document_id": "40b849c0cbc65ce9895e3ce9",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0093",
+      "expected_titles": [
+        "乌克兰总统办公室大楼"
+      ],
+      "found_titles": [
+        "乌克兰总统办公室大楼"
+      ],
+      "actual_document_ids": [
+        "0d5b43274746fd75b85061ca"
+      ],
+      "original_document_id": "2f726b6a4ad6929b802e0db4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0070",
+      "expected_titles": [
+        "蕭琮"
+      ],
+      "found_titles": [
+        "蕭琮"
+      ],
+      "actual_document_ids": [
+        "2011bf5a756c219fe508c716"
+      ],
+      "original_document_id": "322a922e929704445ea58154",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0043",
+      "expected_titles": [
+        "約克大廈"
+      ],
+      "found_titles": [
+        "約克大廈"
+      ],
+      "actual_document_ids": [
+        "858fdee08301dff54f50ce4f"
+      ],
+      "original_document_id": "d8ed0798ae4e35cc6fbb6f2a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0054",
+      "expected_titles": [
+        "福州航空"
+      ],
+      "found_titles": [
+        "福州航空"
+      ],
+      "actual_document_ids": [
+        "280014f212d04d1bb4fbd1b9"
+      ],
+      "original_document_id": "cdcc5a50f1391279cd8b2521",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0016",
+      "expected_titles": [
+        "东乡区"
+      ],
+      "found_titles": [
+        "东乡区"
+      ],
+      "actual_document_ids": [
+        "74f620758028738fdf48397f"
+      ],
+      "original_document_id": "669d0d9f72ce6ea90d6349b2",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0166",
+      "expected_titles": [
+        "韋雷瑟"
+      ],
+      "found_titles": [
+        "韋雷瑟"
+      ],
+      "actual_document_ids": [
+        "71c5ddfe51150099d329b778",
+        "fbea439fce3d02d274fd62bd",
+        "945a75986018184f50d7e04c"
+      ],
+      "original_document_id": "1f3bfa489e3c3415716881b5",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0006",
+      "expected_titles": [
+        "一生交给党"
+      ],
+      "found_titles": [
+        "一生交给党"
+      ],
+      "actual_document_ids": [
+        "b4772bc52c2a3a51c9c123f8"
+      ],
+      "original_document_id": "0ea5ef733c5a599e4b2c69e3",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0097",
+      "expected_titles": [
+        "梅涅勒"
+      ],
+      "found_titles": [
+        "梅涅勒"
+      ],
+      "actual_document_ids": [
+        "5be2fc3db98f52fcef9f17a8"
+      ],
+      "original_document_id": "6b717970acd8d1fa1a7e6531",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "basic-0005",
+      "expected_titles": [
+        "深圳地铁1号线",
+        "深圳地铁车站列表"
+      ],
+      "found_titles": [
+        "深圳地铁1号线"
+      ],
+      "actual_document_ids": [
+        "cec3ee25e4ded37f9231e945"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0020",
+      "expected_titles": [
+        "豪赫蒂夫"
+      ],
+      "found_titles": [
+        "豪赫蒂夫"
+      ],
+      "actual_document_ids": [
+        "ab5574a0db7e42b54b08e0bf",
+        "46e4c02b50cff2a7f2a4eb59",
+        "919f4e68b709e69cc0c6ecaa"
+      ],
+      "original_document_id": "c1c24e6722c9dff8d09f931d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0160",
+      "expected_titles": [
+        "阿方索六世 (雷昂與卡斯提亞)"
+      ],
+      "found_titles": [
+        "阿方索六世 (雷昂與卡斯提亞)"
+      ],
+      "actual_document_ids": [
+        "d156a258ecb480ec129e5d20",
+        "ad7d128f5ae33d6ad1866017"
+      ],
+      "original_document_id": "dddf1b1a33d12effef7eedfa",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0082",
+      "expected_titles": [
+        "Windows 10"
+      ],
+      "found_titles": [
+        "Windows 10"
+      ],
+      "actual_document_ids": [
+        "bb75ba2b0cd02e062497e02f",
+        "e7b5a0f1a8ca1688e0c151e6"
+      ],
+      "original_document_id": "a97dcd3638e24014c0273e87",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "native_wiki-0003",
+      "expected_titles": [
+        "Discuz!",
+        "Gearman",
+        "Ghost (博客平台)"
+      ],
+      "found_titles": [
+        "Discuz!",
+        "Gearman",
+        "Ghost (博客平台)"
+      ],
+      "actual_document_ids": [
+        "8807fceae2617732f627b7bc",
+        "075e10464f6a1483551e5934",
+        "0b32700106d52544d3ae2360"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0010",
+      "expected_titles": [
+        "HTBasic"
+      ],
+      "found_titles": [
+        "HTBasic"
+      ],
+      "actual_document_ids": [
+        "a1c0649a037936a2118739d8"
+      ],
+      "original_document_id": "eb618c2f48a75be1c4e7fd5c",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0173",
+      "expected_titles": [
+        "混乱之子"
+      ],
+      "found_titles": [
+        "混乱之子"
+      ],
+      "actual_document_ids": [
+        "d2898106d2412a48b33237f8"
+      ],
+      "original_document_id": "324e8cddf365ddde0683b7f5",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0012",
+      "expected_titles": [
+        "东丹"
+      ],
+      "found_titles": [
+        "东丹"
+      ],
+      "actual_document_ids": [
+        "28ae7fa22375dbeef503aef3"
+      ],
+      "original_document_id": "e618600d1a892dc802615f5d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0125",
+      "expected_titles": [
+        "大藏寺"
+      ],
+      "found_titles": [
+        "大藏寺"
+      ],
+      "actual_document_ids": [
+        "07bb67c139b2b8bd4da9972f"
+      ],
+      "original_document_id": "13e469f9acdb6205299c01c9",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0195",
+      "expected_titles": [
+        "毒海浮生"
+      ],
+      "found_titles": [
+        "毒海浮生"
+      ],
+      "actual_document_ids": [
+        "f02cbb86b8b950b522c10218"
+      ],
+      "original_document_id": "e625d9dd034c1129f8fba4f0",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0132",
+      "expected_titles": [
+        "撒姆魯"
+      ],
+      "found_titles": [
+        "撒姆魯"
+      ],
+      "actual_document_ids": [
+        "43b7399ecd1788099413a6e4"
+      ],
+      "original_document_id": "28a05bab6c7d222b954b7ced",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0157",
+      "expected_titles": [
+        "留尼旺白䴉"
+      ],
+      "found_titles": [
+        "留尼旺白䴉"
+      ],
+      "actual_document_ids": [
+        "021f57a5871695d6ea51562a"
+      ],
+      "original_document_id": "890b399420415332fa1f9c8f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0083",
+      "expected_titles": [
+        "下恩特費爾登"
+      ],
+      "found_titles": [
+        "下恩特費爾登"
+      ],
+      "actual_document_ids": [
+        "5ef307eb15bda8ae6c956c09"
+      ],
+      "original_document_id": "ea8a04d9224d6d12ee9a9507",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0081",
+      "expected_titles": [
+        "江西生产建设兵团"
+      ],
+      "found_titles": [
+        "江西生产建设兵团"
+      ],
+      "actual_document_ids": [
+        "7225c7e65cfdbaa27652045f"
+      ],
+      "original_document_id": "c5cf6301806c34bc13c4023a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0114",
+      "expected_titles": [
+        "白沙撒字"
+      ],
+      "found_titles": [
+        "白沙撒字"
+      ],
+      "actual_document_ids": [
+        "5264ff6259d29532b55b1fc3"
+      ],
+      "original_document_id": "c7f65ceae91001c65a4a9eb1",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0118",
+      "expected_titles": [
+        "德赖艾希"
+      ],
+      "found_titles": [
+        "德赖艾希"
+      ],
+      "actual_document_ids": [
+        "0778017021e382e6460b32b6",
+        "6d93a18e7eec62cde62955e5",
+        "6c1fdf1805f3dc4954e49cf6"
+      ],
+      "original_document_id": "6db4b980b36838cebbf80039",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0038",
+      "expected_titles": [
+        "奥普韦克"
+      ],
+      "found_titles": [
+        "奥普韦克"
+      ],
+      "actual_document_ids": [
+        "0c9eff13a4294759d47e51f2"
+      ],
+      "original_document_id": "56be0464bbaf76348ef6d105",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0048",
+      "expected_titles": [
+        "斯卡伊茨維斯基公園"
+      ],
+      "found_titles": [
+        "斯卡伊茨維斯基公園"
+      ],
+      "actual_document_ids": [
+        "807937a47de777dcbd0afe4d"
+      ],
+      "original_document_id": "c034ccc62c82614cd31789d4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0002",
+      "expected_titles": [
+        "2020年夏季奥林匹克运动会坦桑尼亚代表团"
+      ],
+      "found_titles": [
+        "2020年夏季奥林匹克运动会坦桑尼亚代表团"
+      ],
+      "actual_document_ids": [
+        "9fac9b02f90d94f8ff2d44d8"
+      ],
+      "original_document_id": "7a3f7adafaf89725c79e6e19",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0187",
+      "expected_titles": [
+        "秦皇岛市"
+      ],
+      "found_titles": [
+        "秦皇岛市"
+      ],
+      "actual_document_ids": [
+        "8ee907074071093021a0b725",
+        "6f8ad07565c712d8812cdcfd",
+        "ca46d39d08db3d961bf59365",
+        "3e256373178e0a5ebc303038"
+      ],
+      "original_document_id": "18cb54093989706bc6a4f448",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0095",
+      "expected_titles": [
+        "法兰西艺术院"
+      ],
+      "found_titles": [
+        "法兰西艺术院"
+      ],
+      "actual_document_ids": [
+        "ae78cca445d1eb3e5a83459c"
+      ],
+      "original_document_id": "8da22e5e72ebe19347c64daa",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0138",
+      "expected_titles": [
+        "Frog City Software"
+      ],
+      "found_titles": [
+        "Frog City Software"
+      ],
+      "actual_document_ids": [
+        "b49b8e0c1fe16c56a42d8ebc"
+      ],
+      "original_document_id": "f60ce48f724f9313f0910263",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0061",
+      "expected_titles": [
+        "暗戀桃花源"
+      ],
+      "found_titles": [
+        "暗戀桃花源"
+      ],
+      "actual_document_ids": [
+        "f5be4d5204b0e9d8be70331f"
+      ],
+      "original_document_id": "5a75a664b70fd97feacb04c8",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0074",
+      "expected_titles": [
+        "小林尽"
+      ],
+      "found_titles": [
+        "小林尽"
+      ],
+      "actual_document_ids": [
+        "45835d9d9266169a25be9cab"
+      ],
+      "original_document_id": "5ac91bfa298886a9d189d740",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0141",
+      "expected_titles": [
+        "慈雙冠麗魚"
+      ],
+      "found_titles": [
+        "慈雙冠麗魚"
+      ],
+      "actual_document_ids": [
+        "9e5c1d19a34ae604691c8915"
+      ],
+      "original_document_id": "049e41258f7bdd9f29179639",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0028",
+      "expected_titles": [
+        "派克賓館麵包卷"
+      ],
+      "found_titles": [
+        "派克賓館麵包卷"
+      ],
+      "actual_document_ids": [
+        "11e7638d960e681279fadf8f"
+      ],
+      "original_document_id": "e466d33e67836a298e2482a8",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0098",
+      "expected_titles": [
+        "鄭國"
+      ],
+      "found_titles": [
+        "鄭國"
+      ],
+      "actual_document_ids": [
+        "146a40a166021ceae6e72dff"
+      ],
+      "original_document_id": "c6da442b0d979d1ac0623645",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0121",
+      "expected_titles": [
+        "丸龜市"
+      ],
+      "found_titles": [
+        "丸龜市"
+      ],
+      "actual_document_ids": [
+        "6fc91a47556804c9ee3a712b"
+      ],
+      "original_document_id": "11e02166b87783950f31601e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0162",
+      "expected_titles": [
+        "塔卡尼克"
+      ],
+      "found_titles": [
+        "塔卡尼克"
+      ],
+      "actual_document_ids": [
+        "3996b7a9cdd70fc7117d820d"
+      ],
+      "original_document_id": "eaecc3f5675e1da2fb8f3d83",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0003",
+      "expected_titles": [
+        "釋心道"
+      ],
+      "found_titles": [
+        "釋心道"
+      ],
+      "actual_document_ids": [
+        "3aab13c44d2cb2f950c20d86"
+      ],
+      "original_document_id": "cd29bb0119973657d7d334f7",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0038",
+      "expected_titles": [
+        "臺東氣象站"
+      ],
+      "found_titles": [
+        "臺東氣象站"
+      ],
+      "actual_document_ids": [
+        "e3aa77a5ec1501df9faa8606"
+      ],
+      "original_document_id": "1c176382d325d8255b3fe833",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0084",
+      "expected_titles": [
+        "長泉町"
+      ],
+      "found_titles": [
+        "長泉町"
+      ],
+      "actual_document_ids": [
+        "5d2ec9b2e6273ee8984a29c4"
+      ],
+      "original_document_id": "46f33653999b6a96ab222f65",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0106",
+      "expected_titles": [
+        "沈一贯"
+      ],
+      "found_titles": [
+        "沈一贯"
+      ],
+      "actual_document_ids": [
+        "cb6627e5a770fd7d4ee15839",
+        "9b36e33bff1222b3a9622b8a",
+        "0fe405b4a5de5577ada9f1fe"
+      ],
+      "original_document_id": "60cd0397f01bc99511089145",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0059",
+      "expected_titles": [
+        "阿爾貝托·賈科梅蒂"
+      ],
+      "found_titles": [
+        "阿爾貝托·賈科梅蒂"
+      ],
+      "actual_document_ids": [
+        "6215d789b1017103fe92ac3c"
+      ],
+      "original_document_id": "21a407ea3570e2a2e0efcf96",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0098",
+      "expected_titles": [
+        "丸户史明"
+      ],
+      "found_titles": [
+        "丸户史明"
+      ],
+      "actual_document_ids": [
+        "3e5182553800505384cd73f1"
+      ],
+      "original_document_id": "6f837121aa52de7e842f610a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0056",
+      "expected_titles": [
+        "大同鄉 (台灣)"
+      ],
+      "found_titles": [
+        "大同鄉 (台灣)"
+      ],
+      "actual_document_ids": [
+        "404a660d7660454eb6b39776"
+      ],
+      "original_document_id": "4f0a225ef0757026fd5e3ca5",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0122",
+      "expected_titles": [
+        "俄罗斯国家爱乐乐团"
+      ],
+      "found_titles": [
+        "俄罗斯国家爱乐乐团"
+      ],
+      "actual_document_ids": [
+        "7201ffd0a042500df43837c7"
+      ],
+      "original_document_id": "e6a2fa4f0ce182202c31a352",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0041",
+      "expected_titles": [
+        "西北岁月"
+      ],
+      "found_titles": [
+        "西北岁月"
+      ],
+      "actual_document_ids": [
+        "f4fdf6d7bb768c38cd20bf4d"
+      ],
+      "original_document_id": "af5eb51d357de5eaed58cc40",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0102",
+      "expected_titles": [
+        "Brandtaucher"
+      ],
+      "found_titles": [
+        "Brandtaucher"
+      ],
+      "actual_document_ids": [
+        "6d946ef33944bad74c689948"
+      ],
+      "original_document_id": "592244f465312a6c5b751e5e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0058",
+      "expected_titles": [
+        "抚远市"
+      ],
+      "found_titles": [
+        "抚远市"
+      ],
+      "actual_document_ids": [
+        "690fb1b97b77c561230027ae"
+      ],
+      "original_document_id": "a0aada0773ac96c7e7b7a608",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0095",
+      "expected_titles": [
+        "圣保罗使徒科学信息与技术大学"
+      ],
+      "found_titles": [
+        "圣保罗使徒科学信息与技术大学"
+      ],
+      "actual_document_ids": [
+        "452c6744837d8a43bfca6d51"
+      ],
+      "original_document_id": "993d9af5a360d8d21b925c37",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0132",
+      "expected_titles": [
+        "三角洲行动"
+      ],
+      "found_titles": [
+        "三角洲行动"
+      ],
+      "actual_document_ids": [
+        "ae4799629b969be790004426",
+        "614e185beafc735b4b03893e"
+      ],
+      "original_document_id": "afa82ad0c6583edbeaa8de6f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0152",
+      "expected_titles": [
+        "金钱骗局"
+      ],
+      "found_titles": [
+        "金钱骗局"
+      ],
+      "actual_document_ids": [
+        "6a4b93b2d74b88499b36e38e"
+      ],
+      "original_document_id": "4d4a4e64fd1378c19fcd8758",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0181",
+      "expected_titles": [
+        "埃利·乌尔德·穆罕默德·瓦勒"
+      ],
+      "found_titles": [
+        "埃利·乌尔德·穆罕默德·瓦勒"
+      ],
+      "actual_document_ids": [
+        "34798a6c7edababa0bb4b036"
+      ],
+      "original_document_id": "dd84a460e283edfde0172291",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0183",
+      "expected_titles": [
+        "苏里南工党"
+      ],
+      "found_titles": [
+        "苏里南工党"
+      ],
+      "actual_document_ids": [
+        "a104b13b6777d9c027751570"
+      ],
+      "original_document_id": "af7229d815aa0205f8dd2b45",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0137",
+      "expected_titles": [
+        "王沃"
+      ],
+      "found_titles": [
+        "王沃"
+      ],
+      "actual_document_ids": [
+        "148c30f073f46bc3947c2099"
+      ],
+      "original_document_id": "6dcabdd055f561e494b7b533",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0021",
+      "expected_titles": [
+        "我要你开花"
+      ],
+      "found_titles": [
+        "我要你开花"
+      ],
+      "actual_document_ids": [
+        "74cd2c410dc98f3a91fedbb5"
+      ],
+      "original_document_id": "8518c27a0bb56300e575db40",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0172",
+      "expected_titles": [
+        "纽约爱乐"
+      ],
+      "found_titles": [
+        "纽约爱乐"
+      ],
+      "actual_document_ids": [
+        "2168f2c894cf68973e29e92d"
+      ],
+      "original_document_id": "91cbcb67a21debf51ed0f793",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "native_wiki-0000",
+      "expected_titles": [
+        "CAN FD"
+      ],
+      "found_titles": [
+        "CAN FD"
+      ],
+      "actual_document_ids": [
+        "47898be6767966e68e50625e"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0076",
+      "expected_titles": [
+        "义乌市"
+      ],
+      "found_titles": [
+        "义乌市"
+      ],
+      "actual_document_ids": [
+        "74dbc810098b487eac0a5d41",
+        "159ad180550d99c5441f469d",
+        "af0f09170e7380e22fc166ed",
+        "8d39bca5c033d5705fc3a850"
+      ],
+      "original_document_id": "5989937bc8821d9959822535",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0105",
+      "expected_titles": [
+        "流亡黯道"
+      ],
+      "found_titles": [
+        "流亡黯道"
+      ],
+      "actual_document_ids": [
+        "e8a96003b84377261476772e"
+      ],
+      "original_document_id": "b7e179e72147cee0d5f98e86",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0032",
+      "expected_titles": [
+        "汕尾市新城中學"
+      ],
+      "found_titles": [
+        "汕尾市新城中學"
+      ],
+      "actual_document_ids": [
+        "7df475ac565703f294db7300"
+      ],
+      "original_document_id": "e8fb4ac44cd1bffdb78e1935",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0087",
+      "expected_titles": [
+        "聚丙烯腈"
+      ],
+      "found_titles": [
+        "聚丙烯腈"
+      ],
+      "actual_document_ids": [
+        "94000ab13354ac1e4dfbd7d6"
+      ],
+      "original_document_id": "4c6b08adc87b98fd95b94b3e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0050",
+      "expected_titles": [
+        "四月望雨"
+      ],
+      "found_titles": [
+        "四月望雨"
+      ],
+      "actual_document_ids": [
+        "0194ed11dd5165601ea67bca"
+      ],
+      "original_document_id": "6ab6e2a75c874ade77f81d07",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "basic-0003",
+      "expected_titles": [
+        "中华人民共和国各省级行政区人口列表",
+        "广东省",
+        "河南省"
+      ],
+      "found_titles": [
+        "广东省",
+        "河南省"
+      ],
+      "actual_document_ids": [
+        "7541943382523c829651998e",
+        "565e1d96fb023843c9a61f3b",
+        "7c46dfabca65bd795f238f55"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0107",
+      "expected_titles": [
+        "安庆石化"
+      ],
+      "found_titles": [
+        "安庆石化"
+      ],
+      "actual_document_ids": [
+        "1375b89ddbe9145bdfe802bc"
+      ],
+      "original_document_id": "d169472bd263487c40971360",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0116",
+      "expected_titles": [
+        "荃灣公立何傳耀紀念中學"
+      ],
+      "found_titles": [
+        "荃灣公立何傳耀紀念中學"
+      ],
+      "actual_document_ids": [
+        "bb3eadadca33e215bc209e4d",
+        "0e21be8b022aab111a0012f2",
+        "9ed0e846803c25aa43abf2c7",
+        "dff0af120f03d70cfdd7d9b6",
+        "a6cf68788f278fd526e90e5f",
+        "6a1bb8f9c2c2eaa288c009b3",
+        "c06440130d4a9415b158962a",
+        "39ac9f4aa928002a214a6cb3"
+      ],
+      "original_document_id": "083121836fcd890e74dd551a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0182",
+      "expected_titles": [
+        "瑪麗娜·杜潘-程"
+      ],
+      "found_titles": [
+        "瑪麗娜·杜潘-程"
+      ],
+      "actual_document_ids": [
+        "bdba8a675f85a1a222e8c690"
+      ],
+      "original_document_id": "d5f67ed69d20dc8b3cbbc591",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0013",
+      "expected_titles": [
+        "夢萊茵"
+      ],
+      "found_titles": [
+        "夢萊茵"
+      ],
+      "actual_document_ids": [
+        "f6026d7c0164c58ec8487a4c"
+      ],
+      "original_document_id": "10d91ad4dbe5bf2ba953a923",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0057",
+      "expected_titles": [
+        "擔子果"
+      ],
+      "found_titles": [
+        "擔子果"
+      ],
+      "actual_document_ids": [
+        "775db9516298b6afb4638d78"
+      ],
+      "original_document_id": "456670590414f47df4f00716",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0193",
+      "expected_titles": [
+        "桑·拉"
+      ],
+      "found_titles": [
+        "桑·拉"
+      ],
+      "actual_document_ids": [
+        "1260507eaccdb69aa210e0bc"
+      ],
+      "original_document_id": "8f5d2680dba3971955ea5f0f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0178",
+      "expected_titles": [
+        "维克托·涅克拉索夫"
+      ],
+      "found_titles": [
+        "维克托·涅克拉索夫"
+      ],
+      "actual_document_ids": [
+        "d9dacf5558813bad4196173b"
+      ],
+      "original_document_id": "1a5a64802c5016759f78ceca",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "basic-0001",
+      "expected_titles": [
+        "中华人民共和国",
+        "北京",
+        "首都"
+      ],
+      "found_titles": [
+        "中华人民共和国",
+        "首都"
+      ],
+      "actual_document_ids": [
+        "8ee743307e98461d570332f0",
+        "276077d74b05c3ff9db905e9"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0063",
+      "expected_titles": [
+        "墨尔本"
+      ],
+      "found_titles": [
+        "墨尔本"
+      ],
+      "actual_document_ids": [
+        "ae38c8c76c888c312ca7cc31"
+      ],
+      "original_document_id": "29d47cd97f9215c2c358fbe6",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0124",
+      "expected_titles": [
+        "巴陵郡"
+      ],
+      "found_titles": [
+        "巴陵郡"
+      ],
+      "actual_document_ids": [
+        "95c2885813cc02752a2c1604"
+      ],
+      "original_document_id": "311495fb2bc176ee5e923702",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0139",
+      "expected_titles": [
+        "江水地站"
+      ],
+      "found_titles": [
+        "江水地站"
+      ],
+      "actual_document_ids": [
+        "dfb2e03482a8928adbbc3979",
+        "bf4ddd10c1997189aa5cda54"
+      ],
+      "original_document_id": "3fd4fae0822394e872788fa1",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0185",
+      "expected_titles": [
+        "GONZO"
+      ],
+      "found_titles": [
+        "GONZO"
+      ],
+      "actual_document_ids": [
+        "38ad5f985b14acfac2c20b64"
+      ],
+      "original_document_id": "571140aa9a0530f42646e436",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0075",
+      "expected_titles": [
+        "马诺尔"
+      ],
+      "found_titles": [
+        "马诺尔"
+      ],
+      "actual_document_ids": [
+        "90eaadeb02190cdbfd3fcc17"
+      ],
+      "original_document_id": "ed5537d64085e9cdb4a63f20",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0167",
+      "expected_titles": [
+        "剑桥大学彼得学院"
+      ],
+      "found_titles": [
+        "剑桥大学彼得学院"
+      ],
+      "actual_document_ids": [
+        "d2ebe4efc309b489ec408c4e"
+      ],
+      "original_document_id": "a2e1ed29f760e3453200c4f2",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0177",
+      "expected_titles": [
+        "字母主义国际"
+      ],
+      "found_titles": [
+        "字母主义国际"
+      ],
+      "actual_document_ids": [
+        "d524f1ec4f94ec9c0fb11d3b"
+      ],
+      "original_document_id": "37b3b9bf59b09e364cc7b5ff",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0015",
+      "expected_titles": [
+        "波基普西镇"
+      ],
+      "found_titles": [
+        "波基普西镇"
+      ],
+      "actual_document_ids": [
+        "2c8c9de51cf9d429f69e3121"
+      ],
+      "original_document_id": "ea3fd8ed56ce9178c1bafad0",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0174",
+      "expected_titles": [
+        "密印寺"
+      ],
+      "found_titles": [
+        "密印寺"
+      ],
+      "actual_document_ids": [
+        "d7151ebb9dbb5433b9464fb1"
+      ],
+      "original_document_id": "5e0d7a48e4227f3b04f12d55",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0077",
+      "expected_titles": [
+        "股直肌"
+      ],
+      "found_titles": [
+        "股直肌"
+      ],
+      "actual_document_ids": [
+        "a266a95cfec11baf85241dab"
+      ],
+      "original_document_id": "1749fb2f878e7f94710d9f54",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0057",
+      "expected_titles": [
+        "梁柏豪"
+      ],
+      "found_titles": [
+        "梁柏豪"
+      ],
+      "actual_document_ids": [
+        "a93c2db0bf7a47e69460ab8b"
+      ],
+      "original_document_id": "dd081b8df1601cb612ee3664",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0030",
+      "expected_titles": [
+        "辛醣"
+      ],
+      "found_titles": [
+        "辛醣"
+      ],
+      "actual_document_ids": [
+        "a4c98f2d47c5c2169875b351"
+      ],
+      "original_document_id": "19fcc13263790963318bcafc",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0026",
+      "expected_titles": [
+        "像素星际海盗"
+      ],
+      "found_titles": [
+        "像素星际海盗"
+      ],
+      "actual_document_ids": [
+        "9080e306bf4a5760b8d95af8",
+        "87533d3600c9af00f5ce7768",
+        "29030264c731e2623bec5d21"
+      ],
+      "original_document_id": "28be3aa0e1986c4084bdb093",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0176",
+      "expected_titles": [
+        "湄公河"
+      ],
+      "found_titles": [
+        "湄公河"
+      ],
+      "actual_document_ids": [
+        "ea4953215b9bfa7091cbd7eb",
+        "91e1a1197e6645966590a0ae"
+      ],
+      "original_document_id": "a09f93bbec84073ee6d87fd8",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0066",
+      "expected_titles": [
+        "光之美少女系列"
+      ],
+      "found_titles": [
+        "光之美少女系列"
+      ],
+      "actual_document_ids": [
+        "55361617ee09b754fe14a679",
+        "cbbd734b414c3a703f53e9de",
+        "209dd414b05a3a0d146ce598"
+      ],
+      "original_document_id": "dd6cead3d596c6a0b41e7a40",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0065",
+      "expected_titles": [
+        "塔伊诺"
+      ],
+      "found_titles": [
+        "塔伊诺"
+      ],
+      "actual_document_ids": [
+        "c2081751b77fc7dedaff9995"
+      ],
+      "original_document_id": "2b100b91753bec0d2f9f7b51",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0161",
+      "expected_titles": [
+        "念珠冷水花"
+      ],
+      "found_titles": [
+        "念珠冷水花"
+      ],
+      "actual_document_ids": [
+        "f65cbba36a00b96ff1f505d0"
+      ],
+      "original_document_id": "fb8bad9500b4a92048dedaf7",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0198",
+      "expected_titles": [
+        "駢文"
+      ],
+      "found_titles": [
+        "駢文"
+      ],
+      "actual_document_ids": [
+        "7bea126289b8e2d7b3af9077"
+      ],
+      "original_document_id": "c64fd900a97ab2e28f1a7b2e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0156",
+      "expected_titles": [
+        "羅文錦"
+      ],
+      "found_titles": [
+        "羅文錦"
+      ],
+      "actual_document_ids": [
+        "b4e8a286090f8ddf9d46a525"
+      ],
+      "original_document_id": "7f85601953d8bdf9e0c9b3be",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0147",
+      "expected_titles": [
+        "道南漁火鐵道"
+      ],
+      "found_titles": [
+        "道南漁火鐵道"
+      ],
+      "actual_document_ids": [
+        "ca03ae8ea939de8d7ec5590e"
+      ],
+      "original_document_id": "e211380433d2b482c75c66c2",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0005",
+      "expected_titles": [
+        "李運騰"
+      ],
+      "found_titles": [
+        "李運騰"
+      ],
+      "actual_document_ids": [
+        "f6c1361507aad2f740019cf7",
+        "378395accf648423349214b5",
+        "82526fb0dfa27b8e5ad5fe0a"
+      ],
+      "original_document_id": "277660ecee53ffa0333fe05f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0005",
+      "expected_titles": [
+        "瓦森"
+      ],
+      "found_titles": [
+        "瓦森"
+      ],
+      "actual_document_ids": [
+        "20dd765bdf86fe3aa2c0217a"
+      ],
+      "original_document_id": "58aa8c7cad9f98ea7ab20d89",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0078",
+      "expected_titles": [
+        "黄金圈"
+      ],
+      "found_titles": [
+        "黄金圈"
+      ],
+      "actual_document_ids": [
+        "c64f79ab201e873cc1a7dd78",
+        "63c9b5342095660d2a8e8fba"
+      ],
+      "original_document_id": "7e56c5f077795dfa8be1042b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0008",
+      "expected_titles": [
+        "万顺天国"
+      ],
+      "found_titles": [
+        "万顺天国"
+      ],
+      "actual_document_ids": [
+        "cfb0ab454691cc66daf8720a"
+      ],
+      "original_document_id": "499dc086d1230136d182a482",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0062",
+      "expected_titles": [
+        "林階堂"
+      ],
+      "found_titles": [
+        "林階堂"
+      ],
+      "actual_document_ids": [
+        "b15d85f0ed49b1462d947c38"
+      ],
+      "original_document_id": "ffeb32342cec2e018707d660",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0011",
+      "expected_titles": [
+        "诺基亚N8"
+      ],
+      "found_titles": [
+        "诺基亚N8"
+      ],
+      "actual_document_ids": [
+        "94e959df997b4f0a8f296548"
+      ],
+      "original_document_id": "895079de1b515c5d785f8be9",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0002",
+      "expected_titles": [
+        "克拉斯诺鄂毕斯克"
+      ],
+      "found_titles": [
+        "克拉斯诺鄂毕斯克"
+      ],
+      "actual_document_ids": [
+        "67c00ea37d4df9ddccb8d028"
+      ],
+      "original_document_id": "cf273ee4880b61823bc7e308",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0099",
+      "expected_titles": [
+        "驼背光尾鲨"
+      ],
+      "found_titles": [
+        "驼背光尾鲨"
+      ],
+      "actual_document_ids": [
+        "e914644f4606af571329f3ac"
+      ],
+      "original_document_id": "d2ced6a3c4b2d29f4ed2828e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0000",
+      "expected_titles": [
+        "格特拉克"
+      ],
+      "found_titles": [
+        "格特拉克"
+      ],
+      "actual_document_ids": [
+        "b9c5f66bec199327eb35b8ec",
+        "f0e28050ab66878cbd016b2a",
+        "6b770edba7f6c4d85aa94632"
+      ],
+      "original_document_id": "8e63f320f01c1cc148a5996d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0003",
+      "expected_titles": [
+        "山西博物院"
+      ],
+      "found_titles": [
+        "山西博物院"
+      ],
+      "actual_document_ids": [
+        "f3415940e5d9b740fb8e8fd8",
+        "1187da2ff72d93521d12234f"
+      ],
+      "original_document_id": "c5bc3b5b1fe78a101318d5ce",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0190",
+      "expected_titles": [
+        "天津梅江会展中心"
+      ],
+      "found_titles": [
+        "天津梅江会展中心"
+      ],
+      "actual_document_ids": [
+        "58ac1bf0c3f360ca3fadf816",
+        "ba1532cf1a9a931bc881d5bf",
+        "36935a68332cd81034a49f4d"
+      ],
+      "original_document_id": "a308c036b0291e8866fddc2b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0127",
+      "expected_titles": [
+        "阿拉斯"
+      ],
+      "found_titles": [
+        "阿拉斯"
+      ],
+      "actual_document_ids": [
+        "1c140b044d1ed9903b579941"
+      ],
+      "original_document_id": "9aa63c26e66809d0ece80171",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0045",
+      "expected_titles": [
+        "琴平町"
+      ],
+      "found_titles": [
+        "琴平町"
+      ],
+      "actual_document_ids": [
+        "c36e6d629fbf05de98f17359"
+      ],
+      "original_document_id": "24c72b07092cf134b2a2bc8e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0058",
+      "expected_titles": [
+        "漫畫週刊"
+      ],
+      "found_titles": [
+        "漫畫週刊"
+      ],
+      "actual_document_ids": [
+        "2637b80010c2def37508b34f",
+        "4678a54ef998cda67383cfe8",
+        "8f128d128789f52a9fc8b3db",
+        "b8a7ae0f78212a633aaa81c1"
+      ],
+      "original_document_id": "0e0f8d1abd02f66445bdba3b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0186",
+      "expected_titles": [
+        "陳歐珀"
+      ],
+      "found_titles": [
+        "陳歐珀"
+      ],
+      "actual_document_ids": [
+        "0052b1b4c88731ef9ffa8d4b",
+        "20e53e84cbb76ae2b5ba6954"
+      ],
+      "original_document_id": "d24d7bd0f2d34748314dd619",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0003",
+      "expected_titles": [
+        "センラ"
+      ],
+      "found_titles": [
+        "センラ"
+      ],
+      "actual_document_ids": [
+        "be6c792dce308dd3875ae435"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0113",
+      "expected_titles": [
+        "僑港伍氏宗親會伍時暢紀念學校"
+      ],
+      "found_titles": [
+        "僑港伍氏宗親會伍時暢紀念學校"
+      ],
+      "actual_document_ids": [
+        "a6bccfdfd3c1c2b2794911d5",
+        "154f82ab6d3c8aa03e121e77"
+      ],
+      "original_document_id": "566eaf4cf13d4ba6ce46a14e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0019",
+      "expected_titles": [
+        "丘东平",
+        "东平 (消歧义)"
+      ],
+      "found_titles": [
+        "丘东平"
+      ],
+      "actual_document_ids": [
+        "72b21e68f97dd9d626f6bb28"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0017",
+      "expected_titles": [
+        "抚琴站"
+      ],
+      "found_titles": [
+        "抚琴站"
+      ],
+      "actual_document_ids": [
+        "0d5e4840b64d51739a3afe2f"
+      ],
+      "original_document_id": "ee84f763b1691ee81aeec938",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0176",
+      "expected_titles": [
+        "反射望远镜座"
+      ],
+      "found_titles": [
+        "反射望远镜座"
+      ],
+      "actual_document_ids": [
+        "03cf97540935db31675b3906"
+      ],
+      "original_document_id": "5b2b35b9e5eea89dbc71eee6",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0133",
+      "expected_titles": [
+        "Topcraft"
+      ],
+      "found_titles": [
+        "Topcraft"
+      ],
+      "actual_document_ids": [
+        "a4c1fc7a1c985a91e0113e2a"
+      ],
+      "original_document_id": "e8d33188cfc3763b75381020",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "native_wiki-0005",
+      "expected_titles": [
+        "Ghost (博客平台)"
+      ],
+      "found_titles": [
+        "Ghost (博客平台)"
+      ],
+      "actual_document_ids": [
+        "0b32700106d52544d3ae2360"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0021",
+      "expected_titles": [
+        "基辅罗斯"
+      ],
+      "found_titles": [
+        "基辅罗斯"
+      ],
+      "actual_document_ids": [
+        "66dc10ea37b99238f32e8c7a"
+      ],
+      "original_document_id": "a2834f5235c4b33b14593c05",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0072",
+      "expected_titles": [
+        "管风琴教堂"
+      ],
+      "found_titles": [
+        "管风琴教堂"
+      ],
+      "actual_document_ids": [
+        "069789113aa81b84c14d71b2"
+      ],
+      "original_document_id": "2919f5824738a7c164c3ea9b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0102",
+      "expected_titles": [
+        "野中卓也"
+      ],
+      "found_titles": [
+        "野中卓也"
+      ],
+      "actual_document_ids": [
+        "ef999a81c969142727cae7b7"
+      ],
+      "original_document_id": "3939f8edf055819a50912dff",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0078",
+      "expected_titles": [
+        "3000"
+      ],
+      "found_titles": [
+        "3000"
+      ],
+      "actual_document_ids": [
+        "63dfbc22a0b77561aa62ef18"
+      ],
+      "original_document_id": "322050a6cfc248d991897099",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0070",
+      "expected_titles": [
+        "朝鲜民主主义人民共和国铁道省"
+      ],
+      "found_titles": [
+        "朝鲜民主主义人民共和国铁道省"
+      ],
+      "actual_document_ids": [
+        "11107e46031cf4a38d5b5a62"
+      ],
+      "original_document_id": "94efba3e0f95c8433bb86e90",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0034",
+      "expected_titles": [
+        "明鄭"
+      ],
+      "found_titles": [
+        "明鄭"
+      ],
+      "actual_document_ids": [
+        "d1cb32ffed1640839bd9c95c",
+        "9710f6b75013193c9f0e34de"
+      ],
+      "original_document_id": "549fdbae24afdde7c48a9948",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0163",
+      "expected_titles": [
+        "成昆铁路"
+      ],
+      "found_titles": [
+        "成昆铁路"
+      ],
+      "actual_document_ids": [
+        "e3bdb8cb4b594d890f3978df",
+        "dd326039755f5b8498f0e205"
+      ],
+      "original_document_id": "fefd98c74b4a637bacf48160",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0069",
+      "expected_titles": [
+        "勒德马克"
+      ],
+      "found_titles": [
+        "勒德马克"
+      ],
+      "actual_document_ids": [
+        "84f72d04431c2604b2313aa0",
+        "fd8d41e495f5e4fe37332a2a"
+      ],
+      "original_document_id": "8ae14be738af561a1153baa7",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0023",
+      "expected_titles": [
+        "年輕人們"
+      ],
+      "found_titles": [
+        "年輕人們"
+      ],
+      "actual_document_ids": [
+        "231c8cd2defe47918d245502"
+      ],
+      "original_document_id": "6ba6540ca3bd5e623aaec953",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0134",
+      "expected_titles": [
+        "泰諾儀式用椅"
+      ],
+      "found_titles": [
+        "泰諾儀式用椅"
+      ],
+      "actual_document_ids": [
+        "dcf621a7645d707f41d40dea",
+        "d0259fa42007c23d7ba0f855",
+        "31d1df1bb2caaa72c2656378"
+      ],
+      "original_document_id": "9718ba241059a58af0ffd139",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0108",
+      "expected_titles": [
+        "發現者紀念碑"
+      ],
+      "found_titles": [
+        "發現者紀念碑"
+      ],
+      "actual_document_ids": [
+        "d41982645ebf54592526fe1d"
+      ],
+      "original_document_id": "0efa4794b32966b7a810c7c4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0090",
+      "expected_titles": [
+        "蝴蝶变形记"
+      ],
+      "found_titles": [
+        "蝴蝶变形记"
+      ],
+      "actual_document_ids": [
+        "773e6ab504d5de8290763150"
+      ],
+      "original_document_id": "82b1bd4523f8d69b616edb62",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0047",
+      "expected_titles": [
+        "阿德拉米狄翁"
+      ],
+      "found_titles": [
+        "阿德拉米狄翁"
+      ],
+      "actual_document_ids": [
+        "f60bf8f42f8fcd7e6ef8b363"
+      ],
+      "original_document_id": "80d6938f9292d528cc5c4aec",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0130",
+      "expected_titles": [
+        "廖述宗"
+      ],
+      "found_titles": [
+        "廖述宗"
+      ],
+      "actual_document_ids": [
+        "eeabff2670b2d8e1b2847e87"
+      ],
+      "original_document_id": "6eebacb80c611a077569deb4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0110",
+      "expected_titles": [
+        "白水河电站"
+      ],
+      "found_titles": [
+        "白水河电站"
+      ],
+      "actual_document_ids": [
+        "314209b2776d157c495f8383"
+      ],
+      "original_document_id": "86e012c59e6356b4be61390f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0035",
+      "expected_titles": [
+        "甘薇"
+      ],
+      "found_titles": [
+        "甘薇"
+      ],
+      "actual_document_ids": [
+        "b341d21def380130bc4b47ec"
+      ],
+      "original_document_id": "3b13dac9e5e79a328faaebf4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0110",
+      "expected_titles": [
+        "王者基多拉"
+      ],
+      "found_titles": [
+        "王者基多拉"
+      ],
+      "actual_document_ids": [
+        "16854cff9ac4b33719b98b0c"
+      ],
+      "original_document_id": "31485c1a1e92fc2995ebbc1c",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0006",
+      "expected_titles": [
+        "中国人权发展基金会"
+      ],
+      "found_titles": [
+        "中国人权发展基金会"
+      ],
+      "actual_document_ids": [
+        "f7800f3f92d9dd16ad045137"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0121",
+      "expected_titles": [
+        "那福路站"
+      ],
+      "found_titles": [
+        "那福路站"
+      ],
+      "actual_document_ids": [
+        "1a167118b5b2b9604cfb2e47",
+        "e4233f8b61138387457e274d"
+      ],
+      "original_document_id": "4fabbca22d84c804c3e9878b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0172",
+      "expected_titles": [
+        "高廷宇"
+      ],
+      "found_titles": [
+        "高廷宇"
+      ],
+      "actual_document_ids": [
+        "17fd1a037bf48c873fec75f3"
+      ],
+      "original_document_id": "3720fb5f2ac5e48f6e8e0915",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0148",
+      "expected_titles": [
+        "九龍區專線小巴26線"
+      ],
+      "found_titles": [
+        "九龍區專線小巴26線"
+      ],
+      "actual_document_ids": [
+        "63ff94577de2b18ee21eed61"
+      ],
+      "original_document_id": "f563a00fedcf7872a44d682d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0118",
+      "expected_titles": [
+        "浮梁镇"
+      ],
+      "found_titles": [
+        "浮梁镇"
+      ],
+      "actual_document_ids": [
+        "b8335b07d56fb448b686deff"
+      ],
+      "original_document_id": "de683a7b61bdf213f694d62e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0131",
+      "expected_titles": [
+        "泰坦殘骸"
+      ],
+      "found_titles": [
+        "泰坦殘骸"
+      ],
+      "actual_document_ids": [
+        "7aff638799075ecd4defca56"
+      ],
+      "original_document_id": "fbe8bdc565dc351c6c0ed44e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "basic-0004",
+      "expected_titles": [
+        "中国男女比例失调",
+        "单身",
+        "婚姻挤压"
+      ],
+      "found_titles": [
+        "中国男女比例失调",
+        "單身",
+        "婚姻挤压"
+      ],
+      "actual_document_ids": [
+        "992372dd12ef7367f6861027",
+        "d3dee2e97ba759af83df76c3",
+        "1003aac2a522995f26d4ee2d"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0165",
+      "expected_titles": [
+        "界首市"
+      ],
+      "found_titles": [
+        "界首市"
+      ],
+      "actual_document_ids": [
+        "f5d8faf29a3dff1f3be8fa1a"
+      ],
+      "original_document_id": "ef06b287b254dfa99880ca5c",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0067",
+      "expected_titles": [
+        "俄羅斯解體"
+      ],
+      "found_titles": [
+        "俄羅斯解體"
+      ],
+      "actual_document_ids": [
+        "1c16b0e44dc20570b33c416e"
+      ],
+      "original_document_id": "58fd79896558229ae1809564",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0036",
+      "expected_titles": [
+        "風景畫"
+      ],
+      "found_titles": [
+        "風景畫"
+      ],
+      "actual_document_ids": [
+        "0958e2bd2214edc401bbbffa",
+        "2fd442e33dc68452f3062408",
+        "a60ea9c3ac867be8ae8cc364"
+      ],
+      "original_document_id": "d2538b629a711560a9a8e089",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0094",
+      "expected_titles": [
+        "土邦"
+      ],
+      "found_titles": [
+        "土邦"
+      ],
+      "actual_document_ids": [
+        "30ad00bcd30082428bcb3983"
+      ],
+      "original_document_id": "16c0ee55153081846334259f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "native_wiki-0001",
+      "expected_titles": [
+        "IEC 61131-3",
+        "IEC 61499",
+        "IEC 61508",
+        "IEC 62056"
+      ],
+      "found_titles": [
+        "IEC 61131-3",
+        "IEC 61499",
+        "IEC 61508",
+        "IEC 62056"
+      ],
+      "actual_document_ids": [
+        "25935f1c413bb96f4078dc9c",
+        "f17e29bc88343f4fa0625b93",
+        "257f8b0c17102ae430ffa5fc",
+        "c4c438f75930506fe92624e4"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0104",
+      "expected_titles": [
+        "太阳能源"
+      ],
+      "found_titles": [
+        "太阳能源"
+      ],
+      "actual_document_ids": [
+        "7a8f1c53e0bffdd8aabe1427"
+      ],
+      "original_document_id": "bc56b373726d1c7e33b67e48",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0178",
+      "expected_titles": [
+        "臺南市立文賢國民中學"
+      ],
+      "found_titles": [
+        "臺南市立文賢國民中學"
+      ],
+      "actual_document_ids": [
+        "22f0e0a42a577430432b07f3"
+      ],
+      "original_document_id": "6ee9564bcaa9d1b8d8472b3b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0119",
+      "expected_titles": [
+        "河北区"
+      ],
+      "found_titles": [
+        "河北区"
+      ],
+      "actual_document_ids": [
+        "2bc9ee73720d975473567d8e"
+      ],
+      "original_document_id": "2977be4cc1c9dfc6d44697bc",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0047",
+      "expected_titles": [
+        "徐国"
+      ],
+      "found_titles": [
+        "徐国"
+      ],
+      "actual_document_ids": [
+        "eef6a492720503e5540f6173"
+      ],
+      "original_document_id": "6dcec710325c6b37893bd9ae",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0175",
+      "expected_titles": [
+        "蔡謨"
+      ],
+      "found_titles": [
+        "蔡謨"
+      ],
+      "actual_document_ids": [
+        "a46b25b222d7acca5292cb9f"
+      ],
+      "original_document_id": "b07611c46049a9ea10a826f0",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0000",
+      "expected_titles": [
+        "斗笠棋"
+      ],
+      "found_titles": [
+        "斗笠棋"
+      ],
+      "actual_document_ids": [
+        "a34852cbb5561ef7d5ca2ff9"
+      ],
+      "original_document_id": "ba706f95be44991a942ab5fb",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0050",
+      "expected_titles": [
+        "千山古建筑群"
+      ],
+      "found_titles": [
+        "千山古建筑群"
+      ],
+      "actual_document_ids": [
+        "66286e02e935deac34a725b8"
+      ],
+      "original_document_id": "70c4f0996a92b96dc9462edb",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0085",
+      "expected_titles": [
+        "卫岗乳业"
+      ],
+      "found_titles": [
+        "卫岗乳业"
+      ],
+      "actual_document_ids": [
+        "a2bdf2e8732458da5eadc25e"
+      ],
+      "original_document_id": "256922e32cea7e8ac61ffbaf",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0158",
+      "expected_titles": [
+        "散兵镇"
+      ],
+      "found_titles": [
+        "散兵镇"
+      ],
+      "actual_document_ids": [
+        "7bb9c2643f2139c9ab0ac61e"
+      ],
+      "original_document_id": "d2ef12d4cc7c9c783091def7",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0080",
+      "expected_titles": [
+        "蔡元宸"
+      ],
+      "found_titles": [
+        "蔡元宸"
+      ],
+      "actual_document_ids": [
+        "c77ed978604b8759985b1aa9",
+        "5093795e08d772fc356196a3"
+      ],
+      "original_document_id": "60ec4360a20d0f70afcdabc4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0164",
+      "expected_titles": [
+        "宿毛市"
+      ],
+      "found_titles": [
+        "宿毛市"
+      ],
+      "actual_document_ids": [
+        "d75100d957907076d4fedba5"
+      ],
+      "original_document_id": "393c1978b37842384da4f32e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0106",
+      "expected_titles": [
+        "韋維傑萊托"
+      ],
+      "found_titles": [
+        "韋維傑萊托"
+      ],
+      "actual_document_ids": [
+        "f87a296ce8676019c1733c41"
+      ],
+      "original_document_id": "2bf8283f6c778f47a48108f2",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0079",
+      "expected_titles": [
+        "斯奈山半岛"
+      ],
+      "found_titles": [
+        "斯奈山半岛"
+      ],
+      "actual_document_ids": [
+        "4de25d932c1ea6d23bdc936c",
+        "cc00c63ac1a817e922264628"
+      ],
+      "original_document_id": "a0b44ac268f2bb478c4d999d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0194",
+      "expected_titles": [
+        "伽利略传"
+      ],
+      "found_titles": [
+        "伽利略传"
+      ],
+      "actual_document_ids": [
+        "24fb2acf773acad1623cae08"
+      ],
+      "original_document_id": "ef06e732d8a5cd8aa32b2bf2",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0084",
+      "expected_titles": [
+        "河東碧梧桐"
+      ],
+      "found_titles": [
+        "河東碧梧桐"
+      ],
+      "actual_document_ids": [
+        "94dbb055b199e9c22dd0ab4b"
+      ],
+      "original_document_id": "c85a7eb36bdad5543540dfe3",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0044",
+      "expected_titles": [
+        "云南大学"
+      ],
+      "found_titles": [
+        "云南大学"
+      ],
+      "actual_document_ids": [
+        "f00c6a54d0f1601d7680e286",
+        "bdf40a2a5bf07b03f4ea28d5"
+      ],
+      "original_document_id": "c79b1cc30470fbeb8ae538c3",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0194",
+      "expected_titles": [
+        "余震東"
+      ],
+      "found_titles": [
+        "余震東"
+      ],
+      "actual_document_ids": [
+        "fcb803dbadb4e5c3d3f390d8"
+      ],
+      "original_document_id": "64491c178a5a55580c8bb508",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0135",
+      "expected_titles": [
+        "奥塞布尔"
+      ],
+      "found_titles": [
+        "奥塞布尔"
+      ],
+      "actual_document_ids": [
+        "05994aabb9c552dad9550ad2"
+      ],
+      "original_document_id": "9eb96fc0f6a919032e7fc858",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0022",
+      "expected_titles": [
+        "烏德勒支足球會"
+      ],
+      "found_titles": [
+        "烏德勒支足球會"
+      ],
+      "actual_document_ids": [
+        "87bf0ecf113356708ae76b7b"
+      ],
+      "original_document_id": "661e0c39be181dfedd00a92f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0018",
+      "expected_titles": [
+        "马塞杜上校镇"
+      ],
+      "found_titles": [
+        "马塞杜上校镇"
+      ],
+      "actual_document_ids": [
+        "1e29258e49d432e246f5fdf3"
+      ],
+      "original_document_id": "9ac5c450b7ab7d8b9cdedbd0",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0096",
+      "expected_titles": [
+        "載人火星任務"
+      ],
+      "found_titles": [
+        "載人火星任務"
+      ],
+      "actual_document_ids": [
+        "e30c4bb0cc271f532cf95ca8"
+      ],
+      "original_document_id": "f0e203e2d0c903dcdc6e9e0f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0130",
+      "expected_titles": [
+        "中国航空博物馆"
+      ],
+      "found_titles": [
+        "中国航空博物馆"
+      ],
+      "actual_document_ids": [
+        "8b1745e66ba0c807f425b35c"
+      ],
+      "original_document_id": "3ec880a343b5788db941a53a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0197",
+      "expected_titles": [
+        "北京大兴站"
+      ],
+      "found_titles": [
+        "北京大兴站"
+      ],
+      "actual_document_ids": [
+        "90c587a24f75e7cd43d71490"
+      ],
+      "original_document_id": "c4ad1f836da5167865c559f0",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0037",
+      "expected_titles": [
+        "派塔區"
+      ],
+      "found_titles": [
+        "派塔區"
+      ],
+      "actual_document_ids": [
+        "63bf9c96500ca3583b469f7e"
+      ],
+      "original_document_id": "e745876e7770dc875da806f3",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0001",
+      "expected_titles": [
+        "共识主动性"
+      ],
+      "found_titles": [
+        "共识主动性"
+      ],
+      "actual_document_ids": [
+        "6622e3af7b3a4938a7f58970"
+      ],
+      "original_document_id": "30d38301f9712bbc3aa29335",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0062",
+      "expected_titles": [
+        "天津地铁5号线"
+      ],
+      "found_titles": [
+        "天津地铁5号线"
+      ],
+      "actual_document_ids": [
+        "a7c24c98dd175c916f557cd2",
+        "d8f09a7ea8af9da6ab922eb8"
+      ],
+      "original_document_id": "682c08bdd5d7e53e09dbfe43",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "native_wiki-0006",
+      "expected_titles": [
+        "Windows NT 3.5"
+      ],
+      "found_titles": [
+        "Windows NT 3.5"
+      ],
+      "actual_document_ids": [
+        "029c3908223a6044a24a7010"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0097",
+      "expected_titles": [
+        "潼南区"
+      ],
+      "found_titles": [
+        "潼南区"
+      ],
+      "actual_document_ids": [
+        "206b472302b493b7568badd0"
+      ],
+      "original_document_id": "06b2a6313eacf5c4337bff8a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0179",
+      "expected_titles": [
+        "派克海鯰"
+      ],
+      "found_titles": [
+        "派克海鯰"
+      ],
+      "actual_document_ids": [
+        "c39118d0664b0839a35841cb"
+      ],
+      "original_document_id": "9e15a14e302442f0cce7e8c9",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0014",
+      "expected_titles": [
+        "小布什总统任期"
+      ],
+      "found_titles": [
+        "小布什总统任期"
+      ],
+      "actual_document_ids": [
+        "320c582e6abbed5e59374ace",
+        "8b73c30437196f7abfefde5c"
+      ],
+      "original_document_id": "c32fd15f4eb43922ccccbdc3",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0180",
+      "expected_titles": [
+        "王磐"
+      ],
+      "found_titles": [
+        "王磐"
+      ],
+      "actual_document_ids": [
+        "c64d7e1d067c7758e13303ad",
+        "61725be6cf39c67603eff579",
+        "f84aced010331a2974cb8a0f"
+      ],
+      "original_document_id": "3c2fc66ca200f5e019e51875",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0009",
+      "expected_titles": [
+        "香港回归",
+        "香港回歸"
+      ],
+      "found_titles": [
+        "香港回歸"
+      ],
+      "actual_document_ids": [
+        "acf4bbc6e96c8d2867faa417"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0128",
+      "expected_titles": [
+        "高潤生"
+      ],
+      "found_titles": [
+        "高潤生"
+      ],
+      "actual_document_ids": [
+        "89e9d3ee795e93227a9866fd"
+      ],
+      "original_document_id": "e3877a259e5a73730a919096",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0015",
+      "expected_titles": [
+        "古茗"
+      ],
+      "found_titles": [
+        "古茗"
+      ],
+      "actual_document_ids": [
+        "fb890104682fae0f154097b0",
+        "0162a3f2ee89826f957e76e4",
+        "b19a95cacdfa0ab90f4fec46",
+        "1418f5accdfbab4549301aac",
+        "338c0c5408ea8c3a84077b7b",
+        "754e8f306d3eff76f7be11ad"
+      ],
+      "original_document_id": "2843367820f5a39689df8a80",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "native_wiki-0002",
+      "expected_titles": [
+        "ICE-1列車",
+        "ICE-2列車",
+        "JR九州305系電聯車"
+      ],
+      "found_titles": [
+        "ICE-1列車",
+        "ICE-2列車",
+        "JR九州305系電聯車"
+      ],
+      "actual_document_ids": [
+        "013d0aee53239317d4c6d0ac",
+        "7a8e0775f011812d68e18374",
+        "9b38dd9c3a592769518fe95d"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0007",
+      "expected_titles": [
+        "维尔德舍瑙"
+      ],
+      "found_titles": [
+        "维尔德舍瑙"
+      ],
+      "actual_document_ids": [
+        "5b7e552d2806622d7f8a3889"
+      ],
+      "original_document_id": "9d28e2d27fdc0f0095aa13b4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0028",
+      "expected_titles": [
+        "科园大道站"
+      ],
+      "found_titles": [
+        "科园大道站"
+      ],
+      "actual_document_ids": [
+        "6b1db36af83fa38162f96d56",
+        "dcd267405ba1dca2a94e0429"
+      ],
+      "original_document_id": "177028051bd34e1656bcce28",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0017",
+      "expected_titles": [
+        "硝酸",
+        "硫酸"
+      ],
+      "found_titles": [
+        "硝酸",
+        "硫酸"
+      ],
+      "actual_document_ids": [
+        "91a19a3e9ffcf4b548deb738",
+        "01c109ea8d658430ccd455de"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0082",
+      "expected_titles": [
+        "高句丽"
+      ],
+      "found_titles": [
+        "高句丽"
+      ],
+      "actual_document_ids": [
+        "397a4683259b86830c6e33e7",
+        "9edd4ac4e4957162e50eb7cc"
+      ],
+      "original_document_id": "775a3d9bfb90904c351c4042",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0180",
+      "expected_titles": [
+        "久我通誠"
+      ],
+      "found_titles": [
+        "久我通誠"
+      ],
+      "actual_document_ids": [
+        "c8d849fc182981ba34c8d7a9"
+      ],
+      "original_document_id": "2951e6bfbee7c886f089af22",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0153",
+      "expected_titles": [
+        "羅明才"
+      ],
+      "found_titles": [
+        "羅明才"
+      ],
+      "actual_document_ids": [
+        "5abaa6fa7dc6bdddf0cce9a6",
+        "16f187ba092381761b127293",
+        "0beea2024dc321b6dfa650b2",
+        "05b58d3c4c07c8d6e1cecb6c",
+        "cf795fe4aaafaf3627e90f0d",
+        "ecdc075ab82f6d6aec9c4044",
+        "0049908c2a5c6e1e71841a38",
+        "b0164a0e417db29f35c542fd",
+        "3a1c47d9d70426c8f1a70226",
+        "f49fe1ac8924ce324934a95a",
+        "ebd2a10d0b0163ac7124da1b",
+        "9b0282a5511805944ac75eb1"
+      ],
+      "original_document_id": "d7d090f1e30f5603fcca0d04",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0142",
+      "expected_titles": [
+        "广州市第一巴士"
+      ],
+      "found_titles": [
+        "广州市第一巴士"
+      ],
+      "actual_document_ids": [
+        "abba997da1f755766cd9c2cf"
+      ],
+      "original_document_id": "a81555bd303616850ea93291",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0024",
+      "expected_titles": [
+        "天通苑北站"
+      ],
+      "found_titles": [
+        "天通苑北站"
+      ],
+      "actual_document_ids": [
+        "0ebe654d758fe40571046cb5",
+        "3ae83f58b3917016cacadb1a",
+        "9bf8487c3b848e8449746b23",
+        "078a1b9600135d30d57b31f1",
+        "73595480108a7f3af989ea05"
+      ],
+      "original_document_id": "a4beb838e72bf75c0cc3f84a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0171",
+      "expected_titles": [
+        "Emtech"
+      ],
+      "found_titles": [
+        "Emtech"
+      ],
+      "actual_document_ids": [
+        "6c9eed3212b2f5195ebfd330"
+      ],
+      "original_document_id": "1ee4ccd8246536a6ca529cda",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0114",
+      "expected_titles": [
+        "台灣鐵路"
+      ],
+      "found_titles": [
+        "台灣鐵路"
+      ],
+      "actual_document_ids": [
+        "bc9a67ec2994e5c38096b146",
+        "a2feac9d9bcdb6190d933715"
+      ],
+      "original_document_id": "1d35f01e5341ed4af7f2230b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0108",
+      "expected_titles": [
+        "厉麟似"
+      ],
+      "found_titles": [
+        "厉麟似"
+      ],
+      "actual_document_ids": [
+        "933a04c5e20047cd6b4f9b6f",
+        "82e785ebb5b797fc04e892cf"
+      ],
+      "original_document_id": "8b951c6aa55c7efb03aeaf00",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0181",
+      "expected_titles": [
+        "西螺服務區"
+      ],
+      "found_titles": [
+        "西螺服務區"
+      ],
+      "actual_document_ids": [
+        "a16019b1dd2d4f097c2c76bf"
+      ],
+      "original_document_id": "99a23742273c93fdcfcf6c17",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0036",
+      "expected_titles": [
+        "洪堡圈"
+      ],
+      "found_titles": [
+        "洪堡圈"
+      ],
+      "actual_document_ids": [
+        "e5776e2aa9f4214a2a3f33c6"
+      ],
+      "original_document_id": "652a148dca80600462a65518",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0120",
+      "expected_titles": [
+        "無無眠"
+      ],
+      "found_titles": [
+        "無無眠"
+      ],
+      "actual_document_ids": [
+        "6740885c35c7d5984cb601ca"
+      ],
+      "original_document_id": "5d387212a24f5e1718fc24e8",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0064",
+      "expected_titles": [
+        "楊家埠街道"
+      ],
+      "found_titles": [
+        "楊家埠街道"
+      ],
+      "actual_document_ids": [
+        "286f8705de4f17a0d2ea9070"
+      ],
+      "original_document_id": "012b041665cf38b239ac87ed",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0071",
+      "expected_titles": [
+        "天心阁"
+      ],
+      "found_titles": [
+        "天心阁"
+      ],
+      "actual_document_ids": [
+        "44135e1a35d9b9cfeadee845"
+      ],
+      "original_document_id": "009800bf059d66e005dc29e9",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0189",
+      "expected_titles": [
+        "义渠"
+      ],
+      "found_titles": [
+        "义渠"
+      ],
+      "actual_document_ids": [
+        "ddf6a03c75f19c06aa75cad9"
+      ],
+      "original_document_id": "07acedc894cbec8a73afb1b5",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0125",
+      "expected_titles": [
+        "若望九世"
+      ],
+      "found_titles": [
+        "若望九世"
+      ],
+      "actual_document_ids": [
+        "a481d5e81d0aaf9fb38d91ac",
+        "df4a19e665f37e74c1891866"
+      ],
+      "original_document_id": "33d4b37a28c7d95c88419cac",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0166",
+      "expected_titles": [
+        "帕爾佩爾斯"
+      ],
+      "found_titles": [
+        "帕爾佩爾斯"
+      ],
+      "actual_document_ids": [
+        "c8239303b33ebf75f667d705"
+      ],
+      "original_document_id": "0c59312badaf5fcdd8266bf9",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0004",
+      "expected_titles": [
+        "馬南扎里河"
+      ],
+      "found_titles": [
+        "馬南扎里河"
+      ],
+      "actual_document_ids": [
+        "5ea42d5dfc7484676981a81c"
+      ],
+      "original_document_id": "823a0fc912265d39652d1c7d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0103",
+      "expected_titles": [
+        "本岑施維爾"
+      ],
+      "found_titles": [
+        "本岑施維爾"
+      ],
+      "actual_document_ids": [
+        "409075dc34500d3e23c07e21"
+      ],
+      "original_document_id": "da472b8081a336c8439d36da",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0060",
+      "expected_titles": [
+        "辽宁鸿祥实业集团"
+      ],
+      "found_titles": [
+        "辽宁鸿祥实业集团"
+      ],
+      "actual_document_ids": [
+        "7b1651bb314c47d5fa986d03"
+      ],
+      "original_document_id": "7802ea3dc8b0ca72c904bfc6",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0030",
+      "expected_titles": [
+        "弗蘭斯·波斯特"
+      ],
+      "found_titles": [
+        "弗蘭斯·波斯特"
+      ],
+      "actual_document_ids": [
+        "419ce4337109eab89b8088c5",
+        "b4c2e7da93df1bb639c4181d",
+        "ab4a93ddc9a03fbcc7a17f07",
+        "c13de03ef303b192e855a8f9"
+      ],
+      "original_document_id": "799db991bcaa7da8fdcaf987",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0144",
+      "expected_titles": [
+        "斯凯扎-格努普韦里亚区"
+      ],
+      "found_titles": [
+        "斯凯扎-格努普韦里亚区"
+      ],
+      "actual_document_ids": [
+        "a4e30353c09949faed60e93b"
+      ],
+      "original_document_id": "be349fd555301f216ff282dc",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0143",
+      "expected_titles": [
+        "關原加油站"
+      ],
+      "found_titles": [
+        "關原加油站"
+      ],
+      "actual_document_ids": [
+        "51eeed7feeff20b8a91cc74c"
+      ],
+      "original_document_id": "d91a97c5f5ce130f4a1b20cf",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0100",
+      "expected_titles": [
+        "金巴利"
+      ],
+      "found_titles": [
+        "金巴利"
+      ],
+      "actual_document_ids": [
+        "4c9c2a690bbc3b7f06c880a1"
+      ],
+      "original_document_id": "56f7be519358d0ece4ce90bb",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0018",
+      "expected_titles": [
+        "馬昂",
+        "马昂",
+        "马昂 (消歧义)",
+        "马昂 (演员)"
+      ],
+      "found_titles": [
+        "馬昂"
+      ],
+      "actual_document_ids": [
+        "24c8ebaf6542dd0b1287daff"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0145",
+      "expected_titles": [
+        "圣殿研究所"
+      ],
+      "found_titles": [
+        "圣殿研究所"
+      ],
+      "actual_document_ids": [
+        "0f418d64d04a7047e0eb67af"
+      ],
+      "original_document_id": "42c9b0673cc5c0118e4c34b5",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0136",
+      "expected_titles": [
+        "水晶大樓"
+      ],
+      "found_titles": [
+        "水晶大樓"
+      ],
+      "actual_document_ids": [
+        "06c23f762be51036c8c3e5fc"
+      ],
+      "original_document_id": "586f485a8fb04e15b4ee5581",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0068",
+      "expected_titles": [
+        "柏林新博物馆"
+      ],
+      "found_titles": [
+        "柏林新博物馆"
+      ],
+      "actual_document_ids": [
+        "d313106360dcf33c912b9511"
+      ],
+      "original_document_id": "a89d37a14a43501a6ce46a90",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0093",
+      "expected_titles": [
+        "君主"
+      ],
+      "found_titles": [
+        "君主"
+      ],
+      "actual_document_ids": [
+        "925a563aa1bd56b89ac2cb6a"
+      ],
+      "original_document_id": "8462d0c95188fe6e58e15926",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0198",
+      "expected_titles": [
+        "水手服"
+      ],
+      "found_titles": [
+        "水手服"
+      ],
+      "actual_document_ids": [
+        "ad0776b63fb41c21ec4208c5",
+        "3c1245a340e2955a37d60ecd"
+      ],
+      "original_document_id": "85a6cdf2b6f02a8e6bc9538c",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0025",
+      "expected_titles": [
+        "卡兰德"
+      ],
+      "found_titles": [
+        "卡兰德"
+      ],
+      "actual_document_ids": [
+        "b461dd8dae99ff5fa41f7895"
+      ],
+      "original_document_id": "716b990d9a217d0787d0eb14",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0191",
+      "expected_titles": [
+        "救殭清道夫"
+      ],
+      "found_titles": [
+        "救殭清道夫"
+      ],
+      "actual_document_ids": [
+        "bcadfd4b6aa66128d6888be4"
+      ],
+      "original_document_id": "b4c74549085ff96798b3c3ec",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0087",
+      "expected_titles": [
+        "后梁"
+      ],
+      "found_titles": [
+        "后梁"
+      ],
+      "actual_document_ids": [
+        "c750041c62e9cbedcc7e3689"
+      ],
+      "original_document_id": "fc2d5cc4f8f9279ac27c62e2",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0016",
+      "expected_titles": [
+        "尺八",
+        "长笛"
+      ],
+      "found_titles": [
+        "尺八",
+        "长笛"
+      ],
+      "actual_document_ids": [
+        "41d11ceb961a22b601097b37",
+        "bba0e2682d7d671371daae7d"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "basic-0000",
+      "expected_titles": [
+        "中华人民共和国",
+        "北京",
+        "首都"
+      ],
+      "found_titles": [
+        "中华人民共和国",
+        "首都"
+      ],
+      "actual_document_ids": [
+        "8ee743307e98461d570332f0",
+        "276077d74b05c3ff9db905e9"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0046",
+      "expected_titles": [
+        "洛斯塔洛"
+      ],
+      "found_titles": [
+        "洛斯塔洛"
+      ],
+      "actual_document_ids": [
+        "6d0df178e8572d95a7e4b38f"
+      ],
+      "original_document_id": "10e6e4d4e992346f6d9f787a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0059",
+      "expected_titles": [
+        "盘庚迁殷"
+      ],
+      "found_titles": [
+        "盘庚迁殷"
+      ],
+      "actual_document_ids": [
+        "e001bfea6848024955d103aa"
+      ],
+      "original_document_id": "d6e05c1ba5bcae555f427cbe",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0005",
+      "expected_titles": [
+        "成县"
+      ],
+      "found_titles": [
+        "成县"
+      ],
+      "actual_document_ids": [
+        "e1d4449d7f789c81fb845a8a"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0129",
+      "expected_titles": [
+        "苏黎世圣经译本"
+      ],
+      "found_titles": [
+        "苏黎世圣经译本"
+      ],
+      "actual_document_ids": [
+        "bdc45031879ae5d069ee330f"
+      ],
+      "original_document_id": "46fae6261697c8ef3ce98032",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0117",
+      "expected_titles": [
+        "這個美術社大有問題！"
+      ],
+      "found_titles": [
+        "這個美術社大有問題！"
+      ],
+      "actual_document_ids": [
+        "834401790bb1b5df1e7c86a9"
+      ],
+      "original_document_id": "a7952fdf0e007028d04206f6",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0189",
+      "expected_titles": [
+        "奈尔斯"
+      ],
+      "found_titles": [
+        "奈尔斯"
+      ],
+      "actual_document_ids": [
+        "381f01754022f8d92582cfa3"
+      ],
+      "original_document_id": "3d4d5c4ad62c2577c2ef5bd9",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0090",
+      "expected_titles": [
+        "刘公岛"
+      ],
+      "found_titles": [
+        "刘公岛"
+      ],
+      "actual_document_ids": [
+        "45863e31edc4ffaaa4fcf038"
+      ],
+      "original_document_id": "153063473da5a5dbb78d14bd",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0199",
+      "expected_titles": [
+        "怪樂的不得了"
+      ],
+      "found_titles": [
+        "怪樂的不得了"
+      ],
+      "actual_document_ids": [
+        "0d4bd52d2a444c23534c8bd7"
+      ],
+      "original_document_id": "a4ac9d00a6b664d7b8e8c56e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0088",
+      "expected_titles": [
+        "瓦倫達斯"
+      ],
+      "found_titles": [
+        "瓦倫達斯"
+      ],
+      "actual_document_ids": [
+        "8a5b2dbc2ca1d33516902c4e"
+      ],
+      "original_document_id": "5762ac6a728d4167be83b1d8",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0089",
+      "expected_titles": [
+        "米那迪爾"
+      ],
+      "found_titles": [
+        "米那迪爾"
+      ],
+      "actual_document_ids": [
+        "cf264e51cc659a85ce0dab03"
+      ],
+      "original_document_id": "b4429db370a3d52b5b780aac",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0073",
+      "expected_titles": [
+        "杨振鸿"
+      ],
+      "found_titles": [
+        "杨振鸿"
+      ],
+      "actual_document_ids": [
+        "649693da9a5491419a3413c2"
+      ],
+      "original_document_id": "9acaef642e751b9232567220",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0009",
+      "expected_titles": [
+        "北海银行"
+      ],
+      "found_titles": [
+        "北海银行"
+      ],
+      "actual_document_ids": [
+        "04c69e0060929156364f5857"
+      ],
+      "original_document_id": "fb16850e2a5479e40255bea5",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0120",
+      "expected_titles": [
+        "寄葉二號B型"
+      ],
+      "found_titles": [
+        "寄葉二號B型"
+      ],
+      "actual_document_ids": [
+        "76a26002b9e613599c62b6ab",
+        "a80ca67d8d6d42d7d9e8dc73",
+        "ddd6617ca3651ecd1ec64090"
+      ],
+      "original_document_id": "bf1bda2e097e8344e1bdb92d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0013",
+      "expected_titles": [
+        "上海巴士电车"
+      ],
+      "found_titles": [
+        "上海巴士电车"
+      ],
+      "actual_document_ids": [
+        "425eb31ff7d2fe33879a9694"
+      ],
+      "original_document_id": "cebf4b97664c875b0dfab282",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0076",
+      "expected_titles": [
+        "周赧王"
+      ],
+      "found_titles": [
+        "周赧王"
+      ],
+      "actual_document_ids": [
+        "8447928166fd6da52bc33ae4"
+      ],
+      "original_document_id": "23cf0b85759a7b5476038b52",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0162",
+      "expected_titles": [
+        "MediaWorks"
+      ],
+      "found_titles": [
+        "MediaWorks"
+      ],
+      "actual_document_ids": [
+        "fea3e3b0040ad561795b4735"
+      ],
+      "original_document_id": "69a4eaf80dd981cc20b34550",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0147",
+      "expected_titles": [
+        "马里奥豪洛姆"
+      ],
+      "found_titles": [
+        "马里奥豪洛姆"
+      ],
+      "actual_document_ids": [
+        "2773d4663662de64f0ad2f26"
+      ],
+      "original_document_id": "5b9d005b1b8d9a2102825711",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0141",
+      "expected_titles": [
+        "五道口"
+      ],
+      "found_titles": [
+        "五道口"
+      ],
+      "actual_document_ids": [
+        "dd3806ce21ace56bb2eab972"
+      ],
+      "original_document_id": "16c325ecd710144099b54471",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0052",
+      "expected_titles": [
+        "我的青春"
+      ],
+      "found_titles": [
+        "我的青春"
+      ],
+      "actual_document_ids": [
+        "f656006c04c94c1b6494d6c0",
+        "33251789f5cc930016d41699",
+        "a163c1daf094fa420a209dca",
+        "07a11713b02244a10ffe257f",
+        "eb1a0992a5b0b2a645fcafb1",
+        "69e915b7a7bc2647e8865a8f",
+        "a4b0771adf59d0c2e7ca0403",
+        "afcca5e3a8dc2efbf8a86de5",
+        "079385a97a61d71a94d278dc",
+        "80af28cd893cd1f3527f15ef",
+        "9876d83a66d7c2029896c3be"
+      ],
+      "original_document_id": "e06856ca671bd74b8de34b91",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0192",
+      "expected_titles": [
+        "上海之夜"
+      ],
+      "found_titles": [
+        "上海之夜"
+      ],
+      "actual_document_ids": [
+        "f0b86950d7ab0fa4249f0507"
+      ],
+      "original_document_id": "bceb105b1bf686fee1bdb278",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0140",
+      "expected_titles": [
+        "蔡振南"
+      ],
+      "found_titles": [
+        "蔡振南"
+      ],
+      "actual_document_ids": [
+        "ffabc4f864a142afac31512f"
+      ],
+      "original_document_id": "13e55462a1d2b2f754225bbf",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0151",
+      "expected_titles": [
+        "中国国家男子篮球队"
+      ],
+      "found_titles": [
+        "中国国家男子篮球队"
+      ],
+      "actual_document_ids": [
+        "8775a682b03589177155dd91",
+        "cfa1d9fb31b74c3eec3fe4ad",
+        "48c8424f9e135136f1cbd282",
+        "751474ec555c1eedd66eb698",
+        "6409dfc6185221f4d5b1095f",
+        "08939343a759f74b85be42a9",
+        "1fd1f70833cd657404290d93",
+        "b5e29cfbd35aff3b79e6dbbb",
+        "20425862dd198d383a0fdfe3"
+      ],
+      "original_document_id": "58c3b09235c2baec79c9f134",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0148",
+      "expected_titles": [
+        "尤拉伊·格羅斯"
+      ],
+      "found_titles": [
+        "尤拉伊·格羅斯"
+      ],
+      "actual_document_ids": [
+        "6c06ce686f68d7e8608f922d",
+        "e8c4215298f272cf93694a7c",
+        "819c5200d6040210af8a44fc"
+      ],
+      "original_document_id": "f458c0f24a84d94f16327898",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0152",
+      "expected_titles": [
+        "個資風暴：劍橋分析事件"
+      ],
+      "found_titles": [
+        "個資風暴：劍橋分析事件"
+      ],
+      "actual_document_ids": [
+        "f3efd284cb998ef34cf2930d"
+      ],
+      "original_document_id": "959da54d5127382b01f614b4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0160",
+      "expected_titles": [
+        "英語完全征服"
+      ],
+      "found_titles": [
+        "英語完全征服"
+      ],
+      "actual_document_ids": [
+        "7a1186104c8e826e67429d07"
+      ],
+      "original_document_id": "66439df1a9ba002f4b5b82ad",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0170",
+      "expected_titles": [
+        "南汉"
+      ],
+      "found_titles": [
+        "南汉"
+      ],
+      "actual_document_ids": [
+        "3d3f6dc32f936670f6b3622b"
+      ],
+      "original_document_id": "0f5e8a0df494d2862b6860e0",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0081",
+      "expected_titles": [
+        "雷恰利茲"
+      ],
+      "found_titles": [
+        "雷恰利茲"
+      ],
+      "actual_document_ids": [
+        "b7dfb3d90fcc574b5e512282",
+        "9ae64b57414753cf853f5784"
+      ],
+      "original_document_id": "ce77806d71fee1e967aff6d1",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0041",
+      "expected_titles": [
+        "笔法"
+      ],
+      "found_titles": [
+        "笔法"
+      ],
+      "actual_document_ids": [
+        "333ac245ba708d02f4ce6db0"
+      ],
+      "original_document_id": "97efb123b00ff186329a1197",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0175",
+      "expected_titles": [
+        "奧萊什基沙漠"
+      ],
+      "found_titles": [
+        "奧萊什基沙漠"
+      ],
+      "actual_document_ids": [
+        "c5859387a2809be36dd3bd02"
+      ],
+      "original_document_id": "20fcae714e2dc40dbc774f03",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0085",
+      "expected_titles": [
+        "登楼库组"
+      ],
+      "found_titles": [
+        "登楼库组"
+      ],
+      "actual_document_ids": [
+        "6d3a2bc7c905edf242416458"
+      ],
+      "original_document_id": "8df553dea41a7f6a4a968e13",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0004",
+      "expected_titles": [
+        "格羅德諾城堡"
+      ],
+      "found_titles": [
+        "格羅德諾城堡"
+      ],
+      "actual_document_ids": [
+        "71a8bc1c5654627a36ca2480"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0089",
+      "expected_titles": [
+        "奧爾塞利納"
+      ],
+      "found_titles": [
+        "奧爾塞利納"
+      ],
+      "actual_document_ids": [
+        "5103fdc0b7d9982109250c0f"
+      ],
+      "original_document_id": "8652afa4536d95d3b46f805d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0015",
+      "expected_titles": [
+        "硝酸"
+      ],
+      "found_titles": [
+        "硝酸"
+      ],
+      "actual_document_ids": [
+        "91a19a3e9ffcf4b548deb738"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0157",
+      "expected_titles": [
+        "迈克尔·卢卡斯"
+      ],
+      "found_titles": [
+        "迈克尔·卢卡斯"
+      ],
+      "actual_document_ids": [
+        "36f46360a5581eac97d2c653"
+      ],
+      "original_document_id": "9fdea5e364ff34ab7c970293",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "native_wiki-0007",
+      "expected_titles": [
+        "紅級設標船"
+      ],
+      "found_titles": [
+        "紅級設標船"
+      ],
+      "actual_document_ids": [
+        "38e2c54ac95dd6acbea776f2"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0034",
+      "expected_titles": [
+        "美国侵犯人权报告"
+      ],
+      "found_titles": [
+        "美国侵犯人权报告"
+      ],
+      "actual_document_ids": [
+        "bc78659b43c746684b4704ab",
+        "e48a3d1d938f3bf8bfc50ba6",
+        "5385954d417e7bc28ff4df9c"
+      ],
+      "original_document_id": "1ce1d2308228cc943a051924",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0056",
+      "expected_titles": [
+        "特鲁普"
+      ],
+      "found_titles": [
+        "特鲁普"
+      ],
+      "actual_document_ids": [
+        "cf86849d6a59f885e8f39e38"
+      ],
+      "original_document_id": "e933864ef8b9b6c409cec67c",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0183",
+      "expected_titles": [
+        "北品川站"
+      ],
+      "found_titles": [
+        "北品川站"
+      ],
+      "actual_document_ids": [
+        "03455906c8ab0a91c556c7cf"
+      ],
+      "original_document_id": "ac74b9a4c90dbd144e8e994f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0184",
+      "expected_titles": [
+        "駱駝駱駝不要哭"
+      ],
+      "found_titles": [
+        "駱駝駱駝不要哭"
+      ],
+      "actual_document_ids": [
+        "39b7d091f05e12f5b6799b61"
+      ],
+      "original_document_id": "3bde65d6d2945cabb3834546",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0179",
+      "expected_titles": [
+        "马云"
+      ],
+      "found_titles": [
+        "马云"
+      ],
+      "actual_document_ids": [
+        "ad6f25962c3832dbc842e93e",
+        "083de930ffa66f3510df406e"
+      ],
+      "original_document_id": "e2ff15eb9165a14bebe6a789",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0185",
+      "expected_titles": [
+        "新罗"
+      ],
+      "found_titles": [
+        "新罗"
+      ],
+      "actual_document_ids": [
+        "63254f568339a0f059c580b9"
+      ],
+      "original_document_id": "6b30a45a7c64d5ba3c35f601",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0184",
+      "expected_titles": [
+        "馬鞍山新市鎮"
+      ],
+      "found_titles": [
+        "馬鞍山新市鎮"
+      ],
+      "actual_document_ids": [
+        "78a38a19bebb834af3f0e053"
+      ],
+      "original_document_id": "d579cb9514fd51bc2e5c81ea",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0111",
+      "expected_titles": [
+        "斑條麗脂鯉"
+      ],
+      "found_titles": [
+        "斑條麗脂鯉"
+      ],
+      "actual_document_ids": [
+        "2289300c3e94ed22b88d91c0"
+      ],
+      "original_document_id": "6b246a2fdac3309c770f1702",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0000",
+      "expected_titles": [
+        "CPUID"
+      ],
+      "found_titles": [
+        "CPUID"
+      ],
+      "actual_document_ids": [
+        "833049a60208ecd01c5a6db5"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0060",
+      "expected_titles": [
+        "李菁紀念基金"
+      ],
+      "found_titles": [
+        "李菁紀念基金"
+      ],
+      "actual_document_ids": [
+        "712de281515c579a5b96e174"
+      ],
+      "original_document_id": "f83dc5808d6f48b20b8635a0",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0103",
+      "expected_titles": [
+        "聚氧二甲苯"
+      ],
+      "found_titles": [
+        "聚氧二甲苯"
+      ],
+      "actual_document_ids": [
+        "0ad4a0dd769425cadf38127a"
+      ],
+      "original_document_id": "8b0a41c70805f3c0e96d1524",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0105",
+      "expected_titles": [
+        "伊藤晴雨"
+      ],
+      "found_titles": [
+        "伊藤晴雨"
+      ],
+      "actual_document_ids": [
+        "b2d36bddc8cc723dfbb5c52d"
+      ],
+      "original_document_id": "d34bcff49228e0872614a8da",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0019",
+      "expected_titles": [
+        "梁洳瑄"
+      ],
+      "found_titles": [
+        "梁洳瑄"
+      ],
+      "actual_document_ids": [
+        "6f817a8990ccaa702ef3e713"
+      ],
+      "original_document_id": "10cfee0a84cc1281cfc71be6",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0049",
+      "expected_titles": [
+        "佐敦北"
+      ],
+      "found_titles": [
+        "佐敦北"
+      ],
+      "actual_document_ids": [
+        "d56d13d2369e5b60b8f9d16e",
+        "8b6038a28a08feca7be21f45"
+      ],
+      "original_document_id": "3b6d5a9b469204ab6adc7325",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0071",
+      "expected_titles": [
+        "貝拉赫"
+      ],
+      "found_titles": [
+        "貝拉赫"
+      ],
+      "actual_document_ids": [
+        "3a2f986f0cca727508966c05"
+      ],
+      "original_document_id": "d72e26d203b774bbefc23c20",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0129",
+      "expected_titles": [
+        "高階組合語言"
+      ],
+      "found_titles": [
+        "高階組合語言"
+      ],
+      "actual_document_ids": [
+        "d035bc1ad28a29986d733c5a"
+      ],
+      "original_document_id": "366e01f93e42884a9e8b9b87",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0139",
+      "expected_titles": [
+        "10月30日"
+      ],
+      "found_titles": [
+        "10月30日"
+      ],
+      "actual_document_ids": [
+        "986e1cfb6ba04c154f883d13"
+      ],
+      "original_document_id": "056c4fd93a233f8a89f66011",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0033",
+      "expected_titles": [
+        "大賭秀"
+      ],
+      "found_titles": [
+        "大賭秀"
+      ],
+      "actual_document_ids": [
+        "3f34640a2166d5bdda2cc238"
+      ],
+      "original_document_id": "0d8ec61de5b3e5fef5b9560f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0053",
+      "expected_titles": [
+        "保羅·瓦勒里"
+      ],
+      "found_titles": [
+        "保羅·瓦勒里"
+      ],
+      "actual_document_ids": [
+        "308c79fa7a40b6f4b134f4bf"
+      ],
+      "original_document_id": "ce42161d8de51ea2391f66be",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0101",
+      "expected_titles": [
+        "查理·科克"
+      ],
+      "found_titles": [
+        "查理·科克"
+      ],
+      "actual_document_ids": [
+        "023d1ed98813324bc40557ca"
+      ],
+      "original_document_id": "faf68313ca17608c10f30151",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0101",
+      "expected_titles": [
+        "缨绒花"
+      ],
+      "found_titles": [
+        "缨绒花"
+      ],
+      "actual_document_ids": [
+        "75b0daa8c7472ed6ad7f7c00"
+      ],
+      "original_document_id": "e888a5f54a85f7be8ecbc318",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0051",
+      "expected_titles": [
+        "瑪琳·黛德麗"
+      ],
+      "found_titles": [
+        "瑪琳·黛德麗"
+      ],
+      "actual_document_ids": [
+        "19d3d73f298df3c2eea8c61c",
+        "0a64b4dc7bdf8778f6284413"
+      ],
+      "original_document_id": "664a5c6ac8271f9cbada0d90",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0008",
+      "expected_titles": [
+        "澳門回歸",
+        "澳门回归"
+      ],
+      "found_titles": [
+        "澳門回歸"
+      ],
+      "actual_document_ids": [
+        "75bcca7dde19aa41a21870c3",
+        "e91124d228f8795230000821"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0156",
+      "expected_titles": [
+        "运城盐湖"
+      ],
+      "found_titles": [
+        "运城盐湖"
+      ],
+      "actual_document_ids": [
+        "195d52a3deff63027586e906"
+      ],
+      "original_document_id": "173f7b6598246a938042b8f7",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0186",
+      "expected_titles": [
+        "所罗门圣殿 (圣保罗)"
+      ],
+      "found_titles": [
+        "所罗门圣殿 (圣保罗)"
+      ],
+      "actual_document_ids": [
+        "c51ba92e1e9873089ec8d811"
+      ],
+      "original_document_id": "045621902dedff18f1198203",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0069",
+      "expected_titles": [
+        "胡朝"
+      ],
+      "found_titles": [
+        "胡朝"
+      ],
+      "actual_document_ids": [
+        "90eb70a19e583c81dcce13a5",
+        "d7edfa2db1f96a7f2a847beb",
+        "f88eae34eff4c3714649b00e"
+      ],
+      "original_document_id": "fd4d7b36fce089c0df568bc2",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0027",
+      "expected_titles": [
+        "检断沙汰"
+      ],
+      "found_titles": [
+        "检断沙汰"
+      ],
+      "actual_document_ids": [
+        "9be733bea891cf2cc591b7e0"
+      ],
+      "original_document_id": "761c372d1254927c715575c4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0074",
+      "expected_titles": [
+        "波密土王"
+      ],
+      "found_titles": [
+        "波密土王"
+      ],
+      "actual_document_ids": [
+        "0cc8d007bb65a94417f939ce"
+      ],
+      "original_document_id": "7d62c40da751d8a98e3cf4cf",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0068",
+      "expected_titles": [
+        "薄叶南蛇藤"
+      ],
+      "found_titles": [
+        "薄叶南蛇藤"
+      ],
+      "actual_document_ids": [
+        "ee3eb0b39bbd24a35ae2701c"
+      ],
+      "original_document_id": "e54442d8b2aa383b2a9965c2",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0051",
+      "expected_titles": [
+        "医科达"
+      ],
+      "found_titles": [
+        "医科达"
+      ],
+      "actual_document_ids": [
+        "97dcda4c23891ef97de7c380"
+      ],
+      "original_document_id": "bdf945fa69e5819fef4e3f65",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0107",
+      "expected_titles": [
+        "廣島短距離交通瀨野線"
+      ],
+      "found_titles": [
+        "廣島短距離交通瀨野線"
+      ],
+      "actual_document_ids": [
+        "99fdde471909e4aaf9a7d6e8"
+      ],
+      "original_document_id": "28b86108a287ec3fff883bbf",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0011",
+      "expected_titles": [
+        "路德會梁鉅鏐小學"
+      ],
+      "found_titles": [
+        "路德會梁鉅鏐小學"
+      ],
+      "actual_document_ids": [
+        "4c724be7e17f9e2680d3ce2b"
+      ],
+      "original_document_id": "6b1d347d8a49d7f23f1712cb",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0055",
+      "expected_titles": [
+        "上海宾馆"
+      ],
+      "found_titles": [
+        "上海宾馆"
+      ],
+      "actual_document_ids": [
+        "5c54e0082a4459186e5024d5"
+      ],
+      "original_document_id": "cc7d6e2b65c2389e1d2ebecc",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0131",
+      "expected_titles": [
+        "阿尔及利亚穆斯林贤哲会"
+      ],
+      "found_titles": [
+        "阿尔及利亚穆斯林贤哲会"
+      ],
+      "actual_document_ids": [
+        "2ab1751be3df784e9c6519f5"
+      ],
+      "original_document_id": "55b5ec416401fdff9f682e6a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0190",
+      "expected_titles": [
+        "戴列斯劇場"
+      ],
+      "found_titles": [
+        "戴列斯劇場"
+      ],
+      "actual_document_ids": [
+        "3785daba039c1a57776942d9"
+      ],
+      "original_document_id": "c910628a707e41b02688558e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0126",
+      "expected_titles": [
+        "笑笑大搞作"
+      ],
+      "found_titles": [
+        "笑笑大搞作"
+      ],
+      "actual_document_ids": [
+        "9c1b5275f240b1f4434db038"
+      ],
+      "original_document_id": "073efe24f6fb925138e614e7",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0199",
+      "expected_titles": [
+        "快樂旋律"
+      ],
+      "found_titles": [
+        "快樂旋律"
+      ],
+      "actual_document_ids": [
+        "f5d6c24e7772f1747db23902",
+        "c062c60bb015eec3e79b7963",
+        "ecd11f1eceb85a75aad50db4",
+        "bab8d03e2a9c0ed3c10fb180",
+        "b7c6d032492d768e876cbea8",
+        "b72c7a344896912f5b502f9c",
+        "e0370f3cbd103c74754b04b1"
+      ],
+      "original_document_id": "8b4ec6478f7c090d2ef79ffe",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0173",
+      "expected_titles": [
+        "乌兰浩特站"
+      ],
+      "found_titles": [
+        "乌兰浩特站"
+      ],
+      "actual_document_ids": [
+        "00ba478ab1ac5213727543b5",
+        "64295028838087b12d37c0c1"
+      ],
+      "original_document_id": "26b7160de7e1a398bab55981",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0169",
+      "expected_titles": [
+        "姜文"
+      ],
+      "found_titles": [
+        "姜文"
+      ],
+      "actual_document_ids": [
+        "36ba17574bbc27cb0490c58e"
+      ],
+      "original_document_id": "0367d0dbc7c69a472016d6b6",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0115",
+      "expected_titles": [
+        "吸血鬼了沒"
+      ],
+      "found_titles": [
+        "吸血鬼了沒"
+      ],
+      "actual_document_ids": [
+        "b1e6b14e85813373385e74d8"
+      ],
+      "original_document_id": "e60e6199341dcc605fa2f31a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0146",
+      "expected_titles": [
+        "C13H14N2O3"
+      ],
+      "found_titles": [
+        "C13H14N2O3"
+      ],
+      "actual_document_ids": [
+        "6e1a2fcfebe45350afe4dcd6"
+      ],
+      "original_document_id": "fe04babb86809c3a828dc32e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0112",
+      "expected_titles": [
+        "定點突變"
+      ],
+      "found_titles": [
+        "定點突變"
+      ],
+      "actual_document_ids": [
+        "1e953218d6157c7ecd2658a9"
+      ],
+      "original_document_id": "77ba2ab9a87b48a2e3d3bf9f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0151",
+      "expected_titles": [
+        "希腊火药与弹药公司"
+      ],
+      "found_titles": [
+        "希腊火药与弹药公司"
+      ],
+      "actual_document_ids": [
+        "e75dcfb9ea4a2e1120053539"
+      ],
+      "original_document_id": "d0224a84f7d24abdb4c16788",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0079",
+      "expected_titles": [
+        "五城目町"
+      ],
+      "found_titles": [
+        "五城目町"
+      ],
+      "actual_document_ids": [
+        "92c866c8931fbcda19c24674"
+      ],
+      "original_document_id": "3a109b995faccc6411b705b7",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0008",
+      "expected_titles": [
+        "突騎施"
+      ],
+      "found_titles": [
+        "突騎施"
+      ],
+      "actual_document_ids": [
+        "809f157f243161f4cbfefc57"
+      ],
+      "original_document_id": "a295a870078911b93422e085",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0153",
+      "expected_titles": [
+        "皮卡迪利劇院"
+      ],
+      "found_titles": [
+        "皮卡迪利劇院"
+      ],
+      "actual_document_ids": [
+        "2c61898991c9307534ce9d4b"
+      ],
+      "original_document_id": "7422479b82bcb605ac13c92a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0040",
+      "expected_titles": [
+        "美國衰落"
+      ],
+      "found_titles": [
+        "美國衰落"
+      ],
+      "actual_document_ids": [
+        "13adc1d6db7dc8fad810d19e"
+      ],
+      "original_document_id": "160d28778ac11ad7ddb09433",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0191",
+      "expected_titles": [
+        "中井貴一"
+      ],
+      "found_titles": [
+        "中井貴一"
+      ],
+      "actual_document_ids": [
+        "7b7b5619a8f18869232d355a"
+      ],
+      "original_document_id": "13bc0d6099e4c2c639cedbfa",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0169",
+      "expected_titles": [
+        "萨非王朝"
+      ],
+      "found_titles": [
+        "萨非王朝"
+      ],
+      "actual_document_ids": [
+        "73d95ec59f3423f1c071404d"
+      ],
+      "original_document_id": "07733fb14c202eefb1f880ba",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0029",
+      "expected_titles": [
+        "山陽鐵道"
+      ],
+      "found_titles": [
+        "山陽鐵道"
+      ],
+      "actual_document_ids": [
+        "9f8aabe35c0ec049b5100262"
+      ],
+      "original_document_id": "968ec11b195db8841872a9dc",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0164",
+      "expected_titles": [
+        "溫哥華白浪足球會"
+      ],
+      "found_titles": [
+        "溫哥華白浪足球會"
+      ],
+      "actual_document_ids": [
+        "89c2aaa4bf53aaeb0eb76941",
+        "7ddc75184038212fd9d8bb5b"
+      ],
+      "original_document_id": "cb5251a864b4425a7ea8cbc1",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0113",
+      "expected_titles": [
+        "倒霉性爱，发狂黄片"
+      ],
+      "found_titles": [
+        "倒霉性爱，发狂黄片"
+      ],
+      "actual_document_ids": [
+        "b1a4bb6c4090686eeb2adfa7"
+      ],
+      "original_document_id": "48ccc27cd4b9ae2e455d44ad",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0006",
+      "expected_titles": [
+        "Po朝霆"
+      ],
+      "found_titles": [
+        "Po朝霆"
+      ],
+      "actual_document_ids": [
+        "cd630205ac3402d9402a622b"
+      ],
+      "original_document_id": "989a322b82baaff146d08837",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0171",
+      "expected_titles": [
+        "松平賴恭"
+      ],
+      "found_titles": [
+        "松平賴恭"
+      ],
+      "actual_document_ids": [
+        "2c19ec7d18c3a729256b52fd"
+      ],
+      "original_document_id": "26e02cb2ba1c6e90142b8434",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0049",
+      "expected_titles": [
+        "哥倫比亞西部山脈"
+      ],
+      "found_titles": [
+        "哥倫比亞西部山脈"
+      ],
+      "actual_document_ids": [
+        "5fa100f38e3d2d878c780269"
+      ],
+      "original_document_id": "c67c40f2badf077d55197715",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0031",
+      "expected_titles": [
+        "第58届格莱美奖"
+      ],
+      "found_titles": [
+        "第58届格莱美奖"
+      ],
+      "actual_document_ids": [
+        "dbf98549dfae23abb73cae44"
+      ],
+      "original_document_id": "3a8eeb148bb13d43e7433df6",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0124",
+      "expected_titles": [
+        "蔡炳瑞"
+      ],
+      "found_titles": [
+        "蔡炳瑞"
+      ],
+      "actual_document_ids": [
+        "7f0580da4b64c169fc3b2cff"
+      ],
+      "original_document_id": "45d06ed1b8a467b96ecd898b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0197",
+      "expected_titles": [
+        "維利耶"
+      ],
+      "found_titles": [
+        "維利耶",
+        "维利耶"
+      ],
+      "actual_document_ids": [
+        "963584c52df295cedb9621ef",
+        "b8b97e62a4035af64b3245ac"
+      ],
+      "original_document_id": "7256c88722ad3ebad9b4632f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0168",
+      "expected_titles": [
+        "满者伯夷"
+      ],
+      "found_titles": [
+        "满者伯夷"
+      ],
+      "actual_document_ids": [
+        "122eb9bf0e9194a1663b5f7b"
+      ],
+      "original_document_id": "8821bcab2149a8ae58643717",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0122",
+      "expected_titles": [
+        "塔明斯"
+      ],
+      "found_titles": [
+        "塔明斯"
+      ],
+      "actual_document_ids": [
+        "84a848c3acea988b8bb57103"
+      ],
+      "original_document_id": "fd3dbe31a00a85437330df70",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0195",
+      "expected_titles": [
+        "TestNG"
+      ],
+      "found_titles": [
+        "TestNG"
+      ],
+      "actual_document_ids": [
+        "88e61aa25fb44a384867aa96"
+      ],
+      "original_document_id": "0cc906b98104ae660406b812",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0007",
+      "expected_titles": [
+        "金色情挑"
+      ],
+      "found_titles": [
+        "金色情挑"
+      ],
+      "actual_document_ids": [
+        "a698effde1726b5e9c4e9c45"
+      ],
+      "original_document_id": "b96f49a32337579e14c0761a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0091",
+      "expected_titles": [
+        "韦世豪"
+      ],
+      "found_titles": [
+        "韦世豪"
+      ],
+      "actual_document_ids": [
+        "52360876350a4751dce118aa",
+        "85f3bc2b8ae73d6c08641ad6"
+      ],
+      "original_document_id": "1245dcf947810b824564df2c",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0188",
+      "expected_titles": [
+        "奥巴马总统任期"
+      ],
+      "found_titles": [
+        "奥巴马总统任期"
+      ],
+      "actual_document_ids": [
+        "a43d26961d20b51b9bdfb4e9",
+        "e326434b9882313523a8bb3e"
+      ],
+      "original_document_id": "71de09c10000f007aecf3357",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0133",
+      "expected_titles": [
+        "雷·沃納爾"
+      ],
+      "found_titles": [
+        "雷·沃納爾"
+      ],
+      "actual_document_ids": [
+        "8d44fcdbd3329ea1366c7e94"
+      ],
+      "original_document_id": "a2c623ae65b3cb004d7c66c9",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0033",
+      "expected_titles": [
+        "1555年"
+      ],
+      "found_titles": [
+        "1555年"
+      ],
+      "actual_document_ids": [
+        "3d33d4aa7bc35d266bebb24b"
+      ],
+      "original_document_id": "a11098b7c4731ad5a1ad75fe",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0073",
+      "expected_titles": [
+        "溫特瓦茨"
+      ],
+      "found_titles": [
+        "溫特瓦茨"
+      ],
+      "actual_document_ids": [
+        "a4552d59685d170de60a53d8"
+      ],
+      "original_document_id": "4497083e69f610d919daf462",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0142",
+      "expected_titles": [
+        "中华民国陆海军大元帅大本营"
+      ],
+      "found_titles": [
+        "中华民国陆海军大元帅大本营"
+      ],
+      "actual_document_ids": [
+        "0c1daa281176d9712bbef912"
+      ],
+      "original_document_id": "549d6abe125a3c1bdbbf1335",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0188",
+      "expected_titles": [
+        "龍族戰神"
+      ],
+      "found_titles": [
+        "龍族戰神"
+      ],
+      "actual_document_ids": [
+        "65adf59cf06bfa4813ad60ee"
+      ],
+      "original_document_id": "ac5cfcb8b7bc0de30c204138",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0109",
+      "expected_titles": [
+        "澳門單牌車進出橫琴"
+      ],
+      "found_titles": [
+        "澳門單牌車進出橫琴"
+      ],
+      "actual_document_ids": [
+        "dec166075c15bc4072799378",
+        "decdc60c0502859bb6a2cc09"
+      ],
+      "original_document_id": "3b3b1a263600be484ed43e33",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "basic-0002",
+      "expected_titles": [
+        "中华人民共和国各省级行政区人口列表",
+        "广东省",
+        "河南省"
+      ],
+      "found_titles": [
+        "广东省",
+        "河南省"
+      ],
+      "actual_document_ids": [
+        "7541943382523c829651998e",
+        "565e1d96fb023843c9a61f3b",
+        "7c46dfabca65bd795f238f55"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0066",
+      "expected_titles": [
+        "庄桥街道"
+      ],
+      "found_titles": [
+        "庄桥街道"
+      ],
+      "actual_document_ids": [
+        "1edb6fa072e5dd48459655e0"
+      ],
+      "original_document_id": "11fb8d9bf8832c578e49ad75",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0042",
+      "expected_titles": [
+        "毛羽皇"
+      ],
+      "found_titles": [
+        "毛羽皇"
+      ],
+      "actual_document_ids": [
+        "5eba2a85abbfd35325065300",
+        "b1d568c7b017fcbdd02a147c"
+      ],
+      "original_document_id": "c866ee61f2d49947c72a3571",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0016",
+      "expected_titles": [
+        "網球王子音樂劇第二季"
+      ],
+      "found_titles": [
+        "網球王子音樂劇第二季"
+      ],
+      "actual_document_ids": [
+        "8d339932eb165f9849da024e"
+      ],
+      "original_document_id": "0228d8450ff9d19c7736237b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0159",
+      "expected_titles": [
+        "巴林LGBT权益"
+      ],
+      "found_titles": [
+        "巴林LGBT权益"
+      ],
+      "actual_document_ids": [
+        "63cbee4e3eabad2bdb2f3bf6"
+      ],
+      "original_document_id": "5d18aed51930c9e27dcb7f58",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0187",
+      "expected_titles": [
+        "岛山安昌浩级潜艇"
+      ],
+      "found_titles": [
+        "岛山安昌浩级潜艇"
+      ],
+      "actual_document_ids": [
+        "3f7db362d03d5d4e1ad8b927"
+      ],
+      "original_document_id": "9a816485dbe31eb0b194e105",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0020",
+      "expected_titles": [
+        "斯利那加"
+      ],
+      "found_titles": [
+        "斯利那加"
+      ],
+      "actual_document_ids": [
+        "30fdbb85fa234ca2bab89142"
+      ],
+      "original_document_id": "c1b2edec3221412fab214f2e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0053",
+      "expected_titles": [
+        "對立教宗菲利普"
+      ],
+      "found_titles": [
+        "對立教宗菲利普"
+      ],
+      "actual_document_ids": [
+        "779fec5d9d8b9198e5ac6dc9",
+        "c678c361e71b5b4a335bf9e4"
+      ],
+      "original_document_id": "45bcdd4e662e57578a9ed568",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0192",
+      "expected_titles": [
+        "臺中市立豐東國民中學"
+      ],
+      "found_titles": [
+        "臺中市立豐東國民中學"
+      ],
+      "actual_document_ids": [
+        "ed848636a6c879285e2d0ad3"
+      ],
+      "original_document_id": "0589bdd2a898b5606998681e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0167",
+      "expected_titles": [
+        "回轉變流機"
+      ],
+      "found_titles": [
+        "回轉變流機"
+      ],
+      "actual_document_ids": [
+        "8410f73f67c5a624db986baf"
+      ],
+      "original_document_id": "b910420dc279bff591a2e1d2",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0119",
+      "expected_titles": [
+        "李村基督教堂"
+      ],
+      "found_titles": [
+        "李村基督教堂"
+      ],
+      "actual_document_ids": [
+        "1b3bb6f8d3ab14bacbbaf94d"
+      ],
+      "original_document_id": "fdd00f5a56a61a271fd8c29e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0077",
+      "expected_titles": [
+        "瑞竹地區"
+      ],
+      "found_titles": [
+        "瑞竹地區"
+      ],
+      "actual_document_ids": [
+        "c84a8dd8f0b0a993e4156a76"
+      ],
+      "original_document_id": "ffdc0b7b767ef6de664cee1c",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0140",
+      "expected_titles": [
+        "波多黎各的古堡與聖胡安歷史遺址"
+      ],
+      "found_titles": [
+        "波多黎各的古堡與聖胡安歷史遺址"
+      ],
+      "actual_document_ids": [
+        "a528c1de9ee43f68ac25acf2"
+      ],
+      "original_document_id": "15bfa97d8bdd30a8b7e0c054",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0023",
+      "expected_titles": [
+        "天津中德应用技术大学"
+      ],
+      "found_titles": [
+        "天津中德应用技术大学"
+      ],
+      "actual_document_ids": [
+        "a6a6a1748709714167053717",
+        "b106ef84e6ca9e6192313f25",
+        "42d990170efa8b1b7ecd1af0"
+      ],
+      "original_document_id": "7141fe329a89317189acc47d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0048",
+      "expected_titles": [
+        "中国人民解放军坦克博物馆"
+      ],
+      "found_titles": [
+        "中国人民解放军坦克博物馆"
+      ],
+      "actual_document_ids": [
+        "3e9b151028b738a542abfdc2"
+      ],
+      "original_document_id": "10c5c81b6ee4bebe05ad3baa",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0154",
+      "expected_titles": [
+        "雷姆沙伊德"
+      ],
+      "found_titles": [
+        "雷姆沙伊德"
+      ],
+      "actual_document_ids": [
+        "134281d842b0ed4f944d560e"
+      ],
+      "original_document_id": "642aa4d1d46ce243b8d28d83",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0115",
+      "expected_titles": [
+        "甲府市"
+      ],
+      "found_titles": [
+        "甲府市"
+      ],
+      "actual_document_ids": [
+        "411e5b80b9f4568c03816688"
+      ],
+      "original_document_id": "20699b0a4fa972c36e55c100",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0013",
+      "expected_titles": [
+        "阿波罗11号",
+        "阿波羅11號"
+      ],
+      "found_titles": [
+        "阿波罗11号"
+      ],
+      "actual_document_ids": [
+        "0b569890deb851b92b020c9b"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0025",
+      "expected_titles": [
+        "一夜狂奔"
+      ],
+      "found_titles": [
+        "一夜狂奔"
+      ],
+      "actual_document_ids": [
+        "dcdfce4f21ff4c0e0f8988dd"
+      ],
+      "original_document_id": "56ba355908bf263963043822",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0011",
+      "expected_titles": [
+        "长城"
+      ],
+      "found_titles": [
+        "长城"
+      ],
+      "actual_document_ids": [
+        "e9346c3cf5b361c4b709d1ea"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0054",
+      "expected_titles": [
+        "念珠芥属"
+      ],
+      "found_titles": [
+        "念珠芥属"
+      ],
+      "actual_document_ids": [
+        "fb74b66fc90504637a9e383b"
+      ],
+      "original_document_id": "329fa0a3838fd2a727add79d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0045",
+      "expected_titles": [
+        "魏璘"
+      ],
+      "found_titles": [
+        "魏璘"
+      ],
+      "actual_document_ids": [
+        "45e3e2c8b69405eddf71e29d"
+      ],
+      "original_document_id": "5706d64c7d85c247a38fbb8b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0086",
+      "expected_titles": [
+        "计算机科学"
+      ],
+      "found_titles": [
+        "计算机科学"
+      ],
+      "actual_document_ids": [
+        "253c9893d71cc7ad12bf3b18",
+        "01c65dfac9dc57a7283ebcb0"
+      ],
+      "original_document_id": "30b52e41628f17182eb8e12a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0012",
+      "expected_titles": [
+        "虞国"
+      ],
+      "found_titles": [
+        "虞国"
+      ],
+      "actual_document_ids": [
+        "7b337a5102b0e3a2cd039f86"
+      ],
+      "original_document_id": "5a9d85f7258ca38722419a62",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0168",
+      "expected_titles": [
+        "城南书院"
+      ],
+      "found_titles": [
+        "城南书院"
+      ],
+      "actual_document_ids": [
+        "06be28342fab20750a03c9ad"
+      ],
+      "original_document_id": "4c6004935601745e64679d58",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0174",
+      "expected_titles": [
+        "馬拉度納教"
+      ],
+      "found_titles": [
+        "馬拉度納教"
+      ],
+      "actual_document_ids": [
+        "9badc93e82269f71f433204b"
+      ],
+      "original_document_id": "73e45f7159a8c3f30e550843",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0155",
+      "expected_titles": [
+        "苦苓"
+      ],
+      "found_titles": [
+        "苦苓"
+      ],
+      "actual_document_ids": [
+        "b087f6b641da9fbf2c6dd922",
+        "2ef0b563d375dca460e21aac"
+      ],
+      "original_document_id": "0e9c394f4da67914777772d4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0032",
+      "expected_titles": [
+        "渭水春風"
+      ],
+      "found_titles": [
+        "渭水春風"
+      ],
+      "actual_document_ids": [
+        "b166374a0d822a3e40d8151c"
+      ],
+      "original_document_id": "16c82f9fcddf1c57d5f227f3",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0042",
+      "expected_titles": [
+        "心理不应期"
+      ],
+      "found_titles": [
+        "心理不应期"
+      ],
+      "actual_document_ids": [
+        "42cc762dd19d2510887728e0"
+      ],
+      "original_document_id": "2494bef020ebe8b6f8928787",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0104",
+      "expected_titles": [
+        "拉斯玛·卡尤"
+      ],
+      "found_titles": [
+        "拉斯玛·卡尤"
+      ],
+      "actual_document_ids": [
+        "82162bbe62e91a88fd747ee2"
+      ],
+      "original_document_id": "a9f388b1ab1e60d7261eca08",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0091",
+      "expected_titles": [
+        "文藝復興時期的柏拉圖主義"
+      ],
+      "found_titles": [
+        "文藝復興時期的柏拉圖主義"
+      ],
+      "actual_document_ids": [
+        "ac6654ab2305843623e8f8d3"
+      ],
+      "original_document_id": "a9686fb4de44266e5c2a85da",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0127",
+      "expected_titles": [
+        "永康学派"
+      ],
+      "found_titles": [
+        "永康学派"
+      ],
+      "actual_document_ids": [
+        "9c70e521697e6217690332bf"
+      ],
+      "original_document_id": "997279be27a455848ef177db",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0196",
+      "expected_titles": [
+        "黑茨納赫"
+      ],
+      "found_titles": [
+        "黑茨納赫"
+      ],
+      "actual_document_ids": [
+        "a57d1c147415f16f6546df08"
+      ],
+      "original_document_id": "3c38ba47fe3ff547eb7e0475",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0083",
+      "expected_titles": [
+        "海因里希·克雷默"
+      ],
+      "found_titles": [
+        "海因里希·克雷默"
+      ],
+      "actual_document_ids": [
+        "07048ce4dad915e1d700cf63"
+      ],
+      "original_document_id": "d64074f51b5432c41f3d9b2f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0026",
+      "expected_titles": [
+        "左菁華"
+      ],
+      "found_titles": [
+        "左菁華"
+      ],
+      "actual_document_ids": [
+        "2cad0cd55db48654485d97b0"
+      ],
+      "original_document_id": "1237b53f0bf4ad27ea7f8537",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0150",
+      "expected_titles": [
+        "Buildbox"
+      ],
+      "found_titles": [
+        "Buildbox"
+      ],
+      "actual_document_ids": [
+        "4d14149b9bfe16c6cb496cbc"
+      ],
+      "original_document_id": "b510801ad011ec1de754224e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0092",
+      "expected_titles": [
+        "禁煙委員會"
+      ],
+      "found_titles": [
+        "禁煙委員會"
+      ],
+      "actual_document_ids": [
+        "1c793975ede93a626dd5bb25",
+        "e40da1c96fdd65ab9d7e7623"
+      ],
+      "original_document_id": "0ee2659a32216f30c035205a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0002",
+      "expected_titles": [
+        "陆贽",
+        "陸贄"
+      ],
+      "found_titles": [
+        "陸贄"
+      ],
+      "actual_document_ids": [
+        "fbd5e36c662f51cd11ede474"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0144",
+      "expected_titles": [
+        "开平矿务局"
+      ],
+      "found_titles": [
+        "开平矿务局"
+      ],
+      "actual_document_ids": [
+        "6198162728f80b07d123bdd5"
+      ],
+      "original_document_id": "33be17c8535e2655b7a99f4f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0029",
+      "expected_titles": [
+        "下安特亞蒙"
+      ],
+      "found_titles": [
+        "下安特亞蒙"
+      ],
+      "actual_document_ids": [
+        "a53500f84adaeb7c43fa80f5"
+      ],
+      "original_document_id": "6ad2a80e701a8d819fea41d1",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0022",
+      "expected_titles": [
+        "社寮地區"
+      ],
+      "found_titles": [
+        "社寮地區"
+      ],
+      "actual_document_ids": [
+        "0ce732f7907ed8209fc853d6"
+      ],
+      "original_document_id": "18d3aa2da646ac2c1a7426e3",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0138",
+      "expected_titles": [
+        "切帕赫"
+      ],
+      "found_titles": [
+        "切帕赫"
+      ],
+      "actual_document_ids": [
+        "5d3daa0e8aae33f1699d5e28"
+      ],
+      "original_document_id": "fc04d30035092f7b85550e5e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0046",
+      "expected_titles": [
+        "惠桥水库"
+      ],
+      "found_titles": [
+        "惠桥水库"
+      ],
+      "actual_document_ids": [
+        "12ebccbab75b6e7f970f8641"
+      ],
+      "original_document_id": "b64ec0fc4b62ce2bba173e40",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0004",
+      "expected_titles": [
+        "萨珊王朝"
+      ],
+      "found_titles": [
+        "萨珊王朝"
+      ],
+      "actual_document_ids": [
+        "8d263ed65d8cdff8d7b718cd"
+      ],
+      "original_document_id": "4fb04a7ed486bc7995ab41d0",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0037",
+      "expected_titles": [
+        "产出缺口"
+      ],
+      "found_titles": [
+        "产出缺口"
+      ],
+      "actual_document_ids": [
+        "0e5c79793b45699f363d901a",
+        "effb37c5738ac4dba77fd973"
+      ],
+      "original_document_id": "30253c0dc76e56ecf478475a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0154",
+      "expected_titles": [
+        "Poly Bridge"
+      ],
+      "found_titles": [
+        "Poly Bridge"
+      ],
+      "actual_document_ids": [
+        "180d27c7781b216c33ae60cf"
+      ],
+      "original_document_id": "be8c51479e2ae9bb89f0e8b0",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0159",
+      "expected_titles": [
+        "斯洛博齊亞"
+      ],
+      "found_titles": [
+        "斯洛博齊亞"
+      ],
+      "actual_document_ids": [
+        "bee01d828c6b7b98d4da9def"
+      ],
+      "original_document_id": "44e8c6067f2f0cb5da976a8a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0018",
+      "expected_titles": [
+        "索科托哈里发国"
+      ],
+      "found_titles": [
+        "索科托哈里发国"
+      ],
+      "actual_document_ids": [
+        "0f9ff5fd495d9d1644c0d2aa"
+      ],
+      "original_document_id": "128b41f2920c407719dfe1e3",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0136",
+      "expected_titles": [
+        "菲涅耳透鏡"
+      ],
+      "found_titles": [
+        "菲涅耳透鏡"
+      ],
+      "actual_document_ids": [
+        "76801ab88360910991cfc53d"
+      ],
+      "original_document_id": "fce4a0f29b7b931c0745f917",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0007",
+      "expected_titles": [
+        "蒙古航空"
+      ],
+      "found_titles": [
+        "蒙古航空"
+      ],
+      "actual_document_ids": [
+        "bbd69b5d6fcc75a4c715af7e"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0043",
+      "expected_titles": [
+        "宗萨寺"
+      ],
+      "found_titles": [
+        "宗萨寺"
+      ],
+      "actual_document_ids": [
+        "ec95124b7c41e207816597e9"
+      ],
+      "original_document_id": "bfcfe542281b88694137576d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0126",
+      "expected_titles": [
+        "林岱樺"
+      ],
+      "found_titles": [
+        "林岱樺"
+      ],
+      "actual_document_ids": [
+        "2e5ccd51893a842eaa13eeb4",
+        "ef4ea6a0ab50c666dcad6e99"
+      ],
+      "original_document_id": "bca3f0840d9fee43c9de7d1a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0149",
+      "expected_titles": [
+        "格克切貝伊"
+      ],
+      "found_titles": [
+        "格克切貝伊"
+      ],
+      "actual_document_ids": [
+        "f2032d8f55d98e419d5321b2"
+      ],
+      "original_document_id": "97324539c986ba29fe8c4845",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0150",
+      "expected_titles": [
+        "佐藤聰美"
+      ],
+      "found_titles": [
+        "佐藤聰美"
+      ],
+      "actual_document_ids": [
+        "ed31bd8ef2a0820da0e71a3c"
+      ],
+      "original_document_id": "e95c4d4b3f5c0a0604a32520",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0099",
+      "expected_titles": [
+        "国际排球联合会"
+      ],
+      "found_titles": [
+        "国际排球联合会"
+      ],
+      "actual_document_ids": [
+        "5067391fc06eac2dd4e28866"
+      ],
+      "original_document_id": "61793d08d77e8e097c63b82b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0092",
+      "expected_titles": [
+        "楠伯"
+      ],
+      "found_titles": [
+        "楠伯"
+      ],
+      "actual_document_ids": [
+        "b831686dd752ec9c73a74f4d"
+      ],
+      "original_document_id": "38eddd48ff0614b8fa368384",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0137",
+      "expected_titles": [
+        "惠庭市"
+      ],
+      "found_titles": [
+        "惠庭市"
+      ],
+      "actual_document_ids": [
+        "a2199999e2724d7352c19fc7"
+      ],
+      "original_document_id": "9e1439b8c44e41ac9e8e5611",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0158",
+      "expected_titles": [
+        "石壁街道"
+      ],
+      "found_titles": [
+        "石壁街道"
+      ],
+      "actual_document_ids": [
+        "0c99627197dafc41651cd105",
+        "b513cdf9f3cdeb83b3c768a7"
+      ],
+      "original_document_id": "0e2867217a2f92e1b790fa56",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0145",
+      "expected_titles": [
+        "池田1號墳"
+      ],
+      "found_titles": [
+        "池田1號墳"
+      ],
+      "actual_document_ids": [
+        "a5650118df2acc78681ce5a2"
+      ],
+      "original_document_id": "80e7d222b7cc3f197b1fc6ab",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0039",
+      "expected_titles": [
+        "記錄的地平線"
+      ],
+      "found_titles": [
+        "記錄的地平線"
+      ],
+      "actual_document_ids": [
+        "a7eca79a7d251cf001b6ca1a"
+      ],
+      "original_document_id": "b3c608f968b1a62feb7d889d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0109",
+      "expected_titles": [
+        "苏珊·卡伯特"
+      ],
+      "found_titles": [
+        "苏珊·卡伯特"
+      ],
+      "actual_document_ids": [
+        "4cc6097aa70c5f8ce1721b91"
+      ],
+      "original_document_id": "5d477db5f36793fdea984f77",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0196",
+      "expected_titles": [
+        "安然公司"
+      ],
+      "found_titles": [
+        "安然公司"
+      ],
+      "actual_document_ids": [
+        "e3e280585f516ea4d789802f",
+        "c3f5449f3a7bc15a563aa889"
+      ],
+      "original_document_id": "bc30182d17082880c4d682fc",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0072",
+      "expected_titles": [
+        "大中壩機場"
+      ],
+      "found_titles": [
+        "大中壩機場"
+      ],
+      "actual_document_ids": [
+        "70b22b4f0be2360899a1d50c"
+      ],
+      "original_document_id": "c275ae2e4ef493d9f428c6db",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0146",
+      "expected_titles": [
+        "特效導演"
+      ],
+      "found_titles": [
+        "特效導演"
+      ],
+      "actual_document_ids": [
+        "4b10cf71ea982b029ed42eaf"
+      ],
+      "original_document_id": "1e64fcc243dad4d08f78441a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0088",
+      "expected_titles": [
+        "昆沙"
+      ],
+      "found_titles": [
+        "昆沙"
+      ],
+      "actual_document_ids": [
+        "7a68a2b7ef8fb36cb12a2a41",
+        "5847609b2c4115a297fe2dca"
+      ],
+      "original_document_id": "b1162baa3668efd850da0d2f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0027",
+      "expected_titles": [
+        "圣卡塔尔多"
+      ],
+      "found_titles": [
+        "圣卡塔尔多"
+      ],
+      "actual_document_ids": [
+        "505f4e234ef413a5031f3493"
+      ],
+      "original_document_id": "c789b63c1cf04dd87f70d757",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0075",
+      "expected_titles": [
+        "南京公教新村"
+      ],
+      "found_titles": [
+        "南京公教新村"
+      ],
+      "actual_document_ids": [
+        "7e3704388d5ced5b7186602b"
+      ],
+      "original_document_id": "7b57c6f770526c9f8bb6c148",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0017",
+      "expected_titles": [
+        "极地号"
+      ],
+      "found_titles": [
+        "极地号"
+      ],
+      "actual_document_ids": [
+        "594dc5b70599d20dd38bb149"
+      ],
+      "original_document_id": "649b60f441d8e5bc42f90b42",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0111",
+      "expected_titles": [
+        "唐山鋼鐵"
+      ],
+      "found_titles": [
+        "唐山鋼鐵"
+      ],
+      "actual_document_ids": [
+        "fc3bf0adb2a59297fe6728c2"
+      ],
+      "original_document_id": "035bf24df7ba666cf0544550",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0117",
+      "expected_titles": [
+        "我们要洞房"
+      ],
+      "found_titles": [
+        "我们要洞房"
+      ],
+      "actual_document_ids": [
+        "b7ba882f1d3e0c7bab4c934b"
+      ],
+      "original_document_id": "5360784fb6507585dc5cad35",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0014",
+      "expected_titles": [
+        "莫罗佐夫村"
+      ],
+      "found_titles": [
+        "莫罗佐夫村"
+      ],
+      "actual_document_ids": [
+        "055b6f018a169b269fba281b"
+      ],
+      "original_document_id": "bfeaf6c923d09b72e37540de",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0080",
+      "expected_titles": [
+        "庐阳区"
+      ],
+      "found_titles": [
+        "庐阳区"
+      ],
+      "actual_document_ids": [
+        "ff8bff5883b81a513feba5a8"
+      ],
+      "original_document_id": "0de6d7cfc94ae7c16c97d69c",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0116",
+      "expected_titles": [
+        "賴國"
+      ],
+      "found_titles": [
+        "賴國"
+      ],
+      "actual_document_ids": [
+        "d3a74f53dea67b3ca5e4d88b"
+      ],
+      "original_document_id": "94e9b4020418f53df424604c",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0039",
+      "expected_titles": [
+        "FNC娛樂"
+      ],
+      "found_titles": [
+        "FNC娛樂"
+      ],
+      "actual_document_ids": [
+        "53ed67b1cd2851f890b90f1c"
+      ],
+      "original_document_id": "b64825db7ad880fda440659a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0182",
+      "expected_titles": [
+        "尼洛替尼"
+      ],
+      "found_titles": [
+        "尼洛替尼"
+      ],
+      "actual_document_ids": [
+        "ff958ccc80127cdbd6dfbe8b"
+      ],
+      "original_document_id": "0c969a7d68f417c4248b6407",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0055",
+      "expected_titles": [
+        "純粹海花介"
+      ],
+      "found_titles": [
+        "純粹海花介"
+      ],
+      "actual_document_ids": [
+        "1592326a1b1637ead6e82b40"
+      ],
+      "original_document_id": "b5a893ca5a497d62c2be4cdc",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0067",
+      "expected_titles": [
+        "檜山修之"
+      ],
+      "found_titles": [
+        "檜山修之"
+      ],
+      "actual_document_ids": [
+        "093572cafacd48653df091ca"
+      ],
+      "original_document_id": "2773f6985e2f3365425e8d7f",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0001",
+      "expected_titles": [
+        "硝酸"
+      ],
+      "found_titles": [
+        "硝酸"
+      ],
+      "actual_document_ids": [
+        "91a19a3e9ffcf4b548deb738"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0134",
+      "expected_titles": [
+        "生存技能"
+      ],
+      "found_titles": [
+        "生存技能"
+      ],
+      "actual_document_ids": [
+        "92c6947960eb0938c6e014ef"
+      ],
+      "original_document_id": "fcf9a2900e9900f52da4f79b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0155",
+      "expected_titles": [
+        "匈牙利農業博物館"
+      ],
+      "found_titles": [
+        "匈牙利農業博物館"
+      ],
+      "actual_document_ids": [
+        "1847a22bfc43813d9aa34909"
+      ],
+      "original_document_id": "5cabfc79a676a94d2e6bca33",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0165",
+      "expected_titles": [
+        "切尔沃港"
+      ],
+      "found_titles": [
+        "切尔沃港"
+      ],
+      "actual_document_ids": [
+        "e9b3c5f7bcba6c7017fc16e6"
+      ],
+      "original_document_id": "82758aea7335c026cedfff0a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0112",
+      "expected_titles": [
+        "罗家桥站"
+      ],
+      "found_titles": [
+        "罗家桥站"
+      ],
+      "actual_document_ids": [
+        "3eda18490979cef7d3b15d99"
+      ],
+      "original_document_id": "75204d114561c08ddbc57019",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0086",
+      "expected_titles": [
+        "潮龜"
+      ],
+      "found_titles": [
+        "潮龜"
+      ],
+      "actual_document_ids": [
+        "7f1a90424a0514a48f2bdb72"
+      ],
+      "original_document_id": "d5bebce06b4fe52b2d3f1773",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0044",
+      "expected_titles": [
+        "蒂亞瓦亞區"
+      ],
+      "found_titles": [
+        "蒂亞瓦亞區"
+      ],
+      "actual_document_ids": [
+        "8e6f6e7269a188cc2d513d22"
+      ],
+      "original_document_id": "a98371002d6fe839446d7fa1",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0052",
+      "expected_titles": [
+        "美国电影学会"
+      ],
+      "found_titles": [
+        "美国电影学会"
+      ],
+      "actual_document_ids": [
+        "6d5372d9cd7da20e32da1ed3"
+      ],
+      "original_document_id": "e2410b14a75b97adaa4f93d4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0193",
+      "expected_titles": [
+        "香槟集市"
+      ],
+      "found_titles": [
+        "香槟集市"
+      ],
+      "actual_document_ids": [
+        "c3253d97da0e7a4a95d99481"
+      ],
+      "original_document_id": "1a2f73559fa66bfa3b7fa243",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0094",
+      "expected_titles": [
+        "欧拉方法"
+      ],
+      "found_titles": [
+        "欧拉方法"
+      ],
+      "actual_document_ids": [
+        "2ff130f9fcd2e61045062596",
+        "099cc1f4a78e811e89bcd177"
+      ],
+      "original_document_id": "9b7a0c359e94e06cbf7b3b4a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "native_wiki-0004",
+      "expected_titles": [
+        "Media Foundation",
+        "NativeScript",
+        "RPG Maker MV",
+        "WinJS"
+      ],
+      "found_titles": [
+        "Media Foundation",
+        "NativeScript",
+        "RPG Maker MV",
+        "WinJS"
+      ],
+      "actual_document_ids": [
+        "91eb7e7837d3938681cac25b",
+        "335b11f68d18e68b6e217580",
+        "7b48809b2357c112ea8e1614",
+        "caafbaa3a01f3faa055cdaa1"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0019",
+      "expected_titles": [
+        "登山杖"
+      ],
+      "found_titles": [
+        "登山杖"
+      ],
+      "actual_document_ids": [
+        "88dbc670ff8b3a19a1282d61"
+      ],
+      "original_document_id": "c0c3801acadcc285b7fe6bc7",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0128",
+      "expected_titles": [
+        "金衛醫療"
+      ],
+      "found_titles": [
+        "金衛醫療"
+      ],
+      "actual_document_ids": [
+        "9b3256f8b0e0aea8af162889"
+      ],
+      "original_document_id": "5e9188fd917a66e67cee74fe",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0096",
+      "expected_titles": [
+        "帝王谷"
+      ],
+      "found_titles": [
+        "帝王谷"
+      ],
+      "actual_document_ids": [
+        "dd50c2c1269b57484322591c",
+        "dee8a146426a2597b167173a"
+      ],
+      "original_document_id": "6cf9b5c75b9864903121e880",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0035",
+      "expected_titles": [
+        "W創作社"
+      ],
+      "found_titles": [
+        "W創作社"
+      ],
+      "actual_document_ids": [
+        "2a8871e62d76e204552b5bfb",
+        "7b49985601aa185ac5762b9b"
+      ],
+      "original_document_id": "e14ec512a8f204d4b2eee7b5",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0063",
+      "expected_titles": [
+        "抢劫恋爱"
+      ],
+      "found_titles": [
+        "抢劫恋爱"
+      ],
+      "actual_document_ids": [
+        "1a81e5ba1f408bfe9a1b9f3e"
+      ],
+      "original_document_id": "1a4d2d5c41a601004bfbb976",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0001",
+      "expected_titles": [
+        "貝克斯特河"
+      ],
+      "found_titles": [
+        "貝克斯特河"
+      ],
+      "actual_document_ids": [
+        "ae895f4ed3cc11a8bd156f40"
+      ],
+      "original_document_id": "2ce865b9d75036f03b9a2293",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0012",
+      "expected_titles": [
+        "高级长期威胁"
+      ],
+      "found_titles": [
+        "高级长期威胁"
+      ],
+      "actual_document_ids": [
+        "0c3c5d331d426901d5bef12e"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0040",
+      "expected_titles": [
+        "荷蘭皇家航空867號班機事故"
+      ],
+      "found_titles": [
+        "荷蘭皇家航空867號班機事故"
+      ],
+      "actual_document_ids": [
+        "1ac12a13785e04be2898abfd"
+      ],
+      "original_document_id": "6953c0ed5cdf85429acc326a",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0061",
+      "expected_titles": [
+        "小贝流浪记"
+      ],
+      "found_titles": [
+        "小贝流浪记"
+      ],
+      "actual_document_ids": [
+        "455bdba44f2b14a450e4f43b"
+      ],
+      "original_document_id": "2c5c0ce0cd1352f43f3cb062",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0149",
+      "expected_titles": [
+        "凌海市"
+      ],
+      "found_titles": [
+        "凌海市"
+      ],
+      "actual_document_ids": [
+        "15e7c87b4d54d356d60f5fed",
+        "40d08e06d2eb39ce43333b87"
+      ],
+      "original_document_id": "b24d5d7042c7292e5b954a6e",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0170",
+      "expected_titles": [
+        "绣线菊族"
+      ],
+      "found_titles": [
+        "绣线菊族"
+      ],
+      "actual_document_ids": [
+        "479e7c11ee8f1da1cf891219"
+      ],
+      "original_document_id": "44e91e26b79f63296e340061",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0064",
+      "expected_titles": [
+        "马来西亚工程部"
+      ],
+      "found_titles": [
+        "马来西亚工程部"
+      ],
+      "actual_document_ids": [
+        "77e335476800326fe856d9f1"
+      ],
+      "original_document_id": "233410345326885312c3290d",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0010",
+      "expected_titles": [
+        "爱好者杂志"
+      ],
+      "found_titles": [
+        "爱好者杂志"
+      ],
+      "actual_document_ids": [
+        "a800475905d570a6ddd734a2"
+      ],
+      "original_document_id": "198a5cbbe93fbf69df10e960",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0024",
+      "expected_titles": [
+        "李道增"
+      ],
+      "found_titles": [
+        "李道增"
+      ],
+      "actual_document_ids": [
+        "226d522979b82d93b6c50dbf"
+      ],
+      "original_document_id": "e8774e910ece86fc7b5f7ae8",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0123",
+      "expected_titles": [
+        "西湖电影院"
+      ],
+      "found_titles": [
+        "西湖电影院"
+      ],
+      "actual_document_ids": [
+        "5e3b670f107943af5ffe27ea"
+      ],
+      "original_document_id": "a67b0a2eebf52f577d652b00",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0177",
+      "expected_titles": [
+        "陳山聰"
+      ],
+      "found_titles": [
+        "陳山聰"
+      ],
+      "actual_document_ids": [
+        "dd58cc7c4fbce4343d8fd9b5",
+        "31f977f0a30ecf75dc5546ed"
+      ],
+      "original_document_id": "cc29b743ab06a08d77287cad",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0009",
+      "expected_titles": [
+        "半岛网"
+      ],
+      "found_titles": [
+        "半岛网"
+      ],
+      "actual_document_ids": [
+        "ca19f03a8cff24e5065387d1"
+      ],
+      "original_document_id": "38136f2a979b9b6cbec0a09b",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "diverse-0010",
+      "expected_titles": [
+        "深圳地铁1号线",
+        "深圳地铁车站列表"
+      ],
+      "found_titles": [
+        "深圳地铁1号线"
+      ],
+      "actual_document_ids": [
+        "cec3ee25e4ded37f9231e945"
+      ],
+      "original_document_id": null,
+      "original_document_id_matches_legacy_identity": null,
+      "reference_exact_substring": null,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0031",
+      "expected_titles": [
+        "Toy (歌曲)"
+      ],
+      "found_titles": [
+        "Toy (歌曲)"
+      ],
+      "actual_document_ids": [
+        "1b16e71b5d7fde4c81693a3c"
+      ],
+      "original_document_id": "becc97d03379615b8294e910",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0065",
+      "expected_titles": [
+        "靈魂奇遇記"
+      ],
+      "found_titles": [
+        "靈魂奇遇記"
+      ],
+      "actual_document_ids": [
+        "f4ba07752ca1e67a9042a96c"
+      ],
+      "original_document_id": "bfe2b882850ab7077cc6015c",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_verified-0143",
+      "expected_titles": [
+        "伊拉斯謨計劃"
+      ],
+      "found_titles": [
+        "伊拉斯謨計劃"
+      ],
+      "actual_document_ids": [
+        "e11fae5a30ec0cc1b34b49ac"
+      ],
+      "original_document_id": "ccddb1146fbb23aef9c587b0",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0163",
+      "expected_titles": [
+        "一党优势制"
+      ],
+      "found_titles": [
+        "一党优势制"
+      ],
+      "actual_document_ids": [
+        "ab88e46313c40c24fba3e472"
+      ],
+      "original_document_id": "1aa68bb30be9ffd55a4756e8",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0123",
+      "expected_titles": [
+        "香港航海學校"
+      ],
+      "found_titles": [
+        "香港航海學校"
+      ],
+      "actual_document_ids": [
+        "3c268dfdf6a77d152683d2a6"
+      ],
+      "original_document_id": "9f2862240ed79441d5920127",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": true,
+      "full_article_restored": true
+    },
+    {
+      "case_id": "wiki_batch2-0100",
+      "expected_titles": [
+        "万维网"
+      ],
+      "found_titles": [
+        "万维网"
+      ],
+      "actual_document_ids": [
+        "7bc688571c03ba4e10663298",
+        "f2be999f53bba94a31aba483"
+      ],
+      "original_document_id": "a7dfc75528ba9bfc748b65c4",
+      "original_document_id_matches_legacy_identity": true,
+      "reference_exact_substring": false,
+      "full_article_restored": true
+    }
+  ],
+  "boundary": "New selected full-article corpus with 5000 fixed distractors; not a byte-identical restoration of the deleted original complete index. Missing articles and nonliteral reference comparisons remain visible."
+}
