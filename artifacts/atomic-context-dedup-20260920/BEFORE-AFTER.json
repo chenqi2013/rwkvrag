@@ -1,0 +1,60 @@
+{
+  "protocol": "atomic-evidence-v7",
+  "prior_artifact": "artifacts/table-presentation-inspection-20260920/inspection.json",
+  "before_context_chars": 909,
+  "after_context_chars": 459,
+  "answer_row_preserved": true,
+  "exact_source_slice": true,
+  "coverage": {
+    "total_spans": 2,
+    "considered_spans": 2,
+    "unexamined_spans": 0,
+    "oversized_spans": 0
+  },
+  "row": {
+    "start": 450,
+    "end": 574,
+    "text": "| 省电 | 48 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\n",
+    "context": [
+      {
+        "start": 0,
+        "end": 9,
+        "text": "# 棣山 C26\n",
+        "origin": "saved_source_metadata",
+        "context_index": 0,
+        "sha256": "335dd148b8eb16d51f441a0e2607a70c66bf531ec3341e3e7d8df93828cbfadb"
+      },
+      {
+        "start": 0,
+        "end": 450,
+        "text": "| 模式 | 续航（小时） | 辅助字段01 | 辅助字段02 | 辅助字段03 | 辅助字段04 | 辅助字段05 | 辅助字段06 | 辅助字段07 | 辅助字段08 | 辅助字段09 | 辅助字段10 | 辅助字段11 | 辅助字段12 | 辅助字段13 | 辅助字段14 | 辅助字段15 | 辅助字段16 | 辅助字段17 | 辅助字段18 | 辅助字段19 | 辅助字段20 | 辅助字段21 | 辅助字段22 | 辅助字段23 | 辅助字段24 | 辅助字段25 | 辅助字段26 | 辅助字段27 | 辅助字段28 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n",
+        "origin": "saved_source_metadata",
+        "context_index": 1,
+        "sha256": "c74b74e415b1e2a2051405986c5cd82679d33c8ce63a9166bdc26e49375746be"
+      }
+    ],
+    "context_deduplication": {
+      "removed_local_ranges": [
+        {
+          "start": 0,
+          "end": 268,
+          "text": "| 模式 | 续航（小时） | 辅助字段01 | 辅助字段02 | 辅助字段03 | 辅助字段04 | 辅助字段05 | 辅助字段06 | 辅助字段07 | 辅助字段08 | 辅助字段09 | 辅助字段10 | 辅助字段11 | 辅助字段12 | 辅助字段13 | 辅助字段14 | 辅助字段15 | 辅助字段16 | 辅助字段17 | 辅助字段18 | 辅助字段19 | 辅助字段20 | 辅助字段21 | 辅助字段22 | 辅助字段23 | 辅助字段24 | 辅助字段25 | 辅助字段26 | 辅助字段27 | 辅助字段28 |\n",
+          "covered_by_context_indices": [
+            1
+          ]
+        },
+        {
+          "start": 268,
+          "end": 450,
+          "text": "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n",
+          "covered_by_context_indices": [
+            1
+          ]
+        }
+      ],
+      "offset_unit": "unicode_code_points_in_saved_indexed_chunk",
+      "method": "verified_document_range_containment_v1"
+    }
+  },
+  "model_quality_tested": false
+}

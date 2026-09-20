@@ -59,3 +59,37 @@ async def test_scoped_history_route_and_request_validation(setup, index):
         assert (await client.get("/v1/admin/knowledge-bases/default/atomic-evidence/unknown")).status_code == 404
         bad = await client.post("/v1/admin/knowledge-bases/default/atomic-evidence", json={"object": " ", "attribute": "功率", "base_url": "http://example.com"})
         assert bad.status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_wide_table_context_survives_real_index_and_history(setup, index):
+    from test_atomic_context_dedup import table_source, REQUEST
+    from llamaindex_retrieval.atomic_evidence import candidates
+    from llamaindex_retrieval.rwkv_pipeline import source_from_hit
+
+    _, repo, _, _ = setup
+    source = table_source(30)
+    source.metadata["knowledge_base_id"] = "default"
+    index.upsert_nodes([TextNode(id_=source.id, text=source.snippet, metadata=source.metadata)])
+    index.client.indices.refresh(index=index.index_name)
+    hits = index.search_chunks("设备 续航", candidate_k=10, knowledge_base_id="default")
+    restored = source_from_hit(next(h for h in hits if h.node_id == source.id))
+    spans, coverage = candidates(restored, REQUEST)
+    selected = next(i for i, s in enumerate(spans, 1) if "| 省电" in s["text"])
+    svc = AtomicEvidenceService(index.settings, repo, index, Model([f"[{selected}]"]),
+                                reader=Model(['{"answer":"YES"}']))
+    # Pin retrieved input, leaving real database persistence and extraction intact.
+    run = {"id": "wide-context-regression", "knowledge_base_id": "default", "claims": [],
+           "sources": [], "calls": [], "issues": [], "coverage": {}, "index_version": index.versions.current(),
+           "status": "running"}
+    await repo.create_atomic_run(run)
+    await svc.extract(run, REQUEST, [restored])
+    await repo.finish_atomic_run(run)
+    saved = await repo.get_atomic_run("default", run["id"])
+    assert saved == run and run["status"] == "completed"
+    assert len(saved["claims"]) == 1 and "| 省电 | 48" in saved["claims"][0]["statement_quote"]
+    evidence = saved["claims"][0]["evidence"]
+    assert sum(len(c["text"]) for c in evidence["context"]) <= 600
+    assert len(evidence["context_deduplication"]["removed_local_ranges"]) == 2
+    assert saved["claims"][0]["protocol"] == "atomic-evidence-v7"
+    assert saved["sources"][0]["metadata"]["context_spans"] == source.metadata["context_spans"]

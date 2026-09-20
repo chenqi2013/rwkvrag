@@ -23,7 +23,7 @@ from .rwkv_pipeline import evidence_units, source_from_hit
 from .rwkvos_batch import RwkvosBatchClient
 from .reader_prompt import binary_query_prompt, parse_binary_decision
 
-PROTOCOL = "atomic-evidence-v6"
+PROTOCOL = "atomic-evidence-v7"
 
 
 def digest(text):
@@ -113,14 +113,65 @@ Oversized structural rows are reported to the caller instead of truncated.
     return result
 
 
+def attach_context(source, spans):
+    """Keep saved parents, removing only local ranges proved to be covered.
+
+    Local offsets address the indexed chunk; saved parent offsets address the
+    document. Never deduplicate by text alone or across unknown source bindings.
+    The original metadata stays untouched and remains in the saved source.
+    """
+    parent = source.metadata.get("context_spans", [])
+    if not isinstance(parent, list):
+        return
+    chunk = source.metadata.get("source_span", {})
+    chunk_bound = (isinstance(chunk, dict)
+        and type(chunk.get("start")) is int and type(chunk.get("end")) is int
+        and 0 <= chunk["start"] < chunk["end"]
+        and chunk["end"] - chunk["start"] == len(source.snippet)
+        and chunk.get("unit") == "unicode_code_points"
+        and chunk.get("sha256") == digest(source.snippet)
+        and source.metadata.get("document_id", source.document_id) == source.document_id)
+    saved, covered = [], []
+    for i, c in enumerate(parent):
+        if not isinstance(c, dict) or not isinstance(c.get("text"), str):
+            continue
+        saved.append({"start": 0, "end": len(c["text"]), "text": c["text"],
+            "origin": "saved_source_metadata", "context_index": i, "sha256": digest(c["text"])})
+        same_source = all(key not in c or c[key] == value for key, value in {
+            "document_id": source.document_id, "source_id": source.id,
+            "source_text_sha256": source.metadata.get("source_text_sha256"),
+            "source_sha256": source.metadata.get("source_sha256"),
+            "parsed_snapshot_sha256": source.metadata.get("parsed_snapshot_sha256"),
+        }.items())
+        if not (chunk_bound and same_source
+                and c.get("unit", "unicode_code_points") == "unicode_code_points"
+                and type(c.get("start")) is int and type(c.get("end")) is int
+                and chunk["start"] <= c["start"] < c["end"] <= chunk["end"]
+                and c.get("sha256") == digest(c["text"])):
+            continue
+        a, b = c["start"] - chunk["start"], c["end"] - chunk["start"]
+        if source.snippet[a:b] == c["text"]:
+            covered.append((a, b, i))
+    for span in spans:
+        retained, duplicates = [], []
+        for local in span["context"]:
+            matches = [i for a, b, i in covered
+                       if a <= local["start"] < local["end"] <= b
+                       and source.snippet[local["start"]:local["end"]] == local["text"]]
+            if matches:
+                duplicates.append({**local, "covered_by_context_indices": matches})
+            else:
+                retained.append(local)
+        span["context"] = retained + [dict(c) for c in saved]
+        if duplicates:
+            span["context_deduplication"] = {"removed_local_ranges": duplicates,
+                "offset_unit": "unicode_code_points_in_saved_indexed_chunk",
+                "method": "verified_document_range_containment_v1"}
+
+
 def candidates(source, request, maximum=6):
     spans = short_spans(source.snippet)
-    parent = source.metadata.get("context_spans", [])
-    if isinstance(parent, list):
-        for span in spans:
-            span["context"] += [{"start": 0, "end": len(c["text"]), "text": c["text"],
-                "origin": "saved_source_metadata", "context_index": i, "sha256": digest(c["text"])}
-                for i, c in enumerate(parent) if isinstance(c, dict) and isinstance(c.get("text"), str)]
+    attach_context(source, spans)
     query = set(lexical_tokens(" ".join([request.object, request.attribute, request.conditions])))
     tokens = [set(lexical_tokens(s["text"] + " ".join(c["text"] for c in s["context"]))) for s in spans]
     frequency = Counter(token for terms in tokens for token in terms)

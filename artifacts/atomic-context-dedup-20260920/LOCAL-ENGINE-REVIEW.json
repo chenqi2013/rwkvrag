@@ -1,0 +1,21 @@
+{
+  "repo": "/home/chase/GitHub/vllm-rwkv",
+  "head": "4ee959dfad73456232a13aab62151f2d69b42906",
+  "working_tree_has_existing_changes": true,
+  "files_sha256": {
+    "vllm/v1/worker/gpu/model_states/rwkv.py": "06e8d245f32bf9facc293f8a0d1075f9ef97900ba281a07a5ef1c9ed09b1787c",
+    "vllm/entrypoints/generate/base/serving.py": "ec943bfefe90200e846e0904e66c7095d803fec0af710a5dcf9c195e079e353e",
+    "vllm/entrypoints/openai/chat_completion/protocol.py": "fe456c77bb1eb678db5aa7b319a0dd61e1c31fcc456d53810f7dbe052641affd",
+    "vllm/sampling_params.py": "4658a47c921e465d311ed95ed98991eda4e9f499ee8d66bc5968dda78a6f85b7",
+    "vllm/v1/worker/gpu/sample/states.py": "4e3671f93695ba5a48fad7d2d13beb231ac8741034904ed5a15d9f7b9b86662e",
+    "benchmarks/rwkv7/benchmark_stateful_chat.py": "4f27f712d42a8b03cf23ff80670d071e82e46d548c1f756e1d1c46fadab151e1",
+    "docs/models/rwkv.md": "24d53a0667525e6f92cac0fe5bc9d9137f72fb9070da2852e82a5571cb83477a",
+    "requirements/rwkv.txt": "adb8a7b9640156da053369501fe5273812876f3d93ab93e87dfd0aa0a21b5f75",
+    ".venv/lib/python3.12/site-packages/flashrwkv2/__init__.py": "6b7ab030c5ec23603c96e6839756796482de9a2c62a834c6aecee15cc1cf2366",
+    ".venv/lib/python3.12/site-packages/flashrwkv2/_csrc/sm80/sampling/infer_fp32_forward_varlen.cu": "0e41180933adf5d7ad0ebdd51632ce6a82065d57e00b59dfb6852243e39eb8ef"
+  },
+  "review_only_no_engine_changes": true,
+  "inference_run": false,
+  "installed_flashrwkv2_source_version": "0.1.0a13",
+  "deployed_server_identity_verified": false
+}

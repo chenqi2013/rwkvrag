@@ -1,6 +1,6 @@
 # 属性证据第一阶段：数据契约与交付边界
 
-维护契约；部署状态见 [CURRENT](CURRENT.md)。核对日期：2026-09-20。实现协议：atomic-evidence-v6。前置备份：68b6bf4a6587ad1d446d70634d98299bdb54ab0e。
+维护契约；部署状态见 [CURRENT](CURRENT.md)。核对日期：2026-09-20。实现协议：atomic-evidence-v7。前置备份：68b6bf4a6587ad1d446d70634d98299bdb54ab0e。
 
 ## 本阶段解决什么
 
@@ -48,7 +48,8 @@ object 与 attribute 非空、各不超过 120 字符；conditions 不超过 300
 | target | 用户指定的对象/属性/条件；不是模型已经证明的实体关系 |
 | kind | reader_supported 或 unconfirmed，仅为 Reader 的判断 |
 | statement_quote / statement_position | 完整选中短原文及其在保存片段中的位置 |
-| evidence.context | 随附表头、标题等；外部元数据上下文有单独位置原点 |
+| evidence.context | 随附表头、标题等；外部元数据上下文有单独位置原点；仅在同源范围和哈希可验证时移除重复本地引用 |
+| evidence.context_deduplication | 去掉的本地重复范围、覆盖它的元数据 context_index 与方法版本；不修改原文快照 |
 | value_quote | 当前固定 null，尚未标准化出独立值 |
 | normalization_status | not_performed |
 | binding | 知识库、来源、文档、索引版本、文本哈希、可用的源文件版本哈希 |
