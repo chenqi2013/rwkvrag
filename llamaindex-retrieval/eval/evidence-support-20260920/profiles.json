@@ -1,0 +1,6 @@
+[
+  {"id":"reader29-canonical","model":"rwkv7-g1j-2.9b-20260831-ctx16384","base_url":"http://127.0.0.1:18423/v1","state":"reader-trace-450","protocol":"canonical"},
+  {"id":"reader29-strict","model":"rwkv7-g1j-2.9b-20260831-ctx16384","base_url":"http://127.0.0.1:18423/v1","state":"reader-trace-450","protocol":"strict-v1"},
+  {"id":"zero72-canonical","model":"rwkv7-g1j-7.2b-20260831-ctx16384","base_url":"http://127.0.0.1:18425/v1","state":null,"protocol":"canonical"},
+  {"id":"zero72-strict","model":"rwkv7-g1j-7.2b-20260831-ctx16384","base_url":"http://127.0.0.1:18425/v1","state":null,"protocol":"strict-v1"}
+]
