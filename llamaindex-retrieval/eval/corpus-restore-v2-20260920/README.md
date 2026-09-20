@@ -1,0 +1,3 @@
+# Corpus registration v2
+
+V1 preserved identical-body article revisions as separate file registrations, which conflicts with the unchanged app unique (knowledge_base_id, sha256) index. V2 stores one physical file registration per exact UTF-8 text hash; all original article/version nodes and source texts remain. Node file_id maps to the first deterministic same-body file; document_id, article title, revision URI, original path, content hash and version provenance remain unchanged. Nothing is deduplicated by answer or semantic similarity. New isolated index and database; v1 and its failed startup/preflight are retained. 5,577 version records, 5,524 physical files, 58,594 verified nodes.

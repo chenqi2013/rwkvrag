@@ -1,0 +1,24 @@
+{
+  "index": "rwkvrag-restored-regression-20260920-v2",
+  "alias": "rwkvrag-restored-regression-20260920-v2-active",
+  "knowledge_base_id": "wiki-restored-20260920",
+  "database": "rwkvrag_restored_regression_20260920_v2",
+  "documents": 5577,
+  "physical_files": 5524,
+  "nodes": 58594,
+  "all_source_spans_verified": true,
+  "scan_order_content_sha256": "e97a4378899b64596134bb428d0a51fcde56380d1e650e154b749821ee2f8f49",
+  "settings_sha256": "5e9ed0a2ff01eccd19165955a3f7999670938b4ecd7b3a2778729b3fc135fe96",
+  "production_settings_sha256": "949359e947c67e4a38110a52865e016636180833f1a450d10d702306a2845e5b",
+  "changed_configuration_fields": [
+    "mongo_database",
+    "opensearch_index",
+    "upload_dir"
+  ],
+  "corpus_manifest_sha256": {
+    "data/corpora/finewiki-restored-20260920/selected-v2/manifest.json": "798f959664870eb1efff6724f3619c163fec3b836e664cfbe68b6c728f938d51",
+    "data/corpora/finewiki-restored-20260920/wikipedia-supplement/manifest.json": "a3747abadfd6446dee3b6b59e93f6d8be29efcb151030e737b6f360c3d60570c"
+  },
+  "no_model_or_prompt_changes": true,
+  "production_index_unchanged_by_build": true
+}
