@@ -1,5 +1,7 @@
 # P0 第一批：质量验收与真实基线
 
+> **历史记录，非当前状态。** 本文保留当时的实验、部署或设计结论；“当前”“最新”“下一步”均指原记录时点。当前事实与行动以[当前状态](../../CURRENT.md)为准。原路径：docs/p0-quality-baseline-20260916.md。
+
 日期：2026-09-16。来源：[WeKnora 对照评审](weknora-gap-review-20260916.md) 的 P0 建议。
 
 > 后续校正：本页原始运行采用 **legacy 传输模板**，与应用已配置的 canonical 模板在回答起始位置相差一个换行。因此下述 3/8 仅是 legacy 条件下的诊断基线，不能代表当前应用配置。原始证据保持不变，补测见 [第二轮实验](p0-writer-experiment-20260916.md)。
@@ -11,7 +13,7 @@
 3. **新增固定材料质量验收入口。** 复用已有 smoke 数据与收据，固定 8 题分母，核对源码、输入、输出哈希；将调用完成、正文协议、引用编号存在性与显式语义复核分开。未复核不能通过，错误与截断不能从分母消失。
 4. **跑完一轮真实 2.9B Writer300 基线并逐题复核。** 模型调用与原始答案全部保存；复核未修改金标或模型文本。
 
-入口与使用方法：[QUALITY_GATE.md](../llamaindex-retrieval/eval/native-smoke/QUALITY_GATE.md)。
+入口与使用方法：[QUALITY_GATE.md](../../../llamaindex-retrieval/eval/native-smoke/QUALITY_GATE.md)。
 
 ## 真实运行条件
 
@@ -70,12 +72,12 @@
 
 ## 证据与复现
 
-- [质量报告](../artifacts/quality-20260916/quality.json)
-- [逐题语义复核](../artifacts/quality-20260916/review.json)
-- [完整原始答案投影](../artifacts/quality-20260916/raw-answers.json)：保留答案全文、正文边界、引用映射与完整响应 SHA；不冒充完整 HTTP 收据。
-- [运行配置与源码清单](../artifacts/quality-20260916/manifest.json)
-- [执行汇总](../artifacts/quality-20260916/execution-summary.json)
-- [文件哈希与完整运行位置](../artifacts/quality-20260916/FILES.json)
+- [质量报告](../../../artifacts/quality-20260916/quality.json)
+- [逐题语义复核](../../../artifacts/quality-20260916/review.json)
+- [完整原始答案投影](../../../artifacts/quality-20260916/raw-answers.json)：保留答案全文、正文边界、引用映射与完整响应 SHA；不冒充完整 HTTP 收据。
+- [运行配置与源码清单](../../../artifacts/quality-20260916/manifest.json)
+- [执行汇总](../../../artifacts/quality-20260916/execution-summary.json)
+- [文件哈希与完整运行位置](../../../artifacts/quality-20260916/FILES.json)
 
 完整冻结源码、请求、响应、模型 trace 与 HTTP 收据保存在本机 `data/quality-runs/20260916-writer300-material-v1/`（Git 忽略的实验目录）。仓库内约 33 KB 的摘要用于审阅；跨机器重放质量验收需要复制完整运行目录，或按入口说明执行新一轮。早期自动报告与最终复核报告分别保留，没有覆盖原输出。
 

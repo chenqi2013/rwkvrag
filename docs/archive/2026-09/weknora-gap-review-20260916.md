@@ -1,5 +1,7 @@
 # WeKnora 对照评审：RWKVRAG 还差在哪里
 
+> **历史记录，非当前状态。** 本文保留当时的实验、部署或设计结论；“当前”“最新”“下一步”均指原记录时点。当前事实与行动以[当前状态](../../CURRENT.md)为准。原路径：docs/weknora-gap-review-20260916.md。
+
 评审日期：2026-09-16。
 
 ## 结论
@@ -35,7 +37,7 @@ WeKnora 总体功能依据：[官方 README](https://github.com/Tencent/WeKnora/
 
 ### 1. 有据回答的可靠性：优先级最高
 
-我们自己的 [2026-09-11 评测](../llamaindex-retrieval/eval/trace-eval-20260911/RESULTS.md) 已明确显示：
+我们自己的 [2026-09-11 评测](../../../llamaindex-retrieval/eval/trace-eval-20260911/RESULTS.md) 已明确显示：
 
 - Reader 的 60 道受控挑战由 48/60 提高到 60/60，但不能解释成完整 RAG 正确率。
 - 固定 36 道通用 Writer 题，有据可用由零 state 的 10/36 提高到 Writer300 的 17/36，仍有明显不足。
@@ -45,15 +47,15 @@ WeKnora 总体功能依据：[官方 README](https://github.com/Tencent/WeKnora/
 
 建议先建立固定验收集，分开检查：规划语义与格式、支持事实的片段召回、Reader 误选/漏选、Writer 完整性、引用支持、无证据处理、版本冲突、耗时和模型调用成本。特别加入“标题含答案关键词但正文不支持”的反例。
 
-现有 [evaluate.py](../llamaindex-retrieval/src/llamaindex_retrieval/evaluate.py) 的 `recall_at_k` 实际按题统计预期标题是否命中，并不是逐证据片段的标准召回率。应保留其用途并明确命名，再补片段级标注与指标。
+现有 [evaluate.py](../../../llamaindex-retrieval/src/llamaindex_retrieval/evaluate.py) 的 `recall_at_k` 实际按题统计预期标题是否命中，并不是逐证据片段的标准召回率。应保留其用途并明确命名，再补片段级标注与指标。
 
-所有修复遵守 [架构规则](../llamaindex-retrieval/ARCHITECTURE_RULES.md)：由模型作语义决定；审计不修改原答案；需要重新生成时保留独立调用与 trace。
+所有修复遵守 [架构规则](../../../llamaindex-retrieval/ARCHITECTURE_RULES.md)：由模型作语义决定；审计不修改原答案；需要重新生成时保留独立调用与 trace。
 
 ### 2. 文档更新必须可靠，不能只有“重新导入”
 
-当前 [parsers.py](../llamaindex-retrieval/src/llamaindex_retrieval/parsers.py) 上传格式仅包括 `.md/.markdown/.mdx/.pdf/.docx`。扫描 PDF 无文字时直接要求先做 OCR；DOCX 将段落和表格分别收集再拼接，可能失去原来的交错顺序。复杂文档解析质量会直接影响后面的证据判断。
+当前 [parsers.py](../../../llamaindex-retrieval/src/llamaindex_retrieval/parsers.py) 上传格式仅包括 `.md/.markdown/.mdx/.pdf/.docx`。扫描 PDF 无文字时直接要求先做 OCR；DOCX 将段落和表格分别收集再拼接，可能失去原来的交错顺序。复杂文档解析质量会直接影响后面的证据判断。
 
-更具体的工程风险在 [tasks.py](../llamaindex-retrieval/src/llamaindex_retrieval/tasks.py) 的 `_run_file_job`：先删除该文件的旧索引，再建立新索引。如果新建失败，旧知识已不可完整检索。这里是代码路径推断，未做故障注入。
+更具体的工程风险在 [tasks.py](../../../llamaindex-retrieval/src/llamaindex_retrieval/tasks.py) 的 `_run_file_job`：先删除该文件的旧索引，再建立新索引。如果新建失败，旧知识已不可完整检索。这里是代码路径推断，未做故障注入。
 
 建议：
 
@@ -66,7 +68,7 @@ WeKnora 的 [Connector 接口](https://github.com/Tencent/WeKnora/blob/6f98ff80c
 
 ### 3. 默认 RWKV 链路还不是可自主补证据的 Agent
 
-[service.py](../llamaindex-retrieval/src/llamaindex_retrieval/service.py) 在 `rag_pipeline=rwkv` 时直接进入 [RWKVPipeline.ask](../llamaindex-retrieval/src/llamaindex_retrieval/rwkv_pipeline.py)。当前是一次规划、批量检索、阅读、作答；虽然支持多条查询、来源融合和多次 Reader 调用，但阅读后不会回到检索阶段。
+[service.py](../../../llamaindex-retrieval/src/llamaindex_retrieval/service.py) 在 `rag_pipeline=rwkv` 时直接进入 [RWKVPipeline.ask](../../../llamaindex-retrieval/src/llamaindex_retrieval/rwkv_pipeline.py)。当前是一次规划、批量检索、阅读、作答；虽然支持多条查询、来源融合和多次 Reader 调用，但阅读后不会回到检索阶段。
 
 仓库确实有 `active_retrieval.py` 和旧管线的多轮检索代码，不能因此认定默认原生链路已拥有这些能力。
 
@@ -95,7 +97,7 @@ WeKnora 的 [Wiki 文档](https://github.com/Tencent/WeKnora/blob/6f98ff80c31856
 
 ### 5. 后台任务已有基础，但还缺多实例协作机制
 
-[TaskManager](../llamaindex-retrieval/src/llamaindex_retrieval/tasks.py) 已有任务持久化、状态/进度、失败记录及重启恢复，不是纯内存任务系统。但执行由各进程 `asyncio.create_task` 和信号量管理；启动时读取可恢复任务再执行，所检查路径未见原子认领或租约。
+[TaskManager](../../../llamaindex-retrieval/src/llamaindex_retrieval/tasks.py) 已有任务持久化、状态/进度、失败记录及重启恢复，不是纯内存任务系统。但执行由各进程 `asyncio.create_task` 和信号量管理；启动时读取可恢复任务再执行，所检查路径未见原子认领或租约。
 
 由此推断，多进程同时启动时可能重复恢复同一个任务。进程内并发限制也不等于跨进程总量限制。
 
@@ -105,19 +107,19 @@ WeKnora 的 [任务仓储](https://github.com/Tencent/WeKnora/blob/6f98ff80c3185
 
 ### 6. 面向团队使用前，补权限和用户反馈
 
-当前 [api.py](../llamaindex-retrieval/src/llamaindex_retrieval/api.py)、[路由](../llamaindex-retrieval/src/llamaindex_retrieval/routers/admin.py) 和 [依赖注入](../llamaindex-retrieval/src/llamaindex_retrieval/dependencies.py) 未发现应用级身份与资源授权。外部网关是否保护当前部署，本次未核实。
+当前 [api.py](../../../llamaindex-retrieval/src/llamaindex_retrieval/api.py)、[路由](../../../llamaindex-retrieval/src/llamaindex_retrieval/routers/admin.py) 和 [依赖注入](../../../llamaindex-retrieval/src/llamaindex_retrieval/dependencies.py) 未发现应用级身份与资源授权。外部网关是否保护当前部署，本次未核实。
 
 WeKnora 的 [知识库访问控制](https://github.com/Tencent/WeKnora/blob/6f98ff80c3185679cc16f834faf42fc662770e68/internal/middleware/kb_access.go) 会把文档/片段追溯到所属知识库，再实施访问控制。这比仅在界面隐藏按钮更值得借鉴。
 
 我们应在多人共享前覆盖搜索、原文下载、片段、历史、trace 和管理操作的授权。对于当前单机研究阶段，此项不应挤占模型质量实验；对外提供服务时则是前置条件。
 
-[SearchPage.tsx](../llamaindex-retrieval/web/src/pages/SearchPage.tsx) 已支持对话历史、来源和 trace，但等待 `api.ask` 完整返回。建议补阶段进度、停止操作、引用定位，以及“错答/漏答/引用错误”反馈。反馈绑定当次问题、输入来源和配置版本，经过独立审核再进入训练集。
+[SearchPage.tsx](../../../llamaindex-retrieval/web/src/pages/SearchPage.tsx) 已支持对话历史、来源和 trace，但等待 `api.ask` 完整返回。建议补阶段进度、停止操作、引用定位，以及“错答/漏答/引用错误”反馈。反馈绑定当次问题、输入来源和配置版本，经过独立审核再进入训练集。
 
 ### 7. 将已有评测资产变成日常发布流程
 
 我们已有相当细的调用收据和独立语义复核，不应重新从零做评测。缺的是把这些能力合并成固定入口、长期结果记录和发布判断。
 
-[历史验证记录](../artifacts/statetune-20260911/VALIDATION.json) 是 757 通过、114 失败、2 跳过；它说明历史失败集合未变化，不能代表全量测试通过。这份材料还记录当时未包含前端构建，而当前前端已恢复，因此也不能拿它作为当前整个产品的验收结果。
+[历史验证记录](../../../artifacts/statetune-20260911/VALIDATION.json) 是 757 通过、114 失败、2 跳过；它说明历史失败集合未变化，不能代表全量测试通过。这份材料还记录当时未包含前端构建，而当前前端已恢复，因此也不能拿它作为当前整个产品的验收结果。
 
 建议明确维护链路和旧回归测试的契约，逐项解释或修复历史失败；保持失败可见，不以批量跳过制造通过。统一运行固定材料、Reader、检索、完整 RAG 和前端检查，并将模型/state、prompt、索引、代码版本与结果绑定。
 

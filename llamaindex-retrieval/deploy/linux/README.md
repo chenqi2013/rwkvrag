@@ -1,5 +1,7 @@
 # Linux deployment
 
+> Deployment template, not the current machine state. See [CURRENT](../../../docs/CURRENT.md).
+
 The Linux deployment keeps application code and runtime data separate:
 
 - application: `/workspace/rwkvrag`

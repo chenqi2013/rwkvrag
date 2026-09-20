@@ -1,33 +1,22 @@
-# RWKVRAG — RWKV 原生 RAG
+# RWKVRAG
 
-基于 `bm250820` 的 `2bbc406125e7e030eda98b11993dc13fc4534ca4` 开发，当前优化分支为 `chase/rwkv-native-rag-rebuild`。
+基于 RWKV、OpenSearch BM25 和 MongoDB 的知识库问答项目。模型负责语义判断，程序负责检索组织、任务预算、原文与版本保存、传输和校验。模型原始输出保持不变。
 
-**RWKV 2.9B + OpenSearch BM25，不使用 embedding。** 模型负责问题规划、证据判断与回答；代码负责检索组织、传输、来源与格式校验。原始模型输出保持不变。
+## 从这里开始
 
-## StateTune 实践
+- **[当前状态与下一步](docs/CURRENT.md)**：区分已实现、运行配置、实验结果和未实施设计。
+- **[实验变量控制](docs/EXPERIMENTS.md)**：下一轮改变什么、固定什么、怎样计分。
+- [完整文档索引](docs/README.md)：按用途查阅，不按文件新旧猜状态。
+- [架构规则](llamaindex-retrieval/ARCHITECTURE_RULES.md)：开发约束。
 
-[StateTune经验总结](docs/statetune-experience.md)记录本轮如何从真实trace发现问题、生成2000条纠错数据、完成六组state训练，以及改善与失败。
+当前工作集中在短证据定位、属性与条件匹配、否定和零值的可靠判断。单项证据核对已实现；标准化事实、独立判断记录、冲突关系与阶梯总结处于不同阶段，详见当前状态页。
 
-Reader在60道受控阅读挑战中从48/60提高到60/60。Writer明显减少失控重复；固定36题的独立抽样中，Writer300有据可用17/36，零state为10/36，扩大到1400条没有继续提高。Planner出现格式退步，空证据和冲突处理仍不可靠。这些结果不是全场景准确率，也不代表模型能力上限。
+## 使用与开发
 
-- [数据与训练入口](llamaindex-retrieval/statetune/README.md)
-- [原始实验记录、权重和恢复方式](docs/artifacts.md)
-- [最新训练核验](llamaindex-retrieval/eval/trace-training-20260911/TRAINING-VERIFIED.json)
-- [最新评测汇总](llamaindex-retrieval/eval/trace-eval-20260911/RESULTS.md)
-
-## 使用
-
-通用安装与接口见[Python服务说明](llamaindex-retrieval/README.md)，现有环境的管理方式见[本地部署说明](llamaindex-retrieval/deploy/local/README.md)。本地页面为 <http://127.0.0.1:18440/admin/#/search>，通过后端 `POST /v1/ask` 执行真实RAG；API接口文档为 `/docs`。现有前端已恢复用于人工试用。
-
-仅使用指定的RWKV7 G1j 2.9B。训练后的state必须显式选择；训练完成不等于应用默认配置已经切换。2026-09-11测试结束后，按用户要求保留比较服务，没有恢复原问答服务。
-
-现有页面已接入此前评测使用的 **5000篇FineWiki中文文章、45960个原文片段**。选择“FineWiki 中文百科（5000篇）”即可试用，文件列表支持完整分页。[试用指南、13道测试题与参考答案](docs/wiki-rag-test-guide.md)包含原文依据、接入方法和实际试用记录，适合转发学习。
-
-复杂多问、长历史、缺证据与引用仍有已知错误。服务可访问不代表所有场景已可靠。架构约束见[ARCHITECTURE_RULES.md](llamaindex-retrieval/ARCHITECTURE_RULES.md)。
-
-## 开发验证
-
-[P0 质量验收与首轮基线](docs/p0-quality-baseline-20260916.md)：规划回退状态修复、固定材料质量验收入口，以及 2026-09-16 的真实 2.9B Writer300 逐题结果。
+- [Python 服务与接口](llamaindex-retrieval/README.md)
+- [本地服务管理](llamaindex-retrieval/deploy/local/README.md)
+- [Linux 部署模板](llamaindex-retrieval/deploy/linux/README.md)
+- [StateTune 工具入口](llamaindex-retrieval/statetune/README.md)
 
 ```bash
 cd llamaindex-retrieval
@@ -35,22 +24,8 @@ uv sync --frozen --extra dev
 uv run pytest -q
 ```
 
-历史实验的独立重放需要先按[归档说明](docs/artifacts.md)恢复相应文件；普通代码测试所需的小型固定材料保留在Git中。发布时的实际检查结果见 `artifacts/statetune-20260911/VALIDATION.json`。
+模型端点、State 与部署状态以实际配置和健康检查为准；代码存在不代表运行服务已启用，测试能执行不代表质量通过。
 
-仓库保留维护中的代码、训练入口、正式数据和必要测试材料；原始调用、冻结源码与过时实验说明统一归档。旧Git提交保持不变。
+## 历史资料
 
-[P0 第二轮 Writer 实验](docs/p0-writer-experiment-20260916.md)：48 次调用、失败候选记录、评测模板校正及引用审计。
-
-[知识维护第一批](docs/index-maintenance-20260919.md)：重建先构建新版本再切换，保留旧索引，并验证真实 OpenSearch 故障场景。
-
-[知识维护第二批](docs/index-rollback-20260919.md)：只读查看索引版本、受校验的全索引回滚与真实故障测试。
-
-[知识维护第三批](docs/source-revisions-20260919.md)：原文/解析快照、切片来源版本、索引发布绑定与来源查询。
-
-[知识维护第四批](docs/document-revisions-20260919.md)：文档修订上传、并发校验、失败恢复和管理页入口。
-
-[自动 Wiki 本地上线](docs/automatic-wiki-20260919.md)：上传/修订后自动生成可追溯草稿，历史与过期检测，真实模型浏览器验收和部署记录。
-
-[知识库＋网络检索上线](docs/hybrid-search-20260919.md)：复用 SearchReader，1.5B 自动联网选择器、StateTune 验收、来源快照及混合检索故障隔离。
-
-[引用原文展示修复](docs/citations-ui-20260919.md)：答案编号可点击，检索/历史/Wiki 统一展示逐字证据和历史来源快照。
+[历史报告索引](docs/archive/README.md)保留阶段验收、失败结果和旧设计。[实验附件](docs/artifacts.md)说明旧数据及权重的恢复方式。历史报告不作为当前默认配置或下一步任务。

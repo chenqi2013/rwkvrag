@@ -1,13 +1,13 @@
-# RWKV传输与state
+# RWKV 传输与 State：维护参考
 
-当前项目固定使用RWKV7 G1j 2.9B。服务器本轮训练与推理使用物理GPU3；训练、协议和结果见[StateTune经验](statetune-experience.md)。旧外部API探针仅证明当时服务自报身份，不能替代本轮底模SHA核验。
+项目通过配置指定 RWKV 模型，不把架构绑定为“仅使用 2.9B”。正式试用与独立 7.2B 实验的状态见 [CURRENT](CURRENT.md)。本会话授权的是 rwkv-8222 的物理 GPU3；文档不会扩大资源授权。旧探针或历史报告中的模型名不能替代运行时身份和底模 SHA 核对。
 
 `rwkvos_batch`发送完整原始prompt，按批次返回的index对应每个请求。认证通过本机环境配置，不进入公开trace。共享批次的完整收据与单项公开记录分开保存；每项保留原始输入、输出、哈希、阶段与错误。
 
 历史外部服务的 `finish_reason="stop"` 不能单独证明实际EOS。需要使用有实际token记录的服务验证正常结束。`stop_tokens`省略、空数组与`[0]`也不能混为同一协议。
 
-本轮Writer/Reader使用带末尾换行的Assistant前缀，Planner使用对应的无末尾换行协议。模型名前缀、state层数、轴序、dtype和底模SHA需要同时匹配。六份最终state的映射见[STATES.json](../artifacts/statetune-20260911/STATES.json)，下载与恢复见[实验附件](artifacts.md)。
+提示前缀、换行和 State 协议必须与选用配置、训练条件一致，不能混用不同模板的实验成绩。模型名、State 层数、轴序、dtype 和底模 SHA 需要匹配；2.9B State 不能直接用于 7.2B。2026-09-11 六份 State 的历史映射见 [STATES.json](../artifacts/statetune-20260911/STATES.json)，下载与恢复见[实验附件](artifacts.md)。
 
-训练state不能替代完整动态会话状态。本项目没有已验证的session续读、分叉或跨文档状态合并。2026-09-11测试后按要求保留比较服务，未恢复原问答模型服务。
+训练 State 不能替代完整动态会话状态。本项目没有已验证的 session 续读、分叉或跨文档状态合并。实际加载状态通过配置、健康接口与逐次 trace 核对，不从旧服务保留说明推断。
 
 旧版文档中的外部API、GPU2初期训练和本机数值探针完整保存在归档的同一相对路径，属于历史条件，不是当前部署说明。

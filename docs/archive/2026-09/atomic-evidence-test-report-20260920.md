@@ -1,5 +1,7 @@
 # 属性证据第一阶段测试报告
 
+> **历史记录，非当前状态。** 本文保留当时的实验、部署或设计结论；“当前”“最新”“下一步”均指原记录时点。当前事实与行动以[当前状态](../../CURRENT.md)为准。原路径：docs/atomic-evidence-test-report-20260920.md。
+
 ## 结论
 
 第一阶段的检索、短证据保存、版本绑定、历史回看和前端原文定位已实现，可在独立预览中检查。**模型的语义质量门槛尚未通过，不应接入自动冲突裁定、最终答案或自动 Wiki 发布。** 当前展示原文及模型标签，没有宣称已经抽出可信的标准化事实。
@@ -19,7 +21,7 @@
 | 最终固定材料模型调用 | 78/78 以 stop 结束 | 此批没有输出截断；不能由小样本证明所有问题都不会循环 |
 | 最终证据位置与哈希审计 | 45/45 一致 | 保存原文、SHA-256、Unicode 起止位置一致；这不验证内容真伪或语义相关性 |
 
-浏览器使用真实预览 API，未拦截或伪造返回：提交查询→OpenSearch→7.2B 选片段→2.9B Reader→MongoDB→点击两份冲突原文→刷新打开历史→切换知识库清除旧记录。另检查 390px 手机布局、抽屉原文进入视口、无横向溢出和 JavaScript 错误。记录见 [browser-qa.json](../artifacts/atomic-evidence-20260920/browser-qa.json)，截图在同目录。
+浏览器使用真实预览 API，未拦截或伪造返回：提交查询→OpenSearch→7.2B 选片段→2.9B Reader→MongoDB→点击两份冲突原文→刷新打开历史→切换知识库清除旧记录。另检查 390px 手机布局、抽屉原文进入视口、无横向溢出和 JavaScript 错误。记录见 [browser-qa.json](../../../artifacts/atomic-evidence-20260920/browser-qa.json)，截图在同目录。
 
 ## 仍未通过的语义门槛
 
@@ -43,7 +45,7 @@
 
 各次运行输出分别保存，没有覆盖或修补旧模型回答。开发过程中固定了材料与调用，分开记录局部调整；这不是严格随机对照实验，不能将多阶段调整归因为单一模型提升。8 个新增用例在首次结果出炉后已成为开发可见材料；v6 是回归复测，不能再称为未见盲测。
 
-历史代码快照、摘要与配置哈希在 [artifacts/atomic-evidence-20260920](../artifacts/atomic-evidence-20260920)。最终 v6 的逐调用 prompt、原始输出、来源和位置随测试材料一起保存在 `v6-final` / `v6-holdout` 子目录。完整 HTTP 收据另存于被 Git 忽略的本地 `data/quality-runs/atomic-evidence-20260920`。
+历史代码快照、摘要与配置哈希在 [artifacts/atomic-evidence-20260920](../../../artifacts/atomic-evidence-20260920)。最终 v6 的逐调用 prompt、原始输出、来源和位置随测试材料一起保存在 `v6-final` / `v6-holdout` 子目录。完整 HTTP 收据另存于被 Git 忽略的本地 `data/quality-runs/atomic-evidence-20260920`。
 
 ## 如何复测
 

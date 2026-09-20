@@ -1,5 +1,7 @@
 # 证据支持判断：四组固定对照结果
 
+> **历史记录，非当前状态。** 本文保留当时的实验、部署或设计结论；“当前”“最新”“下一步”均指原记录时点。当前事实与行动以[当前状态](../../CURRENT.md)为准。原路径：docs/evidence-support-results-20260920.md。
+
 ## 结论
 
 已完成下一阶段的专项评测：40 条固定材料、4 组模型/提示配置，共 160 次真实调用。全部返回有效 JSON，**四组都没有通过预先声明的小样本门槛**。
@@ -69,7 +71,7 @@
 - 10 条待独立审阅记录：任一配置与标签不符的材料进入复核队列，默认禁止直接用于训练。
 - 模型配置独立于评分协议。未来新 RWKV checkpoint 可添加配置重跑；其他传输实现需要保持原始输出和追踪契约。
 
-结果：[SUMMARY.json](../artifacts/evidence-support-20260920/SUMMARY.json)。逐调用原文记录：[calls.jsonl](../artifacts/evidence-support-20260920/calls.jsonl)。待审阅材料：[REVIEW-QUEUE.json](../artifacts/evidence-support-20260920/REVIEW-QUEUE.json)。复现说明：[README](../llamaindex-retrieval/eval/evidence-support-20260920/README.md)。
+结果：[SUMMARY.json](../../../artifacts/evidence-support-20260920/SUMMARY.json)。逐调用原文记录：[calls.jsonl](../../../artifacts/evidence-support-20260920/calls.jsonl)。待审阅材料：[REVIEW-QUEUE.json](../../../artifacts/evidence-support-20260920/REVIEW-QUEUE.json)。复现说明：[README](../../../llamaindex-retrieval/eval/evidence-support-20260920/README.md)。
 
 完整 HTTP 收据保留在本地被 Git 忽略的 `data/quality-runs/evidence-support-20260920/run1`。公开导出保留每条 prompt、原始输出和 trace，不导出 HTTP 收据；每份原始结果文件均记录 SHA-256。
 

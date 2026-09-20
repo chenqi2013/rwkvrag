@@ -2,11 +2,13 @@
 
 本地API地址为 `http://127.0.0.1:18440`，交互接口文档为 `/docs`，RAG调用为 `POST /v1/ask`。页面入口为 <http://127.0.0.1:18440/admin/#/search>，已有前端用于实际试用。
 
-使用 **RWKV7 G1j 2.9B + OpenSearch BM25 + MongoDB**，没有embedding，服务器推理使用物理GPU3。本轮训练和评测见[StateTune经验](../../../docs/statetune-experience.md)。2026-09-11测试后保留比较服务，未恢复原问答推理服务；前端试用配置将Reader设为reader-trace-450、Writer设为writer-trace-300，Planner保持zero；三阶段由同一比较推理服务按请求加载对应state，不启动第二个GPU模型服务。
+本文是本机服务的管理参考，运行状态与核对时间见[CURRENT](../../../docs/CURRENT.md)。主问答的配置读取本机 settings.json，不能根据历史实验报告推断已加载的模型。
+
+正式主服务的 2.9B 管理脚本与独立 7.2B 试验进程是两套部署入口。本页的 manage_gpu3.py 绑定 2.9B 权重和结构，不能只改模型名来启动 7.2B。原子证据预览也不代表正式页面已经更新。
 
 ## 本地服务
 
-四个专用 systemd 用户服务已经安装并启用，引用本目录内的配置原件。它们使用原有数据目录；WSL 用户服务管理器运行时会启动，并在进程异常退出后重启。SSH 隧道独立于其他任务的共享 SSH 连接。
+本机使用以下四个专用 systemd 用户服务；实际启用与运行状态须检查，引用本目录内的配置原件。它们使用原有数据目录；WSL 用户服务管理器运行时会启动，并在进程异常退出后重启。SSH 隧道独立于其他任务的共享 SSH 连接。
 
 ```bash
 systemctl --user start rwkvrag-api.service
@@ -27,7 +29,7 @@ systemctl --user stop rwkvrag-api.service rwkvrag-mongodb.service rwkvrag-opense
 
 本地服务启动后，需等 MongoDB、OpenSearch 恢复完成；`/v1/admin/health` 检查两者，模型就绪另看 `http://127.0.0.1:18423/health`。`active` 本身不证明模型已加载。
 
-“验收资料”知识库包含人工构造材料。此前评测的5000篇Wiki已接入页面，选择“FineWiki 中文百科（5000篇）”即可检索45960个原文片段。`rwkvrag-local-use-v1`是页面使用的OpenSearch索引，包含这个Wiki知识库和原有小型知识库；原Wiki索引另行保留。接入后页面索引合计5019篇文档、46051个片段，文档列表支持分页。
+以下规模是 2026-09-11 的接入快照，不是实时统计。“验收资料”知识库包含人工构造材料。该次评测的5000篇Wiki已接入页面，选择“FineWiki 中文百科（5000篇）”即可检索45960个原文片段。`rwkvrag-local-use-v1`是页面使用的OpenSearch索引，包含这个Wiki知识库和原有小型知识库；原Wiki索引另行保留。接入后页面索引合计5019篇文档、46051个片段，文档列表支持分页。
 
 [Wiki试用指南与13道参考问答](../../../docs/wiki-rag-test-guide.md)说明如何选择资料、核对答案，以及如何用本目录的 `connect_wiki.py` 将已有冻结Wiki索引接入管理页。
 
@@ -53,9 +55,9 @@ Reader协议取决于选用的配置，合法输出仍可能选错原文，需�
 
 服务代码同时校验2.9B模型名、权重SHA及32层/40头布局，不能仅修改配置便换成其他模型。
 
-## StateTune 方法文档试用
+## 2026-09-11 StateTune 方法文档试用记录
 
-打开 <http://127.0.0.1:18440/admin/#/search>，知识库过滤选择“StateTune 数据构建与训练方法”。这里导入的是项目正式方法文档，模型仍需通过BM25检索、Reader判断和Writer生成；没有预置这些问题的答案。
+打开 <http://127.0.0.1:18440/admin/#/search>，知识库过滤选择“StateTune 数据构建与训练方法”。这里导入的是当时的方法文档快照，文件整理不会自动更新已导入语料，模型仍需通过BM25检索、Reader判断和Writer生成；没有预置这些问题的答案。
 
 独立问题之间点击“开始新对话”；连续追问则保留当前会话。可以依次试：
 

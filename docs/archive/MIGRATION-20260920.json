@@ -1,0 +1,121 @@
+{
+  "baseline_commit": "77c74f9ec972b716d9be084a925ba0b881faf048",
+  "date": "2026-09-20",
+  "policy": "Move narrative history, rebase links, preserve frozen experiments/artifacts/datasets.",
+  "moves": [
+    {
+      "old_path": "docs/document-revisions-20260919.md",
+      "new_path": "docs/archive/2026-09/document-revisions-20260919.md",
+      "original_sha256": "122cdfd8b398ee9676b68e81fea589099d8139f80d2dc901723e035e46c52acb",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/p0-quality-baseline-20260916.md",
+      "new_path": "docs/archive/2026-09/p0-quality-baseline-20260916.md",
+      "original_sha256": "6daf2ff70faae3a39ff79fae89515a85313ed163dc33cc46b6f79c0dff910518",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/evidence-support-next-stage-20260920.md",
+      "new_path": "docs/ASSESSMENTS.md",
+      "original_sha256": "abe72d734bef323ae955b8bf2c73dbf588985888b69b42e0d9be278a44c1a23a",
+      "classification": "maintained_contract"
+    },
+    {
+      "old_path": "docs/citations-ui-20260919.md",
+      "new_path": "docs/archive/2026-09/citations-ui-20260919.md",
+      "original_sha256": "3df8a4f7a37f97f9a2825fa033a836063e8054ab98513020889b0ed88b37ec34",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/g1j72-evidence-architecture-20260920.md",
+      "new_path": "docs/archive/2026-09/g1j72-evidence-architecture-20260920.md",
+      "original_sha256": "d58ee050b16f3358b0850315cf523572101ae7680af7ecb468a7b4bba0e51e2b",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/g1j72-test-report-20260920.md",
+      "new_path": "docs/archive/2026-09/g1j72-test-report-20260920.md",
+      "original_sha256": "1a498d44ea833af3d9301c025c4e61ccb465fe59037a6aa6393422a809897fa4",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/weknora-gap-review-20260916.md",
+      "new_path": "docs/archive/2026-09/weknora-gap-review-20260916.md",
+      "original_sha256": "3b79a39c5cba96a8573221f2536208eaabe8c2494237211232ba279ef996f38f",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/hybrid-search-20260919.md",
+      "new_path": "docs/archive/2026-09/hybrid-search-20260919.md",
+      "original_sha256": "a0bffab48151dce7e6b51a6244d136f6379ba96009691556ceeae409bf448d55",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/evidence-support-results-20260920.md",
+      "new_path": "docs/archive/2026-09/evidence-support-results-20260920.md",
+      "original_sha256": "a245ed903e924622d993422768915177a3a064c81be8f3b1aa2bc2ff6a67c69e",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/source-revisions-20260919.md",
+      "new_path": "docs/archive/2026-09/source-revisions-20260919.md",
+      "original_sha256": "1c1dff5f7e45d6d967e89b4155e9195572650812c2393437ecf2121d7866504b",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/index-rollback-20260919.md",
+      "new_path": "docs/archive/2026-09/index-rollback-20260919.md",
+      "original_sha256": "d834b0b68bb4ccc9f808c27fefe88da314e9b31298ce0925bcc71098497254ca",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/comparison-task-matrix-20260920.md",
+      "new_path": "docs/archive/2026-09/comparison-task-matrix-20260920.md",
+      "original_sha256": "f17815958a67b04f63693748233addfdffccbadd218bb0d3c23172ce4e489c89",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/p0-writer-experiment-20260916.md",
+      "new_path": "docs/archive/2026-09/p0-writer-experiment-20260916.md",
+      "original_sha256": "7e8a11c0f7f520aca6aba7014d0c8cbede0660e4a07c806c0f38e306081ceb53",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/index-maintenance-20260919.md",
+      "new_path": "docs/archive/2026-09/index-maintenance-20260919.md",
+      "original_sha256": "0afb5c32bbf96e09ba9abe200d7ee29fb1b423f758d3c8bd1d23fb9b2a9fff90",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/automatic-wiki-20260919.md",
+      "new_path": "docs/archive/2026-09/automatic-wiki-20260919.md",
+      "original_sha256": "0feae1a0cd2444efba34f4b96c63401032c2c63aed1a45a4091974ebe33b5d1a",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/atomic-evidence-contract-20260920.md",
+      "new_path": "docs/EVIDENCE.md",
+      "original_sha256": "c2e4aba19addc95906da56d9326f8db8c0f00329d7ee006ccd0327c8c3baec7f",
+      "classification": "maintained_contract"
+    },
+    {
+      "old_path": "docs/atomic-evidence-test-report-20260920.md",
+      "new_path": "docs/archive/2026-09/atomic-evidence-test-report-20260920.md",
+      "original_sha256": "07e82db98c33d0f04d5cdad2f3b0f49c745e7c9b1a3caadd59fb37060fc53767",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/comparison-quality-20260919.md",
+      "new_path": "docs/archive/2026-09/comparison-quality-20260919.md",
+      "original_sha256": "beeeb47bcb6da681263a57f030f0df1594ebf0fc9ea7eb85fb163aea631f0225",
+      "classification": "historical"
+    },
+    {
+      "old_path": "docs/statetune-experience.md",
+      "new_path": "docs/archive/2026-09/statetune-experience-20260911.md",
+      "original_sha256": "9951c391364a8047256d547e8da74d498ad8eb9685efbf11043b391b7aa08f2c",
+      "classification": "historical"
+    }
+  ]
+}

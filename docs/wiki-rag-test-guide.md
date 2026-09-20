@@ -1,8 +1,10 @@
 # 5000篇中文Wiki：RWKV 2.9B RAG试用与参考问答
 
+> **历史语料试问参考（2026-09-11）。** 数据规模、配置和结果均为当时快照；不是实时统计或未见验收题。当前服务见 [CURRENT](CURRENT.md)。
+
 本项目使用RWKV7 G1j 2.9B与OpenSearch BM25，不使用embedding。现有管理页来自父分支`bm250820`，页面通过`POST /v1/ask`调用真实检索、Reader证据判断与Writer生成。
 
-如果主要想学习StateTune，请先看[数据集如何构建、用什么训练](statetune-experience.md)，再看[正式训练数据与代码](../llamaindex-retrieval/statetune/README.md)。本页用于实际试问和核对来源。
+如果主要想学习StateTune，请先看[数据集如何构建、用什么训练](archive/2026-09/statetune-experience-20260911.md)，再看[正式训练数据与代码](../llamaindex-retrieval/statetune/README.md)。本页用于实际试问和核对来源。
 
 ## 在已部署的本地环境试用
 
@@ -13,9 +15,9 @@
 
 `127.0.0.1`只指向打开浏览器的那台电脑；分享GitHub链接不会把当前本地页面变成公共在线演示。其他电脑需要依照[服务说明](../llamaindex-retrieval/README.md)部署，并准备2.9B模型、OpenSearch和MongoDB。
 
-当前试用配置：Planner为zero state，Reader为`reader-trace-450`，Writer为`writer-trace-300`，由同一个推理服务按阶段加载。这个组合尚未证明是端到端最优。
+当时试用配置：Planner为zero state，Reader为`reader-trace-450`，Writer为`writer-trace-300`，由同一个推理服务按阶段加载。这个组合尚未证明是端到端最优。
 
-## 数据规模与接入方式
+## 2026-09-11 数据规模与接入方式
 
 | 范围 | 文章数 | 原文片段数 |
 |---|---:|---:|
@@ -74,7 +76,7 @@ llamaindex-retrieval/.venv/bin/python llamaindex-retrieval/deploy/local/connect_
 
 原样答案、调用阶段、来源与引用审计保存在[BROWSER.json](../llamaindex-retrieval/eval/wiki-ui-20260911/BROWSER.json)。这3次检查只证明本次接入后的具体表现，未重新评测全部13题或所有5000篇文章，也不代表整体准确率。
 
-前端构建通过，仍有已有的大包体提示。后端全量测试为761通过、114失败、2跳过，114个失败用例ID与此前记录一致；不能称为全量测试通过。接入收据与验证记录见[本次验证目录](../llamaindex-retrieval/eval/wiki-ui-20260911/)。
+前端构建通过，仍有已有的大包体提示。后端全量测试为761通过、114失败、2跳过，114个失败用例ID与此前记录一致；不能称为全量测试通过。接入收据与验证记录见[本次验证目录](../llamaindex-retrieval/eval/wiki-ui-20260911)。
 
 ## 来源与许可
 

@@ -1,6 +1,8 @@
-# RWKV 2.9B StateTune 数据与训练
+# StateTune 工具与 2026-09-11 训练记录
 
-[实践总结](../../docs/statetune-experience.md)是本轮经验的主要入口。最新数据为 `datasets/trace-v1-2000/draft-v6-seeded`，正式训练包为 `datasets/trace-v1-2000/release-v1`。2000条唯一训练数据已经独立复核，六组state训练与本轮推理已完成；成绩与局限见总结。
+[实践总结](../../docs/archive/2026-09/statetune-experience-20260911.md)说明 2026-09-11 那一轮训练；不代表新的 Reader 训练已经开始。当时数据为 `datasets/trace-v1-2000/draft-v6-seeded`，正式训练包为 `datasets/trace-v1-2000/release-v1`。2000条唯一训练数据已经独立复核，六组state训练与本轮推理已完成；成绩与局限见总结。
+
+> 当前任务见[CURRENT](../../docs/CURRENT.md)。新的训练必须新建版本并固定底模、数据、提示与验证集；下列脚本和数据用于方法参考或复现。
 
 ## 数据流程
 

@@ -1,5 +1,7 @@
 # P0 第二轮：Writer 提示词对照与评测模板校正
 
+> **历史记录，非当前状态。** 本文保留当时的实验、部署或设计结论；“当前”“最新”“下一步”均指原记录时点。当前事实与行动以[当前状态](../../CURRENT.md)为准。原路径：docs/p0-writer-experiment-20260916.md。
+
 日期：2026-09-16。承接 [WeKnora 差距评审](weknora-gap-review-20260916.md) 与 [首轮基线](p0-quality-baseline-20260916.md)。
 
 ## 结论
@@ -32,14 +34,14 @@ legacy 下，开发题丢失原先通过的筹款题；留出题改善部分资�
 
 检查本机应用设置发现：应用使用 `rwkv_g1j_no_think_v1`，早期 smoke 使用 `legacy`。两者在 `Assistant: <think></think>` 后相差一个换行，这也是训练模板的一部分。
 
-补测保持模型 `rwkv7-g1j-2.9b-20260831-ctx16384`、有效 state `writer-trace-300`、材料、历史、内容提示词及远端参数不变。逐题比较实际 trace：16/16 的 messages、parameters、evidence_ids 相同，canonical prompt 恰好是 legacy prompt 加一个换行。源码审计功能虽在两轮之间增加，但未改变上述实际模型输入。详见 [协议对照证据](../artifacts/writer-p0-20260916/PROTOCOL-COMPARISON.json)。
+补测保持模型 `rwkv7-g1j-2.9b-20260831-ctx16384`、有效 state `writer-trace-300`、材料、历史、内容提示词及远端参数不变。逐题比较实际 trace：16/16 的 messages、parameters、evidence_ids 相同，canonical prompt 恰好是 legacy prompt 加一个换行。源码审计功能虽在两轮之间增加，但未改变上述实际模型输入。详见 [协议对照证据](../../../artifacts/writer-p0-20260916/PROTOCOL-COMPARISON.json)。
 
 开发题仍通过 3/8，但通过项发生变化：筹款题将 29 天写成 13 天而失败，长材料题补上有效引用而通过；列车、工作站题重复至截断；空材料仍杜撰销量 0 台及资料 1。新编题组通过 7/8，剩余长材料题事实正确但没有引用。不能把小样本差异宣称为产品总体准确率。
 
 ## 证据与验证
 
-- [冻结实验计划](../artifacts/writer-p0-20260916/PLAN.json)、[补测计划](../artifacts/writer-p0-20260916/PROTOCOL-FOLLOWUP-PLAN.json)
-- [提示词对照报告](../artifacts/writer-p0-20260916/COMPARISON.json)、[引用独立诊断](../artifacts/writer-p0-20260916/CITATION-DIAGNOSTICS.json)
+- [冻结实验计划](../../../artifacts/writer-p0-20260916/PLAN.json)、[补测计划](../../../artifacts/writer-p0-20260916/PROTOCOL-FOLLOWUP-PLAN.json)
+- [提示词对照报告](../../../artifacts/writer-p0-20260916/COMPARISON.json)、[引用独立诊断](../../../artifacts/writer-p0-20260916/CITATION-DIAGNOSTICS.json)
 - 各组目录保留完整答案投影、逐题复核、manifest、执行汇总和质量报告；原始响应没有覆盖。
 - 完整 HTTP 收据、冻结源码、材料和 trace 位于本机 `data/quality-runs/20260916-writer-checked-v1/` 与 `data/quality-runs/20260916-writer-canonical-{development,holdout}/`。仓库投影不替代完整运行包；跨机器重放验收需要完整目录。
 - 前端 23 项测试及 TypeScript/Vite 构建通过；最终相关后端回归 336 项通过（覆盖本轮改动，非全仓库测试），结果见同目录测试日志。新增 canonical 执行器测试直接检查发往 mock 服务的换行和 Writer 专用 state，而非只检查配置对象。

@@ -1,12 +1,10 @@
 # RWKV 原生检索问答服务
 
-从 `bm250820@2bbc406` 重建。`rwkv_pipeline.py` 编排检索、原文选择和作答，`model_client.py` 选择传输，`verbatim_chunking.py` 保留原文。约束见 [ARCHITECTURE_RULES.md](ARCHITECTURE_RULES.md)。
+> 维护参考。当前开发重点、实际部署与实验状态统一见[当前状态](../docs/CURRENT.md)，实验前读[变量控制](../docs/EXPERIMENTS.md)。
 
-通过 `POST /v1/ask` 调用 **RWKV7 G1j 2.9B + OpenSearch BM25 + MongoDB**，不使用embedding。现有前端用于人工试用，入口为 <http://127.0.0.1:18440/admin/#/search>；API交互文档在 `/docs`。文件、知识库、历史和trace由后端接口管理。
+基于 OpenSearch BM25、MongoDB 和 RWKV API。模型端点与兼容 State 由配置指定；2.9B 正式试用与 7.2B 独立实验不能混为同一部署。约束见 [ARCHITECTURE_RULES.md](ARCHITECTURE_RULES.md)。
 
-本轮2000条数据与六组state训练、评测已完成，见[StateTune经验](../docs/statetune-experience.md)及[最新结果](eval/trace-eval-20260911/RESULTS.md)。Reader和Writer部分能力有改善，Planner出现格式退步；不同题组结果不能合成全场景准确率。试用配置按阶段使用Reader450与Writer300，Planner保持零state；这个组合是试用候选，尚未证明在完整RAG中最优。应用配置以本机配置文件为准。
-
-实验原始输出、旧方案、模型与源码依赖按[归档说明](../docs/artifacts.md)恢复。2026-09-11测试后保留比较推理服务，未恢复旧问答模型服务；不要将历史部署说明当成当前加载状态。
+POST /v1/ask 执行检索与作答；文件、知识库、历史和 trace 由管理接口维护。新代码中的单项证据接口见[证据契约](../docs/EVIDENCE.md)，默认需要显式配置才能启用。通用安装配置不等同于本机正在运行的配置。
 
 ## 依赖与启动
 
@@ -63,7 +61,7 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 | `NATIVE_INGEST_CHUNK_CHARACTERS` / `NATIVE_INGEST_OVERLAP_CHARACTERS` | 2400 / 180 | 逐字软窗口与重叠 |
 | `NATIVE_TIMEOUT_SECONDS` | 180 | 示例 600；计数开启时涵盖排队、计数和生成 |
 
-`candidate_k` 是每条检索式的候选量，总来源上限不是调用次数上限。超长原文可分多次读取。每次 Reader 的约 6,000 原文字符没有包括历史、任务、父级上下文和模板，不能当总 token 上限。外部计数默认关闭；启用后计数失败或超过显式应用上限均显式返回，不裁切输入。没有动态 state 续读，详细机制与 8K/16K/32K 结果见 [超长上下文](../docs/long-context.md)。
+`candidate_k` 是每条检索式的候选量，总来源上限不是调用次数上限。超长原文可分多次读取。每次 Reader 的约 6,000 原文字符没有包括历史、任务、父级上下文和模板，不能当总 token 上限。外部计数默认关闭；启用后计数失败或超过显式应用上限均显式返回，不裁切输入。没有动态 state 续读，预算和动态 State 边界见 [超长上下文](../docs/long-context.md)。
 
 计数开启时，总期限从调用入口开始，包含等槽和批次排队；失败收据的有界落盘收尾单独计时。计数关闭时保留原外部批次 HTTP 时限。
 
@@ -85,7 +83,7 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 }
 ```
 
-`POST /v1/material-ask` 只运行固定材料 Writer，输入 question、history、materials（1–20 份 SourceItem）。`POST /v1/search` 只运行 BM25；展示 top_k 不限制 Writer 返回的引用来源。管理、导入和任务接口复用基点实现，新切块应使用新索引。
+`POST /v1/material-ask` 只运行固定材料 Writer，输入 question、history、materials（1–20 份 SourceItem）。POST /v1/search 按 retrieval_mode 检索知识库、网络或混合材料，不生成最终 Writer 答案；展示 top_k 不限制 Writer 返回的引用来源。管理、导入和任务接口复用基点实现，新切块应使用新索引。
 
 `answer` 保留原始模型文本。`generation.answer_span` 标出正文的 Unicode 起止位置；不能把它当事实审核。没有模型文本时 answer 为空、raw_model_answer 为 null。
 
@@ -102,7 +100,7 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 
 ## StateTune数据与训练
 
-本轮从真实trace的17个纠错种子生成2000条数据，已完成六组训练与对照。[数据管线](statetune/README.md)提供入口、格式和正式训练包；旧草稿及阶段运行记录按[附件说明](../docs/artifacts.md)恢复。
+2026-09-11 实验从真实trace的17个纠错种子生成2000条数据，已完成六组训练与对照。[数据管线](statetune/README.md)提供入口、格式和正式训练包；旧草稿及阶段运行记录按[附件说明](../docs/artifacts.md)恢复。
 
 `rwkvrag-state-data`提供 `prepare / build / audit / export`，`rwkvrag-state-release`管理独立复核后的训练发布。数据导出、格式通过和loss下降均不能代替实际问答测试。
 
@@ -118,8 +116,8 @@ uv run pytest -q tests/test_native_rwkv.py tests/test_rwkvos_batch.py tests/test
 
 发布验证见 [VALIDATION.json](../artifacts/statetune-20260911/VALIDATION.json)。完整回归仍有114项历史失败；没有删除这些测试或将其改成跳过。软件测试不证明模型答案正确。历史日志与失败集对照保存在实验附件中。
 
-Writer 提示词实验与 canonical 模板校正见 [第二轮报告](../docs/p0-writer-experiment-20260916.md)。实验候选未启用；新评测应显式指定传输模板和 Writer state。
+Writer 提示词实验与 canonical 模板校正见 [第二轮报告](../docs/archive/2026-09/p0-writer-experiment-20260916.md)。实验候选未启用；新评测应显式指定传输模板和 Writer state。
 
 ## 自动联网与混合检索
 
-管理页默认由 SearchReader 的 1.5B StateTune 选择器判断是否补充网络材料；API 显式传 `retrieval_mode: "auto"` 启用。支持强制 knowledge_base / hybrid / web。详细配置、训练结果、部署与已知质量问题见 [混合检索交付报告](../docs/hybrid-search-20260919.md)。
+管理页默认由 SearchReader 的 1.5B StateTune 选择器判断是否补充网络材料；API 显式传 `retrieval_mode: "auto"` 启用。支持强制 knowledge_base / hybrid / web。详细配置、训练结果、部署与已知质量问题见 [混合检索交付报告](../docs/archive/2026-09/hybrid-search-20260919.md)。

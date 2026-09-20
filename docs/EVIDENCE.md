@@ -1,6 +1,6 @@
 # 属性证据第一阶段：数据契约与交付边界
 
-日期：2026-09-20。实现协议：atomic-evidence-v6。前置备份：68b6bf4a6587ad1d446d70634d98299bdb54ab0e。
+维护契约；部署状态见 [CURRENT](CURRENT.md)。核对日期：2026-09-20。实现协议：atomic-evidence-v6。前置备份：68b6bf4a6587ad1d446d70634d98299bdb54ab0e。
 
 ## 本阶段解决什么
 
@@ -87,6 +87,6 @@ MongoDB 集合 atomic_evidence_runs。先写 running，结束时仅允许对 run
 
 功能默认关闭，需要配置 atomic_model_base_url 并具备已配置的 native batch Reader。预览使用独立 MongoDB、OpenSearch 索引和上传目录，不接管正式问答或 Wiki。
 
-预览：http://127.0.0.1:18445/admin/#/atomic-evidence 。界面知识库名以“证据验收”开头，资料均为人工构造。2026-09-20 的远端 7.2B 测试服务设置了 4 小时寿命，约 14:13 停止；预览服务也为临时服务。它们不是已部署的常驻生产服务。
+预览地址、服务寿命与本次核对状态统一见 [CURRENT](CURRENT.md)，不能从实现契约推断运行服务已经启用。
 
 下一道门槛是严格验证“对象、属性、时间、地域、否定”的相符性，处理表头误选与 QA 否定漏判，再冻结新的未见测试集。通过后才能让标准化原子记录进入分子关系、冲突裁定、阶梯总结与 Wiki 更新。StateTune 训练、分子层、Writer 改造均未在本阶段实施。

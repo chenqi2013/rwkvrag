@@ -1,6 +1,8 @@
 # StateTune实验附件与文件整理
 
-正式经验只记录问题来源、纠错数据、训练方法和效果，见[StateTune经验](statetune-experience.md)。本页说明原始记录和权重的存放位置。
+> **2026-09-11 实验的恢复参考。** 本页不是项目当前状态；后续报告整理见[历史索引](archive/README.md)，当前事实见 [CURRENT](CURRENT.md)。
+
+正式经验只记录问题来源、纠错数据、训练方法和效果，见[StateTune经验](archive/2026-09/statetune-experience-20260911.md)。本页说明原始记录和权重的存放位置。
 
 ## 下载与校验
 
@@ -34,7 +36,7 @@ tar -xzf data/downloads/statetune-20260911/statetune-states-20260911.tar.gz \
   -C data/restored-statetune-20260911
 ```
 
-当前正式数据也保留在Git的 `llamaindex-retrieval/statetune/datasets/trace-v1-2000/` 中。归档中的原始回执、哈希、时间和当时状态不追写成最新结论，例如训练完成回执中的“尚未评测”描述的是训练结束时点。
+2026-09-11 发布的数据也保留在Git的 `llamaindex-retrieval/statetune/datasets/trace-v1-2000/` 中。归档中的原始回执、哈希、时间和当时状态不追写成最新结论，例如训练完成回执中的“尚未评测”描述的是训练结束时点。
 
 ## 复现实验的边界
 
@@ -44,10 +46,10 @@ tar -xzf data/downloads/statetune-20260911/statetune-states-20260911.tar.gz \
 
 旧阶段权重保留在本地，明确列在[EXCLUDED-STATES.json](../artifacts/statetune-20260911/EXCLUDED-STATES.json)，不属于本次附件。历史tar包内部可能另有当时已公开的小型state；本次没有将未发布的旧训练检查点补齐，不能声称附件可恢复所有历史权重。
 
-## 本次清理
+## 2026-09-11 当次清理记录
 
 维护入口收敛为根README、后端说明、StateTune经验和数据入口。重复阶段报告、旧草稿和原始调用移出活动目录，保存在已校验附件及本地归档中；原有Git历史保持不变。具体路径见[CLEANUP.json](../artifacts/statetune-20260911/CLEANUP.json)。
 
-旧Go原型已移除。现有前端根据最新试用要求恢复，连接同一套2.9B RAG后端；实验记录与过时文档的清理保持有效。后续部署验证单独记录，不改写历史测试回执。
+旧Go原型已移除。当时前端按试用要求恢复并连接2.9B RAG后端；实验记录与过时文档的清理保持有效。后续部署验证单独记录，不改写历史测试回执。
 
 必要的小型回归材料保留在Git。发布时测试结果及历史失败对照见[VALIDATION.json](../artifacts/statetune-20260911/VALIDATION.json)，没有把已知失败改成跳过或声称全量测试通过。
