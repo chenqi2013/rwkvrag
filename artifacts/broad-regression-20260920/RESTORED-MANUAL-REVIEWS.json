@@ -1,0 +1,467 @@
+{
+  "purpose": "Preselected 48-case agent review; not independent adjudication",
+  "items": [
+    {
+      "case_id": "diverse-0014",
+      "verdict": "fail",
+      "issues": [
+        "no_evidence",
+        "unsupported_answer",
+        "citation_out_of_range",
+        "repetition",
+        "length"
+      ],
+      "note": "来源为空，却反复声称模拟舱训练并递增资料编号直到长度限制，没有回答训练方法。"
+    },
+    {
+      "case_id": "wiki_batch2-0070",
+      "verdict": "fail",
+      "issues": [
+        "repetition",
+        "length"
+      ],
+      "note": "皇帝身份有原文支持且符合问题，但重复百余次至长度限制，整体输出失败；不能仅按包含正确身份判通过。旧参考只有早期封号，未改gold。"
+    },
+    {
+      "case_id": "basic-0005",
+      "verdict": "fail",
+      "issues": [
+        "incomplete_list",
+        "unsupported_station_names",
+        "citation_misalignment",
+        "repetition",
+        "length"
+      ],
+      "note": "没有给完整站点列表，将道路名称及历史备选站名混入，统一引用的资料3只支持两端点和数量，随后路线描述反复至长度上限。按冻结材料核验，不断言当前线路状态。"
+    },
+    {
+      "case_id": "native_wiki-0003",
+      "verdict": "fail",
+      "issues": [
+        "missing_objects",
+        "citation_misalignment",
+        "repetition",
+        "length"
+      ],
+      "note": "许可证事实正确但应引来源4，来源1是付费托管服务；NT语言技术和Gearman角色证据均在来源中却漏答，反复Ghost至长度上限。"
+    },
+    {
+      "case_id": "wiki_verified-0195",
+      "verdict": "fail",
+      "issues": [
+        "wrong_scope",
+        "repetition",
+        "length",
+        "missing_citation"
+      ],
+      "note": "第二辑9行表在来源6中，但答案将不同辑内容混在一起且反复循环，没有按集数/日期/主题整理，无引用，直至长度限制。"
+    },
+    {
+      "case_id": "wiki_verified-0095",
+      "verdict": "partial",
+      "issues": [
+        "missing_city",
+        "irrelevant_citation"
+      ],
+      "note": "北马其顿正确，但已提供原文中的奥赫里德未回答。资料1仅标题、不支持地点；资料2支持国家与城市。追踪显示标题对原问题NO，却对关键词位置变体YES而入选。"
+    },
+    {
+      "case_id": "native_wiki-0000",
+      "verdict": "fail",
+      "issues": [
+        "wrong_unit",
+        "missing_citation"
+      ],
+      "note": "11/29位ID与5Mbit/s基本正确，但64位元组误写成64位元，且没有引用；完整支持证据已经返回。"
+    },
+    {
+      "case_id": "basic-0003",
+      "verdict": "fail",
+      "issues": [
+        "no_evidence",
+        "citation_out_of_range",
+        "unsupported_answer"
+      ],
+      "note": "输出广东省，但sources为空却引用资料1。旧用例只列候选标题，不据字面答案判断事实通过；缺少可核验证据与统计时间。"
+    },
+    {
+      "case_id": "basic-0001",
+      "verdict": "pass",
+      "issues": [
+        "redundant_answer"
+      ],
+      "note": "北京与来源1对应，核心事实及引用通过；但同一事实重复四行，属于仍需改进的体验，语义通过不代表体验验收通过。"
+    },
+    {
+      "case_id": "wiki_batch2-0177",
+      "verdict": "pass",
+      "issues": [],
+      "note": "完整回答两位创建者，资料1原文直接支持；没有混入成员名单或多余重复。"
+    },
+    {
+      "case_id": "wiki_batch2-0005",
+      "verdict": "pass",
+      "issues": [
+        "irrelevant_selected_sources"
+      ],
+      "note": "回答398人并保留2018年口径，引用资料1直接支持；入选来源还夹带俄罗斯与下萨瓦人口，但没有混入最终回答。"
+    },
+    {
+      "case_id": "diverse-0003",
+      "verdict": "fail",
+      "issues": [
+        "missing_key_identity",
+        "citation_misalignment",
+        "citation_out_of_range",
+        "repetition",
+        "length"
+      ],
+      "note": "原文6、8明确提供日本歌手及浦岛坂田船成员身份，但回答只写别名、生辰和出身地，随后重复链接与递增引用至55并长度退出；仅10份来源，多数编号越界，资料1也不支持生辰。"
+    },
+    {
+      "case_id": "diverse-0019",
+      "verdict": "fail",
+      "issues": [
+        "unrequested_expansion",
+        "relation_reversal",
+        "contradicts_source",
+        "citation_misalignment"
+      ],
+      "note": "作家丘东平的基本身份正确，但擅自扩展亲属问答；原文2明确女儿丘丽卿，回答却称未记载女儿并将其写成二妹，另造八个表兄弟，全部错误引用不含家庭信息的资料1。未就东平名称歧义说明范围。"
+    },
+    {
+      "case_id": "native_wiki-0005",
+      "verdict": "fail",
+      "issues": [
+        "no_evidence",
+        "missing_required_facts",
+        "question_echo",
+        "citation_out_of_range",
+        "planner_partial_failure"
+      ],
+      "note": "未补齐目标25000英镑、实际196362英镑及29天三格，仅复述栏名；来源为空仍输出资料1至4。规划部分失败没有被模型转成可用答复。"
+    },
+    {
+      "case_id": "wiki_batch2-0023",
+      "verdict": "pass",
+      "issues": [
+        "irrelevant_selected_sources"
+      ],
+      "note": "回答电影1967年上映，资料1直接支持，未混用1966年电视剧或两部后续电影日期；来源列表仍夹带后续作品和裸标题。"
+    },
+    {
+      "case_id": "diverse-0006",
+      "verdict": "pass",
+      "issues": [
+        "irrelevant_selected_sources"
+      ],
+      "note": "成立年份及补充日期均与资料2一致，引用正确；资料1仅为裸标题，没有被当成该日期的引用。"
+    },
+    {
+      "case_id": "basic-0004",
+      "verdict": "partial",
+      "issues": [
+        "unresolved_information_need",
+        "scope_not_clarified"
+      ],
+      "note": "所给资料没有人数，回答没有编造数字；但未解决用户问题，也未说明需要年份及未婚/婚姻挤压等统计口径，不能视为完整可用答案。"
+    },
+    {
+      "case_id": "native_wiki-0001",
+      "verdict": "partial",
+      "issues": [
+        "citation_misalignment"
+      ],
+      "note": "四项主要事实与原文及参考要求一致，但三项引用错位：编程语言引用7而对应列表在17；事件驱动引用9而支持在3；三色书引用2而支持在1。生命周期16阶段引用4正确。"
+    },
+    {
+      "case_id": "native_wiki-0006",
+      "verdict": "fail",
+      "issues": [
+        "wrong_negation",
+        "wrong_citation",
+        "missing_fact",
+        "repetition",
+        "length"
+      ],
+      "note": "工作站Mac支持被说成是，所引资料3实际为电影条目；原文资料2明确不支持。未输出Daytona，反复输出已撤回3.51直到长度限制。"
+    },
+    {
+      "case_id": "diverse-0009",
+      "verdict": "fail",
+      "issues": [
+        "budget_exceeded",
+        "empty_answer"
+      ],
+      "note": "香港回归年份普通题返回budget_exceeded和空答案；不能计为正确拒答。"
+    },
+    {
+      "case_id": "native_wiki-0002",
+      "verdict": "fail",
+      "issues": [
+        "object_mixing",
+        "wrong_citation",
+        "missing_fact",
+        "repetition",
+        "length"
+      ],
+      "note": "将ICE-2说明用于ICE-1问题，资料2实际是305系编组；Hamm被反复写作动力车而非合体站，未完成305系6辆/4动力车答案，长度退出。"
+    },
+    {
+      "case_id": "diverse-0017",
+      "verdict": "fail",
+      "issues": [
+        "attribute_mixing",
+        "unsupported_answer",
+        "missing_citation"
+      ],
+      "note": "来源3的硫酸与氧化铜/碳酸钠反应被写作硝酸制备，硫酸脱水剂作用被移给硝酸；未给引用，比较答案出现明显属性串位。"
+    },
+    {
+      "case_id": "wiki_verified-0103",
+      "verdict": "pass",
+      "issues": [],
+      "note": "548人口及资料1对应正确，按冻结历史来源核验；来源数字属于2010年，不作为当前人口声明。"
+    },
+    {
+      "case_id": "wiki_verified-0060",
+      "verdict": "partial",
+      "issues": [
+        "citation_misalignment"
+      ],
+      "note": "2011成立有实际来源2支持，但引用1只有标题；旧gold只列下属公司，未改gold，按完整检索证据判事实正确。"
+    },
+    {
+      "case_id": "diverse-0018",
+      "verdict": "fail",
+      "issues": [
+        "wrong_object_binding",
+        "unsupported_detail",
+        "citation_misalignment",
+        "repetition",
+        "length"
+      ],
+      "note": "人物身份生卒有据，但将王翱吏部尚书经历移给马昂，刑部尚书等无据，后续广东巡抚重复至上限；统一资料2不支持诸官职。"
+    },
+    {
+      "case_id": "diverse-0016",
+      "verdict": "fail",
+      "issues": [
+        "no_evidence",
+        "unsupported_answer",
+        "citation_out_of_range"
+      ],
+      "note": "检索来源为空，仍生成历史音色使用场景比较并给不存在的资料1至6，无法核查。"
+    },
+    {
+      "case_id": "basic-0000",
+      "verdict": "partial",
+      "issues": [
+        "citation_misalignment",
+        "repetition"
+      ],
+      "note": "北京事实及资料1支持正确，但重复七次并将一般首都背景资料2至7均挂作支持，引用不准确。"
+    },
+    {
+      "case_id": "diverse-0005",
+      "verdict": "partial",
+      "issues": [
+        "citation_misalignment",
+        "scope_expansion",
+        "planner_partial_failure"
+      ],
+      "note": "甘肃省正确但应引来源3/4而非只有标题的1；增加未问地理经济背景，另保留规划部分失败状态。"
+    },
+    {
+      "case_id": "wiki_verified-0189",
+      "verdict": "pass",
+      "issues": [],
+      "note": "美国纽约州的归属与资料2一致，有真实引用；未要求县级或全部地理背景。"
+    },
+    {
+      "case_id": "diverse-0004",
+      "verdict": "pass",
+      "issues": [],
+      "note": "波兰与实际资料1对应，直接回答位置；按冻结语料核验，不外推同名城堡。"
+    },
+    {
+      "case_id": "diverse-0015",
+      "verdict": "fail",
+      "issues": [
+        "mixed_processes",
+        "citation_misalignment",
+        "repetition"
+      ],
+      "note": "把氨氧化现代流程和氮氧高温旧法混为一谈，资料2只有标题却用来引用全部工艺，并重复五段。"
+    },
+    {
+      "case_id": "native_wiki-0007",
+      "verdict": "fail",
+      "issues": [
+        "wrong_object_binding",
+        "wrong_event_date"
+      ],
+      "note": "要求红山毛榉2000-06-10与红橡1999-09-13，答案错选移交阿根廷的红木且两日期均错；正确表格就在资料2。"
+    },
+    {
+      "case_id": "diverse-0000",
+      "verdict": "fail",
+      "issues": [
+        "contradicts_source",
+        "unsupported_detail",
+        "citation_misalignment"
+      ],
+      "note": "操作码写0x90与来源0F A2矛盾，首批80186也与奔腾/486SL来源矛盾；寄存器含义泛化错误，全部引仅讲支持检测的资料1。"
+    },
+    {
+      "case_id": "wiki_verified-0129",
+      "verdict": "partial",
+      "issues": [
+        "missing_citation"
+      ],
+      "note": "发明者藍道爾海德正确但无引用，实际来源1支持。"
+    },
+    {
+      "case_id": "diverse-0008",
+      "verdict": "partial",
+      "issues": [
+        "citation_misalignment",
+        "repetition"
+      ],
+      "note": "1999-12-20正确且来源3/5支持，但重复七段并全引1至8，含外链列表和纯标题等不支持片段。"
+    },
+    {
+      "case_id": "wiki_verified-0008",
+      "verdict": "fail",
+      "issues": [
+        "mixed_event_binding",
+        "severe_repetition",
+        "length"
+      ],
+      "note": "将700年前后的归附事件混为扣马围攻，数量一万亦与来源2一千不同；末尾黄黑二姓解释反复直至长度限制，完整原文保留。"
+    },
+    {
+      "case_id": "basic-0002",
+      "verdict": "fail",
+      "issues": [
+        "no_evidence",
+        "citation_out_of_range"
+      ],
+      "note": "来源为空仍给广东及不存在资料1；知识库证据约束未满足，不用常识代替实际支持。"
+    },
+    {
+      "case_id": "diverse-0013",
+      "verdict": "partial",
+      "issues": [
+        "missing_citation",
+        "incomplete_explanation"
+      ],
+      "note": "回答仅称为首次登月奠定基础，没有明确说明任务本身实现首次载人登月，也未展开历史意义；无来源引用。"
+    },
+    {
+      "case_id": "diverse-0011",
+      "verdict": "fail",
+      "issues": [
+        "severe_repetition",
+        "length",
+        "missing_citation"
+      ],
+      "note": "先列出部分关隘及长城区段，随后反复输出内外长城直到长度上限，未附引用。保留完整原文，人工展示仅截取首尾以确认循环。"
+    },
+    {
+      "case_id": "diverse-0002",
+      "verdict": "partial",
+      "issues": [
+        "citation_misalignment"
+      ],
+      "note": "唐朝宰相、生卒年、官职与主要身份可由正文支持，但所有事实均引用文末书目来源1，应分别引用简介5、生平3或改革段2。"
+    },
+    {
+      "case_id": "diverse-0007",
+      "verdict": "partial",
+      "issues": [
+        "missing_citation",
+        "repetition",
+        "query_echo"
+      ],
+      "note": "成立于2002年正确，但重复年份/时间/日期及检索式，没有来源引用。"
+    },
+    {
+      "case_id": "diverse-0001",
+      "verdict": "fail",
+      "issues": [
+        "wrong_chemical_structure",
+        "mixed_concentration_values",
+        "wrong_equation",
+        "citation_misalignment"
+      ],
+      "note": "定义开头正确，但后续分子键描述与来源3不符，混用纯硝酸和浓溶液密度，反应式与来源9不同且引用了条目列表10，多处错位。"
+    },
+    {
+      "case_id": "wiki_verified-0193",
+      "verdict": "fail",
+      "issues": [
+        "severe_repetition",
+        "length_exit",
+        "unsupported_causal_claims",
+        "citation_misalignment"
+      ],
+      "note": "前段政治、军事、新海路和税负有来源支持，但把繁荣期全年集市制度误作衰落原因，把巴黎声望写成法国声望，并将战争与经济史意义错误拼接；后段反复重复国王税收句直到长度退出。不能因部分原因正确及重复引用资料2判通过。"
+    },
+    {
+      "case_id": "wiki_verified-0094",
+      "verdict": "partial",
+      "issues": [
+        "nonspecific_citations",
+        "duplicate_sources"
+      ],
+      "note": "五点简介与资料7/8正文及资料2/4注释相符，直接覆盖题意，未要求必须抄写参考的公式。但每句都机械列出全部8条来源，混入仅标题/小标题及重复片段，引用不能定位具体依据；核心回答正确，引用体验未通过。"
+    },
+    {
+      "case_id": "native_wiki-0004",
+      "verdict": "fail",
+      "issues": [
+        "cross_platform_fact_binding",
+        "contradicted_cited_evidence"
+      ],
+      "note": "XML、Windows8、Vista三格正确且引用对应；但将MV的Windows/手机两平台都写为ogg，资料1明确分别是ogg与m4a，核心对比维度混淆。完整证据已在最终来源中，不能归咎检索缺失。"
+    },
+    {
+      "case_id": "diverse-0012",
+      "verdict": "partial",
+      "issues": [
+        "unrequested_expansion",
+        "citation_misalignment",
+        "unsupported_claims",
+        "temporal_meaning_loss"
+      ],
+      "note": "隐蔽、长期及复杂技术的核心解释基本有据，但首点引用9并不完整支持所述技术能力；后续扩成七个自拟问答，把未出现APT术语误写为钓鱼过程不被称作APT，添加资料9未提供的更新/备份等策略。原题可用的简洁解释被无关扩写和错引损害。"
+    },
+    {
+      "case_id": "diverse-0010",
+      "verdict": "fail",
+      "issues": [
+        "incomplete_station_list",
+        "road_station_confusion",
+        "obsolete_name_confusion",
+        "severe_repetition",
+        "length_exit",
+        "citation_misalignment"
+      ],
+      "note": "仅起终点正确；将深南东路、深南大道当成站点，将固戍旧候选名航城并列为现站，未列出完整站表；引用3只有线路简介，不能支持长段走向，后续深大大道句持续循环直到截断。来源集合没有完整站表，答案也未说明缺失。"
+    },
+    {
+      "case_id": "wiki_batch2-0031",
+      "verdict": "fail",
+      "issues": [
+        "table_value_binding",
+        "period_scope_confusion",
+        "missing_certification",
+        "missing_citations",
+        "severe_repetition",
+        "length_exit"
+      ],
+      "note": "把不同榜单及年度排名都写成1，混淆资料2年终榜48/78/45与资料4高峰榜1/11；资料1巴西双白金80000认证完全漏答。Hot Dance/Electronic2019排名1持续重复直到长度退出，无引用。"
+    }
+  ]
+}
