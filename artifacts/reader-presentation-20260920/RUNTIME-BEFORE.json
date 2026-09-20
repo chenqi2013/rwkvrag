@@ -1,0 +1,32 @@
+{
+  "checked_at": "2026-09-20T06:53:35.497115+00:00",
+  "groups": {
+    "engine": {
+      "files": 2444,
+      "mismatches": [],
+      "manifest_sha256": "b8be05cd8dddcdb9eac88bca6af0ff2486982edd9407328fb6b064fd0c416168"
+    },
+    "dependencies": {
+      "files": 133,
+      "mismatches": [],
+      "manifest_sha256": "9fa7c35f7b501d50ab9a4565d41f458f818bae67632852c51b6661b96d79426e"
+    }
+  },
+  "service": "RuntimeMaxUSec=2h\nMainPID=1203049\nActiveState=active\nActiveEnterTimestamp=Sun 2026-09-20 14:31:36 CST\n",
+  "processes": {
+    "1203049": {
+      "flashrwkv2_libraries": []
+    },
+    "1203469": {
+      "flashrwkv2_libraries": []
+    },
+    "1203470": {
+      "flashrwkv2_libraries": [
+        "/home/chase/.cache/torch_extensions/_flashrwkv2_816f65631ef08ad8/_flashrwkv2_816f65631ef08ad8.cpython-312-x86_64-linux-gnu.so"
+      ]
+    }
+  },
+  "compiled_libraries": {
+    "/home/chase/.cache/torch_extensions/_flashrwkv2_816f65631ef08ad8/_flashrwkv2_816f65631ef08ad8.cpython-312-x86_64-linux-gnu.so": "51b4bff083afc39cb7c4c8370695eba1668852eb8c34a404bcbfeccfc33c90bb"
+  }
+}

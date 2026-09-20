@@ -1,0 +1,20 @@
+{
+  "files": {
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-presentation-20260920/schedule.json": "054d608505890acb0757128127b9d167b322dbdf09dcb51fb8c20eb8bc59105e",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-presentation-20260920/prepare.py": "ceeadff32c64ff01c1ca89fc285c7e1272d54e1c627d520370a8fa872ebff4ca",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-presentation-20260920/protocol.py": "bb6276c1b88148b9666b401736cdc2ca0d40f5e44ca43c5dba84d216d1845e25",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-presentation-20260920/analysis.py": "9aa53b6004a024890f94c3a1ae36958f5e9b5d1464305dda0b6cd6de7b3dc165",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-presentation-20260920/inputs.json": "67967e0ee59c6cbfeccb9d82dc1438463b21150d2ddc335743b8791147065a1f",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-presentation-20260920/README.md": "c3ceba95e8f6196c7250e281c0f5a51239c932e1c6635e0275799347d9f76e71",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-presentation-20260920/run.py": "a00cfa8ffb47968b8a04909f5ceeb9f79468c814646a4ef686da7853d9810a1f",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/vllm-decoding-20260920/protocol.py": "5a4c1eeacc11ab5b2ded64b8c26bd8e806ee7a328ff9186485ef1c808b272980",
+    "/home/chase/GitHub/rwkvrag/artifacts/vllm-decoding-20260920/ROWS.json": "99509ce573e6732c53243b2bd4dccc8869e913b2bf452be5f0893c5cd6ee1609",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-20260920/protocol.py": "d15d4f82e8f19b26dbcdf8510edaec5a5820f96e83a7fd987895bcfdd86766c3",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/evidence-support-20260920/protocol.py": "a6c1f39919bb087e86fd4886e23238541d62e85e3fc1ff6f4ffefea2c91fc957"
+  },
+  "git_commit": "7a09f9676efaed1bc54aaa4e862dae0d51570e4d",
+  "started_at": "2026-09-20T06:53:36.919855+00:00",
+  "scheduled_calls": 640,
+  "seen_cases": 160,
+  "source": "local optimized vllm-rwkv; exact deployment binding separately attached"
+}

@@ -6,6 +6,7 @@
 
 | 报告 | 原路径 |
 | --- | --- |
+| [Reader 呈现回归：表格改善与负向迁移](2026-09/reader-presentation-results-20260920.md) | 新主线回归报告，640 次调用 |
 | [本地 vllm-rwkv 更新与解码回归：未观察到采样收益](2026-09/vllm-decoding-results-20260920.md) | 新部署与 1,120 次回归报告 |
 | [表头重复修复与本地 vLLM 引擎核对](2026-09/atomic-context-dedup-20260920.md) | 新修复报告与只读引擎审查 |
 | [表格呈现检查：重复表头与实验设计](2026-09/table-presentation-inspection-20260920.md) | 新检查报告，未执行模型对照 |
