@@ -1,0 +1,15 @@
+{
+  "code_commit": "7a0df088",
+  "preview_service": "rwkvrag-atomic-preview-20260920.service",
+  "restarted_at": "2026-09-20T13:35:51+08:00",
+  "pid": 655735,
+  "active": true,
+  "capabilities": {
+    "available": true
+  },
+  "main_app_restarted": false,
+  "decoding_parameters_changed": false,
+  "model_quality_evaluated": false,
+  "doc_links_checked": 205,
+  "broken_doc_links": []
+}

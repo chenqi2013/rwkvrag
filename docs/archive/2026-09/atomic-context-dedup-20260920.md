@@ -35,6 +35,10 @@ llamaindex-retrieval/.venv/bin/pytest -q \
 
 集成测试使用独立随机名称的数据库和索引并清理自己创建的数据。模型回复是固定测试桩，不能把测试通过写成模型回答质量改善。
 
+## 部署范围
+
+修复提交 7a0df088 已推送。原子证据预览 18445 于 2026-09-20 13:35:51（Asia/Shanghai）重启，进程 active，能力接口返回 available=true。正式应用 18440 未重启，模型和采样配置未改变。这是代码加载/健康检查，不是新模型质量验收。
+
 ## 本地 vllm-rwkv：实际应以用户的优化实现为准
 
 用户明确要求核对本地引擎，后续以 `/home/chase/GitHub/vllm-rwkv` 为依据，不以官方示例推断这套引擎。审查基线 HEAD 为 `4ee959dfa`，工作区已有用户未提交修改；本轮只读，未改动或提交该仓库。实际读到的文件哈希见[本地审查绑定](../../../artifacts/atomic-context-dedup-20260920/LOCAL-ENGINE-REVIEW.json)。该记录不是远程部署身份核验。
