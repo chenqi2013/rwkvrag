@@ -1,0 +1,4 @@
+[
+  {"id":"zero72-yes-no","model":"rwkv7-g1j-7.2b-20260831-ctx16384","base_url":"http://127.0.0.1:18425/v1","state":null,"protocol":"yes-no"},
+  {"id":"zero72-neutral","model":"rwkv7-g1j-7.2b-20260831-ctx16384","base_url":"http://127.0.0.1:18425/v1","state":null,"protocol":"neutral-labels"}
+]
