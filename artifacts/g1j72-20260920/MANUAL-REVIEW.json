@@ -1,0 +1,1771 @@
+{
+  "reviewer": "assistant manual review of all raw answers against frozen source text; not independent human/blind evaluation",
+  "criteria": {
+    "facts_complete": "all requested facts/absence answers, units, conditions and conflict sides correct; uncontrolled repetition or truncated final answer fails",
+    "citations": "valid clickable [资料 N] tags, correct provenance for assertions and derived comparison claims; separate valid tags may jointly support a compound statement; missing-evidence refusal itself may omit citation",
+    "strict_pass": "normal EOS AND facts_complete AND citations_correct",
+    "scope": "fixed-material answer quality, not complete production pipeline acceptance"
+  },
+  "arms": {
+    "direct-29-zero": {
+      "total": 28,
+      "normal_eos": 25,
+      "facts_complete": 22,
+      "strict_pass": 16,
+      "cases": [
+        {
+          "id": "comparison_smoke_001",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "0a525b0725fb6ca77462429dda1599e1716be9fcb64abfeb1edee70a00c72db4"
+        },
+        {
+          "id": "comparison_smoke_002",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "e634ec3da4775f26f04a19652d25559a0a3b7e103fd742614d7f0ef33768d4f5"
+        },
+        {
+          "id": "comparison_smoke_003",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "e09f28e02152b7e271c44e30dd802a86ec3df2b430141a036b25017aec73070f"
+        },
+        {
+          "id": "comparison_smoke_004",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "数值与不可比结论未提供引用。"
+          ],
+          "raw_result_sha256": "33e611379fcc8fce2f80ccdf0a43991352bd1223dc7184c2c7c21f1574f8ed84"
+        },
+        {
+          "id": "comparison_smoke_005",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "比较结论使用前端不支持的合并引用[资料 1, 资料 2]。"
+          ],
+          "raw_result_sha256": "bc3dfcb45714cf3ad945b7e4ad2416ebe4d6e8772e081de80f9683761c336e3e"
+        },
+        {
+          "id": "comparison_smoke_006",
+          "normal_eos": false,
+          "facts_complete": false,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "重复废止值说明直至输出上限，答案未完成。",
+            "事实无引用，且输出截断。"
+          ],
+          "raw_result_sha256": "81656e86176c55b34f8badd623d05048be8c78acb31ddcdcaabb8dcf17ad69ab"
+        },
+        {
+          "id": "comparison_smoke_007",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "漏掉南仓90平方米，以问题中的限制语代替该项事实。",
+            "用资料1引用用户的问题限制语，没有给出该来源的90平方米事实。"
+          ],
+          "raw_result_sha256": "99826985e3615c457fefa873d5ec97c91523b194abb61e7e7f0b3954bbc68be9"
+        },
+        {
+          "id": "comparison_smoke_008",
+          "normal_eos": false,
+          "facts_complete": false,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "无材料却编造价格和离线能力，并循环至上限。",
+            "证据列表为空却引用不存在的来源。"
+          ],
+          "raw_result_sha256": "4f502765847ca6b7beaf93e895cdcb63c33169fb594d17a1b41060c22e849bc5"
+        },
+        {
+          "id": "regression_smoke_001",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "b860bb99531233e181a34a992651099cffe57c0fbda2c09a8045529d47585116"
+        },
+        {
+          "id": "regression_smoke_002",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "be7723908ffe27e96f06b1401ed89209775e303649a18a902dc0a3d85452e1b4"
+        },
+        {
+          "id": "regression_smoke_003",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "无材料却把实际交付写成0台。",
+            "证据列表为空却引用资料1。"
+          ],
+          "raw_result_sha256": "dd73ec9e8ab9613c4b59b29ce90198e007fa05462977e6c887ad274918ed4792"
+        },
+        {
+          "id": "regression_smoke_004",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "缺证据结论使用非法合并标签[资料 1, 2]。"
+          ],
+          "raw_result_sha256": "31bb3a3c4f65a3e8471ed3ab42e7aebd540e2991306051e1ad6890277bc9ab12"
+        },
+        {
+          "id": "regression_smoke_005",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "最终无法裁定的结论使用非法合并标签。"
+          ],
+          "raw_result_sha256": "f6e1fad037dfa5ee4d00bddfbd4cbbd43b4116d5a6c53215783b17498664207f"
+        },
+        {
+          "id": "regression_smoke_006",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "fa56d337ace451de01ed05af86cc39ff248d42e5b6ea308cc39026d11007bef3"
+        },
+        {
+          "id": "regression_smoke_007",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "只有资料1，却引用资料27。"
+          ],
+          "raw_result_sha256": "fb56f59dc54688d17bcee4995c12c9db469f60d3c8bf879bd1c47cd03d439fcc"
+        },
+        {
+          "id": "regression_smoke_008",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "e410ae1014e2e52871897750a4333c2bd5f079ced927b92017f689c4d48fbb03"
+        },
+        {
+          "id": "controlled_single",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "abe1cb10550bcd6f16cdf38fe184830eea7b6f248949a1e4a3e49366f58bbbbb"
+        },
+        {
+          "id": "controlled_agreement",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "99d2944f631cdb16924c6d8b9e518b45c3b2bd81eda86383aa31102b6d4b9fba"
+        },
+        {
+          "id": "controlled_conflict",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "c407019b3a4bfe20b3ff8a895e2b5eb5a08b1817b39f290bc79a95896e72d3f8"
+        },
+        {
+          "id": "controlled_conflict_reversed",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "c9dce50ff4e7933730cbac2aad86295c0a6d62a4876da2dbf68d07bc914bd87f"
+        },
+        {
+          "id": "controlled_conditions",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "将标准模式与增强模式误判为同条件冲突。",
+            "以标准模式单方来源支持错误的同条件冲突判断。"
+          ],
+          "raw_result_sha256": "dfb32ad7afb93e21059e90785fd78365f6714f536311acecb02f6262315bc35d"
+        },
+        {
+          "id": "controlled_revision",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "1b99cc76099eb7a87e86ad97630eba584241747e51293feb6aec86818fb312a9"
+        },
+        {
+          "id": "controlled_zero",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "5ccd54cd795ed0358926688edd75341b434ec5da686e93de78988ae7e1714170"
+        },
+        {
+          "id": "controlled_missing",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "a7507a95fedd020858b35b77104d9806c27a3170602d49c165139835e6ad3082"
+        },
+        {
+          "id": "controlled_long_agreement",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "5bb44a0f168b6e6862864ebefab45f9af307ba39a344b7e5e9bae42d0748bd9c"
+        },
+        {
+          "id": "controlled_long_conflict",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "47a5fea1ddc127aed94fca07516c8856360e6cf0e44ab37b6d9554bde008551c"
+        },
+        {
+          "id": "controlled_long_conflict_reversed",
+          "normal_eos": false,
+          "facts_complete": false,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "来源换序后丢失18 W记录，重复25 W并生成不存在的引用直至上限。",
+            "资料2被错引为25 W，并虚构资料3及之后编号。"
+          ],
+          "raw_result_sha256": "c1e2e054726113fc352161089333ec94e7a34727194cd0c8cc6448a91c01b7ae"
+        },
+        {
+          "id": "controlled_units",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "不可比结论使用非法合并引用。"
+          ],
+          "raw_result_sha256": "ebc1026ffaf62df19e3e8dedb2b2af78da5ca4a8e47dd0b4c1acbdb5ffd768f7"
+        }
+      ]
+    },
+    "direct-72-zero": {
+      "total": 28,
+      "normal_eos": 28,
+      "facts_complete": 26,
+      "strict_pass": 16,
+      "cases": [
+        {
+          "id": "comparison_smoke_001",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "容量结论仅引乙型来源，离线结论仅引甲型来源，无法分别支持两对象。"
+          ],
+          "raw_result_sha256": "8acadb6948d10943766799137b23fd92f622692231cddb37a45a8690642ba630"
+        },
+        {
+          "id": "comparison_smoke_002",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "c38c3db35aeb20b561e5334e8c4d9a88808049b2b78623b96b96888a2c6659e4"
+        },
+        {
+          "id": "comparison_smoke_003",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "全部事实未标引用。"
+          ],
+          "raw_result_sha256": "16c7b27209d03273691acb319d129066655a2ebf9a3c265206e7834982265363"
+        },
+        {
+          "id": "comparison_smoke_004",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "原单位与不可比结论无可点击引用。"
+          ],
+          "raw_result_sha256": "49d1eb13700b452b00bc75c7b785170f74c0c1c7d7031b05511335b9d530c00f"
+        },
+        {
+          "id": "comparison_smoke_005",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "比较结论使用非法合并引用。"
+          ],
+          "raw_result_sha256": "91639f69a7f55ae8d62e65b8bc8728ff560d6f83acfc2e5ec03f6ec336d38cbc"
+        },
+        {
+          "id": "comparison_smoke_006",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "22c4b41b3e38218afd1a87ed38ff4c95b6c76ab679ea7d22bd4bf0df4722ae1a"
+        },
+        {
+          "id": "comparison_smoke_007",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "e0e002dfbea5944f8a4611f6b379c56967f5dbf6201969b0e651d74ef5e49ea7"
+        },
+        {
+          "id": "comparison_smoke_008",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "无材料却编造199/299元和离线能力。",
+            "无材料却引用资料1。"
+          ],
+          "raw_result_sha256": "117e4945d4208ef8ddd3c1987e4ee29edb330ca47b764af6352e275cd40027e8"
+        },
+        {
+          "id": "regression_smoke_001",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "e6c1bf8d2ce4ddb3c9f48a5cf177b7ebce26203a529b891b9568256516b43481"
+        },
+        {
+          "id": "regression_smoke_002",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "6cd130ff3daa35b862385290ad24ba61a240b7b4bb89eb71ad33a8db41e19ab4"
+        },
+        {
+          "id": "regression_smoke_003",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "无材料却引用资料2。"
+          ],
+          "raw_result_sha256": "0a90adfabeae67d0fe1aabc626e9a7e45955770229086bec64660fae8353f8c4"
+        },
+        {
+          "id": "regression_smoke_004",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "41e8ce3566e9d1155f4ca5bfd38c44ca5b0f0dda8c824055bc62432641e2239c"
+        },
+        {
+          "id": "regression_smoke_005",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "只写依据资料1/2，缺少要求的可点击引用标签。"
+          ],
+          "raw_result_sha256": "8a999845534e79889a7aeefc4483f95ace224ae8e38ced2739fd136f8d4bdca8"
+        },
+        {
+          "id": "regression_smoke_006",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "版本、年份及流量事实均无引用。"
+          ],
+          "raw_result_sha256": "1f5a2e4a4527b05e8de4582053670df31be5185396f38bb075f88fd9317eff57"
+        },
+        {
+          "id": "regression_smoke_007",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "正确提取13秒及校验码，但又称该段不规定复位时长或校验码，原文段落范围混淆。",
+            "只有资料1，却引用资料271。"
+          ],
+          "raw_result_sha256": "9f32af02b7d8dd59109927a7288ee74acb50b7fff97eacbe2808c999e181f897"
+        },
+        {
+          "id": "regression_smoke_008",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "6f386e7a8dc29e179391d17f569ec6e7cd3012fded0a37a115c5fefc3edb1cc6"
+        },
+        {
+          "id": "controlled_single",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "7a3053b852ab99260a221a60a2d44d80f54b35d99dadd5e757a380b6ab153b3e"
+        },
+        {
+          "id": "controlled_agreement",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "ef128346db929c1c3e231a1242884b768168c13e99e47ee50853ccb4ec2acf64"
+        },
+        {
+          "id": "controlled_conflict",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "1545fa12fe00cce8b13419a038535a5b270aa5c562e57bd6199d45d012e4c5e2"
+        },
+        {
+          "id": "controlled_conflict_reversed",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "129472c966fbd42311f0ccac03a5e25ce8c05d42a91b92d35797ad69148d856d"
+        },
+        {
+          "id": "controlled_conditions",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "不是同条件冲突的派生比较结论没有引用。"
+          ],
+          "raw_result_sha256": "5d36b20d97da2c672780df8155438915497810d5d96869399001ee4f2c44f407"
+        },
+        {
+          "id": "controlled_revision",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "当前值与撤回状态都无引用。"
+          ],
+          "raw_result_sha256": "13e587e1bb9dcaa9abea1e54330fe918d846090f4224a7eb7858179b3ca716f6"
+        },
+        {
+          "id": "controlled_zero",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "f44230e4b5c55face07aa996746b6dd3215ae603c91459816dd010779f209518"
+        },
+        {
+          "id": "controlled_missing",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "daba99cb530bbfd2897b6f713d6e3ec8767459e8065565b45a6c5eca206fbdd9"
+        },
+        {
+          "id": "controlled_long_agreement",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "712b799b3a53359d4e166e768ae01809086b99192d8711fd9638fe648d341a57"
+        },
+        {
+          "id": "controlled_long_conflict",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "321d437bb587ca32a75bdb0e671500738f5a95477c498fb75662905b51c5b0e4"
+        },
+        {
+          "id": "controlled_long_conflict_reversed",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "c230f38adb0a8301b3039b9d25dd9af79e1537b6825514c4f4bc38a5e61f3cd6"
+        },
+        {
+          "id": "controlled_units",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "不可比结论使用非法合并引用。"
+          ],
+          "raw_result_sha256": "9258bc6de19f3f7e66f215bbc4bc0b9ffbbdeed8a5b8cf897c888da16269639c"
+        }
+      ]
+    },
+    "direct-29-tuned": {
+      "total": 28,
+      "normal_eos": 28,
+      "facts_complete": 20,
+      "strict_pass": 14,
+      "cases": [
+        {
+          "id": "comparison_smoke_001",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "e41971db91c5f27b22d0fa749ac05e6da0353a77f338a008499f26484089e772"
+        },
+        {
+          "id": "comparison_smoke_002",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "19ff16c6eff5a782954778a798b2332b4c3aefc2c7c6a3ad2dc3f7441eace89c"
+        },
+        {
+          "id": "comparison_smoke_003",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "1d5fd6ba783dac78aaac8a8becb89abd632e7c64cdda68201219d3ae9b0a6148"
+        },
+        {
+          "id": "comparison_smoke_004",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "两个对象及不可比结论只引资料1，遗漏水泵A实际来源。"
+          ],
+          "raw_result_sha256": "c4c02405866734e3b8902cca310df49d2474483d6892f27bdd2b447788645d87"
+        },
+        {
+          "id": "comparison_smoke_005",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "两个日期不同的比较结论没有引用。"
+          ],
+          "raw_result_sha256": "29c7378b4ccc4aafaad63fd44e41131d988fe6d2a59aa21d0ff723252c831ad0"
+        },
+        {
+          "id": "comparison_smoke_006",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": true,
+          "strict_pass": false,
+          "notes": [
+            "只回答甲设备16 W，漏答乙设备21 W。"
+          ],
+          "raw_result_sha256": "f934b06210662bdd582f1cc3c74ad92635262c1d60cba02b69962eadc89cfb33"
+        },
+        {
+          "id": "comparison_smoke_007",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "冲突结论使用非法合并引用[资料 1, 3]。"
+          ],
+          "raw_result_sha256": "ae62bb78a330881049338c22759aa6d0c25beb31529ffc061efad0eea204fb13"
+        },
+        {
+          "id": "comparison_smoke_008",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "无材料却编造199/399元和离线能力。",
+            "无材料却引用资料1。"
+          ],
+          "raw_result_sha256": "211adadc45e31a7f9ed237ca2ead4571c6814073850a68848afae612d9fdf82b"
+        },
+        {
+          "id": "regression_smoke_001",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "59d9209b31fa7c2e36b8b5cc883bb30620916db39fc5942c240a7edf4db64edf"
+        },
+        {
+          "id": "regression_smoke_002",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "d9423675078e863fb7a3c07c7d67c8300284650a2da42bff99064da5a69496f1"
+        },
+        {
+          "id": "regression_smoke_003",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "2a13b43b66891b23a555b789948f541069db268462c0ab35d0b66e25992e2aa9"
+        },
+        {
+          "id": "regression_smoke_004",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": true,
+          "strict_pass": false,
+          "notes": [
+            "只回答功率，漏掉冷却方式和销量缺证据说明。"
+          ],
+          "raw_result_sha256": "bc4960cf2aa77d236053cb024b998e378c3149e0dd72c01fc052293e0c9763fe"
+        },
+        {
+          "id": "regression_smoke_005",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "6bea90bfc2cba31cd77eb68afa5c52bebf957ffd85f5c6191513834229dbd3db"
+        },
+        {
+          "id": "regression_smoke_006",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "6939d12e3ffd2b3d33a2ba5772aef70073bfadc072949daf88acbb1dd03360fd"
+        },
+        {
+          "id": "regression_smoke_007",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "只有资料1却引用资料27。"
+          ],
+          "raw_result_sha256": "2c94167f1f1aa21efadf2e70e7f99bfd884a2bff22f4577eb95f54306997a350"
+        },
+        {
+          "id": "regression_smoke_008",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": true,
+          "strict_pass": false,
+          "notes": [
+            "只回答交付0台，漏答是否量产。"
+          ],
+          "raw_result_sha256": "78b8eb5bc01d3dcd26d620ede2c28c9a00953928b4974be25f17093e69133d13"
+        },
+        {
+          "id": "controlled_single",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "e0bfcd7fd2053911a9efb11156d2351ca62029e57d093cb414beec9fe8b5eb1e"
+        },
+        {
+          "id": "controlled_agreement",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "1248fa934774555fba2dd715e6d5ac3797c6e14d5733ceb7e425dd2d209dcbbb"
+        },
+        {
+          "id": "controlled_conflict",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": true,
+          "strict_pass": false,
+          "notes": [
+            "只选第二来源25 W，隐藏第一来源18 W。"
+          ],
+          "raw_result_sha256": "900414e7b5f76122ea754a96146545e6162366e7c34a17c0ded0637c73ca2d5e"
+        },
+        {
+          "id": "controlled_conflict_reversed",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": true,
+          "strict_pass": false,
+          "notes": [
+            "换序后只选第二来源18 W，隐藏第一来源25 W。"
+          ],
+          "raw_result_sha256": "33b146c8c20f0b10db7dcae79d82d3033db9172358708abf67c7a6d0bd0c4679"
+        },
+        {
+          "id": "controlled_conditions",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "不是同条件冲突的派生结论没有引用。"
+          ],
+          "raw_result_sha256": "3865f851a789e22492395c1a5768f2cc2ca4067cddbd58da04da99b094f429be"
+        },
+        {
+          "id": "controlled_revision",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "6a307bc89106ace9e25d98ecb29a09d29e786bf407ff6d86a93841261b53df29"
+        },
+        {
+          "id": "controlled_zero",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "e4ce1d32e47f8027bd7c43ebabe66ae3680322239835081eaed69d66f646c0ba"
+        },
+        {
+          "id": "controlled_missing",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "fcce1bcc628e051b9101b3b4a32160a31925a4709266f02501e46544eaf3c4cf"
+        },
+        {
+          "id": "controlled_long_agreement",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "2042990b17dfed8a4993d1ee275991ead74ac027e7825bbdb098f31067edebcc"
+        },
+        {
+          "id": "controlled_long_conflict",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": true,
+          "strict_pass": false,
+          "notes": [
+            "只选第一来源18 W，隐藏25 W。"
+          ],
+          "raw_result_sha256": "af6bbaa11261c3e2c0bee9ab949c8439821f8f779b71268b55729731ce7757ce"
+        },
+        {
+          "id": "controlled_long_conflict_reversed",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": true,
+          "strict_pass": false,
+          "notes": [
+            "只选第二来源18 W，隐藏25 W。"
+          ],
+          "raw_result_sha256": "e2b16aae9b6be131b43c59516e25cd6eed3d76e92f1414092942f310c21081e1"
+        },
+        {
+          "id": "controlled_units",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "不可比结论使用非法合并引用。"
+          ],
+          "raw_result_sha256": "968a6b4af1971e142ad57a3e0e4b1cb0d5b8a6491921ae2c14c7618bc82193b1"
+        }
+      ]
+    },
+    "oracle-29-zero": {
+      "total": 12,
+      "normal_eos": 12,
+      "facts_complete": 11,
+      "strict_pass": 10,
+      "cases": [
+        {
+          "id": "controlled_single",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "a12e2b79c4a6bfc3cd56817aff27050833aa171a4f60456ae0afc5165dbdfc07"
+        },
+        {
+          "id": "controlled_agreement",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "795e3e416a7848ae5a3a70dcd0a84359dc95aad4120df39357459e1d1566996d"
+        },
+        {
+          "id": "controlled_conflict",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "b6fb76ad170adef7e28671e3380c778053f15c94b1bf744d481d7a47bc649d54"
+        },
+        {
+          "id": "controlled_conflict_reversed",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "6c3580bd1ee2f3d98218612aec4812a1086c3a0c81941cc71d8aa7e1c3a9c656"
+        },
+        {
+          "id": "controlled_conditions",
+          "normal_eos": true,
+          "facts_complete": false,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "将标准模式与增强模式误判为同条件冲突。",
+            "以标准模式单方来源支持错误的同条件冲突判断。"
+          ],
+          "raw_result_sha256": "113a2252d68385b315198e8931712950807cf8748cf86b75fb7f991f9ceb3632"
+        },
+        {
+          "id": "controlled_revision",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "0ff7fceef89008ed75ca636c97ce4cf099088c34986282c0c81cef29ae95b650"
+        },
+        {
+          "id": "controlled_zero",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "ad185c9babdb146ed54af39b6e14af916f7820e3b0a4a4aa0806b2d22f83307b"
+        },
+        {
+          "id": "controlled_missing",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "93c07dabadac3da1079af3f00e844d0479fb692625de5fe88fd1c15402b0d43e"
+        },
+        {
+          "id": "controlled_long_agreement",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "3a7ead70dea1bd78a29eb447800ba0d4df2b8349fba34e3e9a1356f1bb2e59f0"
+        },
+        {
+          "id": "controlled_long_conflict",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [
+            "事实和对应来源可核对，但重复表达两遍；未耗尽预算，冗余问题另记。"
+          ],
+          "raw_result_sha256": "97ca9177bd0734dc8547ab7fb77eaf5ceb33bcd36076e8df1c7e80583ac90ace"
+        },
+        {
+          "id": "controlled_long_conflict_reversed",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "75bd77948f77ebe06886664f3ca0c1ec326214b041b03209065d8d15f55f276c"
+        },
+        {
+          "id": "controlled_units",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "不可比结论使用非法合并引用。"
+          ],
+          "raw_result_sha256": "0ad9c44892d81d00b01be98f5cd67b498dbaa89b574259e95c2bf486748b72ab"
+        }
+      ]
+    },
+    "oracle-72-zero": {
+      "total": 12,
+      "normal_eos": 12,
+      "facts_complete": 12,
+      "strict_pass": 9,
+      "cases": [
+        {
+          "id": "controlled_single",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "4a34c4ea96882e7a721fae4ebd1d0d0528226452001368d1199ce8312441c679"
+        },
+        {
+          "id": "controlled_agreement",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "167ebb9e01f8de160585b19e694a208399568c4dc027cac5c8fd67ef14c8dc9a"
+        },
+        {
+          "id": "controlled_conflict",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "45278dae2d7bb4ca841191d91a84382a931d1db088aa555d1a4265feeb2ee0bb"
+        },
+        {
+          "id": "controlled_conflict_reversed",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "f91b12eaf6d4179d1f1f5c6a2b8f5330f32fdd354f34d302017ed251ca6843da"
+        },
+        {
+          "id": "controlled_conditions",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "不是同条件冲突的派生比较结论没有引用。"
+          ],
+          "raw_result_sha256": "5db6560cae75a626c1a181b5d7674fca2c6bfafaa3e9d3b596eb389b6e3319b2"
+        },
+        {
+          "id": "controlled_revision",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "当前值与撤回状态都无引用。"
+          ],
+          "raw_result_sha256": "35778a548fddddc981bae4446f3967bdc4e9b6fdd7f3d561ef31a3710581fe8d"
+        },
+        {
+          "id": "controlled_zero",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "81261ba48caafe7753cf99466ca5e5225cb8ebf7a9f1fe4090e519cf0dcdeb67"
+        },
+        {
+          "id": "controlled_missing",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "a95e231c3e313038086e655db5190a4530ea277e28486e8e1998013c86a3d5ce"
+        },
+        {
+          "id": "controlled_long_agreement",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "601bdcd822ab6c6305e8ba1f4d7294c3a41768df746e376ac89de9baa84cdd4d"
+        },
+        {
+          "id": "controlled_long_conflict",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "b3431bc2e3cf5c1f9a26db80a4b8eef4bac1ab1dcb7eb7e9b4fcc4d43df77030"
+        },
+        {
+          "id": "controlled_long_conflict_reversed",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": true,
+          "strict_pass": true,
+          "notes": [],
+          "raw_result_sha256": "04bee6e2388045d48c54ebf5a02be8117a9fd9a1bfc0fcd46e9c88aa93358cb2"
+        },
+        {
+          "id": "controlled_units",
+          "normal_eos": true,
+          "facts_complete": true,
+          "citations_correct": false,
+          "strict_pass": false,
+          "notes": [
+            "不可比结论使用非法合并引用。"
+          ],
+          "raw_result_sha256": "652ca38cf4965c497853c02900522f4f61a54443bb5b3b3ecc3b300f2ed569dc"
+        }
+      ]
+    },
+    "staged-29-zero": {
+      "total": 12,
+      "completed": 0,
+      "interpretation": "contract failure is separate from semantic failure; TypeError unhashable dict occurs because model returned top-level array while frozen validator expected object. No coercion/retry; original outputs preserved.",
+      "cases": [
+        {
+          "id": "controlled_single",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "ValueError: invalid relation fields",
+          "elapsed_seconds": 3.263189520002925,
+          "calls": 2
+        },
+        {
+          "id": "controlled_agreement",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 5.274920727002609,
+          "calls": 2
+        },
+        {
+          "id": "controlled_conflict",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 5.241207297003712,
+          "calls": 2
+        },
+        {
+          "id": "controlled_conflict_reversed",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "ValueError: invalid atoms schema",
+          "elapsed_seconds": 2.7023690620044363,
+          "calls": 1
+        },
+        {
+          "id": "controlled_conditions",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 2.5594340310053667,
+          "calls": 1
+        },
+        {
+          "id": "controlled_revision",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 2.710999704002461,
+          "calls": 1
+        },
+        {
+          "id": "controlled_zero",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "ValueError: invalid atoms schema",
+          "elapsed_seconds": 2.4276384429977043,
+          "calls": 1
+        },
+        {
+          "id": "controlled_missing",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 3.040316009995877,
+          "calls": 1
+        },
+        {
+          "id": "controlled_long_agreement",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 2.54604512899823,
+          "calls": 1
+        },
+        {
+          "id": "controlled_long_conflict",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 2.540081099999952,
+          "calls": 1
+        },
+        {
+          "id": "controlled_long_conflict_reversed",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 2.5658522410012665,
+          "calls": 1
+        },
+        {
+          "id": "controlled_units",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "ValueError: invalid atoms schema",
+          "elapsed_seconds": 1.7564209930060315,
+          "calls": 1
+        }
+      ]
+    },
+    "staged-72-zero": {
+      "total": 12,
+      "completed": 0,
+      "interpretation": "contract failure is separate from semantic failure; TypeError unhashable dict occurs because model returned top-level array while frozen validator expected object. No coercion/retry; original outputs preserved.",
+      "cases": [
+        {
+          "id": "controlled_single",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 3.729812473000493,
+          "calls": 1
+        },
+        {
+          "id": "controlled_agreement",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 3.2749788490036735,
+          "calls": 1
+        },
+        {
+          "id": "controlled_conflict",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 3.2880637319976813,
+          "calls": 1
+        },
+        {
+          "id": "controlled_conflict_reversed",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 3.286718674004078,
+          "calls": 1
+        },
+        {
+          "id": "controlled_conditions",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 3.2795619999960763,
+          "calls": 1
+        },
+        {
+          "id": "controlled_revision",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 6.035124458998325,
+          "calls": 1
+        },
+        {
+          "id": "controlled_zero",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 3.0429734669960453,
+          "calls": 1
+        },
+        {
+          "id": "controlled_missing",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 3.000381344994821,
+          "calls": 1
+        },
+        {
+          "id": "controlled_long_agreement",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "ValueError: extract-1 exhausted generation budget",
+          "elapsed_seconds": 20.41725641699304,
+          "calls": 1
+        },
+        {
+          "id": "controlled_long_conflict",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "ValueError: extract-1 exhausted generation budget",
+          "elapsed_seconds": 20.442243060999317,
+          "calls": 1
+        },
+        {
+          "id": "controlled_long_conflict_reversed",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "ValueError: extract-1 exhausted generation budget",
+          "elapsed_seconds": 20.417562957998598,
+          "calls": 1
+        },
+        {
+          "id": "controlled_units",
+          "group": "controlled",
+          "arm": "staged",
+          "status": "failed",
+          "error": "TypeError: unhashable type: 'dict'",
+          "elapsed_seconds": 3.0014217930001905,
+          "calls": 1
+        }
+      ]
+    },
+    "relations-29-zero": {
+      "total": 12,
+      "completed": 12,
+      "relation_label_match": 7,
+      "manual_assessment": "All rationales and source labels reviewed. Label failures are substantive: revision/withdrawal and reservation-vs-delivery misclassified as conflicts; mode scope also mislabeled. Passing labels have corresponding support, with some imprecise wording.",
+      "cases": [
+        {
+          "id": "controlled_single",
+          "expected_relation": "supported",
+          "raw_text": "{\"status\":\"supported\",\"reason\":\"资料 1 明确给出青岭 R6 标准模式额定功率为 18 W。\",\"source_labels\":[\"资料 1\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "supported",
+            "reason": "资料 1 明确给出青岭 R6 标准模式额定功率为 18 W。",
+            "source_labels": [
+              "资料 1"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.234978945001785
+        },
+        {
+          "id": "controlled_agreement",
+          "expected_relation": "supported",
+          "raw_text": "{\"status\":\"supported\",\"reason\":\"两个来源均明确给出相同数值18 W，且无其他冲突信息。\",\"source_labels\":[\"资料 1\",\"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "supported",
+            "reason": "两个来源均明确给出相同数值18 W，且无其他冲突信息。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 1.9120241480050026
+        },
+        {
+          "id": "controlled_conflict",
+          "expected_relation": "conflict",
+          "raw_text": "{\"status\":\"conflict\",\"reason\":\"两个来源对青岭 R6 标准模式额定功率的记录不一致，无法确定唯一值。\",\"source_labels\":[\"资料 1\",\"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "两个来源对青岭 R6 标准模式额定功率的记录不一致，无法确定唯一值。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.225781745997665
+        },
+        {
+          "id": "controlled_conflict_reversed",
+          "expected_relation": "conflict",
+          "raw_text": "{\"status\":\"conflict\",\"reason\":\"两个来源对青岭 R6 标准模式额定功率的记录不一致，无法确定唯一值。\",\"source_labels\":[\"资料 1\",\"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "两个来源对青岭 R6 标准模式额定功率的记录不一致，无法确定唯一值。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.419885625000461
+        },
+        {
+          "id": "controlled_conditions",
+          "expected_relation": "scope_difference",
+          "raw_text": "{\"status\":\"supported\",\"reason\":\"同条件冲突\",\"source_labels\":[\"资料 1\",\"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "supported",
+            "reason": "同条件冲突",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": false,
+          "elapsed_seconds": 1.1493383519991767
+        },
+        {
+          "id": "controlled_revision",
+          "expected_relation": "supported",
+          "raw_text": "{\"status\":\"conflict\",\"reason\":\"两个来源对同一主题（青岭 R6 标准模式额定功率）给出了不同数值，且资料 2 明确撤回了资料 1 的旧值，属于互不相容的冲突。\",\"source_labels\":[\"资料 1\",\"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "两个来源对同一主题（青岭 R6 标准模式额定功率）给出了不同数值，且资料 2 明确撤回了资料 1 的旧值，属于互不相容的冲突。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": false,
+          "elapsed_seconds": 3.261871839000378
+        },
+        {
+          "id": "controlled_zero",
+          "expected_relation": "supported",
+          "raw_text": "{\"status\":\"conflict\",\"reason\":\"两个来源对首月实际交付数量的记载完全矛盾，无法裁定一致或有明确修订依据。\",\"source_labels\":[\"资料 1\",\"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "两个来源对首月实际交付数量的记载完全矛盾，无法裁定一致或有明确修订依据。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": false,
+          "elapsed_seconds": 2.347111686001881
+        },
+        {
+          "id": "controlled_missing",
+          "expected_relation": "missing",
+          "raw_text": "{\"status\":\"conflict\",\"reason\":\"同范围互不相容且无裁决依据\",\"source_labels\":[\"资料 1\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "同范围互不相容且无裁决依据",
+            "source_labels": [
+              "资料 1"
+            ]
+          },
+          "relation_label_match": false,
+          "elapsed_seconds": 1.293521725005121
+        },
+        {
+          "id": "controlled_long_agreement",
+          "expected_relation": "supported",
+          "raw_text": "{\"status\":\"supported\",\"reason\":\"两个来源均明确记载青岭 R6 标准模式额定功率为 18 W，且无冲突或缺失信息。\",\"source_labels\":[\"资料 1\",\"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "supported",
+            "reason": "两个来源均明确记载青岭 R6 标准模式额定功率为 18 W，且无冲突或缺失信息。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.3316176640000776
+        },
+        {
+          "id": "controlled_long_conflict",
+          "expected_relation": "conflict",
+          "raw_text": "{\"status\":\"conflict\",\"reason\":\"两个来源对青岭 R6 标准模式额定功率的记录不一致，无法裁定唯一值。\",\"source_labels\":[\"资料 1\",\"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "两个来源对青岭 R6 标准模式额定功率的记录不一致，无法裁定唯一值。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.2395340889997897
+        },
+        {
+          "id": "controlled_long_conflict_reversed",
+          "expected_relation": "conflict",
+          "raw_text": "{\"status\":\"conflict\",\"reason\":\"两个来源对青岭 R6 标准模式额定功率的记录不一致，无法裁定唯一值。\",\"source_labels\":[\"资料 1\",\"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "两个来源对青岭 R6 标准模式额定功率的记录不一致，无法裁定唯一值。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.2276537809957517
+        },
+        {
+          "id": "controlled_units",
+          "expected_relation": "scope_difference",
+          "raw_text": "{\"status\":\"conflict\",\"reason\":\"两个来源分别给出体积流量和质量流量，无法直接比较大小，且未提供介质密度，无法换算。\",\"source_labels\":[\"资料 1\",\"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "两个来源分别给出体积流量和质量流量，无法直接比较大小，且未提供介质密度，无法换算。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": false,
+          "elapsed_seconds": 2.5282470890015247
+        }
+      ]
+    },
+    "relations-72-zero": {
+      "total": 12,
+      "completed": 12,
+      "relation_label_match": 9,
+      "manual_assessment": "All rationales and source labels reviewed. Label failures are substantive: revision/withdrawal and reservation-vs-delivery misclassified as conflicts; mode scope also mislabeled. Passing labels have corresponding support, with some imprecise wording.",
+      "cases": [
+        {
+          "id": "controlled_single",
+          "expected_relation": "supported",
+          "raw_text": "{\"status\": \"supported\", \"reason\": \"quote 直接给出额定功率为 18 W，与问题一致。\", \"source_labels\": [\"资料 1\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "supported",
+            "reason": "quote 直接给出额定功率为 18 W，与问题一致。",
+            "source_labels": [
+              "资料 1"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.2497499809978763
+        },
+        {
+          "id": "controlled_agreement",
+          "expected_relation": "supported",
+          "raw_text": "{\"status\": \"supported\", \"reason\": \"两个来源均明确记载青岭 R6 标准模式额定功率为 18 W，且无冲突或不同条件。\", \"source_labels\": [\"资料 1\", \"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "supported",
+            "reason": "两个来源均明确记载青岭 R6 标准模式额定功率为 18 W，且无冲突或不同条件。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.563637709004979
+        },
+        {
+          "id": "controlled_conflict",
+          "expected_relation": "conflict",
+          "raw_text": "{\"status\": \"conflict\", \"reason\": \"资料 1 和资料 2 对青岭 R6 标准模式额定功率的记录不同，且未提供裁定依据。\", \"source_labels\": [\"资料 1\", \"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "资料 1 和资料 2 对青岭 R6 标准模式额定功率的记录不同，且未提供裁定依据。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.631459452000854
+        },
+        {
+          "id": "controlled_conflict_reversed",
+          "expected_relation": "conflict",
+          "raw_text": "{\"status\": \"conflict\", \"reason\": \"资料 1 和资料 2 对青岭 R6 标准模式额定功率的记录不同，且未提供裁定依据。\", \"source_labels\": [\"资料 1\", \"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "资料 1 和资料 2 对青岭 R6 标准模式额定功率的记录不同，且未提供裁定依据。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.6221162930014543
+        },
+        {
+          "id": "controlled_conditions",
+          "expected_relation": "scope_difference",
+          "raw_text": "{\"status\": \"supported\", \"reason\": \"两个来源均明确给出了青岭 R6 的标准模式和增强模式功率，且数值不同，但未提供冲突依据，属于有效主张一致。\", \"source_labels\": [\"资料 1\", \"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "supported",
+            "reason": "两个来源均明确给出了青岭 R6 的标准模式和增强模式功率，且数值不同，但未提供冲突依据，属于有效主张一致。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": false,
+          "elapsed_seconds": 3.171467958003632
+        },
+        {
+          "id": "controlled_revision",
+          "expected_relation": "supported",
+          "raw_text": "{\"status\": \"conflict\", \"reason\": \"资料 1 与资料 2 对青岭 R6 标准模式额定功率的核准值存在直接冲突，且资料 2 明确标注原 18 W 记录已撤回，两者不可同时成立。\", \"source_labels\": [\"资料 1\", \"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "资料 1 与资料 2 对青岭 R6 标准模式额定功率的核准值存在直接冲突，且资料 2 明确标注原 18 W 记录已撤回，两者不可同时成立。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": false,
+          "elapsed_seconds": 3.567903549002949
+        },
+        {
+          "id": "controlled_zero",
+          "expected_relation": "supported",
+          "raw_text": "{\"status\": \"conflict\", \"reason\": \"资料 1 称首月收到预约 80 台，资料 2 称正式交付 0 台，两者在首月交付数量上直接冲突，且未提供裁定依据。\", \"source_labels\": [\"资料 1\", \"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "资料 1 称首月收到预约 80 台，资料 2 称正式交付 0 台，两者在首月交付数量上直接冲突，且未提供裁定依据。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": false,
+          "elapsed_seconds": 3.1493277740009944
+        },
+        {
+          "id": "controlled_missing",
+          "expected_relation": "missing",
+          "raw_text": "{\"status\":\"missing\",\"reason\":\"资料 1 仅记载预约数量，未提供实际交付数据。\",\"source_labels\":[\"资料 1\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "missing",
+            "reason": "资料 1 仅记载预约数量，未提供实际交付数据。",
+            "source_labels": [
+              "资料 1"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 1.6103720030005206
+        },
+        {
+          "id": "controlled_long_agreement",
+          "expected_relation": "supported",
+          "raw_text": "{\"status\": \"supported\", \"reason\": \"两个来源均明确记载青岭 R6 标准模式额定功率为 18 W，且无冲突或不同条件，有效主张一致。\", \"source_labels\": [\"资料 1\", \"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "supported",
+            "reason": "两个来源均明确记载青岭 R6 标准模式额定功率为 18 W，且无冲突或不同条件，有效主张一致。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.820565379995969
+        },
+        {
+          "id": "controlled_long_conflict",
+          "expected_relation": "conflict",
+          "raw_text": "{\"status\": \"conflict\", \"reason\": \"资料 1 和资料 2 均声称青岭 R6 标准模式额定功率为 18 W 和 25 W，但未提供裁定依据，且无法确定唯一值，因此标记为 conflict。\", \"source_labels\": [\"资料 1\", \"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "资料 1 和资料 2 均声称青岭 R6 标准模式额定功率为 18 W 和 25 W，但未提供裁定依据，且无法确定唯一值，因此标记为 conflict。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 3.372434204000456
+        },
+        {
+          "id": "controlled_long_conflict_reversed",
+          "expected_relation": "conflict",
+          "raw_text": "{\"status\": \"conflict\", \"reason\": \"资料 1 和资料 2 均声称青岭 R6 标准模式额定功率为 25 W 和 18 W，但未提供任何裁定依据或修订依据，因此无法判断哪一个为准，属于冲突。\", \"source_labels\": [\"资料 1\", \"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "conflict",
+            "reason": "资料 1 和资料 2 均声称青岭 R6 标准模式额定功率为 25 W 和 18 W，但未提供任何裁定依据或修订依据，因此无法判断哪一个为准，属于冲突。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 3.6390401889948407
+        },
+        {
+          "id": "controlled_units",
+          "expected_relation": "scope_difference",
+          "raw_text": "{\"status\": \"scope_difference\", \"reason\": \"水泵 C 的体积流量与粉料泵 D 的质量流量属于不同物理量，无法直接比较大小。\", \"source_labels\": [\"资料 1\", \"资料 2\"]}",
+          "finish_reason": "stop",
+          "status": "completed",
+          "parsed": {
+            "status": "scope_difference",
+            "reason": "水泵 C 的体积流量与粉料泵 D 的质量流量属于不同物理量，无法直接比较大小。",
+            "source_labels": [
+              "资料 1",
+              "资料 2"
+            ]
+          },
+          "relation_label_match": true,
+          "elapsed_seconds": 2.6091924880020088
+        }
+      ]
+    }
+  }
+}

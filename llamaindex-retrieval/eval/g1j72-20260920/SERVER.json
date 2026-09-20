@@ -1,0 +1,12 @@
+{
+  "runtime": "data/experiments/practical-rag-20260910/runtime-cuda-v1",
+  "checkpoint": "/mnt/nas-model/g1j/rwkv7-g1j-7.2b-20260831-ctx16384.pth",
+  "model": "rwkv7-g1j-7.2b-20260831-ctx16384",
+  "checkpoint_sha256": "e3091a579c23ea7ebce9a0ad1ecfbda27082eeecd64d7f0474016e626df8f9c3",
+  "output": "data/experiments/g1j72-20260920/inference",
+  "bindings": {
+    "llamaindex-retrieval/eval/g1j72-20260920/serve_72.py": "1cc89e21cf6e3b7341cbbddb5132e1efab2bcb5a673ddb5fb81baed34befc759",
+    "llamaindex-retrieval/src/llamaindex_retrieval/state_tokens.py": "6c496d3061abd6d764881b71f1b2c06f4bb85b44a3c6763e2807b313b17da882"
+  },
+  "states": []
+}

@@ -1,0 +1,18 @@
+{
+  "created_at": "2026-09-20T02:26:09.845616+00:00",
+  "purpose": "isolate relation judgment from extraction schema failures; diagnostic extension, no training, exposed cases",
+  "bindings": {
+    "llamaindex-retrieval/eval/g1j72-20260920/cases.jsonl": "33e5ef2b79d952925e13dec8fb9b025ead14b1fdc7b4113b43b7cfe9bf0e8c35",
+    "llamaindex-retrieval/eval/g1j72-20260920/run_probe.py": "f9903a2bdcba57401a3ec8e5935c106aaa551462ad3098478df336b0bd6e5c28",
+    "llamaindex-retrieval/eval/g1j72-20260920/run_relations.py": "5c94d7f56226a8ce16ee4dae56d619d64699b47149ff9c9501bc0367b44aa675"
+  },
+  "arms": [
+    "2.9B zero state",
+    "7.2B zero state"
+  ],
+  "cases_per_arm": 12,
+  "budget": 256,
+  "retry": 0,
+  "inputs": "hand-selected exact source spans; no expected relations or gold facts fed to model",
+  "strict_contract": "same relation_prompt and validator as primary experiment"
+}

@@ -1,0 +1,10 @@
+{
+  "artifacts/g1j72-20260920/BACKUP.json": "60de36110cd53e15ba5a6110584dc0a0e19cfab4d45431e4f68846dcfb004ded",
+  "artifacts/g1j72-20260920/EXECUTION-SUMMARY.json": "287cccf4706b68ad28c9641456c02f8daedee77126a01783ff14c51d1993e280",
+  "artifacts/g1j72-20260920/MANUAL-REVIEW.json": "80c74b8cff541f9fe91e3a311d4eec108ea89fffebd7fa262aafe776036d7bd8",
+  "artifacts/g1j72-20260920/PLAN-relations.json": "7964644e342fa0012d912d8798f57353ba6be6455bee57bd05a16556c5ef89d7",
+  "artifacts/g1j72-20260920/PLAN.json": "c9bc4f88a0fbabbfc320c4e9578558365cfe5c582face6b430e7c6e22fe24d1d",
+  "artifacts/g1j72-20260920/TRACE-MANIFEST.json": "07820d326f105b2ddea74f9c36751fa680bf02ad7ab88d8bc5acc8250939059c",
+  "artifacts/g1j72-20260920/VALIDATION.json": "ff36fe1f63d5ef14b55b3ec6568cfe305d17ee014550c610da56d7096c691805",
+  "artifacts/g1j72-20260920/raw-traces.tar.gz": "578f9bd7c9f5eb7b9379b2bbfd381d10269c196ea269db0363ddb8c146d945a2"
+}

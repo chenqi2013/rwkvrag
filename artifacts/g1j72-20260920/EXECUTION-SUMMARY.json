@@ -1,0 +1,1549 @@
+{
+  "native_receipts_matched_exactly": 159,
+  "matching": "model, State, exact prompt hash, output budget and exact raw output; complete one-to-one multiset match",
+  "all_native_generations_completed": true,
+  "sampling": "argmax, stop token 0",
+  "performance_limit": "Two model arms could share GPU concurrently; timings are receipts, not isolated throughput benchmarks.",
+  "arms": {
+    "direct-29-tuned": {
+      "cases": 28,
+      "calls": 28,
+      "case_status_counts": {
+        "completed": 28
+      },
+      "input_tokens": 46566,
+      "output_tokens_including_eos": 1273,
+      "length_calls": 0,
+      "calls_detail": [
+        {
+          "case": "comparison_smoke_001",
+          "stage": "writer",
+          "input_tokens": 477,
+          "output_tokens_including_eos": 39,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.0344254821538925,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0386.started.json"
+        },
+        {
+          "case": "comparison_smoke_002",
+          "stage": "writer",
+          "input_tokens": 489,
+          "output_tokens_including_eos": 47,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.8084012269973755,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0387.started.json"
+        },
+        {
+          "case": "comparison_smoke_003",
+          "stage": "writer",
+          "input_tokens": 493,
+          "output_tokens_including_eos": 52,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.9985568458214402,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0388.started.json"
+        },
+        {
+          "case": "comparison_smoke_004",
+          "stage": "writer",
+          "input_tokens": 495,
+          "output_tokens_including_eos": 49,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.93307273555547,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0389.started.json"
+        },
+        {
+          "case": "comparison_smoke_005",
+          "stage": "writer",
+          "input_tokens": 492,
+          "output_tokens_including_eos": 50,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.9645320745185018,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0390.started.json"
+        },
+        {
+          "case": "comparison_smoke_006",
+          "stage": "writer",
+          "input_tokens": 492,
+          "output_tokens_including_eos": 17,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 0.665097463876009,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0391.started.json"
+        },
+        {
+          "case": "comparison_smoke_007",
+          "stage": "writer",
+          "input_tokens": 505,
+          "output_tokens_including_eos": 95,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.5973364813253284,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0392.started.json"
+        },
+        {
+          "case": "comparison_smoke_008",
+          "stage": "writer",
+          "input_tokens": 428,
+          "output_tokens_including_eos": 65,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.4821822000667453,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0393.started.json"
+        },
+        {
+          "case": "controlled_agreement",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 23,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 0.9136050874367356,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0403.started.json"
+        },
+        {
+          "case": "controlled_conditions",
+          "stage": "writer",
+          "input_tokens": 493,
+          "output_tokens_including_eos": 65,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.520391259342432,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0406.started.json"
+        },
+        {
+          "case": "controlled_conflict",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 23,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 0.9143682429566979,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0404.started.json"
+        },
+        {
+          "case": "controlled_conflict_reversed",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 23,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 0.930069150403142,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0405.started.json"
+        },
+        {
+          "case": "controlled_long_agreement",
+          "stage": "writer",
+          "input_tokens": 7794,
+          "output_tokens_including_eos": 23,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.622163780964911,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0410.started.json"
+        },
+        {
+          "case": "controlled_long_conflict",
+          "stage": "writer",
+          "input_tokens": 7794,
+          "output_tokens_including_eos": 23,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.4923876319080591,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0411.started.json"
+        },
+        {
+          "case": "controlled_long_conflict_reversed",
+          "stage": "writer",
+          "input_tokens": 7794,
+          "output_tokens_including_eos": 23,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.642380341887474,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0412.started.json"
+        },
+        {
+          "case": "controlled_missing",
+          "stage": "writer",
+          "input_tokens": 455,
+          "output_tokens_including_eos": 18,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 0.7161322785541415,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0409.started.json"
+        },
+        {
+          "case": "controlled_revision",
+          "stage": "writer",
+          "input_tokens": 508,
+          "output_tokens_including_eos": 55,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1489836368709803,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0407.started.json"
+        },
+        {
+          "case": "controlled_single",
+          "stage": "writer",
+          "input_tokens": 473,
+          "output_tokens_including_eos": 23,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 0.9144301982596517,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0402.started.json"
+        },
+        {
+          "case": "controlled_units",
+          "stage": "writer",
+          "input_tokens": 497,
+          "output_tokens_including_eos": 114,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 4.424271527677774,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0413.started.json"
+        },
+        {
+          "case": "controlled_zero",
+          "stage": "writer",
+          "input_tokens": 491,
+          "output_tokens_including_eos": 28,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.1172173824161291,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0408.started.json"
+        },
+        {
+          "case": "regression_smoke_001",
+          "stage": "writer",
+          "input_tokens": 624,
+          "output_tokens_including_eos": 87,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.3006315547972918,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0394.started.json"
+        },
+        {
+          "case": "regression_smoke_002",
+          "stage": "writer",
+          "input_tokens": 815,
+          "output_tokens_including_eos": 66,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.5289895217865705,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0395.started.json"
+        },
+        {
+          "case": "regression_smoke_003",
+          "stage": "writer",
+          "input_tokens": 441,
+          "output_tokens_including_eos": 5,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 0.21874516643583775,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0396.started.json"
+        },
+        {
+          "case": "regression_smoke_004",
+          "stage": "writer",
+          "input_tokens": 509,
+          "output_tokens_including_eos": 20,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 0.7772333538159728,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0397.started.json"
+        },
+        {
+          "case": "regression_smoke_005",
+          "stage": "writer",
+          "input_tokens": 537,
+          "output_tokens_including_eos": 100,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.779112962074578,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0398.started.json"
+        },
+        {
+          "case": "regression_smoke_006",
+          "stage": "writer",
+          "input_tokens": 576,
+          "output_tokens_including_eos": 78,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.5172383515164256,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0399.started.json"
+        },
+        {
+          "case": "regression_smoke_007",
+          "stage": "writer",
+          "input_tokens": 10860,
+          "output_tokens_including_eos": 39,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.494047176092863,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0400.started.json"
+        },
+        {
+          "case": "regression_smoke_008",
+          "stage": "writer",
+          "input_tokens": 522,
+          "output_tokens_including_eos": 23,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 0.9129865160211921,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0401.started.json"
+        }
+      ]
+    },
+    "direct-29-zero": {
+      "cases": 28,
+      "calls": 28,
+      "case_status_counts": {
+        "completed": 25,
+        "length": 3
+      },
+      "input_tokens": 46566,
+      "output_tokens_including_eos": 7775,
+      "length_calls": 3,
+      "calls_detail": [
+        {
+          "case": "comparison_smoke_001",
+          "stage": "writer",
+          "input_tokens": 477,
+          "output_tokens_including_eos": 45,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.3450753865763545,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0358.started.json"
+        },
+        {
+          "case": "comparison_smoke_002",
+          "stage": "writer",
+          "input_tokens": 489,
+          "output_tokens_including_eos": 55,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1031050300225616,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0359.started.json"
+        },
+        {
+          "case": "comparison_smoke_003",
+          "stage": "writer",
+          "input_tokens": 493,
+          "output_tokens_including_eos": 58,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.2290073120966554,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0360.started.json"
+        },
+        {
+          "case": "comparison_smoke_004",
+          "stage": "writer",
+          "input_tokens": 495,
+          "output_tokens_including_eos": 102,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.886310625821352,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0361.started.json"
+        },
+        {
+          "case": "comparison_smoke_005",
+          "stage": "writer",
+          "input_tokens": 492,
+          "output_tokens_including_eos": 91,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.4726742301136255,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0362.started.json"
+        },
+        {
+          "case": "comparison_smoke_006",
+          "stage": "writer",
+          "input_tokens": 492,
+          "output_tokens_including_eos": 2048,
+          "finish_reason": "length",
+          "native_elapsed_seconds": 77.40225708857179,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0363.started.json"
+        },
+        {
+          "case": "comparison_smoke_007",
+          "stage": "writer",
+          "input_tokens": 505,
+          "output_tokens_including_eos": 87,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.3617569860070944,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0364.started.json"
+        },
+        {
+          "case": "comparison_smoke_008",
+          "stage": "writer",
+          "input_tokens": 428,
+          "output_tokens_including_eos": 2048,
+          "finish_reason": "length",
+          "native_elapsed_seconds": 78.10941367037594,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0365.started.json"
+        },
+        {
+          "case": "controlled_agreement",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 52,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.099345543421805,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0375.started.json"
+        },
+        {
+          "case": "controlled_conditions",
+          "stage": "writer",
+          "input_tokens": 493,
+          "output_tokens_including_eos": 69,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.7485002148896456,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0378.started.json"
+        },
+        {
+          "case": "controlled_conflict",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 52,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.989134520292282,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0431.started.json"
+        },
+        {
+          "case": "controlled_conflict_reversed",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 52,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1572032626718283,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0377.started.json"
+        },
+        {
+          "case": "controlled_long_agreement",
+          "stage": "writer",
+          "input_tokens": 7794,
+          "output_tokens_including_eos": 26,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.3351179976016283,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0382.started.json"
+        },
+        {
+          "case": "controlled_long_conflict",
+          "stage": "writer",
+          "input_tokens": 7794,
+          "output_tokens_including_eos": 42,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.9384443731978536,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0383.started.json"
+        },
+        {
+          "case": "controlled_long_conflict_reversed",
+          "stage": "writer",
+          "input_tokens": 7794,
+          "output_tokens_including_eos": 2048,
+          "finish_reason": "length",
+          "native_elapsed_seconds": 79.26587512064725,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0384.started.json"
+        },
+        {
+          "case": "controlled_missing",
+          "stage": "writer",
+          "input_tokens": 455,
+          "output_tokens_including_eos": 50,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.900198387913406,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0436.started.json"
+        },
+        {
+          "case": "controlled_revision",
+          "stage": "writer",
+          "input_tokens": 508,
+          "output_tokens_including_eos": 61,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.321867165155709,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0434.started.json"
+        },
+        {
+          "case": "controlled_single",
+          "stage": "writer",
+          "input_tokens": 473,
+          "output_tokens_including_eos": 26,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.0290368553251028,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0374.started.json"
+        },
+        {
+          "case": "controlled_units",
+          "stage": "writer",
+          "input_tokens": 497,
+          "output_tokens_including_eos": 111,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 4.316865534521639,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0385.started.json"
+        },
+        {
+          "case": "controlled_zero",
+          "stage": "writer",
+          "input_tokens": 491,
+          "output_tokens_including_eos": 55,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.162807459011674,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0380.started.json"
+        },
+        {
+          "case": "regression_smoke_001",
+          "stage": "writer",
+          "input_tokens": 624,
+          "output_tokens_including_eos": 97,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.789348926395178,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0366.started.json"
+        },
+        {
+          "case": "regression_smoke_002",
+          "stage": "writer",
+          "input_tokens": 815,
+          "output_tokens_including_eos": 78,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.1374072255566716,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0367.started.json"
+        },
+        {
+          "case": "regression_smoke_003",
+          "stage": "writer",
+          "input_tokens": 441,
+          "output_tokens_including_eos": 33,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.3110825158655643,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0368.started.json"
+        },
+        {
+          "case": "regression_smoke_004",
+          "stage": "writer",
+          "input_tokens": 509,
+          "output_tokens_including_eos": 81,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.1609511515125632,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0369.started.json"
+        },
+        {
+          "case": "regression_smoke_005",
+          "stage": "writer",
+          "input_tokens": 537,
+          "output_tokens_including_eos": 95,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.697019941173494,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0370.started.json"
+        },
+        {
+          "case": "regression_smoke_006",
+          "stage": "writer",
+          "input_tokens": 576,
+          "output_tokens_including_eos": 95,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.7067060843110085,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0371.started.json"
+        },
+        {
+          "case": "regression_smoke_007",
+          "stage": "writer",
+          "input_tokens": 10860,
+          "output_tokens_including_eos": 40,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.6331382570788264,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0372.started.json"
+        },
+        {
+          "case": "regression_smoke_008",
+          "stage": "writer",
+          "input_tokens": 522,
+          "output_tokens_including_eos": 78,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.0349292512983084,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0373.started.json"
+        }
+      ]
+    },
+    "direct-72-zero": {
+      "cases": 28,
+      "calls": 28,
+      "case_status_counts": {
+        "completed": 28
+      },
+      "input_tokens": 46566,
+      "output_tokens_including_eos": 1717,
+      "length_calls": 0,
+      "calls_detail": [
+        {
+          "case": "comparison_smoke_001",
+          "stage": "writer",
+          "input_tokens": 477,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.33603002037853,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0001.started.json"
+        },
+        {
+          "case": "comparison_smoke_002",
+          "stage": "writer",
+          "input_tokens": 489,
+          "output_tokens_including_eos": 46,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.4258523639291525,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0002.started.json"
+        },
+        {
+          "case": "comparison_smoke_003",
+          "stage": "writer",
+          "input_tokens": 493,
+          "output_tokens_including_eos": 41,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1912846602499485,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0003.started.json"
+        },
+        {
+          "case": "comparison_smoke_004",
+          "stage": "writer",
+          "input_tokens": 495,
+          "output_tokens_including_eos": 80,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.1629177182912827,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0004.started.json"
+        },
+        {
+          "case": "comparison_smoke_005",
+          "stage": "writer",
+          "input_tokens": 492,
+          "output_tokens_including_eos": 83,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.271299386397004,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0005.started.json"
+        },
+        {
+          "case": "comparison_smoke_006",
+          "stage": "writer",
+          "input_tokens": 492,
+          "output_tokens_including_eos": 31,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.2438559839501977,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0006.started.json"
+        },
+        {
+          "case": "comparison_smoke_007",
+          "stage": "writer",
+          "input_tokens": 505,
+          "output_tokens_including_eos": 61,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.420371161773801,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0007.started.json"
+        },
+        {
+          "case": "comparison_smoke_008",
+          "stage": "writer",
+          "input_tokens": 428,
+          "output_tokens_including_eos": 108,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 4.2338578989729285,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0008.started.json"
+        },
+        {
+          "case": "controlled_agreement",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1408835388720036,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0018.started.json"
+        },
+        {
+          "case": "controlled_conditions",
+          "stage": "writer",
+          "input_tokens": 493,
+          "output_tokens_including_eos": 82,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.319082801230252,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0021.started.json"
+        },
+        {
+          "case": "controlled_conflict",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1270650876685977,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0043.started.json"
+        },
+        {
+          "case": "controlled_conflict_reversed",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1370112588629127,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0020.started.json"
+        },
+        {
+          "case": "controlled_long_agreement",
+          "stage": "writer",
+          "input_tokens": 7794,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.188735851086676,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0025.started.json"
+        },
+        {
+          "case": "controlled_long_conflict",
+          "stage": "writer",
+          "input_tokens": 7794,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.123169212602079,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0026.started.json"
+        },
+        {
+          "case": "controlled_long_conflict_reversed",
+          "stage": "writer",
+          "input_tokens": 7794,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.18220922537148,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0027.started.json"
+        },
+        {
+          "case": "controlled_missing",
+          "stage": "writer",
+          "input_tokens": 455,
+          "output_tokens_including_eos": 37,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.4715386480093002,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0024.started.json"
+        },
+        {
+          "case": "controlled_revision",
+          "stage": "writer",
+          "input_tokens": 508,
+          "output_tokens_including_eos": 44,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.736383629962802,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0046.started.json"
+        },
+        {
+          "case": "controlled_single",
+          "stage": "writer",
+          "input_tokens": 473,
+          "output_tokens_including_eos": 27,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.0832917327061296,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0017.started.json"
+        },
+        {
+          "case": "controlled_units",
+          "stage": "writer",
+          "input_tokens": 497,
+          "output_tokens_including_eos": 112,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 4.379338227212429,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0052.started.json"
+        },
+        {
+          "case": "controlled_zero",
+          "stage": "writer",
+          "input_tokens": 491,
+          "output_tokens_including_eos": 45,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.7887765802443027,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0023.started.json"
+        },
+        {
+          "case": "regression_smoke_001",
+          "stage": "writer",
+          "input_tokens": 624,
+          "output_tokens_including_eos": 102,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 4.01794770359993,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0009.started.json"
+        },
+        {
+          "case": "regression_smoke_002",
+          "stage": "writer",
+          "input_tokens": 815,
+          "output_tokens_including_eos": 40,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.646556937135756,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0010.started.json"
+        },
+        {
+          "case": "regression_smoke_003",
+          "stage": "writer",
+          "input_tokens": 441,
+          "output_tokens_including_eos": 76,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.989920698106289,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0011.started.json"
+        },
+        {
+          "case": "regression_smoke_004",
+          "stage": "writer",
+          "input_tokens": 509,
+          "output_tokens_including_eos": 52,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.0717287939041853,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0012.started.json"
+        },
+        {
+          "case": "regression_smoke_005",
+          "stage": "writer",
+          "input_tokens": 537,
+          "output_tokens_including_eos": 95,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.760854515247047,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0013.started.json"
+        },
+        {
+          "case": "regression_smoke_006",
+          "stage": "writer",
+          "input_tokens": 576,
+          "output_tokens_including_eos": 66,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.617960619740188,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0014.started.json"
+        },
+        {
+          "case": "regression_smoke_007",
+          "stage": "writer",
+          "input_tokens": 10860,
+          "output_tokens_including_eos": 53,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.635229525156319,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0015.started.json"
+        },
+        {
+          "case": "regression_smoke_008",
+          "stage": "writer",
+          "input_tokens": 522,
+          "output_tokens_including_eos": 58,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.3263068394735456,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0016.started.json"
+        }
+      ]
+    },
+    "oracle-29-zero": {
+      "cases": 12,
+      "calls": 12,
+      "case_status_counts": {
+        "completed": 12
+      },
+      "input_tokens": 5971,
+      "output_tokens_including_eos": 746,
+      "length_calls": 0,
+      "calls_detail": [
+        {
+          "case": "controlled_agreement",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 52,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.519388328306377,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0430.started.json"
+        },
+        {
+          "case": "controlled_conditions",
+          "stage": "writer",
+          "input_tokens": 493,
+          "output_tokens_including_eos": 69,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.609900200739503,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0433.started.json"
+        },
+        {
+          "case": "controlled_conflict",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 52,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.0615678392350674,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0376.started.json"
+        },
+        {
+          "case": "controlled_conflict_reversed",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 52,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.973623726516962,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0432.started.json"
+        },
+        {
+          "case": "controlled_long_agreement",
+          "stage": "writer",
+          "input_tokens": 514,
+          "output_tokens_including_eos": 52,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.9773532096296549,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0437.started.json"
+        },
+        {
+          "case": "controlled_long_conflict",
+          "stage": "writer",
+          "input_tokens": 514,
+          "output_tokens_including_eos": 124,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 4.682304864749312,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0438.started.json"
+        },
+        {
+          "case": "controlled_long_conflict_reversed",
+          "stage": "writer",
+          "input_tokens": 514,
+          "output_tokens_including_eos": 42,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.6024340242147446,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0439.started.json"
+        },
+        {
+          "case": "controlled_missing",
+          "stage": "writer",
+          "input_tokens": 455,
+          "output_tokens_including_eos": 50,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.935303220525384,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0381.started.json"
+        },
+        {
+          "case": "controlled_revision",
+          "stage": "writer",
+          "input_tokens": 508,
+          "output_tokens_including_eos": 61,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.380230862647295,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0379.started.json"
+        },
+        {
+          "case": "controlled_single",
+          "stage": "writer",
+          "input_tokens": 473,
+          "output_tokens_including_eos": 26,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.476790988817811,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0429.started.json"
+        },
+        {
+          "case": "controlled_units",
+          "stage": "writer",
+          "input_tokens": 497,
+          "output_tokens_including_eos": 111,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 4.184871109202504,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0440.started.json"
+        },
+        {
+          "case": "controlled_zero",
+          "stage": "writer",
+          "input_tokens": 491,
+          "output_tokens_including_eos": 55,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.09958350751549,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0435.started.json"
+        }
+      ]
+    },
+    "oracle-72-zero": {
+      "cases": 12,
+      "calls": 12,
+      "case_status_counts": {
+        "completed": 12
+      },
+      "input_tokens": 5971,
+      "output_tokens_including_eos": 671,
+      "length_calls": 0,
+      "calls_detail": [
+        {
+          "case": "controlled_agreement",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.709901435300708,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0042.started.json"
+        },
+        {
+          "case": "controlled_conditions",
+          "stage": "writer",
+          "input_tokens": 493,
+          "output_tokens_including_eos": 82,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.2316237399354577,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0045.started.json"
+        },
+        {
+          "case": "controlled_conflict",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1383190006017685,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0019.started.json"
+        },
+        {
+          "case": "controlled_conflict_reversed",
+          "stage": "writer",
+          "input_tokens": 504,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1097968695685267,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0044.started.json"
+        },
+        {
+          "case": "controlled_long_agreement",
+          "stage": "writer",
+          "input_tokens": 514,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.25146945938468,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0049.started.json"
+        },
+        {
+          "case": "controlled_long_conflict",
+          "stage": "writer",
+          "input_tokens": 514,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.353317796252668,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0050.started.json"
+        },
+        {
+          "case": "controlled_long_conflict_reversed",
+          "stage": "writer",
+          "input_tokens": 514,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1404264718294144,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0051.started.json"
+        },
+        {
+          "case": "controlled_missing",
+          "stage": "writer",
+          "input_tokens": 455,
+          "output_tokens_including_eos": 37,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.4792550262063742,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0048.started.json"
+        },
+        {
+          "case": "controlled_revision",
+          "stage": "writer",
+          "input_tokens": 508,
+          "output_tokens_including_eos": 44,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.7544924169778824,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0022.started.json"
+        },
+        {
+          "case": "controlled_single",
+          "stage": "writer",
+          "input_tokens": 473,
+          "output_tokens_including_eos": 27,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.4969798903912306,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0041.started.json"
+        },
+        {
+          "case": "controlled_units",
+          "stage": "writer",
+          "input_tokens": 497,
+          "output_tokens_including_eos": 112,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 4.396597983315587,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0028.started.json"
+        },
+        {
+          "case": "controlled_zero",
+          "stage": "writer",
+          "input_tokens": 491,
+          "output_tokens_including_eos": 45,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.7836829610168934,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0047.started.json"
+        }
+      ]
+    },
+    "relations-29-zero": {
+      "cases": 12,
+      "calls": 12,
+      "case_status_counts": {
+        "completed": 12
+      },
+      "input_tokens": 4383,
+      "output_tokens_including_eos": 617,
+      "length_calls": 0,
+      "calls_detail": [
+        {
+          "case": "controlled_agreement",
+          "stage": "relation",
+          "input_tokens": 372,
+          "output_tokens_including_eos": 46,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.7891865083947778,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0442.started.json"
+        },
+        {
+          "case": "controlled_conditions",
+          "stage": "relation",
+          "input_tokens": 361,
+          "output_tokens_including_eos": 26,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.0188642721623182,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0445.started.json"
+        },
+        {
+          "case": "controlled_conflict",
+          "stage": "relation",
+          "input_tokens": 372,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.0960702169686556,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0443.started.json"
+        },
+        {
+          "case": "controlled_conflict_reversed",
+          "stage": "relation",
+          "input_tokens": 372,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.097865798510611,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0444.started.json"
+        },
+        {
+          "case": "controlled_long_agreement",
+          "stage": "relation",
+          "input_tokens": 382,
+          "output_tokens_including_eos": 57,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.2091326536610723,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0449.started.json"
+        },
+        {
+          "case": "controlled_long_conflict",
+          "stage": "relation",
+          "input_tokens": 382,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.110251802019775,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0450.started.json"
+        },
+        {
+          "case": "controlled_long_conflict_reversed",
+          "stage": "relation",
+          "input_tokens": 382,
+          "output_tokens_including_eos": 54,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.0980422096326947,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0451.started.json"
+        },
+        {
+          "case": "controlled_missing",
+          "stage": "relation",
+          "input_tokens": 321,
+          "output_tokens_including_eos": 30,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.1732581062242389,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0448.started.json"
+        },
+        {
+          "case": "controlled_revision",
+          "stage": "relation",
+          "input_tokens": 376,
+          "output_tokens_including_eos": 81,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.1331292474642396,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0446.started.json"
+        },
+        {
+          "case": "controlled_single",
+          "stage": "relation",
+          "input_tokens": 339,
+          "output_tokens_including_eos": 42,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1372640458866954,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0441.started.json"
+        },
+        {
+          "case": "controlled_units",
+          "stage": "relation",
+          "input_tokens": 365,
+          "output_tokens_including_eos": 62,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.4009528225287795,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0452.started.json"
+        },
+        {
+          "case": "controlled_zero",
+          "stage": "relation",
+          "input_tokens": 359,
+          "output_tokens_including_eos": 57,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.222861984744668,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0447.started.json"
+        }
+      ]
+    },
+    "relations-72-zero": {
+      "cases": 12,
+      "calls": 12,
+      "case_status_counts": {
+        "completed": 12
+      },
+      "input_tokens": 4383,
+      "output_tokens_including_eos": 835,
+      "length_calls": 0,
+      "calls_detail": [
+        {
+          "case": "controlled_agreement",
+          "stage": "relation",
+          "input_tokens": 372,
+          "output_tokens_including_eos": 63,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.4702799385413527,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0054.started.json"
+        },
+        {
+          "case": "controlled_conditions",
+          "stage": "relation",
+          "input_tokens": 361,
+          "output_tokens_including_eos": 79,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.0856735659763217,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0057.started.json"
+        },
+        {
+          "case": "controlled_conflict",
+          "stage": "relation",
+          "input_tokens": 372,
+          "output_tokens_including_eos": 65,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.537880329415202,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0055.started.json"
+        },
+        {
+          "case": "controlled_conflict_reversed",
+          "stage": "relation",
+          "input_tokens": 372,
+          "output_tokens_including_eos": 65,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.5351371970027685,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0056.started.json"
+        },
+        {
+          "case": "controlled_long_agreement",
+          "stage": "relation",
+          "input_tokens": 382,
+          "output_tokens_including_eos": 70,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.727274243719876,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0061.started.json"
+        },
+        {
+          "case": "controlled_long_conflict",
+          "stage": "relation",
+          "input_tokens": 382,
+          "output_tokens_including_eos": 85,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.2795622376725078,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0062.started.json"
+        },
+        {
+          "case": "controlled_long_conflict_reversed",
+          "stage": "relation",
+          "input_tokens": 382,
+          "output_tokens_including_eos": 93,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.5433322098106146,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0063.started.json"
+        },
+        {
+          "case": "controlled_missing",
+          "stage": "relation",
+          "input_tokens": 321,
+          "output_tokens_including_eos": 39,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.5247442675754428,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0060.started.json"
+        },
+        {
+          "case": "controlled_revision",
+          "stage": "relation",
+          "input_tokens": 376,
+          "output_tokens_including_eos": 89,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.472847070544958,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0058.started.json"
+        },
+        {
+          "case": "controlled_single",
+          "stage": "relation",
+          "input_tokens": 339,
+          "output_tokens_including_eos": 42,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.1582733653485775,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0053.started.json"
+        },
+        {
+          "case": "controlled_units",
+          "stage": "relation",
+          "input_tokens": 365,
+          "output_tokens_including_eos": 66,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.521869933232665,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0064.started.json"
+        },
+        {
+          "case": "controlled_zero",
+          "stage": "relation",
+          "input_tokens": 359,
+          "output_tokens_including_eos": 79,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.0566098894923925,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0059.started.json"
+        }
+      ]
+    },
+    "staged-29-zero": {
+      "cases": 12,
+      "calls": 15,
+      "case_status_counts": {
+        "failed": 12
+      },
+      "input_tokens": 15089,
+      "output_tokens_including_eos": 901,
+      "length_calls": 0,
+      "calls_detail": [
+        {
+          "case": "controlled_agreement",
+          "stage": "extract-1",
+          "input_tokens": 275,
+          "output_tokens_including_eos": 61,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.3222670946270227,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0418.started.json"
+        },
+        {
+          "case": "controlled_agreement",
+          "stage": "extract-2",
+          "input_tokens": 275,
+          "output_tokens_including_eos": 70,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.6920279413461685,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0417.started.json"
+        },
+        {
+          "case": "controlled_conditions",
+          "stage": "extract-1",
+          "input_tokens": 264,
+          "output_tokens_including_eos": 64,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.430162682197988,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0421.started.json"
+        },
+        {
+          "case": "controlled_conflict",
+          "stage": "extract-1",
+          "input_tokens": 275,
+          "output_tokens_including_eos": 61,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.323026394471526,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0416.started.json"
+        },
+        {
+          "case": "controlled_conflict",
+          "stage": "extract-2",
+          "input_tokens": 275,
+          "output_tokens_including_eos": 70,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.6663084104657173,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0419.started.json"
+        },
+        {
+          "case": "controlled_conflict_reversed",
+          "stage": "extract-1",
+          "input_tokens": 275,
+          "output_tokens_including_eos": 68,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.572485411539674,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0420.started.json"
+        },
+        {
+          "case": "controlled_long_agreement",
+          "stage": "extract-1",
+          "input_tokens": 3920,
+          "output_tokens_including_eos": 60,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.4031565943732858,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0426.started.json"
+        },
+        {
+          "case": "controlled_long_conflict",
+          "stage": "extract-1",
+          "input_tokens": 3920,
+          "output_tokens_including_eos": 60,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.4019917100667953,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0425.started.json"
+        },
+        {
+          "case": "controlled_long_conflict_reversed",
+          "stage": "extract-1",
+          "input_tokens": 3920,
+          "output_tokens_including_eos": 60,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.4219195283949375,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0427.started.json"
+        },
+        {
+          "case": "controlled_missing",
+          "stage": "extract-1",
+          "input_tokens": 257,
+          "output_tokens_including_eos": 77,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.9105496210977435,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0424.started.json"
+        },
+        {
+          "case": "controlled_revision",
+          "stage": "extract-1",
+          "input_tokens": 262,
+          "output_tokens_including_eos": 68,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.5776713136583567,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0422.started.json"
+        },
+        {
+          "case": "controlled_single",
+          "stage": "extract-1",
+          "input_tokens": 275,
+          "output_tokens_including_eos": 61,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.3248579623177648,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0414.started.json"
+        },
+        {
+          "case": "controlled_single",
+          "stage": "relation",
+          "input_tokens": 383,
+          "output_tokens_including_eos": 18,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 0.7060252521187067,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0415.started.json"
+        },
+        {
+          "case": "controlled_units",
+          "stage": "extract-1",
+          "input_tokens": 262,
+          "output_tokens_including_eos": 43,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 1.641282306984067,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0428.started.json"
+        },
+        {
+          "case": "controlled_zero",
+          "stage": "extract-1",
+          "input_tokens": 251,
+          "output_tokens_including_eos": 60,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.3044069539755583,
+          "native_receipt": "data/experiments/trace-eval-20260911/service/runs/20260919T130333Z/1017078/0423.started.json"
+        }
+      ]
+    },
+    "staged-72-zero": {
+      "cases": 12,
+      "calls": 12,
+      "case_status_counts": {
+        "failed": 12
+      },
+      "input_tokens": 14156,
+      "output_tokens_including_eos": 2317,
+      "length_calls": 3,
+      "calls_detail": [
+        {
+          "case": "controlled_agreement",
+          "stage": "extract-1",
+          "input_tokens": 275,
+          "output_tokens_including_eos": 81,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.1817229883745313,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0030.started.json"
+        },
+        {
+          "case": "controlled_conditions",
+          "stage": "extract-1",
+          "input_tokens": 264,
+          "output_tokens_including_eos": 81,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.1734533421695232,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0033.started.json"
+        },
+        {
+          "case": "controlled_conflict",
+          "stage": "extract-1",
+          "input_tokens": 275,
+          "output_tokens_including_eos": 81,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.6227945648133755,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0029.started.json"
+        },
+        {
+          "case": "controlled_conflict_reversed",
+          "stage": "extract-1",
+          "input_tokens": 275,
+          "output_tokens_including_eos": 81,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.1943373270332813,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0032.started.json"
+        },
+        {
+          "case": "controlled_long_agreement",
+          "stage": "extract-1",
+          "input_tokens": 3920,
+          "output_tokens_including_eos": 512,
+          "finish_reason": "length",
+          "native_elapsed_seconds": 20.318267132155597,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0038.started.json"
+        },
+        {
+          "case": "controlled_long_conflict",
+          "stage": "extract-1",
+          "input_tokens": 3920,
+          "output_tokens_including_eos": 512,
+          "finish_reason": "length",
+          "native_elapsed_seconds": 20.303069322369993,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0037.started.json"
+        },
+        {
+          "case": "controlled_long_conflict_reversed",
+          "stage": "extract-1",
+          "input_tokens": 3920,
+          "output_tokens_including_eos": 512,
+          "finish_reason": "length",
+          "native_elapsed_seconds": 20.295925483107567,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0039.started.json"
+        },
+        {
+          "case": "controlled_missing",
+          "stage": "extract-1",
+          "input_tokens": 257,
+          "output_tokens_including_eos": 74,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.9012875463813543,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0036.started.json"
+        },
+        {
+          "case": "controlled_revision",
+          "stage": "extract-1",
+          "input_tokens": 262,
+          "output_tokens_including_eos": 152,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 5.935645372606814,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0034.started.json"
+        },
+        {
+          "case": "controlled_single",
+          "stage": "extract-1",
+          "input_tokens": 275,
+          "output_tokens_including_eos": 81,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 3.1951739406213164,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0031.started.json"
+        },
+        {
+          "case": "controlled_units",
+          "stage": "extract-1",
+          "input_tokens": 262,
+          "output_tokens_including_eos": 75,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.9016231233254075,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0040.started.json"
+        },
+        {
+          "case": "controlled_zero",
+          "stage": "extract-1",
+          "input_tokens": 251,
+          "output_tokens_including_eos": 75,
+          "finish_reason": "stop",
+          "native_elapsed_seconds": 2.9434986524283886,
+          "native_receipt": "data/experiments/g1j72-20260920/inference/20260920T021305Z/1162216/0035.started.json"
+        }
+      ]
+    }
+  }
+}

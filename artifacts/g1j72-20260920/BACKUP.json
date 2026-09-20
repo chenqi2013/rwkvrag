@@ -1,0 +1,7 @@
+{
+  "branch": "chase/backup-before-g1j72-20260920",
+  "commit": "68b6bf4a6587ad1d446d70634d98299bdb54ab0e",
+  "remote": "https://github.com/chenqi2013/rwkvrag",
+  "remote_hash_verified": true,
+  "scope": "Git tracked and unignored working tree; data/ excluded by existing gitignore; no full database or private settings backup to public GitHub"
+}

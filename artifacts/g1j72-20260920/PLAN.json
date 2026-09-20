@@ -1,0 +1,83 @@
+{
+  "created_at": "2026-09-20T02:16:02.303952+00:00",
+  "backup_commit": "68b6bf4a6587ad1d446d70634d98299bdb54ab0e",
+  "bindings": {
+    "llamaindex-retrieval/eval/g1j72-20260920/cases.jsonl": "33e5ef2b79d952925e13dec8fb9b025ead14b1fdc7b4113b43b7cfe9bf0e8c35",
+    "llamaindex-retrieval/eval/g1j72-20260920/run_probe.py": "f9903a2bdcba57401a3ec8e5935c106aaa551462ad3098478df336b0bd6e5c28",
+    "llamaindex-retrieval/src/llamaindex_retrieval/writer_prompt.py": "dd6fccafb8bde63405ab74ed62c136de8a1b415d107dd66fe75dab120c9f5942",
+    "llamaindex-retrieval/eval/g1j72-20260920/serve_72.py": "1cc89e21cf6e3b7341cbbddb5132e1efab2bcb5a673ddb5fb81baed34befc759",
+    "llamaindex-retrieval/eval/g1j72-20260920/SERVER.json": "f84c1497fb7ba96edf7fd3ad49d81fa4c2f0b9d82dbaf936fbc890c169ddecb7"
+  },
+  "scope": "fixed material inference only, no retrieval/index changes, no training, no production changes",
+  "cases": {
+    "comparison": 8,
+    "regression": 8,
+    "controlled": 12
+  },
+  "arms": [
+    {
+      "model": "2.9B",
+      "state": null,
+      "mode": "direct",
+      "cases": 28
+    },
+    {
+      "model": "7.2B",
+      "state": null,
+      "mode": "direct",
+      "cases": 28
+    },
+    {
+      "model": "2.9B",
+      "state": "writer-trace-300",
+      "mode": "direct",
+      "cases": 28,
+      "purpose": "deployed State reference, not pure model-size causal comparison"
+    },
+    {
+      "model": "2.9B",
+      "state": null,
+      "mode": "staged",
+      "cases": 12
+    },
+    {
+      "model": "7.2B",
+      "state": null,
+      "mode": "staged",
+      "cases": 12
+    },
+    {
+      "model": "2.9B",
+      "state": null,
+      "mode": "oracle_quotes",
+      "cases": 12
+    },
+    {
+      "model": "7.2B",
+      "state": null,
+      "mode": "oracle_quotes",
+      "cases": 12
+    }
+  ],
+  "sampling": "argmax, EOS 0, identical G1j no-think wrapper",
+  "output_limits": {
+    "writer": 2048,
+    "extraction_per_source": 512,
+    "relation": 256
+  },
+  "retry": 0,
+  "scoring": {
+    "termination": "EOS vs length vs failed; never count unfinished as correct",
+    "facts": "manual complete coverage, correct values, units, polarity, conditions, temporal scope",
+    "citations": "each factual claim supported by the cited source; no fabricated labels",
+    "conflict": "retain both mutually exclusive same-scope claims, no unjustified winner, no false conflict for scope differences",
+    "staged": "exact quote validation and schema checks, semantic review separate",
+    "performance": "wall time all calls, token counts from immutable server receipts; no speed claims from GPU-contended arms"
+  },
+  "limitations": [
+    "synthetic and previously exposed regression cases, not blind commercial acceptance",
+    "staged is experimental narrow single-issue proof, not full automatic question planner or ingestion",
+    "oracle_quotes uses hand-selected verbatim spans as diagnostic upper control, not deployable automation"
+  ],
+  "decision_rule": "recommend model and architecture from complete per-case evidence; no automatic promotion or success thresholds inferred from these small fixtures"
+}
