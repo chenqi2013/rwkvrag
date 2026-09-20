@@ -1,0 +1,2823 @@
+{
+  "knowledge_base_id": "wiki-5000-20260908",
+  "scoped_chunk_count": {
+    "count": 45960,
+    "_shards": {
+      "total": 1,
+      "successful": 1,
+      "skipped": 0,
+      "failed": 0
+    }
+  },
+  "manifest_rows": 5000,
+  "manifest_sha256": "35563fa6e5d7c9205cea3d9e1cd5476b01774f11a292dafcfed82fe4d8256ced",
+  "historical_wiki": [
+    {
+      "id": "wiki_verified-0161",
+      "expected_title": "东晋",
+      "expected_document_id": "cbed99e56f107d1479048d1b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0135",
+      "expected_title": "Getmii",
+      "expected_document_id": "40b849c0cbc65ce9895e3ce9",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0093",
+      "expected_title": "乌克兰总统办公室大楼",
+      "expected_document_id": "2f726b6a4ad6929b802e0db4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0070",
+      "expected_title": "蕭琮",
+      "expected_document_id": "322a922e929704445ea58154",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0043",
+      "expected_title": "約克大廈",
+      "expected_document_id": "d8ed0798ae4e35cc6fbb6f2a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0054",
+      "expected_title": "福州航空",
+      "expected_document_id": "cdcc5a50f1391279cd8b2521",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0016",
+      "expected_title": "东乡区",
+      "expected_document_id": "669d0d9f72ce6ea90d6349b2",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0166",
+      "expected_title": "韋雷瑟",
+      "expected_document_id": "1f3bfa489e3c3415716881b5",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0006",
+      "expected_title": "一生交给党",
+      "expected_document_id": "0ea5ef733c5a599e4b2c69e3",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0097",
+      "expected_title": "梅涅勒",
+      "expected_document_id": "6b717970acd8d1fa1a7e6531",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0020",
+      "expected_title": "豪赫蒂夫",
+      "expected_document_id": "c1c24e6722c9dff8d09f931d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0160",
+      "expected_title": "阿方索六世 (雷昂與卡斯提亞)",
+      "expected_document_id": "dddf1b1a33d12effef7eedfa",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0082",
+      "expected_title": "Windows 10",
+      "expected_document_id": "a97dcd3638e24014c0273e87",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0010",
+      "expected_title": "HTBasic",
+      "expected_document_id": "eb618c2f48a75be1c4e7fd5c",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0173",
+      "expected_title": "混乱之子",
+      "expected_document_id": "324e8cddf365ddde0683b7f5",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0012",
+      "expected_title": "东丹",
+      "expected_document_id": "e618600d1a892dc802615f5d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0125",
+      "expected_title": "大藏寺",
+      "expected_document_id": "13e469f9acdb6205299c01c9",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0195",
+      "expected_title": "毒海浮生",
+      "expected_document_id": "e625d9dd034c1129f8fba4f0",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0132",
+      "expected_title": "撒姆魯",
+      "expected_document_id": "28a05bab6c7d222b954b7ced",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0157",
+      "expected_title": "留尼旺白䴉",
+      "expected_document_id": "890b399420415332fa1f9c8f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0083",
+      "expected_title": "下恩特費爾登",
+      "expected_document_id": "ea8a04d9224d6d12ee9a9507",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0081",
+      "expected_title": "江西生产建设兵团",
+      "expected_document_id": "c5cf6301806c34bc13c4023a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0114",
+      "expected_title": "白沙撒字",
+      "expected_document_id": "c7f65ceae91001c65a4a9eb1",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0118",
+      "expected_title": "德赖艾希",
+      "expected_document_id": "6db4b980b36838cebbf80039",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0038",
+      "expected_title": "奥普韦克",
+      "expected_document_id": "56be0464bbaf76348ef6d105",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0048",
+      "expected_title": "斯卡伊茨維斯基公園",
+      "expected_document_id": "c034ccc62c82614cd31789d4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0002",
+      "expected_title": "2020年夏季奥林匹克运动会坦桑尼亚代表团",
+      "expected_document_id": "7a3f7adafaf89725c79e6e19",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0187",
+      "expected_title": "秦皇岛市",
+      "expected_document_id": "18cb54093989706bc6a4f448",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0095",
+      "expected_title": "法兰西艺术院",
+      "expected_document_id": "8da22e5e72ebe19347c64daa",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0138",
+      "expected_title": "Frog City Software",
+      "expected_document_id": "f60ce48f724f9313f0910263",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0061",
+      "expected_title": "暗戀桃花源",
+      "expected_document_id": "5a75a664b70fd97feacb04c8",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0074",
+      "expected_title": "小林尽",
+      "expected_document_id": "5ac91bfa298886a9d189d740",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0141",
+      "expected_title": "慈雙冠麗魚",
+      "expected_document_id": "049e41258f7bdd9f29179639",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0028",
+      "expected_title": "派克賓館麵包卷",
+      "expected_document_id": "e466d33e67836a298e2482a8",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0098",
+      "expected_title": "鄭國",
+      "expected_document_id": "c6da442b0d979d1ac0623645",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0121",
+      "expected_title": "丸龜市",
+      "expected_document_id": "11e02166b87783950f31601e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0162",
+      "expected_title": "塔卡尼克",
+      "expected_document_id": "eaecc3f5675e1da2fb8f3d83",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0003",
+      "expected_title": "釋心道",
+      "expected_document_id": "cd29bb0119973657d7d334f7",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0038",
+      "expected_title": "臺東氣象站",
+      "expected_document_id": "1c176382d325d8255b3fe833",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0084",
+      "expected_title": "長泉町",
+      "expected_document_id": "46f33653999b6a96ab222f65",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0106",
+      "expected_title": "沈一贯",
+      "expected_document_id": "60cd0397f01bc99511089145",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0059",
+      "expected_title": "阿爾貝托·賈科梅蒂",
+      "expected_document_id": "21a407ea3570e2a2e0efcf96",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0098",
+      "expected_title": "丸户史明",
+      "expected_document_id": "6f837121aa52de7e842f610a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0056",
+      "expected_title": "大同鄉 (台灣)",
+      "expected_document_id": "4f0a225ef0757026fd5e3ca5",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0122",
+      "expected_title": "俄罗斯国家爱乐乐团",
+      "expected_document_id": "e6a2fa4f0ce182202c31a352",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0041",
+      "expected_title": "西北岁月",
+      "expected_document_id": "af5eb51d357de5eaed58cc40",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0102",
+      "expected_title": "Brandtaucher",
+      "expected_document_id": "592244f465312a6c5b751e5e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0058",
+      "expected_title": "抚远市",
+      "expected_document_id": "a0aada0773ac96c7e7b7a608",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0095",
+      "expected_title": "圣保罗使徒科学信息与技术大学",
+      "expected_document_id": "993d9af5a360d8d21b925c37",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0132",
+      "expected_title": "三角洲行动",
+      "expected_document_id": "afa82ad0c6583edbeaa8de6f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0152",
+      "expected_title": "金钱骗局",
+      "expected_document_id": "4d4a4e64fd1378c19fcd8758",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0181",
+      "expected_title": "埃利·乌尔德·穆罕默德·瓦勒",
+      "expected_document_id": "dd84a460e283edfde0172291",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0183",
+      "expected_title": "苏里南工党",
+      "expected_document_id": "af7229d815aa0205f8dd2b45",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0137",
+      "expected_title": "王沃",
+      "expected_document_id": "6dcabdd055f561e494b7b533",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0021",
+      "expected_title": "我要你开花",
+      "expected_document_id": "8518c27a0bb56300e575db40",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0172",
+      "expected_title": "纽约爱乐",
+      "expected_document_id": "91cbcb67a21debf51ed0f793",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0076",
+      "expected_title": "义乌市",
+      "expected_document_id": "5989937bc8821d9959822535",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0105",
+      "expected_title": "流亡黯道",
+      "expected_document_id": "b7e179e72147cee0d5f98e86",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0032",
+      "expected_title": "汕尾市新城中學",
+      "expected_document_id": "e8fb4ac44cd1bffdb78e1935",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0087",
+      "expected_title": "聚丙烯腈",
+      "expected_document_id": "4c6b08adc87b98fd95b94b3e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0050",
+      "expected_title": "四月望雨",
+      "expected_document_id": "6ab6e2a75c874ade77f81d07",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0107",
+      "expected_title": "安庆石化",
+      "expected_document_id": "d169472bd263487c40971360",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0116",
+      "expected_title": "荃灣公立何傳耀紀念中學",
+      "expected_document_id": "083121836fcd890e74dd551a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0182",
+      "expected_title": "瑪麗娜·杜潘-程",
+      "expected_document_id": "d5f67ed69d20dc8b3cbbc591",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0013",
+      "expected_title": "夢萊茵",
+      "expected_document_id": "10d91ad4dbe5bf2ba953a923",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0057",
+      "expected_title": "擔子果",
+      "expected_document_id": "456670590414f47df4f00716",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0193",
+      "expected_title": "桑·拉",
+      "expected_document_id": "8f5d2680dba3971955ea5f0f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0178",
+      "expected_title": "维克托·涅克拉索夫",
+      "expected_document_id": "1a5a64802c5016759f78ceca",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0063",
+      "expected_title": "墨尔本",
+      "expected_document_id": "29d47cd97f9215c2c358fbe6",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0124",
+      "expected_title": "巴陵郡",
+      "expected_document_id": "311495fb2bc176ee5e923702",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0139",
+      "expected_title": "江水地站",
+      "expected_document_id": "3fd4fae0822394e872788fa1",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0185",
+      "expected_title": "GONZO",
+      "expected_document_id": "571140aa9a0530f42646e436",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0075",
+      "expected_title": "马诺尔",
+      "expected_document_id": "ed5537d64085e9cdb4a63f20",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0167",
+      "expected_title": "剑桥大学彼得学院",
+      "expected_document_id": "a2e1ed29f760e3453200c4f2",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0177",
+      "expected_title": "字母主义国际",
+      "expected_document_id": "37b3b9bf59b09e364cc7b5ff",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0015",
+      "expected_title": "波基普西镇",
+      "expected_document_id": "ea3fd8ed56ce9178c1bafad0",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0174",
+      "expected_title": "密印寺",
+      "expected_document_id": "5e0d7a48e4227f3b04f12d55",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0077",
+      "expected_title": "股直肌",
+      "expected_document_id": "1749fb2f878e7f94710d9f54",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0057",
+      "expected_title": "梁柏豪",
+      "expected_document_id": "dd081b8df1601cb612ee3664",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0030",
+      "expected_title": "辛醣",
+      "expected_document_id": "19fcc13263790963318bcafc",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0026",
+      "expected_title": "像素星际海盗",
+      "expected_document_id": "28be3aa0e1986c4084bdb093",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0176",
+      "expected_title": "湄公河",
+      "expected_document_id": "a09f93bbec84073ee6d87fd8",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0066",
+      "expected_title": "光之美少女系列",
+      "expected_document_id": "dd6cead3d596c6a0b41e7a40",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0065",
+      "expected_title": "塔伊诺",
+      "expected_document_id": "2b100b91753bec0d2f9f7b51",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0161",
+      "expected_title": "念珠冷水花",
+      "expected_document_id": "fb8bad9500b4a92048dedaf7",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0198",
+      "expected_title": "駢文",
+      "expected_document_id": "c64fd900a97ab2e28f1a7b2e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0156",
+      "expected_title": "羅文錦",
+      "expected_document_id": "7f85601953d8bdf9e0c9b3be",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0147",
+      "expected_title": "道南漁火鐵道",
+      "expected_document_id": "e211380433d2b482c75c66c2",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0005",
+      "expected_title": "李運騰",
+      "expected_document_id": "277660ecee53ffa0333fe05f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0005",
+      "expected_title": "瓦森",
+      "expected_document_id": "58aa8c7cad9f98ea7ab20d89",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0078",
+      "expected_title": "黄金圈",
+      "expected_document_id": "7e56c5f077795dfa8be1042b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0008",
+      "expected_title": "万顺天国",
+      "expected_document_id": "499dc086d1230136d182a482",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0062",
+      "expected_title": "林階堂",
+      "expected_document_id": "ffeb32342cec2e018707d660",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0011",
+      "expected_title": "诺基亚N8",
+      "expected_document_id": "895079de1b515c5d785f8be9",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0002",
+      "expected_title": "克拉斯诺鄂毕斯克",
+      "expected_document_id": "cf273ee4880b61823bc7e308",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0099",
+      "expected_title": "驼背光尾鲨",
+      "expected_document_id": "d2ced6a3c4b2d29f4ed2828e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0000",
+      "expected_title": "格特拉克",
+      "expected_document_id": "8e63f320f01c1cc148a5996d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0003",
+      "expected_title": "山西博物院",
+      "expected_document_id": "c5bc3b5b1fe78a101318d5ce",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0190",
+      "expected_title": "天津梅江会展中心",
+      "expected_document_id": "a308c036b0291e8866fddc2b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0127",
+      "expected_title": "阿拉斯",
+      "expected_document_id": "9aa63c26e66809d0ece80171",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0045",
+      "expected_title": "琴平町",
+      "expected_document_id": "24c72b07092cf134b2a2bc8e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0058",
+      "expected_title": "漫畫週刊",
+      "expected_document_id": "0e0f8d1abd02f66445bdba3b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0186",
+      "expected_title": "陳歐珀",
+      "expected_document_id": "d24d7bd0f2d34748314dd619",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0113",
+      "expected_title": "僑港伍氏宗親會伍時暢紀念學校",
+      "expected_document_id": "566eaf4cf13d4ba6ce46a14e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0017",
+      "expected_title": "抚琴站",
+      "expected_document_id": "ee84f763b1691ee81aeec938",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0176",
+      "expected_title": "反射望远镜座",
+      "expected_document_id": "5b2b35b9e5eea89dbc71eee6",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0133",
+      "expected_title": "Topcraft",
+      "expected_document_id": "e8d33188cfc3763b75381020",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0021",
+      "expected_title": "基辅罗斯",
+      "expected_document_id": "a2834f5235c4b33b14593c05",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0072",
+      "expected_title": "管风琴教堂",
+      "expected_document_id": "2919f5824738a7c164c3ea9b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0102",
+      "expected_title": "野中卓也",
+      "expected_document_id": "3939f8edf055819a50912dff",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0078",
+      "expected_title": "3000",
+      "expected_document_id": "322050a6cfc248d991897099",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0070",
+      "expected_title": "朝鲜民主主义人民共和国铁道省",
+      "expected_document_id": "94efba3e0f95c8433bb86e90",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0034",
+      "expected_title": "明鄭",
+      "expected_document_id": "549fdbae24afdde7c48a9948",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0163",
+      "expected_title": "成昆铁路",
+      "expected_document_id": "fefd98c74b4a637bacf48160",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0069",
+      "expected_title": "勒德马克",
+      "expected_document_id": "8ae14be738af561a1153baa7",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0023",
+      "expected_title": "年輕人們",
+      "expected_document_id": "6ba6540ca3bd5e623aaec953",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0134",
+      "expected_title": "泰諾儀式用椅",
+      "expected_document_id": "9718ba241059a58af0ffd139",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0108",
+      "expected_title": "發現者紀念碑",
+      "expected_document_id": "0efa4794b32966b7a810c7c4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0090",
+      "expected_title": "蝴蝶变形记",
+      "expected_document_id": "82b1bd4523f8d69b616edb62",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0047",
+      "expected_title": "阿德拉米狄翁",
+      "expected_document_id": "80d6938f9292d528cc5c4aec",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0130",
+      "expected_title": "廖述宗",
+      "expected_document_id": "6eebacb80c611a077569deb4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0110",
+      "expected_title": "白水河电站",
+      "expected_document_id": "86e012c59e6356b4be61390f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0035",
+      "expected_title": "甘薇",
+      "expected_document_id": "3b13dac9e5e79a328faaebf4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0110",
+      "expected_title": "王者基多拉",
+      "expected_document_id": "31485c1a1e92fc2995ebbc1c",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0121",
+      "expected_title": "那福路站",
+      "expected_document_id": "4fabbca22d84c804c3e9878b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0172",
+      "expected_title": "高廷宇",
+      "expected_document_id": "3720fb5f2ac5e48f6e8e0915",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0148",
+      "expected_title": "九龍區專線小巴26線",
+      "expected_document_id": "f563a00fedcf7872a44d682d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0118",
+      "expected_title": "浮梁镇",
+      "expected_document_id": "de683a7b61bdf213f694d62e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0131",
+      "expected_title": "泰坦殘骸",
+      "expected_document_id": "fbe8bdc565dc351c6c0ed44e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0165",
+      "expected_title": "界首市",
+      "expected_document_id": "ef06b287b254dfa99880ca5c",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0067",
+      "expected_title": "俄羅斯解體",
+      "expected_document_id": "58fd79896558229ae1809564",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0036",
+      "expected_title": "風景畫",
+      "expected_document_id": "d2538b629a711560a9a8e089",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0094",
+      "expected_title": "土邦",
+      "expected_document_id": "16c0ee55153081846334259f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0104",
+      "expected_title": "太阳能源",
+      "expected_document_id": "bc56b373726d1c7e33b67e48",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0178",
+      "expected_title": "臺南市立文賢國民中學",
+      "expected_document_id": "6ee9564bcaa9d1b8d8472b3b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0119",
+      "expected_title": "河北区",
+      "expected_document_id": "2977be4cc1c9dfc6d44697bc",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0047",
+      "expected_title": "徐国",
+      "expected_document_id": "6dcec710325c6b37893bd9ae",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0175",
+      "expected_title": "蔡謨",
+      "expected_document_id": "b07611c46049a9ea10a826f0",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0000",
+      "expected_title": "斗笠棋",
+      "expected_document_id": "ba706f95be44991a942ab5fb",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0050",
+      "expected_title": "千山古建筑群",
+      "expected_document_id": "70c4f0996a92b96dc9462edb",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0085",
+      "expected_title": "卫岗乳业",
+      "expected_document_id": "256922e32cea7e8ac61ffbaf",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0158",
+      "expected_title": "散兵镇",
+      "expected_document_id": "d2ef12d4cc7c9c783091def7",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0080",
+      "expected_title": "蔡元宸",
+      "expected_document_id": "60ec4360a20d0f70afcdabc4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0164",
+      "expected_title": "宿毛市",
+      "expected_document_id": "393c1978b37842384da4f32e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0106",
+      "expected_title": "韋維傑萊托",
+      "expected_document_id": "2bf8283f6c778f47a48108f2",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0079",
+      "expected_title": "斯奈山半岛",
+      "expected_document_id": "a0b44ac268f2bb478c4d999d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0194",
+      "expected_title": "伽利略传",
+      "expected_document_id": "ef06e732d8a5cd8aa32b2bf2",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0084",
+      "expected_title": "河東碧梧桐",
+      "expected_document_id": "c85a7eb36bdad5543540dfe3",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0044",
+      "expected_title": "云南大学",
+      "expected_document_id": "c79b1cc30470fbeb8ae538c3",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0194",
+      "expected_title": "余震東",
+      "expected_document_id": "64491c178a5a55580c8bb508",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0135",
+      "expected_title": "奥塞布尔",
+      "expected_document_id": "9eb96fc0f6a919032e7fc858",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0022",
+      "expected_title": "烏德勒支足球會",
+      "expected_document_id": "661e0c39be181dfedd00a92f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0018",
+      "expected_title": "马塞杜上校镇",
+      "expected_document_id": "9ac5c450b7ab7d8b9cdedbd0",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0096",
+      "expected_title": "載人火星任務",
+      "expected_document_id": "f0e203e2d0c903dcdc6e9e0f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0130",
+      "expected_title": "中国航空博物馆",
+      "expected_document_id": "3ec880a343b5788db941a53a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0197",
+      "expected_title": "北京大兴站",
+      "expected_document_id": "c4ad1f836da5167865c559f0",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0037",
+      "expected_title": "派塔區",
+      "expected_document_id": "e745876e7770dc875da806f3",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0001",
+      "expected_title": "共识主动性",
+      "expected_document_id": "30d38301f9712bbc3aa29335",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0062",
+      "expected_title": "天津地铁5号线",
+      "expected_document_id": "682c08bdd5d7e53e09dbfe43",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0097",
+      "expected_title": "潼南区",
+      "expected_document_id": "06b2a6313eacf5c4337bff8a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0179",
+      "expected_title": "派克海鯰",
+      "expected_document_id": "9e15a14e302442f0cce7e8c9",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0014",
+      "expected_title": "小布什总统任期",
+      "expected_document_id": "c32fd15f4eb43922ccccbdc3",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0180",
+      "expected_title": "王磐",
+      "expected_document_id": "3c2fc66ca200f5e019e51875",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0128",
+      "expected_title": "高潤生",
+      "expected_document_id": "e3877a259e5a73730a919096",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0015",
+      "expected_title": "古茗",
+      "expected_document_id": "2843367820f5a39689df8a80",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0007",
+      "expected_title": "维尔德舍瑙",
+      "expected_document_id": "9d28e2d27fdc0f0095aa13b4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0028",
+      "expected_title": "科园大道站",
+      "expected_document_id": "177028051bd34e1656bcce28",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0082",
+      "expected_title": "高句丽",
+      "expected_document_id": "775a3d9bfb90904c351c4042",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0180",
+      "expected_title": "久我通誠",
+      "expected_document_id": "2951e6bfbee7c886f089af22",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0153",
+      "expected_title": "羅明才",
+      "expected_document_id": "d7d090f1e30f5603fcca0d04",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0142",
+      "expected_title": "广州市第一巴士",
+      "expected_document_id": "a81555bd303616850ea93291",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0024",
+      "expected_title": "天通苑北站",
+      "expected_document_id": "a4beb838e72bf75c0cc3f84a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0171",
+      "expected_title": "Emtech",
+      "expected_document_id": "1ee4ccd8246536a6ca529cda",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0114",
+      "expected_title": "台灣鐵路",
+      "expected_document_id": "1d35f01e5341ed4af7f2230b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0108",
+      "expected_title": "厉麟似",
+      "expected_document_id": "8b951c6aa55c7efb03aeaf00",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0181",
+      "expected_title": "西螺服務區",
+      "expected_document_id": "99a23742273c93fdcfcf6c17",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0036",
+      "expected_title": "洪堡圈",
+      "expected_document_id": "652a148dca80600462a65518",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0120",
+      "expected_title": "無無眠",
+      "expected_document_id": "5d387212a24f5e1718fc24e8",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0064",
+      "expected_title": "楊家埠街道",
+      "expected_document_id": "012b041665cf38b239ac87ed",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0071",
+      "expected_title": "天心阁",
+      "expected_document_id": "009800bf059d66e005dc29e9",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0189",
+      "expected_title": "义渠",
+      "expected_document_id": "07acedc894cbec8a73afb1b5",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0125",
+      "expected_title": "若望九世",
+      "expected_document_id": "33d4b37a28c7d95c88419cac",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0166",
+      "expected_title": "帕爾佩爾斯",
+      "expected_document_id": "0c59312badaf5fcdd8266bf9",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0004",
+      "expected_title": "馬南扎里河",
+      "expected_document_id": "823a0fc912265d39652d1c7d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0103",
+      "expected_title": "本岑施維爾",
+      "expected_document_id": "da472b8081a336c8439d36da",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0060",
+      "expected_title": "辽宁鸿祥实业集团",
+      "expected_document_id": "7802ea3dc8b0ca72c904bfc6",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0030",
+      "expected_title": "弗蘭斯·波斯特",
+      "expected_document_id": "799db991bcaa7da8fdcaf987",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0144",
+      "expected_title": "斯凯扎-格努普韦里亚区",
+      "expected_document_id": "be349fd555301f216ff282dc",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0143",
+      "expected_title": "關原加油站",
+      "expected_document_id": "d91a97c5f5ce130f4a1b20cf",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0100",
+      "expected_title": "金巴利",
+      "expected_document_id": "56f7be519358d0ece4ce90bb",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0145",
+      "expected_title": "圣殿研究所",
+      "expected_document_id": "42c9b0673cc5c0118e4c34b5",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0136",
+      "expected_title": "水晶大樓",
+      "expected_document_id": "586f485a8fb04e15b4ee5581",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0068",
+      "expected_title": "柏林新博物馆",
+      "expected_document_id": "a89d37a14a43501a6ce46a90",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0093",
+      "expected_title": "君主",
+      "expected_document_id": "8462d0c95188fe6e58e15926",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0198",
+      "expected_title": "水手服",
+      "expected_document_id": "85a6cdf2b6f02a8e6bc9538c",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0025",
+      "expected_title": "卡兰德",
+      "expected_document_id": "716b990d9a217d0787d0eb14",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0191",
+      "expected_title": "救殭清道夫",
+      "expected_document_id": "b4c74549085ff96798b3c3ec",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0087",
+      "expected_title": "后梁",
+      "expected_document_id": "fc2d5cc4f8f9279ac27c62e2",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0046",
+      "expected_title": "洛斯塔洛",
+      "expected_document_id": "10e6e4d4e992346f6d9f787a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0059",
+      "expected_title": "盘庚迁殷",
+      "expected_document_id": "d6e05c1ba5bcae555f427cbe",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0129",
+      "expected_title": "苏黎世圣经译本",
+      "expected_document_id": "46fae6261697c8ef3ce98032",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0117",
+      "expected_title": "這個美術社大有問題！",
+      "expected_document_id": "a7952fdf0e007028d04206f6",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0189",
+      "expected_title": "奈尔斯",
+      "expected_document_id": "3d4d5c4ad62c2577c2ef5bd9",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0090",
+      "expected_title": "刘公岛",
+      "expected_document_id": "153063473da5a5dbb78d14bd",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0199",
+      "expected_title": "怪樂的不得了",
+      "expected_document_id": "a4ac9d00a6b664d7b8e8c56e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0088",
+      "expected_title": "瓦倫達斯",
+      "expected_document_id": "5762ac6a728d4167be83b1d8",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0089",
+      "expected_title": "米那迪爾",
+      "expected_document_id": "b4429db370a3d52b5b780aac",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0073",
+      "expected_title": "杨振鸿",
+      "expected_document_id": "9acaef642e751b9232567220",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0009",
+      "expected_title": "北海银行",
+      "expected_document_id": "fb16850e2a5479e40255bea5",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0120",
+      "expected_title": "寄葉二號B型",
+      "expected_document_id": "bf1bda2e097e8344e1bdb92d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0013",
+      "expected_title": "上海巴士电车",
+      "expected_document_id": "cebf4b97664c875b0dfab282",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0076",
+      "expected_title": "周赧王",
+      "expected_document_id": "23cf0b85759a7b5476038b52",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0162",
+      "expected_title": "MediaWorks",
+      "expected_document_id": "69a4eaf80dd981cc20b34550",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0147",
+      "expected_title": "马里奥豪洛姆",
+      "expected_document_id": "5b9d005b1b8d9a2102825711",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0141",
+      "expected_title": "五道口",
+      "expected_document_id": "16c325ecd710144099b54471",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0052",
+      "expected_title": "我的青春",
+      "expected_document_id": "e06856ca671bd74b8de34b91",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0192",
+      "expected_title": "上海之夜",
+      "expected_document_id": "bceb105b1bf686fee1bdb278",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0140",
+      "expected_title": "蔡振南",
+      "expected_document_id": "13e55462a1d2b2f754225bbf",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0151",
+      "expected_title": "中国国家男子篮球队",
+      "expected_document_id": "58c3b09235c2baec79c9f134",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0148",
+      "expected_title": "尤拉伊·格羅斯",
+      "expected_document_id": "f458c0f24a84d94f16327898",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0152",
+      "expected_title": "個資風暴：劍橋分析事件",
+      "expected_document_id": "959da54d5127382b01f614b4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0160",
+      "expected_title": "英語完全征服",
+      "expected_document_id": "66439df1a9ba002f4b5b82ad",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0170",
+      "expected_title": "南汉",
+      "expected_document_id": "0f5e8a0df494d2862b6860e0",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0081",
+      "expected_title": "雷恰利茲",
+      "expected_document_id": "ce77806d71fee1e967aff6d1",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0041",
+      "expected_title": "笔法",
+      "expected_document_id": "97efb123b00ff186329a1197",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0175",
+      "expected_title": "奧萊什基沙漠",
+      "expected_document_id": "20fcae714e2dc40dbc774f03",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0085",
+      "expected_title": "登楼库组",
+      "expected_document_id": "8df553dea41a7f6a4a968e13",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0089",
+      "expected_title": "奧爾塞利納",
+      "expected_document_id": "8652afa4536d95d3b46f805d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0157",
+      "expected_title": "迈克尔·卢卡斯",
+      "expected_document_id": "9fdea5e364ff34ab7c970293",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0034",
+      "expected_title": "美国侵犯人权报告",
+      "expected_document_id": "1ce1d2308228cc943a051924",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0056",
+      "expected_title": "特鲁普",
+      "expected_document_id": "e933864ef8b9b6c409cec67c",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0183",
+      "expected_title": "北品川站",
+      "expected_document_id": "ac74b9a4c90dbd144e8e994f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0184",
+      "expected_title": "駱駝駱駝不要哭",
+      "expected_document_id": "3bde65d6d2945cabb3834546",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0179",
+      "expected_title": "马云",
+      "expected_document_id": "e2ff15eb9165a14bebe6a789",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0185",
+      "expected_title": "新罗",
+      "expected_document_id": "6b30a45a7c64d5ba3c35f601",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0184",
+      "expected_title": "馬鞍山新市鎮",
+      "expected_document_id": "d579cb9514fd51bc2e5c81ea",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0111",
+      "expected_title": "斑條麗脂鯉",
+      "expected_document_id": "6b246a2fdac3309c770f1702",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0060",
+      "expected_title": "李菁紀念基金",
+      "expected_document_id": "f83dc5808d6f48b20b8635a0",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0103",
+      "expected_title": "聚氧二甲苯",
+      "expected_document_id": "8b0a41c70805f3c0e96d1524",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0105",
+      "expected_title": "伊藤晴雨",
+      "expected_document_id": "d34bcff49228e0872614a8da",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0019",
+      "expected_title": "梁洳瑄",
+      "expected_document_id": "10cfee0a84cc1281cfc71be6",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0049",
+      "expected_title": "佐敦北",
+      "expected_document_id": "3b6d5a9b469204ab6adc7325",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0071",
+      "expected_title": "貝拉赫",
+      "expected_document_id": "d72e26d203b774bbefc23c20",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0129",
+      "expected_title": "高階組合語言",
+      "expected_document_id": "366e01f93e42884a9e8b9b87",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0139",
+      "expected_title": "10月30日",
+      "expected_document_id": "056c4fd93a233f8a89f66011",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0033",
+      "expected_title": "大賭秀",
+      "expected_document_id": "0d8ec61de5b3e5fef5b9560f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0053",
+      "expected_title": "保羅·瓦勒里",
+      "expected_document_id": "ce42161d8de51ea2391f66be",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0101",
+      "expected_title": "查理·科克",
+      "expected_document_id": "faf68313ca17608c10f30151",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0101",
+      "expected_title": "缨绒花",
+      "expected_document_id": "e888a5f54a85f7be8ecbc318",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0051",
+      "expected_title": "瑪琳·黛德麗",
+      "expected_document_id": "664a5c6ac8271f9cbada0d90",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0156",
+      "expected_title": "运城盐湖",
+      "expected_document_id": "173f7b6598246a938042b8f7",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0186",
+      "expected_title": "所罗门圣殿 (圣保罗)",
+      "expected_document_id": "045621902dedff18f1198203",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0069",
+      "expected_title": "胡朝",
+      "expected_document_id": "fd4d7b36fce089c0df568bc2",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0027",
+      "expected_title": "检断沙汰",
+      "expected_document_id": "761c372d1254927c715575c4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0074",
+      "expected_title": "波密土王",
+      "expected_document_id": "7d62c40da751d8a98e3cf4cf",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0068",
+      "expected_title": "薄叶南蛇藤",
+      "expected_document_id": "e54442d8b2aa383b2a9965c2",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0051",
+      "expected_title": "医科达",
+      "expected_document_id": "bdf945fa69e5819fef4e3f65",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0107",
+      "expected_title": "廣島短距離交通瀨野線",
+      "expected_document_id": "28b86108a287ec3fff883bbf",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0011",
+      "expected_title": "路德會梁鉅鏐小學",
+      "expected_document_id": "6b1d347d8a49d7f23f1712cb",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0055",
+      "expected_title": "上海宾馆",
+      "expected_document_id": "cc7d6e2b65c2389e1d2ebecc",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0131",
+      "expected_title": "阿尔及利亚穆斯林贤哲会",
+      "expected_document_id": "55b5ec416401fdff9f682e6a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0190",
+      "expected_title": "戴列斯劇場",
+      "expected_document_id": "c910628a707e41b02688558e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0126",
+      "expected_title": "笑笑大搞作",
+      "expected_document_id": "073efe24f6fb925138e614e7",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0199",
+      "expected_title": "快樂旋律",
+      "expected_document_id": "8b4ec6478f7c090d2ef79ffe",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0173",
+      "expected_title": "乌兰浩特站",
+      "expected_document_id": "26b7160de7e1a398bab55981",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0169",
+      "expected_title": "姜文",
+      "expected_document_id": "0367d0dbc7c69a472016d6b6",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0115",
+      "expected_title": "吸血鬼了沒",
+      "expected_document_id": "e60e6199341dcc605fa2f31a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0146",
+      "expected_title": "C13H14N2O3",
+      "expected_document_id": "fe04babb86809c3a828dc32e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0112",
+      "expected_title": "定點突變",
+      "expected_document_id": "77ba2ab9a87b48a2e3d3bf9f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0151",
+      "expected_title": "希腊火药与弹药公司",
+      "expected_document_id": "d0224a84f7d24abdb4c16788",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0079",
+      "expected_title": "五城目町",
+      "expected_document_id": "3a109b995faccc6411b705b7",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0008",
+      "expected_title": "突騎施",
+      "expected_document_id": "a295a870078911b93422e085",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0153",
+      "expected_title": "皮卡迪利劇院",
+      "expected_document_id": "7422479b82bcb605ac13c92a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0040",
+      "expected_title": "美國衰落",
+      "expected_document_id": "160d28778ac11ad7ddb09433",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0191",
+      "expected_title": "中井貴一",
+      "expected_document_id": "13bc0d6099e4c2c639cedbfa",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0169",
+      "expected_title": "萨非王朝",
+      "expected_document_id": "07733fb14c202eefb1f880ba",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0029",
+      "expected_title": "山陽鐵道",
+      "expected_document_id": "968ec11b195db8841872a9dc",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0164",
+      "expected_title": "溫哥華白浪足球會",
+      "expected_document_id": "cb5251a864b4425a7ea8cbc1",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0113",
+      "expected_title": "倒霉性爱，发狂黄片",
+      "expected_document_id": "48ccc27cd4b9ae2e455d44ad",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0006",
+      "expected_title": "Po朝霆",
+      "expected_document_id": "989a322b82baaff146d08837",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0171",
+      "expected_title": "松平賴恭",
+      "expected_document_id": "26e02cb2ba1c6e90142b8434",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0049",
+      "expected_title": "哥倫比亞西部山脈",
+      "expected_document_id": "c67c40f2badf077d55197715",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0031",
+      "expected_title": "第58届格莱美奖",
+      "expected_document_id": "3a8eeb148bb13d43e7433df6",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0124",
+      "expected_title": "蔡炳瑞",
+      "expected_document_id": "45d06ed1b8a467b96ecd898b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0197",
+      "expected_title": "維利耶",
+      "expected_document_id": "7256c88722ad3ebad9b4632f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0168",
+      "expected_title": "满者伯夷",
+      "expected_document_id": "8821bcab2149a8ae58643717",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0122",
+      "expected_title": "塔明斯",
+      "expected_document_id": "fd3dbe31a00a85437330df70",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0195",
+      "expected_title": "TestNG",
+      "expected_document_id": "0cc906b98104ae660406b812",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0007",
+      "expected_title": "金色情挑",
+      "expected_document_id": "b96f49a32337579e14c0761a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0091",
+      "expected_title": "韦世豪",
+      "expected_document_id": "1245dcf947810b824564df2c",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0188",
+      "expected_title": "奥巴马总统任期",
+      "expected_document_id": "71de09c10000f007aecf3357",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0133",
+      "expected_title": "雷·沃納爾",
+      "expected_document_id": "a2c623ae65b3cb004d7c66c9",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0033",
+      "expected_title": "1555年",
+      "expected_document_id": "a11098b7c4731ad5a1ad75fe",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0073",
+      "expected_title": "溫特瓦茨",
+      "expected_document_id": "4497083e69f610d919daf462",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0142",
+      "expected_title": "中华民国陆海军大元帅大本营",
+      "expected_document_id": "549d6abe125a3c1bdbbf1335",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0188",
+      "expected_title": "龍族戰神",
+      "expected_document_id": "ac5cfcb8b7bc0de30c204138",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0109",
+      "expected_title": "澳門單牌車進出橫琴",
+      "expected_document_id": "3b3b1a263600be484ed43e33",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0066",
+      "expected_title": "庄桥街道",
+      "expected_document_id": "11fb8d9bf8832c578e49ad75",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0042",
+      "expected_title": "毛羽皇",
+      "expected_document_id": "c866ee61f2d49947c72a3571",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0016",
+      "expected_title": "網球王子音樂劇第二季",
+      "expected_document_id": "0228d8450ff9d19c7736237b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0159",
+      "expected_title": "巴林LGBT权益",
+      "expected_document_id": "5d18aed51930c9e27dcb7f58",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0187",
+      "expected_title": "岛山安昌浩级潜艇",
+      "expected_document_id": "9a816485dbe31eb0b194e105",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0020",
+      "expected_title": "斯利那加",
+      "expected_document_id": "c1b2edec3221412fab214f2e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0053",
+      "expected_title": "對立教宗菲利普",
+      "expected_document_id": "45bcdd4e662e57578a9ed568",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0192",
+      "expected_title": "臺中市立豐東國民中學",
+      "expected_document_id": "0589bdd2a898b5606998681e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0167",
+      "expected_title": "回轉變流機",
+      "expected_document_id": "b910420dc279bff591a2e1d2",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0119",
+      "expected_title": "李村基督教堂",
+      "expected_document_id": "fdd00f5a56a61a271fd8c29e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0077",
+      "expected_title": "瑞竹地區",
+      "expected_document_id": "ffdc0b7b767ef6de664cee1c",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0140",
+      "expected_title": "波多黎各的古堡與聖胡安歷史遺址",
+      "expected_document_id": "15bfa97d8bdd30a8b7e0c054",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0023",
+      "expected_title": "天津中德应用技术大学",
+      "expected_document_id": "7141fe329a89317189acc47d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0048",
+      "expected_title": "中国人民解放军坦克博物馆",
+      "expected_document_id": "10c5c81b6ee4bebe05ad3baa",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0154",
+      "expected_title": "雷姆沙伊德",
+      "expected_document_id": "642aa4d1d46ce243b8d28d83",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0115",
+      "expected_title": "甲府市",
+      "expected_document_id": "20699b0a4fa972c36e55c100",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0025",
+      "expected_title": "一夜狂奔",
+      "expected_document_id": "56ba355908bf263963043822",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0054",
+      "expected_title": "念珠芥属",
+      "expected_document_id": "329fa0a3838fd2a727add79d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0045",
+      "expected_title": "魏璘",
+      "expected_document_id": "5706d64c7d85c247a38fbb8b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0086",
+      "expected_title": "计算机科学",
+      "expected_document_id": "30b52e41628f17182eb8e12a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0012",
+      "expected_title": "虞国",
+      "expected_document_id": "5a9d85f7258ca38722419a62",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0168",
+      "expected_title": "城南书院",
+      "expected_document_id": "4c6004935601745e64679d58",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0174",
+      "expected_title": "馬拉度納教",
+      "expected_document_id": "73e45f7159a8c3f30e550843",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0155",
+      "expected_title": "苦苓",
+      "expected_document_id": "0e9c394f4da67914777772d4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0032",
+      "expected_title": "渭水春風",
+      "expected_document_id": "16c82f9fcddf1c57d5f227f3",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0042",
+      "expected_title": "心理不应期",
+      "expected_document_id": "2494bef020ebe8b6f8928787",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0104",
+      "expected_title": "拉斯玛·卡尤",
+      "expected_document_id": "a9f388b1ab1e60d7261eca08",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0091",
+      "expected_title": "文藝復興時期的柏拉圖主義",
+      "expected_document_id": "a9686fb4de44266e5c2a85da",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0127",
+      "expected_title": "永康学派",
+      "expected_document_id": "997279be27a455848ef177db",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0196",
+      "expected_title": "黑茨納赫",
+      "expected_document_id": "3c38ba47fe3ff547eb7e0475",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0083",
+      "expected_title": "海因里希·克雷默",
+      "expected_document_id": "d64074f51b5432c41f3d9b2f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0026",
+      "expected_title": "左菁華",
+      "expected_document_id": "1237b53f0bf4ad27ea7f8537",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0150",
+      "expected_title": "Buildbox",
+      "expected_document_id": "b510801ad011ec1de754224e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0092",
+      "expected_title": "禁煙委員會",
+      "expected_document_id": "0ee2659a32216f30c035205a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0144",
+      "expected_title": "开平矿务局",
+      "expected_document_id": "33be17c8535e2655b7a99f4f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0029",
+      "expected_title": "下安特亞蒙",
+      "expected_document_id": "6ad2a80e701a8d819fea41d1",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0022",
+      "expected_title": "社寮地區",
+      "expected_document_id": "18d3aa2da646ac2c1a7426e3",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0138",
+      "expected_title": "切帕赫",
+      "expected_document_id": "fc04d30035092f7b85550e5e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0046",
+      "expected_title": "惠桥水库",
+      "expected_document_id": "b64ec0fc4b62ce2bba173e40",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0004",
+      "expected_title": "萨珊王朝",
+      "expected_document_id": "4fb04a7ed486bc7995ab41d0",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0037",
+      "expected_title": "产出缺口",
+      "expected_document_id": "30253c0dc76e56ecf478475a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0154",
+      "expected_title": "Poly Bridge",
+      "expected_document_id": "be8c51479e2ae9bb89f0e8b0",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0159",
+      "expected_title": "斯洛博齊亞",
+      "expected_document_id": "44e8c6067f2f0cb5da976a8a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0018",
+      "expected_title": "索科托哈里发国",
+      "expected_document_id": "128b41f2920c407719dfe1e3",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0136",
+      "expected_title": "菲涅耳透鏡",
+      "expected_document_id": "fce4a0f29b7b931c0745f917",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0043",
+      "expected_title": "宗萨寺",
+      "expected_document_id": "bfcfe542281b88694137576d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0126",
+      "expected_title": "林岱樺",
+      "expected_document_id": "bca3f0840d9fee43c9de7d1a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0149",
+      "expected_title": "格克切貝伊",
+      "expected_document_id": "97324539c986ba29fe8c4845",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0150",
+      "expected_title": "佐藤聰美",
+      "expected_document_id": "e95c4d4b3f5c0a0604a32520",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0099",
+      "expected_title": "国际排球联合会",
+      "expected_document_id": "61793d08d77e8e097c63b82b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0092",
+      "expected_title": "楠伯",
+      "expected_document_id": "38eddd48ff0614b8fa368384",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0137",
+      "expected_title": "惠庭市",
+      "expected_document_id": "9e1439b8c44e41ac9e8e5611",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0158",
+      "expected_title": "石壁街道",
+      "expected_document_id": "0e2867217a2f92e1b790fa56",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0145",
+      "expected_title": "池田1號墳",
+      "expected_document_id": "80e7d222b7cc3f197b1fc6ab",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0039",
+      "expected_title": "記錄的地平線",
+      "expected_document_id": "b3c608f968b1a62feb7d889d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0109",
+      "expected_title": "苏珊·卡伯特",
+      "expected_document_id": "5d477db5f36793fdea984f77",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0196",
+      "expected_title": "安然公司",
+      "expected_document_id": "bc30182d17082880c4d682fc",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0072",
+      "expected_title": "大中壩機場",
+      "expected_document_id": "c275ae2e4ef493d9f428c6db",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0146",
+      "expected_title": "特效導演",
+      "expected_document_id": "1e64fcc243dad4d08f78441a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0088",
+      "expected_title": "昆沙",
+      "expected_document_id": "b1162baa3668efd850da0d2f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0027",
+      "expected_title": "圣卡塔尔多",
+      "expected_document_id": "c789b63c1cf04dd87f70d757",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0075",
+      "expected_title": "南京公教新村",
+      "expected_document_id": "7b57c6f770526c9f8bb6c148",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0017",
+      "expected_title": "极地号",
+      "expected_document_id": "649b60f441d8e5bc42f90b42",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0111",
+      "expected_title": "唐山鋼鐵",
+      "expected_document_id": "035bf24df7ba666cf0544550",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0117",
+      "expected_title": "我们要洞房",
+      "expected_document_id": "5360784fb6507585dc5cad35",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0014",
+      "expected_title": "莫罗佐夫村",
+      "expected_document_id": "bfeaf6c923d09b72e37540de",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0080",
+      "expected_title": "庐阳区",
+      "expected_document_id": "0de6d7cfc94ae7c16c97d69c",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0116",
+      "expected_title": "賴國",
+      "expected_document_id": "94e9b4020418f53df424604c",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0039",
+      "expected_title": "FNC娛樂",
+      "expected_document_id": "b64825db7ad880fda440659a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0182",
+      "expected_title": "尼洛替尼",
+      "expected_document_id": "0c969a7d68f417c4248b6407",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0055",
+      "expected_title": "純粹海花介",
+      "expected_document_id": "b5a893ca5a497d62c2be4cdc",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0067",
+      "expected_title": "檜山修之",
+      "expected_document_id": "2773f6985e2f3365425e8d7f",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0134",
+      "expected_title": "生存技能",
+      "expected_document_id": "fcf9a2900e9900f52da4f79b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0155",
+      "expected_title": "匈牙利農業博物館",
+      "expected_document_id": "5cabfc79a676a94d2e6bca33",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0165",
+      "expected_title": "切尔沃港",
+      "expected_document_id": "82758aea7335c026cedfff0a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0112",
+      "expected_title": "罗家桥站",
+      "expected_document_id": "75204d114561c08ddbc57019",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0086",
+      "expected_title": "潮龜",
+      "expected_document_id": "d5bebce06b4fe52b2d3f1773",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0044",
+      "expected_title": "蒂亞瓦亞區",
+      "expected_document_id": "a98371002d6fe839446d7fa1",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0052",
+      "expected_title": "美国电影学会",
+      "expected_document_id": "e2410b14a75b97adaa4f93d4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0193",
+      "expected_title": "香槟集市",
+      "expected_document_id": "1a2f73559fa66bfa3b7fa243",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0094",
+      "expected_title": "欧拉方法",
+      "expected_document_id": "9b7a0c359e94e06cbf7b3b4a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0019",
+      "expected_title": "登山杖",
+      "expected_document_id": "c0c3801acadcc285b7fe6bc7",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0128",
+      "expected_title": "金衛醫療",
+      "expected_document_id": "5e9188fd917a66e67cee74fe",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0096",
+      "expected_title": "帝王谷",
+      "expected_document_id": "6cf9b5c75b9864903121e880",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0035",
+      "expected_title": "W創作社",
+      "expected_document_id": "e14ec512a8f204d4b2eee7b5",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0063",
+      "expected_title": "抢劫恋爱",
+      "expected_document_id": "1a4d2d5c41a601004bfbb976",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0001",
+      "expected_title": "貝克斯特河",
+      "expected_document_id": "2ce865b9d75036f03b9a2293",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0040",
+      "expected_title": "荷蘭皇家航空867號班機事故",
+      "expected_document_id": "6953c0ed5cdf85429acc326a",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0061",
+      "expected_title": "小贝流浪记",
+      "expected_document_id": "2c5c0ce0cd1352f43f3cb062",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0149",
+      "expected_title": "凌海市",
+      "expected_document_id": "b24d5d7042c7292e5b954a6e",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0170",
+      "expected_title": "绣线菊族",
+      "expected_document_id": "44e91e26b79f63296e340061",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0064",
+      "expected_title": "马来西亚工程部",
+      "expected_document_id": "233410345326885312c3290d",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0010",
+      "expected_title": "爱好者杂志",
+      "expected_document_id": "198a5cbbe93fbf69df10e960",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0024",
+      "expected_title": "李道增",
+      "expected_document_id": "e8774e910ece86fc7b5f7ae8",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0123",
+      "expected_title": "西湖电影院",
+      "expected_document_id": "a67b0a2eebf52f577d652b00",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0177",
+      "expected_title": "陳山聰",
+      "expected_document_id": "cc29b743ab06a08d77287cad",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0009",
+      "expected_title": "半岛网",
+      "expected_document_id": "38136f2a979b9b6cbec0a09b",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0031",
+      "expected_title": "Toy (歌曲)",
+      "expected_document_id": "becc97d03379615b8294e910",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0065",
+      "expected_title": "靈魂奇遇記",
+      "expected_document_id": "bfe2b882850ab7077cc6015c",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_verified-0143",
+      "expected_title": "伊拉斯謨計劃",
+      "expected_document_id": "ccddb1146fbb23aef9c587b0",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0163",
+      "expected_title": "一党优势制",
+      "expected_document_id": "1aa68bb30be9ffd55a4756e8",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0123",
+      "expected_title": "香港航海學校",
+      "expected_document_id": "9f2862240ed79441d5920127",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    },
+    {
+      "id": "wiki_batch2-0100",
+      "expected_title": "万维网",
+      "expected_document_id": "a7dfc75528ba9bfc748b65c4",
+      "exact_title_in_current_corpus": false,
+      "execution": "fixed_historical_reference_not_retrieval"
+    }
+  ],
+  "scope_counts": {
+    "fixed_historical_reference": 400,
+    "current_corpus_retrieval": 34,
+    "original_fixed_material": 44
+  },
+  "historical_wiki_title_present": 0,
+  "limitation": "Exact-title corpus check, not semantic retrieval. No missing old question is removed."
+}
