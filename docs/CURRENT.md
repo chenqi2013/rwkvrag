@@ -1,6 +1,6 @@
 # 当前状态与下一步
 
-更新：2026-09-20 21:05（Asia/Shanghai）。旧阶段数值保留在Git历史与[历史报告索引](archive/README.md)，不再作为当前执行指令。
+更新：2026-09-20 21:48（Asia/Shanghai）。旧阶段数值保留在Git历史与[历史报告索引](archive/README.md)，不再作为当前执行指令。
 
 ## 1. 主目标与结论
 
@@ -19,12 +19,15 @@
 | 实际模板 | 2000条真实服务分词完成，最长1071token，无截断；目标mask、前缀和EOS校验通过 |
 | 执行代码 | 55项数据、State客户端及执行边界检查通过；不是55项回答质量测试 |
 | 连续执行 | prepare与continuous进程已启动，等待旧434题回归结束；随后自动做零State对齐、服务开启缓存、GPU预检、训练和1600次zero/2K对照 |
+| 后续质量检查 | 已启动等待任务：160道完整固定材料题×zero/2K两组，共320次分层回答；另生成1600次单条件输出的非精确匹配复核队列，不能把不同措辞自动判错 |
 | 限制 | 仅8222授权GPU3，2个epoch、学习率0.001、累积2、训练上限6小时；固定第二epoch评测，无自动上线 |
 | 尚未发生 | GPU反向预检、优化器更新、训练后质量验收；没有训练收益结论 |
 
 [2K冻结方案与执行脚本](https://github.com/chenqi2013/rwkvrag/tree/1e641e68/llamaindex-retrieval/eval/g1j72-assessment-state-2k-20260920)；[分词归档与准备证据](https://github.com/chenqi2013/rwkvrag/tree/fcaf2f02/artifacts/g1j72-assessment-state-2k-20260920)。独立分支 `chase/g1j72-statetune-20260920`，工作区 `/tmp/rwkvrag-g1j72-statetune-20260920`。
 
-实际运行记录：`data/quality-runs/g1j72-assessment-state-2k-20260920`。BINDING只表示任务已启动，必须看每步日志和RESULT判断是否完成。合成样本共享底层技能，2000条不等于2000种独立能力。此State只训练单条件判断，不能自动修复检索、规划或Writer。
+实际运行记录：`data/quality-runs/g1j72-assessment-state-2k-20260920`。320次后续对照固定原160题及全部历史输入，只让ASSESS使用训练State，计划/阅读/写作协议不改；属于固定材料完整分层验证，不冒充真实检索或前端验收。[冻结执行器](https://github.com/chenqi2013/rwkvrag/tree/f7ca7c69/llamaindex-retrieval/eval/g1j72-state-layered-2k-20260920)。单条件报告器冻结d0d5c0a1，明确区分精确目标一致与语义正确。
+
+BINDING只表示任务已启动，必须看每步日志和RESULT判断是否完成。合成样本共享底层技能，2000条不等于2000种独立能力。此State只训练单条件判断，不能自动修复检索、规划或Writer。
 
 ## 3. 已完成的7.2B全量回归
 
