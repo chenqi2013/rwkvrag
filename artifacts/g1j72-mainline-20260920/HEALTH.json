@@ -1,0 +1,126 @@
+{
+  "new_model": {
+    "status": 200,
+    "body": {
+      "object": "list",
+      "data": [
+        {
+          "id": "rwkvrag-g1j72-mainline",
+          "object": "model",
+          "created": 1789899384,
+          "owned_by": "vllm",
+          "root": "/mnt/nas-model/g1j/hf/rwkv7-g1j-7.2b-20260831-ctx16384",
+          "parent": null,
+          "max_model_len": 16384,
+          "permission": [
+            {
+              "id": "modelperm-86d37e85bfc4058a",
+              "object": "model_permission",
+              "created": 1789899384,
+              "allow_create_engine": false,
+              "allow_sampling": true,
+              "allow_logprobs": true,
+              "allow_search_indices": false,
+              "allow_view": true,
+              "allow_fine_tuning": false,
+              "organization": "*",
+              "group": null,
+              "is_blocking": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "old_model": {
+    "status": 200,
+    "body": {
+      "ready": true,
+      "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+      "state_sha256": null,
+      "available_states": [
+        {
+          "id": "writer-trace-1400",
+          "stage": "writer",
+          "path": "data/experiments/trace-training-20260911-run1/writer-1400/train/state-step-700.pth",
+          "sha256": "ac5b8e4e15efb73fb67ef2374b9db50c5de94f9f15c4312d49638ba5e4871594",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "checkpoint_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239"
+        },
+        {
+          "id": "reader-trace-450",
+          "stage": "resolver",
+          "path": "data/experiments/trace-training-20260911-run1/resolver-450/train/state-step-225.pth",
+          "sha256": "02288c70e62f893613c4affbad2b93cf215d5fc73603fb22434d4cedaf42fe02",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "checkpoint_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239"
+        },
+        {
+          "id": "planner-trace-150",
+          "stage": "planner",
+          "path": "data/experiments/trace-training-20260911-run1/planner-150/train/state-step-75.pth",
+          "sha256": "aa01fe7f0a9d6aaed469fcf513846fbb1ecba6c2f46606f14bf6c00cd3c0cc5b",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "checkpoint_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239"
+        },
+        {
+          "id": "writer-trace-100",
+          "stage": "writer",
+          "path": "data/experiments/trace-training-20260911-run1/writer-100/train/state-step-50.pth",
+          "sha256": "c695d202db987713fca314b18fa99035afdfa422afaf04c51dc3db1546ec50dc",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "checkpoint_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239"
+        },
+        {
+          "id": "writer-trace-300",
+          "stage": "writer",
+          "path": "data/experiments/trace-training-20260911-run1/writer-300/train/state-step-150.pth",
+          "sha256": "dd8bef92d8b3069881cd7e7ba8cf226a902a6e6dcc821658efb61b24e8db453e",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "checkpoint_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239"
+        },
+        {
+          "id": "writer-trace-600",
+          "stage": "writer",
+          "path": "data/experiments/trace-training-20260911-run1/writer-600/train/state-step-300.pth",
+          "sha256": "473162cd58b91e734a0b5ddfd87510c1a38f16412ab41bebadec9c39c105f282",
+          "axes": [
+            "head",
+            "value",
+            "key"
+          ],
+          "checkpoint_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239"
+        }
+      ],
+      "calls": 10570
+    }
+  },
+  "frozen_app": {
+    "status": 200,
+    "body": {
+      "status": "ok"
+    }
+  },
+  "checked_at": "2026-09-20T10:16:27.309774+00:00",
+  "frozen_settings_unchanged": true
+}

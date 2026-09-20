@@ -1,0 +1,30 @@
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "rwkvrag-g1j72-mainline",
+      "object": "model",
+      "created": 1789899255,
+      "owned_by": "vllm",
+      "root": "/mnt/nas-model/g1j/hf/rwkv7-g1j-7.2b-20260831-ctx16384",
+      "parent": null,
+      "max_model_len": 16384,
+      "permission": [
+        {
+          "id": "modelperm-91b4b1fd057c3729",
+          "object": "model_permission",
+          "created": 1789899255,
+          "allow_create_engine": false,
+          "allow_sampling": true,
+          "allow_logprobs": true,
+          "allow_search_indices": false,
+          "allow_view": true,
+          "allow_fine_tuning": false,
+          "organization": "*",
+          "group": null,
+          "is_blocking": false
+        }
+      ]
+    }
+  ]
+}

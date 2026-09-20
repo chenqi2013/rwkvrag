@@ -1,0 +1,26 @@
+{
+  "finished_at": "2026-09-20T10:14:18.119944+00:00",
+  "scope": "transport smoke only; no RAG or general quality claim",
+  "rows": [
+    {
+      "id": "reader_transport",
+      "finish_reason": "stop",
+      "input_tokens": 391,
+      "elapsed_ms": 239.2019433900714
+    },
+    {
+      "id": "comparison_transport",
+      "finish_reason": "stop",
+      "input_tokens": 133,
+      "elapsed_ms": 742.7438562735915
+    },
+    {
+      "id": "choice_transport",
+      "finish_reason": "stop",
+      "input_tokens": 135,
+      "elapsed_ms": 1578.3982519060373
+    }
+  ],
+  "raw_output_modified": false,
+  "state": "zero"
+}

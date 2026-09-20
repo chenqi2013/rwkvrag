@@ -1,0 +1,8 @@
+{
+  "observed_at": "2026-09-20T10:10:15.493564+00:00",
+  "baseline_recorded": 150,
+  "event": "7.2B mainline service start on shared authorized GPU3",
+  "unit": "rwkvrag-g1j72-mainline-20260920.service",
+  "old_application_and_model_configs_changed": false,
+  "limits": "GPU loading/warmup and smoke requests overlap the 2.9B baseline; latency is descriptive and not a controlled model-speed comparison"
+}

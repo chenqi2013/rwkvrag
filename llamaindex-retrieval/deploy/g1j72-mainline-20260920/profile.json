@@ -1,0 +1,20 @@
+{
+  "purpose": "comparison and constrained-choice mainline",
+  "model": "rwkvrag-g1j72-mainline",
+  "artifact": "rwkv7-g1j-7.2b-20260831-ctx16384",
+  "base_url": "http://127.0.0.1:18426/v1",
+  "context_window": 16384,
+  "weights_dtype": "float16",
+  "recurrent_state_dtype": "float32",
+  "state": "zero; do not import 2.9B states",
+  "generation": {
+    "temperature": 1.0,
+    "top_k": 1,
+    "top_p": 1.0,
+    "presence_penalty": 0,
+    "frequency_penalty": 0,
+    "penalty_decay": 0.996,
+    "seed": 11
+  },
+  "scope": "dedicated inference profile; not yet production application configuration"
+}
