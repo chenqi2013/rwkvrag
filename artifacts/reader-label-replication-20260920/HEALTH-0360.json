@@ -1,0 +1,7 @@
+{
+  "ready": true,
+  "model": "rwkv7-g1j-7.2b-20260831-ctx16384",
+  "state_sha256": null,
+  "available_states": [],
+  "calls": 941
+}

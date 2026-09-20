@@ -1,0 +1,29 @@
+{
+  "files": {
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-replication-20260920/analysis.py": "9f27487f5cbf18e5734e69e8d43e08567432ad50107e61bcfeaf9bbaf774a19c",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-replication-20260920/protocol.py": "ffe7f97bbd6d38058ecb889a2acb8774b0962881bd4e754dffa16337313fe4ab",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-replication-20260920/run.py": "e870014a407fef3b67640da80d17063fa541b503efb543582fe9baafb742cf68",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-replication-20260920/cases.jsonl": "50285eae23af5a49b121f460dd0a6aa927710feadbdf74dcc922c91e8b0f7ea0",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-replication-20260920/schedule.json": "7e7b6874a12cc98899ddf179feaa7f07c654475a4bf7415f84f726c357a0abce",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-replication-20260920/README.md": "e7068e44753571cf512309d859f3606fdef9aaf2d0ffc64ffbbba57df20dac51",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-20260920/protocol.py": "d15d4f82e8f19b26dbcdf8510edaec5a5820f96e83a7fd987895bcfdd86766c3",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/evidence-support-20260920/protocol.py": "a6c1f39919bb087e86fd4886e23238541d62e85e3fc1ff6f4ffefea2c91fc957",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/src/llamaindex_retrieval/reader_prompt.py": "700b8b6731102a824b734f038467d4bd92001b00e965ac728f728f9b13ec188e",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/src/llamaindex_retrieval/rwkvos_batch.py": "8842be2e1d2f423e424ee84c8ad826dd9c6ec832ac1c1667a7fe54e36a0ae3b4"
+  },
+  "git_commit": "87380c766f5ffc681543c6a5aea17802096ddb12",
+  "started_at": "2026-09-20T05:06:02.067769+00:00",
+  "model": "rwkv7-g1j-7.2b-20260831-ctx16384",
+  "state": null,
+  "checkpoint_sha256_from_verified_prior_deployment": "e3091a579c23ea7ebce9a0ad1ecfbda27082eeecd64d7f0474016e626df8f9c3",
+  "temperature": 0,
+  "max_tokens": 32,
+  "input_limit": 4096,
+  "stop_tokens": [
+    0
+  ],
+  "unique_cases": 160,
+  "scheduled_calls": 640,
+  "independent_label_review": false,
+  "sole_variable": "output label words and necessary output declarations; data bytes unchanged"
+}
