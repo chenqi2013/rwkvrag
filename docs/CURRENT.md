@@ -1,6 +1,6 @@
 # 当前状态与下一步
 
-更新：2026-09-20 21:57（Asia/Shanghai）。旧阶段数值保留在Git历史与[历史报告索引](archive/README.md)，不再作为当前执行指令。
+更新：2026-09-20 22:10（Asia/Shanghai）。旧阶段数值保留在Git历史与[历史报告索引](archive/README.md)，不再作为当前执行指令。
 
 ## 1. 主目标与结论
 
@@ -18,14 +18,14 @@
 | 数据核对 | 2800条模板专用文本、数值、单位、范围与来源审计通过；实现者阅读87条代表记录，非独立评审 |
 | 实际模板 | 2000条真实服务分词完成，最长1071token，无截断；目标mask、前缀和EOS校验通过 |
 | 执行代码 | 55项数据、State客户端及执行边界检查通过；不是55项回答质量测试 |
-| 连续执行 | 旧1938＋434＋8条回归均已释放，初次零State桥接通过；独立7.2B服务正在重启并验证模型文件，后续自动做缓存零State对齐、GPU预检、训练和1600次zero/2K对照 |
+| 连续执行 | 原1938＋434＋8条回归及缓存前后零State桥接已通过；2000条训练包备份/上传和远端CPU校验完成，continuous-run3已启动GPU预检，随后自动训练和1600次zero/2K对照 |
 | 后续质量检查 | 已启动等待任务：160道完整固定材料题×zero/2K两组，共320次分层回答；另生成1600次单条件输出的非精确匹配复核队列，不能把不同措辞自动判错 |
 | 限制 | 仅8222授权GPU3，2个epoch、学习率0.001、累积2、训练上限6小时；固定第二epoch评测，无自动上线 |
-| 尚未发生 | GPU反向预检、优化器更新、训练后质量验收；没有训练收益结论 |
+| 尚未完成 | GPU预检结果、优化器更新、训练后质量验收；没有训练收益结论 |
 
 [2K冻结方案与执行脚本](https://github.com/chenqi2013/rwkvrag/tree/1e641e68/llamaindex-retrieval/eval/g1j72-assessment-state-2k-20260920)；[分词归档与准备证据](https://github.com/chenqi2013/rwkvrag/tree/fcaf2f02/artifacts/g1j72-assessment-state-2k-20260920)。独立分支 `chase/g1j72-statetune-20260920`，工作区 `/tmp/rwkvrag-g1j72-statetune-20260920`。
 
-实际运行记录：`data/quality-runs/g1j72-assessment-state-2k-20260920`。320次后续对照固定原160题及全部历史输入，只让ASSESS使用训练State，计划/阅读/写作协议不改；属于固定材料完整分层验证，不冒充真实检索或前端验收。[冻结执行器](https://github.com/chenqi2013/rwkvrag/tree/f7ca7c69/llamaindex-retrieval/eval/g1j72-state-layered-2k-20260920)。单条件报告器冻结d0d5c0a1，明确区分精确目标一致与语义正确。
+实际运行记录：`data/quality-runs/g1j72-assessment-state-2k-20260920`，当前controller为continuous-run3。原v1因命令Path对象无法写JSON退出；v2在已备份训练包后因远端缺父目录退出，均未进行GPU预检或参数更新，完整失败记录保留。v3修复部署步骤并逐文件复用同一训练契约，7项控制测试通过；[冻结修正与边界](https://github.com/chenqi2013/rwkvrag/tree/098a684d/llamaindex-retrieval/eval/g1j72-state-execution-v3-20260920)，[已备份训练契约](https://github.com/chenqi2013/rwkvrag/tree/5a38d758/artifacts/g1j72-assessment-state-2k-20260920/pilot-v1-contract)。320次后续对照固定原160题及全部历史输入，只让ASSESS使用训练State，计划/阅读/写作协议不改；属于固定材料完整分层验证，不冒充真实检索或前端验收。[当前冻结执行器](https://github.com/chenqi2013/rwkvrag/tree/098a684d/llamaindex-retrieval/eval/g1j72-state-layered-2k-v3-20260920)，使用显式执行目录绑定continuous-run3，输出run3。原run1/run2因上游调度失败保留0调用记录；对应报告/成对材料导出已更新依赖，明确区分精确目标一致与语义正确。
 
 BINDING只表示任务已启动，必须看每步日志和RESULT判断是否完成。合成样本共享底层技能，2000条不等于2000种独立能力。此State只训练单条件判断，不能自动修复检索、规划或Writer。
 
@@ -60,7 +60,7 @@ BINDING只表示任务已启动，必须看每步日志和RESULT判断是否完�
 
 [结构契约候选范围](https://github.com/chenqi2013/rwkvrag/blob/ac604fbf/docs/archive/2026-09/choice-contract-implementation-20260920.md)。当前训练仍沿用conclusion/evidence_ids协议，不能直接冒充产生四状态及完整候选/条件ID的流程。
 
-运行观察有时间边界：正式18440在12:18观察为2.9B且自动Wiki草稿开启；原子预览18445在13:36已加载v7；独立7.2B 18426在18:13就绪，当前用于离线实验，原服务预计次日06:09到期。新2K调度只有在回归释放后才重启独立服务，开启State缓存并设置24小时运行上限。不能沿用历史ready记录保证端点持续在线。
+运行观察有时间边界：正式18440在12:18观察为2.9B且自动Wiki草稿开启；原子预览18445在13:36已加载v7。独立7.2B State服务18426于21:59就绪，22:09复查模型/导入能力通过，State缓存256MiB、24小时运行上限，仅用于离线实验；当前预检确认授权GPU3、依赖版本及47123MiB可用显存。不能沿用历史ready记录保证端点持续在线。
 
 ## 6. 执行顺序与阅读入口
 
