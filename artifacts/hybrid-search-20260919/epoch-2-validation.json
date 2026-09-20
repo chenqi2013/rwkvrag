@@ -1,0 +1,840 @@
+{
+  "correct": 99,
+  "total": 104,
+  "format_errors": 0,
+  "mean_nll": 0.3044706647883686,
+  "cases": [
+    {
+      "id": "validation_museum_and_subject-true-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 3.564294092939235e-05
+    },
+    {
+      "id": "validation_museum_and_subject-true-2",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.4834770708112046e-05
+    },
+    {
+      "id": "validation_museum_and_subject-true-3",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.136476854910143e-05
+    },
+    {
+      "id": "validation_museum_and_subject-true-4",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.280832192511298e-05
+    },
+    {
+      "id": "validation_museum_and_subject-true-5",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.100715523236431e-05
+    },
+    {
+      "id": "validation_museum_and_subject-false-1",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.9232225137529895e-05
+    },
+    {
+      "id": "validation_museum_and_subject-false-2",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 3.40932747349143e-05
+    },
+    {
+      "id": "validation_museum_and_subject-false-3",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.00022480344341602176
+    },
+    {
+      "id": "validation_museum_and_subject-false-4",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0011336335446685553
+    },
+    {
+      "id": "validation_museum_and_subject-false-5",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 3.111314072157256e-05
+    },
+    {
+      "id": "validation_reading_and_provenance-true-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.60137271147687e-05
+    },
+    {
+      "id": "validation_reading_and_provenance-true-2",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 6.3774932641536e-05
+    },
+    {
+      "id": "validation_reading_and_provenance-true-3",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.125868119648658e-05
+    },
+    {
+      "id": "validation_reading_and_provenance-true-4",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.185469490243122e-05
+    },
+    {
+      "id": "validation_reading_and_provenance-true-5",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.756337511935271e-05
+    },
+    {
+      "id": "validation_reading_and_provenance-false-1",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.221230458118953e-05
+    },
+    {
+      "id": "validation_reading_and_provenance-false-2",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.376194530981593e-05
+    },
+    {
+      "id": "validation_reading_and_provenance-false-3",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.9232225137529895e-05
+    },
+    {
+      "id": "validation_reading_and_provenance-false-4",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.125868119648658e-05
+    },
+    {
+      "id": "validation_reading_and_provenance-false-5",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0008537700050510466
+    },
+    {
+      "id": "validation_everyday_controls-true-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.245071224635467e-05
+    },
+    {
+      "id": "validation_everyday_controls-true-2",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.2569914259947836e-05
+    },
+    {
+      "id": "validation_everyday_controls-true-3",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.411955135059543e-05
+    },
+    {
+      "id": "validation_everyday_controls-true-4",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 7.521823135903105e-05
+    },
+    {
+      "id": "validation_everyday_controls-true-5",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 6.806619057897478e-05
+    },
+    {
+      "id": "validation_everyday_controls-false-1",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 3.838465272565372e-05
+    },
+    {
+      "id": "validation_everyday_controls-false-2",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 3.8742269680369645e-05
+    },
+    {
+      "id": "validation_everyday_controls-false-3",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 2.90866428258596e-05
+    },
+    {
+      "id": "validation_everyday_controls-false-4",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.589452510117553e-05
+    },
+    {
+      "id": "validation_everyday_controls-false-5",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.125868119648658e-05
+    },
+    {
+      "id": "v6-validation-1-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 3.480850500636734e-05
+    },
+    {
+      "id": "v6-validation-1-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.00014065706636756659
+    },
+    {
+      "id": "v6-validation-2-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.08544766157865524
+    },
+    {
+      "id": "v6-validation-2-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 7.033100700937212e-05
+    },
+    {
+      "id": "v6-validation-3-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0007551440503448248
+    },
+    {
+      "id": "v6-validation-3-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 2.9205850296420977e-05
+    },
+    {
+      "id": "v6-validation-4-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.757642793469131e-05
+    },
+    {
+      "id": "v6-validation-4-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 6.317892984952778e-05
+    },
+    {
+      "id": "v6-validation-5-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.686121585313231e-05
+    },
+    {
+      "id": "v6-validation-5-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 8.642300235806033e-05
+    },
+    {
+      "id": "v6-validation-6-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.61460001335945e-05
+    },
+    {
+      "id": "v6-validation-6-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.578839045483619e-05
+    },
+    {
+      "id": "v6-validation-7-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 6.854299135738984e-05
+    },
+    {
+      "id": "v6-validation-7-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0009365463047288358
+    },
+    {
+      "id": "v6-validation-8-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.4238757002167404e-05
+    },
+    {
+      "id": "v6-validation-8-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 1.9907753085135482e-05
+    },
+    {
+      "id": "v6-validation-9-1",
+      "target": true,
+      "output": "false",
+      "correct": false,
+      "format_ok": true,
+      "nll": 4.079588413238525
+    },
+    {
+      "id": "v6-validation-9-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.0424259825376794e-05
+    },
+    {
+      "id": "v6-validation-10-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.00010680581908673048
+    },
+    {
+      "id": "v6-validation-10-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0004812512779608369
+    },
+    {
+      "id": "v6-validation-11-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 6.05564855504781e-05
+    },
+    {
+      "id": "v6-validation-11-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.00012885693286079913
+    },
+    {
+      "id": "v6-validation-12-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0694977268576622
+    },
+    {
+      "id": "v6-validation-12-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 6.401333666872233e-05
+    },
+    {
+      "id": "v6-validation-13-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.8410845667822286e-05
+    },
+    {
+      "id": "v6-validation-13-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.864924969500862e-05
+    },
+    {
+      "id": "v6-validation-14-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.1483970562694594e-05
+    },
+    {
+      "id": "v6-validation-14-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 9.572047565598041e-05
+    },
+    {
+      "id": "v6-validation-15-1",
+      "target": true,
+      "output": "false",
+      "correct": false,
+      "format_ok": true,
+      "nll": 5.5974860191345215
+    },
+    {
+      "id": "v6-validation-15-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.017272294731811e-05
+    },
+    {
+      "id": "v6r2-validation-0-True",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 6.067568756407127e-05
+    },
+    {
+      "id": "v6r2-validation-0-False",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0263367909938097
+    },
+    {
+      "id": "v6r2-validation-1-True",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.2569914259947836e-05
+    },
+    {
+      "id": "v6r2-validation-1-False",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0007453762227669358
+    },
+    {
+      "id": "v6r2-validation-2-True",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.756337511935271e-05
+    },
+    {
+      "id": "v6r2-validation-2-False",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 8.523101132595912e-05
+    },
+    {
+      "id": "v6r2-validation-3-True",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.00015507926582358778
+    },
+    {
+      "id": "v6r2-validation-3-False",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0009176096064038575
+    },
+    {
+      "id": "v6r2-validation-4-True",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.827859811484814e-05
+    },
+    {
+      "id": "v6r2-validation-4-False",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 3.862306402879767e-05
+    },
+    {
+      "id": "v6r2-validation-5-True",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 9.667406266089529e-05
+    },
+    {
+      "id": "v6r2-validation-5-False",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.00018285033002030104
+    },
+    {
+      "id": "v6r2-validation-6-True",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.332815945148468
+    },
+    {
+      "id": "v6r2-validation-6-False",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 7.414542778860778e-05
+    },
+    {
+      "id": "v6r2-validation-7-True",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 6.115249561844394e-05
+    },
+    {
+      "id": "v6r2-validation-7-False",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 8.821098163025454e-05
+    },
+    {
+      "id": "v6r2-validation-8-True",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.004834272898733616
+    },
+    {
+      "id": "v6r2-validation-8-False",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.21395091712474823
+    },
+    {
+      "id": "v6r2-validation-9-True",
+      "target": true,
+      "output": "false",
+      "correct": false,
+      "format_ok": true,
+      "nll": 2.3892111778259277
+    },
+    {
+      "id": "v6r2-validation-9-False",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0072852191515266895
+    },
+    {
+      "id": "hybrid-val-0",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.00026651646476238966
+    },
+    {
+      "id": "hybrid-val-1",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.351044481154531e-05
+    },
+    {
+      "id": "hybrid-val-2",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.00034397884155623615
+    },
+    {
+      "id": "hybrid-val-3",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.672895011026412e-05
+    },
+    {
+      "id": "hybrid-val-4",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.088794958079234e-05
+    },
+    {
+      "id": "hybrid-val-5",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.5536911784438416e-05
+    },
+    {
+      "id": "hybrid-val-6",
+      "target": false,
+      "output": "true",
+      "correct": false,
+      "format_ok": true,
+      "nll": 7.282002925872803
+    },
+    {
+      "id": "hybrid-val-7",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.864924969500862e-05
+    },
+    {
+      "id": "hybrid-val-8",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 9.059495641849935e-05
+    },
+    {
+      "id": "hybrid-val-9",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.2676016164477915e-05
+    },
+    {
+      "id": "hybrid-val-10",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.00010406429646536708
+    },
+    {
+      "id": "hybrid-val-11",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.9828242481453344e-05
+    },
+    {
+      "id": "hybrid-val-12",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 2.455681169521995e-05
+    },
+    {
+      "id": "hybrid-val-13",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.1616290875244886e-05
+    },
+    {
+      "id": "hybrid-val-14",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0001573438785271719
+    },
+    {
+      "id": "hybrid-val-15",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.3748852476710454e-05
+    },
+    {
+      "id": "hybrid-val-16",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.44259077310562134
+    },
+    {
+      "id": "hybrid-val-17",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 6.639736966462806e-05
+    },
+    {
+      "id": "hybrid-val-18",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.446407547220588e-05
+    },
+    {
+      "id": "hybrid-val-19",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.8874615458771586e-05
+    },
+    {
+      "id": "hybrid-val-20",
+      "target": false,
+      "output": "true",
+      "correct": false,
+      "format_ok": true,
+      "nll": 11.046928405761719
+    },
+    {
+      "id": "hybrid-val-21",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.07544796168804169
+    },
+    {
+      "id": "hybrid-val-22",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.8040190449682996e-05
+    },
+    {
+      "id": "hybrid-val-23",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.61460001335945e-05
+    }
+  ]
+}

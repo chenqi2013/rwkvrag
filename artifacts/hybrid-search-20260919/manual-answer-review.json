@@ -1,0 +1,30 @@
+{
+  "scope": "Exposed development smoke, not a blind benchmark",
+  "first_attempt": {
+    "artifact": "live-hybrid-answer-first-failed.json",
+    "passed": false,
+    "issues": [
+      "planner omitted internal upgrade date",
+      "repeated web material exceeded writer input budget"
+    ]
+  },
+  "second_attempt": {
+    "artifact": "live-hybrid-answer-second-partial.json",
+    "passed": false,
+    "issues": [
+      "internal evidence wrongly rejected by Reader",
+      "official source request not satisfied"
+    ]
+  },
+  "third_attempt": {
+    "artifact": "live-hybrid-answer.json",
+    "retrieval_integration_passed": true,
+    "semantic_acceptance_passed": false,
+    "facts_correct": true,
+    "issues": [
+      "second sentence cites source 1 (internal document), but public release date comes from web source 2",
+      "web evidence is a mirror rather than the requested official domain"
+    ]
+  },
+  "action": "Preserve raw answers unchanged; deployment remains an unreviewed evidence-assisted answering feature."
+}

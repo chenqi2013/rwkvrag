@@ -129,7 +129,7 @@ export default function ImportsPage() {
       render: (_, item) => (
         <Space direction="vertical" size={0}>
           <Typography.Text strong>
-            {item.kind === "finewiki_import" ? tr("FineWiki 导入", "FineWiki import") : item.kind === "file_reindex" ? tr("文档重建", "Document reindex") : tr("文档入库", "Document ingestion")}
+            {item.kind === "wiki_generate" ? tr("Wiki 生成", "Wiki generation") : item.kind === "finewiki_import" ? tr("FineWiki 导入", "FineWiki import") : item.kind === "file_reindex" ? tr("文档重建", "Document reindex") : tr("文档入库", "Document ingestion")}
           </Typography.Text>
           <Typography.Text type="secondary" copyable={{ text: item.id }}>
             {item.id.slice(0, 12)}

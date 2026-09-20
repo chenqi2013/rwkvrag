@@ -473,10 +473,28 @@ async def test_failed_plan_retrieves_original_question_and_keeps_history(status,
     assert index.calls == [("问题", settings().candidate_k, "kb")]
     assert [c["stage"] for c in model.calls] == ["planner", "resolver", "writer"]
     assert response.retrieval["plan"]["fallback"] == "original_question"
+    assert response.generation["status"] == "planner_partial_failure"
+    assert response.generation["writer_status"] == "completed"
+    assert response.generation["planner_fallback"] == "original_question"
+    assert response.generation["stage_status"] == {
+        "planner": "failed", "resolver": "completed", "writer": "completed"}
     assert response.generation["model_calls"][0]["status"] == status
     assert response.generation["model_calls"][0]["parse_error"]
     assert response.answer == model.last_writer_raw
     assert "先前的完整对象与更正" in model.calls[-1]["prompt"]
+
+
+@pytest.mark.asyncio
+async def test_planner_fallback_does_not_hide_writer_failure():
+    model = FakeModel(planner_result=native_result("planner", "></think>not JSON"),
+                      writer_raw="partial output", writer_status="length")
+    response = await RWKVPipeline(settings(), FakeIndex({"问题": []}), model).ask(
+        SearchRequest(question="问题"))
+    assert response.generation["status"] == "length"
+    assert response.generation["planner_fallback"] == "original_question"
+    assert response.generation["stage_status"]["planner"] == "failed"
+    assert response.generation["stage_status"]["writer"] == "failed"
+    assert response.answer == "partial output"
 
 
 @pytest.mark.asyncio

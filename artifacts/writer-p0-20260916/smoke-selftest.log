@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "network_requests": 0,
+  "in_process_mock_http_requests": 18,
+  "cases": 8,
+  "checks": [
+    "full material/history preservation",
+    "oracle request boundary",
+    "request/response raw body hashes",
+    "pre-send durable receipt equivalence",
+    "all first attempts and 503 retained without retry",
+    "length raw output immutable",
+    "existing run refusal without overwrite or dispatch",
+    "duplicate case refusal",
+    "index access prohibited",
+    "no automatic semantic scoring",
+    "cancellation keeps in-flight trace and all 8 denominator slots"
+  ]
+}

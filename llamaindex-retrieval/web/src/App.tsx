@@ -10,6 +10,7 @@ import { Layout, Menu, Segmented, Space, Tag, Typography } from "antd";
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 import DashboardPage from "./pages/DashboardPage";
+import WikiPage from "./pages/WikiPage";
 import FilesPage from "./pages/FilesPage";
 import ImportsPage from "./pages/ImportsPage";
 import KnowledgeBasesPage from "./pages/KnowledgeBasesPage";
@@ -27,6 +28,7 @@ export default function App() {
     { key: "/dashboard", icon: <ApiOutlined />, label: tr("运行概览", "Overview") },
     { key: "/knowledge-bases", icon: <DatabaseOutlined />, label: tr("知识库", "Knowledge Bases") },
     { key: "/files", icon: <FileTextOutlined />, label: tr("文档管理", "Documents") },
+    { key: "/wiki", icon: <FileTextOutlined />, label: "Wiki" },
     { key: "/imports", icon: <ImportOutlined />, label: tr("导入任务", "Imports") },
     { key: "/search", icon: <SearchOutlined />, label: tr("检索测试", "Search Lab") },
     { key: "/search-history", icon: <HistoryOutlined />, label: tr("历史测试", "History") },
@@ -73,6 +75,7 @@ export default function App() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/knowledge-bases" element={<KnowledgeBasesPage />} />
             <Route path="/files" element={<FilesPage />} />
+            <Route path="/wiki" element={<WikiPage />} />
             <Route path="/imports" element={<ImportsPage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/search-history" element={<SearchHistoryPage />} />

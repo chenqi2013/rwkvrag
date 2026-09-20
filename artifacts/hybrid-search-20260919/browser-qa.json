@@ -1,0 +1,11 @@
+{
+  "requested_mode": "auto",
+  "selected_mode": "hybrid",
+  "generation_status": "completed",
+  "evidence_origins": [
+    "knowledge_base",
+    "web"
+  ],
+  "javascript_errors": [],
+  "semantic_reviewed": false
+}

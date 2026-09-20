@@ -14,6 +14,7 @@ class ConversationMessage(BaseModel):
 
 class SearchRequest(BaseModel):
     question: str = Field(max_length=10_000)
+    retrieval_mode: Literal["auto", "knowledge_base", "hybrid", "web"] = "knowledge_base"
     top_k: int | None = Field(default=None, ge=1, le=100)
     candidate_k: int | None = Field(default=None, ge=5, le=200)
     min_score: float | None = None
@@ -140,7 +141,7 @@ class KnowledgeBaseItem(BaseModel):
 
 FileStatus = Literal["pending", "processing", "ready", "failed", "deleting"]
 JobStatus = Literal["pending", "running", "completed", "failed"]
-JobKind = Literal["file_ingest", "file_reindex", "finewiki_import"]
+JobKind = Literal["file_ingest", "file_reindex", "finewiki_import", "wiki_generate"]
 
 
 class FileItem(BaseModel):
@@ -156,6 +157,9 @@ class FileItem(BaseModel):
     node_count: int = 0
     error: str | None = None
     last_job_id: str | None = None
+    revision_pending: bool = False
+    last_indexed_revision: dict[str, Any] | None = None
+    last_indexed_index_version: str | None = None
     created_at: datetime
     updated_at: datetime
 

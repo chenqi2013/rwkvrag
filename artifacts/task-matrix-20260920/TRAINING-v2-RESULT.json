@@ -1,0 +1,59 @@
+{
+  "stages": {
+    "writer": {
+      "baseline_validation_loss": 0.22563200956210494,
+      "epochs": [
+        {
+          "path": "data/experiments/task-matrix-20260920/run2/writer-epoch-1.pth",
+          "sha256": "a60be9c97e3ffd357a1c8b4e733651986a4b286a4df54d1e241926a769853224",
+          "validation_loss": 0.06133008406322915
+        },
+        {
+          "path": "data/experiments/task-matrix-20260920/run2/writer-epoch-2.pth",
+          "sha256": "d95086d5950447a1a9ba49e472a225c752eafa224feb34124c44f64a720ccb70",
+          "validation_loss": 0.010877027456444921
+        }
+      ],
+      "selected": {
+        "path": "data/experiments/task-matrix-20260920/run2/writer-epoch-2.pth",
+        "sha256": "d95086d5950447a1a9ba49e472a225c752eafa224feb34124c44f64a720ccb70",
+        "validation_loss": 0.010877027456444921
+      }
+    },
+    "planner": {
+      "baseline_validation_loss": 0.2635970115661621,
+      "epochs": [
+        {
+          "path": "data/experiments/task-matrix-20260920/run2/planner-epoch-1.pth",
+          "sha256": "d8348f99f8fce5e63360ff925bb79f13b942ec23d8b3a44fb4cfd5d9e0b52a07",
+          "validation_loss": 0.03689924580976367
+        },
+        {
+          "path": "data/experiments/task-matrix-20260920/run2/planner-epoch-2.pth",
+          "sha256": "280f246a41f3cd402daeffc786293259743e3901d6301a6d62885e404d09de88",
+          "validation_loss": 0.00116355785576161
+        },
+        {
+          "path": "data/experiments/task-matrix-20260920/run2/planner-epoch-3.pth",
+          "sha256": "f62f21f06acd695106f6bcbe95f61e9e1bf31d0ddbc8b830e8b7d7d33769e786",
+          "validation_loss": 0.00014471809663518798
+        },
+        {
+          "path": "data/experiments/task-matrix-20260920/run2/planner-epoch-4.pth",
+          "sha256": "2380382e489ba154c0cde127b16a90dd04c4e54ad52ee679836ca22173a96b51",
+          "validation_loss": 5.0633134833333315e-05
+        }
+      ],
+      "selected": {
+        "path": "data/experiments/task-matrix-20260920/run2/planner-epoch-4.pth",
+        "sha256": "2380382e489ba154c0cde127b16a90dd04c4e54ad52ee679836ca22173a96b51",
+        "validation_loss": 5.0633134833333315e-05
+      }
+    }
+  },
+  "base_unchanged": true,
+  "heldout_read": false,
+  "generation_quality_verified": false,
+  "elapsed_seconds": 782.5186851033941,
+  "peak_memory_bytes": 6934552576
+}

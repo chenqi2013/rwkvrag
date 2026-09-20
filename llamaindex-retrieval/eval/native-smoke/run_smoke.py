@@ -90,8 +90,8 @@ def load_fixtures(path):
         if case_id in ids:
             raise ValueError("duplicate case ID")
         ids.add(case_id)
-        if row.get("phase") != "development_smoke_not_blind":
-            raise ValueError("fixtures must explicitly identify their exposed development status")
+        if row.get("phase") not in {"development_smoke_not_blind", "frozen_holdout"}:
+            raise ValueError("fixtures must explicitly identify their evaluation split")
         if not isinstance(row["question"], str) or not row["question"].strip():
             raise ValueError("empty question")
         if not isinstance(row["history"], list) or not isinstance(row["materials"], list):
@@ -147,6 +147,8 @@ def load_fixtures(path):
                     raise ValueError(
                         "oracle quote/Unicode offsets do not match the actual material"
                     )
+    if len({row["phase"] for row in rows}) != 1:
+        raise ValueError("development and held-out fixtures cannot be pooled")
     return raw, rows
 
 
@@ -280,6 +282,9 @@ async def execute(args, *, transport=None):
         rwkvos_cf_access_client_secret=os.environ.get(getattr(args, "cf_secret_env", "RWKVRAG_RWKVOS_CF_ACCESS_CLIENT_SECRET"), ""),
         rwkvos_prefill_mode=getattr(args, "prefill_mode", "complete"),
         rwkvos_state_id=getattr(args, "state_id", None),
+        rwkvos_writer_state_id=getattr(args, "writer_state_id", None),
+        rwkvos_writer_prompt_protocol=getattr(args, "writer_transport_protocol", "legacy"),
+        native_writer_prompt_protocol=getattr(args, "writer_prompt_protocol", "task_first"),
         rwkvos_stop_tokens=getattr(args, "stop_tokens", None),
         rwkvos_batch_size=getattr(args, "batch_size", 8),
         rwkvos_batch_wait_ms=getattr(args, "batch_wait_ms", 5),
@@ -352,7 +357,10 @@ async def execute(args, *, transport=None):
     manifest = {
         "schema": "rwkvrag-native-material-smoke-v1",
         "created_at": utc_now(),
-        "purpose": "exposed development smoke, not blind evaluation or retrieval quality",
+        "purpose": ("exposed development smoke, not blind evaluation or retrieval quality"
+                    if fixtures[0]["phase"] == "development_smoke_not_blind" else
+                    "frozen holdout for this experiment, not an external blind benchmark"),
+        "evaluation_split": fixtures[0]["phase"],
         "entrypoint": "RWKVPipeline.ask_materials",
         "database_access_allowed": False,
         "planned_cases": len(fixtures),
@@ -370,6 +378,9 @@ async def execute(args, *, transport=None):
             "model": args.model,
             "transport": settings.native_transport,
             "writer_prefill": settings.native_writer_prefill,
+            "writer_prompt_protocol": settings.native_writer_prompt_protocol,
+            "writer_transport_protocol": settings.rwkvos_writer_prompt_protocol,
+            "writer_state_id": settings.rwkvos_writer_state_id,
             "state_id": settings.rwkvos_state_id,
             "prefill_mode": settings.rwkvos_prefill_mode,
             "stop_tokens": settings.rwkvos_stop_tokens,
@@ -670,6 +681,11 @@ def main():
     )
     parser.add_argument("--transport", dest="transport_kind", choices=("native", "rwkvos_batch"), default="native")
     parser.add_argument("--writer-prefill", choices=("<think", "<think></think"), default="<think")
+    parser.add_argument("--writer-prompt-protocol", choices=("task_first", "evidence_first", "evidence_checked"),
+                        default="task_first")
+    parser.add_argument("--writer-transport-protocol", choices=("legacy", "rwkv_g1j_no_think_v1"),
+                        default="legacy", help="Canonical adds the training-time newline after no-think")
+    parser.add_argument("--writer-state-id", help="Writer-specific state; requires canonical transport")
     parser.add_argument("--prefill-mode", choices=("complete", "continuation"), default="complete")
     parser.add_argument("--state-id")
     parser.add_argument("--stop-tokens", type=json.loads, help="Explicit provider token IDs as a JSON list; omission uses its default")

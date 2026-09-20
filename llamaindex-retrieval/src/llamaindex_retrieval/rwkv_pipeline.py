@@ -12,11 +12,13 @@ from hashlib import sha256
 from time import monotonic
 
 from .config import Settings
+from .citation_audit import audit_citations
 from .lexical_index import LexicalIndex, LexicalResult
 from .model_client import model_answer_bounds, model_client_class, model_client_options
 from .schemas import AskResponse, ConversationMessage, SearchRequest, SourceItem
-from .writer_prompt import writer_prompt_v2
+from .writer_prompt import writer_prompt_checked, writer_prompt_v2
 from .reader_prompt import binary_query_prompt, parse_binary_decision
+from .web_retrieval import SearchReaderAdapter, deduplicate_web_groups, interleave
 
 PROMPT_VERSION = "bm250820-native-v4"
 SELECTION_PROTOCOL_VERSION = "field-evidence-v2"
@@ -72,7 +74,8 @@ def source_from_hit(hit: LexicalResult) -> SourceItem:
         source=str(hit.metadata.get("source") or ""),
         title=str(hit.metadata.get("title") or ""),
         uri=hit.metadata.get("uri") or None, score=hit.score, snippet=hit.text,
-        metadata={**hit.metadata, "indexed_text_sha256": digest(hit.text)},
+        metadata={**hit.metadata, "retrieval_origin": "web" if hit.metadata.get("source") == "web" else "knowledge_base",
+                  "indexed_text_sha256": digest(hit.text)},
     )
 
 
@@ -137,7 +140,15 @@ def parse_plan(text: str, settings: Settings) -> dict:
     fenced = re.fullmatch(r"```(?:json)?[ \t]*\r?\n(.*?)\r?\n```", text.strip(), re.DOTALL | re.IGNORECASE)
     if fenced:
         text = fenced[1]
-    value = json.loads(text)
+    def unique_keys(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"duplicate planner key: {key}")
+            result[key] = value
+        return result
+
+    value = json.loads(text, object_pairs_hook=unique_keys)
     shared = settings.native_plan_protocol == "shared_tasks"
     if shared:
         queries = value
@@ -313,6 +324,7 @@ class RWKVPipeline:
     def __init__(self, settings: Settings, index: LexicalIndex, model=None, *, recorder=None):
         self.settings = settings
         self.index = index
+        self.web = SearchReaderAdapter(settings)
         options = model_client_options(settings)
         if settings.native_transport == "rwkvos_batch":
             options["recorder"] = recorder
@@ -321,7 +333,7 @@ class RWKVPipeline:
     async def aclose(self):
         await self.model.aclose()
 
-    async def _call(self, prompt: str, *, stage: str, max_tokens: int, sources=()):
+    async def _call(self, prompt: str, *, stage: str, max_tokens: int, sources=(), trace=None, state_role=None):
         prefill = {"planner": self.settings.native_planner_prefill,
                    "resolver": self.settings.native_resolver_prefill,
                    "writer": self.settings.native_writer_prefill}.get(stage, "<think")
@@ -329,9 +341,14 @@ class RWKVPipeline:
             [{"role": "user", "content": prompt}], max_tokens=max_tokens,
             stage=stage, evidence_ids=tuple(source.id for source in sources),
             assistant_prefill=prefill,
+            **({"trace": trace} if trace is not None else {}),
+            **({"state_role": state_role} if state_role is not None and self.settings.native_transport == "rwkvos_batch" else {}),
         )
 
     async def search(self, request: SearchRequest):
+        if request.retrieval_mode != "knowledge_base":
+            groups, _ = await self.retrieve_groups(request, [request.question], request.candidate_k or self.settings.candidate_k)
+            return fuse_chunks(groups, order=self.settings.native_candidate_order)
         count = request.candidate_k or self.settings.candidate_k
         hits = await asyncio.to_thread(
             self.index.search_chunks, request.question, candidate_k=count,
@@ -339,7 +356,78 @@ class RWKVPipeline:
         )
         return [source_from_hit(hit) for hit in hits]
 
-    async def _resolve(self, task: str, fields: list[str], sources: list[SourceItem], *, source_tasks=None):
+    async def route_request(self, request):
+        if request.retrieval_mode != "auto":
+            return request, {"status": "manual", "requested_mode": request.retrieval_mode,
+                             "selected_mode": request.retrieval_mode}
+        messages = [item.model_dump() for item in request.history]
+        messages.append({"role": "user", "content": request.question})
+        try:
+            trace = await self.web.decide(messages)
+        except Exception as error:
+            trace = {"stage": "routing", "status": "failed", "error": type(error).__name__}
+        trace["requested_mode"] = "auto"
+        if trace.get("status") != "completed" or type(trace.get("needs_search")) is not bool:
+            return None, trace
+        selected = "hybrid" if trace["needs_search"] else "knowledge_base"
+        trace["selected_mode"] = selected
+        return request.model_copy(update={"retrieval_mode": selected}), trace
+
+    async def retrieve_groups(self, request, queries, candidate_k):
+        request, routing = await self.route_request(request)
+        if request is None:
+            return [[] for _ in queries], {"routing": routing, "retrieval_mode": "auto",
+                "provider_failures": [{"provider": "router", "error": routing["status"]}],
+                "all_providers_failed": True, "web_search": [], "document_retrieval": None}
+        document_trace = None
+        failures = []
+        web_trace = []
+        local_groups = [[] for _ in queries]
+        web_groups = [[] for _ in queries]
+        succeeded = 0
+
+        async def local():
+            nonlocal local_groups, document_trace, succeeded
+            if request.retrieval_mode == "web":
+                return
+            try:
+                if self.settings.native_retrieval_scope == "documents":
+                    from .document_retrieval import document_groups
+                    local_groups, document_trace = await document_groups(self.index, queries,
+                        candidate_k=candidate_k, knowledge_base_id=request.knowledge_base_id,
+                        document_limit=self.settings.native_document_limit)
+                else:
+                    local_groups = await asyncio.gather(*(asyncio.to_thread(
+                        self.index.search_chunks, query, candidate_k=candidate_k,
+                        knowledge_base_id=request.knowledge_base_id) for query in queries))
+                succeeded += 1
+            except Exception as error:
+                failures.append({"provider": "knowledge_base", "error": type(error).__name__})
+
+        async def web(index, query):
+            nonlocal succeeded
+            try:
+                web_groups[index], trace = await self.web.search(query)
+                web_trace.append({"query_index": index, **trace})
+                succeeded += 1
+            except Exception as error:
+                failure = {"provider": "web", "query": query, "error": type(error).__name__}
+                failures.append(failure)
+                web_trace.append({"query_index": index, "status": "failed", **failure})
+
+        tasks = [local()]
+        if request.retrieval_mode != "knowledge_base":
+            tasks.extend(web(i, query) for i, query in enumerate(queries[:self.settings.web_search_max_queries]))
+            web_trace.extend({"query_index": i, "query": query, "status": "skipped_query_budget"}
+                for i, query in enumerate(queries) if i >= self.settings.web_search_max_queries)
+        await asyncio.gather(*tasks)
+        web_groups = deduplicate_web_groups(web_groups)
+        groups = [interleave(kb, network) for kb, network in zip(local_groups, web_groups, strict=True)]
+        return groups, {"routing": routing, "document_retrieval": document_trace,
+            "retrieval_mode": request.retrieval_mode, "web_search": sorted(web_trace, key=lambda x: x["query_index"]),
+            "provider_failures": failures, "all_providers_failed": succeeded == 0}
+
+    async def _resolve(self, task: str, fields: list[str], sources: list[SourceItem], *, source_tasks=None, event_sink=None, state_role=None):
         jobs = []
         for index, source in enumerate(sources):
             units = list(evidence_units(index, source.snippet,
@@ -380,15 +468,21 @@ class RWKVPipeline:
                     source.metadata.get("context_spans", []), units[0].text)
             if repair is not None:
                 prompt = selection_repair_prompt(prompt, repair["raw_text"])
+            call_trace = None
+            if event_sink is not None:
+                call_trace = {"stage": "resolver", "status": "pending", "source_id": source.id,
+                              "prompt": prompt, "prompt_sha256": digest(prompt)}
+                event_sink(call_trace)
             result = await self._call(prompt, stage="resolver",
-                max_tokens=self.settings.native_resolver_max_tokens, sources=[source])
-            event = {**result.trace, "source_id": source.id,
+                max_tokens=self.settings.native_resolver_max_tokens, sources=[source], trace=call_trace, state_role=state_role)
+            event = call_trace if call_trace is not None else {}
+            event.update({**result.trace, "source_id": source.id,
                 "task_group": task_group,
                 "selection_protocol": (BINARY_SELECTION_PROTOCOL_VERSION if binary_selection
                     else TASK_SELECTION_PROTOCOL_VERSION if task_selection else SELECTION_PROTOCOL_VERSION),
                 "source_sha256": digest(source.snippet),
                 "units": [{"id": f"E{i}", "start": u.start, "end": u.end,
-                           "sha256": digest(u.text)} for i, u in enumerate(units, 1)]}
+                           "sha256": digest(u.text)} for i, u in enumerate(units, 1)]})
             if repair is not None:
                 event["format_repair_of_call_id"] = repair["call_id"]
             try:
@@ -463,6 +557,8 @@ class RWKVPipeline:
         )
         if self.settings.native_writer_prompt_protocol == "evidence_first":
             prompt = writer_prompt_v2(task, evidence, fields)
+        elif self.settings.native_writer_prompt_protocol == "evidence_checked":
+            prompt = writer_prompt_checked(task, evidence, fields)
         return await self._call(prompt, stage="writer",
             max_tokens=self.settings.generation_max_tokens, sources=sources)
 
@@ -472,7 +568,19 @@ class RWKVPipeline:
                              if event.get("stage") == "writer"), {})
         bounds = model_answer_bounds(answer, writer_trace)
         final_span = answer[bounds[0]:bounds[1]] if bounds else ""
-        citations = sorted({int(x) for x in re.findall(r"\[资料\s*([1-9]\d*)\]", final_span)})
+        citation_audit = audit_citations(
+            final_span, [source.model_dump() for source in sources],
+            check_quotes=self.settings.native_writer_prompt_protocol == "evidence_checked",
+        )
+        stage_status = {}
+        for stage in ("planner", "resolver", "writer"):
+            calls = [event for event in events if event.get("stage") == stage]
+            failures = [event for event in calls if event.get("status") != "completed"
+                        or ("parse_error" in event
+                            and not event.get("format_repair_succeeded"))]
+            stage_status[stage] = (
+                "not_called" if not calls else "failed" if failures else "completed"
+            )
         return AskResponse(answer=answer if answer is not None else "",
                            sources=sources, retrieval=retrieval, generation={
             "pipeline": "rwkv", "prompt_version": PROMPT_VERSION,
@@ -483,6 +591,10 @@ class RWKVPipeline:
                 "binary_query": BINARY_SELECTION_PROTOCOL_VERSION}.get(
                     self.settings.native_resolver_protocol, SELECTION_PROTOCOL_VERSION)),
             "output_mode": "immutable", "status": status,
+            "stage_status": stage_status,
+            "planner_fallback": retrieval.get("plan", {}).get("fallback"),
+            "retrieval_failures": retrieval.get("provider_failures", []),
+            "routing": retrieval.get("routing"),
             "raw_model_answer": answer, "answer_modified": False,
             "answer_span": list(bounds) if bounds else None,
             "model": self.settings.native_model,
@@ -492,10 +604,7 @@ class RWKVPipeline:
             "model_calls": events, "elapsed_ms": round((monotonic() - started) * 1000),
             "evidence_count": len(sources),
             "citation_map": {str(i): source.id for i, source in enumerate(sources, 1)},
-            "citation_audit": {"label_ids": citations,
-                "scope": "literal_labels_in_answer_span",
-                "unknown_label_ids": [i for i in citations if i > len(sources)],
-                "semantic_support_verified": False},
+            "citation_audit": citation_audit,
         })
 
     async def ask_materials(self, question, materials, history=None):
@@ -515,48 +624,86 @@ class RWKVPipeline:
             [result.trace], result.status, started)
 
     async def ask(self, request: SearchRequest):
+        if self.settings.native_task_matrix_enabled:
+            from .task_matrix import ask_matrix
+            return await ask_matrix(self, request)
         started = monotonic()
+        request, routing = await self.route_request(request)
+        routing_events = [routing] if routing.get("stage") == "routing" else []
+        if request is None:
+            return self._response(None, [], {"mode": "auto", "returned": 0, "routing": routing},
+                routing_events, "routing_failed", started)
         task = conversation(request.question, request.history)
         prompt = planner_prompt(task, self.settings)
         planned = await self._call(prompt, stage="planner",
             max_tokens=self.settings.native_planner_max_tokens)
-        events = [planned.trace]
+        events = [*routing_events, planned.trace]
         try:
             plan = parse_plan(structured_body(planned), self.settings)
         except (ValueError, TypeError) as error:
-            events[0] = {**planned.trace, "parse_error": str(error)}
+            events[-1] = {**planned.trace, "parse_error": str(error)}
             # Keep the complete conversation for Reader/Writer. A failed plan
             # supplies no trusted rewritten query or inferred answer fields.
             plan = {"queries": [request.question], "fields": [request.question],
                     "fallback": "original_question", "planner_error": str(error)}
+            if self.settings.native_planner_format_repair and planned.status == "completed":
+                # The model, never a list-flattening/truncation heuristic, repairs
+                # its plan. Keep both raw calls and associate the new attempt.
+                original_event = events[-1]
+                shape = ('["完整子问题"]' if self.settings.native_plan_protocol == "shared_tasks"
+                         else '{"queries":["完整检索问题"],"fields":["所求属性"]}')
+                repair_prompt = (prompt + "\n上一次规划未通过格式校验。重新阅读完整任务并输出合法JSON。"
+                    f"唯一合法结构示例：{shape}。示例文字必须替换成实际任务，"
+                    "不能在这个结构外再加数组、对象、解释或Markdown。"
+                    f"检索问题最多{self.settings.native_max_queries}条，"
+                    f"所求属性最多{self.settings.native_max_fields}条。不要重复变体凑数。")
+                repaired = await self._call(repair_prompt, stage="planner",
+                    max_tokens=self.settings.native_planner_max_tokens)
+                repair_event = {**repaired.trace, "purpose": "planner_format_repair",
+                    "repair_of_call_id": original_event.get("call_id")}
+                events.append(repair_event)
+                try:
+                    plan = parse_plan(structured_body(repaired), self.settings)
+                except (ValueError, TypeError) as repair_error:
+                    repair_event["parse_error"] = str(repair_error)
+                    plan["planner_repair_error"] = str(repair_error)
+                    original_event["format_repair_succeeded"] = False
+                else:
+                    original_event["format_repair_succeeded"] = True
         candidate_k = request.candidate_k or self.settings.candidate_k
+        queries = plan["queries"]
+        preserve_question = (self.settings.native_preserve_original_question
+                             or request.retrieval_mode != "knowledge_base")
+        if preserve_question:
+            # Preserve the complete user task even when the planner drops a clause.
+            # This is an exact input, not a semantic rewrite or replacement of the plan.
+            queries = list(dict.fromkeys([request.question, *queries]))
         try:
-            document_trace = None
-            if self.settings.native_retrieval_scope == "documents":
-                from .document_retrieval import document_groups
-                groups, document_trace = await document_groups(self.index, plan["queries"],
-                    candidate_k=candidate_k, knowledge_base_id=request.knowledge_base_id,
-                    document_limit=self.settings.native_document_limit)
-            else:
-                groups = await asyncio.gather(*(asyncio.to_thread(
-                    self.index.search_chunks, query, candidate_k=candidate_k,
-                    knowledge_base_id=request.knowledge_base_id) for query in plan["queries"]))
+            groups, provider_trace = await self.retrieve_groups(request, queries, candidate_k)
+            provider_trace["routing"] = routing
+            if provider_trace["all_providers_failed"]:
+                return self._response(None, [], {"mode": request.retrieval_mode, "returned": 0,
+                    "plan": plan, **provider_trace}, events, "retrieval_failed", started)
             candidates = fuse_chunks(groups, order=self.settings.native_candidate_order)
+            if request.retrieval_mode == "hybrid":
+                candidates = interleave([s for s in candidates if s.metadata["retrieval_origin"] == "knowledge_base"],
+                                        [s for s in candidates if s.metadata["retrieval_origin"] == "web"])
         except Exception as error:
             return self._response(None, [], {"mode": "bm25", "returned": 0,
                 "plan": plan, "error": f"{type(error).__name__}: {error}"},
                 events, "retrieval_failed", started)
-        # A fixed configuration selects one model-authored list for both later
-        # stages. The original planner output remains in the trace; no per-query
-        # semantic choice, query rewriting or history resolution happens here.
+        # Keep the model-authored list and, for web modes, the exact original
+        # question. The model plan stays immutable; code does not rewrite tasks.
         active_tasks = plan[self.settings.native_task_source]
+        if preserve_question:
+            active_tasks = list(dict.fromkeys([request.question, *active_tasks]))
         source_tasks = None
         if self.settings.native_resolver_budget_scope == "per_query":
             # Each model-authored query gets its own ranked candidates. Reading
             # unrelated queries against every source spends the same call budget
             # while cutting off deeper hits from the relevant query.
             source_tasks = {}
-            for query, group in zip(plan["queries"], groups, strict=True):
+            for query, group in zip(queries, groups, strict=True):
                 for hit in group[:self.settings.native_resolver_sources]:
                     assigned = source_tasks.setdefault(hit.node_id, [])
                     if [query] not in assigned:
@@ -567,7 +714,9 @@ class RWKVPipeline:
         selected_ids = {source.id for source in selected}
         retrieval = {"mode": "native-plan+bm25+chunk-candidates", "index": self.settings.opensearch_index,
             "candidate_order": self.settings.native_candidate_order, "score_method": "chunk_rrf",
-            "plan": plan, "candidate_k_per_query": candidate_k,
+            "provider_order": "knowledge_base_web_round_robin" if request.retrieval_mode == "hybrid" else None,
+            "plan": plan, "retrieval_queries": queries, "original_question_preserved": preserve_question,
+            "candidate_k_per_query": candidate_k,
             "active_task_source": self.settings.native_task_source,
             "active_tasks": active_tasks,
             "per_document_limit": None, "relative_score_threshold": None,
@@ -580,7 +729,9 @@ class RWKVPipeline:
             "omitted_by_reader_budget": [s.id for s in candidates
                 if s.id not in selected_ids],
             "query_results": [[h.node_id for h in group] for group in groups]}
-        retrieval["document_retrieval"] = document_trace
+        retrieval.update(provider_trace)
+        if request.retrieval_mode != "knowledge_base":
+            retrieval["mode"] = "native-plan+" + request.retrieval_mode + "+chunk-candidates"
         evidence, resolver_events = await self._resolve(task, active_tasks, selected, source_tasks=source_tasks)
         events.extend(resolver_events)
         retrieval["returned"] = len(evidence)
@@ -597,6 +748,10 @@ class RWKVPipeline:
         if status == "completed" and any("parse_error" in event
                 and not event.get("format_repair_succeeded") for event in resolver_events):
             status = "resolver_partial_failure"
+        elif status == "completed" and plan.get("fallback"):
+            status = "planner_partial_failure"
+        if status == "completed" and provider_trace["provider_failures"]:
+            status = "retrieval_partial_failure"
         response = self._response(result.raw_text, evidence, retrieval, events, status, started)
         response.generation["writer_status"] = result.status
         return response

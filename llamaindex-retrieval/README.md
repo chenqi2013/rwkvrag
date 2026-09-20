@@ -108,8 +108,18 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 
 ## 验证
 
+固定材料的质量验收入口见 [P0 验收说明](eval/native-smoke/QUALITY_GATE.md)。它复用已有 8 道开发题和原始收据，分别检查执行、正文协议、引用标签以及显式语义复核；尚未复核不能算质量通过。该题组不代表完整 RAG 或盲测成绩。
+
+规划失败后继续用原问题检索时，若 Writer 完成且证据读取未失败，状态为 `planner_partial_failure`，历史归类为 `partial`。`generation.stage_status` 分别记录各模型阶段是否成功，`planner_fallback` 记录回退方式。Writer 截断/超时等状态仍优先保留，原始答案不修改。此前已经存储的历史记录不会被本次代码更新自动重写。
+
 ```bash
 uv run pytest -q tests/test_native_rwkv.py tests/test_rwkvos_batch.py tests/test_model_transport.py tests/test_rwkv_pipeline.py tests/test_native_integration.py tests/test_verbatim_chunking.py tests/test_ingest.py
 ```
 
 发布验证见 [VALIDATION.json](../artifacts/statetune-20260911/VALIDATION.json)。完整回归仍有114项历史失败；没有删除这些测试或将其改成跳过。软件测试不证明模型答案正确。历史日志与失败集对照保存在实验附件中。
+
+Writer 提示词实验与 canonical 模板校正见 [第二轮报告](../docs/p0-writer-experiment-20260916.md)。实验候选未启用；新评测应显式指定传输模板和 Writer state。
+
+## 自动联网与混合检索
+
+管理页默认由 SearchReader 的 1.5B StateTune 选择器判断是否补充网络材料；API 显式传 `retrieval_mode: "auto"` 启用。支持强制 knowledge_base / hybrid / web。详细配置、训练结果、部署与已知质量问题见 [混合检索交付报告](../docs/hybrid-search-20260919.md)。

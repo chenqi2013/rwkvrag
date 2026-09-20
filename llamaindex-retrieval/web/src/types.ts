@@ -8,6 +8,7 @@ export interface KnowledgeBase {
 }
 
 export interface FileItem {
+  revision_pending?: boolean;
   id: string;
   knowledge_base_id: string;
   filename: string;
@@ -26,7 +27,7 @@ export interface FileItem {
 
 export interface JobItem {
   id: string;
-  kind: "file_ingest" | "file_reindex" | "finewiki_import";
+  kind: "file_ingest" | "file_reindex" | "finewiki_import" | "wiki_generate";
   status: "pending" | "running" | "completed" | "failed";
   progress: number;
   stage: string;
@@ -130,4 +131,19 @@ export interface AdminHealth {
   status: "ok" | "degraded";
   mongodb: Record<string, unknown>;
   lexical: Record<string, unknown>;
+}
+
+
+export interface WikiVersion {
+  id: string;
+  page_id: string;
+  title: string;
+  knowledge_base_id: string;
+  status: "draft" | "generation_failed";
+  freshness?: string;
+  created_at: string;
+  generated_at?: string;
+  body?: string;
+  binding: { index_version: string; revision: { source_sha256: string; parsed_snapshot_sha256: string } };
+  response?: AskResponse;
 }

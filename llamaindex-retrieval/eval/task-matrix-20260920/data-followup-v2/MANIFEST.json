@@ -1,0 +1,21 @@
+{
+  "files": {
+    "train.planner.jsonl": {
+      "sha256": "b0e634df64f7245629c18dcc90bdd870cc04e4f0f7299f12b4676ac0e3a07a18",
+      "rows": 128
+    },
+    "validation.planner.jsonl": {
+      "sha256": "6731c6493f23ad7ebd1284f0531f9d75f26dbd33764b2d546c4119bb564ebd12",
+      "rows": 8
+    },
+    "holdout.planner.jsonl": {
+      "sha256": "2b42b04f70511ae9b9837a004e0c4e7ca2ad4832463672abef2fe34a7bc804a9",
+      "rows": 8
+    }
+  },
+  "role": "followup",
+  "synthetic": true,
+  "independent_review": false,
+  "holdout_used_for_training": false,
+  "builder_sha256": "c7ce77768a30c25907af0057c12f2a85e6f95e502728f5f83b52e648d1f90496"
+}

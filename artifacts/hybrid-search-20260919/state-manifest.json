@@ -1,0 +1,10 @@
+{
+  "/home/chase/rwkvrag/data/experiments/hybrid-router-20260919/run1/best-state.pth": {
+    "sha256": "5cb0d26df1d55004f2bab1db893b2b889daa7bd861514072b908bd9e613d4994",
+    "size": 12591093
+  },
+  "/home/chase/apps/rwkv-search-reader/runs/router-state-v6r2/best-state.pth": {
+    "sha256": "0941c9b978f91f5e4a1f984d21b94a059d7e5854e7079cbd380d04844a1e0c57",
+    "size": 12591093
+  }
+}

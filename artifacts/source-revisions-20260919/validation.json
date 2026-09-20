@@ -1,0 +1,25 @@
+{
+  "test_runs": [
+    {
+      "passed": 55,
+      "log": "related-and-live-tests.log"
+    },
+    {
+      "passed": 4,
+      "log": "api-tests.log",
+      "overlaps_previous_run": true
+    }
+  ],
+  "deployed": false,
+  "production_index_changed": false,
+  "source_sha256": {
+    "llamaindex-retrieval/src/llamaindex_retrieval/source_revisions.py": "f51354425861a191fe504c3c4d8b53201e7a71435465506a7ad3800e120e4ce5",
+    "llamaindex-retrieval/src/llamaindex_retrieval/tasks.py": "56301c3c00dd514eaa653f3cf4b67305875ff828a12c290f8459ba879b960c5e",
+    "llamaindex-retrieval/src/llamaindex_retrieval/ingest.py": "770789c534d36a3675d93f6e023d6979c3b1c7de71542c9a8372a4f02b211829",
+    "llamaindex-retrieval/src/llamaindex_retrieval/index_versions.py": "3f44ecd7050f3bd29b4fd9a6f72dd43c9e7801ff5ed0e80d5f6b5db59ab3c625",
+    "llamaindex-retrieval/src/llamaindex_retrieval/cli.py": "c61e216c4ea47c0189f621f474d28518ad4ef6955805538347deca117df40521",
+    "llamaindex-retrieval/src/llamaindex_retrieval/schemas.py": "bc011ddaa19eaddd9de266b88e505e9307d5ec0d2f98e00c268dc774738709d3",
+    "llamaindex-retrieval/tests/test_source_revisions.py": "c6d06ff6ab3c7b6691b5e724a4570458d6cb8d93b8655b494014c9b5b5b9c8dd",
+    "llamaindex-retrieval/tests/test_index_versions.py": "eaf55752d1b3664f875a3e8263e5c2394157f0d3640eb77a449db8c9f4d942de"
+  }
+}

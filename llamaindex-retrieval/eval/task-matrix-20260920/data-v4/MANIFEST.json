@@ -1,0 +1,55 @@
+{
+  "synthetic": true,
+  "independent_review": false,
+  "split_by_case": true,
+  "holdout_used_for_training": false,
+  "seed": "matrix-v1",
+  "files": {
+    "train.planner.jsonl": {
+      "sha256": "ef932463e0cd0a7968f780e58c58b631867661c7a780477f991b82d6458e908d",
+      "rows": 128,
+      "max_tokens": 659
+    },
+    "train.resolver.jsonl": {
+      "sha256": "47c2ae0d7620b0f53b964b4ffc21f807ed8dad50dbfbf4c99e640f04a23fe2e1",
+      "rows": 1432,
+      "max_tokens": 429
+    },
+    "train.writer.jsonl": {
+      "sha256": "dee3a1280a6cf5fdca125522028a6edf5fd45afe1ff45490dcc4249cb88bc54a",
+      "rows": 256,
+      "max_tokens": 1383
+    },
+    "validation.planner.jsonl": {
+      "sha256": "49b2d2e93aa5759ce7d75d67582dab9da65b8f5a1eb5431c0988eb669e654df9",
+      "rows": 8,
+      "max_tokens": 560
+    },
+    "validation.resolver.jsonl": {
+      "sha256": "4b8e04b1b7c40e8641d12289e2979338adf7e1042ff211e830cb46b9c82041eb",
+      "rows": 64,
+      "max_tokens": 428
+    },
+    "validation.writer.jsonl": {
+      "sha256": "a9f9a736a2858bc3dafdc3dd090bc72b061cae262b8ad7bf54c0365bf0591e66",
+      "rows": 16,
+      "max_tokens": 1135
+    },
+    "holdout.planner.jsonl": {
+      "sha256": "9436ed317aa7996730923e1b558de769ce644f1c1dc2dd7c13a876a8cda70beb",
+      "rows": 8,
+      "max_tokens": 560
+    },
+    "holdout.resolver.jsonl": {
+      "sha256": "c566e3d046a1edd82a7de5a04e0eca12399e9409b52088f0e65c7a71a8a7902c",
+      "rows": 64,
+      "max_tokens": 429
+    },
+    "holdout.writer.jsonl": {
+      "sha256": "c07bc515e2c328ffd507ba140f29393f262588baf4c0cb08407ce0a3e10a8d73",
+      "rows": 16,
+      "max_tokens": 1143
+    }
+  },
+  "builder_sha256": "a8405abd828095f875b33ec5ccf6768ca7bf18797bc7bd6495b1c397d7e5899f"
+}

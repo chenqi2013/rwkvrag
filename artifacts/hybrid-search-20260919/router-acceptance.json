@@ -1,0 +1,218 @@
+[
+  {
+    "id": "kb_policy",
+    "messages": [
+      {
+        "role": "user",
+        "content": "公司内部报销制度规定的住宿上限是多少？"
+      }
+    ],
+    "expected": false
+  },
+  {
+    "id": "kb_upgrade",
+    "messages": [
+      {
+        "role": "user",
+        "content": "根据知识库里的内部升级计划，我们哪一天升级 Python？"
+      }
+    ],
+    "expected": false
+  },
+  {
+    "id": "kb_only",
+    "messages": [
+      {
+        "role": "user",
+        "content": "只根据知识库回答服务器维护周期，不要联网。"
+      }
+    ],
+    "expected": false
+  },
+  {
+    "id": "kb_summary",
+    "messages": [
+      {
+        "role": "user",
+        "content": "总结我上传文档中的项目风险。"
+      }
+    ],
+    "expected": false
+  },
+  {
+    "id": "kb_compare",
+    "messages": [
+      {
+        "role": "user",
+        "content": "比较知识库里两版内部采购制度的变化。"
+      }
+    ],
+    "expected": false
+  },
+  {
+    "id": "math",
+    "messages": [
+      {
+        "role": "user",
+        "content": "计算 135 乘以 24。"
+      }
+    ],
+    "expected": false
+  },
+  {
+    "id": "code",
+    "messages": [
+      {
+        "role": "user",
+        "content": "写一个 Python 函数把列表中的重复数字去掉。"
+      }
+    ],
+    "expected": false
+  },
+  {
+    "id": "rewrite",
+    "messages": [
+      {
+        "role": "user",
+        "content": "将这句话改得更礼貌：请你明天提交报告。"
+      }
+    ],
+    "expected": false
+  },
+  {
+    "id": "web_release",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Python 最新正式版本是什么？请查官网。"
+      }
+    ],
+    "expected": true
+  },
+  {
+    "id": "web_url",
+    "messages": [
+      {
+        "role": "user",
+        "content": "读取 https://www.python.org/downloads/ 并告诉我最新版本。"
+      }
+    ],
+    "expected": true
+  },
+  {
+    "id": "web_weather",
+    "messages": [
+      {
+        "role": "user",
+        "content": "明天上海会下雨吗？"
+      }
+    ],
+    "expected": true
+  },
+  {
+    "id": "hybrid_compare",
+    "messages": [
+      {
+        "role": "user",
+        "content": "比较知识库内的 Python 升级计划与 Python 官网的最新版本。"
+      }
+    ],
+    "expected": true
+  },
+  {
+    "id": "web_historical",
+    "messages": [
+      {
+        "role": "user",
+        "content": "请查证 Python 3.13.0 的正式发布日期并提供官方来源。"
+      }
+    ],
+    "expected": true
+  },
+  {
+    "id": "web_explicit",
+    "messages": [
+      {
+        "role": "user",
+        "content": "搜索 RWKV 官方发布的最新模型。"
+      }
+    ],
+    "expected": true
+  },
+  {
+    "id": "web_price",
+    "messages": [
+      {
+        "role": "user",
+        "content": "今天美元兑人民币汇率是多少？"
+      }
+    ],
+    "expected": true
+  },
+  {
+    "id": "kb_no_web_latest",
+    "messages": [
+      {
+        "role": "user",
+        "content": "不要联网，只从知识库找最近上传的维护记录。"
+      }
+    ],
+    "expected": false
+  },
+  {
+    "id": "followup_web",
+    "messages": [
+      {
+        "role": "user",
+        "content": "先总结知识库内的设备维护计划。"
+      },
+      {
+        "role": "assistant",
+        "content": "维护计划要求每周巡检。"
+      },
+      {
+        "role": "user",
+        "content": "再查一下厂家官网是否发布了新的维护要求。"
+      }
+    ],
+    "expected": true
+  },
+  {
+    "id": "followup_stop",
+    "messages": [
+      {
+        "role": "user",
+        "content": "请联网查最新 Python 版本。"
+      },
+      {
+        "role": "assistant",
+        "content": "已检索。"
+      },
+      {
+        "role": "user",
+        "content": "现在不要联网，只把刚才的回答翻译成英语。"
+      }
+    ],
+    "expected": false
+  },
+  {
+    "id": "translate_url",
+    "messages": [
+      {
+        "role": "user",
+        "content": "翻译这句话，不访问链接：请访问 https://python.org 查询最新版本。"
+      }
+    ],
+    "expected": false
+  },
+  {
+    "id": "hybrid_fact",
+    "messages": [
+      {
+        "role": "user",
+        "content": "内部计划安排何时升级到 Python 3.13.0？另外，请联网查该版本的正式发布日期。"
+      }
+    ],
+    "expected": true
+  }
+]

@@ -5,6 +5,14 @@ type Label = [string, string];
 export function evidenceWarnings(response?: Pick<AskResponse, "generation" | "sources">): Label[] {
   if (!response) return [];
   const warnings: Label[] = [];
+  if (response.generation.planner_fallback === "original_question") {
+    warnings.push(["规划失败，本次使用原问题检索；请核对历史指代和问题范围。",
+      "Planning failed; retrieval used the original question. Check history references and scope."]);
+  }
+  if (Array.isArray(response.generation.retrieval_failures) && response.generation.retrieval_failures.length) {
+    warnings.push(["部分检索未成功，回答可能只使用了剩余来源；请查看运行记录。",
+      "Some retrieval requests failed; the answer may use only the remaining sources. Check the trace."]);
+  }
   if (response.sources.length === 0) {
     warnings.push(["本次未返回有效证据，下面的模型输出没有可核对的来源。",
       "No evidence was returned. The model output below has no sources to check."]);
@@ -17,6 +25,19 @@ export function evidenceWarnings(response?: Pick<AskResponse, "generation" | "so
     if (ids.length) warnings.push([
       `引用无对应来源：${ids.map((id) => `[资料 ${id}]`).join("、")}。请勿将这些引用视为依据。`,
       `Citations have no matching source: ${ids.map((id) => `[Source ${id}]`).join(", ")}. These citations do not support the answer.`,
+    ]);
+  }
+  if (audit && typeof audit === "object") {
+    const invalid = "invalid_labels" in audit ? audit.invalid_labels : undefined;
+    if (Array.isArray(invalid) && invalid.length) warnings.push([
+      `引用格式无效：${invalid.filter((item) => typeof item === "string").join("、")}。`,
+      "The answer contains malformed citation labels or unresolved placeholders.",
+    ]);
+    const quotes = "quote_audit" in audit ? audit.quote_audit : undefined;
+    if (quotes && typeof quotes === "object" && "failed" in quotes
+      && typeof quotes.failed === "number" && quotes.failed > 0) warnings.push([
+      `${quotes.failed} 段标为原文的摘录未逐字匹配对应资料，请核对。`,
+      `${quotes.failed} excerpts labeled as original text do not match their cited sources verbatim.`,
     ]);
   }
   return warnings;
@@ -62,7 +83,18 @@ export function answerPresentation(response?: Pick<AskResponse, "answer" | "gene
   const answerText = spanValid ? characters.slice(span[0], span[1]).join("") : "";
   let color = "orange";
   let label: Label;
-  if (status === "resolver_partial_failure") {
+  if (status === "answer_quality_failed") {
+    label = ["答案未通过模型内容检查，请核对原文", "Answer failed model review; check source evidence"];
+  } else if (status === "answer_review_failed") {
+    label = ["已生成，内容检查未完成", "Generated; content review did not complete"];
+  } else if (status === "matrix_partial_failure") {
+    label = ["已生成，部分对比项目检查失败", "Generated; some comparison checks failed"];
+  } else if (status === "planner_partial_failure") {
+    label = ["已生成，规划失败后使用原问题检索",
+      "Generated; planning failed and retrieval used the original question"];
+  } else if (status === "retrieval_partial_failure") {
+    label = ["已生成，部分检索失败", "Generated; some retrieval requests failed"];
+  } else if (status === "resolver_partial_failure") {
     label = writerStatus === "completed"
       ? ["已生成，部分证据读取失败", "Generated; some evidence reads failed"]
       : ["部分证据读取失败，生成未完成", "Some evidence reads failed; generation incomplete"];
@@ -72,6 +104,8 @@ export function answerPresentation(response?: Pick<AskResponse, "answer" | "gene
       : !answerText.trim() ? ["生成完成，正文为空", "Generation completed; answer is empty"]
         : !writerAttempted && !writerCalled
           ? ["流程报告完成，缺少生成记录", "Completed status; generation record missing"]
+          : generation.task_matrix_protocol && generation.model_review_passed === true
+            ? ["生成完成，模型检查通过；请结合原文核对", "Generated; model review passed. Check the source evidence."]
           : generation.termination_verified === false
             ? ["已返回回答，终止原因与语义支持未核验", "Answer returned; termination and semantic support unverified"]
             : ["生成完成，尚未做语义核验", "Generation completed; semantic support not verified"];
@@ -82,6 +116,9 @@ export function answerPresentation(response?: Pick<AskResponse, "answer" | "gene
   } else if (status === "planner_failed") {
     color = "red";
     label = ["规划失败，未进入生成", "Planning failed; generation not reached"];
+  } else if (status === "routing_failed") {
+    color = "red";
+    label = ["联网判断失败，请重试或手动选择检索范围", "Web decision failed; retry or choose a search scope"];
   } else if (status === "retrieval_failed") {
     color = "red";
     label = ["检索失败，未进入生成", "Retrieval failed; generation not reached"];

@@ -1,0 +1,49 @@
+{
+  "runtime": {
+    "checkpoint": "data/experiments/state-protocol-20260909/checkpoints/rwkv7-g1j-2.9b-20260831-ctx16384.pth",
+    "peft_source": "data/experiments/state-protocol-20260909/training-v2/execution-source"
+  },
+  "output": "data/experiments/task-matrix-20260920/run1",
+  "data": "llamaindex-retrieval/eval/task-matrix-20260920/data-v3",
+  "manifest_sha256": "6c4f8b121ccb737aac25fab57533a84ce735aa70ac7245c917d801d8af34941a",
+  "epochs": 2,
+  "learning_rate": 5e-05,
+  "accumulation": 4,
+  "wall_seconds": 5400,
+  "bindings": {
+    "llamaindex-retrieval/statetune/pilot_runtime.py": "08431a0587d5f1e2df17f9160fd1e2e7c93e9c11084a722da646854eb0f0141a",
+    "llamaindex-retrieval/statetune/preflight_state.py": "d6edbdc99c95fde6c67161456c1da07f953eb6b58f4e8e73cc48aaa2eeaace10",
+    "llamaindex-retrieval/statetune/train_released_state.py": "621894df872f10f9bda10d9035daf9451312205e907868dbf1853e9b051d625c",
+    "llamaindex-retrieval/src/llamaindex_retrieval/state_training.py": "3a3d3118295e90032c96f502a43c663421154518b5dbf40d94fd8f7c3c6ee155",
+    "llamaindex-retrieval/src/llamaindex_retrieval/state_tokens.py": "6c496d3061abd6d764881b71f1b2c06f4bb85b44a3c6763e2807b313b17da882",
+    "llamaindex-retrieval/eval/task-matrix-20260920/train_candidate.py": "f6d0a1f305900bb8aae436c410c15c59a6457f25a4f134aa1f830a78d4b9a158",
+    "data/experiments/state-protocol-20260909/training-v2/execution-source/SOURCE-MANIFEST.json": "ccdbb113427dad96e90d7cdef285f80eacb27dd02dedb63517fc7c903fc916ca"
+  },
+  "initial_states": {
+    "resolver": {
+      "id": "reader-trace-450",
+      "stage": "resolver",
+      "path": "data/experiments/trace-training-20260911-run1/resolver-450/train/state-step-225.pth",
+      "sha256": "02288c70e62f893613c4affbad2b93cf215d5fc73603fb22434d4cedaf42fe02",
+      "axes": [
+        "head",
+        "value",
+        "key"
+      ],
+      "checkpoint_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239"
+    },
+    "writer": {
+      "id": "writer-trace-300",
+      "stage": "writer",
+      "path": "data/experiments/trace-training-20260911-run1/writer-300/train/state-step-150.pth",
+      "sha256": "dd8bef92d8b3069881cd7e7ba8cf226a902a6e6dcc821658efb61b24e8db453e",
+      "axes": [
+        "head",
+        "value",
+        "key"
+      ],
+      "checkpoint_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239"
+    },
+    "planner": null
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "correct": 23,
+  "total": 24,
+  "format_errors": 0,
+  "mean_nll": 0.23047215903375218,
+  "cases": [
+    {
+      "id": "hybrid-holdout-0",
+      "target": false,
+      "output": "true",
+      "correct": false,
+      "format_ok": true,
+      "nll": 5.519700527191162
+    },
+    {
+      "id": "hybrid-holdout-1",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.00223708082921803
+    },
+    {
+      "id": "hybrid-holdout-2",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.0005098473629914224
+    },
+    {
+      "id": "hybrid-holdout-3",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 1.7762025890988298e-05
+    },
+    {
+      "id": "hybrid-holdout-4",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 6.603976362384856e-05
+    },
+    {
+      "id": "hybrid-holdout-5",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.00035232058144174516
+    },
+    {
+      "id": "hybrid-holdout-6",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 3.6000557884108275e-05
+    },
+    {
+      "id": "hybrid-holdout-7",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 0.007630960550159216
+    },
+    {
+      "id": "hybrid-holdout-8",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 7.211902266135439e-05
+    },
+    {
+      "id": "hybrid-holdout-9",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.935142715112306e-05
+    },
+    {
+      "id": "hybrid-holdout-10",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 3.611976353568025e-05
+    },
+    {
+      "id": "hybrid-holdout-11",
+      "target": false,
+      "output": "false",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.732496745418757e-05
+    },
+    {
+      "id": "hybrid-holdout-12",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.351044481154531e-05
+    },
+    {
+      "id": "hybrid-holdout-13",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.61460001335945e-05
+    },
+    {
+      "id": "hybrid-holdout-14",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.327203714638017e-05
+    },
+    {
+      "id": "hybrid-holdout-15",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.924526340095326e-05
+    },
+    {
+      "id": "hybrid-holdout-16",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.2676016164477915e-05
+    },
+    {
+      "id": "hybrid-holdout-17",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.590759246842936e-05
+    },
+    {
+      "id": "hybrid-holdout-18",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.482168878894299e-05
+    },
+    {
+      "id": "hybrid-holdout-19",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.768258077092469e-05
+    },
+    {
+      "id": "hybrid-holdout-20",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 3.9219088648678735e-05
+    },
+    {
+      "id": "hybrid-holdout-21",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 3.93382906622719e-05
+    },
+    {
+      "id": "hybrid-holdout-22",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 5.936446541454643e-05
+    },
+    {
+      "id": "hybrid-holdout-23",
+      "target": true,
+      "output": "true",
+      "correct": true,
+      "format_ok": true,
+      "nll": 4.51792984677013e-05
+    }
+  ]
+}

@@ -148,6 +148,8 @@ class RwkvosBatchClient:
         batch_size: int = 8, batch_wait_ms: float = 5, state_id: str | None = None,
         reader_state_id: str | None = None, reader_prompt_protocol: str = "legacy",
         writer_state_id: str | None = None,
+        planner_state_id: str | None = None,
+        matrix_state_ids: dict[str, str] | None = None,
         reader_input_layout: str = "original",
         writer_prompt_protocol: str = "legacy",
         prefill_mode: str = "complete",
@@ -171,6 +173,12 @@ class RwkvosBatchClient:
                 raise ValueError(f"{name} must be a positive integer")
         if state_id is not None and (not isinstance(state_id, str) or not state_id.strip()):
             raise ValueError("state_id must be a nonempty string or None")
+        if planner_state_id is not None and (not isinstance(planner_state_id, str) or not planner_state_id.strip()):
+            raise ValueError("planner_state_id must be a nonempty string or None")
+        if matrix_state_ids is not None and (not isinstance(matrix_state_ids, dict)
+                or set(matrix_state_ids) - {"plan", "reader", "assessment", "followup", "review", "writer"}
+                or any(not isinstance(v, str) or not v.strip() for v in matrix_state_ids.values())):
+            raise ValueError("invalid matrix state roles")
         if reader_state_id is not None and (
             not isinstance(reader_state_id, str) or not reader_state_id.strip()
         ):
@@ -226,6 +234,8 @@ class RwkvosBatchClient:
         self.state_id = state_id
         self.reader_state_id = reader_state_id
         self.writer_state_id = writer_state_id
+        self.planner_state_id = planner_state_id
+        self.matrix_state_ids = dict(matrix_state_ids or {})
         self.reader_prompt_protocol = reader_prompt_protocol
         self.reader_input_layout = reader_input_layout
         self.writer_prompt_protocol = writer_prompt_protocol
@@ -400,6 +410,7 @@ class RwkvosBatchClient:
         top_p: float = 0, top_k: int = 20, presence_penalty: float = 0,
         frequency_penalty: float = 0, seed: int | None = None,
         stage: str = "reader", evidence_ids: Sequence[str] = (), trace: dict | None = None,
+        state_role: str | None = None,
     ) -> NativeRWKVResult:
         started = perf_counter()
         record = trace if trace is not None else {}
@@ -408,8 +419,12 @@ class RwkvosBatchClient:
                     else self.state_id)
         if stage == "writer" and self.writer_state_id is not None:
             state_id = self.writer_state_id
+        if stage == "planner" and self.planner_state_id is not None:
+            state_id = self.planner_state_id
+        if stage in {"planner", "resolver", "writer"} and state_role in self.matrix_state_ids:
+            state_id = self.matrix_state_ids[state_role]
         record.update(call_id=str(uuid4()), transport="rwkvos_batch", stage=stage, model=self.model,
-                      state_id=state_id, messages=deepcopy(messages), evidence_ids=list(evidence_ids),
+                      state_id=state_id, state_role=state_role, messages=deepcopy(messages), evidence_ids=list(evidence_ids),
                       started_at=_now(), status="pending", http=[], raw_text=None, finish_reason=None,
                       completion_attempted=False, usage=None, termination="unknown",
                       termination_verified=False, provider_finish_reason=None,
@@ -426,7 +441,14 @@ class RwkvosBatchClient:
         try:
             if self._closed:
                 raise ValueError("client is closed")
+            allowed_roles = {"planner": {"plan", "assessment", "followup", "review"},
+                             "resolver": {"reader", "review"}, "writer": {"writer"}}
+            if state_role is not None and state_role not in allowed_roles.get(stage, set()):
+                raise ValueError("invalid state role for stage")
             prompt, prefill = render_batch_prompt(messages, assistant_prefill, self.prefill_mode)
+            if stage == "planner" and state_id is not None and (
+                    prefill != "<think></think>" or self.prefill_mode != "complete"):
+                raise ValueError("Planner state requires complete no-think prefill")
             if reader_stage and self.reader_prompt_protocol == "rwkv_g1j_no_think_v1":
                 if prefill != "<think></think>" or self.prefill_mode != "complete":
                     raise ValueError("Canonical Reader protocol requires complete no-think prefill")

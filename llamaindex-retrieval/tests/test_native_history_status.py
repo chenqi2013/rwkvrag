@@ -27,6 +27,7 @@ def native(status, answer=">未改动的思考</think>原始答案🙂"):
 
 @pytest.mark.parametrize("status,expected,category", [
     ("planner_failed", "failed", "retrieval_failed"),
+    ("planner_partial_failure", "partial", "retrieval_failed"),
     ("retrieval_failed", "failed", "retrieval_failed"),
     ("resolver_partial_failure", "partial", "evidence_extraction_failed"),
     ("invalid_materials", "failed", "evidence_extraction_failed"),

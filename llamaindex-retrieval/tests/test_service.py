@@ -120,6 +120,14 @@ def test_field_evidence_quote_fallback_uses_terminal_outcome_markers() -> None:
 
 class FakeIndices:
     @staticmethod
+    def exists_alias(*, name: str) -> bool:
+        return True
+
+    @staticmethod
+    def get_alias(*, name: str) -> dict:
+        return {name.removesuffix("-active"): {"aliases": {name: {"is_write_index": True}}}}
+
+    @staticmethod
     def exists(*, index: str) -> bool:
         return True
 

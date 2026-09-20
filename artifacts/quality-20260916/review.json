@@ -1,0 +1,227 @@
+{
+  "cases": [
+    {
+      "decision_correct": true,
+      "facts": [
+        {
+          "citation_supported": false,
+          "correct": false,
+          "id": "F1"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F2"
+        },
+        {
+          "citation_supported": false,
+          "correct": true,
+          "id": "F3"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F4"
+        }
+      ],
+      "id": "smoke_001",
+      "no_uncontrolled_repetition": true,
+      "no_unsupported_claims": false,
+      "notes": "F1漏阶梯图并重复结构化文本，五种语言列表不完整；F2事件驱动正确且资料2支持；F3颜色正确但误引资料2，实际支持位于资料6；F4的16阶段及补充阶段分组有资料1支持。",
+      "response_sha256": "09862719fbb77797f875b7ac047a73b01b81dbb7335290aeeaf43862e62be6ff"
+    },
+    {
+      "decision_correct": true,
+      "facts": [
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F1"
+        },
+        {
+          "citation_supported": false,
+          "correct": false,
+          "id": "F2"
+        },
+        {
+          "citation_supported": false,
+          "correct": false,
+          "id": "F3"
+        },
+        {
+          "citation_supported": false,
+          "correct": false,
+          "id": "F4"
+        }
+      ],
+      "id": "smoke_002",
+      "no_uncontrolled_repetition": true,
+      "no_unsupported_claims": false,
+      "notes": "F1不能重联有资料1支持，但附加的车头/车厢没有连接器因果解释无据；F2应为Hamm，答成科隆/杜塞尔多夫且误引资料2；F3/F4应为6辆/4动力车，答成4辆/2动力车，并混入402型和223系。",
+      "response_sha256": "3b156690c8273cc67d4184b1cab53dbbb74c4ac5ef2812a806223db958c035f0"
+    },
+    {
+      "decision_correct": true,
+      "facts": [
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F1"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F2"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F3"
+        }
+      ],
+      "id": "smoke_003",
+      "no_uncontrolled_repetition": true,
+      "no_unsupported_claims": true,
+      "notes": "按完整历史核对，三格为25000英镑、196362英镑、29天。均正确；列表末尾资料1作为整个三项列表的共同引用，明确支持全部三项，无新增主张。本次认可共同引用，不要求逐行重复同一标签。",
+      "response_sha256": "5edbdddb7286bad35773d4f30ed0852e282cf2bb622c705bc6129ef356b450e4"
+    },
+    {
+      "decision_correct": true,
+      "facts": [
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F1"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F2"
+        },
+        {
+          "citation_supported": false,
+          "correct": false,
+          "id": "F3"
+        }
+      ],
+      "id": "smoke_004",
+      "no_uncontrolled_repetition": true,
+      "no_unsupported_claims": true,
+      "notes": "按完整历史核对NT3.5工作站版，10个客户端与不支持Mac均正确且资料1支持；遗漏第三格开发代号Daytona。两句完全重复，记录为短重复，未扩大解释为失控生成；主要失败是漏字段。",
+      "response_sha256": "bc89e8e9e9678ca4b14884951c208e66a38ae0396e6c5b5118fae4beeacecb33"
+    },
+    {
+      "decision_correct": true,
+      "facts": [
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F1"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F2"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F3"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F4"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F5"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F6"
+        }
+      ],
+      "id": "smoke_005",
+      "no_uncontrolled_repetition": true,
+      "no_unsupported_claims": true,
+      "notes": "六项12 V、被动散热无风扇、68 °C、14天、kPa、出厂远程上传关闭均正确，各自引用资料1至6，均有对应原文支持。",
+      "response_sha256": "2fb167716d431e11a3d661a18f720027ca82d28ce7c799fbf2a85dd06fd82a90"
+    },
+    {
+      "decision_correct": true,
+      "facts": [
+        {
+          "citation_supported": false,
+          "correct": true,
+          "id": "F1"
+        },
+        {
+          "citation_supported": false,
+          "correct": true,
+          "id": "F2"
+        }
+      ],
+      "id": "smoke_006",
+      "no_uncontrolled_repetition": true,
+      "no_unsupported_claims": true,
+      "notes": "从长材料末尾正确读取11秒和LARCH-482，事实有原文支持，但最终答案没有任何来源引用；两项引用支持要求未通过。",
+      "response_sha256": "66b16321abeb618f2e05e5e420b1d57fdcb9cd703d37135fc3671ce9325000eb"
+    },
+    {
+      "decision_correct": true,
+      "facts": [
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F1"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F2"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F3"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F4"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F5"
+        },
+        {
+          "citation_supported": true,
+          "correct": true,
+          "id": "F6"
+        }
+      ],
+      "id": "smoke_007",
+      "no_uncontrolled_repetition": true,
+      "no_unsupported_claims": true,
+      "notes": "A2022为8 L/min且不能离线；A2023为6 L/min且可离线；B2023为4 kg/min且不能离线。六项均正确，型号、年份、单位未混用，引用资料1/2均正确。",
+      "response_sha256": "2a93bae6f07707671d24ed6c4a0250e2b4000ce7cee6b8c986663617e49cb8a2"
+    },
+    {
+      "decision_correct": false,
+      "facts": [],
+      "id": "smoke_008",
+      "no_uncontrolled_repetition": true,
+      "no_unsupported_claims": false,
+      "notes": "输入材料为空，应该说明资料不足；模型却断言上市首月销量0台并生成不存在的资料1。拒答决策与额外事实支持均失败；引用标签检查也失败。",
+      "response_sha256": "cfb0db27b50dea5bf18dc78d3ffd7472112f0eba0af3a87aa5ca86dd90ef13ee"
+    }
+  ],
+  "manifest_sha256": "ac30beb432ad68f6203c65af5c6dd544112b5fbd137922aad99f712c4e521f9d",
+  "reviewed_at": "2026-09-16T02:33:33.479115+00:00",
+  "reviewer": "Codex 主代理，按冻结 gold 和原文逐题复核；非独立第二审查人",
+  "schema": "rwkvrag-material-review-v1"
+}

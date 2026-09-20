@@ -1,0 +1,32 @@
+{
+  "created_at": "2026-09-16T02:48:51.025303+00:00",
+  "experiment": "Single frozen evidence_checked prompt candidate versus evidence_first",
+  "bindings": {
+    "llamaindex-retrieval/src/llamaindex_retrieval/writer_prompt.py": "dd6fccafb8bde63405ab74ed62c136de8a1b415d107dd66fe75dab120c9f5942",
+    "llamaindex-retrieval/eval/native-smoke/fixtures.jsonl": "36ca2a895139b3e361e661896a347322818d52295e74ea44d8cc9d55321f37da",
+    "llamaindex-retrieval/eval/writer-p0-20260916/holdout.jsonl": "d0fa52509e68d84f0c9f9f504702d26e1ffa23f3c3b62604c7d274c827eb57f4"
+  },
+  "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+  "state_id": "writer-trace-300",
+  "max_output_tokens": 2048,
+  "concurrency": 2,
+  "batch_size": 2,
+  "timeout_seconds": 180,
+  "stop_tokens": [
+    0
+  ],
+  "prefill": "<think></think",
+  "prefill_mode": "complete",
+  "variable": "native_writer_prompt_protocol only",
+  "arms": [
+    "development/evidence_first",
+    "development/evidence_checked",
+    "holdout/evidence_first",
+    "holdout/evidence_checked"
+  ],
+  "retries": 0,
+  "tuning_after_holdout": false,
+  "review": "Same root agent checks frozen gold against original final answers. Not an independent second reviewer.",
+  "candidate_acceptance": "Development quality improves by at least one case; holdout quality does not regress; empty-evidence refusal and explicit-zero facts both pass; report full cost and output-length changes. No default promotion without subsequent Reader/retrieval/end-to-end validation.",
+  "scope": "8 exposed development cases and 8 new author-controlled holdout cases; not an external blind benchmark."
+}

@@ -1,0 +1,23 @@
+{
+  "passed": 22,
+  "runs": [
+    {
+      "passed": 20,
+      "log": "integration.log"
+    },
+    {
+      "passed": 2,
+      "deselected": 20,
+      "log": "cli-and-shard-checks.log"
+    }
+  ],
+  "production_index_changed": false,
+  "deployed": false,
+  "scope": "search_index_version_operations_only",
+  "source_sha256": {
+    "llamaindex-retrieval/src/llamaindex_retrieval/index_versions.py": "bbbadb9ae6ecf893db0e5d7b2c24744bb4b6c0678933bed92501b5a3fcc92a35",
+    "llamaindex-retrieval/src/llamaindex_retrieval/lexical_index.py": "61047387cabb9a01deea058576bc80692b511596f06df908a94256b2b552075b",
+    "llamaindex-retrieval/src/llamaindex_retrieval/cli.py": "e0fa6abe5af875167ec5e34707dbf71266df39e8499111d7ddb86db4652bc14a",
+    "llamaindex-retrieval/tests/test_index_versions.py": "820ce994b3e0f4916231fbe777c18726c86e4ae069ab3474a32e760f9acc186d"
+  }
+}

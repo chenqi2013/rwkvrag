@@ -1,0 +1,21 @@
+{
+  "files": {
+    "train.resolver.jsonl": {
+      "sha256": "ae9537933dc4d5a2ceb88662dee9b8b398b1dda8ad3e66a69c460cfd26419d0b",
+      "rows": 576
+    },
+    "validation.resolver.jsonl": {
+      "sha256": "f9702fb39a1e06446b3ab0da1592fb6698d2e86393d8847a3006d0b8827797d5",
+      "rows": 128
+    },
+    "holdout.resolver.jsonl": {
+      "sha256": "2af35f9925be3e3810d8fe696d454b1ed64be4dd100eae1703f296b2023866c4",
+      "rows": 128
+    }
+  },
+  "synthetic": true,
+  "split_by_case": true,
+  "independent_review": false,
+  "holdout_used_for_training": false,
+  "builder_sha256": "61b29d9a8eb8d294fb2c1b8ac248aa33aec901094a9d7c6515d50e27a636a0d4"
+}

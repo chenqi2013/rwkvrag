@@ -395,3 +395,16 @@ body {
     padding-inline: 8px;
   }
 }
+
+/* Citation evidence remains readable in search, historical runs and Wiki. */
+.cited-answer { width: 100%; min-width: 0; }
+.citation-link { display: inline; padding: 1px 5px; margin: 0 2px; border: 1px solid #b6d4ff; border-radius: 5px; color: #0958d9; background: #edf5ff; font: inherit; cursor: pointer; }
+.citation-link:hover { background: #d6e8ff; }
+.citation-link:focus-visible { outline: 2px solid #1677ff; outline-offset: 2px; }
+.citation-missing { color: #b42318; background: #fff1f0; border-color: #ffccc7; }
+.citation-heading { margin: 16px 0 12px; }
+.citation-heading h5 { margin-bottom: 4px; }
+.citation-source-list { display: grid; gap: 10px; }
+.citation-source-title { height: auto; padding: 0; white-space: normal; text-align: left; font-weight: 600; margin-bottom: 8px; max-width: 100%; overflow-wrap: anywhere; }
+.citation-preview { margin: 8px 0 !important; white-space: pre-wrap; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+.citation-full-text { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; line-height: 1.8; padding: 14px; background: #f6f8fb; border: 1px solid #e3e8ef; border-radius: 8px; max-width: 100%; }

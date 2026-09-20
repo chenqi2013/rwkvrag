@@ -27,6 +27,8 @@ Reader在60道受控阅读挑战中从48/60提高到60/60。Writer明显减少�
 
 ## 开发验证
 
+[P0 质量验收与首轮基线](docs/p0-quality-baseline-20260916.md)：规划回退状态修复、固定材料质量验收入口，以及 2026-09-16 的真实 2.9B Writer300 逐题结果。
+
 ```bash
 cd llamaindex-retrieval
 uv sync --frozen --extra dev
@@ -36,3 +38,19 @@ uv run pytest -q
 历史实验的独立重放需要先按[归档说明](docs/artifacts.md)恢复相应文件；普通代码测试所需的小型固定材料保留在Git中。发布时的实际检查结果见 `artifacts/statetune-20260911/VALIDATION.json`。
 
 仓库保留维护中的代码、训练入口、正式数据和必要测试材料；原始调用、冻结源码与过时实验说明统一归档。旧Git提交保持不变。
+
+[P0 第二轮 Writer 实验](docs/p0-writer-experiment-20260916.md)：48 次调用、失败候选记录、评测模板校正及引用审计。
+
+[知识维护第一批](docs/index-maintenance-20260919.md)：重建先构建新版本再切换，保留旧索引，并验证真实 OpenSearch 故障场景。
+
+[知识维护第二批](docs/index-rollback-20260919.md)：只读查看索引版本、受校验的全索引回滚与真实故障测试。
+
+[知识维护第三批](docs/source-revisions-20260919.md)：原文/解析快照、切片来源版本、索引发布绑定与来源查询。
+
+[知识维护第四批](docs/document-revisions-20260919.md)：文档修订上传、并发校验、失败恢复和管理页入口。
+
+[自动 Wiki 本地上线](docs/automatic-wiki-20260919.md)：上传/修订后自动生成可追溯草稿，历史与过期检测，真实模型浏览器验收和部署记录。
+
+[知识库＋网络检索上线](docs/hybrid-search-20260919.md)：复用 SearchReader，1.5B 自动联网选择器、StateTune 验收、来源快照及混合检索故障隔离。
+
+[引用原文展示修复](docs/citations-ui-20260919.md)：答案编号可点击，检索/历史/Wiki 统一展示逐字证据和历史来源快照。

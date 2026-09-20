@@ -10,6 +10,7 @@ from llama_index.core.schema import BaseNode
 from opencc import OpenCC
 from opensearchpy import OpenSearch, helpers
 
+from .index_versions import IndexVersions, serialized_write
 from .config import Settings
 from .evidence_quality import is_repetitive_garbage
 
@@ -224,11 +225,17 @@ def _passage_score(
 
 
 class LexicalIndex:
-    def __init__(self, settings: Settings, client: OpenSearch | None = None) -> None:
+    def __init__(self, settings: Settings, client: OpenSearch | None = None,
+                 *, initialize: bool = True) -> None:
         self.settings = settings
         self.index_name = settings.opensearch_index
         self.client = client or self._create_client()
-        self.ensure_index()
+        self.versions = IndexVersions(self)
+        if initialize:
+            self.versions.initialize()
+        self.index_name = self.versions.alias
+        if initialize:
+            self.ensure_index()
 
     def _create_client(self) -> OpenSearch:
         authentication = None
@@ -302,9 +309,7 @@ class LexicalIndex:
             put_mapping(index=self.index_name, body={"properties": properties})
 
     def recreate(self) -> None:
-        if self.client.indices.exists(index=self.index_name):
-            self.client.indices.delete(index=self.index_name)
-        self.client.indices.create(index=self.index_name, body=self.index_definition())
+        raise RuntimeError("禁止先删除活动索引；请使用 ingest_documents(recreate=True) 构建并发布新版本")
 
     def _record(self, node: BaseNode) -> dict[str, Any]:
         metadata = dict(node.metadata)
@@ -347,6 +352,7 @@ class LexicalIndex:
             "entity_bigram_tokens": " ".join(entity_bigram_tokens(entity_text)),
         }
 
+    @serialized_write
     def upsert_nodes(self, nodes: Iterable[BaseNode]) -> int:
         actions = []
         for node in nodes:
@@ -369,6 +375,8 @@ class LexicalIndex:
             raise_on_error=True,
             stats_only=True,
         )
+        if int(success) != len(actions):
+            raise RuntimeError("索引写入数量不完整，新版本不能发布")
         return int(success)
 
     def search(
@@ -1403,6 +1411,7 @@ class LexicalIndex:
             )
         return results
 
+    @serialized_write
     def delete_by_field(self, key: str, value: str) -> int:
         allowed = {"node_id", "document_id", "file_id", "knowledge_base_id", "source"}
         if key not in allowed:
@@ -1469,6 +1478,8 @@ class LexicalIndex:
             "documents": count,
             "url": self.settings.opensearch_url,
             "index": self.index_name,
+            "configured_index": self.settings.opensearch_index,
+            "index_version": self.versions.current(),
             "cluster_status": cluster.get("status"),
             "version": (info.get("version") or {}).get("number"),
         }

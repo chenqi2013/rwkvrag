@@ -21,8 +21,17 @@ def migrate_from_sqlite(
     if not sqlite_path.is_file():
         raise FileNotFoundError(f"SQLite 索引不存在：{sqlite_path}")
     index = LexicalIndex(settings)
-    if recreate:
-        index.recreate()
+    try:
+        if recreate:
+            with index.versions.replacement() as staged:
+                return _migrate(settings, sqlite_path, batch_size, progress_callback, staged)
+        with index.versions.write_lock():
+            return _migrate(settings, sqlite_path, batch_size, progress_callback, index)
+    finally:
+        index.close()
+
+
+def _migrate(settings, sqlite_path, batch_size, progress_callback, index):
     index.client.indices.put_settings(
         index=index.index_name,
         body={"index": {"refresh_interval": "-1"}},
@@ -74,5 +83,4 @@ def migrate_from_sqlite(
             body={"index": {"refresh_interval": settings.opensearch_refresh_interval}},
         )
         index.refresh()
-        index.close()
     return {"processed": processed, "indexed": indexed}

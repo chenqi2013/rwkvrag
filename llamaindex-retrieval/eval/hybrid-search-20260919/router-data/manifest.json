@@ -1,0 +1,20 @@
+{
+  "note": "96 new targeted training cases plus 480 retained training; 24 new validation plus 80 retained; 24 new held-out cases. No universal quality claim.",
+  "files": {
+    "train.jsonl": {
+      "count": 576,
+      "true": 288,
+      "sha256": "ed158ebf2891502950d9462936ea4b7f07353d495ba64aa880b6d9ee1b174ece"
+    },
+    "validation.jsonl": {
+      "count": 104,
+      "true": 52,
+      "sha256": "c6b525b2e57596727751aaad725b405dda952e8581c3d4ab76a2224d740f2e24"
+    },
+    "test.jsonl": {
+      "count": 24,
+      "true": 12,
+      "sha256": "ee4b8ea56f511836302cad9fd06ebbcde454c4fedeb4a02b253fc57eabebc457"
+    }
+  }
+}

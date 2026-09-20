@@ -1,0 +1,136 @@
+[
+  {
+    "id": "smoke_001",
+    "response_sha256": "09862719fbb77797f875b7ac047a73b01b81dbb7335290aeeaf43862e62be6ff",
+    "status": "completed",
+    "raw_answer": "1. 自动化课程的四张知识卡请分开找依据：IEC 61131-3条目列了哪五种编程语言；IEC 61499用什么执行模型取代循环模型；IEC 62056中的DLMS用户联盟把三份规范文档叫哪三种颜色的书；IEC 61508的安全生命周期包含几个阶段？仅复核库中介绍，不做当前合规认证。\n- IEC 61131-3条目列了哪五种编程语言：IEC 61131-3标准定义了五种编程语言：指令表（IL）、结构化文本（ST）、功能块图（FBD）、顺序功能图（SFC）和结构化文本（ST）。[资料 3]\n- IEC 61499用什么执行模型取代循环模型：IEC 61499基于事件驱动模型，可执行过程以功能块、事件和算法为基础，通过触发事件执行事件驱动模型。[资料 2]\n- IEC 62056中的DLMS用户联盟把三份规范文档叫哪三种颜色的书：DLMS用户联盟把三份规范文档叫三种颜色的书：绿皮书、黄皮书和蓝皮书。[资料 2]\n- IEC 61508的安全生命周期包含几个阶段？仅复核库中介绍，不做当前合规认证：IEC 61508的安全生命周期包含16个阶段，分别是：1-5阶段描述了分析过程，6-13阶段描述了实现过程，14-16阶段描述了运作及维护阶段。[资料 1]",
+    "answer_span": [
+      0,
+      531
+    ],
+    "citation_map": {
+      "1": "b66f45a4994f4bf9b1be8ea0fa1e1d18",
+      "10": "57584be8978e2696710b40d710c68825",
+      "11": "d1760422a128aeaf31311103620c5615",
+      "12": "2f43ec6aa1a7199c15d3377233502123",
+      "2": "a2f2d6cfe73bca9db4dd2d3bead77ba2",
+      "3": "92abe28864416959db1a6af1cce00167",
+      "4": "175633fb5d2ad4de893408a8af2b9648",
+      "5": "a3ffd4a2c77f21c43128f08a58b10c4a",
+      "6": "f0dd745b9c9cabf1e09fa66997f7d90e",
+      "7": "2d5ec6b36412f155d13b27109d71be5e",
+      "8": "9edbb6e0f11c8771610a9472fb18b170",
+      "9": "180bdaeadd8874763032302074cf4d24"
+    }
+  },
+  {
+    "id": "smoke_002",
+    "response_sha256": "3b156690c8273cc67d4184b1cab53dbbb74c4ac5ef2812a806223db958c035f0",
+    "status": "completed",
+    "raw_answer": "ICE-1列车最初设计时不能像后续车型那样与另一列组合运行，因为它的车头与车厢之间没有连接器，只能单独运营。[资料 1]\nICE-2科隆/杜塞尔多夫往柏林的例子在哪一站合体？在科隆/杜塞尔多夫往柏林的例子中，ICE-2列车在科隆/杜塞尔多夫合体，然后继续前往柏林。[资料 2]\nJR九州305系一个编组总共几辆，其中几辆是动力车？JR九州305系一个编组总共由4节车厢组成，其中2节为动力车（编号为402型），2节为无动力车（编号为223系）。[资料 8]",
+    "answer_span": [
+      0,
+      228
+    ],
+    "citation_map": {
+      "1": "3584ef3c0f829c95ae3c6a288aa2a8dd",
+      "10": "c7c6f046f2888760f55531fade7de7cd",
+      "11": "7a02baaa1a9d8d9aba484f093fcb1dd7",
+      "12": "15740fab825a66534433b7ad72355305",
+      "2": "1a73c72cac5759820a23269dafbeafb7",
+      "3": "eaea4e787ed3d189369e83155c882e57",
+      "4": "c8e8cbff0cb62174400fc699f8b87150",
+      "5": "3ec9e62722c1a77368d963b6e2ce4d0f",
+      "6": "d943cc12a592f2dbeb0df7cc0df44b15",
+      "7": "3c079b02da1bc6c9fa4d9e78130c1e20",
+      "8": "457ace9de1981e4c5684085179ffdd88",
+      "9": "aea170a9e59bb736b5678de36e029255"
+    }
+  },
+  {
+    "id": "smoke_003",
+    "response_sha256": "5edbdddb7286bad35773d4f30ed0852e282cf2bb622c705bc6129ef356b450e4",
+    "status": "completed",
+    "raw_answer": "1. 首次Kickstarter筹款目标金额：£25,000  \n2. 实际筹款金额：£196,362  \n3. 用时：29天  \n[资料 1]",
+    "answer_span": [
+      0,
+      72
+    ],
+    "citation_map": {
+      "1": "549fb7228fd96e82af5893c12298f8d8",
+      "2": "2187e55056dab6c64c9d7c2cc213f37d"
+    }
+  },
+  {
+    "id": "smoke_004",
+    "response_sha256": "bc89e8e9e9678ca4b14884951c208e66a38ae0396e6c5b5118fae4beeacecb33",
+    "status": "completed",
+    "raw_answer": "Windows NT 3.5的工作站版支持10个客户端并发访问文件服务器，不支持Mac客户端。[资料 1]\nWindows NT 3.5的工作站版支持10个客户端并发访问文件服务器，不支持Mac客户端。[资料 1]",
+    "answer_span": [
+      0,
+      107
+    ],
+    "citation_map": {
+      "1": "c167c1a41244c84ad28f38cbdcec7e44",
+      "2": "f0b661c11dba1be7c96f765f6f6fe51a",
+      "3": "a2946fb2b853828ae351f75b1ec18ca5",
+      "4": "94e12b7452518606f776c6efbc7702f3"
+    }
+  },
+  {
+    "id": "smoke_005",
+    "response_sha256": "2fb167716d431e11a3d661a18f720027ca82d28ce7c799fbf2a85dd06fd82a90",
+    "status": "completed",
+    "raw_answer": "栖光 R6 的额定输入电压为 12 V，依据资料 1[资料 1]。\n栖光 R6 的冷却方式为被动散热，不装风扇，依据资料 2[资料 2]。\n栖光 R6 的报警温度为 68 °C，依据资料 3[资料 3]。\n栖光 R6 的滤网检查周期为每 14 天一次，依据资料 4[资料 4]。\n栖光 R6 的气压记录单位为 kPa，依据资料 5[资料 5]。\n栖光 R6 的出厂时远程上传功能关闭，依据资料 6[资料 6]。",
+    "answer_span": [
+      0,
+      205
+    ],
+    "citation_map": {
+      "1": "r6-chunk-1",
+      "2": "r6-chunk-2",
+      "3": "r6-chunk-3",
+      "4": "r6-chunk-4",
+      "5": "r6-chunk-5",
+      "6": "r6-chunk-6"
+    }
+  },
+  {
+    "id": "smoke_006",
+    "response_sha256": "66b16321abeb618f2e05e5e420b1d57fdcb9cd703d37135fc3671ce9325000eb",
+    "status": "completed",
+    "raw_answer": "恢复键需要连续按住11秒；维护码是LARCH-482。",
+    "answer_span": [
+      0,
+      27
+    ],
+    "citation_map": {
+      "1": "long-manual-tail"
+    }
+  },
+  {
+    "id": "smoke_007",
+    "response_sha256": "2a93bae6f07707671d24ed6c4a0250e2b4000ce7cee6b8c986663617e49cb8a2",
+    "status": "completed",
+    "raw_answer": "A款2022年：额定流量8 L/min，不能离线。[资料 1]\nA款2023年：额定流量6 L/min，支持离线。[资料 1]\nB款2023年：额定流量4 kg/min，不能离线。[资料 2]",
+    "answer_span": [
+      0,
+      96
+    ],
+    "citation_map": {
+      "1": "pump-a-2022-2023",
+      "2": "pump-b-2023"
+    }
+  },
+  {
+    "id": "smoke_008",
+    "response_sha256": "cfb0db27b50dea5bf18dc78d3ffd7472112f0eba0af3a87aa5ca86dd90ef13ee",
+    "status": "completed",
+    "raw_answer": "\n结论[资料 1]：该设备上市首月全球实际销量为0台。",
+    "answer_span": [
+      0,
+      27
+    ],
+    "citation_map": {}
+  }
+]

@@ -24,6 +24,7 @@ from .routers.public import router as public_router
 from .service import SearchService
 from .semantic_query_planning import LanguageModelQueryPlanner
 from .tasks import TaskManager
+from .wiki import WikiService
 
 
 @asynccontextmanager
@@ -44,6 +45,9 @@ async def lifespan(app: FastAPI):
         document_reranker=LanguageModelDocumentReranker(settings),
         native_recorder=repository.record_model_http,
     )
+    wiki = WikiService(settings, repository, lexical_index, search.native_pipeline, task_manager)
+    task_manager.wiki = wiki
+    app.state.wiki_service = wiki
     admin = AdminService(settings, repository, task_manager, lexical_index)
     app.state.repository = repository
     app.state.lexical_index = lexical_index
@@ -51,6 +55,7 @@ async def lifespan(app: FastAPI):
     app.state.search_service = search
     app.state.admin_service = admin
     await task_manager.start()
+    await wiki.backfill()
     yield
     await task_manager.shutdown()
     await search.aclose()
@@ -106,7 +111,7 @@ async def root() -> RedirectResponse:
     return RedirectResponse("/admin/")
 
 
-static_directory = Path(__file__).resolve().parent / "static" / "admin"
+static_directory = settings.admin_static_dir or Path(__file__).resolve().parent / "static" / "admin"
 app.mount(
     "/admin",
     StaticFiles(directory=static_directory, html=True, check_dir=False),

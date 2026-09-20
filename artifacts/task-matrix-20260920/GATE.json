@@ -1,0 +1,12 @@
+{
+  "scope": "author-controlled synthetic curriculum, not an external blind benchmark",
+  "timing": "Reader results were already observed when this gate file was written; Writer/Planner candidate outputs were not. This is not a fully preregistered benchmark.",
+  "selection": "each stage's lowest validation teacher-forcing loss, then actual-generation gates; no holdout tuning",
+  "reader_validation": "improve over 56/64 with no increase above baseline 1 false positive",
+  "writer_validation": "at least 6/8 fully correct, empty-evidence refusal required, no new failure on previously passing cases",
+  "planner_validation": "all 8 plans structurally valid, all requested objects/dimensions preserved; manually check question scope",
+  "holdout": "reader at least 60/64 with no false positives; writer at least 7/8 including empty-evidence refusal",
+  "end_to_end": "at least 7/8 fully correct with no empty-evidence fabrication; execution success alone is insufficient",
+  "noncomparison_regression": "check existing evidence-first Writer regression suite before any global Writer state replacement",
+  "promotion": "no default activation unless applicable gates pass; keep original answers, candidates and failed trials"
+}

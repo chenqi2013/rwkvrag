@@ -92,6 +92,21 @@ export default function FilesPage() {
     }
   };
 
+  const revise = async (item: FileItem, file: File) => {
+    setUploading(true);
+    try {
+      await api.reviseFile(item.id, file, item.sha256);
+      void message.success(tr("新版本已提交，完成后替换当前文件", "Revision submitted; the current file changes after completion"));
+      await load();
+    } catch (error) { void message.error(errorMessage(error)); }
+    finally { setUploading(false); }
+  };
+
+  const retryRevision = async (id: string) => {
+    try { await api.retryRevision(id); await load(); }
+    catch (error) { void message.error(errorMessage(error)); }
+  };
+
   const remove = async (id: string) => {
     try {
       await api.deleteFile(id);
@@ -144,7 +159,7 @@ export default function FilesPage() {
       render: (status: FileItem["status"], item) => (
         <Space direction="vertical" size={3}>
           <Tag color={statusMap[status].color}>{statusMap[status].text}</Tag>
-          {status === "processing" && <Progress percent={60} size="small" showInfo={false} status="active" />}
+          {status === "processing" && !item.error && <Progress percent={60} size="small" showInfo={false} status="active" />}
           {item.error && <Typography.Text type="danger">{item.error}</Typography.Text>}
         </Space>
       ),
@@ -173,10 +188,24 @@ export default function FilesPage() {
           <Button type="text" icon={<DownloadOutlined />} href={`/v1/admin/files/${item.id}/download`}>
             {tr("下载", "Download")}
           </Button>
+          <Upload accept=".md,.markdown,.mdx,.pdf,.docx" showUploadList={false}
+            disabled={uploading || item.status !== "ready"}
+            beforeUpload={(file) => { void revise(item, file as File); return Upload.LIST_IGNORE; }}>
+            <Button type="text" disabled={uploading || item.status !== "ready"}>
+              {tr("上传新版本", "Upload revision")}
+            </Button>
+          </Upload>
+          {item.revision_pending && item.error && <Button type="text" onClick={() => void retryRevision(item.id)}>
+            {tr("恢复修订任务", "Retry revision")}
+          </Button>}
+          <Button type="text" disabled={item.status !== "ready"} onClick={() => {
+            void api.generateWiki(item.id).then(() => message.success(tr("Wiki 任务已提交", "Wiki queued")))
+              .catch(error => message.error(errorMessage(error)));
+          }}>Wiki</Button>
           <Button type="text" icon={<ReloadOutlined />} disabled={item.status !== "ready" && item.status !== "failed"} onClick={() => void reindex(item.id)}>
             {tr("重建", "Reindex")}
           </Button>
-          <Popconfirm title={tr("确认删除文件和全部索引？", "Delete this file and all of its index data?")} onConfirm={() => void remove(item.id)}>
+          <Popconfirm title={tr("删除当前文件和检索内容？历史快照仍会保留。", "Delete the current file and searchable content? Historical snapshots will remain.")} onConfirm={() => void remove(item.id)}>
             <Button danger type="text" icon={<DeleteOutlined />} disabled={["pending", "processing"].includes(item.status)}>
               {tr("删除", "Delete")}
             </Button>

@@ -1,0 +1,14 @@
+{
+  "ready": true,
+  "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+  "calls": 2847,
+  "selected_state": [
+    {
+      "id": "writer-trace-300",
+      "stage": "writer",
+      "sha256": "dd8bef92d8b3069881cd7e7ba8cf226a902a6e6dcc821658efb61b24e8db453e",
+      "checkpoint_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239"
+    }
+  ],
+  "scope": "Post-run health observation; not per-request GPU weight attestation."
+}

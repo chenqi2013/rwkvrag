@@ -1,0 +1,69 @@
+{
+  "stages": {
+    "resolver": {
+      "baseline_validation_loss": 0.049319631482603654,
+      "epochs": [
+        {
+          "path": "data/experiments/task-matrix-20260920/run1/resolver-epoch-1.pth",
+          "sha256": "f09093a11c39fb6a3c744b69bd7d304427edd5d94cc0eb26c227ddf48b176785",
+          "validation_loss": 7.630175031181352e-05
+        },
+        {
+          "path": "data/experiments/task-matrix-20260920/run1/resolver-epoch-2.pth",
+          "sha256": "ef7e8da00b7920bbdd2f541227703e8306f22e756125df4f802d84794108cef1",
+          "validation_loss": 9.17480333129106e-06
+        }
+      ],
+      "selected": {
+        "path": "data/experiments/task-matrix-20260920/run1/resolver-epoch-2.pth",
+        "sha256": "ef7e8da00b7920bbdd2f541227703e8306f22e756125df4f802d84794108cef1",
+        "validation_loss": 9.17480333129106e-06
+      }
+    },
+    "writer": {
+      "baseline_validation_loss": 0.23649635212495923,
+      "epochs": [
+        {
+          "path": "data/experiments/task-matrix-20260920/run1/writer-epoch-1.pth",
+          "sha256": "6ce87659acc9a0d222a446aecafd2ead65dfb349f0e5cde76ee47a3104097ff8",
+          "validation_loss": 0.1676334801595658
+        },
+        {
+          "path": "data/experiments/task-matrix-20260920/run1/writer-epoch-2.pth",
+          "sha256": "783792d5d38452befbaedfa26fe44e7f563dd4d872f19fee794e01ba25b75460",
+          "validation_loss": 0.11793360603041947
+        }
+      ],
+      "selected": {
+        "path": "data/experiments/task-matrix-20260920/run1/writer-epoch-2.pth",
+        "sha256": "783792d5d38452befbaedfa26fe44e7f563dd4d872f19fee794e01ba25b75460",
+        "validation_loss": 0.11793360603041947
+      }
+    },
+    "planner": {
+      "baseline_validation_loss": 1.1776719872768109,
+      "epochs": [
+        {
+          "path": "data/experiments/task-matrix-20260920/run1/planner-epoch-1.pth",
+          "sha256": "e5398ef852ac90e3d92063d24347523c524459944e618dec340d72255d5fdd46",
+          "validation_loss": 0.28640810202640027
+        },
+        {
+          "path": "data/experiments/task-matrix-20260920/run1/planner-epoch-2.pth",
+          "sha256": "5f870b6e2eb66122dcfc8f1122fa82be73a7e3136e83399d1c97308671d6a8ee",
+          "validation_loss": 0.16981128395463413
+        }
+      ],
+      "selected": {
+        "path": "data/experiments/task-matrix-20260920/run1/planner-epoch-2.pth",
+        "sha256": "5f870b6e2eb66122dcfc8f1122fa82be73a7e3136e83399d1c97308671d6a8ee",
+        "validation_loss": 0.16981128395463413
+      }
+    }
+  },
+  "base_unchanged": true,
+  "heldout_read": false,
+  "generation_quality_verified": false,
+  "elapsed_seconds": 901.0048048486933,
+  "peak_memory_bytes": 6656403968
+}

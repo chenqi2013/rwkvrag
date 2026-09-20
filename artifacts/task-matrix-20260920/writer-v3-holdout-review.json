@@ -1,0 +1,8 @@
+{
+  "passed": 8,
+  "total": 8,
+  "all_exact_target_match": true,
+  "semantic_inspection": "author-agent verified source/value/negation/conflict/refusal bindings",
+  "independent_review": false,
+  "external_blind_benchmark": false
+}

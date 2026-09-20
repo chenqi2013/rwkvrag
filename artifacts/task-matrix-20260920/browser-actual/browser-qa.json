@@ -1,0 +1,11 @@
+{
+  "api_intercepted": true,
+  "first_scenario_real_pipeline_response": true,
+  "response_sha256": "a4bb4aa3a7e8b090cb79848f7c174ed6d8b769c4bf21857c208660d336d35997",
+  "synthetic_status_fixtures": true,
+  "checks": [
+    "four object/dimension cells; source button opens exact saved evidence",
+    "missing/conflict and failed-review states are visibly distinct; original answer retained"
+  ],
+  "javascript_errors": []
+}

@@ -30,6 +30,16 @@ class Settings(BaseSettings):
     chunk_size: int = Field(default=512, ge=128, le=8192)
     chunk_overlap: int = Field(default=64, ge=1, le=1024)
     candidate_k: int = Field(default=40, ge=5, le=200)
+    searchreader_project_dir: Path | None = None
+    searchreader_router_base_url: str | None = None
+    searchreader_router_model: str | None = None
+    searchreader_router_state_sha256: str | None = None
+    searchreader_router_timeout: float = Field(default=25, ge=1, le=120)
+    web_search_results: int = Field(default=2, ge=1, le=10)
+    web_search_max_queries: int = Field(default=2, ge=1, le=8)
+    web_search_timeout: float = Field(default=45, ge=1, le=120)
+    web_search_concurrency: int = Field(default=2, ge=1, le=4)
+    web_search_material_characters: int = Field(default=3000, ge=256, le=24000)
     default_top_k: int = Field(default=5, ge=1, le=50)
     max_top_k: int = Field(default=20, ge=1, le=100)
     max_chunks_per_document: int = Field(default=1, ge=1, le=10)
@@ -44,11 +54,15 @@ class Settings(BaseSettings):
     native_api_key: str = ""
     native_transport: Literal["native", "rwkvos_batch"] = "native"
     native_writer_prefill: Literal["<think", "<think></think"] = "<think"
-    native_writer_prompt_protocol: Literal["task_first", "evidence_first"] = "task_first"
+    native_writer_prompt_protocol: Literal[
+        "task_first", "evidence_first", "evidence_checked"
+    ] = "task_first"
     rwkvos_cf_access_client_id: SecretStr = SecretStr("")
     rwkvos_cf_access_client_secret: SecretStr = SecretStr("")
     rwkvos_prefill_mode: Literal["complete", "continuation"] = "complete"
     rwkvos_state_id: str | None = None
+    rwkvos_planner_state_id: str | None = None
+    rwkvos_matrix_state_ids: dict[str, str] = Field(default_factory=dict)
     rwkvos_reader_state_id: str | None = None
     rwkvos_binary_reader_state_id: str | None = None
     rwkvos_writer_state_id: str | None = None
@@ -75,6 +89,17 @@ class Settings(BaseSettings):
     native_resolver_max_tokens: int = Field(default=1024, ge=32, le=4096)
     native_resolver_sources: int = Field(default=24, ge=1, le=200)
     native_resolver_budget_scope: Literal["global", "per_query"] = "global"
+    # Preserve an exact independent query when the model drops part of the task.
+    # Opt-in for existing KB installations because this adds retrieval/Reader work.
+    native_preserve_original_question: bool = False
+    native_planner_format_repair: bool = False
+    native_task_matrix_enabled: bool = False
+    native_matrix_max_cells: int = Field(default=8, ge=1, le=24)
+    native_matrix_max_rounds: int = Field(default=2, ge=1, le=3)
+    native_matrix_sources_per_cell: int = Field(default=3, ge=1, le=8)
+    native_matrix_max_reader_calls: int = Field(default=48, ge=1, le=192)
+    native_matrix_answer_repairs: int = Field(default=0, ge=0, le=1)
+    native_matrix_timeout_seconds: int = Field(default=600, ge=10, le=1800)
     native_retrieval_scope: Literal["chunks", "documents"] = "chunks"
     native_document_limit: int = Field(default=5, ge=1, le=20)
     native_resolver_window_characters: int = Field(default=1200, ge=256, le=8000)
@@ -98,6 +123,20 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_reader_state_protocol(self) -> "Settings":
+        if (set(self.rwkvos_matrix_state_ids) - {"plan", "reader", "assessment", "followup", "review", "writer"}
+                or any(not value.strip() for value in self.rwkvos_matrix_state_ids.values())):
+            raise ValueError("Invalid matrix state role or empty state ID")
+        if self.rwkvos_planner_state_id is not None and (
+                not self.rwkvos_planner_state_id.strip() or self.native_transport != "rwkvos_batch"
+                or self.rwkvos_prefill_mode != "complete" or self.native_planner_prefill != "<think></think"):
+            raise ValueError("Planner state requires batch complete no-think protocol")
+        if self.native_task_matrix_enabled and (
+                self.native_resolver_protocol != "binary_query"
+                or self.native_resolver_task_grouping != "individual"):
+            raise ValueError("Task matrix requires individual binary Reader selection")
+        if self.native_task_matrix_enabled and self.native_transport == "rwkvos_batch" and not {
+                "plan", "reader", "assessment", "followup", "review", "writer"} <= set(self.rwkvos_matrix_state_ids):
+            raise ValueError("Task matrix requires explicit states for all six roles")
         if self.native_resolver_budget_scope == "per_query" and (
                 self.native_task_source != "queries"
                 or self.native_resolver_task_grouping != "individual"
@@ -120,7 +159,7 @@ class Settings(BaseSettings):
         if self.rwkvos_writer_state_id is not None:
             if (not self.rwkvos_writer_state_id.strip()
                     or self.rwkvos_writer_prompt_protocol != "rwkv_g1j_no_think_v1"
-                    or self.native_writer_prompt_protocol != "evidence_first"):
+                    or self.native_writer_prompt_protocol not in {"evidence_first", "evidence_checked"}):
                 raise ValueError("Writer state requires canonical evidence-first Writer protocol")
         if self.rwkvos_writer_prompt_protocol == "rwkv_g1j_no_think_v1":
             if (self.native_transport != "rwkvos_batch" or self.rwkvos_prefill_mode != "complete"
@@ -184,6 +223,9 @@ class Settings(BaseSettings):
     mongo_url: str = "mongodb://127.0.0.1:27017"
     mongo_database: str = "rwkvrag_admin"
     sqlite_migration_path: Path = Path("/Volumes/mark/rwkvrag/data/lexical/bm25.sqlite3")
+    admin_static_dir: Path | None = None
+    wiki_auto_generate: bool = True
+    wiki_max_source_characters: int = Field(default=24000, ge=100, le=200000)
     upload_dir: Path = Path("/Volumes/mark/rwkvrag/data/admin-uploads")
     finewiki_import_roots: str = "/Volumes/mark/rwkvrag/data/deploy-demo/finewiki-sample"
     max_upload_bytes: int = Field(default=100 * 1024 * 1024, ge=1024)

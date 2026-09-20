@@ -1,3 +1,4 @@
+import type { WikiVersion } from "./types";
 import type {
   AdminHealth,
   ChunkItem,
@@ -65,6 +66,18 @@ export const api = {
     });
   },
   deleteFile: (id: string) => request<void>(`/v1/admin/files/${id}`, { method: "DELETE" }),
+  wikiPages: () => request<WikiVersion[]>("/v1/admin/wiki"),
+  wikiVersion: (id: string) => request<WikiVersion>(`/v1/admin/wiki/versions/${id}`),
+  wikiHistory: (fileId: string) => request<WikiVersion[]>(`/v1/admin/wiki/files/${fileId}/versions`),
+  generateWiki: (fileId: string) => request<{job_id: string}>(`/v1/admin/wiki/files/${fileId}/generate`, {method: "POST"}),
+  reviseFile: (id: string, file: File, expectedSha256: string) => {
+    const data = new FormData();
+    data.append("file", file);
+    data.append("expected_sha256", expectedSha256);
+    return request<{ job_id: string; status: string }>(`/v1/admin/files/${id}/revisions`, { method: "POST", body: data });
+  },
+  retryRevision: (id: string) => request<{ job_id: string; status: string }>(
+    `/v1/admin/files/${id}/revisions/retry`, { method: "POST" }),
   reindexFile: (id: string) =>
     request<{ job_id: string; status: string }>(`/v1/admin/files/${id}/reindex`, {
       method: "POST",

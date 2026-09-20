@@ -1,0 +1,36 @@
+{
+  "runtime": {
+    "checkpoint": "data/experiments/state-protocol-20260909/checkpoints/rwkv7-g1j-2.9b-20260831-ctx16384.pth",
+    "peft_source": "data/experiments/state-protocol-20260909/training-v2/execution-source"
+  },
+  "output": "data/experiments/task-matrix-20260920/writer-run3",
+  "data": "llamaindex-retrieval/eval/task-matrix-20260920/data-v4",
+  "manifest_sha256": "97603a882fea09809a0afae2f1dcc5d52e9f3b489d72d02aea436f9f12538e9b",
+  "epochs": 2,
+  "learning_rate": 5e-05,
+  "accumulation": 4,
+  "wall_seconds": 5400,
+  "bindings": {
+    "llamaindex-retrieval/statetune/pilot_runtime.py": "08431a0587d5f1e2df17f9160fd1e2e7c93e9c11084a722da646854eb0f0141a",
+    "llamaindex-retrieval/statetune/preflight_state.py": "d6edbdc99c95fde6c67161456c1da07f953eb6b58f4e8e73cc48aaa2eeaace10",
+    "llamaindex-retrieval/statetune/train_released_state.py": "621894df872f10f9bda10d9035daf9451312205e907868dbf1853e9b051d625c",
+    "llamaindex-retrieval/src/llamaindex_retrieval/state_training.py": "3a3d3118295e90032c96f502a43c663421154518b5dbf40d94fd8f7c3c6ee155",
+    "llamaindex-retrieval/src/llamaindex_retrieval/state_tokens.py": "6c496d3061abd6d764881b71f1b2c06f4bb85b44a3c6763e2807b313b17da882",
+    "data/experiments/state-protocol-20260909/training-v2/execution-source/SOURCE-MANIFEST.json": "ccdbb113427dad96e90d7cdef285f80eacb27dd02dedb63517fc7c903fc916ca",
+    "llamaindex-retrieval/eval/task-matrix-20260920/train_writer_v3.py": "82ca53a3bc1c0e4eee02e06f4f21238a5bf4ae687eee6f98b347abb7c0495c97"
+  },
+  "initial_states": {
+    "writer": {
+      "id": "writer-matrix-v2",
+      "stage": "writer",
+      "path": "data/experiments/task-matrix-20260920/run2/writer-epoch-2.pth",
+      "sha256": "d95086d5950447a1a9ba49e472a225c752eafa224feb34124c44f64a720ccb70",
+      "axes": [
+        "head",
+        "value",
+        "key"
+      ],
+      "checkpoint_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239"
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { Alert, Button, Card, Empty, List, message, Select, Space, Table, Tag, T
 import type { ColumnsType } from "antd/es/table";
 import { useCallback, useEffect, useState } from "react";
 
+import CitedAnswer from "../components/CitedAnswer";
 import { api } from "../api";
 import type { FailureCategory, SearchAnswerStatus, SearchTestDetail, SearchTestItem, SearchTestRun } from "../types";
 import { errorMessage, formatDate } from "../utils";
@@ -47,11 +48,7 @@ function VersionResult({ run }: { run: SearchTestRun }) {
             {tr("失败原因：", "Failure reason: ")}{failureReason}
           </Typography.Text>
         ) : null}
-        {presentation.answerText ? (
-          <Typography.Paragraph className="result-snippet answer-body" copyable={{ text: presentation.answerText }}>
-            {presentation.answerText}
-          </Typography.Paragraph>
-        ) : <Typography.Text type="secondary">{tr("未提供可显示的答案正文。", "No answer body is available.")}</Typography.Text>}
+        <CitedAnswer key={run.id} text={presentation.answerText} response={response} />
         {presentation.isNative && (
           <details className="answer-trace">
             <summary>{tr("原始模型输出与运行记录", "Raw model output and trace")}</summary>
@@ -66,19 +63,7 @@ function VersionResult({ run }: { run: SearchTestRun }) {
             </details>
           </details>
         )}
-        <List
-          size="small"
-          dataSource={response.sources}
-          locale={{ emptyText: tr("没有检索到证据", "No evidence retrieved") }}
-          renderItem={(source, index) => (
-            <List.Item className="history-evidence-item">
-              <Typography.Text strong>[{tr("资料", "Source")} {index + 1}] {source.title || tr("未命名资料", "Untitled source")}</Typography.Text>
-              <Typography.Text type="secondary" className="history-evidence-snippet">
-                {source.snippet}
-              </Typography.Text>
-            </List.Item>
-          )}
-        />
+
       </Space>
     </Card>
   );
@@ -323,14 +308,16 @@ export default function SearchHistoryPage() {
             },
           }}
           expandable={{
+            columnWidth: 100,
             expandedRowKeys: expandedKeys,
             expandIcon: ({ expanded, onExpand, record }) => (
               <Button
                 type="text"
+                aria-label={expanded ? tr("收起答案与引用", "Collapse answer and citations") : tr("展开答案与引用", "Expand answer and citations")}
                 size="small"
                 icon={<DownOutlined rotate={expanded ? 180 : 0} />}
                 onClick={(event) => onExpand(record, event)}
-              />
+              >{expanded ? tr("收起", "Collapse") : tr("查看引用", "View citations")}</Button>
             ),
             onExpand: (expanded, record) => {
               setExpandedKeys((current) => expanded

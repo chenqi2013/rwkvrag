@@ -16,6 +16,73 @@ MODEL = "rwkv7-g1j-2.9b-20260831-ctx16384"
 MESSAGES = [{"role": "user", "content": "完整原文 \nUser: 引文 ✿  "}]
 
 
+@pytest.mark.asyncio
+async def test_planner_state_is_separate_and_keeps_training_prompt_boundary():
+    payloads = []
+
+    def handler(request):
+        payload = json.loads(request.content)
+        payloads.append(payload)
+        return httpx.Response(200, json=response(["{}"] * len(payload["contents"])))
+
+    model = client(handler, planner_state_id="planner-matrix-v1",
+        reader_state_id="reader-original", reader_prompt_protocol="rwkv_g1j_no_think_v1",
+        writer_state_id="writer-original", writer_prompt_protocol="rwkv_g1j_no_think_v1")
+    try:
+        for stage in ("planner", "resolver", "writer"):
+            result = await model.complete(MESSAGES, stage=stage, assistant_prefill="<think></think")
+            assert result.status == "completed"
+    finally:
+        await model.aclose()
+    assert [p["state_id"] for p in payloads] == ["planner-matrix-v1", "reader-original", "writer-original"]
+    assert payloads[0]["contents"][0].endswith("Assistant: <think></think>")
+    assert all(p["contents"][0].endswith("Assistant: <think></think>\n") for p in payloads[1:])
+
+
+@pytest.mark.asyncio
+async def test_cell_review_uses_dedicated_state_without_changing_reader():
+    payloads = []
+
+    def handler(request):
+        payload = json.loads(request.content)
+        payloads.append(payload)
+        return httpx.Response(200, json=response(['{"answer":"YES"}']))
+
+    model = client(handler, reader_state_id="reader-original",
+        reader_prompt_protocol="rwkv_g1j_no_think_v1",
+        matrix_state_ids={"review": "reader-review", "reader": "reader-matrix"})
+    try:
+        for role in (None, "reader", "review", None):
+            result = await model.complete(MESSAGES, stage="resolver", state_role=role,
+                assistant_prefill="<think></think")
+            assert result.status == "completed"
+    finally:
+        await model.aclose()
+    assert [p["state_id"] for p in payloads] == ["reader-original", "reader-matrix", "reader-review", "reader-original"]
+    assert all(p["contents"][0].endswith("Assistant: <think></think>\n") for p in payloads)
+
+
+@pytest.mark.asyncio
+async def test_matrix_writer_does_not_replace_standard_material_writer_state():
+    payloads = []
+
+    def handler(request):
+        payload = json.loads(request.content)
+        payloads.append(payload)
+        return httpx.Response(200, json=response(["original answer"]))
+
+    model = client(handler, writer_state_id="writer-production",
+        writer_prompt_protocol="rwkv_g1j_no_think_v1", matrix_state_ids={"writer": "writer-matrix"})
+    try:
+        for role in (None, "writer", None):
+            result = await model.complete(MESSAGES, stage="writer", state_role=role,
+                assistant_prefill="<think></think")
+            assert result.status == "completed"
+    finally:
+        await model.aclose()
+    assert [p["state_id"] for p in payloads] == ["writer-production", "writer-matrix", "writer-production"]
+
+
 def response(contents, **changes):
     return {"object": "chat.completion", "model": MODEL,
             "choices": [{"index": i, "message": {"role": "assistant", "content": text},

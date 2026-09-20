@@ -1,0 +1,27 @@
+{
+  "health": {
+    "status": "ok",
+    "mongodb": {
+      "ok": true,
+      "latency_ms": 1.97
+    },
+    "lexical": {
+      "ok": true,
+      "algorithm": "OpenSearch BM25",
+      "documents": 46051,
+      "url": "http://127.0.0.1:18438",
+      "index": "rwkvrag-local-use-v1-active",
+      "configured_index": "rwkvrag-local-use-v1",
+      "index_version": "rwkvrag-local-use-v1",
+      "cluster_status": "green",
+      "version": "3.8.0"
+    }
+  },
+  "wiki_api_status": 200,
+  "wiki_pages": 0,
+  "javascript_errors": [],
+  "url": "http://127.0.0.1:18440/admin/#/wiki",
+  "release": "data/services/local-app/releases/wiki-20260919",
+  "existing_documents_preserved": true,
+  "note": "Read-only deployment check; real-model upload and revision verified in isolated preview."
+}

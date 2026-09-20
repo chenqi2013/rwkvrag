@@ -1,0 +1,30 @@
+{
+  "settings_sha256": "949359e947c67e4a38110a52865e016636180833f1a450d10d702306a2845e5b",
+  "enabled": {
+    "native_preserve_original_question": true,
+    "native_planner_format_repair": true,
+    "rwkvos_binary_reader_state_id": "reader-trace-450",
+    "rwkvos_writer_state_id": "writer-trace-300",
+    "native_writer_prompt_protocol": "evidence_first",
+    "admin_static_dir": "/home/chase/GitHub/rwkvrag/data/services/local-app/releases/citations-20260919/web"
+  },
+  "health": {
+    "status": "ok",
+    "mongodb": {
+      "ok": true,
+      "latency_ms": 1.05
+    },
+    "lexical": {
+      "ok": true,
+      "algorithm": "OpenSearch BM25",
+      "documents": 46051,
+      "url": "http://127.0.0.1:18438",
+      "index": "rwkvrag-local-use-v1-active",
+      "configured_index": "rwkvrag-local-use-v1",
+      "index_version": "rwkvrag-local-use-v1",
+      "cluster_status": "green",
+      "version": "3.8.0"
+    }
+  },
+  "commercial_answer_quality_verified": false
+}

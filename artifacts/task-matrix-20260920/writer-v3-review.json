@@ -1,0 +1,14 @@
+{
+  "reviewer": "author-agent semantic inspection, not independent human review",
+  "validation_passed": 8,
+  "validation_total": 8,
+  "validation_gate_passed": true,
+  "transfer_fixed_materials_passed": 6,
+  "transfer_total": 8,
+  "transfer_failures": {
+    "smoke_002": "encryption claims have malformed/misassigned source references",
+    "smoke_006": "adds withdrawn draft value despite explicit instruction to ignore it"
+  },
+  "scope": "transfer uses ordinary evidence_first prompt with supplied materials; matrix retrieval and Reader may change evidence selection; not full RAG result",
+  "global_state_promotion": false
+}

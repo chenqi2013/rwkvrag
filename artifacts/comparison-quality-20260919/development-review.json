@@ -1,0 +1,391 @@
+{
+  "scope": "8 synthetic development cases; author reviewed; no heldout or complete-RAG claim",
+  "criteria": "All requested objects and dimensions covered, facts source-supported, separate valid citations, conflict and missing data handled, no extra unsupported claims",
+  "runs": [
+    {
+      "arm": "baseline-v2",
+      "passed": 3,
+      "total": 8,
+      "cases": [
+        {
+          "id": "smoke_001",
+          "status": "completed",
+          "answer": "甲型容量为 8 L，支持离线。[资料 2]\n乙型容量为 12 L，不支持离线。[资料 1]",
+          "pass": true,
+          "response_sha256": "6cb93a78508cb6c2e7aeaaaae2c9461933d383d8bfa14d315b077a2e17d6321b"
+        },
+        {
+          "id": "smoke_002",
+          "status": "completed",
+          "answer": "白榆1.0并发上限为 6，不支持加密。[资料 2]\n白榆2.0并发上限为 18，支持加密。[资料 2]",
+          "pass": false,
+          "response_sha256": "1c1582335cc45a15fb418ba9fb9bea165da48c268673e340945d0b697ab91a01"
+        },
+        {
+          "id": "smoke_003",
+          "status": "completed",
+          "answer": "甲站故障次数为 0 次，停机时长为 0 小时。[资料 1]\n乙站故障次数为 2 次；停机时长未记载。[资料 2]",
+          "pass": true,
+          "response_sha256": "8f0dfdd3ae36e8d1cdd11ffc8315046a3ab834dfa81ed320b01534ce3e7759bf"
+        },
+        {
+          "id": "smoke_004",
+          "status": "completed",
+          "answer": "水泵A额定流量为 11 L/min；粉料泵B额定流量为 5 kg/min。两者单位不同，不能直接比较大小。[资料 2]",
+          "pass": false,
+          "response_sha256": "189d4340a6c4337f09803dfe5ede8f1bfa3289a974af23f31f3cf1a6f8c20631"
+        },
+        {
+          "id": "smoke_005",
+          "status": "completed",
+          "answer": "团队实施日期：2026年10月15日[资料 1]；产品公开发布日期：2024年10月7日[资料 2]。",
+          "pass": true,
+          "response_sha256": "8810d266aa4311edd1b47ae8a0856596fbafe5cb879a1d236fe19d6104812851"
+        },
+        {
+          "id": "smoke_006",
+          "status": "completed",
+          "answer": "甲设备核准功率为 16 W[资料 2]。",
+          "pass": false,
+          "response_sha256": "700a408b45098b336060f305baa3cf1233fd2a4e98d31fd9417098c0d4815532"
+        },
+        {
+          "id": "smoke_007",
+          "status": "completed",
+          "answer": "南仓面积：无法确定。南仓两份记录没有权威排序，不能选择其中一份作为唯一面积值。[资料 1, 资料 3]",
+          "pass": false,
+          "response_sha256": "e6648ccc8bf2a1ac13c6f3902bf51198a29699f813cd0eccaf2fdaa66d0ead1d"
+        },
+        {
+          "id": "smoke_008",
+          "status": "completed",
+          "answer": "星舟桌面版和服务器版的价格与离线能力无法确定，因为缺少对应的资料[资料 1]。",
+          "pass": false,
+          "response_sha256": "d492c9fefbd5a3460805cc3b16b7ddcbc8bf802a5537a48295457f8acdd50241"
+        }
+      ],
+      "trace_directory": "/home/chase/GitHub/rwkvrag/data/quality-runs/comparison-20260919-baseline-v2"
+    },
+    {
+      "arm": "matrix",
+      "passed": 0,
+      "total": 8,
+      "cases": [
+        {
+          "id": "smoke_001",
+          "status": "completed",
+          "answer": "甲型容量为 8 L，支持离线。",
+          "pass": false,
+          "response_sha256": "5b2e353391cc86734fa865d7cb212653de7e7f657f4a55ecf100d347ae4d4c15"
+        },
+        {
+          "id": "smoke_002",
+          "status": "completed",
+          "answer": "白榆1.0：并发上限为 6，不支持加密。  \n白榆2.0：并发上限为 18，支持加密。",
+          "pass": false,
+          "response_sha256": "5c2f3dff0ae4ee2deacf32c6e6eec49440fb6e08b005bcea17c26d215ed35535"
+        },
+        {
+          "id": "smoke_003",
+          "status": "completed",
+          "answer": "对比甲站与乙站的故障次数和停机时长：\n- 甲站：故障次数 0 次，停机时长 0 小时。（资料 1）\n- 乙站：故障次数 2 次；停机时长未记载。（资料 2）\n未记载的项目：乙站的停机时长。",
+          "pass": false,
+          "response_sha256": "a36d2c48da7894b6b99851782d685ac0e53975e9a25e6ad5844f46b36cfefc26"
+        },
+        {
+          "id": "smoke_004",
+          "status": "completed",
+          "answer": "水泵A额定流量为 11 L/min；粉料泵B额定流量为 5 kg/min。两者单位不同，无法直接比较大小。",
+          "pass": false,
+          "response_sha256": "95fa219a282256cd7610e54ff73822768e11f4b30ce7f29337dd31c582a4b4ca"
+        },
+        {
+          "id": "smoke_005",
+          "status": "completed",
+          "answer": "团队实施日期：2026 年 10 月 15 日；产品公开发布日期：2024 年 10 月 7 日。",
+          "pass": false,
+          "response_sha256": "d02dab436356d6f115960ae4247968918d42ae40f38745d438d8998cc4cd77ed"
+        },
+        {
+          "id": "smoke_006",
+          "status": "completed",
+          "answer": "甲设备：最终核准功率为 16 W，无废止记录，适用条件为最终核准。  \n乙设备：最终核准功率为 21 W，无废止记录，适用条件为最终核准。  \n比较：甲设备 16 W，乙设备 21 W。",
+          "pass": false,
+          "response_sha256": "829d0087e252ad7759251b63c2a4d163f64702d6d67f5abecbd04c66f3dd2a52"
+        },
+        {
+          "id": "smoke_007",
+          "status": "completed",
+          "answer": "南仓面积：90 平方米（资料 1）；95 平方米（资料 3）。北仓面积：120 平方米（资料 2）。",
+          "pass": false,
+          "response_sha256": "d1ad808f90e9a8cc768b9697e4d3d62f34c16891cffbaa0503fb53a239df6fb4"
+        },
+        {
+          "id": "smoke_008",
+          "status": "completed",
+          "answer": "星舟桌面版与服务器版的价格与离线能力对比如下：\n- 价格：星舟桌面版价格未公开，服务器版价格未公开。资料不足。\n- 离线能力：星舟桌面版支持离线使用，服务器版不支持离线使用。资料不足。\n- 无材料时不要猜测。",
+          "pass": false,
+          "response_sha256": "adf9a4bf107b76fd92a105f94a02f639fb7a73c5562aec2ed21931b00d10e7a9"
+        }
+      ],
+      "trace_directory": "/home/chase/GitHub/rwkvrag/data/quality-runs/comparison-20260919-matrix"
+    },
+    {
+      "arm": "matrix-v2",
+      "passed": 3,
+      "total": 8,
+      "cases": [
+        {
+          "id": "smoke_001",
+          "status": "completed",
+          "answer": "甲型容量为 8 L，支持离线。[资料 2]\n乙型容量为 12 L，不支持离线。[资料 1]",
+          "pass": true,
+          "response_sha256": "41ad9e6c99969b76994db2ddc03018ee07b5e0df580673e86fd9be0c72d11188"
+        },
+        {
+          "id": "smoke_002",
+          "status": "completed",
+          "answer": "白榆1.0并发上限为 6，不支持加密。[资料 2]\n白榆2.0并发上限为 18，支持加密。[资料 2]\n两者并发上限不同，白榆2.0更高；两者加密支持不同，白榆2.0支持加密。[资料 2]",
+          "pass": false,
+          "response_sha256": "6d3074c87c6d8a741a8999fa5fbc1768dd168cf1a469f70c84616a0823267992"
+        },
+        {
+          "id": "smoke_003",
+          "status": "completed",
+          "answer": "甲站故障次数为 0 次，停机时长为 0 小时。[资料 1]\n乙站故障次数为 2 次；停机时长未记载。[资料 2]\n未记载的项目：乙站停机时长。",
+          "pass": true,
+          "response_sha256": "f37c41cb8bd4ec60d6a4f87885ccfecf03aa2864ff6a4a70fc028b430e45fae3"
+        },
+        {
+          "id": "smoke_004",
+          "status": "completed",
+          "answer": "水泵A额定流量为 11 L/min；粉料泵B额定流量为 5 kg/min。[资料 1]\n水泵A的流量单位为 L/min，粉料泵B的流量单位为 kg/min，两者单位不同，不能直接比较大小。[资料 1]",
+          "pass": false,
+          "response_sha256": "b2fedc1f743328b5fed988b8b0178b2ae0ba20563dbb9588c520f29dade003e9"
+        },
+        {
+          "id": "smoke_005",
+          "status": "completed",
+          "answer": "团队实施日期：2026年10月15日[资料 1]；产品公开发布日期：2024年10月7日[资料 2]。",
+          "pass": true,
+          "response_sha256": "41eec372aac3983c56362e34a18bcbad7f52557d7b130ac0df680bbf15e0bb97"
+        },
+        {
+          "id": "smoke_006",
+          "status": "completed",
+          "answer": "甲设备核准功率为 16 W，来源：[资料 2]。",
+          "pass": false,
+          "response_sha256": "98d70630ea238f90be9de3af94e183a278f7092aee1dca03cdbf2e6732427d6e"
+        },
+        {
+          "id": "smoke_007",
+          "status": "completed",
+          "answer": "南仓面积：南仓记录一为 90 平方米，南仓记录二为 95 平方米，北仓面积为 120 平方米。[资料 1, 资料 2, 资料 3]\n南仓两份记录没有权威排序，不能擅自选一个值。[资料 1, 资料 2, 资料 3]",
+          "pass": false,
+          "response_sha256": "ff62a40522e0086ef24c503a1428064674871b878f819edd18036540b2ad23b0"
+        },
+        {
+          "id": "smoke_008",
+          "status": "completed",
+          "answer": "星舟桌面版的价格为199元，星舟服务器版的价格为299元。[资料 1]\n星舟桌面版的离线能力为可离线使用，星舟服务器版的离线能力为不支持离线使用。[资料 1]\n无材料时不要猜测。",
+          "pass": false,
+          "response_sha256": "e1d6d5f53f2ad2bb98162af06231ab72b2e289438d52b99ebc5335c1e51ec6a4"
+        }
+      ],
+      "trace_directory": "/home/chase/GitHub/rwkvrag/data/quality-runs/comparison-20260919-matrix-v2"
+    },
+    {
+      "arm": "state600",
+      "passed": 0,
+      "total": 8,
+      "cases": [
+        {
+          "id": "smoke_001",
+          "status": "completed",
+          "answer": "甲型容量为 8 L，支持离线。[资料 2]",
+          "pass": false,
+          "response_sha256": "9eb260e9b413463431b38b41fe23ae820d694dc781efcb01abdc20f20d0972a4"
+        },
+        {
+          "id": "smoke_002",
+          "status": "completed",
+          "answer": "白榆1.0并发上限为 6，不支持加密[资料 2]。",
+          "pass": false,
+          "response_sha256": "835fb2c25db497019f41ace783c8ef33456124a5001332bd851337d6a9f6096c"
+        },
+        {
+          "id": "smoke_003",
+          "status": "completed",
+          "answer": "甲站故障次数为 0 次，停机时长为 0 小时；乙站故障次数为 2 次，停机时长未记载。",
+          "pass": false,
+          "response_sha256": "8c53f0437ffd241faa905feb0f30cacb8c1a78a0fe43b218847d667517014d2e"
+        },
+        {
+          "id": "smoke_004",
+          "status": "completed",
+          "answer": "水泵A额定流量为 11 L/min；粉料泵B额定流量为 5 kg/min。两者单位不同，不能直接比较大小。",
+          "pass": false,
+          "response_sha256": "c5fb40e98c0e528dddb30ae12abc76a85239666276b71d2599cd3ccabedc85b9"
+        },
+        {
+          "id": "smoke_005",
+          "status": "completed",
+          "answer": "比较团队实施日期与产品公开发布日期，不能把它们当成同一天。",
+          "pass": false,
+          "response_sha256": "12dffdc6bdbcebd2dd4d8da11ea0204aa5488bd219fbbc0a65fb621c8ef04213"
+        },
+        {
+          "id": "smoke_006",
+          "status": "completed",
+          "answer": "比较甲设备和乙设备的核准功率，忽略已经废止的数值。",
+          "pass": false,
+          "response_sha256": "abc82584bd015401e79b25d28cbc170260f5cead50c4519f305811e414cd027f"
+        },
+        {
+          "id": "smoke_007",
+          "status": "completed",
+          "answer": "南仓面积：90 平方米[资料 1]；北仓面积：120 平方米[资料 2]。",
+          "pass": false,
+          "response_sha256": "32724255cd739e163679a20ff212cc0d33d01d3c131217b78adbe50a6bbecc94"
+        },
+        {
+          "id": "smoke_008",
+          "status": "completed",
+          "answer": "星舟桌面版和服务器版的价格与离线能力：无材料时不要猜测。",
+          "pass": false,
+          "response_sha256": "d9d96804d85388934eefc83fd2d9be76709a54f39fed5bf95a953e941a0b9edf"
+        }
+      ],
+      "trace_directory": "/home/chase/GitHub/rwkvrag/data/quality-runs/comparison-20260919-state600"
+    },
+    {
+      "arm": "state100",
+      "passed": 3,
+      "total": 8,
+      "cases": [
+        {
+          "id": "smoke_001",
+          "status": "completed",
+          "answer": "甲型容量为 8 L，支持离线。[资料 2]\n乙型容量为 12 L，不支持离线。[资料 1]",
+          "pass": true,
+          "response_sha256": "c4eedb9bd4056b7e91b4e4c46917ca1ab6eae850c2d1731fb43c577a723716e6"
+        },
+        {
+          "id": "smoke_002",
+          "status": "completed",
+          "answer": "白榆1.0并发上限为6，不支持加密。[资料 1]\n白榆2.0并发上限为18，支持加密。[资料 2]",
+          "pass": false,
+          "response_sha256": "611097f3125b6392fc566ffeaac0571d7110b8d6a68398ed518c3b8fe760d528"
+        },
+        {
+          "id": "smoke_003",
+          "status": "completed",
+          "answer": "甲站故障次数为 0 次，停机时长为 0 小时。[资料 1]\n乙站故障次数为 2 次；停机时长未记载。[资料 2]\n未记载的项目：乙站停机时长。",
+          "pass": true,
+          "response_sha256": "cb8d1357322dbb75a5584c8edc18f3432304a1e620c010d6725f88bae2e09f5a"
+        },
+        {
+          "id": "smoke_004",
+          "status": "completed",
+          "answer": "水泵A额定流量为 11 L/min；粉料泵B额定流量为 5 kg/min。两者单位不同，不能直接判断谁更大。[资料 2]",
+          "pass": false,
+          "response_sha256": "1b8fcb0f0c6a07be97a1bcdd02cedd8babbf03b9172c3f413d6f43ba4486637f"
+        },
+        {
+          "id": "smoke_005",
+          "status": "completed",
+          "answer": "团队实施日期为 2026 年 10 月 15 日，产品公开发布日期为 2024 年 10 月 7 日，两者不是同一天。",
+          "pass": false,
+          "response_sha256": "38d4ac02b52e61cdd01056dd9937f1dafd68e231b79f467e0c1f930bad5d700c"
+        },
+        {
+          "id": "smoke_006",
+          "status": "completed",
+          "answer": "比较甲设备和乙设备的核准功率，忽略已经废止的数值。甲设备功率为 16 W，乙设备功率为 21 W。[资料 2]",
+          "pass": true,
+          "response_sha256": "6fd46a62669c55585c2f1eefb2879d4062ed6c05e1b278801ad743067af7954d"
+        },
+        {
+          "id": "smoke_007",
+          "status": "completed",
+          "answer": "南仓面积为 90 平方米。[资料 1]\n北仓面积为 120 平方米。[资料 2]\n南仓两份记录没有权威排序，不要擅自选一个值。[资料 3]",
+          "pass": false,
+          "response_sha256": "ca358b4fb6da18904b26170dfbbb527d8c709de80fc1e5629d9a45f0f56e97cc"
+        },
+        {
+          "id": "smoke_008",
+          "status": "completed",
+          "answer": "[资料 1] 星舟桌面版和服务器版的价格与离线能力：无材料时不要猜测。",
+          "pass": false,
+          "response_sha256": "c9bfb640562d848d4b1d90f43514b04efe7d035b8e95c42732e45bc1cbc9ec07"
+        }
+      ],
+      "trace_directory": "/home/chase/GitHub/rwkvrag/data/quality-runs/comparison-20260919-state100"
+    },
+    {
+      "arm": "base",
+      "passed": 3,
+      "total": 8,
+      "cases": [
+        {
+          "id": "smoke_001",
+          "status": "completed",
+          "answer": "1. 甲型容量为 8 L，支持离线。[资料 2]\n2. 乙型容量为 12 L，不支持离线。[资料 1]",
+          "pass": true,
+          "response_sha256": "5fc96dd3b7b403c874c1859ad24af281c313237455eaf3c6c45af9ed4d74c318"
+        },
+        {
+          "id": "smoke_002",
+          "status": "completed",
+          "answer": "1. 白榆2.0并发上限为 18，支持加密。[资料 2]\n2. 白榆1.0并发上限为 6，不支持加密。[资料 1]",
+          "pass": false,
+          "response_sha256": "9d7c232c046de1fd5e68463966201c56dbaa6e0b894f673d7614483bf7cf3938"
+        },
+        {
+          "id": "smoke_003",
+          "status": "completed",
+          "answer": "1. 甲站故障次数为 0 次，停机时长为 0 小时。[资料 1]\n2. 乙站故障次数为 2 次；停机时长未记载。[资料 2]",
+          "pass": true,
+          "response_sha256": "a05fff452b27809c6b79b822abccd1d291342c3b0a876b1738a0370027fdb7a7"
+        },
+        {
+          "id": "smoke_004",
+          "status": "completed",
+          "answer": "1. 粉料泵B额定流量为 5 kg/min。资料未给出物料密度。[资料 1]\n2. 水泵A额定流量为 11 L/min。[资料 2]\n3. 无法直接判断谁更大。因为粉料泵B的流量单位是 kg/min，水泵A的流量单位是 L/min，两者单位不同，不能直接比较。[资料 1, 资料 2]",
+          "pass": false,
+          "response_sha256": "2993e7bea80c12e63a9ae3ab97fe3811a8e4da4803da982e226479ae7053f441"
+        },
+        {
+          "id": "smoke_005",
+          "status": "completed",
+          "answer": "1. 团队计划于 2026 年 10 月 15 日升级。[资料 1]\n2. 产品公开发布日期为 2024 年 10 月 7 日。[资料 2]\n3. 团队实施日期与产品公开发布日期不是同一天。[资料 1, 资料 2]",
+          "pass": false,
+          "response_sha256": "5a1f912a52d38d52da7843ffa11c08c23cd5fe9816c7659733fe71aad2afdcd9"
+        },
+        {
+          "id": "smoke_006",
+          "status": "completed",
+          "answer": "1. 甲设备的核准功率是 16 W。[资料 2]\n2. 乙设备的核准功率是 21 W。[资料 2]\n3. 甲设备的核准功率比乙设备的核准功率低 5 W。[资料 2]",
+          "pass": true,
+          "response_sha256": "6dcdfbcfe66223f7a7fa99dcb264f82c9377c67a4e4349758605508231fcd4a7"
+        },
+        {
+          "id": "smoke_007",
+          "status": "completed",
+          "answer": "1. 南仓面积为 90 平方米。[资料 1]\n2. 北仓面积为 120 平方米。[资料 2]\n3. 南仓两份记录没有权威排序，不要擅自选一个值。[资料 3]",
+          "pass": false,
+          "response_sha256": "c64395d4c673ca5c7c983146cd59e375c6bf636ea57cad1096720a4b050d9386"
+        },
+        {
+          "id": "smoke_008",
+          "status": "length",
+          "answer": "结论[资料 1]：星舟桌面版和服务器版的价格相同，均为199元。  \n结论[资料 2]：星舟桌面版和服务器版均支持离线使用。  \n结论[资料 3]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 4]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 5]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 6]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 7]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 8]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 9]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 10]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 11]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 12]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 13]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 14]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 15]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 16]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 17]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 18]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 19]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 20]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 21]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 22]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 23]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 24]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 25]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 26]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 27]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 28]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 29]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 30]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 31]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 32]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 33]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 34]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 35]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 36]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 37]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 38]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 39]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 40]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 41]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 42]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 43]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 44]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 45]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 46]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 47]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 48]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 49]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 50]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 51]：星舟桌面版和服务器版均支持离线使用，且离线时可以使用所有功能。  \n结论[资料 52]：星舟桌面版和服务器版均支持离线使用，且离线时",
+          "pass": false,
+          "response_sha256": "f142caee8bc5713c100784d4659eb8623ac275a497e093a7cceaf7cfda2897e5"
+        }
+      ],
+      "trace_directory": "/home/chase/GitHub/rwkvrag/data/quality-runs/comparison-20260919-base"
+    }
+  ],
+  "selection": "Retain writer-trace-300 and evidence_first; all alternatives rejected. No heldout tuning or promotion."
+}

@@ -1,0 +1,9 @@
+{
+  "api_intercepted": true,
+  "synthetic_status_fixtures": true,
+  "checks": [
+    "four object/dimension cells; source button opens exact saved evidence",
+    "missing/conflict and failed-review states are visibly distinct; original answer retained"
+  ],
+  "javascript_errors": []
+}

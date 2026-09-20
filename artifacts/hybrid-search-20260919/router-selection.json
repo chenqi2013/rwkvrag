@@ -1,0 +1,23 @@
+{
+  "deployed_model": "rwkv7-g1j-1.5b-search-router-state-v6r2",
+  "deployed_state_sha256": "0941c9b978f91f5e4a1f984d21b94a059d7e5854e7079cbd380d04844a1e0c57",
+  "candidate_state_sha256": "5cb0d26df1d55004f2bab1db893b2b889daa7bd861514072b908bd9e613d4994",
+  "candidate_deployed": false,
+  "criterion": "Validation correct count, then lower validation mean NLL; compare candidate with unchanged baseline. Holdout not used for checkpoint selection.",
+  "baseline": {
+    "validation_correct": 99,
+    "validation_total": 104,
+    "validation_mean_nll": 0.25478045809387156,
+    "holdout_correct": 23,
+    "holdout_total": 24
+  },
+  "candidate": {
+    "selected_epoch": 2,
+    "validation_correct": 99,
+    "validation_total": 104,
+    "validation_mean_nll": 0.3044706647883686,
+    "holdout_correct": 23,
+    "holdout_total": 24
+  },
+  "reason": "No validation accuracy gain and worse validation loss; retain prior state. Targeted training completed and candidate preserved."
+}

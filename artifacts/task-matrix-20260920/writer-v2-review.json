@@ -1,0 +1,47 @@
+{
+  "reviewer": "author-agent semantic inspection, not independent human review",
+  "validation_passed": 7,
+  "total": 8,
+  "per_case": {
+    "validation-000": {
+      "passed": true,
+      "reason": "facts and source mapping agree; no unsupported ranking"
+    },
+    "validation-001": {
+      "passed": true,
+      "reason": "facts and source mapping agree; no unsupported ranking"
+    },
+    "validation-002": {
+      "passed": false,
+      "reason": "supported claims omit all citation labels"
+    },
+    "validation-003": {
+      "passed": true,
+      "reason": "facts and source mapping agree; no unsupported ranking"
+    },
+    "validation-004": {
+      "passed": true,
+      "reason": "facts and source mapping agree; no unsupported ranking"
+    },
+    "validation-005": {
+      "passed": true,
+      "reason": "facts and source mapping agree; no unsupported ranking"
+    },
+    "validation-006": {
+      "passed": true,
+      "reason": "facts and source mapping agree; no unsupported ranking"
+    },
+    "validation-007": {
+      "passed": true,
+      "reason": "facts and source mapping agree; no unsupported ranking"
+    }
+  },
+  "gate_passed": false,
+  "gate_failure": "new citation omission on baseline passing one-sided-missing case",
+  "prompt_only_baseline_passed": 6,
+  "prompt_only_baseline_failures": [
+    "validation-004 unresolved conflict not explained",
+    "validation-007 cites unavailable source"
+  ],
+  "holdout_used": false
+}

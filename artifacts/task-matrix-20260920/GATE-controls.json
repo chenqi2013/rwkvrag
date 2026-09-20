@@ -1,0 +1,6 @@
+{
+  "timing": "before dedicated control states generated predictions",
+  "assessment": "32/32 validation and 32/32 heldout; correct status and source-ID set",
+  "followup": "8/8 validation and 8/8 heldout; correct stop and unresolved cell IDs; no exact previously attempted queries; manually inspect question scope",
+  "scope": "author-controlled synthetic cases, not independent external benchmark"
+}

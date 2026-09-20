@@ -1,0 +1,148 @@
+TAP version 13
+# Subtest: Shanghai response exposes missing evidence and invalid citation without replacing model output
+ok 1 - Shanghai response exposes missing evidence and invalid citation without replacing model output
+  ---
+  duration_ms: 1.227815
+  type: 'test'
+  ...
+# Subtest: evidence notices tolerate legacy responses and do not infer semantic correctness
+ok 2 - evidence notices tolerate legacy responses and do not infer semantic correctness
+  ---
+  duration_ms: 0.412893
+  type: 'test'
+  ...
+# Subtest: malformed labels and fabricated source quotes are visible without rewriting the answer
+ok 3 - malformed labels and fabricated source quotes are visible without rewriting the answer
+  ---
+  duration_ms: 0.095905
+  type: 'test'
+  ...
+# Subtest: Python code-point bounds preserve emoji, raw text and the original API object
+ok 4 - Python code-point bounds preserve emoji, raw text and the original API object
+  ---
+  duration_ms: 0.193395
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: undefined
+ok 5 - invalid or missing answer_span never exposes thinking as an answer: undefined
+  ---
+  duration_ms: 0.122345
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: null
+ok 6 - invalid or missing answer_span never exposes thinking as an answer: null
+  ---
+  duration_ms: 0.074295
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [0]
+ok 7 - invalid or missing answer_span never exposes thinking as an answer: [0]
+  ---
+  duration_ms: 0.095547
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [-1,2]
+ok 8 - invalid or missing answer_span never exposes thinking as an answer: [-1,2]
+  ---
+  duration_ms: 0.052794
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [3,1]
+ok 9 - invalid or missing answer_span never exposes thinking as an answer: [3,1]
+  ---
+  duration_ms: 0.778757
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [0,999]
+ok 10 - invalid or missing answer_span never exposes thinking as an answer: [0,999]
+  ---
+  duration_ms: 0.23095
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [true,2]
+ok 11 - invalid or missing answer_span never exposes thinking as an answer: [true,2]
+  ---
+  duration_ms: 0.118568
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [0,2.5]
+ok 12 - invalid or missing answer_span never exposes thinking as an answer: [0,2.5]
+  ---
+  duration_ms: 0.038857
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [0,2,3]
+ok 13 - invalid or missing answer_span never exposes thinking as an answer: [0,2,3]
+  ---
+  duration_ms: 0.025083
+  type: 'test'
+  ...
+# Subtest: native completed ignores legacy verification flags and does not claim semantic correctness
+ok 14 - native completed ignores legacy verification flags and does not claim semantic correctness
+  ---
+  duration_ms: 0.070898
+  type: 'test'
+  ...
+# Subtest: resolver partial failure preserves the answer and reports failed evidence reads
+ok 15 - resolver partial failure preserves the answer and reports failed evidence reads
+  ---
+  duration_ms: 0.042309
+  type: 'test'
+  ...
+# Subtest: planner fallback remains visible without changing the model answer
+ok 16 - planner fallback remains visible without changing the model answer
+  ---
+  duration_ms: 0.06927
+  type: 'test'
+  ...
+# Subtest: length-limited output stays explicitly incomplete even with a valid final span
+ok 17 - length-limited output stays explicitly incomplete even with a valid final span
+  ---
+  duration_ms: 0.042374
+  type: 'test'
+  ...
+# Subtest: writer budget rejection distinguishes stage entry from a model generation request
+ok 18 - writer budget rejection distinguishes stage entry from a model generation request
+  ---
+  duration_ms: 0.028307
+  type: 'test'
+  ...
+# Subtest: planner_failed does not invent a Writer call or an insufficient-evidence judgment
+ok 19 - planner_failed does not invent a Writer call or an insufficient-evidence judgment
+  ---
+  duration_ms: 0.04475
+  type: 'test'
+  ...
+# Subtest: retrieval_failed does not invent a Writer call or an insufficient-evidence judgment
+ok 20 - retrieval_failed does not invent a Writer call or an insufficient-evidence judgment
+  ---
+  duration_ms: 0.027884
+  type: 'test'
+  ...
+# Subtest: invalid_materials does not invent a Writer call or an insufficient-evidence judgment
+ok 21 - invalid_materials does not invent a Writer call or an insufficient-evidence judgment
+  ---
+  duration_ms: 0.027081
+  type: 'test'
+  ...
+# Subtest: completed with no writer records remains a missing-record diagnostic
+ok 22 - completed with no writer records remains a missing-record diagnostic
+  ---
+  duration_ms: 0.032518
+  type: 'test'
+  ...
+# Subtest: legacy answer text and existing verification/failure labels stay compatible
+ok 23 - legacy answer text and existing verification/failure labels stay compatible
+  ---
+  duration_ms: 0.040822
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 85.364172

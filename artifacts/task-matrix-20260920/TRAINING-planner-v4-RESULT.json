@@ -1,0 +1,29 @@
+{
+  "stages": {
+    "planner": {
+      "baseline_validation_loss": 0.022409420072411496,
+      "epochs": [
+        {
+          "path": "data/experiments/task-matrix-20260920/planner-run4/planner-epoch-1.pth",
+          "sha256": "3d0ff45dbdd341beeaaab04c07295de723e7718e5fcf1c33c224179a553779c0",
+          "validation_loss": 0.0005589916775837386
+        },
+        {
+          "path": "data/experiments/task-matrix-20260920/planner-run4/planner-epoch-2.pth",
+          "sha256": "2c9d7d69f32f07ac0e31b10b446e57a0291b26fe4413b41002e9672ccd86d8b9",
+          "validation_loss": 5.019815732036174e-05
+        }
+      ],
+      "selected": {
+        "path": "data/experiments/task-matrix-20260920/planner-run4/planner-epoch-2.pth",
+        "sha256": "2c9d7d69f32f07ac0e31b10b446e57a0291b26fe4413b41002e9672ccd86d8b9",
+        "validation_loss": 5.019815732036174e-05
+      }
+    }
+  },
+  "base_unchanged": true,
+  "heldout_read": false,
+  "generation_quality_verified": false,
+  "elapsed_seconds": 562.5619452754036,
+  "peak_memory_bytes": 6624182784
+}

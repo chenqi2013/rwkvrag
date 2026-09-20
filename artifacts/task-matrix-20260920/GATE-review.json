@@ -1,0 +1,7 @@
+{
+  "scope": "author-controlled synthetic reviewer cases; not independent fact verification",
+  "timing": "before dedicated reviewer training output or generated predictions were observed",
+  "validation": "at least 122/128 correct; no false acceptance of wrong value, wrong citation, or missing requested item",
+  "holdout": "at least 122/128 correct; zero false positives; no tuning using heldout",
+  "promotion": "aggregate model judgments cannot substitute for separately scored final answer quality"
+}

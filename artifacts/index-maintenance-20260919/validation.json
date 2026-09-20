@@ -1,0 +1,17 @@
+{
+  "service_failure_names_unchanged": true,
+  "preexisting_service_failures": 42,
+  "service_passed": 36,
+  "related_passed": 57,
+  "live_test_log": "opensearch-integration.log",
+  "production_index_changed": false,
+  "production_restarted": false,
+  "opensearch_and_job_tests_passed": 12,
+  "changed_source_sha256": {
+    "llamaindex-retrieval/src/llamaindex_retrieval/index_versions.py": "330c5d534c216b0dbf61d6b5f1db2894b0241a81802de86d1d8779f21a3e5ad7",
+    "llamaindex-retrieval/src/llamaindex_retrieval/lexical_index.py": "1ada153c685d65be63658d11a3b76c2484dbd309f2788081d34d634b2069a339",
+    "llamaindex-retrieval/src/llamaindex_retrieval/ingest.py": "4f1cf9dfbe57204f51252f3c253f65a6d44b19ec83f16536a1c7fa2d9e851956",
+    "llamaindex-retrieval/src/llamaindex_retrieval/tasks.py": "2932bf5892ed996af69fcef47708abca68c0a69d0b415b7ba4c02051329a0240",
+    "llamaindex-retrieval/src/llamaindex_retrieval/migrate_sqlite.py": "3855dd707dde279f580826c7a71a377952ed0374d03f3fd0d9f7b81b05789b12"
+  }
+}

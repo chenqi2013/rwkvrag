@@ -1,0 +1,15 @@
+{
+  "files": {
+    "execution-summary.json": "b52cda79cf4c7020a81cffaf8087e9a773bf506e6b96e1819e25bd85db33b33b",
+    "manifest.json": "ac30beb432ad68f6203c65af5c6dd544112b5fbd137922aad99f712c4e521f9d",
+    "pytest.log": "d84be52a860116cded742dd255ef6ccfeaba30f87cda68081c287cb32c3229c4",
+    "quality-gate-pytest.log": "3d03f68f5df92d739e6d55ecddd0541a60554e90a298b5851f1adde897ee00f2",
+    "quality.json": "8fec8ac96cb148b4baf376e0b8398ea2da202cdf4eabb96332e42ad753c46c3b",
+    "raw-answers.json": "66bb0555825aeca23d2475b9bce6b33d3cb3338dc1c4689f2549ca3c31b4e05a",
+    "review.json": "c1ac4dacd6b8dd3a073c7b123bdf8d7263224735f8cf4bdbb90646778b977628",
+    "server-health-after.json": "1d12456aa60a78cf83aaf996ba60a58be9919028469537527dbae85dbc33b8c1"
+  },
+  "full_run_local_path": "/home/chase/GitHub/rwkvrag/data/quality-runs/20260916-writer300-material-v1",
+  "full_results_sha256": "0ac238fe8a7d8c228d3a041a23cfbcbc4999aec50098ae02aee6bef5c8823d75",
+  "note": "raw-answers.json is an exact answer-text projection; full responses, inputs and HTTP receipts remain in the local run directory."
+}

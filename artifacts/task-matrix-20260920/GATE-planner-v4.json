@@ -1,0 +1,7 @@
+{
+  "timing": "before candidate v4 actual generation",
+  "validation": "12/12 exact object/dimension/condition labels and requested pairs; manually inspect per-cell question scope",
+  "holdout": "12/12 on fresh scope4 heldout; no tuning on heldout",
+  "transfer": "old exposed comparison and ordinary questions must not omit requests or add unrequested cross-products",
+  "not_independent_review": true
+}

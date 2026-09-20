@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-09-16T03:38:19.300503+00:00",
+  "kind": "protocol_alignment_followup",
+  "reason": "Application and Writer300 training use canonical no-think plus newline; original smoke used legacy without newline. The previous within-legacy comparison remains valid but does not represent application configuration.",
+  "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+  "state_id": "writer-trace-300",
+  "writer_transport_protocol": "rwkv_g1j_no_think_v1",
+  "writer_prompt_protocol": "evidence_first",
+  "variable_against_previous_baseline": "one trailing newline in rendered model prompt; state selection and all sampling parameters unchanged",
+  "fixtures_reused_after_prior_evaluation": true,
+  "scope": "configuration diagnosis and regression, not a new untouched holdout",
+  "planned_arms": [
+    "development canonical evidence_first",
+    "holdout canonical evidence_first"
+  ],
+  "candidate_policy": "The structured candidate remains unpromoted; do not infer canonical performance from its legacy failures. No automatic candidate or default switch.",
+  "bindings": {
+    "llamaindex-retrieval/src/llamaindex_retrieval/writer_prompt.py": "dd6fccafb8bde63405ab74ed62c136de8a1b415d107dd66fe75dab120c9f5942",
+    "llamaindex-retrieval/eval/native-smoke/run_smoke.py": "f1e18396aff9649d73ccaecec0701762bcd869ce65255e536f3c84abefbe824e"
+  }
+}

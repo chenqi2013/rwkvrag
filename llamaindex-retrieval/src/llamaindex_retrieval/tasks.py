@@ -6,12 +6,26 @@ from typing import Any
 import pyarrow.parquet as parquet
 
 from .config import Settings
-from .ingest import ingest_finewiki, ingest_uploaded_documents, parquet_files
+from .ingest import ingest_finewiki, replace_uploaded_documents, parquet_files
 from .lexical_index import LexicalIndex
-from .parsers import parse_uploaded_file
+from .source_revisions import prepare_revision
 from .repository import MongoRepository, utc_now
 
 logger = logging.getLogger(__name__)
+
+
+async def finish_thread_on_cancel(function, *args):
+    # to_thread cannot stop an in-flight writer. Wait before marking a job
+    # recoverable or closing clients, so shutdown cannot start a second writer.
+    task = asyncio.create_task(asyncio.to_thread(function, *args))
+    try:
+        return await asyncio.shield(task)
+    except asyncio.CancelledError:
+        try:
+            await task
+        except Exception:
+            logger.exception("index writer failed during shutdown")
+        raise
 
 
 class TaskManager:
@@ -26,8 +40,10 @@ class TaskManager:
         self.lexical_index = lexical_index
         self.semaphore = asyncio.Semaphore(settings.task_workers)
         self.tasks: set[asyncio.Task[None]] = set()
+        self.wiki = None
 
     async def start(self) -> None:
+        await self.repository.ensure_revision_jobs()
         for job in await self.repository.recoverable_jobs():
             await self.repository.update_job(
                 job["id"],
@@ -55,6 +71,12 @@ class TaskManager:
         async with self.semaphore:
             job = await self.repository.get_job(job_id)
             if job is None:
+                return
+            if job["kind"] == "wiki_generate":
+                if self.wiki is None:
+                    await self.repository.update_job(job_id, {"status": "failed", "stage": "failed", "error": "Wiki 服务未配置"})
+                    return
+                await self.wiki.generate(job)
                 return
             await self.repository.update_job(
                 job_id,
@@ -100,16 +122,27 @@ class TaskManager:
                 )
                 file_id = job["payload"].get("file_id")
                 if file_id:
-                    await self.repository.update_file(
-                        file_id,
-                        {"status": "failed", "error": str(error)},
-                    )
+                    payload = job["payload"]
+                    if payload.get("operation_token"):
+                        current = await self.repository.get_file(file_id)
+                        if current and current.get("operation_token") == payload["operation_token"]:
+                            status = ("processing" if payload.get("_publication_started") else "ready") if payload.get("revision_upload") else "failed"
+                            await self.repository.update_claimed_file(file_id, payload["operation_token"],
+                                {"status": status, "error": str(error)})
+                    else:
+                        await self.repository.update_file(file_id, {"status": "failed", "error": str(error)})
 
     async def _run_file_job(self, job_id: str, payload: dict[str, Any]) -> None:
         file_id = str(payload["file_id"])
         file_item = await self.repository.get_file(file_id)
         if file_item is None:
             raise FileNotFoundError(f"文件记录不存在：{file_id}")
+        token = payload.get("operation_token")
+        if token and file_item.get("operation_token") != token:
+            raise ValueError("文件操作归属已改变，拒绝执行过期任务")
+        draft = payload.get("revision_upload")
+        if draft and file_item["sha256"] not in {payload["expected_sha256"], draft["sha256"]}:
+            raise ValueError("修订基线已改变")
         path = Path(str(payload["path"]))
         if not path.is_file():
             raise FileNotFoundError(f"原始文件不存在：{path}")
@@ -118,23 +151,25 @@ class TaskManager:
             job_id,
             {"progress": 15, "stage": "parsing", "message": "正在解析文档"},
         )
-        documents = await asyncio.to_thread(
-            parse_uploaded_file,
+        documents, revision = await asyncio.to_thread(
+            prepare_revision,
+            self.settings,
             path,
             file_id,
             str(file_item["knowledge_base_id"]),
+            draft["sha256"] if draft else file_item.get("sha256"),
         )
+        revision = {**revision, "ingest_job_id": job_id}
         await self.repository.update_job(
             job_id,
             {
                 "progress": 30,
-                "stage": "cleaning",
-                "message": "正在清理旧切片",
+                "stage": "staging",
+                "message": "正在准备新索引版本，旧知识继续可检索",
                 "documents_processed": 0,
                 "nodes_processed": 0,
             },
         )
-        await asyncio.to_thread(self.lexical_index.delete_by_field, "file_id", file_id)
         loop = asyncio.get_running_loop()
         total_documents = max(1, len(documents))
         progress_updates = []
@@ -157,26 +192,34 @@ class TaskManager:
                 )
             )
 
-        stats = await asyncio.to_thread(
-            ingest_uploaded_documents,
+        payload["_publication_started"] = True
+        stats = await finish_thread_on_cancel(
+            replace_uploaded_documents,
             self.settings,
             documents,
+            file_id,
             8,
             progress,
             self.lexical_index,
+            revision,
         )
         if progress_updates:
             await asyncio.gather(*(asyncio.wrap_future(update) for update in progress_updates))
-        await self.repository.update_file(
-            file_id,
-            {
-                "status": "ready",
-                "node_count": stats["nodes"],
-                "error": None,
-                "last_job_id": job_id,
-            },
-        )
+        values = {
+            **(draft or {}), "revision_pending": False, "status": "ready", "node_count": stats["nodes"], "error": None,
+            "last_job_id": job_id, "last_indexed_revision": revision,
+            "last_indexed_index_version": stats["index_version"],
+        }
+        if token:
+            await self.repository.update_claimed_file(file_id, token, values)
+        else:
+            await self.repository.update_file(file_id, values)
         await self._complete_job(job_id, stats)
+        if self.wiki is not None and self.settings.wiki_auto_generate:
+            try:
+                await self.wiki.enqueue(file_id, automatic=True)
+            except Exception:
+                logger.exception("file indexed successfully but Wiki enqueue failed: %s", file_id)
 
     async def _run_finewiki_job(self, job_id: str, payload: dict[str, Any]) -> None:
         path = Path(str(payload["path"]))
@@ -212,7 +255,7 @@ class TaskManager:
                 )
             )
 
-        stats = await asyncio.to_thread(
+        stats = await finish_thread_on_cancel(
             ingest_finewiki,
             self.settings,
             path,

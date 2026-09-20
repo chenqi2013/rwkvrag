@@ -153,13 +153,23 @@ class SearchService:
         query_override: tuple[str, ...] | None = None,
     ) -> SearchResponse:
         if self.native_pipeline is not None:
-            sources = await self.native_pipeline.search(request)
+            provider_trace = {}
+            if request.retrieval_mode != "knowledge_base":
+                from .rwkv_pipeline import fuse_chunks
+                groups, provider_trace = await self.native_pipeline.retrieve_groups(
+                    request, [request.question], request.candidate_k or self.settings.candidate_k)
+                sources = fuse_chunks(groups, order=self.settings.native_candidate_order)
+            else:
+                sources = await self.native_pipeline.search(request)
             top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
             return SearchResponse(results=sources[:top_k], retrieval={
-                "mode": "native-bm25-chunks", "index": self.settings.opensearch_index,
+                "mode": "native-bm25-chunks" if request.retrieval_mode == "knowledge_base" else request.retrieval_mode,
+                **provider_trace, "index": self.settings.opensearch_index,
                 "candidate_count": len(sources), "returned": len(sources[:top_k]),
                 "per_document_limit": None,
             })
+        if request.retrieval_mode != "knowledge_base":
+            raise AnswerGenerationError("web retrieval requires RWKVRAG_RAG_PIPELINE=rwkv")
         search_started = monotonic()
         top_k = min(request.top_k or self.settings.default_top_k, self.settings.max_top_k)
         candidate_k = max(request.candidate_k or self.settings.candidate_k, top_k)
@@ -1169,6 +1179,8 @@ class SearchService:
     async def ask(self, request: SearchRequest) -> AskResponse:
         if self.native_pipeline is not None:
             return await self.native_pipeline.ask(request)
+        if request.retrieval_mode != "knowledge_base":
+            raise AnswerGenerationError("web retrieval requires RWKVRAG_RAG_PIPELINE=rwkv")
         if request.history:
             raise AnswerGenerationError("conversation history requires RWKVRAG_RAG_PIPELINE=rwkv")
         if self.settings.generation_output_mode == "immutable":

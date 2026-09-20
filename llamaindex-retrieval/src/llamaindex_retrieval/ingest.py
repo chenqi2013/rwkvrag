@@ -232,7 +232,17 @@ def ingest_documents(
 ) -> dict[str, int]:
     index = lexical_index or LexicalIndex(settings)
     if recreate:
-        index.recreate()
+        with index.versions.replacement() as staged:
+            stats = ingest_documents(settings, documents, batch_size, False,
+                                     progress_callback, staged)
+            if stats["nodes"] == 0:
+                raise ValueError("没有生成有效切片，旧索引未切换")
+            return stats
+    with index.versions.write_lock():
+        return _ingest_batches(settings, documents, batch_size, progress_callback, index)
+
+
+def _ingest_batches(settings, documents, batch_size, progress_callback, index):
     splitter = create_splitter(settings)
     documents_count = 0
     nodes_count = 0
@@ -331,3 +341,16 @@ def ingest_uploaded_documents(
         progress_callback=progress_callback,
         lexical_index=lexical_index,
     )
+
+
+def replace_uploaded_documents(settings, documents, file_id, batch_size=8,
+                               progress_callback=None, lexical_index=None, revision=None):
+    """Replace one file while retaining other files and the previous generation."""
+    index = lexical_index or LexicalIndex(settings)
+    with index.versions.replacement(file_id=file_id, source_revision=revision) as staged:
+        stats = ingest_uploaded_documents(settings, documents, batch_size,
+                                          progress_callback, staged)
+        if stats["nodes"] == 0:
+            raise ValueError("没有生成有效切片，旧文件索引未切换")
+        stats["index_version"] = staged.index_name
+        return stats

@@ -1,0 +1,13 @@
+[Unit]
+Description=RWKVRAG SearchReader StateTune classifier on physical GPU 3
+After=network-online.target
+
+[Service]
+WorkingDirectory=/home/chase/apps/rwkv-search-reader
+ExecStart=/bin/bash /home/chase/apps/rwkv-search-reader/deploy/launch_router_state.sh
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+
+[Install]
+WantedBy=default.target

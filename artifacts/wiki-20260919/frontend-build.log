@@ -1,0 +1,18 @@
+
+> rwkvrag-admin@0.1.0 build
+> tsc -b && vite build --outDir /tmp/rwkvrag-wiki-web-20260919
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 4841 modules transformed.
+rendering chunks...
+computing gzip size...
+../../../../../../tmp/rwkvrag-wiki-web-20260919/index.html                     0.48 kB │ gzip:   0.31 kB
+../../../../../../tmp/rwkvrag-wiki-web-20260919/assets/index-DWnOQYcF.css      5.27 kB │ gzip:   1.56 kB
+../../../../../../tmp/rwkvrag-wiki-web-20260919/assets/index-Dshpa1ZS.js   1,223.07 kB │ gzip: 396.08 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 5.51s

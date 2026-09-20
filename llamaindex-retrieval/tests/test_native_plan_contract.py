@@ -54,3 +54,9 @@ def test_old_contract_remains_explicit_and_rejects_shared_only_payload():
         parse_plan('{"queries":["q"]}', settings)
     assert parse_plan('{"queries":["q"],"fields":["f"]}', settings) == {
         "queries": ["q"], "fields": ["f"]}
+
+
+def test_duplicate_keys_cannot_silently_replace_the_planned_scope():
+    with pytest.raises(ValueError, match="duplicate planner key"):
+        parse_plan('{"queries":["original"],"queries":["replacement"],"fields":["f"]}',
+                   Settings(native_plan_protocol="queries_fields"))

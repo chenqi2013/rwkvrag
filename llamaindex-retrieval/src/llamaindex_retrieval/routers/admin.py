@@ -2,7 +2,7 @@ import asyncio
 from pathlib import Path
 from typing import Literal
 
-from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
+from fastapi import Request, APIRouter, Depends, File, Form, Query, UploadFile
 from fastapi.responses import FileResponse
 
 from ..admin_service import AdminNotFoundError, AdminService, AdminValidationError
@@ -96,6 +96,23 @@ async def upload_file(
 ) -> dict:
     file_item, job = await service.upload_file(file, knowledge_base_id)
     return {"file_id": file_item["id"], "job_id": job["id"], "status": job["status"]}
+
+
+@router.post("/files/{file_id}/revisions", response_model=JobAccepted, status_code=202)
+async def revise_file(
+    file_id: str,
+    file: UploadFile = File(...),
+    expected_sha256: str = Form(...),
+    service: AdminService = Depends(admin_service),
+) -> dict:
+    job = await service.revise_file(file_id, file, expected_sha256)
+    return {"job_id": job["id"], "status": job["status"]}
+
+
+@router.post("/files/{file_id}/revisions/retry", response_model=JobAccepted, status_code=202)
+async def retry_revision(file_id: str, service: AdminService = Depends(admin_service)) -> dict:
+    job = await service.retry_revision(file_id)
+    return {"job_id": job["id"], "status": job["status"]}
 
 
 @router.get("/files/{file_id}", response_model=FileItem)
@@ -278,3 +295,25 @@ async def list_finewiki_paths(path: str | None = None) -> dict:
         )
     except FineWikiPathError as error:
         raise AdminValidationError(str(error)) from error
+
+
+@router.get("/wiki")
+async def list_wiki(request: Request, knowledge_base_id: str | None = None):
+    return await request.app.state.wiki_service.list_pages(knowledge_base_id)
+
+
+@router.get("/wiki/versions/{identity}")
+async def wiki_version(identity: str, request: Request):
+    return await request.app.state.wiki_service.detail(identity)
+
+
+@router.get("/wiki/files/{file_id}/versions")
+async def wiki_history(file_id: str, repo: MongoRepository = Depends(repository)):
+    return await repo.wiki_versions.find({"page_id": file_id},
+        {"_id": 0, "response": 0, "body": 0}).sort("created_at", -1).limit(100).to_list(length=100)
+
+
+@router.post("/wiki/files/{file_id}/generate", response_model=JobAccepted, status_code=202)
+async def generate_wiki(file_id: str, request: Request):
+    job = await request.app.state.wiki_service.enqueue(file_id)
+    return {"job_id": job["id"], "status": job["status"]}

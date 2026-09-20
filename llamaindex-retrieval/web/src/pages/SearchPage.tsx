@@ -1,4 +1,4 @@
-import { LinkOutlined, SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import {
   Alert,
   Button,
@@ -8,7 +8,6 @@ import {
   Form,
   Input,
   InputNumber,
-  List,
   message,
   Row,
   Select,
@@ -18,6 +17,7 @@ import {
 } from "antd";
 import { useEffect, useState } from "react";
 
+import CitedAnswer from "../components/CitedAnswer";
 import { api } from "../api";
 import type { AskResponse, FailureCategory, KnowledgeBase } from "../types";
 import { errorMessage } from "../utils";
@@ -31,6 +31,7 @@ interface ConversationTurn {
 
 interface SearchForm {
   question: string;
+  retrieval_mode: "auto" | "knowledge_base" | "hybrid" | "web";
   knowledge_base_id?: string;
   top_k: number;
 }
@@ -78,6 +79,7 @@ export default function SearchPage() {
   const warnings = evidenceWarnings(response);
   const queryNormalized = response?.retrieval.query_normalized === true;
   const normalizedQuestion = String(response?.retrieval.normalized_question || "");
+  const routing = response?.generation.routing as { selected_mode?: string; requested_mode?: string } | undefined;
   const failureCategory = response?.generation.failure_category as FailureCategory | undefined;
   const failureLabels: Record<FailureCategory, [string, string]> = {
     data_missing: ["数据缺失", "Data missing"],
@@ -93,7 +95,7 @@ export default function SearchPage() {
           <Typography.Text className="eyebrow">RETRIEVAL LAB</Typography.Text>
           <Typography.Title level={2}>{tr("在线检索测试", "Online Search Lab")}</Typography.Title>
           <Typography.Paragraph type="secondary">
-            {tr("调用生产 `/v1/ask`：先用 BM25 检索证据，再由 RWKV 基于证据生成答案。", "Call the production `/v1/ask` endpoint: retrieve evidence with BM25, then let RWKV answer from that evidence.")}
+            {tr("调用生产 `/v1/ask`：从知识库或网络检索材料，再由 RWKV 阅读证据并生成答案。", "Call the production `/v1/ask` endpoint: retrieve knowledge-base or web material, then let RWKV read and answer from the evidence.")}
           </Typography.Paragraph>
         </div>
       </div>
@@ -123,10 +125,19 @@ export default function SearchPage() {
             <Form
               form={form}
               layout="vertical"
-              initialValues={{ top_k: 1 }}
+              initialValues={{ top_k: 1, retrieval_mode: "auto" }}
             >
               <Form.Item label={tr("问题", "Question")} name="question" rules={[{ required: true, message: tr("请输入问题", "Please enter a question") }]}>
                 <Input.TextArea rows={6} placeholder={tr("输入需要检索的问题", "Enter a question to search")} />
+              </Form.Item>
+              <Form.Item label={tr("检索范围", "Search scope")} name="retrieval_mode"
+                extra={tr("自动模式由小模型判断是否补充网络检索；联网时发送检索问题，不上传知识库原文。", "Auto uses a small model to decide whether to add web search. Search queries are sent to the provider; knowledge-base documents are not uploaded.")}>
+                <Select options={[
+                  { value: "auto", label: tr("自动判断是否联网", "Automatically decide whether to search the web") },
+                  { value: "knowledge_base", label: tr("仅知识库", "Knowledge base only") },
+                  { value: "hybrid", label: tr("知识库 + 网络", "Knowledge base + web") },
+                  { value: "web", label: tr("仅网络", "Web only") },
+                ]} />
               </Form.Item>
               <Form.Item label={tr("知识库过滤", "Knowledge base filter")} name="knowledge_base_id">
                 <Select
@@ -161,6 +172,9 @@ export default function SearchPage() {
                   <Tag color={presentation.color}>
                     {tr(...presentation.label)}
                   </Tag>
+                  {routing?.requested_mode === "auto" && routing.selected_mode && <Tag color="purple">
+                    {routing.selected_mode === "hybrid" ? tr("自动判断：知识库 + 网络", "Auto: knowledge base + web") : tr("自动判断：仅知识库", "Auto: knowledge base only")}
+                  </Tag>}
                   {response.generation.model ? (
                     <Tag color="green">{tr("生成模型", "Model")} · {String(response.generation.model)}</Tag>
                   ) : null}
@@ -182,11 +196,7 @@ export default function SearchPage() {
                     </Typography.Text>
                   ) : null}
                 </Space>}
-                {presentation.answerText ? (
-                  <Typography.Paragraph className="result-snippet answer-body" copyable={{ text: presentation.answerText }}>
-                    {presentation.answerText}
-                  </Typography.Paragraph>
-                ) : <Typography.Text type="secondary">{tr("未提供可显示的答案正文。", "No answer body is available.")}</Typography.Text>}
+                <CitedAnswer key={response.answer + String(response.generation.elapsed_ms)} text={presentation.answerText} response={response} />
                 {presentation.isNative && (
                   <details className="answer-trace">
                     <summary>{tr("原始模型输出与运行记录", "Raw model output and trace")}</summary>
@@ -201,44 +211,7 @@ export default function SearchPage() {
                     </details>
                   </details>
                 )}
-                <Card
-                  size="small"
-                  title={tr("检索证据", "Retrieved Evidence")}
-                >
-                  <Space wrap className="answer-status">
-                    {response.retrieval.algorithm ? <Tag color="cyan">{String(response.retrieval.algorithm)}</Tag> : null}
-                    <Tag>{String(response.retrieval.mode)}</Tag>
-                    <Tag>{response.sources.length} {tr("条", "results")}</Tag>
-                  </Space>
-                  <List
-                    dataSource={response.sources}
-                    locale={{ emptyText: <Empty description={tr("没有返回证据", "No evidence returned")} /> }}
-                    renderItem={(item, index) => (
-                      <List.Item>
-                        <Card size="small" className="result-card">
-                          <Space direction="vertical" size={10} style={{ width: "100%" }}>
-                            <div className="result-title-row">
-                              <Space>
-                                <span className="rank-badge">{index + 1}</span>
-                                <Typography.Title level={4}>{item.title}</Typography.Title>
-                              </Space>
-                              <Tag color="blue">{item.score.toFixed(4)}</Tag>
-                            </div>
-                            <Typography.Paragraph className="result-snippet">{item.snippet}</Typography.Paragraph>
-                            <Space wrap>
-                              <Tag>{item.source}</Tag>
-                              {item.uri && (
-                                <Typography.Link href={item.uri} target="_blank">
-                                  <LinkOutlined /> {tr("查看来源", "View source")}
-                                </Typography.Link>
-                              )}
-                            </Space>
-                          </Space>
-                        </Card>
-                      </List.Item>
-                    )}
-                  />
-                </Card>
+
               </Space>
             )}
           </Card>

@@ -1,0 +1,19 @@
+{
+  "backend_passed": 42,
+  "frontend_existing_tests_passed": 23,
+  "frontend_build_passed": true,
+  "browser_interaction_verified": false,
+  "production_deployed": false,
+  "production_database_migrated": false,
+  "source_sha256": {
+    "llamaindex-retrieval/src/llamaindex_retrieval/admin_service.py": "4906b83e8d01300f2523dfdfd785287ef6f767cd4d45b47e8a373d8556624dac",
+    "llamaindex-retrieval/src/llamaindex_retrieval/repository.py": "1805c87e63cfbd9500d3f99f51f65ead6ae67e687a1e2575841633d76a126e68",
+    "llamaindex-retrieval/src/llamaindex_retrieval/tasks.py": "2716672b811e82a482975af70783d9b2e3d131e78216b50b666269268c783299",
+    "llamaindex-retrieval/src/llamaindex_retrieval/schemas.py": "2ead3dab2a6c2debf59e91e1d88bf4d3c2ca2efc5277361bbb45db15daf00acf",
+    "llamaindex-retrieval/src/llamaindex_retrieval/routers/admin.py": "2f451820ac6c2dac03bef7658e73f0fd3bbec491dd7a7f64a2d6f805c15b7b65",
+    "llamaindex-retrieval/web/src/pages/FilesPage.tsx": "253155070dd52e9c29e0af67693151a3219446bdcc086df970d4d3a9cddec371",
+    "llamaindex-retrieval/web/src/api.ts": "06dbe2f2c99e866b8f26380a8e052173fd0e2d1b052eee7b849c6b3931cf973a",
+    "llamaindex-retrieval/web/src/types.ts": "686ab63313bb67b6d4a3842690475852d52a15fc7528867e18847d5551287b69",
+    "llamaindex-retrieval/tests/test_file_revisions.py": "0bc4a16ca907e761c3e1cf7d185b1018c487948d5151b21f3a2ff23427c7c41c"
+  }
+}

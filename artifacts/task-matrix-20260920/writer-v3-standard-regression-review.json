@@ -1,0 +1,12 @@
+{
+  "passed": 5,
+  "total": 8,
+  "baseline_previous_recorded": 7,
+  "independent_review": false,
+  "failures": {
+    "smoke_006": "omits A2021 offline and cites source2 for values from other sources",
+    "smoke_007": "long-record answer loops over nonexistent labels and reaches token limit",
+    "smoke_008": "misses explicit non-production status and adds unrelated reservation count"
+  },
+  "release_decision": "do not change standard Writer state; bind candidate only to explicit matrix Writer role and test actual matrix chain separately"
+}

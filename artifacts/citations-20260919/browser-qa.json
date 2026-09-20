@@ -1,0 +1,14 @@
+{
+  "base": "http://127.0.0.1:18440",
+  "checks": [
+    "search: keyboard activation opens saved local evidence; no broken file links",
+    "web: correct URL, full evidence and saved source material",
+    "missing citation: explicit error, no substituted source",
+    "history: expanded historical run opens its saved evidence",
+    "Wiki: nested citation drawer uses the selected version",
+    "mobile: source drawer fits 390px viewport"
+  ],
+  "javascript_errors": [],
+  "api_intercepted": true,
+  "fixture": "saved real hybrid/Wiki responses; missing citation is a synthetic UI failure fixture"
+}

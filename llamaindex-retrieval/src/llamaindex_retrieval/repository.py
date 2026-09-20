@@ -36,7 +36,7 @@ def search_answer_status(response: dict[str, Any]) -> SearchAnswerStatus:
         # These are execution states, not answer/refusal or support judgments.
         if generation.get("status") == "completed":
             return "completed"
-        if generation.get("status") == "resolver_partial_failure":
+        if generation.get("status") in ("resolver_partial_failure", "planner_partial_failure", "retrieval_partial_failure", "matrix_partial_failure"):
             return "partial"
         return "failed"
     answer = str(response.get("answer") or "").strip()
@@ -49,9 +49,9 @@ def search_failure_category(response: dict[str, Any]) -> FailureCategory | None:
         status = native.get("status")
         if status == "completed":
             return None
-        if status in ("planner_failed", "retrieval_failed"):
+        if status in ("routing_failed", "planner_failed", "planner_partial_failure", "retrieval_failed", "retrieval_partial_failure"):
             return "retrieval_failed"
-        if status in ("resolver_partial_failure", "invalid_materials"):
+        if status in ("resolver_partial_failure", "invalid_materials", "matrix_partial_failure", "invalid_matrix"):
             return "evidence_extraction_failed"
         return "generation_failed"
     generation = response.get("generation")
@@ -72,9 +72,10 @@ def search_failure_reason(response: dict[str, Any]) -> str | None:
         status = native.get("status")
         if status == "completed":
             return None
-        known = ("planner_failed", "retrieval_failed", "resolver_partial_failure",
+        known = ("routing_failed", "planner_failed", "planner_partial_failure", "retrieval_failed", "retrieval_partial_failure", "resolver_partial_failure",
                  "invalid_materials", "length", "timeout", "budget_exceeded", "http_error",
-                 "transport_error", "invalid_request", "invalid_response", "cancelled")
+                 "transport_error", "invalid_request", "invalid_response", "cancelled",
+                 "matrix_partial_failure", "invalid_matrix", "answer_review_failed", "answer_quality_failed")
         if status in known:
             return f"native_{status}"
         return "native_status_missing" if status is None else "native_status_unknown"
@@ -92,10 +93,31 @@ class MongoRepository:
         self.knowledge_bases = self.database["knowledge_bases"]
         self.files = self.database["files"]
         self.jobs = self.database["jobs"]
+        self.wiki_versions = self.database["wiki_versions"]
         self.search_tests = self.database["search_tests"]
         self.search_test_runs = self.database["search_test_runs"]
         self.payloads = AsyncGridFSBucket(self.database, bucket_name="rag_payloads")
         self.model_receipts = AsyncGridFSBucket(self.database, bucket_name="model_receipts")
+
+    async def claim_wiki_job(self, job_id):
+        result = await self.jobs.update_one({"id": job_id, "status": "pending", "kind": "wiki_generate"},
+            {"$set": {"status": "running", "stage": "generating", "progress": 20,
+                      "started_at": utc_now(), "message": "正在根据原文生成 Wiki 草稿"}})
+        return result.modified_count == 1
+
+    async def save_wiki_version(self, page):
+        record = dict(page)
+        payload_id = await self._store_large_payload(record["response"])
+        if payload_id:
+            record.pop("response")
+            record["response_payload_id"] = payload_id
+        await self.wiki_versions.update_one({"id": page["id"]}, {"$setOnInsert": record}, upsert=True)
+
+    async def get_wiki_version(self, identity):
+        record = await self.wiki_versions.find_one({"id": identity}, {"_id": 0})
+        if record and record.get("response_payload_id"):
+            record["response"] = await self._load_payload(record["response_payload_id"])
+        return record
 
     async def record_model_http(self, event: str, record: dict) -> None:
         """Private, exact wire receipts. Never exposed through question history."""
@@ -133,6 +155,12 @@ class MongoRepository:
         await self.files.create_index(
             [("knowledge_base_id", ASCENDING), ("sha256", ASCENDING)], unique=True
         )
+        await self.files.update_many({"content_hashes": {"$exists": False}},
+                                     [{"$set": {"content_hashes": ["$sha256"]}}])
+        await self.files.create_index(
+            [("knowledge_base_id", ASCENDING), ("content_hashes", ASCENDING)], unique=True)
+        await self.wiki_versions.create_index("id", unique=True)
+        await self.wiki_versions.create_index([("page_id", ASCENDING), ("created_at", DESCENDING)])
         await self.jobs.create_index("id", unique=True)
         await self.jobs.create_index([("status", ASCENDING), ("created_at", ASCENDING)])
         await self.search_tests.create_index("id", unique=True)
@@ -231,6 +259,7 @@ class MongoRepository:
         now = utc_now()
         record = {
             **item,
+            "content_hashes": [item["sha256"]],
             "status": "pending",
             "node_count": 0,
             "error": None,
@@ -264,14 +293,38 @@ class MongoRepository:
         await self.files.update_one({"id": file_id}, {"$set": updates})
         return await self.get_file(file_id)
 
+    async def queue_failed_job(self, job_id):
+        result = await self.jobs.update_one({"id": job_id, "status": "failed"},
+            {"$set": {"status": "pending", "stage": "queued", "error": None, "updated_at": utc_now()}})
+        return result.modified_count == 1
+
+    async def claim_file_operation(self, file_id, expected_sha256, token, *, status="pending", reserve_sha256=None, pending_revision=None):
+        update = {"$set": {"status": status, "operation_token": token, "updated_at": utc_now()}}
+        if pending_revision:
+            update["$set"].update(pending_revision=pending_revision, revision_pending=True, last_job_id=token)
+        if reserve_sha256:
+            update["$addToSet"] = {"content_hashes": reserve_sha256}
+        try:
+            result = await self.files.update_one(
+                {"id": file_id, "sha256": expected_sha256, "status": {"$in": ["ready", "failed"]}}, update)
+        except DuplicateKeyError as error:
+            raise RepositoryConflictError("此内容已属于同一知识库中的其他文件版本") from error
+        return result.modified_count == 1
+
+    async def update_claimed_file(self, file_id, token, values):
+        result = await self.files.update_one({"id": file_id, "operation_token": token},
+                                            {"$set": {**values, "updated_at": utc_now()}})
+        if result.matched_count != 1:
+            raise RepositoryConflictError("文件操作归属已改变")
+
     async def delete_file(self, file_id: str) -> bool:
         result = await self.files.delete_one({"id": file_id})
         return result.deleted_count == 1
 
-    async def create_job(self, kind: str, payload: dict[str, Any]) -> dict[str, Any]:
+    async def create_job(self, kind: str, payload: dict[str, Any], *, job_id=None) -> dict[str, Any]:
         now = utc_now()
         item = {
-            "id": uuid4().hex,
+            "id": job_id or uuid4().hex,
             "kind": kind,
             "status": "pending",
             "progress": 0,
@@ -286,6 +339,9 @@ class MongoRepository:
             "started_at": None,
             "completed_at": None,
         }
+        if job_id:
+            await self.jobs.update_one({"id": job_id}, {"$setOnInsert": item}, upsert=True)
+            return await self.get_job(job_id)
         await self.jobs.insert_one(item)
         return item
 
@@ -305,6 +361,12 @@ class MongoRepository:
         updates = {**values, "updated_at": utc_now()}
         await self.jobs.update_one({"id": job_id}, {"$set": updates})
         return await self.get_job(job_id)
+
+    async def ensure_revision_jobs(self):
+        drafts = await self.files.find({"revision_pending": True,
+            "pending_revision": {"$exists": True}, "status": {"$in": ["pending", "processing"]}}, {"_id": 0}).to_list(length=None)
+        for item in drafts:
+            await self.create_job("file_reindex", item["pending_revision"], job_id=item["operation_token"])
 
     async def recoverable_jobs(self) -> list[dict[str, Any]]:
         cursor = self.jobs.find(

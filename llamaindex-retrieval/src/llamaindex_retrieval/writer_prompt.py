@@ -19,3 +19,22 @@ def writer_prompt_v2(task: str, evidence: list[dict], fields: list[str]) -> str:
         f'当前任务（history是历史，latest_question是最新问题）：{task}\n'
         '请直接给出逐项答案，并在每个有依据的结论后写正确的 [资料 N]。'
     )
+
+
+def writer_prompt_checked(task: str, evidence: list[dict], fields: list[str]) -> str:
+    """Opt-in experiment: expose an evidence check for every requested item.
+
+    The model resolves the scope, selects the quote and writes the conclusion.
+    No source-dependent branches, gold facts or programmatic answer repair.
+    """
+    return writer_prompt_v2(task, evidence, fields) + (
+        '\n作答前核对：根据完整历史和最后更正，列全仍有效的所求项目，不能只答最后一句出现的词。'
+        '然后逐项输出，每项只出现一次，使用以下格式：\n'
+        '核对项：本项所求内容\n'
+        '原文：从实际支持本项的资料中逐字摘录一小段，并写该资料的 [资料 N]\n'
+        '结论：仅由上述原文得到的本项答案，并再次写同一个 [资料 N]\n'
+        '找不到支持本项的原文时，直接写“本项资料不足，无法确定”，不写虚构原文或引用。'
+        '如果逐字证据列表为空，明确说明资料不足，不给出数值，不写任何来源编号。'
+        '未记载的数值不能写成0；不能把其他型号、年份或字段的值移过来。'
+        '输出结束前确认每个仍有效的项目都有结论或资料不足说明，不补充原因猜测。'
+    )

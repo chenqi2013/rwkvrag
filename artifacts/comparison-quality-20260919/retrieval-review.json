@@ -1,0 +1,404 @@
+[
+  {
+    "experiment": "retrieval",
+    "file": "smoke_001-preserve-false.json",
+    "status": "planner_partial_failure",
+    "answer": "甲型容量为 8 L[资料 1]。",
+    "plan": {
+      "queries": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fields": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "planner must return queries and fields"
+    },
+    "selected_sources": [
+      {
+        "title": "甲型",
+        "text": "甲型容量为 8 L，支持离线。"
+      }
+    ],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "a3d87afd9a9814b510e9e6e65dfe3cfcb314468ad82ba465df0d77e96c00ff0f"
+  },
+  {
+    "experiment": "retrieval",
+    "file": "smoke_001-preserve-true.json",
+    "status": "planner_partial_failure",
+    "answer": "甲型容量为 8 L[资料 1]。",
+    "plan": {
+      "queries": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fields": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "planner must return queries and fields"
+    },
+    "selected_sources": [
+      {
+        "title": "甲型",
+        "text": "甲型容量为 8 L，支持离线。"
+      }
+    ],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "a0b87049074bb2b37986e14dc78e164ae72b17bea4583199b205d78701fffee2"
+  },
+  {
+    "experiment": "retrieval",
+    "file": "smoke_002-preserve-false.json",
+    "status": "planner_partial_failure",
+    "answer": "白榆1.0并发上限未知，不支持加密。[资料 1]\n白榆2.0并发上限为 18，支持加密。[资料 2]",
+    "plan": {
+      "queries": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fields": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "invalid query count"
+    },
+    "selected_sources": [
+      {
+        "title": "白榆2.0",
+        "text": "白榆2.0并发上限为 18，支持加密。"
+      }
+    ],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "d25b3e182035e4e223504070cb79ffd91f9457ec6fb045297302f2969c9a07f5"
+  },
+  {
+    "experiment": "retrieval",
+    "file": "smoke_002-preserve-true.json",
+    "status": "planner_partial_failure",
+    "answer": "白榆1.0并发上限未知，不支持加密。[资料 1]\n白榆2.0并发上限为 18，支持加密。[资料 2]",
+    "plan": {
+      "queries": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fields": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "invalid query count"
+    },
+    "selected_sources": [
+      {
+        "title": "白榆2.0",
+        "text": "白榆2.0并发上限为 18，支持加密。"
+      }
+    ],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "6edc3f7142b2180db111a8f5546a3b919e0431f3b8817832d6b0157f26acd260"
+  },
+  {
+    "experiment": "planner-repair",
+    "file": "smoke_001-native_planner_format_repair-false.json",
+    "status": "planner_partial_failure",
+    "answer": "甲型容量为 8 L[资料 1]。",
+    "plan": {
+      "queries": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fields": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "planner must return queries and fields"
+    },
+    "selected_sources": [
+      {
+        "title": "甲型",
+        "text": "甲型容量为 8 L，支持离线。"
+      }
+    ],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "e9f39835e851e3eb6dc66763766665dba62a56366e1f1fdcef2915d46481369a"
+  },
+  {
+    "experiment": "planner-repair",
+    "file": "smoke_001-native_planner_format_repair-true.json",
+    "status": "planner_partial_failure",
+    "answer": "甲型容量为 8 L[资料 1]。",
+    "plan": {
+      "queries": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fields": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "planner must return queries and fields",
+      "planner_repair_error": "planner must return queries and fields"
+    },
+    "selected_sources": [
+      {
+        "title": "甲型",
+        "text": "甲型容量为 8 L，支持离线。"
+      }
+    ],
+    "planner_calls": 2,
+    "full_comparison_pass": false,
+    "response_sha256": "b0988758c83cc64b94a3097c4b5b9b9fbcfe128dd1bd1c4b2706f71044116702"
+  },
+  {
+    "experiment": "planner-repair",
+    "file": "smoke_002-native_planner_format_repair-false.json",
+    "status": "planner_partial_failure",
+    "answer": "白榆1.0并发上限未知，不支持加密。[资料 1]\n白榆2.0并发上限为 18，支持加密。[资料 2]",
+    "plan": {
+      "queries": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fields": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "invalid query count"
+    },
+    "selected_sources": [
+      {
+        "title": "白榆2.0",
+        "text": "白榆2.0并发上限为 18，支持加密。"
+      }
+    ],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "48b492a20ee01a5f0a74fcbdd451fe6a972e19d335a757ce1f615e6a1feda2e6"
+  },
+  {
+    "experiment": "planner-repair",
+    "file": "smoke_002-native_planner_format_repair-true.json",
+    "status": "planner_partial_failure",
+    "answer": "白榆1.0并发上限未知，不支持加密。[资料 1]\n白榆2.0并发上限为 18，支持加密。[资料 2]",
+    "plan": {
+      "queries": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fields": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "invalid query count",
+      "planner_repair_error": "invalid query count"
+    },
+    "selected_sources": [
+      {
+        "title": "白榆2.0",
+        "text": "白榆2.0并发上限为 18，支持加密。"
+      }
+    ],
+    "planner_calls": 2,
+    "full_comparison_pass": false,
+    "response_sha256": "ce397790597750b3daa186d439667d94ac487ba4c0d18d12befe4867c9658542"
+  },
+  {
+    "experiment": "planner-repair-v2",
+    "file": "smoke_001-native_planner_format_repair-false.json",
+    "status": "planner_partial_failure",
+    "answer": "甲型容量为 8 L[资料 1]。",
+    "plan": {
+      "queries": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fields": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "planner must return queries and fields"
+    },
+    "selected_sources": [
+      {
+        "title": "甲型",
+        "text": "甲型容量为 8 L，支持离线。"
+      }
+    ],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "738ca5f895a907020a1d72611ec44d1d06c05b57897d3650e0ad727a5f67ab39"
+  },
+  {
+    "experiment": "planner-repair-v2",
+    "file": "smoke_001-native_planner_format_repair-true.json",
+    "status": "completed",
+    "answer": "甲型容量为 8 L，支持离线。[资料 1]",
+    "plan": {
+      "queries": [
+        "比较甲型和乙型的容量，分别引用",
+        "比较甲型和乙型的离线支持，分别引用"
+      ],
+      "fields": [
+        "容量",
+        "离线支持"
+      ]
+    },
+    "selected_sources": [
+      {
+        "title": "甲型",
+        "text": "甲型容量为 8 L，支持离线。"
+      }
+    ],
+    "planner_calls": 2,
+    "full_comparison_pass": false,
+    "response_sha256": "44e50609619243834b3ad4ea16f496d04aefec69b00312de85a4fd3bf962f07c"
+  },
+  {
+    "experiment": "planner-repair-v2",
+    "file": "smoke_002-native_planner_format_repair-false.json",
+    "status": "planner_partial_failure",
+    "answer": "白榆1.0并发上限未知，不支持加密。[资料 1]\n白榆2.0并发上限为 18，支持加密。[资料 2]",
+    "plan": {
+      "queries": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fields": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "invalid query count"
+    },
+    "selected_sources": [
+      {
+        "title": "白榆2.0",
+        "text": "白榆2.0并发上限为 18，支持加密。"
+      }
+    ],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "8c5fc62e88630797e799ee31e239eb4bdf3b828f1f7e7899f0f608c0e6aeb894"
+  },
+  {
+    "experiment": "planner-repair-v2",
+    "file": "smoke_002-native_planner_format_repair-true.json",
+    "status": "completed",
+    "answer": "白榆1.0并发上限未知，白榆2.0并发上限为18[资料 1]。\n白榆1.0加密支持未知，白榆2.0支持加密[资料 1]。\n白榆1.0并发上限和加密支持未知，白榆2.0并发上限为18且支持加密[资料 1]。",
+    "plan": {
+      "queries": [
+        "比较白榆1.0和2.0的并发上限",
+        "比较白榆1.0和2.0的加密支持",
+        "比较白榆1.0和2.0的并发上限和加密支持",
+        "比较白榆1.0和2.0的并发上限和加密支持的具体数值",
+        "比较白榆1.0和2.0的并发上限和加密支持的具体数值和实现方式",
+        "比较白榆1.0和2.0的并发上限和加密支持的具体数值和实现方式和应用场景"
+      ],
+      "fields": [
+        "并发上限",
+        "加密支持",
+        "并发上限数值",
+        "加密支持数值",
+        "并发上限实现方式",
+        "加密支持实现方式",
+        "并发上限应用场景",
+        "加密支持应用场景"
+      ]
+    },
+    "selected_sources": [
+      {
+        "title": "白榆2.0",
+        "text": "白榆2.0并发上限为 18，支持加密。"
+      }
+    ],
+    "planner_calls": 2,
+    "full_comparison_pass": false,
+    "response_sha256": "1a0c571eb5742b3c06f561d50edd721decd2895f263d10e874cda4993f60e8fc"
+  },
+  {
+    "experiment": "reader-base",
+    "file": "smoke_001-reader_without_state-false.json",
+    "status": "planner_partial_failure",
+    "answer": "甲型容量为 8 L[资料 1]。",
+    "plan": {
+      "queries": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fields": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "planner must return queries and fields"
+    },
+    "selected_sources": [
+      {
+        "title": "甲型",
+        "text": "甲型容量为 8 L，支持离线。"
+      }
+    ],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "fda0e30170264104f316f94e4bf830e033a05c085210e364aa17cc49e67f7816"
+  },
+  {
+    "experiment": "reader-base",
+    "file": "smoke_001-reader_without_state-true.json",
+    "status": "planner_partial_failure",
+    "answer": "甲型容量：[资料 1]\n乙型容量：[资料 2]\n离线支持：[资料 3]\n甲型离线支持：[资料 4]\n乙型离线支持：[资料 5]",
+    "plan": {
+      "queries": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fields": [
+        "比较甲型和乙型的容量、离线支持，两项都要分别引用。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "planner must return queries and fields"
+    },
+    "selected_sources": [],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "4dd0ae3d6faab6979d27426bc2d611b2e0b12e68d2ad7d54891299c4582e3af8"
+  },
+  {
+    "experiment": "reader-base",
+    "file": "smoke_002-reader_without_state-false.json",
+    "status": "planner_partial_failure",
+    "answer": "白榆1.0并发上限未知，不支持加密。[资料 1]\n白榆2.0并发上限为 18，支持加密。[资料 2]",
+    "plan": {
+      "queries": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fields": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "invalid query count"
+    },
+    "selected_sources": [
+      {
+        "title": "白榆2.0",
+        "text": "白榆2.0并发上限为 18，支持加密。"
+      }
+    ],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "d656aaec54e5c31f4b340ba362a168aaf558d5e46eb69cfdf5da7a15e23dd6c3"
+  },
+  {
+    "experiment": "reader-base",
+    "file": "smoke_002-reader_without_state-true.json",
+    "status": "planner_partial_failure",
+    "answer": "白榆1.0的并发上限为10000，白榆2.0的并发上限为100000[资料 1]。\n白榆1.0不支持加密，白榆2.0支持加密[资料 1]。",
+    "plan": {
+      "queries": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fields": [
+        "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。"
+      ],
+      "fallback": "original_question",
+      "planner_error": "invalid query count"
+    },
+    "selected_sources": [],
+    "planner_calls": 1,
+    "full_comparison_pass": false,
+    "response_sha256": "0ea370c30e537439c859ee3886585cb86823497969bb9307f049bdc57c72fba8"
+  }
+]
