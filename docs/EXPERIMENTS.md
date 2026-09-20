@@ -2,6 +2,14 @@
 
 维护日期：2026-09-20。初次标签对照在 6054d186 冻结并完成，验证未通过；扩大复验在 87380c76 冻结，执行状态见 [CURRENT](CURRENT.md)。遵循[架构规则](../llamaindex-retrieval/ARCHITECTURE_RULES.md)。
 
+## 当前执行登记：2K单条件判断StateTune
+
+用户要求2000条训练数据后，旧32/192条等待调度终止，未进行优化器更新。当前冻结 `1e641e68`：2000训练、400开发、400留出，zero/2K两组，共1600次开发/留出调用；固定第二epoch，无checkpoint择优。任务仍为原ASSESS的conclusion/evidence_ids协议，不同时修改Writer、模型、采样或检索。
+
+只使用8222物理GPU3。先完成原1938＋434＋8条回归释放与零State对齐，再做最长样本GPU反向预检；训练预算6小时、显存上限40GiB。运行状态见[CURRENT](CURRENT.md)，[精确方案与源码](https://github.com/chenqi2013/rwkvrag/tree/1e641e68/llamaindex-retrieval/eval/g1j72-assessment-state-2k-20260920)。55项CPU/单元检查和分词核验不代表模型效果。
+
+1938条7.2B全量及8条历史输入修正已完成，完整记录与失败保留，分层候选未晋级。[结果与全部原始归档](https://github.com/chenqi2013/rwkvrag/blob/bf2aa1be/docs/archive/2026-09/g1j72-full-results-20260920.md)。下方登记均为先前实验和通用变量控制规则，不能把历史“下一步”当作当前执行指令。
+
 ## 扩大复验登记
 
 2026-09-20 全题型扩大回归：Reader 冻结于 `65b4166c`，4,896 次调用全部完成。保留 40/64/160 历史集合的 264 条成员记录，新增 960 条、40 个模板族；新题首轮 JSON 87.604%、多行86.979%，旧题仍退步，少量跨轮输出变化，未通过门槛。[完整结果](archive/2026-09/broad-reader-results-20260920.md)。应用 v1 因测试脚本误用空知识库而中止并保留66条记录；v2 于 `c9ac393a` 冻结并完成全部478题，但旧400题原文章不在当前语料，改为显式历史参考材料检查，完整检索覆盖缺口另列。不得合并两种口径。历史题目的保留要求见 [REGRESSION_POLICY](REGRESSION_POLICY.md)。
