@@ -6,6 +6,7 @@
 
 | 报告 | 原路径 |
 | --- | --- |
+| [Reader 输出标签单变量对照](2026-09/reader-label-results-20260920.md) | 新报告，直接存入历史区 |
 | [知识维护第四批：正式文档修订与失败恢复](2026-09/document-revisions-20260919.md) | docs/document-revisions-20260919.md |
 | [P0 第一批：质量验收与真实基线](2026-09/p0-quality-baseline-20260916.md) | docs/p0-quality-baseline-20260916.md |
 | [引用原文展示修复](2026-09/citations-ui-20260919.md) | docs/citations-ui-20260919.md |

@@ -1,0 +1,6 @@
+{
+  "repeated_cases": 40,
+  "prompts_identical": true,
+  "predictions_identical": true,
+  "model_and_state_identical": true
+}

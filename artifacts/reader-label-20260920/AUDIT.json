@@ -1,0 +1,9 @@
+{
+  "calls_checked": 128,
+  "paired_cases": 64,
+  "export_matches_original": true,
+  "input_data_identical": true,
+  "sole_prompt_difference": "instruction label words",
+  "all_provider_finish_stop": true,
+  "frozen_files_unchanged": true
+}

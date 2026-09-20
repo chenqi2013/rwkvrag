@@ -1,0 +1,10 @@
+{
+  "zero72-yes-no": {
+    "observed_median_elapsed_ms": 612.895,
+    "observed_total_elapsed_ms": 39014.77
+  },
+  "zero72-neutral": {
+    "observed_median_elapsed_ms": 752.72,
+    "observed_total_elapsed_ms": 48067.23
+  }
+}

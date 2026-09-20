@@ -1,0 +1,16 @@
+{
+  "zero72-yes-no": {
+    "ready": true,
+    "model": "rwkv7-g1j-7.2b-20260831-ctx16384",
+    "state_sha256": null,
+    "available_states": [],
+    "calls": 453
+  },
+  "zero72-neutral": {
+    "ready": true,
+    "model": "rwkv7-g1j-7.2b-20260831-ctx16384",
+    "state_sha256": null,
+    "available_states": [],
+    "calls": 517
+  }
+}

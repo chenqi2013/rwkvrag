@@ -7,7 +7,7 @@
 | 文档 | 用途 | 状态 |
 | --- | --- | --- |
 | [CURRENT](CURRENT.md) | 代码、运行配置、最近已完成评测、下一步 | 当前状态入口 |
-| [EXPERIMENTS](EXPERIMENTS.md) | 单变量约束、冻结和评分规则 | 当前实验约束；下一轮尚未执行 |
+| [EXPERIMENTS](EXPERIMENTS.md) | 单变量约束、冻结和评分规则 | 当前实验约束；运行状态见 CURRENT |
 | [EVIDENCE](EVIDENCE.md) | 单项证据记录与 API 契约 | 已实现，独立预览验证过 |
 | [ASSESSMENTS](ASSESSMENTS.md) | 原文与模型判断分离的接入设计 | 设计草案，尚未接入线上 |
 | [架构规则](../llamaindex-retrieval/ARCHITECTURE_RULES.md) | 代码与模型的职责边界 | 开发约束 |

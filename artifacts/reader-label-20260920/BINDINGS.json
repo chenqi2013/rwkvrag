@@ -1,0 +1,46 @@
+{
+  "files": {
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-20260920/cases.jsonl": "32445f6d9a3321c6b595025729765bd061c12c3ba93edbe98d9f02ed28dd2dbd",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-20260920/protocol.py": "d15d4f82e8f19b26dbcdf8510edaec5a5820f96e83a7fd987895bcfdd86766c3",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-20260920/run.py": "6d332ab55bef069a22e6e7b0796a9efc75fd8dcfae174dddc1634785b5f7cdff",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-20260920/profiles.json": "b285650eb82588466bdda862856795372f1644635d5bbbd5c22c170059b22148",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/src/llamaindex_retrieval/reader_prompt.py": "700b8b6731102a824b734f038467d4bd92001b00e965ac728f728f9b13ec188e",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/src/llamaindex_retrieval/rwkvos_batch.py": "8842be2e1d2f423e424ee84c8ad826dd9c6ec832ac1c1667a7fe54e36a0ae3b4",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/evidence-support-20260920/protocol.py": "a6c1f39919bb087e86fd4886e23238541d62e85e3fc1ff6f4ffefea2c91fc957"
+  },
+  "git_commit": "6054d186e1681b3330deda45b98656cb711d9e28",
+  "created_at": "2026-09-20T04:33:21.430314+00:00",
+  "profiles": [
+    {
+      "id": "zero72-yes-no",
+      "model": "rwkv7-g1j-7.2b-20260831-ctx16384",
+      "base_url": "http://127.0.0.1:18425/v1",
+      "state": null,
+      "protocol": "yes-no"
+    },
+    {
+      "id": "zero72-neutral",
+      "model": "rwkv7-g1j-7.2b-20260831-ctx16384",
+      "base_url": "http://127.0.0.1:18425/v1",
+      "state": null,
+      "protocol": "neutral-labels"
+    }
+  ],
+  "index": "fixed-material-no-retrieval",
+  "temperature": 0,
+  "max_tokens": 32,
+  "gate": {
+    "invalid": 0,
+    "false_positives": 0,
+    "min_recall": 0.9,
+    "min_pair_accuracy": 0.9
+  },
+  "annotation": "synthetic agent-authored labels; self-reviewed only, not independently adjudicated",
+  "split_semantics": {
+    "development": "40 previously seen regression cases",
+    "validation": "24 new prelabelled cases"
+  },
+  "sole_variable": "output label words and their necessary format declarations",
+  "schedule": "profile order from frozen JSON; same case order within both profiles; no concurrent calls",
+  "checkpoint_sha256_from_prior_deployment": "e3091a579c23ea7ebce9a0ad1ecfbda27082eeecd64d7f0474016e626df8f9c3"
+}
