@@ -89,3 +89,5 @@
 - 核对旧成果：按[历史索引](archive/README.md)进入指定报告；历史文中的“下一步”不再作为当前任务。
 
 2026-09-20 16:29 引用补验：在恢复语料的独立服务18446，真实历史问答 Getmii 的引用可展开，正文与保存来源一致，链接固定历史版本；桌面和390px手机视口检查通过，无API拦截、无额外模型请求。这是一条真实历史记录的展示检查，不代表所有引用语义正确。[检查记录](../artifacts/broad-regression-20260920/restored-browser/RESULT.json)。
+
+同批真实失败记录也已做前端补验：diverse-0014 的 sources 为空而回答生成资料编号；历史页点击该编号明确显示‘引用没有对应来源’，不替代成其他文章。[检查记录](../artifacts/broad-regression-20260920/restored-browser-missing-source/RESULT.json)。因此引用内容缺失的一部分原因在生成/证据链，不能只用前端展示修复解释。

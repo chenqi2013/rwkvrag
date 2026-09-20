@@ -1,0 +1,12 @@
+{
+  "case_id": "diverse-0014",
+  "source_count": 0,
+  "citation": 1,
+  "real_saved_model_answer": true,
+  "api_intercepted": false,
+  "extra_model_requests": 0,
+  "explicit_missing_source_message": true,
+  "unrelated_source_substituted": false,
+  "javascript_errors": [],
+  "write_requests": []
+}
