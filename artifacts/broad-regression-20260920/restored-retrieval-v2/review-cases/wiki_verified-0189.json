@@ -1,0 +1,307 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0189",
+    "suite": "wiki_verified",
+    "question": "你知道奈尔斯属于哪里吗？",
+    "http_status": 200,
+    "error": null,
+    "answer": "奈尔斯属于美国纽约州。[资料 2]",
+    "sources": [
+      {
+        "id": "verbatim-v1:e5194bed3795b929914100b964af167652137cad3715b1644f4444231247e586@0:6:4390e190b73a",
+        "document_id": "381f01754022f8d92582cfa3",
+        "source": "finewiki-zh",
+        "title": "奈尔斯",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86521621",
+        "score": 0.11475409836065575,
+        "snippet": "# 奈尔斯\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/5299380@86521621@ad985f28fb27decb",
+          "external_id": "zhwiki/5299380",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "381f01754022f8d92582cfa3",
+          "title": "奈尔斯",
+          "wikiname": "zhwiki",
+          "page_id": 5299380,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/5299380-86521621-ad985f28fb27decb.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "4390e190b73a5c24c2c661724b43622e0fe6251e8eccdf3806a3435d30763fba",
+            "start": 0,
+            "end": 6
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "4390e190b73a5c24c2c661724b43622e0fe6251e8eccdf3806a3435d30763fba",
+          "source_text_sha256": "4f4fc8818223ad5804a9856712103a109de2e393f991a4cf0d943a0e23030c4f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86521621",
+          "version": 86521621,
+          "heading_path": [],
+          "file_id": "381f01754022f8d92582cfa3",
+          "atomic": true,
+          "legacy_document_id": "3d4d5c4ad62c2577c2ef5bd9",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "4390e190b73a5c24c2c661724b43622e0fe6251e8eccdf3806a3435d30763fba",
+          "parent_source_id": "verbatim-v1:e5194bed3795b929914100b964af167652137cad3715b1644f4444231247e586",
+          "parent_text_sha256": "4390e190b73a5c24c2c661724b43622e0fe6251e8eccdf3806a3435d30763fba",
+          "span_start": 0,
+          "span_end": 6,
+          "span_sha256": "4390e190b73a5c24c2c661724b43622e0fe6251e8eccdf3806a3435d30763fba",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:c1a475fdd5effcb4105c8a5ca44a8e6cd78dda1be6e16f9defcc07dd1c3a51d6@0:116:0c060b5c6ada",
+        "document_id": "381f01754022f8d92582cfa3",
+        "source": "finewiki-zh",
+        "title": "奈尔斯",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86521621",
+        "score": 0.11290322580645161,
+        "snippet": "奈尔斯（英語：）是位于美国纽约州卡尤加县的一个镇，地处卡尤加县东部、奥本东南，坐落于奥瓦斯科湖与斯卡尼阿特勒斯湖之间。2010年美国人口普查时，该镇有1194人。最初的定居者于1792年左右到达此地。1833年，奈尔斯镇正式建立。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/5299380@86521621@ad985f28fb27decb",
+          "external_id": "zhwiki/5299380",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "381f01754022f8d92582cfa3",
+          "title": "奈尔斯",
+          "wikiname": "zhwiki",
+          "page_id": 5299380,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/5299380-86521621-ad985f28fb27decb.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "0c060b5c6ada270f9f268fb38c3630f23e3a3dfbeab414e7d616cc39c05422c4",
+            "start": 6,
+            "end": 122
+          },
+          "context_spans": [
+            {
+              "sha256": "4390e190b73a5c24c2c661724b43622e0fe6251e8eccdf3806a3435d30763fba",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 6,
+              "text": "# 奈尔斯\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "0c060b5c6ada270f9f268fb38c3630f23e3a3dfbeab414e7d616cc39c05422c4",
+          "source_text_sha256": "4f4fc8818223ad5804a9856712103a109de2e393f991a4cf0d943a0e23030c4f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86521621",
+          "version": 86521621,
+          "heading_path": [
+            "# 奈尔斯\n"
+          ],
+          "file_id": "381f01754022f8d92582cfa3",
+          "atomic": false,
+          "legacy_document_id": "3d4d5c4ad62c2577c2ef5bd9",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "0c060b5c6ada270f9f268fb38c3630f23e3a3dfbeab414e7d616cc39c05422c4",
+          "parent_source_id": "verbatim-v1:c1a475fdd5effcb4105c8a5ca44a8e6cd78dda1be6e16f9defcc07dd1c3a51d6",
+          "parent_text_sha256": "0c060b5c6ada270f9f268fb38c3630f23e3a3dfbeab414e7d616cc39c05422c4",
+          "span_start": 0,
+          "span_end": 116,
+          "span_sha256": "0c060b5c6ada270f9f268fb38c3630f23e3a3dfbeab414e7d616cc39c05422c4",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:56c530e7702f6531aa31bbacc3805865dd271cd55fcd26786c1e6f1165cfdc7f@0:76:6a0eb8345b62",
+        "document_id": "c8239303b33ebf75f667d705",
+        "source": "finewiki-zh",
+        "title": "帕爾佩爾斯",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=84910341",
+        "score": 0.09327651515151515,
+        "snippet": "帕爾佩爾斯是瑞士的城鎮，位於該國東部，由格勞賓登州負責管轄，面積4.59平方公里，海拔高度778米，2011年人口453，人口密度每平方公里99人。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/3507075@84910341@0322c05fdbd298b8",
+          "external_id": "zhwiki/3507075",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "c8239303b33ebf75f667d705",
+          "title": "帕爾佩爾斯",
+          "wikiname": "zhwiki",
+          "page_id": 3507075,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/3507075-84910341-0322c05fdbd298b8.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "6a0eb8345b623c22d1e1df8a1453d257e36ebc2f7d6a6dbb1342d9179898bbf6",
+            "start": 8,
+            "end": 84
+          },
+          "context_spans": [
+            {
+              "sha256": "608f21109d241605c9e46494d4d15a2a4ccb151f0717dd0223e6335365355174",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# 帕爾佩爾斯\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "6a0eb8345b623c22d1e1df8a1453d257e36ebc2f7d6a6dbb1342d9179898bbf6",
+          "source_text_sha256": "33c770879e044970f235a3ee936b8dd2aea347709890d010b547ea01419a2c6b",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=84910341",
+          "version": 84910341,
+          "heading_path": [
+            "# 帕爾佩爾斯\n"
+          ],
+          "file_id": "c8239303b33ebf75f667d705",
+          "atomic": false,
+          "legacy_document_id": "0c59312badaf5fcdd8266bf9",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "6a0eb8345b623c22d1e1df8a1453d257e36ebc2f7d6a6dbb1342d9179898bbf6",
+          "parent_source_id": "verbatim-v1:56c530e7702f6531aa31bbacc3805865dd271cd55fcd26786c1e6f1165cfdc7f",
+          "parent_text_sha256": "6a0eb8345b623c22d1e1df8a1453d257e36ebc2f7d6a6dbb1342d9179898bbf6",
+          "span_start": 0,
+          "span_end": 76,
+          "span_sha256": "6a0eb8345b623c22d1e1df8a1453d257e36ebc2f7d6a6dbb1342d9179898bbf6",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:e20851b5453d0910e8931fcef6f46baac8ff4bffa0402cb047e89c0183495c80@0:128:72d16efd205f",
+        "document_id": "288d391d9529ac2cbcbb8c85",
+        "source": "finewiki-zh",
+        "title": "別爾斯科縣",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=63358407",
+        "score": 0.09046345811051694,
+        "snippet": "49°49′N 19°02′E﻿ / ﻿49.817°N 19.033°E\n別爾斯科縣（波蘭語：），是波蘭的縣份，位於該國南部，由西里西亞省負責管轄，首府設於別爾斯科-比亞瓦，面積457平方公里，2006年人口150,764，人口密度每平方公里330人。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/6058219@63358407@d6ad6f60e3b23b5e",
+          "external_id": "zhwiki/6058219",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "288d391d9529ac2cbcbb8c85",
+          "title": "別爾斯科縣",
+          "wikiname": "zhwiki",
+          "page_id": 6058219,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/6058219-63358407-d6ad6f60e3b23b5e.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "72d16efd205f63c3a264ad5021d79379b6b1db2c5de1ea68cad0d9f4260e3f33",
+            "start": 8,
+            "end": 136
+          },
+          "context_spans": [
+            {
+              "sha256": "d36f78c9ea070f16f41ec42e25e182d1df2cbe5c9e85d61c834a6f3141741ca4",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# 別爾斯科縣\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "72d16efd205f63c3a264ad5021d79379b6b1db2c5de1ea68cad0d9f4260e3f33",
+          "source_text_sha256": "ed791c8640297e72b5187de17a56e47bdbf8612773e9fbd518b3067c84f247d8",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=63358407",
+          "version": 63358407,
+          "heading_path": [
+            "# 別爾斯科縣\n"
+          ],
+          "file_id": "288d391d9529ac2cbcbb8c85",
+          "atomic": false,
+          "legacy_document_id": "4ff58dd975e58f029d006f01",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "72d16efd205f63c3a264ad5021d79379b6b1db2c5de1ea68cad0d9f4260e3f33",
+          "parent_source_id": "verbatim-v1:e20851b5453d0910e8931fcef6f46baac8ff4bffa0402cb047e89c0183495c80",
+          "parent_text_sha256": "72d16efd205f63c3a264ad5021d79379b6b1db2c5de1ea68cad0d9f4260e3f33",
+          "span_start": 0,
+          "span_end": 128,
+          "span_sha256": "72d16efd205f63c3a264ad5021d79379b6b1db2c5de1ea68cad0d9f4260e3f33",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      17
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 4,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": false,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 0,
+      "reference_terms_total": 3,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0222.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0189",
+    "verdict": "pass",
+    "issues": [],
+    "note": "美国纽约州的归属与资料2一致，有真实引用；未要求县级或全部地理背景。"
+  },
+  "input": {
+    "id": "wiki_verified-0189",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 189,
+    "original_case": {
+      "question": "你知道奈尔斯属于哪里吗？",
+      "question_type": "location",
+      "style": "conversational",
+      "expected_title": "奈尔斯",
+      "expected_document_id": "3d4d5c4ad62c2577c2ef5bd9",
+      "expected_terms": [
+        "美国纽约州卡尤加县的一个镇",
+        "地处卡尤加县东部",
+        "奥本东南"
+      ],
+      "reference": "奈尔斯（英語：）是位于美国纽约州卡尤加县的一个镇，地处卡尤加县东部、奥本东南，坐落于奥瓦斯科湖与斯卡尼阿特勒斯湖之间。",
+      "section": "奈尔斯"
+    },
+    "category": "location",
+    "style": "conversational",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "你知道奈尔斯属于哪里吗？",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "cdb113b936c865ec5889b23107ca1d3026be3b51ad81a2b110dd4d149ad70182"
+}

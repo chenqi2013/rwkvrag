@@ -1,0 +1,820 @@
+{
+  "result": {
+    "case_id": "diverse-0012",
+    "suite": "diverse",
+    "question": "高级长期威胁为什么难以被发现",
+    "http_status": 200,
+    "error": null,
+    "answer": "1. 高级长期威胁为什么难以被发现？\n   - 高级长期威胁的幕后操纵者对组织团体的金钱或信息收集具有持续长期的高隐蔽性，且攻击者会使用复杂精心策划的恶意软件及技术以利用系统中的漏洞，这些特点使得其难以被发现。[资料 9]\n2. 高级长期威胁的定义？\n   - 高级长期威胁（APT）是指隐匿而持久的电脑入侵过程，通常由某些人员精心策划，针对特定的目标，并要求在长时间内保持高隐蔽性。这个术语一般指针对某个目标的计算机入侵，虽然针对西方政府的APT事件在西方广为流传，但许多国家的黑客也会针对个人或一群个人发动攻击。[资料 2]\n3. 高级长期威胁的特征？\n   - 高级长期威胁的特征包括：高级（使用复杂精密的恶意软件及技术以利用系统中的漏洞）、长期（暗示某个攻击者会持续监控特定目标，并从其获取数据）、威胁（指人为参与的攻击）。[资料 2]\n4. 高级长期威胁的检测方法？\n   - 高级长期威胁的检测方法包括：深入分析日志，识别异常流量，使用完善的日志分析工具来检测APT活动，以及通过缓解策略来防御攻击。[资料 9]\n5. 高级长期威胁的防御策略？\n   - 高级长期威胁的防御策略包括：深入分析日志，识别异常流量，使用完善的日志监控工具来检测APT活动，以及缓解策略如保持系统更新、加强访问控制、定期备份数据等。[资料 9]\n6. 高级长期威胁的案例？\n   - 震网蠕虫是APT的一个例子，此蠕虫专门针对伊朗核设施的电脑硬件。[资料 3]\n7. 高级长期威胁的影响？\n   - 高级长期威胁的影响包括：针对性的钓鱼电子邮件会释放木马，外泄敏感信息，但其过程中不被称为APT；APT攻击会针对特定的目标，并试图保持长期的访问权，从而对组织团体的金钱或信誉造成持续变化的威胁。[资料 9]",
+    "sources": [
+      {
+        "id": "verbatim-v1:4c49597950224a9219fb3125409b6215a9cc684488ac4c9603a1421b5550ff53@0:9:46645ba792e7",
+        "document_id": "0c3c5d331d426901d5bef12e",
+        "source": "finewiki-zh",
+        "title": "高级长期威胁",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+        "score": 0.11475409836065575,
+        "snippet": "# 高级长期威胁\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4192747@88276739@eb2171fcf3d87984",
+          "external_id": "zhwiki/4192747",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "0c3c5d331d426901d5bef12e",
+          "title": "高级长期威胁",
+          "wikiname": "zhwiki",
+          "page_id": 4192747,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4192747-88276739-eb2171fcf3d87984.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+            "start": 0,
+            "end": 9
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+          "source_text_sha256": "e398863f4b222f430fbed1a4f4daed08ef3059fc24b1d8a1de4223e0f7b9a89f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+          "version": 88276739,
+          "heading_path": [],
+          "file_id": "0c3c5d331d426901d5bef12e",
+          "atomic": true,
+          "legacy_document_id": "d49b98fbfe0c2b7643433bf4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+          "parent_source_id": "verbatim-v1:4c49597950224a9219fb3125409b6215a9cc684488ac4c9603a1421b5550ff53",
+          "parent_text_sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+          "span_start": 0,
+          "span_end": 9,
+          "span_sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:b9a6d74ac1abb8b22649504b568d6961b8747f11a5265b64ddbb4a1ece37b1ed@0:374:ed39d0a476f5",
+        "document_id": "0c3c5d331d426901d5bef12e",
+        "source": "finewiki-zh",
+        "title": "高级长期威胁",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+        "score": 0.11290322580645161,
+        "snippet": "（英語：，缩写：APT），又称高级持续性威胁、先进持续性威胁等，是指隐匿而持久的电脑入侵过程，通常由某些人员精心策划，针对特定的目标。其通常是出于商业或政治动机，针对特定组织或国家，并要求在长时间内保持高隐蔽性。高级长期威胁包含三个要素：高级、长期、威胁。高级强调的是使用复杂精密的恶意软件及技术以利用系统中的漏洞。长期暗指某个外部力量会持续监控特定目标，并从其获取数据。威胁则指人为参与策划的攻击。\nAPT发起方，如政府，通常具备持久而有效地针对特定主体的能力及意图。此术语一般指网络威胁，尤其是指使用众多情报收集技术来获取敏感信息的网络间谍活动，但也适用于传统的间谍活动之类的威胁。其他攻击面包括受感染的媒介、入侵供应链、社会工程学。个人，如个人黑客，通常不被称作APT，因为即使个人有意攻击特定目标，他们也通常不具备高级和长期这两个条件。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4192747@88276739@eb2171fcf3d87984",
+          "external_id": "zhwiki/4192747",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "0c3c5d331d426901d5bef12e",
+          "title": "高级长期威胁",
+          "wikiname": "zhwiki",
+          "page_id": 4192747,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4192747-88276739-eb2171fcf3d87984.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "ed39d0a476f5ab1583530adf07e8ad540becf1005a03b8120b0dd9c5edfd203b",
+            "start": 9,
+            "end": 383
+          },
+          "context_spans": [
+            {
+              "sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 高级长期威胁\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "ed39d0a476f5ab1583530adf07e8ad540becf1005a03b8120b0dd9c5edfd203b",
+          "source_text_sha256": "e398863f4b222f430fbed1a4f4daed08ef3059fc24b1d8a1de4223e0f7b9a89f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+          "version": 88276739,
+          "heading_path": [
+            "# 高级长期威胁\n"
+          ],
+          "file_id": "0c3c5d331d426901d5bef12e",
+          "atomic": false,
+          "legacy_document_id": "d49b98fbfe0c2b7643433bf4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "ed39d0a476f5ab1583530adf07e8ad540becf1005a03b8120b0dd9c5edfd203b",
+          "parent_source_id": "verbatim-v1:b9a6d74ac1abb8b22649504b568d6961b8747f11a5265b64ddbb4a1ece37b1ed",
+          "parent_text_sha256": "ed39d0a476f5ab1583530adf07e8ad540becf1005a03b8120b0dd9c5edfd203b",
+          "span_start": 0,
+          "span_end": 374,
+          "span_sha256": "ed39d0a476f5ab1583530adf07e8ad540becf1005a03b8120b0dd9c5edfd203b",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:3ff6d753674dee6a103c6bd42352d051c20ddca1d87718fedf121c01b9f7ada7@0:501:44a23a1a0d44",
+        "document_id": "0c3c5d331d426901d5bef12e",
+        "source": "finewiki-zh",
+        "title": "高级长期威胁",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+        "score": 0.1111111111111111,
+        "snippet": "2005年时，英国及美国的一些计算机应急响应组织发布报告，提醒人们注意某些针对性的钓鱼电子邮件会释放木马，外泄敏感信息，但「APT」一词还未被使用。普遍认为「高级长期威胁」这个术语是在2006年由美国空军创造，而格雷格·拉特雷上校一般被认为是该术语的发明人。\n震网蠕虫是APT的一个例子，此蠕虫专门针对伊朗核设施的电脑硬件。此事件中，伊朗政府可能就把震网蠕虫的创造者视为一个高级长期威胁。\n在计算机安全社群及媒体中，此术语常指针对政府、公司、政治活跃分子的长期而复杂的黑客攻击，也指发起这些攻击幕后团体的活動特徵。日趋频繁的高级长期威胁（APT）可能会逐渐只用于指代计算机黑客入侵。据《PC World》杂志统计，从2010年到2011年，针对性的高级电脑黑客攻击增长了81%。\n对于APT的一个常见误解是，APT仅仅针对西方政府。虽然针对西方政府的APT事件在西方广为流传，但许多国家的黑客也会通过网络空间收集个人或一群个人的情报。美国网战司令部负责协调美国军方对网络攻击作出的响应。\n有说法称一些APT团体直属于或受雇于民族国家。\n掌握大量可辨识的个人身份信息的行业极有可能遭受高级长期威胁，如：\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4192747@88276739@eb2171fcf3d87984",
+          "external_id": "zhwiki/4192747",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 3,
+          "document_id": "0c3c5d331d426901d5bef12e",
+          "title": "高级长期威胁",
+          "wikiname": "zhwiki",
+          "page_id": 4192747,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4192747-88276739-eb2171fcf3d87984.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "44a23a1a0d44d77ce395ef28eaeb977414553813c9e08076337e871d36718725",
+            "start": 389,
+            "end": 890
+          },
+          "context_spans": [
+            {
+              "sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 高级长期威胁\n"
+            },
+            {
+              "sha256": "c0eda7e6ed49e139c22c3e36bccf8dfb05ba3360c591a09823f1f8236c3d9cc8",
+              "level": 2,
+              "kind": "heading",
+              "start": 383,
+              "end": 389,
+              "text": "## 历史\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "44a23a1a0d44d77ce395ef28eaeb977414553813c9e08076337e871d36718725",
+          "source_text_sha256": "e398863f4b222f430fbed1a4f4daed08ef3059fc24b1d8a1de4223e0f7b9a89f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+          "version": 88276739,
+          "heading_path": [
+            "# 高级长期威胁\n",
+            "## 历史\n"
+          ],
+          "file_id": "0c3c5d331d426901d5bef12e",
+          "atomic": false,
+          "legacy_document_id": "d49b98fbfe0c2b7643433bf4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "44a23a1a0d44d77ce395ef28eaeb977414553813c9e08076337e871d36718725",
+          "parent_source_id": "verbatim-v1:3ff6d753674dee6a103c6bd42352d051c20ddca1d87718fedf121c01b9f7ada7",
+          "parent_text_sha256": "44a23a1a0d44d77ce395ef28eaeb977414553813c9e08076337e871d36718725",
+          "span_start": 0,
+          "span_end": 501,
+          "span_sha256": "44a23a1a0d44d77ce395ef28eaeb977414553813c9e08076337e871d36718725",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:4199b838bc626d9cbfc1e07825daf0f422f37fe5802682d2bc76baa87101aac5@0:485:86cf438fffdf",
+        "document_id": "0c3c5d331d426901d5bef12e",
+        "source": "finewiki-zh",
+        "title": "高级长期威胁",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+        "score": 0.109375,
+        "snippet": "- 高级：威胁的幕后操纵者对情报收集技术有着全面的掌控能力。其中可包括电脑入侵技术和传统情报收集技术（如电话监听技术、卫星成像技术）。攻击中使用的各个组件本身可能并不能算特别「高级」（例如，利用公开的恶意软件生成工具生成的恶意软件，或是一些容易获得的漏洞利用材料），但是操纵者往往可以按需开发出更高级的工具。他们一般会使用多种针对方式、工具和技术以入侵目标，并保持访问权限。操纵者也可能会特别注意行动中的安全，这一点和「不那么高级」的威胁有所不同。\n- 长期：操纵者注重一个特定的任务，而不是盲目搜寻信息。这一区别暗示攻击者受到外部力量指示。为了达到预定目的，攻击者会持续监控目标，并做出反应。这并不表示攻击者会经常发动攻击、频繁更新恶意软件。事实上，「放长线」的方法会更为成功。如果操纵者失去了对目标的访问权，他们一般会重新尝试入侵，也往往会成功。操纵者的目的之一就是对目标保有长期的访问权，而不是一次性的访问权。\n- 威胁：APT之所以成为威胁，是因为发起方既有此能力，又有此意图。APT攻击是由一群有组织的人发起的。操纵者有特定的目标，且技术精湛、资金雄厚。\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4192747@88276739@eb2171fcf3d87984",
+          "external_id": "zhwiki/4192747",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 7,
+          "document_id": "0c3c5d331d426901d5bef12e",
+          "title": "高级长期威胁",
+          "wikiname": "zhwiki",
+          "page_id": 4192747,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4192747-88276739-eb2171fcf3d87984.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "86cf438fffdfb9e69c324b99f8ad27507724a8b24849ea7a5aa83a3f0dba4f27",
+            "start": 936,
+            "end": 1421
+          },
+          "context_spans": [
+            {
+              "sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 高级长期威胁\n"
+            },
+            {
+              "sha256": "f8c006deadf805efbec5dd9325698ebcb2f1ce88c01aa6834d07567201a51fef",
+              "level": 2,
+              "kind": "heading",
+              "start": 910,
+              "end": 916,
+              "text": "## 术语\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "86cf438fffdfb9e69c324b99f8ad27507724a8b24849ea7a5aa83a3f0dba4f27",
+          "source_text_sha256": "e398863f4b222f430fbed1a4f4daed08ef3059fc24b1d8a1de4223e0f7b9a89f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+          "version": 88276739,
+          "heading_path": [
+            "# 高级长期威胁\n",
+            "## 术语\n"
+          ],
+          "file_id": "0c3c5d331d426901d5bef12e",
+          "atomic": true,
+          "legacy_document_id": "d49b98fbfe0c2b7643433bf4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "86cf438fffdfb9e69c324b99f8ad27507724a8b24849ea7a5aa83a3f0dba4f27",
+          "parent_source_id": "verbatim-v1:4199b838bc626d9cbfc1e07825daf0f422f37fe5802682d2bc76baa87101aac5",
+          "parent_text_sha256": "86cf438fffdfb9e69c324b99f8ad27507724a8b24849ea7a5aa83a3f0dba4f27",
+          "span_start": 0,
+          "span_end": 485,
+          "span_sha256": "86cf438fffdfb9e69c324b99f8ad27507724a8b24849ea7a5aa83a3f0dba4f27",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:bd068e3b83be36f2157a1a1ea5bdae90f543614cc996d240a678b4c349907f5e@0:162:090e177a6493",
+        "document_id": "0c3c5d331d426901d5bef12e",
+        "source": "finewiki-zh",
+        "title": "高级长期威胁",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+        "score": 0.10745920745920746,
+        "snippet": "自习近平于2012年出任中共中央总书记以来，国家安全部（MSS）在网络间谍活动方面获得了比解放军更大的职责，目前负责监督各种高级持续性威胁组织。据安全研究员蒂莫·斯特芬斯（Timo Steffens）称，中国的“高级持续性威胁”（APT）组织利用来自从私有或公共机构到个体（包括和政府有承包项目的小公司和黑客组织）的技能。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4192747@88276739@eb2171fcf3d87984",
+          "external_id": "zhwiki/4192747",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 28,
+          "document_id": "0c3c5d331d426901d5bef12e",
+          "title": "高级长期威胁",
+          "wikiname": "zhwiki",
+          "page_id": 4192747,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4192747-88276739-eb2171fcf3d87984.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "090e177a64937cea60feb27bf02e13b2160f0a80cdf1e64928698a784145be28",
+            "start": 2773,
+            "end": 2935
+          },
+          "context_spans": [
+            {
+              "sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 高级长期威胁\n"
+            },
+            {
+              "sha256": "d79fdf91430202253da6cc1725134eb3c2ca1f4e684ff785706030935a9b04fd",
+              "level": 2,
+              "kind": "heading",
+              "start": 2757,
+              "end": 2765,
+              "text": "## 相关组织\n"
+            },
+            {
+              "sha256": "1a0b55e49f6f1119b851ebdf6689839b2f19f33b457cf5f995584c738df38d7c",
+              "level": 3,
+              "kind": "heading",
+              "start": 2766,
+              "end": 2773,
+              "text": "### 中国\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "090e177a64937cea60feb27bf02e13b2160f0a80cdf1e64928698a784145be28",
+          "source_text_sha256": "e398863f4b222f430fbed1a4f4daed08ef3059fc24b1d8a1de4223e0f7b9a89f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+          "version": 88276739,
+          "heading_path": [
+            "# 高级长期威胁\n",
+            "## 相关组织\n",
+            "### 中国\n"
+          ],
+          "file_id": "0c3c5d331d426901d5bef12e",
+          "atomic": false,
+          "legacy_document_id": "d49b98fbfe0c2b7643433bf4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "090e177a64937cea60feb27bf02e13b2160f0a80cdf1e64928698a784145be28",
+          "parent_source_id": "verbatim-v1:bd068e3b83be36f2157a1a1ea5bdae90f543614cc996d240a678b4c349907f5e",
+          "parent_text_sha256": "090e177a64937cea60feb27bf02e13b2160f0a80cdf1e64928698a784145be28",
+          "span_start": 0,
+          "span_end": 162,
+          "span_sha256": "090e177a64937cea60feb27bf02e13b2160f0a80cdf1e64928698a784145be28",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:9705e59ba6f32bc5ec82dc108c20ac65b7807692b57a790bcd2b68b6eb6bf9f9@0:214:715b3941b100",
+        "document_id": "0c3c5d331d426901d5bef12e",
+        "source": "finewiki-zh",
+        "title": "高级长期威胁",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+        "score": 0.1062937062937063,
+        "snippet": "- 目标 – 威胁的最终目标，即你的对手\n- 时间 – 调查、入侵所花的时间\n- 资源 – 所涉及的知识面及工具（技能和方法也有所影响）\n- 风险承受能力 – 威胁能在多大程度上不被发觉\n- 技能与方法 – 所使用的工具及技术\n- 行动 – 威胁中采取的具体行动\n- 攻击源头 – 攻击来源的数量\n- 牵涉数量 – 牵涉到多少内部或外部系统，多少人的系统具有不同重要性\n- 信息来源 – 是否能通过收集在线信息识别出某个威胁\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4192747@88276739@eb2171fcf3d87984",
+          "external_id": "zhwiki/4192747",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 10,
+          "document_id": "0c3c5d331d426901d5bef12e",
+          "title": "高级长期威胁",
+          "wikiname": "zhwiki",
+          "page_id": 4192747,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4192747-88276739-eb2171fcf3d87984.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "715b3941b100a0e89bfc27fda475eed468067794dbffbb123a17db5c38b97958",
+            "start": 1472,
+            "end": 1686
+          },
+          "context_spans": [
+            {
+              "sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 高级长期威胁\n"
+            },
+            {
+              "sha256": "bf6603f9b401ff2d09c438e79a66b6fdcfcc2acef66901b8d53c8462f24fbf56",
+              "level": 2,
+              "kind": "heading",
+              "start": 1421,
+              "end": 1427,
+              "text": "## 特点\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "715b3941b100a0e89bfc27fda475eed468067794dbffbb123a17db5c38b97958",
+          "source_text_sha256": "e398863f4b222f430fbed1a4f4daed08ef3059fc24b1d8a1de4223e0f7b9a89f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+          "version": 88276739,
+          "heading_path": [
+            "# 高级长期威胁\n",
+            "## 特点\n"
+          ],
+          "file_id": "0c3c5d331d426901d5bef12e",
+          "atomic": true,
+          "legacy_document_id": "d49b98fbfe0c2b7643433bf4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "715b3941b100a0e89bfc27fda475eed468067794dbffbb123a17db5c38b97958",
+          "parent_source_id": "verbatim-v1:9705e59ba6f32bc5ec82dc108c20ac65b7807692b57a790bcd2b68b6eb6bf9f9",
+          "parent_text_sha256": "715b3941b100a0e89bfc27fda475eed468067794dbffbb123a17db5c38b97958",
+          "span_start": 0,
+          "span_end": 214,
+          "span_sha256": "715b3941b100a0e89bfc27fda475eed468067794dbffbb123a17db5c38b97958",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:048b2442b5ee3ead7945b4dc879ed98622bf40a0ab54b49e1ff4c9dec4f2f2c3@0:44:397afef1bd32",
+        "document_id": "0c3c5d331d426901d5bef12e",
+        "source": "finewiki-zh",
+        "title": "高级长期威胁",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+        "score": 0.10381913959613696,
+        "snippet": "APT的幕后黑手会对组织团体的金融财产、知识产权及名誉造成持续变化的威胁，其过程如下：\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4192747@88276739@eb2171fcf3d87984",
+          "external_id": "zhwiki/4192747",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 14,
+          "document_id": "0c3c5d331d426901d5bef12e",
+          "title": "高级长期威胁",
+          "wikiname": "zhwiki",
+          "page_id": 4192747,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4192747-88276739-eb2171fcf3d87984.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "397afef1bd320ae33a1a134c2fb66dc182d0050ecd0de9463e2e5d8c2c52f9e9",
+            "start": 1818,
+            "end": 1862
+          },
+          "context_spans": [
+            {
+              "sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 高级长期威胁\n"
+            },
+            {
+              "sha256": "80bebbd1393df32753a4b1a765880552baca9db5092ee4cbcff29d0da3611919",
+              "level": 2,
+              "kind": "heading",
+              "start": 1810,
+              "end": 1818,
+              "text": "## 生命周期\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "397afef1bd320ae33a1a134c2fb66dc182d0050ecd0de9463e2e5d8c2c52f9e9",
+          "source_text_sha256": "e398863f4b222f430fbed1a4f4daed08ef3059fc24b1d8a1de4223e0f7b9a89f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+          "version": 88276739,
+          "heading_path": [
+            "# 高级长期威胁\n",
+            "## 生命周期\n"
+          ],
+          "file_id": "0c3c5d331d426901d5bef12e",
+          "atomic": false,
+          "legacy_document_id": "d49b98fbfe0c2b7643433bf4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "397afef1bd320ae33a1a134c2fb66dc182d0050ecd0de9463e2e5d8c2c52f9e9",
+          "parent_source_id": "verbatim-v1:048b2442b5ee3ead7945b4dc879ed98622bf40a0ab54b49e1ff4c9dec4f2f2c3",
+          "parent_text_sha256": "397afef1bd320ae33a1a134c2fb66dc182d0050ecd0de9463e2e5d8c2c52f9e9",
+          "span_start": 0,
+          "span_end": 44,
+          "span_sha256": "397afef1bd320ae33a1a134c2fb66dc182d0050ecd0de9463e2e5d8c2c52f9e9",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:26d352ce412de05848f379717d7135804b2c1a32208aedf87b896b2ac267d6c4@0:45:6d5423a1fdf5",
+        "document_id": "0c3c5d331d426901d5bef12e",
+        "source": "finewiki-zh",
+        "title": "高级长期威胁",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+        "score": 0.09889362710258234,
+        "snippet": "Bodmer、Kilger、Carpenter和Jones的研究将APT的标准定义如下：\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4192747@88276739@eb2171fcf3d87984",
+          "external_id": "zhwiki/4192747",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 9,
+          "document_id": "0c3c5d331d426901d5bef12e",
+          "title": "高级长期威胁",
+          "wikiname": "zhwiki",
+          "page_id": 4192747,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4192747-88276739-eb2171fcf3d87984.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "6d5423a1fdf57835a247cdda26344787235ff43377e4107a2e2d1ad77ed40af4",
+            "start": 1427,
+            "end": 1472
+          },
+          "context_spans": [
+            {
+              "sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 高级长期威胁\n"
+            },
+            {
+              "sha256": "bf6603f9b401ff2d09c438e79a66b6fdcfcc2acef66901b8d53c8462f24fbf56",
+              "level": 2,
+              "kind": "heading",
+              "start": 1421,
+              "end": 1427,
+              "text": "## 特点\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "6d5423a1fdf57835a247cdda26344787235ff43377e4107a2e2d1ad77ed40af4",
+          "source_text_sha256": "e398863f4b222f430fbed1a4f4daed08ef3059fc24b1d8a1de4223e0f7b9a89f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+          "version": 88276739,
+          "heading_path": [
+            "# 高级长期威胁\n",
+            "## 特点\n"
+          ],
+          "file_id": "0c3c5d331d426901d5bef12e",
+          "atomic": false,
+          "legacy_document_id": "d49b98fbfe0c2b7643433bf4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "6d5423a1fdf57835a247cdda26344787235ff43377e4107a2e2d1ad77ed40af4",
+          "parent_source_id": "verbatim-v1:26d352ce412de05848f379717d7135804b2c1a32208aedf87b896b2ac267d6c4",
+          "parent_text_sha256": "6d5423a1fdf57835a247cdda26344787235ff43377e4107a2e2d1ad77ed40af4",
+          "span_start": 0,
+          "span_end": 45,
+          "span_sha256": "6d5423a1fdf57835a247cdda26344787235ff43377e4107a2e2d1ad77ed40af4",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:f0eeb68b070998d88877ed89ad23a014e649cc731939694f34d6707f4a878f28@0:159:65baa29dadfd",
+        "document_id": "0c3c5d331d426901d5bef12e",
+        "source": "finewiki-zh",
+        "title": "高级长期威胁",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+        "score": 0.08178170314855311,
+        "snippet": "恶意软件的变种数以千万计，因此要保护组织团体免于APT攻击极为困难。虽然APT活动十分隐蔽，但与APT相关的命令与控制网络流量却可以在网络层由精密的方法检测。深入的日志分析和比对有助于检测APT活动。尽管要从正常流量中分离出异常流量有一定难度，但这一工作可以借助完善的日志分析工具来完成，以便安全专家调查异常流量。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4192747@88276739@eb2171fcf3d87984",
+          "external_id": "zhwiki/4192747",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 20,
+          "document_id": "0c3c5d331d426901d5bef12e",
+          "title": "高级长期威胁",
+          "wikiname": "zhwiki",
+          "page_id": 4192747,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4192747-88276739-eb2171fcf3d87984.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "65baa29dadfd9a69211a1f218eedbcb03af3011abda1db871dd3bc53c1cc5a42",
+            "start": 2432,
+            "end": 2591
+          },
+          "context_spans": [
+            {
+              "sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 高级长期威胁\n"
+            },
+            {
+              "sha256": "8cc2bfdfb7b4b2306df834426e24d47101a747384a4eb1d82b075b0804e028b3",
+              "level": 2,
+              "kind": "heading",
+              "start": 2424,
+              "end": 2432,
+              "text": "## 缓解策略\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "65baa29dadfd9a69211a1f218eedbcb03af3011abda1db871dd3bc53c1cc5a42",
+          "source_text_sha256": "e398863f4b222f430fbed1a4f4daed08ef3059fc24b1d8a1de4223e0f7b9a89f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+          "version": 88276739,
+          "heading_path": [
+            "# 高级长期威胁\n",
+            "## 缓解策略\n"
+          ],
+          "file_id": "0c3c5d331d426901d5bef12e",
+          "atomic": false,
+          "legacy_document_id": "d49b98fbfe0c2b7643433bf4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "65baa29dadfd9a69211a1f218eedbcb03af3011abda1db871dd3bc53c1cc5a42",
+          "parent_source_id": "verbatim-v1:f0eeb68b070998d88877ed89ad23a014e649cc731939694f34d6707f4a878f28",
+          "parent_text_sha256": "65baa29dadfd9a69211a1f218eedbcb03af3011abda1db871dd3bc53c1cc5a42",
+          "span_start": 0,
+          "span_end": 159,
+          "span_sha256": "65baa29dadfd9a69211a1f218eedbcb03af3011abda1db871dd3bc53c1cc5a42",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:54f9d4ab71db260e8a9766c12ba3a253f0239e0eaff089281f6d678b1abcebae@0:8:8cc2bfdfb7b4",
+        "document_id": "0c3c5d331d426901d5bef12e",
+        "source": "finewiki-zh",
+        "title": "高级长期威胁",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+        "score": 0.014925373134328358,
+        "snippet": "## 缓解策略\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4192747@88276739@eb2171fcf3d87984",
+          "external_id": "zhwiki/4192747",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 19,
+          "document_id": "0c3c5d331d426901d5bef12e",
+          "title": "高级长期威胁",
+          "wikiname": "zhwiki",
+          "page_id": 4192747,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4192747-88276739-eb2171fcf3d87984.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8cc2bfdfb7b4b2306df834426e24d47101a747384a4eb1d82b075b0804e028b3",
+            "start": 2424,
+            "end": 2432
+          },
+          "context_spans": [
+            {
+              "sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 高级长期威胁\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "8cc2bfdfb7b4b2306df834426e24d47101a747384a4eb1d82b075b0804e028b3",
+          "source_text_sha256": "e398863f4b222f430fbed1a4f4daed08ef3059fc24b1d8a1de4223e0f7b9a89f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+          "version": 88276739,
+          "heading_path": [
+            "# 高级长期威胁\n"
+          ],
+          "file_id": "0c3c5d331d426901d5bef12e",
+          "atomic": true,
+          "legacy_document_id": "d49b98fbfe0c2b7643433bf4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8cc2bfdfb7b4b2306df834426e24d47101a747384a4eb1d82b075b0804e028b3",
+          "parent_source_id": "verbatim-v1:54f9d4ab71db260e8a9766c12ba3a253f0239e0eaff089281f6d678b1abcebae",
+          "parent_text_sha256": "8cc2bfdfb7b4b2306df834426e24d47101a747384a4eb1d82b075b0804e028b3",
+          "span_start": 0,
+          "span_end": 8,
+          "span_sha256": "8cc2bfdfb7b4b2306df834426e24d47101a747384a4eb1d82b075b0804e028b3",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:4b4be03ffbb83745f8f302ce8b122edee4e86d09d74ae90bed4d6b751e5af564@0:104:ee04d226ed07",
+        "document_id": "0c3c5d331d426901d5bef12e",
+        "source": "finewiki-zh",
+        "title": "高级长期威胁",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+        "score": 0.10168650436292093,
+        "snippet": "- 基於經濟或競爭優勢\n- 時間長期、持續、多個階段的攻擊\n- 目標針對特定公司、組織或平台\n- 多元攻擊方式包括假冒信件、現成與客製化惡意軟體、遠端控制工具、將機密敏感資料外傳[18][19][20]\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4192747@88276739@eb2171fcf3d87984",
+          "external_id": "zhwiki/4192747",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 12,
+          "document_id": "0c3c5d331d426901d5bef12e",
+          "title": "高级长期威胁",
+          "wikiname": "zhwiki",
+          "page_id": 4192747,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4192747-88276739-eb2171fcf3d87984.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "ee04d226ed07a1bb36b72d0e0a1c807c25202dc1fb06eb294ab59a1c5abea1ad",
+            "start": 1706,
+            "end": 1810
+          },
+          "context_spans": [
+            {
+              "sha256": "46645ba792e753671dbc9497c52151ad185ca329e8d7e3e2f5860b5d5f4da36a",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 高级长期威胁\n"
+            },
+            {
+              "sha256": "bf6603f9b401ff2d09c438e79a66b6fdcfcc2acef66901b8d53c8462f24fbf56",
+              "level": 2,
+              "kind": "heading",
+              "start": 1421,
+              "end": 1427,
+              "text": "## 特点\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "ee04d226ed07a1bb36b72d0e0a1c807c25202dc1fb06eb294ab59a1c5abea1ad",
+          "source_text_sha256": "e398863f4b222f430fbed1a4f4daed08ef3059fc24b1d8a1de4223e0f7b9a89f",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88276739",
+          "version": 88276739,
+          "heading_path": [
+            "# 高级长期威胁\n",
+            "## 特点\n"
+          ],
+          "file_id": "0c3c5d331d426901d5bef12e",
+          "atomic": true,
+          "legacy_document_id": "d49b98fbfe0c2b7643433bf4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "ee04d226ed07a1bb36b72d0e0a1c807c25202dc1fb06eb294ab59a1c5abea1ad",
+          "parent_source_id": "verbatim-v1:4b4be03ffbb83745f8f302ce8b122edee4e86d09d74ae90bed4d6b751e5af564",
+          "parent_text_sha256": "ee04d226ed07a1bb36b72d0e0a1c807c25202dc1fb06eb294ab59a1c5abea1ad",
+          "span_start": 0,
+          "span_end": 104,
+          "span_sha256": "ee04d226ed07a1bb36b72d0e0a1c807c25202dc1fb06eb294ab59a1c5abea1ad",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      748
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 11,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0416.json"
+  },
+  "review": {
+    "case_id": "diverse-0012",
+    "verdict": "partial",
+    "issues": [
+      "unrequested_expansion",
+      "citation_misalignment",
+      "unsupported_claims",
+      "temporal_meaning_loss"
+    ],
+    "note": "隐蔽、长期及复杂技术的核心解释基本有据，但首点引用9并不完整支持所述技术能力；后续扩成七个自拟问答，把未出现APT术语误写为钓鱼过程不被称作APT，添加资料9未提供的更新/备份等策略。原题可用的简洁解释被无关扩写和错引损害。"
+  },
+  "input": {
+    "id": "diverse-0012",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 12,
+    "original_case": {
+      "case_type": "cause",
+      "question": "高级长期威胁为什么难以被发现",
+      "expected_titles": [
+        "高级长期威胁"
+      ]
+    },
+    "category": "cause",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "高级长期威胁为什么难以被发现",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "f3350539e8e4623178a902fb1a50e901b781ea12afc784bb7881ad075a265c70"
+}

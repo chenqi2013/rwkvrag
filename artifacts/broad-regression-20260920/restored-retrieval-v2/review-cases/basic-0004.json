@@ -1,0 +1,138 @@
+{
+  "result": {
+    "case_id": "basic-0004",
+    "suite": "basic",
+    "question": "中国有多少光棍男性",
+    "http_status": 200,
+    "error": null,
+    "answer": "中国有多少光棍男性：未提供具体数字。[资料 1]",
+    "sources": [
+      {
+        "id": "verbatim-v1:7c62e8db1fc6b8c28398806e71a859fd3f8cbd08c4a68f48f4dfe56e28ccb5d1@0:174:b5201e88fb63",
+        "document_id": "992372dd12ef7367f6861027",
+        "source": "finewiki-zh",
+        "title": "中国男女比例失调",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=82986977",
+        "score": 0.06505334374186833,
+        "snippet": "由於中国男性过剩，导致婚姻擠壓的出現。另外由于女性更容易選擇高嫁，這使得贫穷和未受过教育的中國男性結婚會非常困難，而喪偶、離異的男子要是再婚也變得困難。不結婚的男子還有可能遭到歧視和被人議論，並且感到孤独感和挫敗感，進而出现心理问题。有學者估計，中國境內的未婚男子主要位於农村地区。\n由於男性結婚困難，造成聘金昂貴的現象，甚至有婦女被拐賣到農村。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/8320726@82986977@eab19d1b93b09d20",
+          "external_id": "zhwiki/8320726",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 17,
+          "document_id": "992372dd12ef7367f6861027",
+          "title": "中国男女比例失调",
+          "wikiname": "zhwiki",
+          "page_id": 8320726,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/8320726-82986977-eab19d1b93b09d20.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "b5201e88fb632f897f88ce8ece615f790664834793986d03aff484741e2e1ad2",
+            "start": 3392,
+            "end": 3566
+          },
+          "context_spans": [
+            {
+              "sha256": "efedaf1ae3f121e861229c1e442f8b00e3a0c5d4e0371cf78bee88b8f915b8b6",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 11,
+              "text": "# 中国男女比例失调\n"
+            },
+            {
+              "sha256": "934db552aacbd258c35b2eee1b1b074560ecdd0f8e8f80fcdf8e93046348d2b0",
+              "level": 2,
+              "kind": "heading",
+              "start": 3386,
+              "end": 3392,
+              "text": "## 後果\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "b5201e88fb632f897f88ce8ece615f790664834793986d03aff484741e2e1ad2",
+          "source_text_sha256": "cc8951def6cd9b6100f88aaee732984606278488645446761e5d24b6f07651c6",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=82986977",
+          "version": 82986977,
+          "heading_path": [
+            "# 中国男女比例失调\n",
+            "## 後果\n"
+          ],
+          "file_id": "992372dd12ef7367f6861027",
+          "atomic": false,
+          "legacy_document_id": "1f774c3a45ea6141e3a35fb2",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "b5201e88fb632f897f88ce8ece615f790664834793986d03aff484741e2e1ad2",
+          "parent_source_id": "verbatim-v1:7c62e8db1fc6b8c28398806e71a859fd3f8cbd08c4a68f48f4dfe56e28ccb5d1",
+          "parent_text_sha256": "b5201e88fb632f897f88ce8ece615f790664834793986d03aff484741e2e1ad2",
+          "span_start": 0,
+          "span_end": 174,
+          "span_sha256": "b5201e88fb632f897f88ce8ece615f790664834793986d03aff484741e2e1ad2",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      24
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0139.json"
+  },
+  "review": {
+    "case_id": "basic-0004",
+    "verdict": "partial",
+    "issues": [
+      "unresolved_information_need",
+      "scope_not_clarified"
+    ],
+    "note": "所给资料没有人数，回答没有编造数字；但未解决用户问题，也未说明需要年份及未婚/婚姻挤压等统计口径，不能视为完整可用答案。"
+  },
+  "input": {
+    "id": "basic-0004",
+    "suite": "basic",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/cases.jsonl",
+    "origin_index": 4,
+    "original_case": {
+      "question": "中国有多少光棍男性",
+      "expected_titles": [
+        "中国男女比例失调",
+        "婚姻挤压",
+        "单身"
+      ]
+    },
+    "category": "basic",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "中国有多少光棍男性",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "d1fdd212617dc29c2c2b7ac61a86a4bd9d1473f18d47c7eb607ad34b47fbe610"
+}

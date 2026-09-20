@@ -1,0 +1,790 @@
+{
+  "result": {
+    "case_id": "native_wiki-0002",
+    "suite": "native_wiki",
+    "question": "列车编组资料里有三个不同问题：ICE-1能不能像后续车型那样与另一列组合运行？ICE-2科隆/杜塞尔多夫往柏林的例子在哪一站合体？JR九州305系一个编组总共几辆，其中几辆是动力车？请分别引用，别把重联和车厢数量当一回事。",
+    "http_status": 200,
+    "error": null,
+    "answer": "ICE-1能不能像后续车型那样与另一列组合运行？\n[资料 1] 德國內高速列車需要由於中型城市分佈平均，所以採用合體設計，以充分運用ICE-2的合體設計。在人口稠密的魯爾區，新ICE路線便採用了「並行」設計。在科隆至柏林的例子在哪一站合體？\n[资料 2] 一列ICE-2由兩個動力車頭（前方稱為「科隆」）、一輛乘客車廂（Bordcerarstation站）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、一輛動力車（Hamm）、",
+    "sources": [
+      {
+        "id": "verbatim-v1:cac030f483914a1a8f012f2f3379132a638b6278a683cf390039622db1bbacf6@0:539:f0d263ad3893",
+        "document_id": "7a8e0775f011812d68e18374",
+        "source": "finewiki-zh",
+        "title": "ICE-2列車",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=71718438",
+        "score": 0.045944779982743746,
+        "snippet": "德國內高速列車需求很大，但由於中型城市分佈平均，所以ICE-2採用合體設計，而路線亦經過特別設計，讓ICE-2列車行經更多的所有中、大型城市，充分運用了ICE-2的合體設計。在人口稠密的魯爾區，新ICE路線便採用了「並行」設計。\n以由科隆至柏林的ICE線為例，一列ICE-2列車會由杜塞道夫中央車站開出，經、杜伊斯堡、埃森、多特蒙德至Hamm；另一輛列車將由科隆（或波昂）開出，經Solingen-Ohligs、Wuppertal至Hamm；兩組車將於Hamm合體再經漢諾威直達柏林；回程路線亦如是在Hamm分體再分開行走不同路線。在慕尼黑開出的已合體ICE-2列車亦會在漢諾威分體，兩列車會分別往漢堡及不來梅方向開行駛。\n有了合體技術後ICE的路線便有更多的變化。例如由多蒙特至慕尼黑的路線，兩列ICE-2列車可由多蒙特分別經杜塞多夫及Wuppertal兩條路線至科隆合體、再完成餘下的路程。但亦可以在下峰時間只用一列列車由多蒙特經杜塞多夫這條較多人的路線行走至科隆；另一列列車則在科隆中央車站等候它的「同伴」到站再進行合體、然後完成餘下的路程。這條多變化的路線非常成功，西面-東南交通得到舒緩，之後更被首先換上ICE-2的繼承人ICE-3/3M，成為ICE-3第一條路線。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/328852@71718438@c6bbcf67f60d456c",
+          "external_id": "zhwiki/328852",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 5,
+          "document_id": "7a8e0775f011812d68e18374",
+          "title": "ICE-2列車",
+          "wikiname": "zhwiki",
+          "page_id": 328852,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/328852-71718438-c6bbcf67f60d456c.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "f0d263ad3893d6fdbeca66e18d8b49409c453021175c062be9e8bff8a0294efd",
+            "start": 782,
+            "end": 1321
+          },
+          "context_spans": [
+            {
+              "sha256": "f722e69e588ba8f82b91766ed2f4749496498e8a316c00ee23746df3f20a3e82",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 10,
+              "text": "# ICE-2列車\n"
+            },
+            {
+              "sha256": "f435caefc8170b249df3da1339dfef30a0cfb9006310e1b4eeca72af2e5ec403",
+              "level": 2,
+              "kind": "heading",
+              "start": 776,
+              "end": 782,
+              "text": "## 路線\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "f0d263ad3893d6fdbeca66e18d8b49409c453021175c062be9e8bff8a0294efd",
+          "source_text_sha256": "9d4713b7dbca6e2606ded5a36ce88a093bc907c3c3a01213c3d4e5aaf2b1f8de",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=71718438",
+          "version": 71718438,
+          "heading_path": [
+            "# ICE-2列車\n",
+            "## 路線\n"
+          ],
+          "file_id": "7a8e0775f011812d68e18374",
+          "atomic": false,
+          "legacy_document_id": "0f32caf1f2e135d086f2a496",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "f0d263ad3893d6fdbeca66e18d8b49409c453021175c062be9e8bff8a0294efd",
+          "parent_source_id": "verbatim-v1:cac030f483914a1a8f012f2f3379132a638b6278a683cf390039622db1bbacf6",
+          "parent_text_sha256": "f0d263ad3893d6fdbeca66e18d8b49409c453021175c062be9e8bff8a0294efd",
+          "span_start": 0,
+          "span_end": 539,
+          "span_sha256": "f0d263ad3893d6fdbeca66e18d8b49409c453021175c062be9e8bff8a0294efd",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1cca2b9d06e5ad4215f232030945e13cae208915fdff1c0a0837371a33e8d59d@0:74:0582a4399df0",
+        "document_id": "9b38dd9c3a592769518fe95d",
+        "source": "finewiki-zh",
+        "title": "JR九州305系電聯車",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=79045272",
+        "score": 0.03252247488101534,
+        "snippet": "305系電聯車每編組為六節车厢组成，如下所示，编号为W1至W6，編組兩端各為一輛無動力駕駛車，編組中間是4輛動力車。1號車位在列車編組之西唐津端。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7483286@79045272@7306f922e2501392",
+          "external_id": "zhwiki/7483286",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 7,
+          "document_id": "9b38dd9c3a592769518fe95d",
+          "title": "JR九州305系電聯車",
+          "wikiname": "zhwiki",
+          "page_id": 7483286,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7483286-79045272-7306f922e2501392.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "0582a4399df0add44ff9fccae17149aca06267651403e59b759b5849d4d60221",
+            "start": 311,
+            "end": 385
+          },
+          "context_spans": [
+            {
+              "sha256": "bf887d9310cdf2939cec39cf4b4b0b7397b2b7732b2294cd4dbdfe9a5f1f8cdd",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 14,
+              "text": "# JR九州305系電聯車\n"
+            },
+            {
+              "sha256": "b74e6301a7aed8a14009feaea9431c74b0c9ed1729aab9ae76874dd5e34ff8e1",
+              "level": 2,
+              "kind": "heading",
+              "start": 305,
+              "end": 311,
+              "text": "## 编組\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "0582a4399df0add44ff9fccae17149aca06267651403e59b759b5849d4d60221",
+          "source_text_sha256": "14ab60ebff841ed49089e9e178434551f42fe8121fca31adf2d64093ca5dcc1a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=79045272",
+          "version": 79045272,
+          "heading_path": [
+            "# JR九州305系電聯車\n",
+            "## 编組\n"
+          ],
+          "file_id": "9b38dd9c3a592769518fe95d",
+          "atomic": false,
+          "legacy_document_id": "fbd4663715991a1d4a9f70a1",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "0582a4399df0add44ff9fccae17149aca06267651403e59b759b5849d4d60221",
+          "parent_source_id": "verbatim-v1:1cca2b9d06e5ad4215f232030945e13cae208915fdff1c0a0837371a33e8d59d",
+          "parent_text_sha256": "0582a4399df0add44ff9fccae17149aca06267651403e59b759b5849d4d60221",
+          "span_start": 0,
+          "span_end": 74,
+          "span_sha256": "0582a4399df0add44ff9fccae17149aca06267651403e59b759b5849d4d60221",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:991aae97cd1ca924c0954fadc6b7a66ea196bda010f1262a870fb3e3423f1e6f@0:325:5f1fa9108521",
+        "document_id": "7a8e0775f011812d68e18374",
+        "source": "finewiki-zh",
+        "title": "ICE-2列車",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=71718438",
+        "score": 0.04441226010616578,
+        "snippet": "德国铁路402號車組（ICE-2）是在1995年承繼前代ICE-1的新一代ICE列車。\n在90年代中，前代ICE已不能應付龐大的需求，故此ICE-2亦被採用了合體列車的設計。一輛ICE-2由兩個動力車頭（前方車頭型號為402，車尾為808）加上乘客车厢（一等舱车厢型號為805、二等舱车厢型號為806，而Bordrestaurant餐车型號為807）組成。ICE-2列車均可以兩輛為一組合體成一輛雙倍長的列車。首批製成的ICE-2共有44輛。\n理論上ICE-2是一輛由兩個動力車頭加上乘客車厢組成的列車，但是402號車頭亦可以被分拆出列車外成為一個拉力車。在測試行駛紀錄上，兩個動力車頭加上一輛乘客車卡組成的試驗型ICE-2是德國最快的鐵路車組。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/328852@71718438@c6bbcf67f60d456c",
+          "external_id": "zhwiki/328852",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "7a8e0775f011812d68e18374",
+          "title": "ICE-2列車",
+          "wikiname": "zhwiki",
+          "page_id": 328852,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/328852-71718438-c6bbcf67f60d456c.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "5f1fa9108521a75cf1bea9f00beeb80b43daec9eda6c2d148e9291a919a1375e",
+            "start": 10,
+            "end": 335
+          },
+          "context_spans": [
+            {
+              "sha256": "f722e69e588ba8f82b91766ed2f4749496498e8a316c00ee23746df3f20a3e82",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 10,
+              "text": "# ICE-2列車\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "5f1fa9108521a75cf1bea9f00beeb80b43daec9eda6c2d148e9291a919a1375e",
+          "source_text_sha256": "9d4713b7dbca6e2606ded5a36ce88a093bc907c3c3a01213c3d4e5aaf2b1f8de",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=71718438",
+          "version": 71718438,
+          "heading_path": [
+            "# ICE-2列車\n"
+          ],
+          "file_id": "7a8e0775f011812d68e18374",
+          "atomic": false,
+          "legacy_document_id": "0f32caf1f2e135d086f2a496",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "5f1fa9108521a75cf1bea9f00beeb80b43daec9eda6c2d148e9291a919a1375e",
+          "parent_source_id": "verbatim-v1:991aae97cd1ca924c0954fadc6b7a66ea196bda010f1262a870fb3e3423f1e6f",
+          "parent_text_sha256": "5f1fa9108521a75cf1bea9f00beeb80b43daec9eda6c2d148e9291a919a1375e",
+          "span_start": 0,
+          "span_end": 325,
+          "span_sha256": "5f1fa9108521a75cf1bea9f00beeb80b43daec9eda6c2d148e9291a919a1375e",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:b7bad3dd372d0173a5d83aab1f830619faf36021a5b81cec7d74b75428ae644a@0:114:c661b8983adf",
+        "document_id": "9b38dd9c3a592769518fe95d",
+        "source": "finewiki-zh",
+        "title": "JR九州305系電聯車",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=79045272",
+        "score": 0.0315136476426799,
+        "snippet": "JR九州305系電聯車是日本九州旅客鐵道公司（JR九州）自2015年2月5日起，使用在筑肥線和福岡市營地下鐵機場線直通運轉的通勤用電聯車。每編組6輛車，全部六個編組（共36輛車）依照計畫在2015年3月14日改點後投入營運。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7483286@79045272@7306f922e2501392",
+          "external_id": "zhwiki/7483286",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "9b38dd9c3a592769518fe95d",
+          "title": "JR九州305系電聯車",
+          "wikiname": "zhwiki",
+          "page_id": 7483286,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7483286-79045272-7306f922e2501392.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c661b8983adfa09cb3cffbb7c400fdd24907304ef37a95c80af36fd9ae86034a",
+            "start": 14,
+            "end": 128
+          },
+          "context_spans": [
+            {
+              "sha256": "bf887d9310cdf2939cec39cf4b4b0b7397b2b7732b2294cd4dbdfe9a5f1f8cdd",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 14,
+              "text": "# JR九州305系電聯車\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c661b8983adfa09cb3cffbb7c400fdd24907304ef37a95c80af36fd9ae86034a",
+          "source_text_sha256": "14ab60ebff841ed49089e9e178434551f42fe8121fca31adf2d64093ca5dcc1a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=79045272",
+          "version": 79045272,
+          "heading_path": [
+            "# JR九州305系電聯車\n"
+          ],
+          "file_id": "9b38dd9c3a592769518fe95d",
+          "atomic": false,
+          "legacy_document_id": "fbd4663715991a1d4a9f70a1",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c661b8983adfa09cb3cffbb7c400fdd24907304ef37a95c80af36fd9ae86034a",
+          "parent_source_id": "verbatim-v1:b7bad3dd372d0173a5d83aab1f830619faf36021a5b81cec7d74b75428ae644a",
+          "parent_text_sha256": "c661b8983adfa09cb3cffbb7c400fdd24907304ef37a95c80af36fd9ae86034a",
+          "span_start": 0,
+          "span_end": 114,
+          "span_sha256": "c661b8983adfa09cb3cffbb7c400fdd24907304ef37a95c80af36fd9ae86034a",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:a99a6861f60965db06b54fc84c04a790d2727c69d3b622b4f027440c0389f06b@0:423:958d24e33be7",
+        "document_id": "7a8e0775f011812d68e18374",
+        "source": "finewiki-zh",
+        "title": "ICE-2列車",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=71718438",
+        "score": 0.044733044733044736,
+        "snippet": "ICE-1（型號：401）與ICE-2（型號：402）外觀很相似，但亦可以從車頭蓋子分辨出來。\nICE-1的車頭蓋子是原個鑄造，前方只有一個小孔給引擎組；ICE-2的卻是分開兩邊製造，當需要與另一輛ICE-2合體時、車頭蓋子會分開突出接合器。ICE-2動力車頭的前方（車頭蓋子的下方）亦有一條保護裙邊。Bordbistro或Bordrestaurant字樣只會在ICE-2的車身印上。ICE-2亦加設了一個吸煙車廂。\n在車廂內ICE-1與ICE-2兩者之間亦只有很小的分別。ICE-2與ICE-1的座椅外觀近乎一樣，只是製造物料不同，較前代更輕，它的重量與飛機椅近似，以減低車身載重。坐位上面行李位處亦有一塊連接了電子訂位系統的電子板，它會顯示出訂了相應座位的客人的上車、下車城市。另外每個車廂前後方亦有一塊電子板顯示列車資料，比如列車路線、列車即時速度、站名播報功能等。總括來說ICE-2的車廂是較前代寬闊、舒適，乘客亦可得到更多列車資料。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/328852@71718438@c6bbcf67f60d456c",
+          "external_id": "zhwiki/328852",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 3,
+          "document_id": "7a8e0775f011812d68e18374",
+          "title": "ICE-2列車",
+          "wikiname": "zhwiki",
+          "page_id": 328852,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/328852-71718438-c6bbcf67f60d456c.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "958d24e33be72897400df14a0e4e0b1ab4845d40547646e95e07a5b80c92b99f",
+            "start": 353,
+            "end": 776
+          },
+          "context_spans": [
+            {
+              "sha256": "f722e69e588ba8f82b91766ed2f4749496498e8a316c00ee23746df3f20a3e82",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 10,
+              "text": "# ICE-2列車\n"
+            },
+            {
+              "sha256": "65a9834f83a7ed28bffe9d9ff3932e71a41e313fa1a200b63f18f99ce3e59f8d",
+              "level": 2,
+              "kind": "heading",
+              "start": 335,
+              "end": 353,
+              "text": "## ICE-1與ICE-2的分別\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "958d24e33be72897400df14a0e4e0b1ab4845d40547646e95e07a5b80c92b99f",
+          "source_text_sha256": "9d4713b7dbca6e2606ded5a36ce88a093bc907c3c3a01213c3d4e5aaf2b1f8de",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=71718438",
+          "version": 71718438,
+          "heading_path": [
+            "# ICE-2列車\n",
+            "## ICE-1與ICE-2的分別\n"
+          ],
+          "file_id": "7a8e0775f011812d68e18374",
+          "atomic": false,
+          "legacy_document_id": "0f32caf1f2e135d086f2a496",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "958d24e33be72897400df14a0e4e0b1ab4845d40547646e95e07a5b80c92b99f",
+          "parent_source_id": "verbatim-v1:a99a6861f60965db06b54fc84c04a790d2727c69d3b622b4f027440c0389f06b",
+          "parent_text_sha256": "958d24e33be72897400df14a0e4e0b1ab4845d40547646e95e07a5b80c92b99f",
+          "span_start": 0,
+          "span_end": 423,
+          "span_sha256": "958d24e33be72897400df14a0e4e0b1ab4845d40547646e95e07a5b80c92b99f",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:293a3e4a4d48e51c21b8e4d00ff4e3869d7ccc71edd1ba25eb8a49e6fa1d75b4@0:79:101ca05af6f1",
+        "document_id": "9b38dd9c3a592769518fe95d",
+        "source": "finewiki-zh",
+        "title": "JR九州305系電聯車",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=79045272",
+        "score": 0.029083245521601686,
+        "snippet": "- 2015年2月，クハ 305-3（W3編組的第一車）的内裝，可見木地板。\n- 使用一般地板的モハ 305-3（W3編組的第2車）内部，2015年2月\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7483286@79045272@7306f922e2501392",
+          "external_id": "zhwiki/7483286",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 12,
+          "document_id": "9b38dd9c3a592769518fe95d",
+          "title": "JR九州305系電聯車",
+          "wikiname": "zhwiki",
+          "page_id": 7483286,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7483286-79045272-7306f922e2501392.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "101ca05af6f1ded37865422e6fd55bfaff444d4dbef5da9e3192c37116fc0223",
+            "start": 1097,
+            "end": 1176
+          },
+          "context_spans": [
+            {
+              "sha256": "bf887d9310cdf2939cec39cf4b4b0b7397b2b7732b2294cd4dbdfe9a5f1f8cdd",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 14,
+              "text": "# JR九州305系電聯車\n"
+            },
+            {
+              "sha256": "8b6e7e65a11ef6200984e097075f8799c8c904dabafa0eea48d48257f78e95ff",
+              "level": 2,
+              "kind": "heading",
+              "start": 944,
+              "end": 950,
+              "text": "## 内裝\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "101ca05af6f1ded37865422e6fd55bfaff444d4dbef5da9e3192c37116fc0223",
+          "source_text_sha256": "14ab60ebff841ed49089e9e178434551f42fe8121fca31adf2d64093ca5dcc1a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=79045272",
+          "version": 79045272,
+          "heading_path": [
+            "# JR九州305系電聯車\n",
+            "## 内裝\n"
+          ],
+          "file_id": "9b38dd9c3a592769518fe95d",
+          "atomic": true,
+          "legacy_document_id": "fbd4663715991a1d4a9f70a1",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "101ca05af6f1ded37865422e6fd55bfaff444d4dbef5da9e3192c37116fc0223",
+          "parent_source_id": "verbatim-v1:293a3e4a4d48e51c21b8e4d00ff4e3869d7ccc71edd1ba25eb8a49e6fa1d75b4",
+          "parent_text_sha256": "101ca05af6f1ded37865422e6fd55bfaff444d4dbef5da9e3192c37116fc0223",
+          "span_start": 0,
+          "span_end": 79,
+          "span_sha256": "101ca05af6f1ded37865422e6fd55bfaff444d4dbef5da9e3192c37116fc0223",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:b060c8206f205aa3cb6d53cea5c7d3592e2cdf74d189926a686f79ba1764576c@0:534:84dcc761919f",
+        "document_id": "9b38dd9c3a592769518fe95d",
+        "source": "finewiki-zh",
+        "title": "JR九州305系電聯車",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=79045272",
+        "score": 0.027809742999616416,
+        "snippet": "| 车号              | 1       | 2         | 3         | 4           | 5           | 6       |\n| ----------------- | ------- | --------- | --------- | ----------- | ----------- | ------- |\n| 区分              | Tc      | M         | Mp        | M1          | M1p         | T'c     |\n| 形式              | クハ305 | モハ305-0 | モハ304-0 | モハ305-100 | モハ304-100 | クハ304 |\n| 重量（t）         | 29.5    | 33.0      | 30.8      | 33.0        | 30.7        | 27.3    |\n| 容量（總計/座位） | 128/42  | 147/51    | 147/51    | 147/51      | 147/51      | 135/45  |\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7483286@79045272@7306f922e2501392",
+          "external_id": "zhwiki/7483286",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 8,
+          "document_id": "9b38dd9c3a592769518fe95d",
+          "title": "JR九州305系電聯車",
+          "wikiname": "zhwiki",
+          "page_id": 7483286,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7483286-79045272-7306f922e2501392.md",
+          "content_type": "table",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "84dcc761919f5e270ad43b2b8bc278d383536191fe8dd72555e2967811858e40",
+            "start": 385,
+            "end": 919
+          },
+          "context_spans": [
+            {
+              "sha256": "bf887d9310cdf2939cec39cf4b4b0b7397b2b7732b2294cd4dbdfe9a5f1f8cdd",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 14,
+              "text": "# JR九州305系電聯車\n"
+            },
+            {
+              "sha256": "b74e6301a7aed8a14009feaea9431c74b0c9ed1729aab9ae76874dd5e34ff8e1",
+              "level": 2,
+              "kind": "heading",
+              "start": 305,
+              "end": 311,
+              "text": "## 编組\n"
+            },
+            {
+              "sha256": "745806a361782e7c1812cb1c512cf25b1ceb9a63552aac43a003cfa241c4e938",
+              "level": null,
+              "kind": "table_header",
+              "start": 385,
+              "end": 571,
+              "text": "| 车号              | 1       | 2         | 3         | 4           | 5           | 6       |\n| ----------------- | ------- | --------- | --------- | ----------- | ----------- | ------- |\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "84dcc761919f5e270ad43b2b8bc278d383536191fe8dd72555e2967811858e40",
+          "source_text_sha256": "14ab60ebff841ed49089e9e178434551f42fe8121fca31adf2d64093ca5dcc1a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=79045272",
+          "version": 79045272,
+          "heading_path": [
+            "# JR九州305系電聯車\n",
+            "## 编組\n"
+          ],
+          "file_id": "9b38dd9c3a592769518fe95d",
+          "atomic": true,
+          "legacy_document_id": "fbd4663715991a1d4a9f70a1",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "84dcc761919f5e270ad43b2b8bc278d383536191fe8dd72555e2967811858e40",
+          "parent_source_id": "verbatim-v1:b060c8206f205aa3cb6d53cea5c7d3592e2cdf74d189926a686f79ba1764576c",
+          "parent_text_sha256": "84dcc761919f5e270ad43b2b8bc278d383536191fe8dd72555e2967811858e40",
+          "span_start": 0,
+          "span_end": 534,
+          "span_sha256": "84dcc761919f5e270ad43b2b8bc278d383536191fe8dd72555e2967811858e40",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "length",
+    "answer_span": [
+      0,
+      2447
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 7,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "length",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0179.json"
+  },
+  "review": {
+    "case_id": "native_wiki-0002",
+    "verdict": "fail",
+    "issues": [
+      "object_mixing",
+      "wrong_citation",
+      "missing_fact",
+      "repetition",
+      "length"
+    ],
+    "note": "将ICE-2说明用于ICE-1问题，资料2实际是305系编组；Hamm被反复写作动力车而非合体站，未完成305系6辆/4动力车答案，长度退出。"
+  },
+  "input": {
+    "id": "native_wiki-0002",
+    "suite": "native_wiki",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+    "origin_index": 2,
+    "original_case": {
+      "id": "held_012",
+      "question": "列车编组资料里有三个不同问题：ICE-1能不能像后续车型那样与另一列组合运行？ICE-2科隆/杜塞尔多夫往柏林的例子在哪一站合体？JR九州305系一个编组总共几辆，其中几辆是动力车？请分别引用，别把重联和车厢数量当一回事。",
+      "history": [],
+      "oracle": {
+        "expected_action": "answer",
+        "known_subjects": [
+          {
+            "id": "S1",
+            "description": "ICE-1",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "ICE-1"
+              }
+            ]
+          },
+          {
+            "id": "S2",
+            "description": "ICE-2所述线路",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "ICE-2"
+              }
+            ]
+          },
+          {
+            "id": "S3",
+            "description": "JR九州305系",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "JR九州305系"
+              }
+            ]
+          }
+        ],
+        "active_constraints": [],
+        "requested_goals": [
+          {
+            "id": "G1",
+            "description": "ICE-1能不能像后续车型那样与另一列组合运行",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "ICE-1能不能像后续车型那样与另一列组合运行"
+              },
+              {
+                "message_id": "Q",
+                "quote": "列车编组资料里有三个不同问题：ICE-1能不能像后续车型那样与另一列组合运行？ICE-2科隆/杜塞尔多夫往柏林的例子在哪一站合体？JR九州305系一个编组总共几辆，其中几辆是动力车？请分别引用，别把重联和车厢数量当一回事。"
+              }
+            ]
+          },
+          {
+            "id": "G2",
+            "description": "在哪一站合体",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "在哪一站合体"
+              },
+              {
+                "message_id": "Q",
+                "quote": "列车编组资料里有三个不同问题：ICE-1能不能像后续车型那样与另一列组合运行？ICE-2科隆/杜塞尔多夫往柏林的例子在哪一站合体？JR九州305系一个编组总共几辆，其中几辆是动力车？请分别引用，别把重联和车厢数量当一回事。"
+              }
+            ]
+          },
+          {
+            "id": "G3",
+            "description": "一个编组总共几辆",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "一个编组总共几辆"
+              },
+              {
+                "message_id": "Q",
+                "quote": "列车编组资料里有三个不同问题：ICE-1能不能像后续车型那样与另一列组合运行？ICE-2科隆/杜塞尔多夫往柏林的例子在哪一站合体？JR九州305系一个编组总共几辆，其中几辆是动力车？请分别引用，别把重联和车厢数量当一回事。"
+              }
+            ]
+          },
+          {
+            "id": "G4",
+            "description": "其中几辆是动力车",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "其中几辆是动力车"
+              },
+              {
+                "message_id": "Q",
+                "quote": "列车编组资料里有三个不同问题：ICE-1能不能像后续车型那样与另一列组合运行？ICE-2科隆/杜塞尔多夫往柏林的例子在哪一站合体？JR九州305系一个编组总共几辆，其中几辆是动力车？请分别引用，别把重联和车厢数量当一回事。"
+              }
+            ]
+          }
+        ],
+        "required_facts": [
+          {
+            "claim": "ICE-1不能与其他列车组合运行，只能单独运行。",
+            "bound_subjects": [
+              "S1"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/328847",
+                  "page_id": 328847,
+                  "title": "ICE-1列車",
+                  "url": "https://zh.wikipedia.org/wiki/ICE-1%E5%88%97%E8%BB%8A",
+                  "language": "zh",
+                  "revision_id": 84396384,
+                  "body_sha256": "e4646bd4539a501492162578d3b532fccf48ec6384f9bba272b54b3afa803104",
+                  "section": "ICE-1列車",
+                  "start": 181,
+                  "end": 258,
+                  "quote": "整列列车全长411米，最大载客800座，它是目前已造ICE列车中最长的。与其他系列的ICE列车相比，ICE-1不能与其他列车组合起来行使，他只可单独运行。"
+                }
+              ]
+            ],
+            "id": "F1"
+          },
+          {
+            "claim": "ICE-2在Hamm（哈姆）合体。",
+            "bound_subjects": [
+              "S2"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/328852",
+                  "page_id": 328852,
+                  "title": "ICE-2列車",
+                  "url": "https://zh.wikipedia.org/wiki/ICE-2%E5%88%97%E8%BB%8A",
+                  "language": "zh",
+                  "revision_id": 71718438,
+                  "body_sha256": "9d4713b7dbca6e2606ded5a36ce88a093bc907c3c3a01213c3d4e5aaf2b1f8de",
+                  "section": "路線",
+                  "start": 897,
+                  "end": 1093,
+                  "quote": "以由科隆至柏林的ICE線為例，一列ICE-2列車會由杜塞道夫中央車站開出，經、杜伊斯堡、埃森、多特蒙德至Hamm；另一輛列車將由科隆（或波昂）開出，經Solingen-Ohligs、Wuppertal至Hamm；兩組車將於Hamm合體再經漢諾威直達柏林；回程路線亦如是在Hamm分體再分開行走不同路線。在慕尼黑開出的已合體ICE-2列車亦會在漢諾威分體，兩列車會分別往漢堡及不來梅方向開行駛。"
+                }
+              ]
+            ],
+            "id": "F2"
+          },
+          {
+            "claim": "305系每编组共6辆。",
+            "bound_subjects": [
+              "S3"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/7483286",
+                  "page_id": 7483286,
+                  "title": "JR九州305系電聯車",
+                  "url": "https://zh.wikipedia.org/wiki/JR%E4%B9%9D%E5%B7%9E305%E7%B3%BB%E9%9B%BB%E8%81%AF%E8%BB%8A",
+                  "language": "zh",
+                  "revision_id": 79045272,
+                  "body_sha256": "14ab60ebff841ed49089e9e178434551f42fe8121fca31adf2d64093ca5dcc1a",
+                  "section": "编組",
+                  "start": 311,
+                  "end": 384,
+                  "quote": "305系電聯車每編組為六節车厢组成，如下所示，编号为W1至W6，編組兩端各為一輛無動力駕駛車，編組中間是4輛動力車。1號車位在列車編組之西唐津端。"
+                }
+              ],
+              [
+                {
+                  "document_id": "zhwiki/7483286",
+                  "page_id": 7483286,
+                  "title": "JR九州305系電聯車",
+                  "url": "https://zh.wikipedia.org/wiki/JR%E4%B9%9D%E5%B7%9E305%E7%B3%BB%E9%9B%BB%E8%81%AF%E8%BB%8A",
+                  "language": "zh",
+                  "revision_id": 79045272,
+                  "body_sha256": "14ab60ebff841ed49089e9e178434551f42fe8121fca31adf2d64093ca5dcc1a",
+                  "section": "JR九州305系電聯車",
+                  "start": 14,
+                  "end": 126,
+                  "quote": "JR九州305系電聯車是日本九州旅客鐵道公司（JR九州）自2015年2月5日起，使用在筑肥線和福岡市營地下鐵機場線直通運轉的通勤用電聯車。每編組6輛車，全部六個編組（共36輛車）依照計畫在2015年3月14日改點後投入營運。"
+                }
+              ]
+            ],
+            "id": "F3"
+          },
+          {
+            "claim": "中间4辆为动力车。",
+            "bound_subjects": [
+              "S3"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/7483286",
+                  "page_id": 7483286,
+                  "title": "JR九州305系電聯車",
+                  "url": "https://zh.wikipedia.org/wiki/JR%E4%B9%9D%E5%B7%9E305%E7%B3%BB%E9%9B%BB%E8%81%AF%E8%BB%8A",
+                  "language": "zh",
+                  "revision_id": 79045272,
+                  "body_sha256": "14ab60ebff841ed49089e9e178434551f42fe8121fca31adf2d64093ca5dcc1a",
+                  "section": "编組",
+                  "start": 311,
+                  "end": 384,
+                  "quote": "305系電聯車每編組為六節车厢组成，如下所示，编号为W1至W6，編組兩端各為一輛無動力駕駛車，編組中間是4輛動力車。1號車位在列車編組之西唐津端。"
+                }
+              ]
+            ],
+            "id": "F4"
+          }
+        ],
+        "excluded": [],
+        "missing_information": [],
+        "required_clarification": [],
+        "minimum_evidence_pages": 3,
+        "required": [
+          "按照用户明示字段和有效历史回答；不得把助手自行追加偏好视为用户要求。",
+          "每个必要事实正确且有真实、实际支持的正式引用；每个多余引用也检查其附着主张。",
+          "无额外关键错误或无据结论，范围、对象与缺失信息处理正确。"
+        ],
+        "forbidden": [
+          "不得由金标证据段背景追加未问日期、单位精度或范围。",
+          "不得把同页但不含该事实的片段或无关页面作为支持。",
+          "不得用思考过程补最终答案；不得把资料未提供说成现实不存在。"
+        ]
+      },
+      "provenance": {
+        "source_experiment": "rwkvrag-wiki-evidence-budget-20260908",
+        "original_split": "holdout",
+        "use": "previously_exposed_development_smoke",
+        "source_inputs_sha256": "7d38ace329779963dd134837aecd54941ed60e44ba3ae74d7aed89c08767d583",
+        "source_gold_sha256": "50edd715fd81cdc545b3a7bd952f840d78ab6876d41496ab9d5a3d8f4938d0ca",
+        "source_input_row_sha256": "f4004732d6b47aaf3a480240bde97491f3fd51280315045a0c009dc58f4a6730",
+        "source_gold_row_sha256": "989ec394b2d02440b5e05870ae0cb8edb172ea9d31e1a9221be386bad6934293",
+        "corpus_manifest_sha256": "35563fa6e5d7c9205cea3d9e1cd5476b01774f11a292dafcfed82fe4d8256ced",
+        "category": "multi_document"
+      }
+    },
+    "category": "native_wiki",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "列车编组资料里有三个不同问题：ICE-1能不能像后续车型那样与另一列组合运行？ICE-2科隆/杜塞尔多夫往柏林的例子在哪一站合体？JR九州305系一个编组总共几辆，其中几辆是动力车？请分别引用，别把重联和车厢数量当一回事。",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "1fd985adc1d90066e3ef16953ad48cb5a52b334b3f92fefdf811535febec0243"
+}

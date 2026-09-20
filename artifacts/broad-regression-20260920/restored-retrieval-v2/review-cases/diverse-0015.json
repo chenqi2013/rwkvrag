@@ -1,0 +1,502 @@
+{
+  "result": {
+    "case_id": "diverse-0015",
+    "suite": "diverse",
+    "question": "硝酸在工业上如何制备",
+    "http_status": 200,
+    "error": null,
+    "answer": "1. 硝酸在工业上如何制备：现代工业用二氧化氮与水混合制得，其原料二氧化氮是由氨氧化而得，硝酸工业与製氨工业密不可分。[资料 2]\n2. 硝酸工业制备流程：先把氮气和氧气高温催化生成二氧化氮，再用二氧化氮与水反应制得硝酸。[资料 2]\n3. 硝酸工业制备工艺：二氧化氮与水混合制得硝酸，其原料二氧化氮是由氨氧化而得，硝酸工业与製氨工业密不可分。[资料 2]\n4. 硝酸工业制备工艺：现代工业用二氧化氮与水混合制得，其原料二氧化氮是由氨氧化而得，硝酸工业与製氨工业密不可分。[资料 2]\n5. 硝酸工业制备工艺：现代工业用二氧化氮与水混合制得，其原料二氧化氮是由氨氧化而得，硝酸工业与製氨工业密不可分。[资料 2]",
+    "sources": [
+      {
+        "id": "verbatim-v1:1379f244036858a7c90e5a6a3547e56213a67d4f56506877b318b7298937a672@0:438:0969717ec0e6",
+        "document_id": "91a19a3e9ffcf4b548deb738",
+        "source": "finewiki-zh",
+        "title": "硝酸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+        "score": 0.08090957165520889,
+        "snippet": "历史上，曾使用伯克兰-艾德法，但因能耗大、效率低，后被取代。\n现代工业用二氧化氮与水混合制备硝酸：奧士華法。其原料二氧化氮是由氨氧化而得，硝酸工业与製氨工业密不可分。\n{\\displaystyle {\\ce {4NH3(g) + 5O2(g) -> 4NO(g) + 6H2O(g)}}}（鉑銠催化）（ΔH＝−905.2kJ/mol）\n{\\displaystyle {\\ce {2NO(g) + O2(g) -> 2NO2(g)}}} (ΔH=−114kJ/mol)\n{\\displaystyle {\\ce {3NO2(g) + H2O(l) -> 2HNO3(aq) + NO(g)}}}(ΔH=−117kJ/mol)\n總式：{\\displaystyle {\\ce {NH3(g) + 2O2(g) -> H2O(l) + HNO3(aq)}}}（鉑銠催化）\n反复把生成的气体通入水中即可得到甚纯的硝酸，不过工业一般用稀硝酸吸收二氧化氮。这样制得的硝酸浓度通常为68%。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/51496@88095570@8e18d1b112f223aa",
+          "external_id": "zhwiki/51496",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 14,
+          "document_id": "91a19a3e9ffcf4b548deb738",
+          "title": "硝酸",
+          "wikiname": "zhwiki",
+          "page_id": 51496,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/51496-88095570-8e18d1b112f223aa.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "0969717ec0e654f608fd2841e4e8683b37e45115d1347bf4508dc4db2efe534f",
+            "start": 2043,
+            "end": 2481
+          },
+          "context_spans": [
+            {
+              "sha256": "3bf86513ea5824028efbb2278642a630d6b662893a2a705ce79a580b02abc3e7",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 硝酸\n"
+            },
+            {
+              "sha256": "b6b2e2b0d605784a70cb51e0eb04607530e71f131efb3e98af92c63d8b1e894f",
+              "level": 2,
+              "kind": "heading",
+              "start": 2037,
+              "end": 2043,
+              "text": "## 制备\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "0969717ec0e654f608fd2841e4e8683b37e45115d1347bf4508dc4db2efe534f",
+          "source_text_sha256": "eea0da85e0e046a626336dff0e4ba7c8b4d8f41adf601a3b6d6a9da033baba7b",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+          "version": 88095570,
+          "heading_path": [
+            "# 硝酸\n",
+            "## 制备\n"
+          ],
+          "file_id": "91a19a3e9ffcf4b548deb738",
+          "atomic": false,
+          "legacy_document_id": "d8bc8b32349b9f2e9be94c4c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "0969717ec0e654f608fd2841e4e8683b37e45115d1347bf4508dc4db2efe534f",
+          "parent_source_id": "verbatim-v1:1379f244036858a7c90e5a6a3547e56213a67d4f56506877b318b7298937a672",
+          "parent_text_sha256": "0969717ec0e654f608fd2841e4e8683b37e45115d1347bf4508dc4db2efe534f",
+          "span_start": 0,
+          "span_end": 438,
+          "span_sha256": "0969717ec0e654f608fd2841e4e8683b37e45115d1347bf4508dc4db2efe534f",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:65e21a41246900ba9efacf09ab7de2af889c41a98faa6133cdb26ea361104e5e@0:10:9ef1d00d3105",
+        "document_id": "91a19a3e9ffcf4b548deb738",
+        "source": "finewiki-zh",
+        "title": "硝酸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+        "score": 0.0793938671691705,
+        "snippet": "### 製備純硝酸\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/51496@88095570@8e18d1b112f223aa",
+          "external_id": "zhwiki/51496",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 15,
+          "document_id": "91a19a3e9ffcf4b548deb738",
+          "title": "硝酸",
+          "wikiname": "zhwiki",
+          "page_id": 51496,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/51496-88095570-8e18d1b112f223aa.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "9ef1d00d3105aa5d79d58f1b8adc39211fc4dcfb79042474a04816a0949d647f",
+            "start": 2481,
+            "end": 2491
+          },
+          "context_spans": [
+            {
+              "sha256": "3bf86513ea5824028efbb2278642a630d6b662893a2a705ce79a580b02abc3e7",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 硝酸\n"
+            },
+            {
+              "sha256": "b6b2e2b0d605784a70cb51e0eb04607530e71f131efb3e98af92c63d8b1e894f",
+              "level": 2,
+              "kind": "heading",
+              "start": 2037,
+              "end": 2043,
+              "text": "## 制备\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "9ef1d00d3105aa5d79d58f1b8adc39211fc4dcfb79042474a04816a0949d647f",
+          "source_text_sha256": "eea0da85e0e046a626336dff0e4ba7c8b4d8f41adf601a3b6d6a9da033baba7b",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+          "version": 88095570,
+          "heading_path": [
+            "# 硝酸\n",
+            "## 制备\n"
+          ],
+          "file_id": "91a19a3e9ffcf4b548deb738",
+          "atomic": true,
+          "legacy_document_id": "d8bc8b32349b9f2e9be94c4c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "9ef1d00d3105aa5d79d58f1b8adc39211fc4dcfb79042474a04816a0949d647f",
+          "parent_source_id": "verbatim-v1:65e21a41246900ba9efacf09ab7de2af889c41a98faa6133cdb26ea361104e5e",
+          "parent_text_sha256": "9ef1d00d3105aa5d79d58f1b8adc39211fc4dcfb79042474a04816a0949d647f",
+          "span_start": 0,
+          "span_end": 10,
+          "span_sha256": "9ef1d00d3105aa5d79d58f1b8adc39211fc4dcfb79042474a04816a0949d647f",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:a863bcd27210822b29004b7667d28ff1d2e17ced5ff21e98cae0b2b33becc563@0:134:6511f4be7d5e",
+        "document_id": "91a19a3e9ffcf4b548deb738",
+        "source": "finewiki-zh",
+        "title": "硝酸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+        "score": 0.07963749024199844,
+        "snippet": "硝酸在工业和实验室都是很常用的酸。\n作为硝酸盐和硝酸酯的必需原料，硝酸用来制取硝酸铵、硝酸钾等一系列硝酸盐类氮肥；也用来制取三硝基甲苯（TNT）、硝化甘油等硝酸酯类或含硝基的炸药。\n它同时是氧化劑和酸，也用来精炼金属：先把不纯的金属氧化成硝酸盐，排除杂质后再还原。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/51496@88095570@8e18d1b112f223aa",
+          "external_id": "zhwiki/51496",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 22,
+          "document_id": "91a19a3e9ffcf4b548deb738",
+          "title": "硝酸",
+          "wikiname": "zhwiki",
+          "page_id": 51496,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/51496-88095570-8e18d1b112f223aa.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "6511f4be7d5e9904c397b0af2ced049ba64602dcaa77a021338a9453f4c660e2",
+            "start": 3232,
+            "end": 3366
+          },
+          "context_spans": [
+            {
+              "sha256": "3bf86513ea5824028efbb2278642a630d6b662893a2a705ce79a580b02abc3e7",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 硝酸\n"
+            },
+            {
+              "sha256": "4a44859441e0ba2a94160a71e4579f6e3b6924c2ebd434ee2d4951059535b4cb",
+              "level": 2,
+              "kind": "heading",
+              "start": 3224,
+              "end": 3232,
+              "text": "## 工业用途\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "6511f4be7d5e9904c397b0af2ced049ba64602dcaa77a021338a9453f4c660e2",
+          "source_text_sha256": "eea0da85e0e046a626336dff0e4ba7c8b4d8f41adf601a3b6d6a9da033baba7b",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+          "version": 88095570,
+          "heading_path": [
+            "# 硝酸\n",
+            "## 工业用途\n"
+          ],
+          "file_id": "91a19a3e9ffcf4b548deb738",
+          "atomic": false,
+          "legacy_document_id": "d8bc8b32349b9f2e9be94c4c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "6511f4be7d5e9904c397b0af2ced049ba64602dcaa77a021338a9453f4c660e2",
+          "parent_source_id": "verbatim-v1:a863bcd27210822b29004b7667d28ff1d2e17ced5ff21e98cae0b2b33becc563",
+          "parent_text_sha256": "6511f4be7d5e9904c397b0af2ced049ba64602dcaa77a021338a9453f4c660e2",
+          "span_start": 0,
+          "span_end": 134,
+          "span_sha256": "6511f4be7d5e9904c397b0af2ced049ba64602dcaa77a021338a9453f4c660e2",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:801ac27ab4e482ca73473dbfa34136b62fbdb288b83de2c22085380021f179aa@0:386:8a8976aa1189",
+        "document_id": "91a19a3e9ffcf4b548deb738",
+        "source": "finewiki-zh",
+        "title": "硝酸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+        "score": 0.07518475676370413,
+        "snippet": "雷雨时能生成少量硝酸。打雷放出的能量讓空氣中的N2和O2高温反應，生成NO：\n{\\displaystyle {\\ce {N2 + O2 -> 2NO}}}\n{\\displaystyle {\\ce {2NO + O2 -> 2NO2}}}\n{\\displaystyle {\\ce {N2 + 2O2 -> 2NO2}}}\nNO2和水反應生成硝酸：\n无氧時：{\\displaystyle {\\ce {3NO2 + H2O -> 2HNO3 + NO}}}\n含氧時：{\\displaystyle {\\ce {4NO2 + O2 + 2H2O -> 4HNO3}}}\n实验室中，用火焰可以产生少量硝酸，如用高压电与火花隙进行弧光放电效率更高，在工业中曾经用于伯克兰-艾德法。但因效率低，电能消耗大而不再使用。\n有些海鞘（Ciona intestinalis）也能分泌硝酸御敌。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/51496@88095570@8e18d1b112f223aa",
+          "external_id": "zhwiki/51496",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 5,
+          "document_id": "91a19a3e9ffcf4b548deb738",
+          "title": "硝酸",
+          "wikiname": "zhwiki",
+          "page_id": 51496,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/51496-88095570-8e18d1b112f223aa.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8a8976aa1189e497d90bd7f2b0c70e2d95fa587f22d8475e589ccbef1abb6241",
+            "start": 325,
+            "end": 711
+          },
+          "context_spans": [
+            {
+              "sha256": "3bf86513ea5824028efbb2278642a630d6b662893a2a705ce79a580b02abc3e7",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 硝酸\n"
+            },
+            {
+              "sha256": "17b6043cb84bc95783793fe1cfd833d2012d6ec80c1c48b87e5b9dccdce02783",
+              "level": 2,
+              "kind": "heading",
+              "start": 317,
+              "end": 325,
+              "text": "## 自然存在\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "8a8976aa1189e497d90bd7f2b0c70e2d95fa587f22d8475e589ccbef1abb6241",
+          "source_text_sha256": "eea0da85e0e046a626336dff0e4ba7c8b4d8f41adf601a3b6d6a9da033baba7b",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+          "version": 88095570,
+          "heading_path": [
+            "# 硝酸\n",
+            "## 自然存在\n"
+          ],
+          "file_id": "91a19a3e9ffcf4b548deb738",
+          "atomic": false,
+          "legacy_document_id": "d8bc8b32349b9f2e9be94c4c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8a8976aa1189e497d90bd7f2b0c70e2d95fa587f22d8475e589ccbef1abb6241",
+          "parent_source_id": "verbatim-v1:801ac27ab4e482ca73473dbfa34136b62fbdb288b83de2c22085380021f179aa",
+          "parent_text_sha256": "8a8976aa1189e497d90bd7f2b0c70e2d95fa587f22d8475e589ccbef1abb6241",
+          "span_start": 0,
+          "span_end": 386,
+          "span_sha256": "8a8976aa1189e497d90bd7f2b0c70e2d95fa587f22d8475e589ccbef1abb6241",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:ec56be0d20a5f39e290d121946be2202c250320c5d1f08d61cfdfe25cf13a7a5@0:836:ee5193bd4edd",
+        "document_id": "91a19a3e9ffcf4b548deb738",
+        "source": "finewiki-zh",
+        "title": "硝酸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+        "score": 0.07764423076923077,
+        "snippet": "纯硝酸可以自偶电离：2HNO₃　⇌　H₂O＋NO₂⁺＋NO₃⁻\n硝酸作为氮的最高价（＋5）水化物，其酸性很强，一般情况认为硝酸在水溶液中完全电离。硝酸可以与醇酯化反应，如制备硝酸甘油。（實際會用浓硫酸生成大量NO₂⁺），成本較低且較易處理，與其他更強的脫水劑，例如P₄O₁₀，也可以生成大量硝醯陽離子，这是硝化反应的本质。\nHNO₃＋H₂O　→　H₃O⁺＋NO₃⁻（水中）\nHO－NO₂＋2H₂SO₄　→　NO₂⁺＋2HSO₄⁻＋H₃O⁺（浓硫酸中）\n硝酸的水溶液无论浓稀均有强氧化力及腐蚀力，溶液越浓其氧化力越强。硝酸經光照分解成水、NO2和O2，方程式如下：\n4HNO₃　→　4NO₂＋O₂＋2H₂O\n一定要盛放在棕色瓶中，並置於阴凉处保存。硝酸能溶解多种金属（例如银），生成盐、水、氮氧化物。随着溶液變稀，其还原产物逐渐由高价向低价过渡，从最浓到最稀可生成NO₂、NO、N₂O、N₂、NH₄NO₃、H₂。还原产物一般是混合物，金属与濃硝酸反应多生成NO2，與稀硝酸反應生成如NO等較低價化合物。\n铁、铝、铬等金属遇冷的浓硝酸可以钝化，只在表面形成致密的氧化膜，不会繼續反应。\n浓硝酸和浓盐酸的物質量按1比3混合，即为王水，能溶解金、铂等稳定金属。\n硝酸盐大多易遇热分解，生成氧气、氮氧化物、金属氧化物（中途也可能生成亚硝酸盐等）。\n硝酸铵中的硝酸根與銨根，平均能量大於有其平均價數之一氧化二氮，在固態時均化反應（動力學所限，在溶液內不反應）（即加热或撞击分解生成一氧化二氮和水），一般使用現代合成炸藥引爆，威力與TNT相去不遠，但成本極低，因此用于国防工业及工程而獲美譽「國防工業之母」（主要製造硝基含能化合物（現代合成炸藥）。硝酸钾就是黑火药的成分之一）。\n硝酸也屬強酸，可以和鹼酸鹼中和反應。\n{\\displaystyle {\\ce {HNO3(aq) + NaOH(aq) -> NaNO3(aq) + H2O(l)}}}\n上為硝酸和氫氧化鈉的複分解反應。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/51496@88095570@8e18d1b112f223aa",
+          "external_id": "zhwiki/51496",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 12,
+          "document_id": "91a19a3e9ffcf4b548deb738",
+          "title": "硝酸",
+          "wikiname": "zhwiki",
+          "page_id": 51496,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/51496-88095570-8e18d1b112f223aa.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "ee5193bd4edd86f8c77fdc3ee867d18bc312d05bfd6697047da012c14d942746",
+            "start": 1201,
+            "end": 2037
+          },
+          "context_spans": [
+            {
+              "sha256": "3bf86513ea5824028efbb2278642a630d6b662893a2a705ce79a580b02abc3e7",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 硝酸\n"
+            },
+            {
+              "sha256": "c3555663b92670a750e2e41538e4b80f23a521c0446d77ea17e0d0be2a3aaa09",
+              "level": 2,
+              "kind": "heading",
+              "start": 1193,
+              "end": 1201,
+              "text": "## 化学性质\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "ee5193bd4edd86f8c77fdc3ee867d18bc312d05bfd6697047da012c14d942746",
+          "source_text_sha256": "eea0da85e0e046a626336dff0e4ba7c8b4d8f41adf601a3b6d6a9da033baba7b",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+          "version": 88095570,
+          "heading_path": [
+            "# 硝酸\n",
+            "## 化学性质\n"
+          ],
+          "file_id": "91a19a3e9ffcf4b548deb738",
+          "atomic": false,
+          "legacy_document_id": "d8bc8b32349b9f2e9be94c4c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "ee5193bd4edd86f8c77fdc3ee867d18bc312d05bfd6697047da012c14d942746",
+          "parent_source_id": "verbatim-v1:ec56be0d20a5f39e290d121946be2202c250320c5d1f08d61cfdfe25cf13a7a5",
+          "parent_text_sha256": "ee5193bd4edd86f8c77fdc3ee867d18bc312d05bfd6697047da012c14d942746",
+          "span_start": 0,
+          "span_end": 836,
+          "span_sha256": "ee5193bd4edd86f8c77fdc3ee867d18bc312d05bfd6697047da012c14d942746",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:5e601b7272be75d4e70a321c8fcae32d100aa6b7369536f20450ab08a4280e65@0:96:8de46b3fff1a",
+        "document_id": "91a19a3e9ffcf4b548deb738",
+        "source": "finewiki-zh",
+        "title": "硝酸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+        "score": 0.07315139986342796,
+        "snippet": "製造純硝酸則是把濃硫酸與硝酸鹽混合加熱，反應式為：\nNaNO₃＋H₂SO₄　→　NaHSO₄＋HNO₃\n其二步反应是硫酸氢盐与硝酸盐反应，值得注意的是，反应温度更高，硝酸会分解，影响产率。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/51496@88095570@8e18d1b112f223aa",
+          "external_id": "zhwiki/51496",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 16,
+          "document_id": "91a19a3e9ffcf4b548deb738",
+          "title": "硝酸",
+          "wikiname": "zhwiki",
+          "page_id": 51496,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/51496-88095570-8e18d1b112f223aa.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8de46b3fff1ad3467f5fd065df7e792e78a790f54ab76290402246f765388452",
+            "start": 2491,
+            "end": 2587
+          },
+          "context_spans": [
+            {
+              "sha256": "3bf86513ea5824028efbb2278642a630d6b662893a2a705ce79a580b02abc3e7",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 硝酸\n"
+            },
+            {
+              "sha256": "b6b2e2b0d605784a70cb51e0eb04607530e71f131efb3e98af92c63d8b1e894f",
+              "level": 2,
+              "kind": "heading",
+              "start": 2037,
+              "end": 2043,
+              "text": "## 制备\n"
+            },
+            {
+              "sha256": "9ef1d00d3105aa5d79d58f1b8adc39211fc4dcfb79042474a04816a0949d647f",
+              "level": 3,
+              "kind": "heading",
+              "start": 2481,
+              "end": 2491,
+              "text": "### 製備純硝酸\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "8de46b3fff1ad3467f5fd065df7e792e78a790f54ab76290402246f765388452",
+          "source_text_sha256": "eea0da85e0e046a626336dff0e4ba7c8b4d8f41adf601a3b6d6a9da033baba7b",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+          "version": 88095570,
+          "heading_path": [
+            "# 硝酸\n",
+            "## 制备\n",
+            "### 製備純硝酸\n"
+          ],
+          "file_id": "91a19a3e9ffcf4b548deb738",
+          "atomic": false,
+          "legacy_document_id": "d8bc8b32349b9f2e9be94c4c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8de46b3fff1ad3467f5fd065df7e792e78a790f54ab76290402246f765388452",
+          "parent_source_id": "verbatim-v1:5e601b7272be75d4e70a321c8fcae32d100aa6b7369536f20450ab08a4280e65",
+          "parent_text_sha256": "8de46b3fff1ad3467f5fd065df7e792e78a790f54ab76290402246f765388452",
+          "span_start": 0,
+          "span_end": 96,
+          "span_sha256": "8de46b3fff1ad3467f5fd065df7e792e78a790f54ab76290402246f765388452",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      306
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 6,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0249.json"
+  },
+  "review": {
+    "case_id": "diverse-0015",
+    "verdict": "fail",
+    "issues": [
+      "mixed_processes",
+      "citation_misalignment",
+      "repetition"
+    ],
+    "note": "把氨氧化现代流程和氮氧高温旧法混为一谈，资料2只有标题却用来引用全部工艺，并重复五段。"
+  },
+  "input": {
+    "id": "diverse-0015",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 15,
+    "original_case": {
+      "case_type": "procedure",
+      "question": "硝酸在工业上如何制备",
+      "expected_titles": [
+        "硝酸"
+      ]
+    },
+    "category": "procedure",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "硝酸在工业上如何制备",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "92fc03e93a14aa5bb1153f80f33f0c0cdb6b8d67c9cdedc6f2253b0a7436f1e2"
+}

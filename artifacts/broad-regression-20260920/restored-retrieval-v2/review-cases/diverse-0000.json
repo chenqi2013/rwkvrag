@@ -1,0 +1,1547 @@
+{
+  "result": {
+    "case_id": "diverse-0000",
+    "suite": "diverse",
+    "question": "CPUID是什么指令",
+    "http_status": 200,
+    "error": null,
+    "answer": "1. CPUID是什么指令：CPUID是一条x86/x86-64架构的指令，其操作码为0x90，用于检测和获取处理器信息，如型号、制造商ID、缓存和TLB信息等。[资料1]\n2. CPUID指令的功能是什么：CPUID指令的功能是检测处理器型号、获取处理器信息，并返回处理器的制造商ID、缓存尺寸、TLB信息等。[资料1]\n3. CPUID指令的历史：CPUID指令最早出现在Intel 80186处理器中，后来被广泛使用，并在Intel 80486、奔腾、奔腾2等处理器中得到支持。[资料1]\n4. CPUID指令的使用场景：CPUID指令常用于软件中判断处理器型号，以便于识别对应的处理器型号，如在Windows NT4 SP1以上的操作系统中使用。[资料1]\n5. CPUID指令的参数：CPUID指令的输入参数为EAX和ECX，其中EAX为基础输入参数，ECX为扩展输入参数（子叶）。[资料1]\n6. CPUID指令的返回值：CPUID指令的返回值包括EAX、EBX、ECX、EDX四个寄存器，其中EAX返回处理器ID，EBX返回制造商ID，ECX返回缓存和TLB信息，EDX返回其他信息。[资料1]\n7. CPUID指令的应用：CPUID指令被广泛应用于软件中判断处理器型号，如在Windows NT4 SP1以上的操作系统中使用。[资料1]",
+    "sources": [
+      {
+        "id": "verbatim-v1:60a1f7f97d5c749698b8f4a2ba80813be402d2a4569a30abfc156d1813c8755f@0:151:94eacbc9cc5c",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.11153728410237573,
+        "snippet": "\n[[编辑](/w/index.php?title=CPUID&action=edit&section=5 \"编辑章节：检测80486或奔腾（i586）\")]\n\n奔腾处理器支持使用CPUID指令，因此其标志位中设置了一个被称为ID的特殊标志，若该标志存在，则对应的处理器支持CPUID，检测实现如下\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 21,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "94eacbc9cc5cde4bb3d1911b82f19d76b100dbf3ed5ec5cbe0f69887e0ceb9fd",
+            "start": 4465,
+            "end": 4616
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "c0eda7e6ed49e139c22c3e36bccf8dfb05ba3360c591a09823f1f8236c3d9cc8",
+              "level": 2,
+              "kind": "heading",
+              "start": 1645,
+              "end": 1651,
+              "text": "## 历史\n"
+            },
+            {
+              "sha256": "7aaff2190fe701b0046845643a2b8012bbd24678a67ffd5030b1c28b02ba1f3d",
+              "level": 3,
+              "kind": "heading",
+              "start": 1718,
+              "end": 1739,
+              "text": "### CPUID前判断处理器型号的方法\n"
+            },
+            {
+              "sha256": "b9ca4450b918bef60d78f2531e0e0485393ab30d88334be8972fead58f1167f3",
+              "level": 4,
+              "kind": "heading",
+              "start": 4349,
+              "end": 4465,
+              "text": "#### 检测[80486](/wiki/Intel_80486 \"Intel 80486\")或[奔腾](/wiki/%E5%A5%94%E8%85%BE_(%E5%88%9D%E4%BB%A3) \"奔腾 (初代)\")（i586）\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "94eacbc9cc5cde4bb3d1911b82f19d76b100dbf3ed5ec5cbe0f69887e0ceb9fd",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 历史\n",
+            "### CPUID前判断处理器型号的方法\n",
+            "#### 检测[80486](/wiki/Intel_80486 \"Intel 80486\")或[奔腾](/wiki/%E5%A5%94%E8%85%BE_(%E5%88%9D%E4%BB%A3) \"奔腾 (初代)\")（i586）\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "94eacbc9cc5cde4bb3d1911b82f19d76b100dbf3ed5ec5cbe0f69887e0ceb9fd",
+          "parent_source_id": "verbatim-v1:60a1f7f97d5c749698b8f4a2ba80813be402d2a4569a30abfc156d1813c8755f",
+          "parent_text_sha256": "94eacbc9cc5cde4bb3d1911b82f19d76b100dbf3ed5ec5cbe0f69887e0ceb9fd",
+          "span_start": 0,
+          "span_end": 151,
+          "span_sha256": "94eacbc9cc5cde4bb3d1911b82f19d76b100dbf3ed5ec5cbe0f69887e0ceb9fd",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:29a5069cbc4c36d5d35b3aea053e8cad30f691c750510ba4f8955f171f991a3c@0:800:43975f2ddb5f",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.11343204653622423,
+        "snippet": "\n**`CPUID`**指令是一条[x86](/wiki/X86 \"X86\")架构中的的扩展指令（此处的扩展指相对i[80386](/wiki/Intel_80386 \"Intel 80386\")），其操作码助记符缩写于“CPU识别”（CPU Identification），其作用是返回特定的[CPU](/wiki/%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8 \"中央处理器\")信息，使得[软件](/wiki/%E8%BD%AF%E4%BB%B6 \"软件\")可以在运行时检测CPU的硬件特性，以便于识别并决定运行哪些代码。首批支持CPUID指令的处理器是1993年发布的[奔腾](/wiki/%E5%A5%94%E8%85%BE_(%E5%88%9D%E4%BB%A3) \"奔腾 (初代)\")（i586）和[486](/wiki/Intel_80486 \"Intel 80486\")SL。[[1]](#cite_note-1)\n\n通过使用`CPUID`，软件可以确定处理器的类型和特性支持（例如[MMX](/wiki/MMX \"MMX\")/[SSE](/wiki/SSE \"SSE\")）。`CPUID`操作码为0Fh、A2h。在调用CPUID前EAX[寄存器](/wiki/%E5%AF%84%E5%AD%98%E5%99%A8 \"寄存器\")内的值作为其输入参数,Intel64指令集手册中称其为“叶”（Leaf)，AMD64指令集手册中称“功能码”（Function Number），执行CPUID后，返回值将被写入EAX，EBX，ECX和EDX寄存器内。此外，在使用一些特殊的输入参数时，必须同时于ECX内写入第二个输入参数，否则无法得到有意义的返回值。第二个参数也被称为“子叶”（Sub Leaf）或“子功能码”（Sub Function）。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 5,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "43975f2ddb5fa00b22476360565ab8d8156e8c8bcee4f64c38cc2c74acb55401",
+            "start": 845,
+            "end": 1645
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "43975f2ddb5fa00b22476360565ab8d8156e8c8bcee4f64c38cc2c74acb55401",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "43975f2ddb5fa00b22476360565ab8d8156e8c8bcee4f64c38cc2c74acb55401",
+          "parent_source_id": "verbatim-v1:29a5069cbc4c36d5d35b3aea053e8cad30f691c750510ba4f8955f171f991a3c",
+          "parent_text_sha256": "43975f2ddb5fa00b22476360565ab8d8156e8c8bcee4f64c38cc2c74acb55401",
+          "span_start": 0,
+          "span_end": 800,
+          "span_sha256": "43975f2ddb5fa00b22476360565ab8d8156e8c8bcee4f64c38cc2c74acb55401",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:30ff7777ec6acd8017507b753dcfefd379e95c71336d9f03f8d85193861913a1@0:396:d4f58523d171",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.10423986549873143,
+        "snippet": "\n[[编辑](/w/index.php?title=CPUID&action=edit&section=16 \"编辑章节：关于子叶的意义以及最大支持的子叶\")]\n\n英特尔并未在其发布的官方手册中定义子叶与缓存的绝对对应关系，也未说明最大支持的子叶，上述关系表格只是软硬件工程师的总结，但截止到2023年的SunnyCove架构，所有的英特尔处理器都遵守这一对应关系。\n\n在面对一个全新的英特尔架构时，应当假定上述对应关系与最大子叶数不存在，并通过该指令判断，其中对应关系由上述EAX中的返回值相应字段确定，最大子叶值由以下方法判断：在EAX输入4，ECX中的初始值为0并执行CPUID指令，每次执行后将ECX内值加1，EAX仍为4，直到四个寄存器的返回值全部为0，则使返回值不为0的最大ECX输入就是最大支持的子叶。\n\n**对于AMD处理器，EAX=3是保留项。四个寄存器都将返回0。**\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 75,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "d4f58523d171c5bc399694dfd0fcef27813a75679da10f22fc79e647d23328d9",
+            "start": 18607,
+            "end": 19003
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+              "level": 2,
+              "kind": "heading",
+              "start": 5913,
+              "end": 5924,
+              "text": "## 调用CPUID\n"
+            },
+            {
+              "sha256": "b4ca7129eeef155ef0c713110e779543cb9899fed561dc0d9ba910d83479ffde",
+              "level": 3,
+              "kind": "heading",
+              "start": 17749,
+              "end": 17768,
+              "text": "### EAX=4缓存参数（英特尔）\n"
+            },
+            {
+              "sha256": "e482ce08d51eb821f8c5c0037c3c5568fca804581e2199292e52680415b48691",
+              "level": 4,
+              "kind": "heading",
+              "start": 18488,
+              "end": 18506,
+              "text": "#### 关于EAX=4的注意事项\n"
+            },
+            {
+              "sha256": "11bc9068a2e6d85661dd98d7f0d49a5d990ee4edb183e04a5cdf91d9f7c47e40",
+              "level": 5,
+              "kind": "heading",
+              "start": 18584,
+              "end": 18607,
+              "text": "##### 关于子叶的意义以及最大支持的子叶\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "d4f58523d171c5bc399694dfd0fcef27813a75679da10f22fc79e647d23328d9",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 调用CPUID\n",
+            "### EAX=4缓存参数（英特尔）\n",
+            "#### 关于EAX=4的注意事项\n",
+            "##### 关于子叶的意义以及最大支持的子叶\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "d4f58523d171c5bc399694dfd0fcef27813a75679da10f22fc79e647d23328d9",
+          "parent_source_id": "verbatim-v1:30ff7777ec6acd8017507b753dcfefd379e95c71336d9f03f8d85193861913a1",
+          "parent_text_sha256": "d4f58523d171c5bc399694dfd0fcef27813a75679da10f22fc79e647d23328d9",
+          "span_start": 0,
+          "span_end": 396,
+          "span_sha256": "d4f58523d171c5bc399694dfd0fcef27813a75679da10f22fc79e647d23328d9",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:017eb0018cfc0c6d0992ca4f9766a781dc173a1ad936595bcf4919b15e463846@0:758:ea6e7fc52c2c",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.11087909626216078,
+        "snippet": "\n[[编辑](/w/index.php?title=CPUID&action=edit&section=7 \"编辑章节：调用CPUID\")]\n\n`CPUID` 指令的操作码是 `0F A2`。`CPUID`没有显式的操作数，其隐式使用EAX或EAX与ECX中的值作为参数，以确定要获取的信息。在[英特尔](/wiki/%E8%8B%B1%E7%89%B9%E5%B0%94 \"英特尔\")指令集手册中，`CPUID`的输入参数（EAX），被称为“叶”（Leaf），AMD称其为“功能码”（Function Number），执行CPUID后，返回值将被写入EAX，EBX，ECX和EDX寄存器内。此外，在使用一些特殊的输入参数时，必须同时于ECX内写入第二个输入参数，否则无法得到有意义的返回值。第二个参数也被称为“子叶”（Sub Leaf）或“子功能码”（Sub Function）。\n\n注意，当且仅当MSR[寄存器](/wiki/%E5%AF%84%E5%AD%98%E5%99%A8 \"寄存器\")*IA32\\_MISC\\_ENABLE.BOOT\\_NT4* 的第22位为0时，EAX大于3的输入才是有意义的。当且仅当该位被设为1时，[Windows NT](/wiki/Windows_NT_4.0 \"Windows NT 4.0\") 4.0 SP6以前的操作系统才能正常启动。\n\n截止到2022年，对于一些常见的处理器架构，最大的有效的基础输入是0x20(GoldenCove），0x10（[Zen4](/wiki/Zen_4%E5%BE%AE%E6%9E%B6%E6%A7%8B \"Zen 4微架構\"));最大有效的扩展输入是0x80000008（GoldenCove），0x80000028（Zen4）。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 27,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "ea6e7fc52c2cc2eb5cfc7d91b25bad5b3581f68543cb24f96a5786c0bdba0c89",
+            "start": 5924,
+            "end": 6682
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+              "level": 2,
+              "kind": "heading",
+              "start": 5913,
+              "end": 5924,
+              "text": "## 调用CPUID\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "ea6e7fc52c2cc2eb5cfc7d91b25bad5b3581f68543cb24f96a5786c0bdba0c89",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 调用CPUID\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "ea6e7fc52c2cc2eb5cfc7d91b25bad5b3581f68543cb24f96a5786c0bdba0c89",
+          "parent_source_id": "verbatim-v1:017eb0018cfc0c6d0992ca4f9766a781dc173a1ad936595bcf4919b15e463846",
+          "parent_text_sha256": "ea6e7fc52c2cc2eb5cfc7d91b25bad5b3581f68543cb24f96a5786c0bdba0c89",
+          "span_start": 0,
+          "span_end": 758,
+          "span_sha256": "ea6e7fc52c2cc2eb5cfc7d91b25bad5b3581f68543cb24f96a5786c0bdba0c89",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:7192beff58ce7f8ef4a95a74399f91a0facac532faf06a73968c467efd2adf02@0:67:6f178bea6fdd",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.06668913845795924,
+        "snippet": "\n[[编辑](/w/index.php?title=CPUID&action=edit&section=1 \"编辑章节：历史\")]\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 7,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "6f178bea6fddd341d69e186af4c6c0d5d934c847a406d73e930f682c8dc099e6",
+            "start": 1651,
+            "end": 1718
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "c0eda7e6ed49e139c22c3e36bccf8dfb05ba3360c591a09823f1f8236c3d9cc8",
+              "level": 2,
+              "kind": "heading",
+              "start": 1645,
+              "end": 1651,
+              "text": "## 历史\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "6f178bea6fddd341d69e186af4c6c0d5d934c847a406d73e930f682c8dc099e6",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 历史\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "6f178bea6fddd341d69e186af4c6c0d5d934c847a406d73e930f682c8dc099e6",
+          "parent_source_id": "verbatim-v1:7192beff58ce7f8ef4a95a74399f91a0facac532faf06a73968c467efd2adf02",
+          "parent_text_sha256": "6f178bea6fddd341d69e186af4c6c0d5d934c847a406d73e930f682c8dc099e6",
+          "span_start": 0,
+          "span_end": 67,
+          "span_sha256": "6f178bea6fddd341d69e186af4c6c0d5d934c847a406d73e930f682c8dc099e6",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:de0bb2a0c0c3aa75e2ac169974e81ee080958b9dcef898604759eea7c3633308@0:231:b370dfb09945",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.09793181312168654,
+        "snippet": "\n[[编辑](/w/index.php?title=CPUID&action=edit&section=8 \"编辑章节：EAX=0: 最高基础输入参数与制造商ID\")]\n\n输入参数位0时，CPUID返回对当前处理器有意义的（即被当前架构所实现的）最大输入参数以及ASCII编码的制造商ID（Manufacturer ID）。\n\n最大输入参数被写入EAX寄存器中，对于英特尔和AMD处理器，已知的返回值如下表所示：\n\n英特尔处理器架构所实现的最高CPUID输入\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 29,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "b370dfb09945fb7383a7f2bc9a597c5680c4ce9a86d94e0a155fa95c7edbf106",
+            "start": 6708,
+            "end": 6939
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+              "level": 2,
+              "kind": "heading",
+              "start": 5913,
+              "end": 5924,
+              "text": "## 调用CPUID\n"
+            },
+            {
+              "sha256": "3dade09fff5f5ad1244751d0561650b540496551a12e34558921a57b2ae484ac",
+              "level": 3,
+              "kind": "heading",
+              "start": 6682,
+              "end": 6708,
+              "text": "### EAX=0: 最高基础输入参数与制造商ID\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "b370dfb09945fb7383a7f2bc9a597c5680c4ce9a86d94e0a155fa95c7edbf106",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 调用CPUID\n",
+            "### EAX=0: 最高基础输入参数与制造商ID\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "b370dfb09945fb7383a7f2bc9a597c5680c4ce9a86d94e0a155fa95c7edbf106",
+          "parent_source_id": "verbatim-v1:de0bb2a0c0c3aa75e2ac169974e81ee080958b9dcef898604759eea7c3633308",
+          "parent_text_sha256": "b370dfb09945fb7383a7f2bc9a597c5680c4ce9a86d94e0a155fa95c7edbf106",
+          "span_start": 0,
+          "span_end": 231,
+          "span_sha256": "b370dfb09945fb7383a7f2bc9a597c5680c4ce9a86d94e0a155fa95c7edbf106",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:286409bcbc8579a073f41edfabb278fbeca6c33105833dfdc969e46b730dc17a@0:853:9312a5838aa0",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.10498449263155146,
+        "snippet": "\n[[编辑](/w/index.php?title=CPUID&action=edit&section=2 \"编辑章节：CPUID前判断处理器型号的方法\")]\n\n在`CPUID`指令被引入前，若要在运行时确定[CPU](/wiki/%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8 \"中央处理器\")的型号，需要编写晦涩的[汇编语言](/wiki/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80 \"汇编语言\")代码以判断某些指令被执行后处理器的行为。\n\n1990年以前，对于如何判断CPU的型号没有官方说明与实现方法，但软硬件工程师们总结了一套利用PUSHF/POPF指令检测CPU行为以判断其架构的方法。此方法在广泛应用的同时引起了巨大争议，反对者认为其并非万无一失，在某些需要高可靠性的软件平台上若处理器型号判断错误，则有可能造成巨大损失，但英特尔在1990年发布了《i486微处理器程序员参考手册》（*i486 Microprocessor Programmer's Reference Manual* Intel Corp. 1990），其中在手册的第22.10节中使用了上述方法判断CPU代数，并且英特尔声称“*代码序列已经过 Intel 验证，可以检测 CPUID、数学协处理器功能，并进行相应的初始化。任何其他方法都可能在未来的处理器中产生不可预测的结果*”。此后该方法被应用于大多数[操作系统](/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F \"操作系统\")[内核](/wiki/%E5%86%85%E6%A0%B8 \"内核\")中。\n\n以下所介绍之方法为英特尔手册中的官方[算法](/wiki/%E7%AE%97%E6%B3%95 \"算法\")。\n\n该算法的核心是利用PUSHF/POPF指令将标志寄存器中的特定位设为1或0，并观察处理器随后的行为，每一代处理器的具体行为均有所不同。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 9,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "9312a5838aa02875bb61dc75a5c05cce5942b73a897a2d31090a31b7d0b0817c",
+            "start": 1739,
+            "end": 2592
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "c0eda7e6ed49e139c22c3e36bccf8dfb05ba3360c591a09823f1f8236c3d9cc8",
+              "level": 2,
+              "kind": "heading",
+              "start": 1645,
+              "end": 1651,
+              "text": "## 历史\n"
+            },
+            {
+              "sha256": "7aaff2190fe701b0046845643a2b8012bbd24678a67ffd5030b1c28b02ba1f3d",
+              "level": 3,
+              "kind": "heading",
+              "start": 1718,
+              "end": 1739,
+              "text": "### CPUID前判断处理器型号的方法\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "9312a5838aa02875bb61dc75a5c05cce5942b73a897a2d31090a31b7d0b0817c",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 历史\n",
+            "### CPUID前判断处理器型号的方法\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "9312a5838aa02875bb61dc75a5c05cce5942b73a897a2d31090a31b7d0b0817c",
+          "parent_source_id": "verbatim-v1:286409bcbc8579a073f41edfabb278fbeca6c33105833dfdc969e46b730dc17a",
+          "parent_text_sha256": "9312a5838aa02875bb61dc75a5c05cce5942b73a897a2d31090a31b7d0b0817c",
+          "span_start": 0,
+          "span_end": 853,
+          "span_sha256": "9312a5838aa02875bb61dc75a5c05cce5942b73a897a2d31090a31b7d0b0817c",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:db7a78192bc04ca251a5442e93a195acb6565bd52e166032a978240222d90a82@0:419:544fc7ad0855",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.09892350788448394,
+        "snippet": "| 架构 | 基础输入 | 扩展输入 |\n| --- | --- | --- |\n| K5以前 | *不支持CPUID指令* | |\n| K5 | 0x1 | 不支持 |\n| K5（Krypton） | 0x1 | 0x8000 0005 |\n| K6 | 0x1 | 0x8000 0006 |\n| K7 | 0x1 | 0x8000 0007 |\n| K8 | 0x1 | 0x8000 0018 |\n| K10 | 0x5 | 0x8000 001B |\n| K10（Llanro） | 0x6 | 0x8000 001B |\n| Bulldozer | 0xD | 0x8000 001E |\n| Zen | 0xD | 0x8000 001F |\n| Zen2 | 0x10 | 0x8000 0020 |\n| Zen3 | 0x10 | 0x8000 0023 |\n| Zen4 | 0x10 | 0x8000 0028 |\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 32,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "table",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "544fc7ad0855fbffd87125a6173af39c8dac1fb3bff450dafe520fbc85045afe",
+            "start": 7519,
+            "end": 7938
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+              "level": 2,
+              "kind": "heading",
+              "start": 5913,
+              "end": 5924,
+              "text": "## 调用CPUID\n"
+            },
+            {
+              "sha256": "3dade09fff5f5ad1244751d0561650b540496551a12e34558921a57b2ae484ac",
+              "level": 3,
+              "kind": "heading",
+              "start": 6682,
+              "end": 6708,
+              "text": "### EAX=0: 最高基础输入参数与制造商ID\n"
+            },
+            {
+              "sha256": "f582614c210be0a053cadefb2ec8d6f58d920f8514201a8419506ce999ac1e78",
+              "level": null,
+              "kind": "table_header",
+              "start": 7519,
+              "end": 7560,
+              "text": "| 架构 | 基础输入 | 扩展输入 |\n| --- | --- | --- |\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "544fc7ad0855fbffd87125a6173af39c8dac1fb3bff450dafe520fbc85045afe",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 调用CPUID\n",
+            "### EAX=0: 最高基础输入参数与制造商ID\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": true,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "544fc7ad0855fbffd87125a6173af39c8dac1fb3bff450dafe520fbc85045afe",
+          "parent_source_id": "verbatim-v1:db7a78192bc04ca251a5442e93a195acb6565bd52e166032a978240222d90a82",
+          "parent_text_sha256": "544fc7ad0855fbffd87125a6173af39c8dac1fb3bff450dafe520fbc85045afe",
+          "span_start": 0,
+          "span_end": 419,
+          "span_sha256": "544fc7ad0855fbffd87125a6173af39c8dac1fb3bff450dafe520fbc85045afe",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:523ef7c2f8801ddf4cdcf681a5cb94485e47c55d782cea0625f4d2fffde92a09@0:69:0df7e569fc33",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.0293236301369863,
+        "snippet": "\nECX和EDX返回处理器实现的功能，一个二进制位代表一个功能，该位为1是表示处理器支持该功能，反之则不支持，各位对应功能或指令如下：\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 55,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "0df7e569fc338d699c8dadd1fff190270b30dac8234afe51c231b986bc9bb36b",
+            "start": 12753,
+            "end": 12822
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+              "level": 2,
+              "kind": "heading",
+              "start": 5913,
+              "end": 5924,
+              "text": "## 调用CPUID\n"
+            },
+            {
+              "sha256": "28e216dbc257ff723dd150c12eca03cf351469379a934d3f8147640dd8c6ff45",
+              "level": 3,
+              "kind": "heading",
+              "start": 10753,
+              "end": 10773,
+              "text": "### EAX=1: 处理器信息和特性\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "0df7e569fc338d699c8dadd1fff190270b30dac8234afe51c231b986bc9bb36b",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 调用CPUID\n",
+            "### EAX=1: 处理器信息和特性\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "0df7e569fc338d699c8dadd1fff190270b30dac8234afe51c231b986bc9bb36b",
+          "parent_source_id": "verbatim-v1:523ef7c2f8801ddf4cdcf681a5cb94485e47c55d782cea0625f4d2fffde92a09",
+          "parent_text_sha256": "0df7e569fc338d699c8dadd1fff190270b30dac8234afe51c231b986bc9bb36b",
+          "span_start": 0,
+          "span_end": 69,
+          "span_sha256": "0df7e569fc338d699c8dadd1fff190270b30dac8234afe51c231b986bc9bb36b",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:75f003132e6db7aa0a432f53f659ba7c7fb103d21d180ccc56fc74ce98cfc5b7@0:237:84fc6d66b499",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.1021179912673427,
+        "snippet": "* [CPU-Z](/wiki/CPU-Z \"CPU-Z\")，一个使用`CPUID`等信息识别系统配置的Windows实用工具。\n* [CPU-X](/w/index.php?title=CPU-X&action=edit&redlink=1 \"CPU-X（页面不存在）\")，一个使用`CPUID`等信息识别系统配置的Linux实用工具。\n* `cpuid`，[類Unix](/wiki/%E7%B1%BBUnix \"类Unix\")作業系統下的讀取CPUID的實用工具。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 83,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "84fc6d66b499e0018040e485e7acb901d2231197bbc289d81f0ec6d91dc4acb8",
+            "start": 20347,
+            "end": 20584
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "2be154ad94f0a3964acafaf617819136c3b62639effb1613cbc40f50e50876ab",
+              "level": 2,
+              "kind": "heading",
+              "start": 20273,
+              "end": 20279,
+              "text": "## 参见\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "84fc6d66b499e0018040e485e7acb901d2231197bbc289d81f0ec6d91dc4acb8",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 参见\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": true,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "84fc6d66b499e0018040e485e7acb901d2231197bbc289d81f0ec6d91dc4acb8",
+          "parent_source_id": "verbatim-v1:75f003132e6db7aa0a432f53f659ba7c7fb103d21d180ccc56fc74ce98cfc5b7",
+          "parent_text_sha256": "84fc6d66b499e0018040e485e7acb901d2231197bbc289d81f0ec6d91dc4acb8",
+          "span_start": 0,
+          "span_end": 237,
+          "span_sha256": "84fc6d66b499e0018040e485e7acb901d2231197bbc289d81f0ec6d91dc4acb8",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:76400e790a1ce62e354dc9e6f23d5d15b10de51e82d922ba78f411b1a4423d29@0:157:89c05b92b079",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.0814122924177272,
+        "snippet": "\n[[编辑](/w/index.php?title=CPUID&action=edit&section=14 \"编辑章节：EAX=4缓存参数（英特尔）\")]\n\n以4作为EAX输入参数时，CPUID依据ECX寄存器中输入的第二个参数（也称为子叶）返回处理器缓存信息。\n\nEAX返回缓存类型信息，值分为以下几个字段\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 67,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "89c05b92b079dd52b5e69ebbc7e3ec6d3714a786c029da90747d57b605179af5",
+            "start": 17768,
+            "end": 17925
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+              "level": 2,
+              "kind": "heading",
+              "start": 5913,
+              "end": 5924,
+              "text": "## 调用CPUID\n"
+            },
+            {
+              "sha256": "b4ca7129eeef155ef0c713110e779543cb9899fed561dc0d9ba910d83479ffde",
+              "level": 3,
+              "kind": "heading",
+              "start": 17749,
+              "end": 17768,
+              "text": "### EAX=4缓存参数（英特尔）\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "89c05b92b079dd52b5e69ebbc7e3ec6d3714a786c029da90747d57b605179af5",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 调用CPUID\n",
+            "### EAX=4缓存参数（英特尔）\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "89c05b92b079dd52b5e69ebbc7e3ec6d3714a786c029da90747d57b605179af5",
+          "parent_source_id": "verbatim-v1:76400e790a1ce62e354dc9e6f23d5d15b10de51e82d922ba78f411b1a4423d29",
+          "parent_text_sha256": "89c05b92b079dd52b5e69ebbc7e3ec6d3714a786c029da90747d57b605179af5",
+          "span_start": 0,
+          "span_end": 157,
+          "span_sha256": "89c05b92b079dd52b5e69ebbc7e3ec6d3714a786c029da90747d57b605179af5",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:acb73c5ef195aa0712ee1f27c70eab4c05bc4b75a74b90e4456082f2617d4d27@0:433:aea987ff7487",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.10375113658695749,
+        "snippet": "| 字段 | EBX | 说明 |\n| --- | --- | --- |\n| 7:0 | 处理器名称索引号（Brand Index） |  |\n| 15:8 | CLFLUSH指令清除缓存的大小 | 仅当CPU支持CLFLUSH指令时 （CPUID.01.EDX.CLFSH [bit 19]= 1）有效 |\n| 23:16 | 对于AMD处理器，若HTT标志（位于CPUID Fn0000\\_0001\\_EDX）为1，则该字段为该处理器的逻辑核心（即线程）数，反之，该字段无意义且为0。 对于Intel处理器，若与上述相同位置的HT标志有效，则该字段代表该架构处理器中可寻址的最大APIC ID数量，（注意：这个值不是逻辑处理器数），在奔腾4HT及以前的处理器中，该字段代表每个物理核心对应的逻辑处理器数量。 | 无论是何种处理器，该字段只在HT标志有效时有意义。 |\n| 31:24 | 初始Local APIC ID | 该值已被x2APIC ID取代 |\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 54,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "table",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "aea987ff74872f471bbec4dd8c761230e45d067ae04949dc36c1081f8b6fe841",
+            "start": 12320,
+            "end": 12753
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+              "level": 2,
+              "kind": "heading",
+              "start": 5913,
+              "end": 5924,
+              "text": "## 调用CPUID\n"
+            },
+            {
+              "sha256": "28e216dbc257ff723dd150c12eca03cf351469379a934d3f8147640dd8c6ff45",
+              "level": 3,
+              "kind": "heading",
+              "start": 10753,
+              "end": 10773,
+              "text": "### EAX=1: 处理器信息和特性\n"
+            },
+            {
+              "sha256": "38b44e1b2a3d6f6a1d638788315629eaf07de610a147c0075f8feb55fa382e37",
+              "level": null,
+              "kind": "table_header",
+              "start": 12320,
+              "end": 12358,
+              "text": "| 字段 | EBX | 说明 |\n| --- | --- | --- |\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "aea987ff74872f471bbec4dd8c761230e45d067ae04949dc36c1081f8b6fe841",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 调用CPUID\n",
+            "### EAX=1: 处理器信息和特性\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": true,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "aea987ff74872f471bbec4dd8c761230e45d067ae04949dc36c1081f8b6fe841",
+          "parent_source_id": "verbatim-v1:acb73c5ef195aa0712ee1f27c70eab4c05bc4b75a74b90e4456082f2617d4d27",
+          "parent_text_sha256": "aea987ff74872f471bbec4dd8c761230e45d067ae04949dc36c1081f8b6fe841",
+          "span_start": 0,
+          "span_end": 433,
+          "span_sha256": "aea987ff74872f471bbec4dd8c761230e45d067ae04949dc36c1081f8b6fe841",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:fcc95452ebbb01a46b601f5af648688e653d01e073d9519fa0cc00cf84273334@0:992:9935d3476fbb",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.0854712196016544,
+        "snippet": "\n[[编辑](/w/index.php?title=CPUID&action=edit&section=6 \"编辑章节：关于上述方法的注意事项\")]\n\n该算法无法检测[80186](/wiki/Intel_80186 \"Intel 80186\")处理器（虽然其并未被广泛使用），80186/88处理器包80286中包含的大部分新指令和异常，包括*PUSHA/POPA、PUSH、SHL*和无效操作码[异常](/wiki/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86 \"异常处理\")。80186/88中唯一没有实现的是专门用于[保护模式](/wiki/%E4%BF%9D%E8%AD%B7%E6%A8%A1%E5%BC%8F \"保護模式\")的指令和异常。未能检测到此处理器可能会禁止使用某些可以利用这些新指令和异常的软件。\n\n同时，由于PUSHF/POPF是Ring0指令，故该算法只能在[实模式](/wiki/%E7%9C%9F%E5%AF%A6%E6%A8%A1%E5%BC%8F \"真實模式\")中执行，保护模式[操作系统](/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F \"操作系统\")中运行的[应用程序](/wiki/%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F \"应用程序\")无法使用这个方法，除非处理器以及操作系统支持虚拟模式扩展（VME）。\n\n以上算法仅供参考与学习，在使用非英特尔处理器，完全软件虚拟化（Full emulation）的虚拟机或其他平台上，该算法很有可能无法正确判断处理器支持的指令集。考虑到奔腾已经是近30年前的处理器，除非有必要在古老的计算机上检测CPU，否则不应该再使用这种算法，而是直接调用CPUID指令。\n\n对于非x86架构的CPU，仍然需要精心设计的代码判断其差别（例如使用MOVE的特权要求判断[摩托罗拉68000](/wiki/%E6%91%A9%E6%89%98%E7%BD%97%E6%8B%8968000 \"摩托罗拉68000\")和68010），但大多数架构都要求具体实现者提供相应的寄存器以提供区分和判断处理器（例如[ARM64](/wiki/ARM%E6%9E%B6%E6%A7%8B \"ARM架構\")的ID\\_AA64寄存器）。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 25,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "9935d3476fbbcde28a2fbe0dde6bdebb686706f19cefcabf9dc37e5a435eaae0",
+            "start": 4921,
+            "end": 5913
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "c0eda7e6ed49e139c22c3e36bccf8dfb05ba3360c591a09823f1f8236c3d9cc8",
+              "level": 2,
+              "kind": "heading",
+              "start": 1645,
+              "end": 1651,
+              "text": "## 历史\n"
+            },
+            {
+              "sha256": "7aaff2190fe701b0046845643a2b8012bbd24678a67ffd5030b1c28b02ba1f3d",
+              "level": 3,
+              "kind": "heading",
+              "start": 1718,
+              "end": 1739,
+              "text": "### CPUID前判断处理器型号的方法\n"
+            },
+            {
+              "sha256": "d14bf412fefda6a13bda69a1da4914611a0e9337cd1fb9a0487e290277265685",
+              "level": 4,
+              "kind": "heading",
+              "start": 4904,
+              "end": 4921,
+              "text": "#### 关于上述方法的注意事项\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "9935d3476fbbcde28a2fbe0dde6bdebb686706f19cefcabf9dc37e5a435eaae0",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 历史\n",
+            "### CPUID前判断处理器型号的方法\n",
+            "#### 关于上述方法的注意事项\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "9935d3476fbbcde28a2fbe0dde6bdebb686706f19cefcabf9dc37e5a435eaae0",
+          "parent_source_id": "verbatim-v1:fcc95452ebbb01a46b601f5af648688e653d01e073d9519fa0cc00cf84273334",
+          "parent_text_sha256": "9935d3476fbbcde28a2fbe0dde6bdebb686706f19cefcabf9dc37e5a435eaae0",
+          "span_start": 0,
+          "span_end": 992,
+          "span_sha256": "9935d3476fbbcde28a2fbe0dde6bdebb686706f19cefcabf9dc37e5a435eaae0",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:f2410fa944af8f35c53455051f1dbc03012d8c6c5450c9e351410025b0a15237@0:29:2bace29286de",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.015384615384615385,
+        "snippet": "\nEBX，ECX返回缓存尺寸信息，返回值各个字段如下：\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 69,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "2bace29286de3100404824aa47f5be552b443141f91f08e6a83afd9ebeb40813",
+            "start": 18224,
+            "end": 18253
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+              "level": 2,
+              "kind": "heading",
+              "start": 5913,
+              "end": 5924,
+              "text": "## 调用CPUID\n"
+            },
+            {
+              "sha256": "b4ca7129eeef155ef0c713110e779543cb9899fed561dc0d9ba910d83479ffde",
+              "level": 3,
+              "kind": "heading",
+              "start": 17749,
+              "end": 17768,
+              "text": "### EAX=4缓存参数（英特尔）\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "2bace29286de3100404824aa47f5be552b443141f91f08e6a83afd9ebeb40813",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 调用CPUID\n",
+            "### EAX=4缓存参数（英特尔）\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "2bace29286de3100404824aa47f5be552b443141f91f08e6a83afd9ebeb40813",
+          "parent_source_id": "verbatim-v1:f2410fa944af8f35c53455051f1dbc03012d8c6c5450c9e351410025b0a15237",
+          "parent_text_sha256": "2bace29286de3100404824aa47f5be552b443141f91f08e6a83afd9ebeb40813",
+          "span_start": 0,
+          "span_end": 29,
+          "span_sha256": "2bace29286de3100404824aa47f5be552b443141f91f08e6a83afd9ebeb40813",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:ebcf3e9325d0bb7d4acb9684cf01a783df03c2dc2a6fee552bf5b14824d822e9@0:8:29b712f90e6a",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.08366502866502867,
+        "snippet": "# CPUID\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 0,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+            "start": 0,
+            "end": 8
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": true,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+          "parent_source_id": "verbatim-v1:ebcf3e9325d0bb7d4acb9684cf01a783df03c2dc2a6fee552bf5b14824d822e9",
+          "parent_text_sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+          "span_start": 0,
+          "span_end": 8,
+          "span_sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:2ceb0a528d5421ed344334ee07d547aa161fff281f67fc38230556b5f85c6ebc@0:121:a198360754bf",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.08051070589045271,
+        "snippet": "\n[[编辑](/w/index.php?title=CPUID&action=edit&section=12 \"编辑章节：EAX=3处理器序列号（英特尔）\")]\n\n以3作为输入参数时，CPUID将在ECX和EDX寄存器中返回处理器序列号。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 63,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "a198360754bf6176400dc5ae3374ec116b168a19cc6ae45a922b61e47b530444",
+            "start": 17121,
+            "end": 17242
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+              "level": 2,
+              "kind": "heading",
+              "start": 5913,
+              "end": 5924,
+              "text": "## 调用CPUID\n"
+            },
+            {
+              "sha256": "5dfd3e36e0798ce7faca429bd9bf9447466e7ae45c780cc1eece64ef2bd2fcc5",
+              "level": 3,
+              "kind": "heading",
+              "start": 17100,
+              "end": 17121,
+              "text": "### EAX=3处理器序列号（英特尔）\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "a198360754bf6176400dc5ae3374ec116b168a19cc6ae45a922b61e47b530444",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 调用CPUID\n",
+            "### EAX=3处理器序列号（英特尔）\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "a198360754bf6176400dc5ae3374ec116b168a19cc6ae45a922b61e47b530444",
+          "parent_source_id": "verbatim-v1:2ceb0a528d5421ed344334ee07d547aa161fff281f67fc38230556b5f85c6ebc",
+          "parent_text_sha256": "a198360754bf6176400dc5ae3374ec116b168a19cc6ae45a922b61e47b530444",
+          "span_start": 0,
+          "span_end": 121,
+          "span_sha256": "a198360754bf6176400dc5ae3374ec116b168a19cc6ae45a922b61e47b530444",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:3ab5a6575fb1d63278e652add2ded7ddf9fcf594de4e7900dd05cea968ec5e84@0:786:1e63ffc95a8a",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.015151515151515152,
+        "snippet": "\n[[编辑](/w/index.php?title=CPUID&action=edit&section=10 \"编辑章节：EAX=2: 缓存和TLB信息（英特尔）\")]\n\n对于英特尔处理器，EAX=2将返回处理器缓存，TLB和预取器信息，这些信息被编码为数个1字节信息返回于EAX，EBX，ECX和EDX四个寄存器中，编码规则如下：\n\nEAX寄存器返回值的最低位（LSB）一定是1，它不代表任何信息，软件读取时应当将其忽略。\n\n每个寄存器返回值的最高位（MSB）代表该寄存器中的值是否有效，若MSB为0，则该寄存器包含有意义的信息，反之则代表该寄存器为保留值且无意义。\n\n若某一寄存器内的返回值有意义，则其应当被分割为4个等长部分，每部分长度为8为，即一字节，每部分代表了一个缓存/TLB或预取器的信息，具体编码见英特尔所发行的官方手册[Intel 64 and IA-32 Architectures Software Developer Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) （[页面存档备份](//web.archive.org/web/20230602224827/https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)，存于[互联网档案馆](/wiki/%E4%BA%92%E8%81%94%E7%BD%91%E6%A1%A3%E6%A1%88%E9%A6%86 \"互联网档案馆\")） 卷2A中关于CPUID指令的表3-12。（截至2023.2，该表位于Vol2A，3-245到3-248页）。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 59,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "1e63ffc95a8a53bc21c83f56c06c6608b2d950ae5e63f3cfbda4b2e6829eefa7",
+            "start": 15990,
+            "end": 16776
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+              "level": 2,
+              "kind": "heading",
+              "start": 5913,
+              "end": 5924,
+              "text": "## 调用CPUID\n"
+            },
+            {
+              "sha256": "0f2962650eb8d864038d174485f38a8ab22a72182401e49fb424e01a2c44a92d",
+              "level": 3,
+              "kind": "heading",
+              "start": 15965,
+              "end": 15990,
+              "text": "### EAX=2: 缓存和TLB信息（英特尔）\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "1e63ffc95a8a53bc21c83f56c06c6608b2d950ae5e63f3cfbda4b2e6829eefa7",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 调用CPUID\n",
+            "### EAX=2: 缓存和TLB信息（英特尔）\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "1e63ffc95a8a53bc21c83f56c06c6608b2d950ae5e63f3cfbda4b2e6829eefa7",
+          "parent_source_id": "verbatim-v1:3ab5a6575fb1d63278e652add2ded7ddf9fcf594de4e7900dd05cea968ec5e84",
+          "parent_text_sha256": "1e63ffc95a8a53bc21c83f56c06c6608b2d950ae5e63f3cfbda4b2e6829eefa7",
+          "span_start": 0,
+          "span_end": 786,
+          "span_sha256": "1e63ffc95a8a53bc21c83f56c06c6608b2d950ae5e63f3cfbda4b2e6829eefa7",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:846093a0e8ea8d1f406720c5c5566f9746f8cf9f81a1a9c5dc5b4ac104328458@0:74:d2f4e1d590d9",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.014925373134328358,
+        "snippet": "\n制造商ID含有12个字符，以EBX-EDX-ECX的顺序拼接，例如在英特尔处理器上将返回“GenuineIntel”，具体的返回值如下表所示：\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 33,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "d2f4e1d590d94b29ae7c191535a9146d3457714200ebc83363e81416d15dc0ab",
+            "start": 7938,
+            "end": 8012
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            },
+            {
+              "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+              "level": 2,
+              "kind": "heading",
+              "start": 5913,
+              "end": 5924,
+              "text": "## 调用CPUID\n"
+            },
+            {
+              "sha256": "3dade09fff5f5ad1244751d0561650b540496551a12e34558921a57b2ae484ac",
+              "level": 3,
+              "kind": "heading",
+              "start": 6682,
+              "end": 6708,
+              "text": "### EAX=0: 最高基础输入参数与制造商ID\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "d2f4e1d590d94b29ae7c191535a9146d3457714200ebc83363e81416d15dc0ab",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n",
+            "## 调用CPUID\n",
+            "### EAX=0: 最高基础输入参数与制造商ID\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "d2f4e1d590d94b29ae7c191535a9146d3457714200ebc83363e81416d15dc0ab",
+          "parent_source_id": "verbatim-v1:846093a0e8ea8d1f406720c5c5566f9746f8cf9f81a1a9c5dc5b4ac104328458",
+          "parent_text_sha256": "d2f4e1d590d94b29ae7c191535a9146d3457714200ebc83363e81416d15dc0ab",
+          "span_start": 0,
+          "span_end": 74,
+          "span_sha256": "d2f4e1d590d94b29ae7c191535a9146d3457714200ebc83363e81416d15dc0ab",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:935642c7e0379b54b5918883758476aeef4b5c0479d9a8ab9be6a993679c983c@0:11:f9d01ca04270",
+        "document_id": "833049a60208ecd01c5a6db5",
+        "source": "wikipedia-snapshot",
+        "title": "CPUID",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+        "score": 0.08211756223758429,
+        "snippet": "## 调用CPUID\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:5643400-93517304",
+          "external_id": "zhwiki/5643400",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 26,
+          "document_id": "833049a60208ecd01c5a6db5",
+          "title": "CPUID",
+          "wikiname": "zhwiki",
+          "page_id": 5643400,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/5643400-93517304.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+            "start": 5913,
+            "end": 5924
+          },
+          "context_spans": [
+            {
+              "sha256": "29b712f90e6a1cebbee3e6b7cff5f162f130a14dcc83e24a2679211c5ef11250",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# CPUID\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+          "source_text_sha256": "28b10df6b7c309dbc0ce0131579f5ab1ed8fc6899ffdfea268b552a769323422",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=93517304",
+          "version": 93517304,
+          "heading_path": [
+            "# CPUID\n"
+          ],
+          "file_id": "833049a60208ecd01c5a6db5",
+          "atomic": true,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+          "parent_source_id": "verbatim-v1:935642c7e0379b54b5918883758476aeef4b5c0479d9a8ab9be6a993679c983c",
+          "parent_text_sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+          "span_start": 0,
+          "span_end": 11,
+          "span_sha256": "f9d01ca042700b7b65f7d3ad16014917975e2160b63e8478251c93474e87dcb8",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      576
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 19,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0260.json"
+  },
+  "review": {
+    "case_id": "diverse-0000",
+    "verdict": "fail",
+    "issues": [
+      "contradicts_source",
+      "unsupported_detail",
+      "citation_misalignment"
+    ],
+    "note": "操作码写0x90与来源0F A2矛盾，首批80186也与奔腾/486SL来源矛盾；寄存器含义泛化错误，全部引仅讲支持检测的资料1。"
+  },
+  "input": {
+    "id": "diverse-0000",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 0,
+    "original_case": {
+      "case_type": "definition",
+      "question": "CPUID是什么指令",
+      "expected_titles": [
+        "CPUID"
+      ]
+    },
+    "category": "definition",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "CPUID是什么指令",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "3adf2e7098edde847157899ce0100ffe54e6b10106a318bdb24e1762ad3f0152"
+}

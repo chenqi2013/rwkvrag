@@ -1,0 +1,178 @@
+{
+  "result": {
+    "case_id": "diverse-0006",
+    "suite": "diverse",
+    "question": "中国人权发展基金会是哪一年成立的",
+    "http_status": 200,
+    "error": null,
+    "answer": "中国人权发展基金会成立于1994年8月15日。[资料 2]",
+    "sources": [
+      {
+        "id": "verbatim-v1:ea1840928bf5c0857ca9251e1431e41397ea4267c64986f89c3187201fea11b8@0:12:569c9fa0b42d",
+        "document_id": "f7800f3f92d9dd16ad045137",
+        "source": "finewiki-zh",
+        "title": "中国人权发展基金会",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=63184572",
+        "score": 0.06557377049180328,
+        "snippet": "# 中国人权发展基金会\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/5919335@63184572@98090414ff060450",
+          "external_id": "zhwiki/5919335",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "f7800f3f92d9dd16ad045137",
+          "title": "中国人权发展基金会",
+          "wikiname": "zhwiki",
+          "page_id": 5919335,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/5919335-63184572-98090414ff060450.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "569c9fa0b42db2b1fb136dba1b788cabb2cabfbb9805d6442eb7359a5bf98d36",
+            "start": 0,
+            "end": 12
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "569c9fa0b42db2b1fb136dba1b788cabb2cabfbb9805d6442eb7359a5bf98d36",
+          "source_text_sha256": "87e168ad82497ab8d1f1b5c9c64a875ea0e787e596cc42902192d3ee031be06d",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=63184572",
+          "version": 63184572,
+          "heading_path": [],
+          "file_id": "f7800f3f92d9dd16ad045137",
+          "atomic": true,
+          "legacy_document_id": "05ef00610efefcad044f8acc",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "569c9fa0b42db2b1fb136dba1b788cabb2cabfbb9805d6442eb7359a5bf98d36",
+          "parent_source_id": "verbatim-v1:ea1840928bf5c0857ca9251e1431e41397ea4267c64986f89c3187201fea11b8",
+          "parent_text_sha256": "569c9fa0b42db2b1fb136dba1b788cabb2cabfbb9805d6442eb7359a5bf98d36",
+          "span_start": 0,
+          "span_end": 12,
+          "span_sha256": "569c9fa0b42db2b1fb136dba1b788cabb2cabfbb9805d6442eb7359a5bf98d36",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:8231c45885547a2ea76139c1d5e9b4897a45f57d136e4a25d8846e7ef509a147@0:315:802de07b4b25",
+        "document_id": "f7800f3f92d9dd16ad045137",
+        "source": "finewiki-zh",
+        "title": "中国人权发展基金会",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=63184572",
+        "score": 0.06451612903225806,
+        "snippet": "中国人权发展基金会成立于1994年8月15日，是由中共中央宣传部（国务院新闻办公室）主管、在民政部登记注册的社会组织。\n根据基金会章程，基金会的宗旨是以“邓小平理论”、“‘三个代表’重要思想”和“科学发展观”为指导，贯彻“习近平总书记系列重要讲话精神”和中共中央“治国理政新理念新思想新战略”，遵守宪法“国家尊重和保障人权”的原则，促进中国人权事业的发展和进步；加强在国际人权领域的交流与合作，推动世界人权进步事业。\n该基金会一直是中华人民共和国唯一的人权方面的基金会。该基金会第一届理事会举办时，得到了时任中共中央政治局常委、国务院总理李鹏的题词，以及全国人大常委会委员长乔石、国务院副总理朱镕基两位中央政治局常委的电话祝贺。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/5919335@63184572@98090414ff060450",
+          "external_id": "zhwiki/5919335",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "f7800f3f92d9dd16ad045137",
+          "title": "中国人权发展基金会",
+          "wikiname": "zhwiki",
+          "page_id": 5919335,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/5919335-63184572-98090414ff060450.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "802de07b4b25147e57199b1351f542660b617f90b857fe8fa25a566c779cb280",
+            "start": 12,
+            "end": 327
+          },
+          "context_spans": [
+            {
+              "sha256": "569c9fa0b42db2b1fb136dba1b788cabb2cabfbb9805d6442eb7359a5bf98d36",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 12,
+              "text": "# 中国人权发展基金会\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "802de07b4b25147e57199b1351f542660b617f90b857fe8fa25a566c779cb280",
+          "source_text_sha256": "87e168ad82497ab8d1f1b5c9c64a875ea0e787e596cc42902192d3ee031be06d",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=63184572",
+          "version": 63184572,
+          "heading_path": [
+            "# 中国人权发展基金会\n"
+          ],
+          "file_id": "f7800f3f92d9dd16ad045137",
+          "atomic": false,
+          "legacy_document_id": "05ef00610efefcad044f8acc",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "802de07b4b25147e57199b1351f542660b617f90b857fe8fa25a566c779cb280",
+          "parent_source_id": "verbatim-v1:8231c45885547a2ea76139c1d5e9b4897a45f57d136e4a25d8846e7ef509a147",
+          "parent_text_sha256": "802de07b4b25147e57199b1351f542660b617f90b857fe8fa25a566c779cb280",
+          "span_start": 0,
+          "span_end": 315,
+          "span_sha256": "802de07b4b25147e57199b1351f542660b617f90b857fe8fa25a566c779cb280",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      29
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0133.json"
+  },
+  "review": {
+    "case_id": "diverse-0006",
+    "verdict": "pass",
+    "issues": [
+      "irrelevant_selected_sources"
+    ],
+    "note": "成立年份及补充日期均与资料2一致，引用正确；资料1仅为裸标题，没有被当成该日期的引用。"
+  },
+  "input": {
+    "id": "diverse-0006",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 6,
+    "original_case": {
+      "case_type": "time",
+      "question": "中国人权发展基金会是哪一年成立的",
+      "expected_titles": [
+        "中国人权发展基金会"
+      ]
+    },
+    "category": "time",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "中国人权发展基金会是哪一年成立的",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "f4ab805a03de70b73e046fa671a3e80930dee446b8e09dec95298ac280e4fdd5"
+}

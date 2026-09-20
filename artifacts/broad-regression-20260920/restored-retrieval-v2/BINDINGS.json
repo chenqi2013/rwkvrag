@@ -1,0 +1,32 @@
+{
+  "files": {
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/restored-retrieval-v2-20260920/REVIEW-PLAN.json": "8084a9ab56908ac1ae8f5311ae8b56bfc9ef2c496e9bb1ae27399d32e7a45afd",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/restored-retrieval-v2-20260920/README.md": "9c65ec9c5ac01ce2cb11a781379db17bdd208df80bab8cfc8eb123326480feba",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/restored-retrieval-v2-20260920/ORIGINS.json": "f8280e073d52d26e0f060af00bbc1f2dd0e02947e7fe30b0785e49a797d82875",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/restored-retrieval-v2-20260920/run.py": "5d2b9506df9c81c6638f0590078a05d72c654bbf3156b3a06186ad25edf4a2ba",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/restored-retrieval-v2-20260920/cases.json": "c2a8341eb9bac88222804e13125ed5708a41912ad60cf4d0d5324d1c7b3d3930",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/restored-retrieval-v2-20260920/COVERAGE.json": "06b695e3e9316b921e690e55b10f3c862433a1ba3042b7985a9d78c75e8b0b49"
+  },
+  "origins": {
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json": "72b97687580f3aee4ee9cab4e3620fbc0956a5a23e6e00fb2009a2b9e5c61b77",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json": "21c2d9f90a83ace982e954c1245811de199f42df71b440616c89f69087144b81",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/cases.jsonl": "d6358838b5961d32e692a2385571a4afbf1f0ccd038014dfc48f52587c646db8",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl": "3699e0ca9806d323644fdd0b2b02b756337d72be7787ac9f547a586644a2d8ff",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl": "469dec3deb84115dceaec16af72a9f98f0ee51db503d4cfeeeed73e27e46a258",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/writer-p0-20260916/holdout.jsonl": "d0fa52509e68d84f0c9f9f504702d26e1ffa23f3c3b62604c7d274c827eb57f4",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/validation.cases.jsonl": "5dff70422657324225bcf9fe7d3456d62047a54a1be4df6a1a4b56588bb2d68f",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/holdout.cases.jsonl": "d2537d4a9e21075b0a8569fa3059bcea82b61bc518d60acde1f20ca2aeb02a68",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/atomic-evidence-20260920/fixtures.jsonl": "891165b813bf880e15032abaead13975f77e62b9726978d64791b3758acddd9c",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/atomic-evidence-20260920/holdout.jsonl": "ee5f31026560c138294becb090989b84d1170acb384b6ff1b18d5142aabf1d37",
+    "artifacts/broad-regression-20260920/corpus-restored/BUILD.json": "d10e65fc356d340dc1f0e9565a045645632f6b56910cf635a1899cc9e155804c",
+    "artifacts/broad-regression-20260920/corpus-restored/FINEWIKI-COVERAGE.json": "da6f70bab4db846a9dd89303c800250eabe8f981651ff8948238b171bc82f9e3",
+    "artifacts/broad-regression-20260920/corpus-restored/FINEWIKI-MANIFEST.json": "798f959664870eb1efff6724f3619c163fec3b836e664cfbe68b6c728f938d51",
+    "artifacts/broad-regression-20260920/corpus-restored/UPSTREAM-TREE.json": "14b1a26d8f3eb3d5ea9d1c971abbec319fc69e03624d314938081110e072edfc",
+    "artifacts/broad-regression-20260920/corpus-restored/WIKIPEDIA-MANIFEST.json": "a3747abadfd6446dee3b6b59e93f6d8be29efcb151030e737b6f360c3d60570c",
+    "artifacts/broad-regression-20260920/corpus-restored/BUILD-V2.json": "78a211e1404019f5234642a3ebeca843bfd512c931a53a59b9ea48abb4d0fb0d"
+  },
+  "settings_sha256": "5e9ed0a2ff01eccd19165955a3f7999670938b4ecd7b3a2778729b3fc135fe96",
+  "git_commit": "61c7ccb7f442615040565c62d4f9e2dc95a35124",
+  "started_at": "2026-09-20T08:18:13.332902+00:00",
+  "planned": 434
+}

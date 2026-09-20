@@ -1,0 +1,130 @@
+{
+  "result": {
+    "case_id": "wiki_batch2-0177",
+    "suite": "wiki_batch2",
+    "question": "字母主义国际是谁创建的？",
+    "http_status": 200,
+    "error": null,
+    "answer": "字母主义国际是由居伊·德波和Gil J. Wolman创建的[资料 1]。",
+    "sources": [
+      {
+        "id": "verbatim-v1:a9f14f000e3b2f7f074554df7335db1455b78999a973224c02e32a2518e08dcd@0:172:249517fdfa6c",
+        "document_id": "d524f1ec4f94ec9c0fb11d3b",
+        "source": "finewiki-zh",
+        "title": "字母主义国际",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=83128073",
+        "score": 0.11396086726599684,
+        "snippet": "字母主义国际（英語：）是存在于1952年至1957年之间的巴黎激进艺术家与文化理论学家团体。字母主义国际由居伊·德波和Gil J. Wolman创建，成员包括由Isidore Isou的字母派团体分裂而出的Jean-Louis Brau和Serge Berna。该组织其后与其他组织一起组成了情境主义国际，运用特定的关键技法与思路进行创作。 \n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/8025740@83128073@4da1d77ad60876d4",
+          "external_id": "zhwiki/8025740",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "d524f1ec4f94ec9c0fb11d3b",
+          "title": "字母主义国际",
+          "wikiname": "zhwiki",
+          "page_id": 8025740,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/8025740-83128073-4da1d77ad60876d4.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "249517fdfa6c69ed51cda910e99cf7e0088ef74fe74791e944e90656b8390e0f",
+            "start": 9,
+            "end": 181
+          },
+          "context_spans": [
+            {
+              "sha256": "f99ff4e8ec820dd653b641e80eb18d72f734580129ea1f63f1a41a6d3d17adef",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 字母主义国际\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "249517fdfa6c69ed51cda910e99cf7e0088ef74fe74791e944e90656b8390e0f",
+          "source_text_sha256": "2c3498de51d055622aa4887aa4ecaea085114b31b6f01b5a93f6166e94529126",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=83128073",
+          "version": 83128073,
+          "heading_path": [
+            "# 字母主义国际\n"
+          ],
+          "file_id": "d524f1ec4f94ec9c0fb11d3b",
+          "atomic": false,
+          "legacy_document_id": "37b3b9bf59b09e364cc7b5ff",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "249517fdfa6c69ed51cda910e99cf7e0088ef74fe74791e944e90656b8390e0f",
+          "parent_source_id": "verbatim-v1:a9f14f000e3b2f7f074554df7335db1455b78999a973224c02e32a2518e08dcd",
+          "parent_text_sha256": "249517fdfa6c69ed51cda910e99cf7e0088ef74fe74791e944e90656b8390e0f",
+          "span_start": 0,
+          "span_end": 172,
+          "span_sha256": "249517fdfa6c69ed51cda910e99cf7e0088ef74fe74791e944e90656b8390e0f",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      37
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": false,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 1,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0080.json"
+  },
+  "review": {
+    "case_id": "wiki_batch2-0177",
+    "verdict": "pass",
+    "issues": [],
+    "note": "完整回答两位创建者，资料1原文直接支持；没有混入成员名单或多余重复。"
+  },
+  "input": {
+    "id": "wiki_batch2-0177",
+    "suite": "wiki_batch2",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+    "origin_index": 177,
+    "original_case": {
+      "question": "字母主义国际是谁创建的？",
+      "question_type": "agent",
+      "style": "direct",
+      "expected_title": "字母主义国际",
+      "expected_document_id": "37b3b9bf59b09e364cc7b5ff",
+      "expected_terms": [
+        "居伊·德波和Gil J. Wolman"
+      ],
+      "reference": "字母主义国际由居伊·德波和Gil J. Wolman创建，成员包括由Isidore Isou的字母派团体分裂而出的Jean-Louis Brau和Serge Berna。",
+      "section": "字母主义国际"
+    },
+    "category": "agent",
+    "style": "direct",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "字母主义国际是谁创建的？",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "d1917bdecaa1475942cfcbcb760a724161e2a760f52e85566868e2079a1a79cb"
+}

@@ -1,0 +1,398 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0095",
+    "suite": "wiki_verified",
+    "question": "想去圣保罗使徒科学信息与技术大学，它的位置在哪里？",
+    "http_status": 200,
+    "error": null,
+    "answer": "圣保罗使徒科学信息与技术大学位于北马其顿[资料 1][资料 2]。",
+    "sources": [
+      {
+        "id": "verbatim-v1:0594314a8d8b0f5a326c65111752f7ea3805dc2803c6e8e42022ad01a0c8ca3f@0:17:7bc88d4c3bb0",
+        "document_id": "452c6744837d8a43bfca6d51",
+        "source": "finewiki-zh",
+        "title": "圣保罗使徒科学信息与技术大学",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+        "score": 0.11475409836065575,
+        "snippet": "# 圣保罗使徒科学信息与技术大学\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4805092@74523983@381e12a26e9b80f6",
+          "external_id": "zhwiki/4805092",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "452c6744837d8a43bfca6d51",
+          "title": "圣保罗使徒科学信息与技术大学",
+          "wikiname": "zhwiki",
+          "page_id": 4805092,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4805092-74523983-381e12a26e9b80f6.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+            "start": 0,
+            "end": 17
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+          "source_text_sha256": "6cc86c15560912ef97216387507948889e46d59cb199b3cab3b7db484ce56509",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+          "version": 74523983,
+          "heading_path": [],
+          "file_id": "452c6744837d8a43bfca6d51",
+          "atomic": true,
+          "legacy_document_id": "993d9af5a360d8d21b925c37",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+          "parent_source_id": "verbatim-v1:0594314a8d8b0f5a326c65111752f7ea3805dc2803c6e8e42022ad01a0c8ca3f",
+          "parent_text_sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+          "span_start": 0,
+          "span_end": 17,
+          "span_sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:f86b3de31b65d4377e14e557c2e63688c54e2965dea03aad73a5dde1d8239154@0:47:66e2a6b8ed13",
+        "document_id": "452c6744837d8a43bfca6d51",
+        "source": "finewiki-zh",
+        "title": "圣保罗使徒科学信息与技术大学",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+        "score": 0.11290322580645161,
+        "snippet": "圣保罗使徒科学信息与技术大学 (UIST)，是一所位于北马其顿的国立大学，坐落在奥赫里德。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4805092@74523983@381e12a26e9b80f6",
+          "external_id": "zhwiki/4805092",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "452c6744837d8a43bfca6d51",
+          "title": "圣保罗使徒科学信息与技术大学",
+          "wikiname": "zhwiki",
+          "page_id": 4805092,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4805092-74523983-381e12a26e9b80f6.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "66e2a6b8ed139fd63fd2f03239588820fd2ae26af0b1e675af18b38665927506",
+            "start": 17,
+            "end": 64
+          },
+          "context_spans": [
+            {
+              "sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 17,
+              "text": "# 圣保罗使徒科学信息与技术大学\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "66e2a6b8ed139fd63fd2f03239588820fd2ae26af0b1e675af18b38665927506",
+          "source_text_sha256": "6cc86c15560912ef97216387507948889e46d59cb199b3cab3b7db484ce56509",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+          "version": 74523983,
+          "heading_path": [
+            "# 圣保罗使徒科学信息与技术大学\n"
+          ],
+          "file_id": "452c6744837d8a43bfca6d51",
+          "atomic": false,
+          "legacy_document_id": "993d9af5a360d8d21b925c37",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "66e2a6b8ed139fd63fd2f03239588820fd2ae26af0b1e675af18b38665927506",
+          "parent_source_id": "verbatim-v1:f86b3de31b65d4377e14e557c2e63688c54e2965dea03aad73a5dde1d8239154",
+          "parent_text_sha256": "66e2a6b8ed139fd63fd2f03239588820fd2ae26af0b1e675af18b38665927506",
+          "span_start": 0,
+          "span_end": 47,
+          "span_sha256": "66e2a6b8ed139fd63fd2f03239588820fd2ae26af0b1e675af18b38665927506",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:260672b0f5f460398ded019acc584a4773de5cd4fcfbcfaecf6ac4c841714c1d@0:82:d2c3878e5b97",
+        "document_id": "452c6744837d8a43bfca6d51",
+        "source": "finewiki-zh",
+        "title": "圣保罗使徒科学信息与技术大学",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+        "score": 0.109375,
+        "snippet": "UIST是由原马其顿共和国议会在2008年通过关于\"建立信息技术大学\"法案而建立的， 2010年，UIST的学生建成了北马其顿的第一台超级计算机。（集群计算机）\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4805092@74523983@381e12a26e9b80f6",
+          "external_id": "zhwiki/4805092",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 3,
+          "document_id": "452c6744837d8a43bfca6d51",
+          "title": "圣保罗使徒科学信息与技术大学",
+          "wikiname": "zhwiki",
+          "page_id": 4805092,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4805092-74523983-381e12a26e9b80f6.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "d2c3878e5b97f8aad467730448302a864580bc0b862a4cf41e837f623e1b2df3",
+            "start": 70,
+            "end": 152
+          },
+          "context_spans": [
+            {
+              "sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 17,
+              "text": "# 圣保罗使徒科学信息与技术大学\n"
+            },
+            {
+              "sha256": "c0eda7e6ed49e139c22c3e36bccf8dfb05ba3360c591a09823f1f8236c3d9cc8",
+              "level": 2,
+              "kind": "heading",
+              "start": 64,
+              "end": 70,
+              "text": "## 历史\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "d2c3878e5b97f8aad467730448302a864580bc0b862a4cf41e837f623e1b2df3",
+          "source_text_sha256": "6cc86c15560912ef97216387507948889e46d59cb199b3cab3b7db484ce56509",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+          "version": 74523983,
+          "heading_path": [
+            "# 圣保罗使徒科学信息与技术大学\n",
+            "## 历史\n"
+          ],
+          "file_id": "452c6744837d8a43bfca6d51",
+          "atomic": false,
+          "legacy_document_id": "993d9af5a360d8d21b925c37",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "d2c3878e5b97f8aad467730448302a864580bc0b862a4cf41e837f623e1b2df3",
+          "parent_source_id": "verbatim-v1:260672b0f5f460398ded019acc584a4773de5cd4fcfbcfaecf6ac4c841714c1d",
+          "parent_text_sha256": "d2c3878e5b97f8aad467730448302a864580bc0b862a4cf41e837f623e1b2df3",
+          "span_start": 0,
+          "span_end": 82,
+          "span_sha256": "d2c3878e5b97f8aad467730448302a864580bc0b862a4cf41e837f623e1b2df3",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:2424ae80336e63cb255f748ce6a1ee0e8aabebfe8ec72b170f88a2df6ef0f594@0:272:1867c65da523",
+        "document_id": "452c6744837d8a43bfca6d51",
+        "source": "finewiki-zh",
+        "title": "圣保罗使徒科学信息与技术大学",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+        "score": 0.1076923076923077,
+        "snippet": "- 奥克兰大学，位于美国密歇根州罗切斯特市\n- 伊斯坦布尔大学，位于土耳其伊斯坦布尔\n- 共和国大学（Cumhuriyet Universiti），位于土耳其锡瓦斯市\n- 克卢日 - 纳波卡技术大学，位于罗马尼亚克卢日 - 纳波卡\n- 蒂米什瓦拉德维斯特汀大学（ University de Vest din Timişoara），位于罗马尼亚蒂米什瓦拉\n- 埃利扎德大学（Elizade University），位于尼日利亚翁多\n- 屈塔希亚杜姆路佩纳大学（Kütahya Dumlupınar University），位于土耳其屈塔希亚\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4805092@74523983@381e12a26e9b80f6",
+          "external_id": "zhwiki/4805092",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 9,
+          "document_id": "452c6744837d8a43bfca6d51",
+          "title": "圣保罗使徒科学信息与技术大学",
+          "wikiname": "zhwiki",
+          "page_id": 4805092,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4805092-74523983-381e12a26e9b80f6.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "1867c65da523b3e61c4ef4da347b2a3ce6ddfdd143f771bbe2c3c5e7632c2c9d",
+            "start": 424,
+            "end": 696
+          },
+          "context_spans": [
+            {
+              "sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 17,
+              "text": "# 圣保罗使徒科学信息与技术大学\n"
+            },
+            {
+              "sha256": "c632325f74cafdc052b406e1509aad4a1398c66ec98ed19a938749e111d541f4",
+              "level": 2,
+              "kind": "heading",
+              "start": 383,
+              "end": 391,
+              "text": "## 院校交流\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "1867c65da523b3e61c4ef4da347b2a3ce6ddfdd143f771bbe2c3c5e7632c2c9d",
+          "source_text_sha256": "6cc86c15560912ef97216387507948889e46d59cb199b3cab3b7db484ce56509",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+          "version": 74523983,
+          "heading_path": [
+            "# 圣保罗使徒科学信息与技术大学\n",
+            "## 院校交流\n"
+          ],
+          "file_id": "452c6744837d8a43bfca6d51",
+          "atomic": true,
+          "legacy_document_id": "993d9af5a360d8d21b925c37",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "1867c65da523b3e61c4ef4da347b2a3ce6ddfdd143f771bbe2c3c5e7632c2c9d",
+          "parent_source_id": "verbatim-v1:2424ae80336e63cb255f748ce6a1ee0e8aabebfe8ec72b170f88a2df6ef0f594",
+          "parent_text_sha256": "1867c65da523b3e61c4ef4da347b2a3ce6ddfdd143f771bbe2c3c5e7632c2c9d",
+          "span_start": 0,
+          "span_end": 272,
+          "span_sha256": "1867c65da523b3e61c4ef4da347b2a3ce6ddfdd143f771bbe2c3c5e7632c2c9d",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:429da4c31197d0b278a045d73051938b73d902738a73a14af567921b6f6732c4@0:140:175583728eba",
+        "document_id": "452c6744837d8a43bfca6d51",
+        "source": "finewiki-zh",
+        "title": "圣保罗使徒科学信息与技术大学",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+        "score": 0.10470375395748531,
+        "snippet": "在UIST，国际推广计划使得该校有着来自世界各地40多个国家的学生，连同当地学生，共超过450人就读。UIST拥有获认证的15个本科和硕士项目，并以英语为教学语言。\n根据2013/2014世界大学学术排名，在北马其顿, UIST超过其他20所大学排名第4。\nUIST包括5个系：\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4805092@74523983@381e12a26e9b80f6",
+          "external_id": "zhwiki/4805092",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 5,
+          "document_id": "452c6744837d8a43bfca6d51",
+          "title": "圣保罗使徒科学信息与技术大学",
+          "wikiname": "zhwiki",
+          "page_id": 4805092,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4805092-74523983-381e12a26e9b80f6.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "175583728eba7054e96a6e5bf0f5ce1192938c7db0ad3fd97ce1de2817b995eb",
+            "start": 158,
+            "end": 298
+          },
+          "context_spans": [
+            {
+              "sha256": "7bc88d4c3bb09a376ac0968ab91ad7fc629a95dcaa4070c3da9c8f305ce422a9",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 17,
+              "text": "# 圣保罗使徒科学信息与技术大学\n"
+            },
+            {
+              "sha256": "fa5d4ad9ef2cddb0639965f3b897127896475a71ead2c0dd55fbb82d27ae2fca",
+              "level": 2,
+              "kind": "heading",
+              "start": 152,
+              "end": 158,
+              "text": "## 课程\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "175583728eba7054e96a6e5bf0f5ce1192938c7db0ad3fd97ce1de2817b995eb",
+          "source_text_sha256": "6cc86c15560912ef97216387507948889e46d59cb199b3cab3b7db484ce56509",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=74523983",
+          "version": 74523983,
+          "heading_path": [
+            "# 圣保罗使徒科学信息与技术大学\n",
+            "## 课程\n"
+          ],
+          "file_id": "452c6744837d8a43bfca6d51",
+          "atomic": false,
+          "legacy_document_id": "993d9af5a360d8d21b925c37",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "175583728eba7054e96a6e5bf0f5ce1192938c7db0ad3fd97ce1de2817b995eb",
+          "parent_source_id": "verbatim-v1:429da4c31197d0b278a045d73051938b73d902738a73a14af567921b6f6732c4",
+          "parent_text_sha256": "175583728eba7054e96a6e5bf0f5ce1192938c7db0ad3fd97ce1de2817b995eb",
+          "span_start": 0,
+          "span_end": 140,
+          "span_sha256": "175583728eba7054e96a6e5bf0f5ce1192938c7db0ad3fd97ce1de2817b995eb",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      33
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 5,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": false,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 0,
+      "reference_terms_total": 2,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0051.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0095",
+    "verdict": "partial",
+    "issues": [
+      "missing_city",
+      "irrelevant_citation"
+    ],
+    "note": "北马其顿正确，但已提供原文中的奥赫里德未回答。资料1仅标题、不支持地点；资料2支持国家与城市。追踪显示标题对原问题NO，却对关键词位置变体YES而入选。"
+  },
+  "input": {
+    "id": "wiki_verified-0095",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 95,
+    "original_case": {
+      "question": "想去圣保罗使徒科学信息与技术大学，它的位置在哪里？",
+      "question_type": "location",
+      "style": "conversational",
+      "expected_title": "圣保罗使徒科学信息与技术大学",
+      "expected_document_id": "993d9af5a360d8d21b925c37",
+      "expected_terms": [
+        "北马其顿的国立大学",
+        "坐落在奥赫里德"
+      ],
+      "reference": "圣保罗使徒科学信息与技术大学 (UIST)，是一所位于北马其顿的国立大学，坐落在奥赫里德。",
+      "section": "圣保罗使徒科学信息与技术大学"
+    },
+    "category": "location",
+    "style": "conversational",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "想去圣保罗使徒科学信息与技术大学，它的位置在哪里？",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "6ba5674017b3841eaafc7f33d448b809cdbf58a87f700e6752ad29da9d8f5d25"
+}

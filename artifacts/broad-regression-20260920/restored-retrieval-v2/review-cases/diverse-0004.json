@@ -1,0 +1,176 @@
+{
+  "result": {
+    "case_id": "diverse-0004",
+    "suite": "diverse",
+    "question": "格罗德诺城堡位于哪里",
+    "http_status": 200,
+    "error": null,
+    "answer": "格罗德诺城堡位于波兰[资料 1]。",
+    "sources": [
+      {
+        "id": "verbatim-v1:dc0772d5752f39c432d7bf815dcf2b4856d86d141166a522b9c7dbc1b02b3cc8@0:89:097edbf35a42",
+        "document_id": "71a8bc1c5654627a36ca2480",
+        "source": "finewiki-zh",
+        "title": "格羅德諾城堡",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=69406332",
+        "score": 0.048651507139079855,
+        "snippet": "格羅德諾城堡（Grodno Castle）是波蘭的一座城堡，位於波蘭南部。格羅德諾城堡修建於1193年，由波勒斯瓦夫公爵建造。城堡曾是賈沃爾公國和波希米亞王國之間防線的一部分。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/6044634@69406332@82f95057e9b56d7d",
+          "external_id": "zhwiki/6044634",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "71a8bc1c5654627a36ca2480",
+          "title": "格羅德諾城堡",
+          "wikiname": "zhwiki",
+          "page_id": 6044634,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/6044634-69406332-82f95057e9b56d7d.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "097edbf35a421f64e5ca0f806abcc9d8032582cf8fd2f9114ec4046d9a7637d4",
+            "start": 9,
+            "end": 98
+          },
+          "context_spans": [
+            {
+              "sha256": "84e03f919ea19233a3e849f99c8d405b2b3d57b0aa059ee5884f5b84d3d49bf2",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 格羅德諾城堡\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "097edbf35a421f64e5ca0f806abcc9d8032582cf8fd2f9114ec4046d9a7637d4",
+          "source_text_sha256": "b1c8eb1387d4b3706b99d3c4191f32629a39024836bd2fcc220a138dd06a9ad2",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=69406332",
+          "version": 69406332,
+          "heading_path": [
+            "# 格羅德諾城堡\n"
+          ],
+          "file_id": "71a8bc1c5654627a36ca2480",
+          "atomic": false,
+          "legacy_document_id": "de6a43898e343bc8e9bc33db",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "097edbf35a421f64e5ca0f806abcc9d8032582cf8fd2f9114ec4046d9a7637d4",
+          "parent_source_id": "verbatim-v1:dc0772d5752f39c432d7bf815dcf2b4856d86d141166a522b9c7dbc1b02b3cc8",
+          "parent_text_sha256": "097edbf35a421f64e5ca0f806abcc9d8032582cf8fd2f9114ec4046d9a7637d4",
+          "span_start": 0,
+          "span_end": 89,
+          "span_sha256": "097edbf35a421f64e5ca0f806abcc9d8032582cf8fd2f9114ec4046d9a7637d4",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:06ce50f5bec464740fe1ca16d7f69d3cb360ad643f69fdee81834832f357fd08@0:9:84e03f919ea1",
+        "document_id": "71a8bc1c5654627a36ca2480",
+        "source": "finewiki-zh",
+        "title": "格羅德諾城堡",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=69406332",
+        "score": 0.048915917503966164,
+        "snippet": "# 格羅德諾城堡\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/6044634@69406332@82f95057e9b56d7d",
+          "external_id": "zhwiki/6044634",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "71a8bc1c5654627a36ca2480",
+          "title": "格羅德諾城堡",
+          "wikiname": "zhwiki",
+          "page_id": 6044634,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/6044634-69406332-82f95057e9b56d7d.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "84e03f919ea19233a3e849f99c8d405b2b3d57b0aa059ee5884f5b84d3d49bf2",
+            "start": 0,
+            "end": 9
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "84e03f919ea19233a3e849f99c8d405b2b3d57b0aa059ee5884f5b84d3d49bf2",
+          "source_text_sha256": "b1c8eb1387d4b3706b99d3c4191f32629a39024836bd2fcc220a138dd06a9ad2",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=69406332",
+          "version": 69406332,
+          "heading_path": [],
+          "file_id": "71a8bc1c5654627a36ca2480",
+          "atomic": true,
+          "legacy_document_id": "de6a43898e343bc8e9bc33db",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "84e03f919ea19233a3e849f99c8d405b2b3d57b0aa059ee5884f5b84d3d49bf2",
+          "parent_source_id": "verbatim-v1:06ce50f5bec464740fe1ca16d7f69d3cb360ad643f69fdee81834832f357fd08",
+          "parent_text_sha256": "84e03f919ea19233a3e849f99c8d405b2b3d57b0aa059ee5884f5b84d3d49bf2",
+          "span_start": 0,
+          "span_end": 9,
+          "span_sha256": "84e03f919ea19233a3e849f99c8d405b2b3d57b0aa059ee5884f5b84d3d49bf2",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      17
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0247.json"
+  },
+  "review": {
+    "case_id": "diverse-0004",
+    "verdict": "pass",
+    "issues": [],
+    "note": "波兰与实际资料1对应，直接回答位置；按冻结语料核验，不外推同名城堡。"
+  },
+  "input": {
+    "id": "diverse-0004",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 4,
+    "original_case": {
+      "case_type": "place",
+      "question": "格罗德诺城堡位于哪里",
+      "expected_titles": [
+        "格羅德諾城堡"
+      ]
+    },
+    "category": "place",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "格罗德诺城堡位于哪里",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "358565bdecc9eb83a42010b8912b29abc0500c31d91c0197901f95b96c96081d"
+}

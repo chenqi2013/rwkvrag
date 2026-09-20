@@ -1,0 +1,192 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0060",
+    "suite": "wiki_verified",
+    "question": "辽宁鸿祥实业集团是哪一年成立的？",
+    "http_status": 200,
+    "error": null,
+    "answer": "辽宁鸿祥实业集团是2011年成立的[资料 1]。",
+    "sources": [
+      {
+        "id": "verbatim-v1:c13ffc415492b6f66340556ec80a1aedec87c5705e120f54253198ef5f9d8c91@0:11:280b9eab291f",
+        "document_id": "7b1651bb314c47d5fa986d03",
+        "source": "finewiki-zh",
+        "title": "辽宁鸿祥实业集团",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86281404",
+        "score": 0.11475409836065575,
+        "snippet": "# 辽宁鸿祥实业集团\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/5463994@86281404@9dd69003cdab2058",
+          "external_id": "zhwiki/5463994",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "7b1651bb314c47d5fa986d03",
+          "title": "辽宁鸿祥实业集团",
+          "wikiname": "zhwiki",
+          "page_id": 5463994,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/5463994-86281404-9dd69003cdab2058.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "280b9eab291fe12e0a7cfb87a05bc3436f2735f8a6eb27d0c19dbf313c2463d4",
+            "start": 0,
+            "end": 11
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "280b9eab291fe12e0a7cfb87a05bc3436f2735f8a6eb27d0c19dbf313c2463d4",
+          "source_text_sha256": "a2188f36de7ce67de9de0c9cbbf86cec7251dc045c965f5e69e6143fc7b20761",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86281404",
+          "version": 86281404,
+          "heading_path": [],
+          "file_id": "7b1651bb314c47d5fa986d03",
+          "atomic": true,
+          "legacy_document_id": "7802ea3dc8b0ca72c904bfc6",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "280b9eab291fe12e0a7cfb87a05bc3436f2735f8a6eb27d0c19dbf313c2463d4",
+          "parent_source_id": "verbatim-v1:c13ffc415492b6f66340556ec80a1aedec87c5705e120f54253198ef5f9d8c91",
+          "parent_text_sha256": "280b9eab291fe12e0a7cfb87a05bc3436f2735f8a6eb27d0c19dbf313c2463d4",
+          "span_start": 0,
+          "span_end": 11,
+          "span_sha256": "280b9eab291fe12e0a7cfb87a05bc3436f2735f8a6eb27d0c19dbf313c2463d4",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1b6dcf5962e57193ae701a46a85afbde2d64f2ac9d94c0654b1a1be8cf0043c0@0:1180:fc7583761dc3",
+        "document_id": "7b1651bb314c47d5fa986d03",
+        "source": "finewiki-zh",
+        "title": "辽宁鸿祥实业集团",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86281404",
+        "score": 0.1111111111111111,
+        "snippet": "2011年，辽宁鸿祥实业集团成立。该集团是由2000年1月创建的丹东鸿祥实业发展有限公司及2001年10月创建的辽宁鸿祥国际货运代理有限公司发展形成。集团的注册总资本大约合人民币1.025亿元。该集团主营中朝进出口贸易、物流运输服务、边境贸易信息咨询、中朝文化交流等等，是丹东市最大的对朝贸易集团。\n辽宁鸿祥实业集团下属的全资、控股、合资合营公司有：丹东鸿祥实业发展有限公司（2000年1月成立，法定代表人马晓红）、辽宁鸿祥国际货运代理有限公司（2001年10月成立，法定代表人马晓杰）、辽宁鸿祥国际旅行社有限公司（2005年2月成立，法定代表人马晓红）、丹东鸿祥边境贸易信息咨询服务有限公司（2010年10月成立，法定代表人马晓红）、丹东柳京酒店、沈阳七宝山饭店。\n丹东鸿祥实业发展有限公司的股东之一是朝鲜光鲜银行金融会社，出资额为980万元，比马晓红的出资额1020万元少。2016年3月，联合国制裁朝鲜个人和实体名单中列出了朝鲜光鲜银行金融会社。丹东鸿祥实业发展有限公司2014、2015年的利润达到千余万元人民币。2016年9月2日，丹东鸿祥实业发展有限公司资产被冻结，冻结期限6个月。9月15日，辽宁省公安厅官网宣布，“辽宁省公安机关在工作中发现，长期以来，丹东鸿祥实业发展有限公司及相关责任人在贸易活动中涉嫌严重经济犯罪。公安机关在掌握确凿证据后，于近期对该公司及相关责任人立案调查，目前相关涉案人员正在接受警方调查。”\n2016年9月20日，中华人民共和国外交部例行记者会上，记者问是否能证实中美两国正合作调查涉嫌协助朝鲜发展核项目的丹东鸿祥实业发展有限公司等公司，发言人陆慷表示，“至于你提到的有关企业，中国有关部门正在依法对其经济犯罪等违法行为进行调查处理，并已于近日公布了相关消息。”据了解，记者的消息来源于9月19日由非盈利机构C4ADS（设在美国华盛顿）和韩国峨山研究院共同出具的一份报告。\n辽宁鸿祥实业集团董事长马晓红是经营中朝贸易获利的中国女性商人，曾获辽宁省优秀企业家、丹东优秀企业家等荣誉称号。2013年当选为辽宁省第十二届人大代表。2016年9月17日，辽宁省人大十二届七次会议筹备组发布公告称，日前沈阳市等14个市人大常委会及有关选举单位决定接受涉及贿选案的丁坤等452人辞去辽宁省第十二届人大代表职务。这452人中包括马晓红。\n2016年9月26日，美国司法部对马晓红及其丹东鸿祥实业发展有限公司（DHID），以及公司总经理周建舒、副总经理洪锦花、财务经理洛传旭发出刑事诉状，罪名为阴谋违反美国制裁法律及阴谋使用货币工具洗钱。美国财政部也对丹东鸿祥实业发展有限公司、马晓红、周建舒、洪锦花实施制裁，理由是其为朝鲜民主主义人民共和国服务。美方采取行动，冻结了据称属丹东鸿祥实业发展有限公司及其幌子公司的25个中资银行账户。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/5463994@86281404@9dd69003cdab2058",
+          "external_id": "zhwiki/5463994",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 3,
+          "document_id": "7b1651bb314c47d5fa986d03",
+          "title": "辽宁鸿祥实业集团",
+          "wikiname": "zhwiki",
+          "page_id": 5463994,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/5463994-86281404-9dd69003cdab2058.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "fc7583761dc3d0454ccda29515e516d16f92119de74dc985564ab85779bad1a3",
+            "start": 81,
+            "end": 1261
+          },
+          "context_spans": [
+            {
+              "sha256": "280b9eab291fe12e0a7cfb87a05bc3436f2735f8a6eb27d0c19dbf313c2463d4",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 11,
+              "text": "# 辽宁鸿祥实业集团\n"
+            },
+            {
+              "sha256": "086335248ffb9c8c4ebb777804f720183c26a4880e3a801c73eca84c2b633fb9",
+              "level": 2,
+              "kind": "heading",
+              "start": 75,
+              "end": 81,
+              "text": "## 简介\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "fc7583761dc3d0454ccda29515e516d16f92119de74dc985564ab85779bad1a3",
+          "source_text_sha256": "a2188f36de7ce67de9de0c9cbbf86cec7251dc045c965f5e69e6143fc7b20761",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86281404",
+          "version": 86281404,
+          "heading_path": [
+            "# 辽宁鸿祥实业集团\n",
+            "## 简介\n"
+          ],
+          "file_id": "7b1651bb314c47d5fa986d03",
+          "atomic": false,
+          "legacy_document_id": "7802ea3dc8b0ca72c904bfc6",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "fc7583761dc3d0454ccda29515e516d16f92119de74dc985564ab85779bad1a3",
+          "parent_source_id": "verbatim-v1:1b6dcf5962e57193ae701a46a85afbde2d64f2ac9d94c0654b1a1be8cf0043c0",
+          "parent_text_sha256": "fc7583761dc3d0454ccda29515e516d16f92119de74dc985564ab85779bad1a3",
+          "span_start": 0,
+          "span_end": 1180,
+          "span_sha256": "fc7583761dc3d0454ccda29515e516d16f92119de74dc985564ab85779bad1a3",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      24
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": false,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 0,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0201.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0060",
+    "verdict": "partial",
+    "issues": [
+      "citation_misalignment"
+    ],
+    "note": "2011成立有实际来源2支持，但引用1只有标题；旧gold只列下属公司，未改gold，按完整检索证据判事实正确。"
+  },
+  "input": {
+    "id": "wiki_verified-0060",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 60,
+    "original_case": {
+      "question": "辽宁鸿祥实业集团是哪一年成立的？",
+      "question_type": "time",
+      "style": "direct",
+      "expected_title": "辽宁鸿祥实业集团",
+      "expected_document_id": "7802ea3dc8b0ca72c904bfc6",
+      "expected_terms": [
+        "2000年1月"
+      ],
+      "reference": "辽宁鸿祥实业集团下属的全资、控股、合资合营公司有：丹东鸿祥实业发展有限公司（2000年1月成立，法定代表人马晓红）、辽宁鸿祥国际货运代理有限公司（2001年10月成立，法定代表人马晓杰）、辽宁鸿祥国际旅行社有限公司（2005年2月成立，法定代表人马晓红）、丹东鸿祥边境贸易信息咨询服务有限公司（2010年10月成立，法定代表人马晓红）、丹东柳京酒店、沈阳七宝山饭店。",
+      "section": "辽宁鸿祥实业集团 > 简介"
+    },
+    "category": "time",
+    "style": "direct",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "辽宁鸿祥实业集团是哪一年成立的？",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "4157d15d505c4e3717e780d4a80c83df41aed687a651c9f3042d2c63670420e8"
+}

@@ -1,0 +1,577 @@
+{
+  "result": {
+    "case_id": "diverse-0008",
+    "suite": "diverse",
+    "question": "澳门是什么时候回归中国的",
+    "http_status": 200,
+    "error": null,
+    "answer": "澳门是什么时候回归中国的：1999年12月20日[资料 1, 2, 3, 4, 5, 6, 7, 8]\n澳门回归中国时间：1999年12月20日[资料 1, 2, 3, 4, 5, 6, 7, 8]\n澳门回归中国日期：1999年12月20日[资料 1, 2, 3, 4, 5, 6, 7, 8]\n澳门回归中国年份：1999年[资料 1, 2, 3, 4, 5, 6, 7, 8]\n澳门回归中国具体时间：1999年12月20日[资料 1, 2, 3, 4, 5, 6, 7, 8]\n澳门回归中国历史：1999年12月20日[资料 1, 2, 3, 4, 5, 6, 7, 8]\n澳门回归中国时间点：1999年12月20日[资料 1, 2, 3, 4, 5, 6, 7, 8]",
+    "sources": [
+      {
+        "id": "verbatim-v1:b4ac69c5cdf20eff8413b090bac9c56f914b7d6f46803f26330a4c696fc5d6c5@0:201:824adb1dd079",
+        "document_id": "75bcca7dde19aa41a21870c3",
+        "source": "finewiki-zh",
+        "title": "澳門回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88494940",
+        "score": 0.11475409836065575,
+        "snippet": "- 政權交接儀式（官方）\n- 中國中央電視台：1999澳门回归专辑 （页面存档备份，存于）\n- 人民日报网络版：澳门回归 （页面存档备份，存于）\n- 香港大學民意研究：澳門政權交接兩週年的民情發展 （页面存档备份，存于）\n- 國際在線-華語廣播-今日澳門百姓眼中的澳門\n- 中國網：慶祝澳門政權交接五週年-法律文件 （页面存档备份，存于）\n- 中國軍網：慶祝澳門回歸20週年 （页面存档备份，存于）\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/282353@88494940@221e67a00edef69b",
+          "external_id": "zhwiki/282353",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 46,
+          "document_id": "75bcca7dde19aa41a21870c3",
+          "title": "澳門回歸",
+          "wikiname": "zhwiki",
+          "page_id": 282353,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/282353-88494940-221e67a00edef69b.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "824adb1dd0797b80292c600af60b5f52da99bc66308631406a2a3c79c199a6bd",
+            "start": 11160,
+            "end": 11361
+          },
+          "context_spans": [
+            {
+              "sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 澳門回歸\n"
+            },
+            {
+              "sha256": "6225b2307cc56d866c6822eb69576ff486631f9379d74ea75351904273345e2c",
+              "level": 2,
+              "kind": "heading",
+              "start": 11152,
+              "end": 11160,
+              "text": "## 外部連結\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "824adb1dd0797b80292c600af60b5f52da99bc66308631406a2a3c79c199a6bd",
+          "source_text_sha256": "5811ca5c67bcd96b0ef193146b3fd38a38402df8032c62e0903144b029c3db2c",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88494940",
+          "version": 88494940,
+          "heading_path": [
+            "# 澳門回歸\n",
+            "## 外部連結\n"
+          ],
+          "file_id": "75bcca7dde19aa41a21870c3",
+          "atomic": true,
+          "legacy_document_id": "b344d196bbfa3e67797327c6",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "824adb1dd0797b80292c600af60b5f52da99bc66308631406a2a3c79c199a6bd",
+          "parent_source_id": "verbatim-v1:b4ac69c5cdf20eff8413b090bac9c56f914b7d6f46803f26330a4c696fc5d6c5",
+          "parent_text_sha256": "824adb1dd0797b80292c600af60b5f52da99bc66308631406a2a3c79c199a6bd",
+          "span_start": 0,
+          "span_end": 201,
+          "span_sha256": "824adb1dd0797b80292c600af60b5f52da99bc66308631406a2a3c79c199a6bd",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:4200c98daae665fad01e85c2e1444ce3ee2d96a699c9e368f410c461967158b4@0:201:824adb1dd079",
+        "document_id": "e91124d228f8795230000821",
+        "source": "finewiki-zh",
+        "title": "澳門回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88792191",
+        "score": 0.11290322580645161,
+        "snippet": "- 政權交接儀式（官方）\n- 中國中央電視台：1999澳门回归专辑 （页面存档备份，存于）\n- 人民日报网络版：澳门回归 （页面存档备份，存于）\n- 香港大學民意研究：澳門政權交接兩週年的民情發展 （页面存档备份，存于）\n- 國際在線-華語廣播-今日澳門百姓眼中的澳門\n- 中國網：慶祝澳門政權交接五週年-法律文件 （页面存档备份，存于）\n- 中國軍網：慶祝澳門回歸20週年 （页面存档备份，存于）\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/282353@88792191@07946ebda4c018c3",
+          "external_id": "zhwiki/282353",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 46,
+          "document_id": "e91124d228f8795230000821",
+          "title": "澳門回歸",
+          "wikiname": "zhwiki",
+          "page_id": 282353,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/282353-88792191-07946ebda4c018c3.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "824adb1dd0797b80292c600af60b5f52da99bc66308631406a2a3c79c199a6bd",
+            "start": 11160,
+            "end": 11361
+          },
+          "context_spans": [
+            {
+              "sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 澳門回歸\n"
+            },
+            {
+              "sha256": "6225b2307cc56d866c6822eb69576ff486631f9379d74ea75351904273345e2c",
+              "level": 2,
+              "kind": "heading",
+              "start": 11152,
+              "end": 11160,
+              "text": "## 外部連結\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "824adb1dd0797b80292c600af60b5f52da99bc66308631406a2a3c79c199a6bd",
+          "source_text_sha256": "5811ca5c67bcd96b0ef193146b3fd38a38402df8032c62e0903144b029c3db2c",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88792191",
+          "version": 88792191,
+          "heading_path": [
+            "# 澳門回歸\n",
+            "## 外部連結\n"
+          ],
+          "file_id": "75bcca7dde19aa41a21870c3",
+          "atomic": true,
+          "legacy_document_id": "b344d196bbfa3e67797327c6",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "824adb1dd0797b80292c600af60b5f52da99bc66308631406a2a3c79c199a6bd",
+          "parent_source_id": "verbatim-v1:4200c98daae665fad01e85c2e1444ce3ee2d96a699c9e368f410c461967158b4",
+          "parent_text_sha256": "824adb1dd0797b80292c600af60b5f52da99bc66308631406a2a3c79c199a6bd",
+          "span_start": 0,
+          "span_end": 201,
+          "span_sha256": "824adb1dd0797b80292c600af60b5f52da99bc66308631406a2a3c79c199a6bd",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:54ff3517c1de6b90a4a5c837ca4cf6ad3ceb23384f8a4164c203fe40089ef5ff@0:763:d48ce170b6da",
+        "document_id": "75bcca7dde19aa41a21870c3",
+        "source": "finewiki-zh",
+        "title": "澳門回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88494940",
+        "score": 0.10866910866910867,
+        "snippet": "澳門回歸（葡萄牙語：；又稱澳門政權移交、冬月回歸、九九回歸、澳門治權移交或澳門主權移交），指1999年12月20日中華人民共和國政府對澳門恢复行使主權，成立澳門特別行政區政府，葡萄牙共和國政府结束對澳门管治的一系列事件。澳门回归象徵著英、葡兩國在港澳地區百年歷史時期的结束；对于葡萄牙而言，其在澳門的殖民統治自此走入歷史，该国亦正式摆脱殖民國家之身份；而对于中国以至整个亚洲，则意味着欧洲殖民主义的终结。\n葡萄牙人自明朝已開始在澳門進行貿易和修建洋房居住。1583年，留澳的葡人以方便對本族社區進行自治管理為由，在未經明朝政府同意下單方面成立澳門議事會。雖然明、清朝廷均有加強對澳門的管治，但葡人的勢力不減反增，並且逐步延伸。1623年，葡萄牙政府開始任命澳門總督（簡稱「澳督」）負責澳門防務及一切有關事務，其後澳門總督的權力亦不斷擴充膨脹。直至1845年，葡國女王瑪麗亞二世宣佈澳門為自由港，更拒绝向清朝政府缴纳地租銀。自1846年起，亞馬留將軍就任澳督後，在澳門推行一系列統治政策，籍以擴張勢力，並下令封鎖關閘，爆發衝突，而澳門也落入葡萄牙之手。1887年，清廷與葡國政府先後簽訂《中葡里斯本草約》、《中葡和好通商條約》，後者為正式條約，條約中列明中國允許葡國「永居管理澳門」，亦同時規定未經中國同意葡萄牙永不得将澳门让与他国。直到中葡就澳門回歸達成一致，由於當地經濟的特殊優勢，以一國兩制設置特別行政區繼續發展。\n澳門特別行政區是中華人民共和國中央人民政府（國務院）繼香港回歸之後所設立的第二個特別行政區。根據《澳門特別行政區基本法》，澳門特別行政區實行一國兩制，「澳人治澳，高度自治」，並保持原有的資本主義制度和生活方式。絕大部份澳門人在政權移交後可享有中華人民共和國公民身份，非華裔居民亦能繼續持有澳門居民身份。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/282353@88494940@221e67a00edef69b",
+          "external_id": "zhwiki/282353",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "75bcca7dde19aa41a21870c3",
+          "title": "澳門回歸",
+          "wikiname": "zhwiki",
+          "page_id": 282353,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/282353-88494940-221e67a00edef69b.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "d48ce170b6da1993b4aa683341ee130355d7d97afa81aea5f2a455cb9296e3df",
+            "start": 7,
+            "end": 770
+          },
+          "context_spans": [
+            {
+              "sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 澳門回歸\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "d48ce170b6da1993b4aa683341ee130355d7d97afa81aea5f2a455cb9296e3df",
+          "source_text_sha256": "5811ca5c67bcd96b0ef193146b3fd38a38402df8032c62e0903144b029c3db2c",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88494940",
+          "version": 88494940,
+          "heading_path": [
+            "# 澳門回歸\n"
+          ],
+          "file_id": "75bcca7dde19aa41a21870c3",
+          "atomic": false,
+          "legacy_document_id": "b344d196bbfa3e67797327c6",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "d48ce170b6da1993b4aa683341ee130355d7d97afa81aea5f2a455cb9296e3df",
+          "parent_source_id": "verbatim-v1:54ff3517c1de6b90a4a5c837ca4cf6ad3ceb23384f8a4164c203fe40089ef5ff",
+          "parent_text_sha256": "d48ce170b6da1993b4aa683341ee130355d7d97afa81aea5f2a455cb9296e3df",
+          "span_start": 0,
+          "span_end": 763,
+          "span_sha256": "d48ce170b6da1993b4aa683341ee130355d7d97afa81aea5f2a455cb9296e3df",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:62be8b1ad2842d75e0febd453b9d90b22a83d1e4c7e155f12f6f00b8bd7218cf@0:7:22585a08ffdc",
+        "document_id": "75bcca7dde19aa41a21870c3",
+        "source": "finewiki-zh",
+        "title": "澳門回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88494940",
+        "score": 0.11013431013431013,
+        "snippet": "# 澳門回歸\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/282353@88494940@221e67a00edef69b",
+          "external_id": "zhwiki/282353",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "75bcca7dde19aa41a21870c3",
+          "title": "澳門回歸",
+          "wikiname": "zhwiki",
+          "page_id": 282353,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/282353-88494940-221e67a00edef69b.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+            "start": 0,
+            "end": 7
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+          "source_text_sha256": "5811ca5c67bcd96b0ef193146b3fd38a38402df8032c62e0903144b029c3db2c",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88494940",
+          "version": 88494940,
+          "heading_path": [],
+          "file_id": "75bcca7dde19aa41a21870c3",
+          "atomic": true,
+          "legacy_document_id": "b344d196bbfa3e67797327c6",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+          "parent_source_id": "verbatim-v1:62be8b1ad2842d75e0febd453b9d90b22a83d1e4c7e155f12f6f00b8bd7218cf",
+          "parent_text_sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+          "span_start": 0,
+          "span_end": 7,
+          "span_sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:2c6ed6d44458970f654b669ea77a8f1cd7f3fc84f4a3d48a27ace96ed6e87fba@0:763:d48ce170b6da",
+        "document_id": "e91124d228f8795230000821",
+        "source": "finewiki-zh",
+        "title": "澳門回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88792191",
+        "score": 0.10700757575757576,
+        "snippet": "澳門回歸（葡萄牙語：；又稱澳門政權移交、冬月回歸、九九回歸、澳門治權移交或澳門主權移交），指1999年12月20日中華人民共和國政府對澳門恢复行使主權，成立澳門特別行政區政府，葡萄牙共和國政府结束對澳门管治的一系列事件。澳门回归象徵著英、葡兩國在港澳地區百年歷史時期的结束；对于葡萄牙而言，其在澳門的殖民統治自此走入歷史，该国亦正式摆脱殖民國家之身份；而对于中国以至整个亚洲，则意味着欧洲殖民主义的终结。\n葡萄牙人自明朝已開始在澳門進行貿易和修建洋房居住。1583年，留澳的葡人以方便對本族社區進行自治管理為由，在未經明朝政府同意下單方面成立澳門議事會。雖然明、清朝廷均有加強對澳門的管治，但葡人的勢力不減反增，並且逐步延伸。1623年，葡萄牙政府開始任命澳門總督（簡稱「澳督」）負責澳門防務及一切有關事務，其後澳門總督的權力亦不斷擴充膨脹。直至1845年，葡國女王瑪麗亞二世宣佈澳門為自由港，更拒绝向清朝政府缴纳地租銀。自1846年起，亞馬留將軍就任澳督後，在澳門推行一系列統治政策，籍以擴張勢力，並下令封鎖關閘，爆發衝突，而澳門也落入葡萄牙之手。1887年，清廷與葡國政府先後簽訂《中葡里斯本草約》、《中葡和好通商條約》，後者為正式條約，條約中列明中國允許葡國「永居管理澳門」，亦同時規定未經中國同意葡萄牙永不得将澳门让与他国。直到中葡就澳門回歸達成一致，由於當地經濟的特殊優勢，以一國兩制設置特別行政區繼續發展。\n澳門特別行政區是中華人民共和國中央人民政府（國務院）繼香港回歸之後所設立的第二個特別行政區。根據《澳門特別行政區基本法》，澳門特別行政區實行一國兩制，「澳人治澳，高度自治」，並保持原有的資本主義制度和生活方式。絕大部份澳門人在政權移交後可享有中華人民共和國公民身份，非華裔居民亦能繼續持有澳門居民身份。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/282353@88792191@07946ebda4c018c3",
+          "external_id": "zhwiki/282353",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "e91124d228f8795230000821",
+          "title": "澳門回歸",
+          "wikiname": "zhwiki",
+          "page_id": 282353,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/282353-88792191-07946ebda4c018c3.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "d48ce170b6da1993b4aa683341ee130355d7d97afa81aea5f2a455cb9296e3df",
+            "start": 7,
+            "end": 770
+          },
+          "context_spans": [
+            {
+              "sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 澳門回歸\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "d48ce170b6da1993b4aa683341ee130355d7d97afa81aea5f2a455cb9296e3df",
+          "source_text_sha256": "5811ca5c67bcd96b0ef193146b3fd38a38402df8032c62e0903144b029c3db2c",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88792191",
+          "version": 88792191,
+          "heading_path": [
+            "# 澳門回歸\n"
+          ],
+          "file_id": "75bcca7dde19aa41a21870c3",
+          "atomic": false,
+          "legacy_document_id": "b344d196bbfa3e67797327c6",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "d48ce170b6da1993b4aa683341ee130355d7d97afa81aea5f2a455cb9296e3df",
+          "parent_source_id": "verbatim-v1:2c6ed6d44458970f654b669ea77a8f1cd7f3fc84f4a3d48a27ace96ed6e87fba",
+          "parent_text_sha256": "d48ce170b6da1993b4aa683341ee130355d7d97afa81aea5f2a455cb9296e3df",
+          "span_start": 0,
+          "span_end": 763,
+          "span_sha256": "d48ce170b6da1993b4aa683341ee130355d7d97afa81aea5f2a455cb9296e3df",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:94ad8b2cd336f0939e552fd70941820a16c7dd97b470b6c1390fcaab7b635b38@0:7:22585a08ffdc",
+        "document_id": "e91124d228f8795230000821",
+        "source": "finewiki-zh",
+        "title": "澳門回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88792191",
+        "score": 0.1084280303030303,
+        "snippet": "# 澳門回歸\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/282353@88792191@07946ebda4c018c3",
+          "external_id": "zhwiki/282353",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "e91124d228f8795230000821",
+          "title": "澳門回歸",
+          "wikiname": "zhwiki",
+          "page_id": 282353,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/282353-88792191-07946ebda4c018c3.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+            "start": 0,
+            "end": 7
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+          "source_text_sha256": "5811ca5c67bcd96b0ef193146b3fd38a38402df8032c62e0903144b029c3db2c",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88792191",
+          "version": 88792191,
+          "heading_path": [],
+          "file_id": "75bcca7dde19aa41a21870c3",
+          "atomic": true,
+          "legacy_document_id": "b344d196bbfa3e67797327c6",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+          "parent_source_id": "verbatim-v1:94ad8b2cd336f0939e552fd70941820a16c7dd97b470b6c1390fcaab7b635b38",
+          "parent_text_sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+          "span_start": 0,
+          "span_end": 7,
+          "span_sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:df2f043b68fa53a65c616f0384b240bf139ca92face724c22f4a7776e6b42d48@0:979:9f1f96a55be9",
+        "document_id": "75bcca7dde19aa41a21870c3",
+        "source": "finewiki-zh",
+        "title": "澳門回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88494940",
+        "score": 0.10188189487345878,
+        "snippet": "- 中共中央總書記視察澳門：澳門自1999年回歸以來，歷任中共中央總書記包括江澤民、胡錦濤、習近平均曾經在澳門特別行政區成立紀念日前夕到訪澳門，出席慶祝澳門回歸週年活動。\n- 慶祝澳門回歸紀念日升旗儀式：回歸當天（12月20日）上午8時於金蓮花廣場舉行。\n- 慶祝澳門回歸祖國大會暨澳門特別行政區新政府就職典禮：於1999年起每5年舉行，包括2004年、2009年、2014年及2019年。\n- “邁向美好明天”大巡遊：於1999年12月20日中午舉行，由澳門各界慶祝澳門回歸祖國活動委員會主辦，參與此次大巡遊活動的有28輛花車、21個方陣、21支巡遊隊伍，合共4500多人[7]。\n- 澳門國際幻彩大巡遊（前名：澳門拉丁城區大巡遊），受COVID-19疫情影響停辦4年，2024年復辦，並首次改於3月24日舉行。活動秉承宣揚「愛‧和平‧文化共融」的理念，展現澳門的特別魅力，為慶祝澳門回歸祖國25周年增添歡樂。超過80隊澳門本地及來自世界各地的巡遊隊伍，約1,800位表演者參與巡遊，風格多樣的藝術表演盡現文明交流互鑑的魅力，彰顯澳門「演藝之都」的文化活力。2024年新設兩項本地巡遊項目，包括設有巨型木偶、巨型外賣員揹包等可移動裝置的「大型藝術裝置巡遊隊」，以及由大灣區藝團、海內外藝團及不同藝術領域的合作團隊，揮灑創意推出系列合作企劃的「特別企劃巡遊隊」，經費預算約700萬元。作為澳門重要的品牌節慶盛事，大巡遊自2011年舉辦至今已踏入第10屆，成為慶祝澳門回歸祖國的年度節慶活動之一，吸引各地旅客及本地居民參與。\n- 慶祝澳門回歸祖國文藝晚會：於回歸前一日（12月19日）舉行，是黨和國家領導人訪問澳門期間的重要大型活動，最近一次在2024年舉行[8]。\n- 慶祝澳門特別行政區成立周年煙花匯演：每年12月20日晚上9時在旅遊塔對開海面發放煙花慶祝澳門特區成立，1999年至2001年回歸煙花一度在觀音蓮花苑對開海面舉行[9]，2002年起改為在西灣湖至澳門旅遊塔對開海面舉行，2004年一度改為回歸日當晚10時30分舉行，2005年、2006年、2012年、2013年一度改為晚上9時30分舉行；2019年更舉行澳珠跨境煙花匯演，並推遲至12月22日晚上9時舉行，2020年至2023年受COVID-19疫情等因素影響停辦，2024年復辦。\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/282353@88494940@221e67a00edef69b",
+          "external_id": "zhwiki/282353",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 42,
+          "document_id": "75bcca7dde19aa41a21870c3",
+          "title": "澳門回歸",
+          "wikiname": "zhwiki",
+          "page_id": 282353,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/282353-88494940-221e67a00edef69b.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "9f1f96a55be9a792edcf7817ea6a8782bc583cb9fdf26b60cc137644a0de4c04",
+            "start": 10109,
+            "end": 11088
+          },
+          "context_spans": [
+            {
+              "sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 澳門回歸\n"
+            },
+            {
+              "sha256": "1d35d72b7233b5af9a5bb9227f8d6a7b92125008fabdc1aa5b37716b715cb917",
+              "level": 2,
+              "kind": "heading",
+              "start": 10101,
+              "end": 10109,
+              "text": "## 慶祝活動\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "9f1f96a55be9a792edcf7817ea6a8782bc583cb9fdf26b60cc137644a0de4c04",
+          "source_text_sha256": "5811ca5c67bcd96b0ef193146b3fd38a38402df8032c62e0903144b029c3db2c",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88494940",
+          "version": 88494940,
+          "heading_path": [
+            "# 澳門回歸\n",
+            "## 慶祝活動\n"
+          ],
+          "file_id": "75bcca7dde19aa41a21870c3",
+          "atomic": true,
+          "legacy_document_id": "b344d196bbfa3e67797327c6",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "9f1f96a55be9a792edcf7817ea6a8782bc583cb9fdf26b60cc137644a0de4c04",
+          "parent_source_id": "verbatim-v1:df2f043b68fa53a65c616f0384b240bf139ca92face724c22f4a7776e6b42d48",
+          "parent_text_sha256": "9f1f96a55be9a792edcf7817ea6a8782bc583cb9fdf26b60cc137644a0de4c04",
+          "span_start": 0,
+          "span_end": 979,
+          "span_sha256": "9f1f96a55be9a792edcf7817ea6a8782bc583cb9fdf26b60cc137644a0de4c04",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:852c03356e39c99cc803e08d1f419ad92eeeefb5762db73968560800d5f8e6e6@0:979:9f1f96a55be9",
+        "document_id": "e91124d228f8795230000821",
+        "source": "finewiki-zh",
+        "title": "澳門回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88792191",
+        "score": 0.1004201680672269,
+        "snippet": "- 中共中央總書記視察澳門：澳門自1999年回歸以來，歷任中共中央總書記包括江澤民、胡錦濤、習近平均曾經在澳門特別行政區成立紀念日前夕到訪澳門，出席慶祝澳門回歸週年活動。\n- 慶祝澳門回歸紀念日升旗儀式：回歸當天（12月20日）上午8時於金蓮花廣場舉行。\n- 慶祝澳門回歸祖國大會暨澳門特別行政區新政府就職典禮：於1999年起每5年舉行，包括2004年、2009年、2014年及2019年。\n- “邁向美好明天”大巡遊：於1999年12月20日中午舉行，由澳門各界慶祝澳門回歸祖國活動委員會主辦，參與此次大巡遊活動的有28輛花車、21個方陣、21支巡遊隊伍，合共4500多人[7]。\n- 澳門國際幻彩大巡遊（前名：澳門拉丁城區大巡遊），受COVID-19疫情影響停辦4年，2024年復辦，並首次改於3月24日舉行。活動秉承宣揚「愛‧和平‧文化共融」的理念，展現澳門的特別魅力，為慶祝澳門回歸祖國25周年增添歡樂。超過80隊澳門本地及來自世界各地的巡遊隊伍，約1,800位表演者參與巡遊，風格多樣的藝術表演盡現文明交流互鑑的魅力，彰顯澳門「演藝之都」的文化活力。2024年新設兩項本地巡遊項目，包括設有巨型木偶、巨型外賣員揹包等可移動裝置的「大型藝術裝置巡遊隊」，以及由大灣區藝團、海內外藝團及不同藝術領域的合作團隊，揮灑創意推出系列合作企劃的「特別企劃巡遊隊」，經費預算約700萬元。作為澳門重要的品牌節慶盛事，大巡遊自2011年舉辦至今已踏入第10屆，成為慶祝澳門回歸祖國的年度節慶活動之一，吸引各地旅客及本地居民參與。\n- 慶祝澳門回歸祖國文藝晚會：於回歸前一日（12月19日）舉行，是黨和國家領導人訪問澳門期間的重要大型活動，最近一次在2024年舉行[8]。\n- 慶祝澳門特別行政區成立周年煙花匯演：每年12月20日晚上9時在旅遊塔對開海面發放煙花慶祝澳門特區成立，1999年至2001年回歸煙花一度在觀音蓮花苑對開海面舉行[9]，2002年起改為在西灣湖至澳門旅遊塔對開海面舉行，2004年一度改為回歸日當晚10時30分舉行，2005年、2006年、2012年、2013年一度改為晚上9時30分舉行；2019年更舉行澳珠跨境煙花匯演，並推遲至12月22日晚上9時舉行，2020年至2023年受COVID-19疫情等因素影響停辦，2024年復辦。\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/282353@88792191@07946ebda4c018c3",
+          "external_id": "zhwiki/282353",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 42,
+          "document_id": "e91124d228f8795230000821",
+          "title": "澳門回歸",
+          "wikiname": "zhwiki",
+          "page_id": 282353,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/282353-88792191-07946ebda4c018c3.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "9f1f96a55be9a792edcf7817ea6a8782bc583cb9fdf26b60cc137644a0de4c04",
+            "start": 10109,
+            "end": 11088
+          },
+          "context_spans": [
+            {
+              "sha256": "22585a08ffdc608f523c1eee67096ba2c9e3710eb81a1ab3a4a196b7b596ee61",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 澳門回歸\n"
+            },
+            {
+              "sha256": "1d35d72b7233b5af9a5bb9227f8d6a7b92125008fabdc1aa5b37716b715cb917",
+              "level": 2,
+              "kind": "heading",
+              "start": 10101,
+              "end": 10109,
+              "text": "## 慶祝活動\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "9f1f96a55be9a792edcf7817ea6a8782bc583cb9fdf26b60cc137644a0de4c04",
+          "source_text_sha256": "5811ca5c67bcd96b0ef193146b3fd38a38402df8032c62e0903144b029c3db2c",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88792191",
+          "version": 88792191,
+          "heading_path": [
+            "# 澳門回歸\n",
+            "## 慶祝活動\n"
+          ],
+          "file_id": "75bcca7dde19aa41a21870c3",
+          "atomic": true,
+          "legacy_document_id": "b344d196bbfa3e67797327c6",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "9f1f96a55be9a792edcf7817ea6a8782bc583cb9fdf26b60cc137644a0de4c04",
+          "parent_source_id": "verbatim-v1:852c03356e39c99cc803e08d1f419ad92eeeefb5762db73968560800d5f8e6e6",
+          "parent_text_sha256": "9f1f96a55be9a792edcf7817ea6a8782bc583cb9fdf26b60cc137644a0de4c04",
+          "span_start": 0,
+          "span_end": 979,
+          "span_sha256": "9f1f96a55be9a792edcf7817ea6a8782bc583cb9fdf26b60cc137644a0de4c04",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      336
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 8,
+      "has_numeric_citation": false,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0274.json"
+  },
+  "review": {
+    "case_id": "diverse-0008",
+    "verdict": "partial",
+    "issues": [
+      "citation_misalignment",
+      "repetition"
+    ],
+    "note": "1999-12-20正确且来源3/5支持，但重复七段并全引1至8，含外链列表和纯标题等不支持片段。"
+  },
+  "input": {
+    "id": "diverse-0008",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 8,
+    "original_case": {
+      "case_type": "time",
+      "question": "澳门是什么时候回归中国的",
+      "expected_titles": [
+        "澳門回歸",
+        "澳门回归"
+      ]
+    },
+    "category": "time",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "澳门是什么时候回归中国的",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "710c1e9ab8bfed82636d8b6ed044751d9d343d5fac8aab1ec90d62ce7ebe45ed"
+}

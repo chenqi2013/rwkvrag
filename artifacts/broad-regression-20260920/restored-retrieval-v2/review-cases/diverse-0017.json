@@ -1,0 +1,291 @@
+{
+  "result": {
+    "case_id": "diverse-0017",
+    "suite": "diverse",
+    "question": "硝酸和硫酸有什么区别",
+    "http_status": 200,
+    "error": null,
+    "answer": "硝酸和硫酸都是强酸，但硝酸是一元酸，硫酸是二元酸。硝酸的化学式为HNO₃，硫酸的化学式为H₂SO₄。硝酸的制备方法包括硝石（硝酸钾）与硫酸反应，硫酸与碳酸钠反应，硫酸与氧化铜反应，硫酸与浓硫酸加热反应。硝酸的用途包括作为化肥、在有机合成中作为脱水剂，以及在电镀中作为电解液。硝酸的物理性质包括无色透明液体，具有强腐蚀性和刺激性。硝酸的安全性包括具有强腐蚀性，接触皮肤或眼睛会造成严重伤害，需要佩戴防护装备。",
+    "sources": [
+      {
+        "id": "verbatim-v1:9d4d935aede4bcca7be7e9aa00c66d3c569c8fd9d7a76bc233cc83c37e831831@0:34:01b52926d815",
+        "document_id": "91a19a3e9ffcf4b548deb738",
+        "source": "finewiki-zh",
+        "title": "硝酸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+        "score": 0.09683140174943455,
+        "snippet": "- 硝酸盐\n- 亚硝酸、连二次硝酸\n- 镪水——硫酸、盐酸、硝酸\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/51496@88095570@8e18d1b112f223aa",
+          "external_id": "zhwiki/51496",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 24,
+          "document_id": "91a19a3e9ffcf4b548deb738",
+          "title": "硝酸",
+          "wikiname": "zhwiki",
+          "page_id": 51496,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/51496-88095570-8e18d1b112f223aa.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "01b52926d815027543e660d821c6e1238940db65e2e92502f14ab117a8c44782",
+            "start": 3372,
+            "end": 3406
+          },
+          "context_spans": [
+            {
+              "sha256": "3bf86513ea5824028efbb2278642a630d6b662893a2a705ce79a580b02abc3e7",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 硝酸\n"
+            },
+            {
+              "sha256": "cf1cfb26b0eea2e8b5cc61ebb54940c1f9c1120650cce073d79747cf3f708d56",
+              "level": 2,
+              "kind": "heading",
+              "start": 3366,
+              "end": 3372,
+              "text": "## 参見\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "01b52926d815027543e660d821c6e1238940db65e2e92502f14ab117a8c44782",
+          "source_text_sha256": "eea0da85e0e046a626336dff0e4ba7c8b4d8f41adf601a3b6d6a9da033baba7b",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+          "version": 88095570,
+          "heading_path": [
+            "# 硝酸\n",
+            "## 参見\n"
+          ],
+          "file_id": "91a19a3e9ffcf4b548deb738",
+          "atomic": true,
+          "legacy_document_id": "d8bc8b32349b9f2e9be94c4c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "01b52926d815027543e660d821c6e1238940db65e2e92502f14ab117a8c44782",
+          "parent_source_id": "verbatim-v1:9d4d935aede4bcca7be7e9aa00c66d3c569c8fd9d7a76bc233cc83c37e831831",
+          "parent_text_sha256": "01b52926d815027543e660d821c6e1238940db65e2e92502f14ab117a8c44782",
+          "span_start": 0,
+          "span_end": 34,
+          "span_sha256": "01b52926d815027543e660d821c6e1238940db65e2e92502f14ab117a8c44782",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:4bab872aefc6e80e2744c0fdbe57fac2eb007dc5e6f7712242bba3cb20d182c3@0:95:a0548230104e",
+        "document_id": "91a19a3e9ffcf4b548deb738",
+        "source": "finewiki-zh",
+        "title": "硝酸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+        "score": 0.09401327838827839,
+        "snippet": "硝酸和硫酸一样由公元8世纪阿拉伯鍊金術士阿布·穆薩·賈比爾·伊本·哈揚（Jabir ibn Hayyan）在乾餾綠矾和硝石混合物時發現，也是化學肥料。硝酸在硝石中發現，故叫硝酸不叫氮酸。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/51496@88095570@8e18d1b112f223aa",
+          "external_id": "zhwiki/51496",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 3,
+          "document_id": "91a19a3e9ffcf4b548deb738",
+          "title": "硝酸",
+          "wikiname": "zhwiki",
+          "page_id": 51496,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/51496-88095570-8e18d1b112f223aa.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "a0548230104e169741cffae973b023ef47d3b02191b73587dc90f31f04a346bd",
+            "start": 222,
+            "end": 317
+          },
+          "context_spans": [
+            {
+              "sha256": "3bf86513ea5824028efbb2278642a630d6b662893a2a705ce79a580b02abc3e7",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 硝酸\n"
+            },
+            {
+              "sha256": "62208934677de2c1bb92d7600b952f5fcebc614611f22d367398100be451af8d",
+              "level": 2,
+              "kind": "heading",
+              "start": 216,
+              "end": 222,
+              "text": "## 歷史\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "a0548230104e169741cffae973b023ef47d3b02191b73587dc90f31f04a346bd",
+          "source_text_sha256": "eea0da85e0e046a626336dff0e4ba7c8b4d8f41adf601a3b6d6a9da033baba7b",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88095570",
+          "version": 88095570,
+          "heading_path": [
+            "# 硝酸\n",
+            "## 歷史\n"
+          ],
+          "file_id": "91a19a3e9ffcf4b548deb738",
+          "atomic": false,
+          "legacy_document_id": "d8bc8b32349b9f2e9be94c4c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "a0548230104e169741cffae973b023ef47d3b02191b73587dc90f31f04a346bd",
+          "parent_source_id": "verbatim-v1:4bab872aefc6e80e2744c0fdbe57fac2eb007dc5e6f7712242bba3cb20d182c3",
+          "parent_text_sha256": "a0548230104e169741cffae973b023ef47d3b02191b73587dc90f31f04a346bd",
+          "span_start": 0,
+          "span_end": 95,
+          "span_sha256": "a0548230104e169741cffae973b023ef47d3b02191b73587dc90f31f04a346bd",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:8fa171d9132da79e12e5695eef20be15e1efb9bfcffeacf8e91372b777de0926@0:467:300283ee59a8",
+        "document_id": "01c109ea8d658430ccd455de",
+        "source": "finewiki-zh",
+        "title": "硫酸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88096280",
+        "score": 0.09029086855173812,
+        "snippet": "硫酸正如其他的酸，能与碱发生中和反应，变為硫酸盐及水。例如，用以电镀或製成杀真菌剂的硫酸铜便是从硫酸与氧化铜的中和反应中取得：\nCuO(𝑠)+ H\n2SO\n4(𝑎𝑞)→ CuSO\n4 (𝑎𝑞) + H\n2O(𝑙)\n硫酸可以和碳酸盐发生反应。如稀硫酸可以和碳酸钠反应，产生碳酸，但碳酸不稳定，会迅速分解为二氧化碳和水：\nNa\n2CO\n3 + H\n2SO\n4 → Na\n2SO\n4 + CO\n2 + H\n2O\n浓硫酸加热下可以和硝酸钾反应得到硝酸、和氯化钠反应得到氯化氢（这也是实验室制取氯化氢的方法之一）：\nKNO\n3 + H\n2SO\n4 → KHSO\n4 + HNO\n3\nNaCl + H\n2SO\n4 → NaHSO\n4 + HCl\n硫酸是不挥发的强酸，因此可以制取弱酸和挥发性酸。以其与乙酸钠為例，它会取代乙酸（CH\n3COOH）產生出硫酸氢钠：\nH\n2SO\n4 + CH\n3COONa → NaHSO\n4 + CH\n3COOH\n硫酸在与硝酸反应时担当酸与脱水剂的角色，產生出NO+\n2离子，在有机化学裡是很重要的一个反应过程。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/16946@88096280@3371b3a3874addda",
+          "external_id": "zhwiki/16946",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 18,
+          "document_id": "01c109ea8d658430ccd455de",
+          "title": "硫酸",
+          "wikiname": "zhwiki",
+          "page_id": 16946,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/16946-88096280-3371b3a3874addda.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "300283ee59a8c400359b7abd35d9a833bdca4c7f26f6d2bda7029799590cace5",
+            "start": 3392,
+            "end": 3859
+          },
+          "context_spans": [
+            {
+              "sha256": "e690bb8f17cd3e59e63749895a54c0a85bc9e6ae77ce6a00bb422d5ebe6b0d9b",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 硫酸\n"
+            },
+            {
+              "sha256": "c3555663b92670a750e2e41538e4b80f23a521c0446d77ea17e0d0be2a3aaa09",
+              "level": 2,
+              "kind": "heading",
+              "start": 2555,
+              "end": 2563,
+              "text": "## 化学性质\n"
+            },
+            {
+              "sha256": "e60147fe54080aed1cd2b6f0f472a167275be5de341ade436dfc5d786ec1d043",
+              "level": 3,
+              "kind": "heading",
+              "start": 3379,
+              "end": 3392,
+              "text": "### 一般酸碱特性泛论\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "300283ee59a8c400359b7abd35d9a833bdca4c7f26f6d2bda7029799590cace5",
+          "source_text_sha256": "082cb7ca5d84dd1844f16043162809041856c769de05c2ed9bf2c1eb50e959ae",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88096280",
+          "version": 88096280,
+          "heading_path": [
+            "# 硫酸\n",
+            "## 化学性质\n",
+            "### 一般酸碱特性泛论\n"
+          ],
+          "file_id": "01c109ea8d658430ccd455de",
+          "atomic": false,
+          "legacy_document_id": "7f62c78996160e17bc96c937",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "300283ee59a8c400359b7abd35d9a833bdca4c7f26f6d2bda7029799590cace5",
+          "parent_source_id": "verbatim-v1:8fa171d9132da79e12e5695eef20be15e1efb9bfcffeacf8e91372b777de0926",
+          "parent_text_sha256": "300283ee59a8c400359b7abd35d9a833bdca4c7f26f6d2bda7029799590cace5",
+          "span_start": 0,
+          "span_end": 467,
+          "span_sha256": "300283ee59a8c400359b7abd35d9a833bdca4c7f26f6d2bda7029799590cace5",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      203
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 3,
+      "has_numeric_citation": false,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0182.json"
+  },
+  "review": {
+    "case_id": "diverse-0017",
+    "verdict": "fail",
+    "issues": [
+      "attribute_mixing",
+      "unsupported_answer",
+      "missing_citation"
+    ],
+    "note": "来源3的硫酸与氧化铜/碳酸钠反应被写作硝酸制备，硫酸脱水剂作用被移给硝酸；未给引用，比较答案出现明显属性串位。"
+  },
+  "input": {
+    "id": "diverse-0017",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 17,
+    "original_case": {
+      "case_type": "comparison",
+      "question": "硝酸和硫酸有什么区别",
+      "expected_titles": [],
+      "expected_titles_all": [
+        "硝酸",
+        "硫酸"
+      ]
+    },
+    "category": "comparison",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "硝酸和硫酸有什么区别",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "b31549f8d0b7683b3de6666d0a9370e1a4886c623dad961e088b20067cda6905"
+}

@@ -1,0 +1,534 @@
+{
+  "result": {
+    "case_id": "diverse-0002",
+    "suite": "diverse",
+    "question": "陆贽是谁",
+    "http_status": 200,
+    "error": null,
+    "answer": "陆贽是唐朝宰相。[资料 1]\n陆贽生卒年：754年—805年。[资料 1]\n陆贽官职：翰林学士、宰相。[资料 1]\n陆贽主要事迹：为政措施中，他改革吏部铨选制度，将官缺根据内外官员三分之一的比例分配，使每年赴京参选的士子和官员数量大致保持一致，减少选人数量，使官缺得以补充。[资料 1]\n陆贽与唐朝关系：他是唐朝宰相，在唐德宗时期任职。[资料 1]\n陆贽的历史地位：他是唐代政治家、文学家、医学家，有“陆宣公”之称，后世常称其为“陆宣公”。[资料 1]",
+    "sources": [
+      {
+        "id": "verbatim-v1:cd571d252599a03ed05c955064188af24d95e4ba50a723ad7ba93fb0eea7c6a5@0:201:4dab871777cf",
+        "document_id": "fbd5e36c662f51cd11ede474",
+        "source": "finewiki-zh",
+        "title": "陸贄",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+        "score": 0.09757581862288368,
+        "snippet": "- 陸贄 :葛氏評点陸宣公奏議. 巻1-4 / 陸贄 撰 ; 葛端調 評点 ; 桑原忱 較訂 （页面存档备份，存于）\n- 石川安貞注: (陸贄)陸宣公全集二十四卷 - 唐 陸贄 撰, 日本 石川安貞 注, 景寛政二年 序, 名古屋永樂屋東四郎等刊本 ( 栗田慶雲堂, 1886 ) （页面存档备份，存于）\n- 陸贄 : 陸宣公奏議. 巻第1-12 ( 日本早稲田大学蔵書 ) （页面存档备份，存于）\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/479606@88646345@09326199bf3b2e52",
+          "external_id": "zhwiki/479606",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 13,
+          "document_id": "fbd5e36c662f51cd11ede474",
+          "title": "陸贄",
+          "wikiname": "zhwiki",
+          "page_id": 479606,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/479606-88646345-09326199bf3b2e52.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "4dab871777cf94dee8e42377468042d16b4fd97b2fb46cfa6069fd8b23057d4d",
+            "start": 1677,
+            "end": 1878
+          },
+          "context_spans": [
+            {
+              "sha256": "f2a72b342bbdbf91e8004387fdac89c501683bf65e434babaf6066d89602093b",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 陸贄\n"
+            },
+            {
+              "sha256": "6225b2307cc56d866c6822eb69576ff486631f9379d74ea75351904273345e2c",
+              "level": 2,
+              "kind": "heading",
+              "start": 1669,
+              "end": 1677,
+              "text": "## 外部連結\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "4dab871777cf94dee8e42377468042d16b4fd97b2fb46cfa6069fd8b23057d4d",
+          "source_text_sha256": "f3cac3aceba043de15943ace42bdca7aa578a1409e07b60767053f2d42fc48ed",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+          "version": 88646345,
+          "heading_path": [
+            "# 陸贄\n",
+            "## 外部連結\n"
+          ],
+          "file_id": "fbd5e36c662f51cd11ede474",
+          "atomic": true,
+          "legacy_document_id": "4713a264d7e8e6426c24cecc",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "4dab871777cf94dee8e42377468042d16b4fd97b2fb46cfa6069fd8b23057d4d",
+          "parent_source_id": "verbatim-v1:cd571d252599a03ed05c955064188af24d95e4ba50a723ad7ba93fb0eea7c6a5",
+          "parent_text_sha256": "4dab871777cf94dee8e42377468042d16b4fd97b2fb46cfa6069fd8b23057d4d",
+          "span_start": 0,
+          "span_end": 201,
+          "span_sha256": "4dab871777cf94dee8e42377468042d16b4fd97b2fb46cfa6069fd8b23057d4d",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:49ca3ccab87f7e1f36c83e7e24e1678e770e50a12d7b10fb9a87298bc77bedaa@0:381:ce8676bed758",
+        "document_id": "fbd5e36c662f51cd11ede474",
+        "source": "finewiki-zh",
+        "title": "陸贄",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+        "score": 0.09285727729574073,
+        "snippet": "《新唐书》卷四五《选举志下》：“初，吏部岁常集人，其后三数岁一集，选人猥至，文簿纷杂，吏因得以为奸利，士至蹉跌，或十年不得官，而阙员亦累岁不补。陆贽为相，乃惩其弊，命吏部据内外员三分之，计阙集人，岁以为常。”\n根据学者陈铁民的研究，唐代士人科举及第后以及六品以下官员任满后需要守选才能参加吏部铨选获取官职，因为每年的官缺数量是相对固定有限的，大概在2000到4000之间，随着时间的推移，每年新入仕的士子和前资官数量不断累积，有限官缺和数量庞大的选人之间矛盾越来越突出，官缺经年得不到补充，有的士人十年都无法获得一个官职。陆贽实行“计阙集人”的办法，首先将每年官缺根据内外官不同的性质一分为三，根据每一年度的具体官缺数量来确定本年度符合条件参与吏部铨选的选人数量，大大减少每年参选的选人数量，使官缺选人数量大致保持一致，使得该年度赴京参选的选人都能获得官职。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/479606@88646345@09326199bf3b2e52",
+          "external_id": "zhwiki/479606",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 7,
+          "document_id": "fbd5e36c662f51cd11ede474",
+          "title": "陸贄",
+          "wikiname": "zhwiki",
+          "page_id": 479606,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/479606-88646345-09326199bf3b2e52.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "ce8676bed75812eec6dc87ff283f08a5d67afd459f9ac1948707424ae7f053ed",
+            "start": 1081,
+            "end": 1462
+          },
+          "context_spans": [
+            {
+              "sha256": "f2a72b342bbdbf91e8004387fdac89c501683bf65e434babaf6066d89602093b",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 陸贄\n"
+            },
+            {
+              "sha256": "951a36583fe16c78e6b8c8f9d92f1d811e182a5f5346908887652c0df2f1231e",
+              "level": 2,
+              "kind": "heading",
+              "start": 1059,
+              "end": 1067,
+              "text": "## 为政措施\n"
+            },
+            {
+              "sha256": "5b62518e21ea75c44b2038090ebd0c225b2e933220e913a2669cc8cf7001a18a",
+              "level": 3,
+              "kind": "heading",
+              "start": 1068,
+              "end": 1081,
+              "text": "### 改革官员守选制度\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "ce8676bed75812eec6dc87ff283f08a5d67afd459f9ac1948707424ae7f053ed",
+          "source_text_sha256": "f3cac3aceba043de15943ace42bdca7aa578a1409e07b60767053f2d42fc48ed",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+          "version": 88646345,
+          "heading_path": [
+            "# 陸贄\n",
+            "## 为政措施\n",
+            "### 改革官员守选制度\n"
+          ],
+          "file_id": "fbd5e36c662f51cd11ede474",
+          "atomic": false,
+          "legacy_document_id": "4713a264d7e8e6426c24cecc",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "ce8676bed75812eec6dc87ff283f08a5d67afd459f9ac1948707424ae7f053ed",
+          "parent_source_id": "verbatim-v1:49ca3ccab87f7e1f36c83e7e24e1678e770e50a12d7b10fb9a87298bc77bedaa",
+          "parent_text_sha256": "ce8676bed75812eec6dc87ff283f08a5d67afd459f9ac1948707424ae7f053ed",
+          "span_start": 0,
+          "span_end": 381,
+          "span_sha256": "ce8676bed75812eec6dc87ff283f08a5d67afd459f9ac1948707424ae7f053ed",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:5441c2e71482a7b3e3f1ca54e2960b318228e4384da9cf9deb8587d855acd047@0:959:1717def59f08",
+        "document_id": "fbd5e36c662f51cd11ede474",
+        "source": "finewiki-zh",
+        "title": "陸贄",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+        "score": 0.09501371164677616,
+        "snippet": "陆贽出自吴郡陆氏侍郎支，祖父陆齐政官至富平令，父親陸侃曾任溧陽（江蘇溧陽）縣令，早年逝去，贄受母親韋氏教育長大。大曆六年（771年）舉進士第六名，歷授華州鄭縣尉，渭南縣主簿，德宗建中初年遷監察御史。\n建中四年陆贽被召為翰林學士。時兩河用兵，他善於分析軍事形勢，並預測可能兵變。建中四年（783年）果然爆發涇原兵變，德宗避朱泚之亂於奉天（今陕西乾县），轉為考功郎中，詔書多出其手，唐德宗发布了《罪己诏》，即由陆贽起草《奉天改元大赦制》：“然以长于深宫之中，暗于经国之务。积习易溺，居安忘危，不知稼穑之艰难，不察征戍之劳苦……天谴于上而朕不悟，人怨于下而朕不知……罪实在予，永言愧悼。”深受德宗重視。\n貞元八年（792年）窦参获罪，出任中书侍郎同平章事即宰相，曾上疏反對兩稅法，陸贄說兩稅法有七弊。《通鉴》经常载入“陆贽上言”，卷234详录陆贽“请均节财赋，凡六条”。德宗雖然欣賞他的言論，但卻不採用。他對戶部侍郎裴延齡當時靠獻媚得寵於天子十分憤慨，屢次在朝上當面力陳這樣做的不宜之處，贞元十年（794年）年末，遭裴延龄诬陷，被降为太子宾客。\n陸贄當初受到唐德宗賞識，不敢因為怕言禍而噤口，有話都直言，朋友勸他，認為這樣做過了，他答道：“我對上不辜負天子，對下不辜負我所學到的知識，我不留戀其他的事物。”\n贞元十一年（795年），裴延龄誣陷陆贽煽动军心，德宗本欲杀陆贽，在谏议大夫阳城、归登、张万福等人的进谏下，德宗不得已只好将陆贽貶为忠州（今重庆忠州区）別駕，同时任命与陆贽有嫌隙的明州长史李吉甫任忠州刺史，想要借刀杀人。而李吉甫欣然厚礼，并不衔恨之前陆贽贬谪自己的事情，以宰相之礼厚待陆贽。\n陆贽在忠州十年，深居简出，抄集药方成《陆氏集验方》五十卷。后来刺史薛延代替李吉甫出任忠州刺史，薛延叩辞陛谢德宗时，德宗令薛延向陆贽宣旨慰安。剑南西川节度使韦皋也多次上表请求陆贽接替自己任节度使，德宗亦不许。\n永贞元年（805年）正月，唐顺宗即位，下诏召回陆贽，诏书未至而陆贽已卒，時年五十二歲。七月初九，追赠陆贽为兵部尚書，并赐给其家人钱二百贯，命令所在州县提供驿递之便，以助办丧事，諡號曰「宣」。\n陆贽有著述多種，流傳有《翰苑集》（《陸宣公集》），同时代的宰相权德舆將他比作漢朝的賈誼。曾國藩也曾稱讚并推薦過陸贄的文章。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/479606@88646345@09326199bf3b2e52",
+          "external_id": "zhwiki/479606",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 3,
+          "document_id": "fbd5e36c662f51cd11ede474",
+          "title": "陸贄",
+          "wikiname": "zhwiki",
+          "page_id": 479606,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/479606-88646345-09326199bf3b2e52.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "1717def59f082aed66559d1507ec730947b49b1a98060fdb9cd4df8fe5ecef84",
+            "start": 100,
+            "end": 1059
+          },
+          "context_spans": [
+            {
+              "sha256": "f2a72b342bbdbf91e8004387fdac89c501683bf65e434babaf6066d89602093b",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 陸贄\n"
+            },
+            {
+              "sha256": "81b8513ba130dff1977a03e999c5cb589b40b385a59d0e2ea4fe38760a169059",
+              "level": 2,
+              "kind": "heading",
+              "start": 94,
+              "end": 100,
+              "text": "## 簡介\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "1717def59f082aed66559d1507ec730947b49b1a98060fdb9cd4df8fe5ecef84",
+          "source_text_sha256": "f3cac3aceba043de15943ace42bdca7aa578a1409e07b60767053f2d42fc48ed",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+          "version": 88646345,
+          "heading_path": [
+            "# 陸贄\n",
+            "## 簡介\n"
+          ],
+          "file_id": "fbd5e36c662f51cd11ede474",
+          "atomic": false,
+          "legacy_document_id": "4713a264d7e8e6426c24cecc",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "1717def59f082aed66559d1507ec730947b49b1a98060fdb9cd4df8fe5ecef84",
+          "parent_source_id": "verbatim-v1:5441c2e71482a7b3e3f1ca54e2960b318228e4384da9cf9deb8587d855acd047",
+          "parent_text_sha256": "1717def59f082aed66559d1507ec730947b49b1a98060fdb9cd4df8fe5ecef84",
+          "span_start": 0,
+          "span_end": 959,
+          "span_sha256": "1717def59f082aed66559d1507ec730947b49b1a98060fdb9cd4df8fe5ecef84",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:75e3a0cfb8a794c21c57338f2ca160e482ca0ff058f5a4248031ff8a2c8a3091@0:5:f2a72b342bbd",
+        "document_id": "fbd5e36c662f51cd11ede474",
+        "source": "finewiki-zh",
+        "title": "陸贄",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+        "score": 0.09550211213517665,
+        "snippet": "# 陸贄\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/479606@88646345@09326199bf3b2e52",
+          "external_id": "zhwiki/479606",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "fbd5e36c662f51cd11ede474",
+          "title": "陸贄",
+          "wikiname": "zhwiki",
+          "page_id": 479606,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/479606-88646345-09326199bf3b2e52.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "f2a72b342bbdbf91e8004387fdac89c501683bf65e434babaf6066d89602093b",
+            "start": 0,
+            "end": 5
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "f2a72b342bbdbf91e8004387fdac89c501683bf65e434babaf6066d89602093b",
+          "source_text_sha256": "f3cac3aceba043de15943ace42bdca7aa578a1409e07b60767053f2d42fc48ed",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+          "version": 88646345,
+          "heading_path": [],
+          "file_id": "fbd5e36c662f51cd11ede474",
+          "atomic": true,
+          "legacy_document_id": "4713a264d7e8e6426c24cecc",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "f2a72b342bbdbf91e8004387fdac89c501683bf65e434babaf6066d89602093b",
+          "parent_source_id": "verbatim-v1:75e3a0cfb8a794c21c57338f2ca160e482ca0ff058f5a4248031ff8a2c8a3091",
+          "parent_text_sha256": "f2a72b342bbdbf91e8004387fdac89c501683bf65e434babaf6066d89602093b",
+          "span_start": 0,
+          "span_end": 5,
+          "span_sha256": "f2a72b342bbdbf91e8004387fdac89c501683bf65e434babaf6066d89602093b",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:13a817ebef81e1aee8770f77cca1974c97661a033df97557c245ab765a5e3361@0:89:cdd69eef0ad4",
+        "document_id": "fbd5e36c662f51cd11ede474",
+        "source": "finewiki-zh",
+        "title": "陸贄",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+        "score": 0.09303613053613054,
+        "snippet": "陸贄（754年—805年），字敬輿，苏州嘉兴县（今浙江省嘉兴市人），祖籍吴郡吴县（今江苏省苏州市），唐代政治家、文学家、医学家，德宗朝翰林学士、宰相，謚曰宣，后世常稱陸宣公。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/479606@88646345@09326199bf3b2e52",
+          "external_id": "zhwiki/479606",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "fbd5e36c662f51cd11ede474",
+          "title": "陸贄",
+          "wikiname": "zhwiki",
+          "page_id": 479606,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/479606-88646345-09326199bf3b2e52.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "cdd69eef0ad413b8f9d8921ab0cb48d78cb9793ad037bc320bc60e6d659da8ef",
+            "start": 5,
+            "end": 94
+          },
+          "context_spans": [
+            {
+              "sha256": "f2a72b342bbdbf91e8004387fdac89c501683bf65e434babaf6066d89602093b",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 陸贄\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "cdd69eef0ad413b8f9d8921ab0cb48d78cb9793ad037bc320bc60e6d659da8ef",
+          "source_text_sha256": "f3cac3aceba043de15943ace42bdca7aa578a1409e07b60767053f2d42fc48ed",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+          "version": 88646345,
+          "heading_path": [
+            "# 陸贄\n"
+          ],
+          "file_id": "fbd5e36c662f51cd11ede474",
+          "atomic": false,
+          "legacy_document_id": "4713a264d7e8e6426c24cecc",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "cdd69eef0ad413b8f9d8921ab0cb48d78cb9793ad037bc320bc60e6d659da8ef",
+          "parent_source_id": "verbatim-v1:13a817ebef81e1aee8770f77cca1974c97661a033df97557c245ab765a5e3361",
+          "parent_text_sha256": "cdd69eef0ad413b8f9d8921ab0cb48d78cb9793ad037bc320bc60e6d659da8ef",
+          "span_start": 0,
+          "span_end": 89,
+          "span_sha256": "cdd69eef0ad413b8f9d8921ab0cb48d78cb9793ad037bc320bc60e6d659da8ef",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:95edae0d1f11c354e6d2601b7f5bbb3557ab51c16bc7834c2f3384e944affdf8@0:6:81b8513ba130",
+        "document_id": "fbd5e36c662f51cd11ede474",
+        "source": "finewiki-zh",
+        "title": "陸贄",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+        "score": 0.09046345811051694,
+        "snippet": "## 簡介\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/479606@88646345@09326199bf3b2e52",
+          "external_id": "zhwiki/479606",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 2,
+          "document_id": "fbd5e36c662f51cd11ede474",
+          "title": "陸贄",
+          "wikiname": "zhwiki",
+          "page_id": 479606,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/479606-88646345-09326199bf3b2e52.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "81b8513ba130dff1977a03e999c5cb589b40b385a59d0e2ea4fe38760a169059",
+            "start": 94,
+            "end": 100
+          },
+          "context_spans": [
+            {
+              "sha256": "f2a72b342bbdbf91e8004387fdac89c501683bf65e434babaf6066d89602093b",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 陸贄\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "81b8513ba130dff1977a03e999c5cb589b40b385a59d0e2ea4fe38760a169059",
+          "source_text_sha256": "f3cac3aceba043de15943ace42bdca7aa578a1409e07b60767053f2d42fc48ed",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+          "version": 88646345,
+          "heading_path": [
+            "# 陸贄\n"
+          ],
+          "file_id": "fbd5e36c662f51cd11ede474",
+          "atomic": true,
+          "legacy_document_id": "4713a264d7e8e6426c24cecc",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "81b8513ba130dff1977a03e999c5cb589b40b385a59d0e2ea4fe38760a169059",
+          "parent_source_id": "verbatim-v1:95edae0d1f11c354e6d2601b7f5bbb3557ab51c16bc7834c2f3384e944affdf8",
+          "parent_text_sha256": "81b8513ba130dff1977a03e999c5cb589b40b385a59d0e2ea4fe38760a169059",
+          "span_start": 0,
+          "span_end": 6,
+          "span_sha256": "81b8513ba130dff1977a03e999c5cb589b40b385a59d0e2ea4fe38760a169059",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:6377c22e435a0043f9dcdd269df8eeb36b3697e5a54faf6de13e3ee4860a61b1@0:1:01ba4719c80b",
+        "document_id": "fbd5e36c662f51cd11ede474",
+        "source": "finewiki-zh",
+        "title": "陸贄",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+        "score": 0.08781512605042018,
+        "snippet": "\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/479606@88646345@09326199bf3b2e52",
+          "external_id": "zhwiki/479606",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 5,
+          "document_id": "fbd5e36c662f51cd11ede474",
+          "title": "陸贄",
+          "wikiname": "zhwiki",
+          "page_id": 479606,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/479606-88646345-09326199bf3b2e52.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+            "start": 1067,
+            "end": 1068
+          },
+          "context_spans": [
+            {
+              "sha256": "f2a72b342bbdbf91e8004387fdac89c501683bf65e434babaf6066d89602093b",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 陸贄\n"
+            },
+            {
+              "sha256": "951a36583fe16c78e6b8c8f9d92f1d811e182a5f5346908887652c0df2f1231e",
+              "level": 2,
+              "kind": "heading",
+              "start": 1059,
+              "end": 1067,
+              "text": "## 为政措施\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "source_text_sha256": "f3cac3aceba043de15943ace42bdca7aa578a1409e07b60767053f2d42fc48ed",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88646345",
+          "version": 88646345,
+          "heading_path": [
+            "# 陸贄\n",
+            "## 为政措施\n"
+          ],
+          "file_id": "fbd5e36c662f51cd11ede474",
+          "atomic": false,
+          "legacy_document_id": "4713a264d7e8e6426c24cecc",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "parent_source_id": "verbatim-v1:6377c22e435a0043f9dcdd269df8eeb36b3697e5a54faf6de13e3ee4860a61b1",
+          "parent_text_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "span_start": 0,
+          "span_end": 1,
+          "span_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      226
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 7,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0359.json"
+  },
+  "review": {
+    "case_id": "diverse-0002",
+    "verdict": "partial",
+    "issues": [
+      "citation_misalignment"
+    ],
+    "note": "唐朝宰相、生卒年、官职与主要身份可由正文支持，但所有事实均引用文末书目来源1，应分别引用简介5、生平3或改革段2。"
+  },
+  "input": {
+    "id": "diverse-0002",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 2,
+    "original_case": {
+      "case_type": "person",
+      "question": "陆贽是谁",
+      "expected_titles": [
+        "陸贄",
+        "陆贽"
+      ]
+    },
+    "category": "person",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "陆贽是谁",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "0bd714b4a0aeb2380a714a00ebaac5511dc91c8dcbf093e92356dd15b3a8eb5d"
+}

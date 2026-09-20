@@ -1,0 +1,1112 @@
+{
+  "result": {
+    "case_id": "native_wiki-0003",
+    "suite": "native_wiki",
+    "question": "我们把博客、论坛和后台任务组件写成三个独立条目：Ghost博客软件采用什么开源许可证；Discuz!NT用什么语言和技术；Gearman任务处理涉及哪三个角色，哪个角色实际执行工作？请不要把Discuz!主版本的技术栈套给NT版。",
+    "http_status": 200,
+    "error": null,
+    "answer": "- Ghost博客软件采用开源许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件支持自动备份、自动升级和邮件技术支持：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资料 1]\n- Ghost博客软件用于博客和网站发布，基于MIT许可证：[资",
+    "sources": [
+      {
+        "id": "verbatim-v1:91752f7fe0ae14539f93d7d9e0f44df410b2cf185093d35028cf37dc6bbcf9bd@0:152:423218d6acc3",
+        "document_id": "0b32700106d52544d3ae2360",
+        "source": "finewiki-zh",
+        "title": "Ghost (博客平台)",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=80527703",
+        "score": 0.03278688524590164,
+        "snippet": "Ghost博客软件可以免费下载和使用。 此外，Ghost 基金会提供了一个付费的博客托管平台，因此 Ghost Foundation 承担起安装、升级和維护服务器的工作。付费后, 用户能够完全掌控博客平台 享受自动备份、自动升级和邮件技术支持. 于此同时，托管平台的收入会用于开发开源软件和项目的维护\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4659204@80527703@fba04e7dcec55dbd",
+          "external_id": "zhwiki/4659204",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 7,
+          "document_id": "0b32700106d52544d3ae2360",
+          "title": "Ghost (博客平台)",
+          "wikiname": "zhwiki",
+          "page_id": 4659204,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4659204-80527703-fba04e7dcec55dbd.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "423218d6acc330a13f57151c91843e0d5189611025fd0f489126ec855aae3099",
+            "start": 683,
+            "end": 835
+          },
+          "context_spans": [
+            {
+              "sha256": "84f1be9312277df953965f1ab2eed396187de7b9fb8cfbc6b7068d4c755f7b53",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 15,
+              "text": "# Ghost (博客平台)\n"
+            },
+            {
+              "sha256": "3d1b6ecf40c7c0f55dcf4d6995e4ba3272116184ed07a50ea2ed13eb7bbd6fc7",
+              "level": 2,
+              "kind": "heading",
+              "start": 675,
+              "end": 683,
+              "text": "## 商业模式\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "423218d6acc330a13f57151c91843e0d5189611025fd0f489126ec855aae3099",
+          "source_text_sha256": "dcb15ac9a18a9552b916aac5346253d99ba2be9b9e6608f152c07ebe344ccfa7",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=80527703",
+          "version": 80527703,
+          "heading_path": [
+            "# Ghost (博客平台)\n",
+            "## 商业模式\n"
+          ],
+          "file_id": "0b32700106d52544d3ae2360",
+          "atomic": false,
+          "legacy_document_id": "a2f7089f32ef215b594a983c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "423218d6acc330a13f57151c91843e0d5189611025fd0f489126ec855aae3099",
+          "parent_source_id": "verbatim-v1:91752f7fe0ae14539f93d7d9e0f44df410b2cf185093d35028cf37dc6bbcf9bd",
+          "parent_text_sha256": "423218d6acc330a13f57151c91843e0d5189611025fd0f489126ec855aae3099",
+          "span_start": 0,
+          "span_end": 152,
+          "span_sha256": "423218d6acc330a13f57151c91843e0d5189611025fd0f489126ec855aae3099",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:40919cfcdee96af5d00c4bbd6e1b7ba7278c7340b9881fa842b2f3126ec6c49e@0:74:cd61bd267084",
+        "document_id": "8807fceae2617732f627b7bc",
+        "source": "finewiki-zh",
+        "title": "Discuz!",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86021061",
+        "score": 0.03131881575727918,
+        "snippet": "Discuz!NT由Discuz!NT開發團隊開發，此版本由C#语言编写而成，使用ASP.NET技术。Discuz!NT官方論壇有最新版本下載。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/128503@86021061@d14bf77c223e3307",
+          "external_id": "zhwiki/128503",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 22,
+          "document_id": "8807fceae2617732f627b7bc",
+          "title": "Discuz!",
+          "wikiname": "zhwiki",
+          "page_id": 128503,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/128503-86021061-d14bf77c223e3307.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "cd61bd2670843651fcd45921367d5c4bf301174f577e78dc85c87328fa3e8ab6",
+            "start": 11581,
+            "end": 11655
+          },
+          "context_spans": [
+            {
+              "sha256": "186a2f0b1206cae3a219c6b9d30b31e4293f312bbe545f5684f380c0c9000eef",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 10,
+              "text": "# Discuz!\n"
+            },
+            {
+              "sha256": "ba864a272cc8a996c07fb40cd07cd425f6d5dee579f6129a3eda10b10aad9bad",
+              "level": 2,
+              "kind": "heading",
+              "start": 11556,
+              "end": 11566,
+              "text": "## 其它官方版本\n"
+            },
+            {
+              "sha256": "01a4ce6918101bb47dbdcfde898394a46e8ebfb06c6c75e85768b84671a996ce",
+              "level": 3,
+              "kind": "heading",
+              "start": 11567,
+              "end": 11581,
+              "text": "### Discuz!NT\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "cd61bd2670843651fcd45921367d5c4bf301174f577e78dc85c87328fa3e8ab6",
+          "source_text_sha256": "b884fb247ae9315be986490e55642e5dc6866a81e94b9426fecf74d893fa1cf3",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86021061",
+          "version": 86021061,
+          "heading_path": [
+            "# Discuz!\n",
+            "## 其它官方版本\n",
+            "### Discuz!NT\n"
+          ],
+          "file_id": "8807fceae2617732f627b7bc",
+          "atomic": false,
+          "legacy_document_id": "45f02acd8dc90abd2d6760db",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "cd61bd2670843651fcd45921367d5c4bf301174f577e78dc85c87328fa3e8ab6",
+          "parent_source_id": "verbatim-v1:40919cfcdee96af5d00c4bbd6e1b7ba7278c7340b9881fa842b2f3126ec6c49e",
+          "parent_text_sha256": "cd61bd2670843651fcd45921367d5c4bf301174f577e78dc85c87328fa3e8ab6",
+          "span_start": 0,
+          "span_end": 74,
+          "span_sha256": "cd61bd2670843651fcd45921367d5c4bf301174f577e78dc85c87328fa3e8ab6",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:2437cbcad57d15c2e31edf62017be622055f4b7a410c06ab817f1d35a7509935@0:57:4850114fb933",
+        "document_id": "075e10464f6a1483551e5934",
+        "source": "finewiki-zh",
+        "title": "Gearman",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+        "score": 0.030886196246139225,
+        "snippet": "Gearman 主要分成三個部份，需求的處理過程涉及三個角色：Client -> Job -> Worker。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/3803511@85696783@7737b86b6d67f816",
+          "external_id": "zhwiki/3803511",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 5,
+          "document_id": "075e10464f6a1483551e5934",
+          "title": "Gearman",
+          "wikiname": "zhwiki",
+          "page_id": 3803511,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/3803511-85696783-7737b86b6d67f816.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "4850114fb9339640ff2a4a6f72613c8721abd2ced302da6bbee2cde41fe3d23d",
+            "start": 469,
+            "end": 526
+          },
+          "context_spans": [
+            {
+              "sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 10,
+              "text": "# Gearman\n"
+            },
+            {
+              "sha256": "596662f810313ae9d631bde54f4471bcf6912085792ea69854fd51c43c977446",
+              "level": 2,
+              "kind": "heading",
+              "start": 453,
+              "end": 469,
+              "text": "## Gearman 運作原理\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "4850114fb9339640ff2a4a6f72613c8721abd2ced302da6bbee2cde41fe3d23d",
+          "source_text_sha256": "3e43b23b50fc25e682e45423ded05e2bdbe6dfbfcd915a06bc12245bf5d7e843",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+          "version": 85696783,
+          "heading_path": [
+            "# Gearman\n",
+            "## Gearman 運作原理\n"
+          ],
+          "file_id": "075e10464f6a1483551e5934",
+          "atomic": false,
+          "legacy_document_id": "f425fe08173b8bba161af186",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "4850114fb9339640ff2a4a6f72613c8721abd2ced302da6bbee2cde41fe3d23d",
+          "parent_source_id": "verbatim-v1:2437cbcad57d15c2e31edf62017be622055f4b7a410c06ab817f1d35a7509935",
+          "parent_text_sha256": "4850114fb9339640ff2a4a6f72613c8721abd2ced302da6bbee2cde41fe3d23d",
+          "span_start": 0,
+          "span_end": 57,
+          "span_sha256": "4850114fb9339640ff2a4a6f72613c8721abd2ced302da6bbee2cde41fe3d23d",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:6ea178130be73d289d89c23a5d5e0c6ea83e66b0a6c5e245d12b97a9ab2cb1ab@0:254:0026932a823a",
+        "document_id": "0b32700106d52544d3ae2360",
+        "source": "finewiki-zh",
+        "title": "Ghost (博客平台)",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=80527703",
+        "score": 0.03225806451612903,
+        "snippet": "Ghost是用JavaScript编写的博客平台，基于MIT许可证开放源代码。Ghost的设计主旨是简化个人网站发布以及网上出版的过程。\nGhost是一款个人博客系统，它使用Node.js语言和MySQL数据库开发，同时支持MySQL、MariaDB、SQLite和PostgreSQL。用户可以在支持Node.js的服务器上使用自己的博客。\nGhost官方支持版，同时有爱好者开发的第三方中文汉化版，如Ghost的中文汉化版。Ghost提供开发插件的API和可以定制的Handlebars主题模板样式。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4659204@80527703@fba04e7dcec55dbd",
+          "external_id": "zhwiki/4659204",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "0b32700106d52544d3ae2360",
+          "title": "Ghost (博客平台)",
+          "wikiname": "zhwiki",
+          "page_id": 4659204,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4659204-80527703-fba04e7dcec55dbd.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "0026932a823a35462986d2a3e30aead28c170b2a45ccb0e2c3e48881bd34155f",
+            "start": 15,
+            "end": 269
+          },
+          "context_spans": [
+            {
+              "sha256": "84f1be9312277df953965f1ab2eed396187de7b9fb8cfbc6b7068d4c755f7b53",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 15,
+              "text": "# Ghost (博客平台)\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "0026932a823a35462986d2a3e30aead28c170b2a45ccb0e2c3e48881bd34155f",
+          "source_text_sha256": "dcb15ac9a18a9552b916aac5346253d99ba2be9b9e6608f152c07ebe344ccfa7",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=80527703",
+          "version": 80527703,
+          "heading_path": [
+            "# Ghost (博客平台)\n"
+          ],
+          "file_id": "0b32700106d52544d3ae2360",
+          "atomic": false,
+          "legacy_document_id": "a2f7089f32ef215b594a983c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "0026932a823a35462986d2a3e30aead28c170b2a45ccb0e2c3e48881bd34155f",
+          "parent_source_id": "verbatim-v1:6ea178130be73d289d89c23a5d5e0c6ea83e66b0a6c5e245d12b97a9ab2cb1ab",
+          "parent_text_sha256": "0026932a823a35462986d2a3e30aead28c170b2a45ccb0e2c3e48881bd34155f",
+          "span_start": 0,
+          "span_end": 254,
+          "span_sha256": "0026932a823a35462986d2a3e30aead28c170b2a45ccb0e2c3e48881bd34155f",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:f8d73391387d6172e9990c194d0e952b8f895cf43f248ba3750b988a884e2a89@0:94:ae71cfcb010c",
+        "document_id": "075e10464f6a1483551e5934",
+        "source": "finewiki-zh",
+        "title": "Gearman",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+        "score": 0.03021353930031804,
+        "snippet": "Gearman  是一套用來把程式需求委派給機器，提供通用的程序框架來將任務分發在機器上进行運算的系統。它同時具備並行工作的能力、負載均衡處理的能力，以及在不同程序語言之間溝通的能力。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/3803511@85696783@7737b86b6d67f816",
+          "external_id": "zhwiki/3803511",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "075e10464f6a1483551e5934",
+          "title": "Gearman",
+          "wikiname": "zhwiki",
+          "page_id": 3803511,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/3803511-85696783-7737b86b6d67f816.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "ae71cfcb010c3b873e79f6bb3ae15dd53c9426e56f36cac96ffcd94c3757dc0d",
+            "start": 10,
+            "end": 104
+          },
+          "context_spans": [
+            {
+              "sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 10,
+              "text": "# Gearman\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "ae71cfcb010c3b873e79f6bb3ae15dd53c9426e56f36cac96ffcd94c3757dc0d",
+          "source_text_sha256": "3e43b23b50fc25e682e45423ded05e2bdbe6dfbfcd915a06bc12245bf5d7e843",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+          "version": 85696783,
+          "heading_path": [
+            "# Gearman\n"
+          ],
+          "file_id": "075e10464f6a1483551e5934",
+          "atomic": false,
+          "legacy_document_id": "f425fe08173b8bba161af186",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "ae71cfcb010c3b873e79f6bb3ae15dd53c9426e56f36cac96ffcd94c3757dc0d",
+          "parent_source_id": "verbatim-v1:f8d73391387d6172e9990c194d0e952b8f895cf43f248ba3750b988a884e2a89",
+          "parent_text_sha256": "ae71cfcb010c3b873e79f6bb3ae15dd53c9426e56f36cac96ffcd94c3757dc0d",
+          "span_start": 0,
+          "span_end": 94,
+          "span_sha256": "ae71cfcb010c3b873e79f6bb3ae15dd53c9426e56f36cac96ffcd94c3757dc0d",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:43905c459fceeee14667a026d21c068bf54db727f4fefea066f415fa180f4fae@0:15:84f1be931227",
+        "document_id": "0b32700106d52544d3ae2360",
+        "source": "finewiki-zh",
+        "title": "Ghost (博客平台)",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=80527703",
+        "score": 0.03125763125763126,
+        "snippet": "# Ghost (博客平台)\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4659204@80527703@fba04e7dcec55dbd",
+          "external_id": "zhwiki/4659204",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "0b32700106d52544d3ae2360",
+          "title": "Ghost (博客平台)",
+          "wikiname": "zhwiki",
+          "page_id": 4659204,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4659204-80527703-fba04e7dcec55dbd.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "84f1be9312277df953965f1ab2eed396187de7b9fb8cfbc6b7068d4c755f7b53",
+            "start": 0,
+            "end": 15
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "84f1be9312277df953965f1ab2eed396187de7b9fb8cfbc6b7068d4c755f7b53",
+          "source_text_sha256": "dcb15ac9a18a9552b916aac5346253d99ba2be9b9e6608f152c07ebe344ccfa7",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=80527703",
+          "version": 80527703,
+          "heading_path": [],
+          "file_id": "0b32700106d52544d3ae2360",
+          "atomic": true,
+          "legacy_document_id": "a2f7089f32ef215b594a983c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "84f1be9312277df953965f1ab2eed396187de7b9fb8cfbc6b7068d4c755f7b53",
+          "parent_source_id": "verbatim-v1:43905c459fceeee14667a026d21c068bf54db727f4fefea066f415fa180f4fae",
+          "parent_text_sha256": "84f1be9312277df953965f1ab2eed396187de7b9fb8cfbc6b7068d4c755f7b53",
+          "span_start": 0,
+          "span_end": 15,
+          "span_sha256": "84f1be9312277df953965f1ab2eed396187de7b9fb8cfbc6b7068d4c755f7b53",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:4ba024437c1bb86ff9d2d256431c8962d572e69709eca285834e477e26f664d3@0:66:acf0dee85376",
+        "document_id": "075e10464f6a1483551e5934",
+        "source": "finewiki-zh",
+        "title": "Gearman",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+        "score": 0.015873015873015872,
+        "snippet": "- Job Server: 瞭解 Client 端的需求，並查看哪個機器可以處理這項要求，在系統裡它通常會是個 Daemon。\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/3803511@85696783@7737b86b6d67f816",
+          "external_id": "zhwiki/3803511",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 9,
+          "document_id": "075e10464f6a1483551e5934",
+          "title": "Gearman",
+          "wikiname": "zhwiki",
+          "page_id": 3803511,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/3803511-85696783-7737b86b6d67f816.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "acf0dee85376de63b583b14396ad9c880bea3f9e3ee9cd97cca0ff2a87fdc0f5",
+            "start": 639,
+            "end": 705
+          },
+          "context_spans": [
+            {
+              "sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 10,
+              "text": "# Gearman\n"
+            },
+            {
+              "sha256": "596662f810313ae9d631bde54f4471bcf6912085792ea69854fd51c43c977446",
+              "level": 2,
+              "kind": "heading",
+              "start": 453,
+              "end": 469,
+              "text": "## Gearman 運作原理\n"
+            },
+            {
+              "sha256": "550087619fc2a04924f4fc59c19672dd9a2c02cfa6c39ed9906bc6335c322288",
+              "level": 3,
+              "kind": "heading",
+              "start": 624,
+              "end": 639,
+              "text": "### Job Server\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "acf0dee85376de63b583b14396ad9c880bea3f9e3ee9cd97cca0ff2a87fdc0f5",
+          "source_text_sha256": "3e43b23b50fc25e682e45423ded05e2bdbe6dfbfcd915a06bc12245bf5d7e843",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+          "version": 85696783,
+          "heading_path": [
+            "# Gearman\n",
+            "## Gearman 運作原理\n",
+            "### Job Server\n"
+          ],
+          "file_id": "075e10464f6a1483551e5934",
+          "atomic": true,
+          "legacy_document_id": "f425fe08173b8bba161af186",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "acf0dee85376de63b583b14396ad9c880bea3f9e3ee9cd97cca0ff2a87fdc0f5",
+          "parent_source_id": "verbatim-v1:4ba024437c1bb86ff9d2d256431c8962d572e69709eca285834e477e26f664d3",
+          "parent_text_sha256": "acf0dee85376de63b583b14396ad9c880bea3f9e3ee9cd97cca0ff2a87fdc0f5",
+          "span_start": 0,
+          "span_end": 66,
+          "span_sha256": "acf0dee85376de63b583b14396ad9c880bea3f9e3ee9cd97cca0ff2a87fdc0f5",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:0020dd47b527fd5ee5009f32fff192eb0ec442d3d63bb039ed9d873b4d8ccfba@0:10:a4c29be224e9",
+        "document_id": "075e10464f6a1483551e5934",
+        "source": "finewiki-zh",
+        "title": "Gearman",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+        "score": 0.015625,
+        "snippet": "# Gearman\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/3803511@85696783@7737b86b6d67f816",
+          "external_id": "zhwiki/3803511",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "075e10464f6a1483551e5934",
+          "title": "Gearman",
+          "wikiname": "zhwiki",
+          "page_id": 3803511,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/3803511-85696783-7737b86b6d67f816.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+            "start": 0,
+            "end": 10
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+          "source_text_sha256": "3e43b23b50fc25e682e45423ded05e2bdbe6dfbfcd915a06bc12245bf5d7e843",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+          "version": 85696783,
+          "heading_path": [],
+          "file_id": "075e10464f6a1483551e5934",
+          "atomic": true,
+          "legacy_document_id": "f425fe08173b8bba161af186",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+          "parent_source_id": "verbatim-v1:0020dd47b527fd5ee5009f32fff192eb0ec442d3d63bb039ed9d873b4d8ccfba",
+          "parent_text_sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+          "span_start": 0,
+          "span_end": 10,
+          "span_sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:a7d02f71885a67a6ed38966693e91ff44b6f452975fbc0f09aa192d9a7d057ce@0:14:c6b44751edd9",
+        "document_id": "075e10464f6a1483551e5934",
+        "source": "finewiki-zh",
+        "title": "Gearman",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+        "score": 0.015384615384615385,
+        "snippet": "## Gearman 特點\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/3803511@85696783@7737b86b6d67f816",
+          "external_id": "zhwiki/3803511",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 2,
+          "document_id": "075e10464f6a1483551e5934",
+          "title": "Gearman",
+          "wikiname": "zhwiki",
+          "page_id": 3803511,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/3803511-85696783-7737b86b6d67f816.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c6b44751edd9cc6c2ab8f5dfa46b3ef06cc579c1a70a94885e9a391ceb6033e0",
+            "start": 104,
+            "end": 118
+          },
+          "context_spans": [
+            {
+              "sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 10,
+              "text": "# Gearman\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c6b44751edd9cc6c2ab8f5dfa46b3ef06cc579c1a70a94885e9a391ceb6033e0",
+          "source_text_sha256": "3e43b23b50fc25e682e45423ded05e2bdbe6dfbfcd915a06bc12245bf5d7e843",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+          "version": 85696783,
+          "heading_path": [
+            "# Gearman\n"
+          ],
+          "file_id": "075e10464f6a1483551e5934",
+          "atomic": true,
+          "legacy_document_id": "f425fe08173b8bba161af186",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c6b44751edd9cc6c2ab8f5dfa46b3ef06cc579c1a70a94885e9a391ceb6033e0",
+          "parent_source_id": "verbatim-v1:a7d02f71885a67a6ed38966693e91ff44b6f452975fbc0f09aa192d9a7d057ce",
+          "parent_text_sha256": "c6b44751edd9cc6c2ab8f5dfa46b3ef06cc579c1a70a94885e9a391ceb6033e0",
+          "span_start": 0,
+          "span_end": 14,
+          "span_sha256": "c6b44751edd9cc6c2ab8f5dfa46b3ef06cc579c1a70a94885e9a391ceb6033e0",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:bbcc5422c9d4bbcaaf2c89d32e98bd52bde33bb499cb0284e42daa1631b11c31@0:16:596662f81031",
+        "document_id": "075e10464f6a1483551e5934",
+        "source": "finewiki-zh",
+        "title": "Gearman",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+        "score": 0.015151515151515152,
+        "snippet": "## Gearman 運作原理\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/3803511@85696783@7737b86b6d67f816",
+          "external_id": "zhwiki/3803511",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 4,
+          "document_id": "075e10464f6a1483551e5934",
+          "title": "Gearman",
+          "wikiname": "zhwiki",
+          "page_id": 3803511,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/3803511-85696783-7737b86b6d67f816.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "596662f810313ae9d631bde54f4471bcf6912085792ea69854fd51c43c977446",
+            "start": 453,
+            "end": 469
+          },
+          "context_spans": [
+            {
+              "sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 10,
+              "text": "# Gearman\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "596662f810313ae9d631bde54f4471bcf6912085792ea69854fd51c43c977446",
+          "source_text_sha256": "3e43b23b50fc25e682e45423ded05e2bdbe6dfbfcd915a06bc12245bf5d7e843",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+          "version": 85696783,
+          "heading_path": [
+            "# Gearman\n"
+          ],
+          "file_id": "075e10464f6a1483551e5934",
+          "atomic": true,
+          "legacy_document_id": "f425fe08173b8bba161af186",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "596662f810313ae9d631bde54f4471bcf6912085792ea69854fd51c43c977446",
+          "parent_source_id": "verbatim-v1:bbcc5422c9d4bbcaaf2c89d32e98bd52bde33bb499cb0284e42daa1631b11c31",
+          "parent_text_sha256": "596662f810313ae9d631bde54f4471bcf6912085792ea69854fd51c43c977446",
+          "span_start": 0,
+          "span_end": 16,
+          "span_sha256": "596662f810313ae9d631bde54f4471bcf6912085792ea69854fd51c43c977446",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:e0944509860dcd0c4f3c725349f9240871557df3da0ec216479643cf4b077e52@0:55:c6d0d795382a",
+        "document_id": "075e10464f6a1483551e5934",
+        "source": "finewiki-zh",
+        "title": "Gearman",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+        "score": 0.014925373134328358,
+        "snippet": "- Worker: Worker 通過 Job Server 的分派，開始執行 Client 端的工作。\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/3803511@85696783@7737b86b6d67f816",
+          "external_id": "zhwiki/3803511",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 11,
+          "document_id": "075e10464f6a1483551e5934",
+          "title": "Gearman",
+          "wikiname": "zhwiki",
+          "page_id": 3803511,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/3803511-85696783-7737b86b6d67f816.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c6d0d795382abe9452127270df1704aec47d977d19d9528241ae77ce1160ff90",
+            "start": 714,
+            "end": 769
+          },
+          "context_spans": [
+            {
+              "sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 10,
+              "text": "# Gearman\n"
+            },
+            {
+              "sha256": "596662f810313ae9d631bde54f4471bcf6912085792ea69854fd51c43c977446",
+              "level": 2,
+              "kind": "heading",
+              "start": 453,
+              "end": 469,
+              "text": "## Gearman 運作原理\n"
+            },
+            {
+              "sha256": "ef0e2201d093b9f2cac3efc5a31174c0f08c18d91bea47d6b7676378a4febbb0",
+              "level": 3,
+              "kind": "heading",
+              "start": 705,
+              "end": 714,
+              "text": "### Work\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c6d0d795382abe9452127270df1704aec47d977d19d9528241ae77ce1160ff90",
+          "source_text_sha256": "3e43b23b50fc25e682e45423ded05e2bdbe6dfbfcd915a06bc12245bf5d7e843",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+          "version": 85696783,
+          "heading_path": [
+            "# Gearman\n",
+            "## Gearman 運作原理\n",
+            "### Work\n"
+          ],
+          "file_id": "075e10464f6a1483551e5934",
+          "atomic": true,
+          "legacy_document_id": "f425fe08173b8bba161af186",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c6d0d795382abe9452127270df1704aec47d977d19d9528241ae77ce1160ff90",
+          "parent_source_id": "verbatim-v1:e0944509860dcd0c4f3c725349f9240871557df3da0ec216479643cf4b077e52",
+          "parent_text_sha256": "c6d0d795382abe9452127270df1704aec47d977d19d9528241ae77ce1160ff90",
+          "span_start": 0,
+          "span_end": 55,
+          "span_sha256": "c6d0d795382abe9452127270df1704aec47d977d19d9528241ae77ce1160ff90",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:23105333db962dbdbf6e36c3949e12f17dda2349811fd1fec356643238a92aa7@0:321:f711c7e943b7",
+        "document_id": "075e10464f6a1483551e5934",
+        "source": "finewiki-zh",
+        "title": "Gearman",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+        "score": 0.014705882352941176,
+        "snippet": "- 執行 Message Queue [2]服務的 Job Server 可以是多台伺服器組成，也就是分散式架構，在 Job Server 上執行 Worker 程式。\n- 這些 Worker 程式會一直循環地等候，直到 Job Server 呼叫它執行工作。\n- Client 端發送出需求之後，會將需要的資料及動作記錄在 Job Server 上，這時 Job Server 會查看是否有空閒並符合需求的 Worker。\n- 在 Worker 結束工作後，會發送通知給 Job Server ，這時 Job Server 就會視狀況把結果回傳給 Client。\n- Client 端不需等候需求的執行結果，可以直接繼續執行其他動作。\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/3803511@85696783@7737b86b6d67f816",
+          "external_id": "zhwiki/3803511",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 13,
+          "document_id": "075e10464f6a1483551e5934",
+          "title": "Gearman",
+          "wikiname": "zhwiki",
+          "page_id": 3803511,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/3803511-85696783-7737b86b6d67f816.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "f711c7e943b77cc9d9edecf1a47fd9c2b6bdfb91974e54997d1782547d41d0b0",
+            "start": 787,
+            "end": 1108
+          },
+          "context_spans": [
+            {
+              "sha256": "a4c29be224e9566a12df3b56d485736ca6e611966caaf9eec248c2ea5f8545a3",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 10,
+              "text": "# Gearman\n"
+            },
+            {
+              "sha256": "596662f810313ae9d631bde54f4471bcf6912085792ea69854fd51c43c977446",
+              "level": 2,
+              "kind": "heading",
+              "start": 453,
+              "end": 469,
+              "text": "## Gearman 運作原理\n"
+            },
+            {
+              "sha256": "1dbaea62e7290172b26d4243dca4ff62cd78f28e7e5d2fbea90697d9503d9091",
+              "level": 3,
+              "kind": "heading",
+              "start": 769,
+              "end": 787,
+              "text": "### Message Queue\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "f711c7e943b77cc9d9edecf1a47fd9c2b6bdfb91974e54997d1782547d41d0b0",
+          "source_text_sha256": "3e43b23b50fc25e682e45423ded05e2bdbe6dfbfcd915a06bc12245bf5d7e843",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=85696783",
+          "version": 85696783,
+          "heading_path": [
+            "# Gearman\n",
+            "## Gearman 運作原理\n",
+            "### Message Queue\n"
+          ],
+          "file_id": "075e10464f6a1483551e5934",
+          "atomic": true,
+          "legacy_document_id": "f425fe08173b8bba161af186",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "f711c7e943b77cc9d9edecf1a47fd9c2b6bdfb91974e54997d1782547d41d0b0",
+          "parent_source_id": "verbatim-v1:23105333db962dbdbf6e36c3949e12f17dda2349811fd1fec356643238a92aa7",
+          "parent_text_sha256": "f711c7e943b77cc9d9edecf1a47fd9c2b6bdfb91974e54997d1782547d41d0b0",
+          "span_start": 0,
+          "span_end": 321,
+          "span_sha256": "f711c7e943b77cc9d9edecf1a47fd9c2b6bdfb91974e54997d1782547d41d0b0",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "length",
+    "answer_span": [
+      0,
+      2611
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 12,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "length",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0015.json"
+  },
+  "review": {
+    "case_id": "native_wiki-0003",
+    "verdict": "fail",
+    "issues": [
+      "missing_objects",
+      "citation_misalignment",
+      "repetition",
+      "length"
+    ],
+    "note": "许可证事实正确但应引来源4，来源1是付费托管服务；NT语言技术和Gearman角色证据均在来源中却漏答，反复Ghost至长度上限。"
+  },
+  "input": {
+    "id": "native_wiki-0003",
+    "suite": "native_wiki",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+    "origin_index": 3,
+    "original_case": {
+      "id": "held_014",
+      "question": "我们把博客、论坛和后台任务组件写成三个独立条目：Ghost博客软件采用什么开源许可证；Discuz!NT用什么语言和技术；Gearman任务处理涉及哪三个角色，哪个角色实际执行工作？请不要把Discuz!主版本的技术栈套给NT版。",
+      "history": [],
+      "oracle": {
+        "expected_action": "answer",
+        "known_subjects": [
+          {
+            "id": "S1",
+            "description": "Ghost博客",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "Ghost博客"
+              }
+            ]
+          },
+          {
+            "id": "S2",
+            "description": "Discuz!NT",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "Discuz!NT"
+              }
+            ]
+          },
+          {
+            "id": "S3",
+            "description": "Gearman",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "Gearman"
+              }
+            ]
+          }
+        ],
+        "active_constraints": [],
+        "requested_goals": [
+          {
+            "id": "G1",
+            "description": "采用什么开源许可证",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "采用什么开源许可证"
+              },
+              {
+                "message_id": "Q",
+                "quote": "我们把博客、论坛和后台任务组件写成三个独立条目：Ghost博客软件采用什么开源许可证；Discuz!NT用什么语言和技术；Gearman任务处理涉及哪三个角色，哪个角色实际执行工作？请不要把Discuz!主版本的技术栈套给NT版。"
+              }
+            ]
+          },
+          {
+            "id": "G2",
+            "description": "用什么语言和技术",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "用什么语言和技术"
+              },
+              {
+                "message_id": "Q",
+                "quote": "我们把博客、论坛和后台任务组件写成三个独立条目：Ghost博客软件采用什么开源许可证；Discuz!NT用什么语言和技术；Gearman任务处理涉及哪三个角色，哪个角色实际执行工作？请不要把Discuz!主版本的技术栈套给NT版。"
+              }
+            ]
+          },
+          {
+            "id": "G3",
+            "description": "涉及哪三个角色",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "涉及哪三个角色"
+              },
+              {
+                "message_id": "Q",
+                "quote": "我们把博客、论坛和后台任务组件写成三个独立条目：Ghost博客软件采用什么开源许可证；Discuz!NT用什么语言和技术；Gearman任务处理涉及哪三个角色，哪个角色实际执行工作？请不要把Discuz!主版本的技术栈套给NT版。"
+              }
+            ]
+          },
+          {
+            "id": "G4",
+            "description": "哪个角色实际执行工作",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "哪个角色实际执行工作"
+              },
+              {
+                "message_id": "Q",
+                "quote": "我们把博客、论坛和后台任务组件写成三个独立条目：Ghost博客软件采用什么开源许可证；Discuz!NT用什么语言和技术；Gearman任务处理涉及哪三个角色，哪个角色实际执行工作？请不要把Discuz!主版本的技术栈套给NT版。"
+              }
+            ]
+          }
+        ],
+        "required_facts": [
+          {
+            "claim": "Ghost使用MIT许可证。",
+            "bound_subjects": [
+              "S1"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/4659204",
+                  "page_id": 4659204,
+                  "title": "Ghost (博客平台)",
+                  "url": "https://zh.wikipedia.org/wiki/Ghost_(%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0)",
+                  "language": "zh",
+                  "revision_id": 80527703,
+                  "body_sha256": "dcb15ac9a18a9552b916aac5346253d99ba2be9b9e6608f152c07ebe344ccfa7",
+                  "section": "Ghost (博客平台)",
+                  "start": 15,
+                  "end": 83,
+                  "quote": "Ghost是用JavaScript编写的博客平台，基于MIT许可证开放源代码。Ghost的设计主旨是简化个人网站发布以及网上出版的过程。"
+                }
+              ]
+            ],
+            "id": "F1"
+          },
+          {
+            "claim": "Discuz!NT使用C#语言和ASP.NET技术。",
+            "bound_subjects": [
+              "S2"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/128503",
+                  "page_id": 128503,
+                  "title": "Discuz!",
+                  "url": "https://zh.wikipedia.org/wiki/Discuz!",
+                  "language": "zh",
+                  "revision_id": 86021061,
+                  "body_sha256": "b884fb247ae9315be986490e55642e5dc6866a81e94b9426fecf74d893fa1cf3",
+                  "section": "Discuz!NT",
+                  "start": 11581,
+                  "end": 11653,
+                  "quote": "Discuz!NT由Discuz!NT開發團隊開發，此版本由C#语言编写而成，使用ASP.NET技术。Discuz!NT官方論壇有最新版本下載。"
+                }
+              ]
+            ],
+            "id": "F2"
+          },
+          {
+            "claim": "三个角色为Client、Job Server（流程中简写Job）和Worker。",
+            "bound_subjects": [
+              "S3"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/3803511",
+                  "page_id": 3803511,
+                  "title": "Gearman",
+                  "url": "https://zh.wikipedia.org/wiki/Gearman",
+                  "language": "zh",
+                  "revision_id": 85696783,
+                  "body_sha256": "3e43b23b50fc25e682e45423ded05e2bdbe6dfbfcd915a06bc12245bf5d7e843",
+                  "section": "Gearman 運作原理",
+                  "start": 469,
+                  "end": 524,
+                  "quote": "Gearman 主要分成三個部份，需求的處理過程涉及三個角色：Client -> Job -> Worker。"
+                },
+                {
+                  "document_id": "zhwiki/3803511",
+                  "page_id": 3803511,
+                  "title": "Gearman",
+                  "url": "https://zh.wikipedia.org/wiki/Gearman",
+                  "language": "zh",
+                  "revision_id": 85696783,
+                  "body_sha256": "3e43b23b50fc25e682e45423ded05e2bdbe6dfbfcd915a06bc12245bf5d7e843",
+                  "section": "Client",
+                  "start": 624,
+                  "end": 638,
+                  "quote": "### Job Server"
+                }
+              ]
+            ],
+            "id": "F3"
+          },
+          {
+            "claim": "Worker实际执行Client的工作。",
+            "bound_subjects": [
+              "S3"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/3803511",
+                  "page_id": 3803511,
+                  "title": "Gearman",
+                  "url": "https://zh.wikipedia.org/wiki/Gearman",
+                  "language": "zh",
+                  "revision_id": 85696783,
+                  "body_sha256": "3e43b23b50fc25e682e45423ded05e2bdbe6dfbfcd915a06bc12245bf5d7e843",
+                  "section": "Work",
+                  "start": 714,
+                  "end": 766,
+                  "quote": "- Worker: Worker 通過 Job Server 的分派，開始執行 Client 端的工作。"
+                }
+              ]
+            ],
+            "id": "F4"
+          }
+        ],
+        "excluded": [],
+        "missing_information": [],
+        "required_clarification": [],
+        "minimum_evidence_pages": 3,
+        "required": [
+          "按照用户明示字段和有效历史回答；不得把助手自行追加偏好视为用户要求。",
+          "每个必要事实正确且有真实、实际支持的正式引用；每个多余引用也检查其附着主张。",
+          "无额外关键错误或无据结论，范围、对象与缺失信息处理正确。"
+        ],
+        "forbidden": [
+          "不得由金标证据段背景追加未问日期、单位精度或范围。",
+          "不得把同页但不含该事实的片段或无关页面作为支持。",
+          "不得用思考过程补最终答案；不得把资料未提供说成现实不存在。"
+        ]
+      },
+      "provenance": {
+        "source_experiment": "rwkvrag-wiki-evidence-budget-20260908",
+        "original_split": "holdout",
+        "use": "previously_exposed_development_smoke",
+        "source_inputs_sha256": "7d38ace329779963dd134837aecd54941ed60e44ba3ae74d7aed89c08767d583",
+        "source_gold_sha256": "50edd715fd81cdc545b3a7bd952f840d78ab6876d41496ab9d5a3d8f4938d0ca",
+        "source_input_row_sha256": "b06fbb6093b12b59855111987b06e980eeffab88f955a9821b31326be0c7ae90",
+        "source_gold_row_sha256": "bb92aecfb541639e134e3e1e954bf515e172d428d69b8eeaa04069fa78a85430",
+        "corpus_manifest_sha256": "35563fa6e5d7c9205cea3d9e1cd5476b01774f11a292dafcfed82fe4d8256ced",
+        "category": "multi_document"
+      }
+    },
+    "category": "native_wiki",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "我们把博客、论坛和后台任务组件写成三个独立条目：Ghost博客软件采用什么开源许可证；Discuz!NT用什么语言和技术；Gearman任务处理涉及哪三个角色，哪个角色实际执行工作？请不要把Discuz!主版本的技术栈套给NT版。",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "5cd7b0d6e0a4e35057cc5da0325ccb857f1630583a81dc008f3f36353c4c0ad7"
+}

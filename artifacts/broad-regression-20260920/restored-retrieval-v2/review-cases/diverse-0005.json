@@ -1,0 +1,551 @@
+{
+  "result": {
+    "case_id": "diverse-0005",
+    "suite": "diverse",
+    "question": "成县位于哪个省",
+    "http_status": 200,
+    "error": null,
+    "answer": "1. 成县位于甘肃省。[资料 1]\n2. 成县位于陇南市。[资料 1]\n3. 成县位于秦岭和巴山之间。[资料 6]\n4. 成县是国务院批准的对外开放县。[资料 7]",
+    "sources": [
+      {
+        "id": "verbatim-v1:8f2789599e6fcbefee331770c041c1542765a8d2530782398273675371485986@0:5:0b7fd61d8594",
+        "document_id": "e1d4449d7f789c81fb845a8a",
+        "source": "wikipedia-snapshot",
+        "title": "成县",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+        "score": 0.01639344262295082,
+        "snippet": "# 成县\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:344681-86994369",
+          "external_id": "zhwiki/344681",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 0,
+          "document_id": "e1d4449d7f789c81fb845a8a",
+          "title": "成县",
+          "wikiname": "zhwiki",
+          "page_id": 344681,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/344681-86994369.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "0b7fd61d8594f485afff0415bfb6589105bdf7c0b15eb9db8a4738f28fd986d1",
+            "start": 0,
+            "end": 5
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "0b7fd61d8594f485afff0415bfb6589105bdf7c0b15eb9db8a4738f28fd986d1",
+          "source_text_sha256": "7129bbdb4a5e38103132c5c6749b110cbca03cae0ecdcc3b1017bb96b1891c32",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+          "version": 86994369,
+          "heading_path": [],
+          "file_id": "e1d4449d7f789c81fb845a8a",
+          "atomic": true,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "0b7fd61d8594f485afff0415bfb6589105bdf7c0b15eb9db8a4738f28fd986d1",
+          "parent_source_id": "verbatim-v1:8f2789599e6fcbefee331770c041c1542765a8d2530782398273675371485986",
+          "parent_text_sha256": "0b7fd61d8594f485afff0415bfb6589105bdf7c0b15eb9db8a4738f28fd986d1",
+          "span_start": 0,
+          "span_end": 5,
+          "span_sha256": "0b7fd61d8594f485afff0415bfb6589105bdf7c0b15eb9db8a4738f28fd986d1",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:266f448d6c500b7a35d02c2a417050f245c84f74e11b602bdf97c64c54525d14@0:1199:679f93e61ee6",
+        "document_id": "e1d4449d7f789c81fb845a8a",
+        "source": "wikipedia-snapshot",
+        "title": "成县",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+        "score": 0.015625,
+        "snippet": "\n[[编辑](/w/index.php?title=%E6%88%90%E5%8E%BF&action=edit&section=3 \"编辑章节：行政区划\")]\n\n成县下辖14个[镇](/wiki/%E8%A1%8C%E6%94%BF%E5%BB%BA%E5%88%B6%E9%95%87 \"行政建制镇\")、3个[乡](/wiki/%E4%B9%A1_(%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD) \"乡 (中华人民共和国)\")[[4]](#cite_note-4)：\n\n[城关镇](/wiki/%E5%9F%8E%E5%85%B3%E9%95%87_(%E6%88%90%E5%8E%BF) \"城关镇 (成县)\")、​[黄渚镇](/wiki/%E9%BB%84%E6%B8%9A%E9%95%87 \"黄渚镇\")、​[红川镇](/wiki/%E7%BA%A2%E5%B7%9D%E9%95%87 \"红川镇\")、​[小川镇](/wiki/%E5%B0%8F%E5%B7%9D%E9%95%87 \"小川镇\")、​[纸坊镇](/wiki/%E7%BA%B8%E5%9D%8A%E9%95%87_(%E6%88%90%E5%8E%BF) \"纸坊镇 (成县)\")、​[抛沙镇](/wiki/%E6%8A%9B%E6%B2%99%E9%95%87 \"抛沙镇\")、​[店村镇](/wiki/%E5%BA%97%E6%9D%91%E9%95%87 \"店村镇\")、​[王磨镇](/wiki/%E7%8E%8B%E7%A3%A8%E9%95%87 \"王磨镇\")、​[陈院镇](/wiki/%E9%99%88%E9%99%A2%E9%95%87 \"陈院镇\")、​[沙坝镇](/wiki/%E6%B2%99%E5%9D%9D%E9%95%87_(%E6%88%90%E5%8E%BF) \"沙坝镇 (成县)\")、​[黄陈镇](/wiki/%E9%BB%84%E9%99%88%E9%95%87 \"黄陈镇\")、​[鸡峰镇](/wiki/%E9%B8%A1%E5%B3%B0%E9%95%87 \"鸡峰镇\")、​[苏元镇](/wiki/%E8%8B%8F%E5%85%83%E9%95%87 \"苏元镇\")、​[索池镇](/wiki/%E7%B4%A2%E6%B1%A0%E9%95%87 \"索池镇\")、​[宋坪乡](/wiki/%E5%AE%8B%E5%9D%AA%E4%B9%A1 \"宋坪乡\")、​[二郎乡](/wiki/%E4%BA%8C%E9%83%8E%E4%B9%A1_(%E6%88%90%E5%8E%BF) \"二郎乡 (成县)\")和​[镡河乡](/wiki/%E9%95%A1%E6%B2%B3%E4%B9%A1 \"镡河乡\")。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:344681-86994369",
+          "external_id": "zhwiki/344681",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 11,
+          "document_id": "e1d4449d7f789c81fb845a8a",
+          "title": "成县",
+          "wikiname": "zhwiki",
+          "page_id": 344681,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/344681-86994369.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "679f93e61ee6772af3f5630be1a5efc1c8dda192299dd41e8b7c3d99fed510b5",
+            "start": 6633,
+            "end": 7832
+          },
+          "context_spans": [
+            {
+              "sha256": "0b7fd61d8594f485afff0415bfb6589105bdf7c0b15eb9db8a4738f28fd986d1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 成县\n"
+            },
+            {
+              "sha256": "c2bf1e6dba05637fa4c289c24c2f2f24a45ba51e959a8a2fc8dbe98d691fbbef",
+              "level": 2,
+              "kind": "heading",
+              "start": 6625,
+              "end": 6633,
+              "text": "## 行政区划\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "679f93e61ee6772af3f5630be1a5efc1c8dda192299dd41e8b7c3d99fed510b5",
+          "source_text_sha256": "7129bbdb4a5e38103132c5c6749b110cbca03cae0ecdcc3b1017bb96b1891c32",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+          "version": 86994369,
+          "heading_path": [
+            "# 成县\n",
+            "## 行政区划\n"
+          ],
+          "file_id": "e1d4449d7f789c81fb845a8a",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "679f93e61ee6772af3f5630be1a5efc1c8dda192299dd41e8b7c3d99fed510b5",
+          "parent_source_id": "verbatim-v1:266f448d6c500b7a35d02c2a417050f245c84f74e11b602bdf97c64c54525d14",
+          "parent_text_sha256": "679f93e61ee6772af3f5630be1a5efc1c8dda192299dd41e8b7c3d99fed510b5",
+          "span_start": 0,
+          "span_end": 1199,
+          "span_sha256": "679f93e61ee6772af3f5630be1a5efc1c8dda192299dd41e8b7c3d99fed510b5",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:d088ff6d4b92572515583746db8830e4a9466fea30e063fb11ece3202c243570@0:341:e40a4483596b",
+        "document_id": "e1d4449d7f789c81fb845a8a",
+        "source": "wikipedia-snapshot",
+        "title": "成县",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+        "score": 0.015384615384615385,
+        "snippet": "\n**成县**在[中华人民共和国](/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD \"中华人民共和国\")[甘肃省](/wiki/%E7%94%98%E8%82%83%E7%9C%81 \"甘肃省\")东南部、[西汉水](/wiki/%E8%A5%BF%E6%B1%89%E6%B0%B4 \"西汉水\")北岸，是[陇南市](/wiki/%E9%99%87%E5%8D%97%E5%B8%82 \"陇南市\")下属的一个[县](/wiki/%E5%8E%BF%E7%BA%A7%E8%A1%8C%E6%94%BF%E5%8C%BA \"县级行政区\")。成县是甘肃省的主要产粮县之一，有“陇右粮仓”之称。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:344681-86994369",
+          "external_id": "zhwiki/344681",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 3,
+          "document_id": "e1d4449d7f789c81fb845a8a",
+          "title": "成县",
+          "wikiname": "zhwiki",
+          "page_id": 344681,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/344681-86994369.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "e40a4483596b7a8b65eb41a64d1ac6e6f07efc372c49ec7e66e21284e3a7f64b",
+            "start": 2818,
+            "end": 3159
+          },
+          "context_spans": [
+            {
+              "sha256": "0b7fd61d8594f485afff0415bfb6589105bdf7c0b15eb9db8a4738f28fd986d1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 成县\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "e40a4483596b7a8b65eb41a64d1ac6e6f07efc372c49ec7e66e21284e3a7f64b",
+          "source_text_sha256": "7129bbdb4a5e38103132c5c6749b110cbca03cae0ecdcc3b1017bb96b1891c32",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+          "version": 86994369,
+          "heading_path": [
+            "# 成县\n"
+          ],
+          "file_id": "e1d4449d7f789c81fb845a8a",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "e40a4483596b7a8b65eb41a64d1ac6e6f07efc372c49ec7e66e21284e3a7f64b",
+          "parent_source_id": "verbatim-v1:d088ff6d4b92572515583746db8830e4a9466fea30e063fb11ece3202c243570",
+          "parent_text_sha256": "e40a4483596b7a8b65eb41a64d1ac6e6f07efc372c49ec7e66e21284e3a7f64b",
+          "span_start": 0,
+          "span_end": 341,
+          "span_sha256": "e40a4483596b7a8b65eb41a64d1ac6e6f07efc372c49ec7e66e21284e3a7f64b",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:d6c04eab56b242a8c1f906fb759cb0446fcbe4c2d74d74ad732860a29354d5dc@0:431:b83889aac026",
+        "document_id": "e1d4449d7f789c81fb845a8a",
+        "source": "wikipedia-snapshot",
+        "title": "成县",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+        "score": 0.015151515151515152,
+        "snippet": "| * [查](https://www.wikidata.org/wiki/Q477154 \"d:Q477154\") * [论](/w/index.php?title=Talk:Q477154&action=edit&redlink=1 \"Talk:Q477154（页面不存在）\") * [编](/wiki/Special:EditPage/d:Q477154 \"Special:EditPage/d:Q477154\")  成县行政区划 | |\n| --- | --- |\n| 行政隶属：[中华人民共和国](/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD \"中华人民共和国\")[甘肃省](/wiki/%E7%94%98%E8%82%83%E7%9C%81 \"甘肃省\")[陇南市](/wiki/%E9%99%87%E5%8D%97%E5%B8%82 \"陇南市\") | |\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:344681-86994369",
+          "external_id": "zhwiki/344681",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 30,
+          "document_id": "e1d4449d7f789c81fb845a8a",
+          "title": "成县",
+          "wikiname": "zhwiki",
+          "page_id": 344681,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/344681-86994369.md",
+          "content_type": "table",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "1c55c7f9f7427e4b42bb0308f46520267150dee88c644f8d43105bba495dea9c",
+            "start": 12588,
+            "end": 14260
+          },
+          "context_spans": [
+            {
+              "sha256": "0b7fd61d8594f485afff0415bfb6589105bdf7c0b15eb9db8a4738f28fd986d1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 成县\n"
+            },
+            {
+              "sha256": "7ac8b1b28a8d1c17d08321719c13ded58acfc41210801655f33e2339faa763b7",
+              "level": 2,
+              "kind": "heading",
+              "start": 12460,
+              "end": 12468,
+              "text": "## 外部链接\n"
+            },
+            {
+              "sha256": "72536a32c5e986f4066e65ec9d82c473bc8399d53f8a3816ae511e789b127c23",
+              "level": null,
+              "kind": "table_header",
+              "start": 12588,
+              "end": 12825,
+              "text": "| * [查](https://www.wikidata.org/wiki/Q477154 \"d:Q477154\") * [论](/w/index.php?title=Talk:Q477154&action=edit&redlink=1 \"Talk:Q477154（页面不存在）\") * [编](/wiki/Special:EditPage/d:Q477154 \"Special:EditPage/d:Q477154\")  成县行政区划 | |\n| --- | --- |\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "1c55c7f9f7427e4b42bb0308f46520267150dee88c644f8d43105bba495dea9c",
+          "source_text_sha256": "7129bbdb4a5e38103132c5c6749b110cbca03cae0ecdcc3b1017bb96b1891c32",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+          "version": 86994369,
+          "heading_path": [
+            "# 成县\n",
+            "## 外部链接\n"
+          ],
+          "file_id": "e1d4449d7f789c81fb845a8a",
+          "atomic": true,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "1c55c7f9f7427e4b42bb0308f46520267150dee88c644f8d43105bba495dea9c",
+          "parent_source_id": "verbatim-v1:d6c04eab56b242a8c1f906fb759cb0446fcbe4c2d74d74ad732860a29354d5dc",
+          "parent_text_sha256": "1c55c7f9f7427e4b42bb0308f46520267150dee88c644f8d43105bba495dea9c",
+          "span_start": 0,
+          "span_end": 431,
+          "span_sha256": "b83889aac026ee4c7f9ee24b843d8c614e4315281324aa1b4c677c46ff80e173",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:d6c04eab56b242a8c1f906fb759cb0446fcbe4c2d74d74ad732860a29354d5dc@1510:1672:46f7421548d1",
+        "document_id": "e1d4449d7f789c81fb845a8a",
+        "source": "wikipedia-snapshot",
+        "title": "成县",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+        "score": 0.015151515151515152,
+        "snippet": "|  | |\n| 参见：[甘肃省乡级以上行政区列表](/wiki/%E7%94%98%E8%82%83%E7%9C%81%E4%B9%A1%E7%BA%A7%E4%BB%A5%E4%B8%8A%E8%A1%8C%E6%94%BF%E5%8C%BA%E5%88%97%E8%A1%A8 \"甘肃省乡级以上行政区列表\") | |\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:344681-86994369",
+          "external_id": "zhwiki/344681",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 30,
+          "document_id": "e1d4449d7f789c81fb845a8a",
+          "title": "成县",
+          "wikiname": "zhwiki",
+          "page_id": 344681,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/344681-86994369.md",
+          "content_type": "table",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "1c55c7f9f7427e4b42bb0308f46520267150dee88c644f8d43105bba495dea9c",
+            "start": 12588,
+            "end": 14260
+          },
+          "context_spans": [
+            {
+              "sha256": "0b7fd61d8594f485afff0415bfb6589105bdf7c0b15eb9db8a4738f28fd986d1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 成县\n"
+            },
+            {
+              "sha256": "7ac8b1b28a8d1c17d08321719c13ded58acfc41210801655f33e2339faa763b7",
+              "level": 2,
+              "kind": "heading",
+              "start": 12460,
+              "end": 12468,
+              "text": "## 外部链接\n"
+            },
+            {
+              "sha256": "72536a32c5e986f4066e65ec9d82c473bc8399d53f8a3816ae511e789b127c23",
+              "level": null,
+              "kind": "table_header",
+              "start": 12588,
+              "end": 12825,
+              "text": "| * [查](https://www.wikidata.org/wiki/Q477154 \"d:Q477154\") * [论](/w/index.php?title=Talk:Q477154&action=edit&redlink=1 \"Talk:Q477154（页面不存在）\") * [编](/wiki/Special:EditPage/d:Q477154 \"Special:EditPage/d:Q477154\")  成县行政区划 | |\n| --- | --- |\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "1c55c7f9f7427e4b42bb0308f46520267150dee88c644f8d43105bba495dea9c",
+          "source_text_sha256": "7129bbdb4a5e38103132c5c6749b110cbca03cae0ecdcc3b1017bb96b1891c32",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+          "version": 86994369,
+          "heading_path": [
+            "# 成县\n",
+            "## 外部链接\n"
+          ],
+          "file_id": "e1d4449d7f789c81fb845a8a",
+          "atomic": true,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "1c55c7f9f7427e4b42bb0308f46520267150dee88c644f8d43105bba495dea9c",
+          "parent_source_id": "verbatim-v1:d6c04eab56b242a8c1f906fb759cb0446fcbe4c2d74d74ad732860a29354d5dc",
+          "parent_text_sha256": "1c55c7f9f7427e4b42bb0308f46520267150dee88c644f8d43105bba495dea9c",
+          "span_start": 1510,
+          "span_end": 1672,
+          "span_sha256": "46f7421548d1bd58162a100367f9cb239dbad074b0d59aecb7d96a9b9c668f93",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:ffd69a83b9bfa2fe3ffad225c81200e022f200ec149c6ce529905e9995bc7ea6@0:277:db5c7a1b8998",
+        "document_id": "e1d4449d7f789c81fb845a8a",
+        "source": "wikipedia-snapshot",
+        "title": "成县",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+        "score": 0.014925373134328358,
+        "snippet": "\n[[编辑](/w/index.php?title=%E6%88%90%E5%8E%BF&action=edit&section=2 \"编辑章节：地理\")]\n\n成县介于[秦岭](/wiki/%E7%A7%A6%E5%B2%AD \"秦岭\")和[巴山](/wiki/%E5%A4%A7%E5%B7%B4%E5%B1%B1 \"大巴山\")之间，属于丘陵地形。有[嘉陵江](/wiki/%E5%98%89%E9%99%B5%E6%B1%9F \"嘉陵江\")支流[青泥河](/wiki/%E9%9D%92%E6%B3%A5%E6%B2%B3 \"青泥河\")穿城而过。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:344681-86994369",
+          "external_id": "zhwiki/344681",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 7,
+          "document_id": "e1d4449d7f789c81fb845a8a",
+          "title": "成县",
+          "wikiname": "zhwiki",
+          "page_id": 344681,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/344681-86994369.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "db5c7a1b89989df9587a876a5be4d368d7bb689f771e9935dc0eebf7dd399190",
+            "start": 5112,
+            "end": 5389
+          },
+          "context_spans": [
+            {
+              "sha256": "0b7fd61d8594f485afff0415bfb6589105bdf7c0b15eb9db8a4738f28fd986d1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 成县\n"
+            },
+            {
+              "sha256": "3fe0fabc0f3c294ca53a99d0c51cc5dcd03cc200027ab9097f8997b0dd91abdf",
+              "level": 2,
+              "kind": "heading",
+              "start": 5106,
+              "end": 5112,
+              "text": "## 地理\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "db5c7a1b89989df9587a876a5be4d368d7bb689f771e9935dc0eebf7dd399190",
+          "source_text_sha256": "7129bbdb4a5e38103132c5c6749b110cbca03cae0ecdcc3b1017bb96b1891c32",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+          "version": 86994369,
+          "heading_path": [
+            "# 成县\n",
+            "## 地理\n"
+          ],
+          "file_id": "e1d4449d7f789c81fb845a8a",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "db5c7a1b89989df9587a876a5be4d368d7bb689f771e9935dc0eebf7dd399190",
+          "parent_source_id": "verbatim-v1:ffd69a83b9bfa2fe3ffad225c81200e022f200ec149c6ce529905e9995bc7ea6",
+          "parent_text_sha256": "db5c7a1b89989df9587a876a5be4d368d7bb689f771e9935dc0eebf7dd399190",
+          "span_start": 0,
+          "span_end": 277,
+          "span_sha256": "db5c7a1b89989df9587a876a5be4d368d7bb689f771e9935dc0eebf7dd399190",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:4ba6235bdd01329fbe469d2f3e1bf01dc2636879e208153f82139394d797b03b@0:261:b1a61e5673ae",
+        "document_id": "e1d4449d7f789c81fb845a8a",
+        "source": "wikipedia-snapshot",
+        "title": "成县",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+        "score": 0.014705882352941176,
+        "snippet": "\n[[编辑](/w/index.php?title=%E6%88%90%E5%8E%BF&action=edit&section=4 \"编辑章节：经济\")]\n\n成县是国务院批准的对外开放县，拥有亚洲第二大铅锌矿带：西成铅锌矿带。[[5]](#cite_note-5)\n工业主要有[采矿业](/wiki/%E9%87%87%E7%9F%BF%E4%B8%9A \"采矿业\")、[水泥](/wiki/%E6%B0%B4%E6%B3%A5 \"水泥\")、[酿酒](/wiki/%E9%85%BF%E9%85%92 \"酿酒\")等。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "wikipedia:344681-86994369",
+          "external_id": "zhwiki/344681",
+          "chunker_version": "verbatim-v1",
+          "source": "wikipedia-snapshot",
+          "chunk_order": 13,
+          "document_id": "e1d4449d7f789c81fb845a8a",
+          "title": "成县",
+          "wikiname": "zhwiki",
+          "page_id": 344681,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/wikipedia-supplement/344681-86994369.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "b1a61e5673aea93d0538828940342169cbcee3157f9ca76b60552deb681241eb",
+            "start": 7838,
+            "end": 8099
+          },
+          "context_spans": [
+            {
+              "sha256": "0b7fd61d8594f485afff0415bfb6589105bdf7c0b15eb9db8a4738f28fd986d1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 成县\n"
+            },
+            {
+              "sha256": "a63bfae1cda5f6107491dceaa8afa4cbf0e97f611a85174fe03a7ee7adf9d0cb",
+              "level": 2,
+              "kind": "heading",
+              "start": 7832,
+              "end": 7838,
+              "text": "## 经济\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "b1a61e5673aea93d0538828940342169cbcee3157f9ca76b60552deb681241eb",
+          "source_text_sha256": "7129bbdb4a5e38103132c5c6749b110cbca03cae0ecdcc3b1017bb96b1891c32",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86994369",
+          "version": 86994369,
+          "heading_path": [
+            "# 成县\n",
+            "## 经济\n"
+          ],
+          "file_id": "e1d4449d7f789c81fb845a8a",
+          "atomic": false,
+          "legacy_document_id": null,
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "b1a61e5673aea93d0538828940342169cbcee3157f9ca76b60552deb681241eb",
+          "parent_source_id": "verbatim-v1:4ba6235bdd01329fbe469d2f3e1bf01dc2636879e208153f82139394d797b03b",
+          "parent_text_sha256": "b1a61e5673aea93d0538828940342169cbcee3157f9ca76b60552deb681241eb",
+          "span_start": 0,
+          "span_end": 261,
+          "span_sha256": "b1a61e5673aea93d0538828940342169cbcee3157f9ca76b60552deb681241eb",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "planner_partial_failure",
+    "answer_span": [
+      0,
+      82
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 7,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "planner_partial_failure",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0219.json"
+  },
+  "review": {
+    "case_id": "diverse-0005",
+    "verdict": "partial",
+    "issues": [
+      "citation_misalignment",
+      "scope_expansion",
+      "planner_partial_failure"
+    ],
+    "note": "甘肃省正确但应引来源3/4而非只有标题的1；增加未问地理经济背景，另保留规划部分失败状态。"
+  },
+  "input": {
+    "id": "diverse-0005",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 5,
+    "original_case": {
+      "case_type": "place",
+      "question": "成县位于哪个省",
+      "expected_titles": [
+        "成县"
+      ]
+    },
+    "category": "place",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "成县位于哪个省",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "4452aaa49e22ba205d47067e81efc89a767177b7a2b35d0f016b1fb473a1e55d"
+}

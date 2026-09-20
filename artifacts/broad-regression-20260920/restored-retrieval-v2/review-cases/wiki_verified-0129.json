@@ -1,0 +1,132 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0129",
+    "suite": "wiki_verified",
+    "question": "说下高階組合語言背后的發明者。",
+    "http_status": 200,
+    "error": null,
+    "answer": "高階組合語言背后的發明者：藍道爾·海德。",
+    "sources": [
+      {
+        "id": "verbatim-v1:d573587efc2951a6e7235cdaa910f77339bff2bd3b78e4f7f731d940616c6a70@0:188:493bf884597f",
+        "document_id": "d035bc1ad28a29986d733c5a",
+        "source": "finewiki-zh",
+        "title": "高階組合語言",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=86358233",
+        "score": 0.06557377049180328,
+        "snippet": "高階組合語言（英語：，縮寫：HLA）是一種由藍道爾·海德發明的組合語言，它允许使用更高级的语言结构（類似高階語言的語法）来帮助初学者和资深汇编语言开发者。 它完全支持高级数据类型和面向对象编程。 它使用松散的基于几种高级编程语言（HLL）的语法，如Pascal、Ada、Modula-2 和 C++，以允许创建可读的汇编语言程序，讓HLL程序员尽可能快地学习高階組合語言。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/1606997@86358233@9873ad58f495c167",
+          "external_id": "zhwiki/1606997",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "d035bc1ad28a29986d733c5a",
+          "title": "高階組合語言",
+          "wikiname": "zhwiki",
+          "page_id": 1606997,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/1606997-86358233-9873ad58f495c167.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "493bf884597f5acdda00aa2e40374dd1a2bd15002bef4f25fb8ef0291b8a7e0a",
+            "start": 9,
+            "end": 197
+          },
+          "context_spans": [
+            {
+              "sha256": "dc6830d2fc8091532edd797602d75739f090c59a58f5aaa1065b1034d85ed336",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 高階組合語言\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "493bf884597f5acdda00aa2e40374dd1a2bd15002bef4f25fb8ef0291b8a7e0a",
+          "source_text_sha256": "7aa732808cac67740b09e2b5d11e0f8ec866d2df43b0bf50d5db1d337b416029",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=86358233",
+          "version": 86358233,
+          "heading_path": [
+            "# 高階組合語言\n"
+          ],
+          "file_id": "d035bc1ad28a29986d733c5a",
+          "atomic": false,
+          "legacy_document_id": "366e01f93e42884a9e8b9b87",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "493bf884597f5acdda00aa2e40374dd1a2bd15002bef4f25fb8ef0291b8a7e0a",
+          "parent_source_id": "verbatim-v1:d573587efc2951a6e7235cdaa910f77339bff2bd3b78e4f7f731d940616c6a70",
+          "parent_text_sha256": "493bf884597f5acdda00aa2e40374dd1a2bd15002bef4f25fb8ef0291b8a7e0a",
+          "span_start": 0,
+          "span_end": 188,
+          "span_sha256": "493bf884597f5acdda00aa2e40374dd1a2bd15002bef4f25fb8ef0291b8a7e0a",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      20
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": false,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": false,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 1,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0267.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0129",
+    "verdict": "partial",
+    "issues": [
+      "missing_citation"
+    ],
+    "note": "发明者藍道爾海德正确但无引用，实际来源1支持。"
+  },
+  "input": {
+    "id": "wiki_verified-0129",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 129,
+    "original_case": {
+      "question": "说下高階組合語言背后的發明者。",
+      "question_type": "agent",
+      "style": "colloquial",
+      "expected_title": "高階組合語言",
+      "expected_document_id": "366e01f93e42884a9e8b9b87",
+      "expected_terms": [
+        "藍道爾·海德"
+      ],
+      "reference": "高階組合語言（英語：，縮寫：HLA）是一種由藍道爾·海德發明的組合語言，它允许使用更高级的语言结构（類似高階語言的語法）来帮助初学者和资深汇编语言开发者。",
+      "section": "高階組合語言"
+    },
+    "category": "agent",
+    "style": "colloquial",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "说下高階組合語言背后的發明者。",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "787701429497614994ee4369af53f18775077cb33263d5a75c269e8e60227f0d"
+}

@@ -1,0 +1,705 @@
+{
+  "result": {
+    "case_id": "basic-0001",
+    "suite": "basic",
+    "question": "中国首都在哪个城市",
+    "http_status": 200,
+    "error": null,
+    "answer": "- 中国首都在北京[资料 1]\n- 中国首都是北京[资料 1]\n- 中国首都是北京[资料 1]\n- 中国首都的城市名称是北京[资料 1]",
+    "sources": [
+      {
+        "id": "verbatim-v1:d0c0c372c92575463c7f859377b8d1cad7ca0cae5fdf603ef558e710c77257a3@0:294:628e57104d7c",
+        "document_id": "276077d74b05c3ff9db905e9",
+        "source": "finewiki-zh",
+        "title": "首都",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+        "score": 0.06384129063829451,
+        "snippet": "首都，以現代政治角度而言，通常指一個國家的中央政府所在地的首要行政中心城市，也是政治活动的中心城市、各类国家级机关集中駐紮地、国家主权的象徵城市。\n在大部分國家，首都是國家最大的城市，如英国倫敦、法國巴黎等；大部份的國家也未在憲法和法律內訂定首都地點，而在部分國家，政治中心與經濟中心分離，例如美国的首都為華盛頓特區，經濟中心為纽约，土耳其首都為安卡拉，經濟中心為伊斯坦堡，中华人民共和国的首都为北京，经济中心为上海等。有時候，一個國家會設有多個首都，如行政首都、立法首都、司法首都，分別作為該國的行政、立法及司法中心，例子有南非、史瓦帝尼等。此外，大部分外國駐當地大使館也設在首都。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/1836@88054307@6373295b5c3ad846",
+          "external_id": "zhwiki/1836",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "276077d74b05c3ff9db905e9",
+          "title": "首都",
+          "wikiname": "zhwiki",
+          "page_id": 1836,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/1836-88054307-6373295b5c3ad846.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "628e57104d7cf9da59fbfefe5c798bf8a1fb9cf82b4808885ee6d5dfc0b76ac6",
+            "start": 5,
+            "end": 299
+          },
+          "context_spans": [
+            {
+              "sha256": "2f8b3ef087acad4c9974ea9315f644bed5714f4197766446849b800cf8b5a2a1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 首都\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "628e57104d7cf9da59fbfefe5c798bf8a1fb9cf82b4808885ee6d5dfc0b76ac6",
+          "source_text_sha256": "6f6227e3e5224054f6c9d03ab5a441bf63461eec58ceabce74f25e8e6859160a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+          "version": 88054307,
+          "heading_path": [
+            "# 首都\n"
+          ],
+          "file_id": "276077d74b05c3ff9db905e9",
+          "atomic": false,
+          "legacy_document_id": "baf570f8af1ebfa81693609e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "628e57104d7cf9da59fbfefe5c798bf8a1fb9cf82b4808885ee6d5dfc0b76ac6",
+          "parent_source_id": "verbatim-v1:d0c0c372c92575463c7f859377b8d1cad7ca0cae5fdf603ef558e710c77257a3",
+          "parent_text_sha256": "628e57104d7cf9da59fbfefe5c798bf8a1fb9cf82b4808885ee6d5dfc0b76ac6",
+          "span_start": 0,
+          "span_end": 294,
+          "span_sha256": "628e57104d7cf9da59fbfefe5c798bf8a1fb9cf82b4808885ee6d5dfc0b76ac6",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:d214114058b23b37d3ad1e6e18f966654456f872bf5dfda66758b970497f5f84@0:103:8957a3f00b2c",
+        "document_id": "276077d74b05c3ff9db905e9",
+        "source": "finewiki-zh",
+        "title": "首都",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+        "score": 0.06452452301209573,
+        "snippet": "- 各国首都列表\n  - 各國第一大和第二大城市列表\n  - 按大洲排列的國家列表\n- 前首都列表\n- 首都不是最大城市的國家列表\n- 特定首都的列表（英语：）（英文）\n- 外首都列表（英语：）（英文）\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/1836@88054307@6373295b5c3ad846",
+          "external_id": "zhwiki/1836",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 35,
+          "document_id": "276077d74b05c3ff9db905e9",
+          "title": "首都",
+          "wikiname": "zhwiki",
+          "page_id": 1836,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/1836-88054307-6373295b5c3ad846.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8957a3f00b2c3c09b718c212588e6b05952fd3486042581d0fc608ff60e63177",
+            "start": 5748,
+            "end": 5851
+          },
+          "context_spans": [
+            {
+              "sha256": "2f8b3ef087acad4c9974ea9315f644bed5714f4197766446849b800cf8b5a2a1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 首都\n"
+            },
+            {
+              "sha256": "7153191e360d239fd304cd9519727ad88303690ec89ca4fd3567363e1c232c0f",
+              "level": 2,
+              "kind": "heading",
+              "start": 5740,
+              "end": 5748,
+              "text": "## 首都列表\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "8957a3f00b2c3c09b718c212588e6b05952fd3486042581d0fc608ff60e63177",
+          "source_text_sha256": "6f6227e3e5224054f6c9d03ab5a441bf63461eec58ceabce74f25e8e6859160a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+          "version": 88054307,
+          "heading_path": [
+            "# 首都\n",
+            "## 首都列表\n"
+          ],
+          "file_id": "276077d74b05c3ff9db905e9",
+          "atomic": true,
+          "legacy_document_id": "baf570f8af1ebfa81693609e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8957a3f00b2c3c09b718c212588e6b05952fd3486042581d0fc608ff60e63177",
+          "parent_source_id": "verbatim-v1:d214114058b23b37d3ad1e6e18f966654456f872bf5dfda66758b970497f5f84",
+          "parent_text_sha256": "8957a3f00b2c3c09b718c212588e6b05952fd3486042581d0fc608ff60e63177",
+          "span_start": 0,
+          "span_end": 103,
+          "span_sha256": "8957a3f00b2c3c09b718c212588e6b05952fd3486042581d0fc608ff60e63177",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:c57d652f5aa30ac26359e0a41ce0ad0ba5375fe847a6f54b60a3348ff900d2f5@0:197:c63e35664a08",
+        "document_id": "276077d74b05c3ff9db905e9",
+        "source": "finewiki-zh",
+        "title": "首都",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+        "score": 0.06275564713064713,
+        "snippet": "每一個國家通常只設立一個首都，因為政府通常會將其重要機關集中在首都地區，以方便政府高層行政和管理，但亦有例外。一些國家有多個首都，一些甚至沒有。有時候，實際的首都和法定的首都由於某些原因並不在同一個城市。譬如，一個稱為「首都」的城市，實際上並非中央政府所在地。反之，所謂的正式「首都」雖然是中央政府的所在地，但可能不是政治決策的地理中心。故此，「行政首都」一般被認定為是該國的「國家首都」。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/1836@88054307@6373295b5c3ad846",
+          "external_id": "zhwiki/1836",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 7,
+          "document_id": "276077d74b05c3ff9db905e9",
+          "title": "首都",
+          "wikiname": "zhwiki",
+          "page_id": 1836,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/1836-88054307-6373295b5c3ad846.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c63e35664a0836e526c832ffa1f4ae91376968552c030d732375d7b04ac2d236",
+            "start": 935,
+            "end": 1132
+          },
+          "context_spans": [
+            {
+              "sha256": "2f8b3ef087acad4c9974ea9315f644bed5714f4197766446849b800cf8b5a2a1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 首都\n"
+            },
+            {
+              "sha256": "6c8f9df24c8b58e4c81fa7c5bf25b26570ba5a0da60b4d4c2de5f2c8494b694a",
+              "level": 2,
+              "kind": "heading",
+              "start": 927,
+              "end": 935,
+              "text": "## 特殊情況\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c63e35664a0836e526c832ffa1f4ae91376968552c030d732375d7b04ac2d236",
+          "source_text_sha256": "6f6227e3e5224054f6c9d03ab5a441bf63461eec58ceabce74f25e8e6859160a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+          "version": 88054307,
+          "heading_path": [
+            "# 首都\n",
+            "## 特殊情況\n"
+          ],
+          "file_id": "276077d74b05c3ff9db905e9",
+          "atomic": false,
+          "legacy_document_id": "baf570f8af1ebfa81693609e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c63e35664a0836e526c832ffa1f4ae91376968552c030d732375d7b04ac2d236",
+          "parent_source_id": "verbatim-v1:c57d652f5aa30ac26359e0a41ce0ad0ba5375fe847a6f54b60a3348ff900d2f5",
+          "parent_text_sha256": "c63e35664a0836e526c832ffa1f4ae91376968552c030d732375d7b04ac2d236",
+          "span_start": 0,
+          "span_end": 197,
+          "span_sha256": "c63e35664a0836e526c832ffa1f4ae91376968552c030d732375d7b04ac2d236",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:e8ef4968cbe63f236ae4433b3a60bf79281b940631d6c4e4514fec25b4038784@0:844:68334aab57c5",
+        "document_id": "276077d74b05c3ff9db905e9",
+        "source": "finewiki-zh",
+        "title": "首都",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+        "score": 0.060633912655971484,
+        "snippet": "「遷都」指一個國家將原來設立的首都，由另一個城市取代，主要行動是將政府高層重要機關總部遷移至新首都，而背後亦涉及很多原因。在古代，多數國家面對不穩定的政治環境，因而遷都的機會較多。也有可能是舊的首都由於某些原因（例如經濟）而逐漸喪失其重要性。朝代的交替或領土的變更或擴大亦影響首都的遷移。\n中國明朝時，政府為防禦北方遊牧民族攻擊，明成祖便下旨將首都從應天府（今南京）遷都北平府（改稱順天府，又稱北京），建紫禁城，由皇帝親自防守國界，加強駐軍、穩定國防，以阻止滿蒙兩族侵擾邊疆。李自成佔領首都後，明朝大致滅亡（南明──幾個由明朝遺老擁護皇室成員在南方建立的流亡政權──則繼續聲稱作為明室正統而存在，並持續對抗清朝）。而滿洲人在崇禎十七年五月初二(1644年6月6日)進入北京，将首都从沈阳迁往北京，則代表了正式的權力轉移。這樣的格局在中國歷史屢見不鮮，及至20世紀傳統儒家政體垮臺。滿清覆亡後，基於地方分權及交通技術的改進，國民政府得以在中國抗日戰爭時期迅速遷都，並維持其原有的領導架構。1949年因中國共產黨在中國大陸建立中華人民共和國之后，中華民國政府也從南京遷都至台北市。\n在其他國家例子有蘇聯/俄罗斯（聖彼得堡—莫斯科）、土耳其（伊斯坦堡—安卡拉）和東西統一後的德國（波恩—柏林）。或是像巴西或澳大利亞等重新建造城市移轉首都的例子。\n在現代世界，由於工業發展日益興盛，全球暖化與氣候變遷問題嚴重，因此也曾出現有國家為因應此一情況而決定遷都，如印尼於2024年將首都自雅加達遷往努山塔拉。\n然而，因為古代國家與開發中國家（例如於2005年遷都的緬甸）行政架構較為簡單，遷都相對於已開發或相對發達國家來說是容易得多。現代的國家遷都要顧及將龐大複雜的政府部門有序不紊地調遷的步驟，以及巨大的國家經濟開支，故此一次完整的遷都可能要花上近10年的時間。\n但也有其變通的方式讓國家資源不至於太集中於首都，但又不用花費巨資遷移首都，有些國家便設立所謂的副首都、行政副中心或是陪都來分散其風險。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/1836@88054307@6373295b5c3ad846",
+          "external_id": "zhwiki/1836",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 28,
+          "document_id": "276077d74b05c3ff9db905e9",
+          "title": "首都",
+          "wikiname": "zhwiki",
+          "page_id": 1836,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/1836-88054307-6373295b5c3ad846.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "68334aab57c5583819bd47306598c8ca4d193c4f64a6d098ebfaf678e53c6daf",
+            "start": 4441,
+            "end": 5285
+          },
+          "context_spans": [
+            {
+              "sha256": "2f8b3ef087acad4c9974ea9315f644bed5714f4197766446849b800cf8b5a2a1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 首都\n"
+            },
+            {
+              "sha256": "34f6533ea569672c7f28415b94c9db579f251aaa0d0836a7c7c64ba24956498f",
+              "level": 2,
+              "kind": "heading",
+              "start": 4435,
+              "end": 4441,
+              "text": "## 遷都\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "68334aab57c5583819bd47306598c8ca4d193c4f64a6d098ebfaf678e53c6daf",
+          "source_text_sha256": "6f6227e3e5224054f6c9d03ab5a441bf63461eec58ceabce74f25e8e6859160a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+          "version": 88054307,
+          "heading_path": [
+            "# 首都\n",
+            "## 遷都\n"
+          ],
+          "file_id": "276077d74b05c3ff9db905e9",
+          "atomic": false,
+          "legacy_document_id": "baf570f8af1ebfa81693609e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "68334aab57c5583819bd47306598c8ca4d193c4f64a6d098ebfaf678e53c6daf",
+          "parent_source_id": "verbatim-v1:e8ef4968cbe63f236ae4433b3a60bf79281b940631d6c4e4514fec25b4038784",
+          "parent_text_sha256": "68334aab57c5583819bd47306598c8ca4d193c4f64a6d098ebfaf678e53c6daf",
+          "span_start": 0,
+          "span_end": 844,
+          "span_sha256": "68334aab57c5583819bd47306598c8ca4d193c4f64a6d098ebfaf678e53c6daf",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1d2770900da1a0bedee898218f73ee621f1fa8b6551078634ef75fcebcd719ef@0:183:dd7298d209f7",
+        "document_id": "276077d74b05c3ff9db905e9",
+        "source": "finewiki-zh",
+        "title": "首都",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+        "score": 0.06088698439241918,
+        "snippet": "- 城市國家，如 摩納哥、 新加坡、 梵蒂冈等，並沒有下設首都，但是基於國家與城市的雙重身份，人們有時會視之為「首都」。\n- 瑙鲁是一個只有21平方公里的島國，沒有首都，行政管理中心設在亚伦。\n- 瑞士由于历史问题，沒有法定首都，但伯尔尼作为政府所在地，被国际公认为瑞士的首都所在。\n- 托克勞没有首都，其行政中心轮流设于3个环礁岛：阿塔富、努库诺努和法考福。\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/1836@88054307@6373295b5c3ad846",
+          "external_id": "zhwiki/1836",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 19,
+          "document_id": "276077d74b05c3ff9db905e9",
+          "title": "首都",
+          "wikiname": "zhwiki",
+          "page_id": 1836,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/1836-88054307-6373295b5c3ad846.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "dd7298d209f718d25477a144a8fa3eea34c78abd071578b385bb9e75e63e9b6f",
+            "start": 2342,
+            "end": 2525
+          },
+          "context_spans": [
+            {
+              "sha256": "2f8b3ef087acad4c9974ea9315f644bed5714f4197766446849b800cf8b5a2a1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 首都\n"
+            },
+            {
+              "sha256": "6c8f9df24c8b58e4c81fa7c5bf25b26570ba5a0da60b4d4c2de5f2c8494b694a",
+              "level": 2,
+              "kind": "heading",
+              "start": 927,
+              "end": 935,
+              "text": "## 特殊情況\n"
+            },
+            {
+              "sha256": "1d2056ea977d554d272b508c41129eeb215380c03da476bc469a11c16dcf13f7",
+              "level": 3,
+              "kind": "heading",
+              "start": 2333,
+              "end": 2342,
+              "text": "### 沒有首都\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "dd7298d209f718d25477a144a8fa3eea34c78abd071578b385bb9e75e63e9b6f",
+          "source_text_sha256": "6f6227e3e5224054f6c9d03ab5a441bf63461eec58ceabce74f25e8e6859160a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+          "version": 88054307,
+          "heading_path": [
+            "# 首都\n",
+            "## 特殊情況\n",
+            "### 沒有首都\n"
+          ],
+          "file_id": "276077d74b05c3ff9db905e9",
+          "atomic": true,
+          "legacy_document_id": "baf570f8af1ebfa81693609e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "dd7298d209f718d25477a144a8fa3eea34c78abd071578b385bb9e75e63e9b6f",
+          "parent_source_id": "verbatim-v1:1d2770900da1a0bedee898218f73ee621f1fa8b6551078634ef75fcebcd719ef",
+          "parent_text_sha256": "dd7298d209f718d25477a144a8fa3eea34c78abd071578b385bb9e75e63e9b6f",
+          "span_start": 0,
+          "span_end": 183,
+          "span_sha256": "dd7298d209f718d25477a144a8fa3eea34c78abd071578b385bb9e75e63e9b6f",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:ccf4fea016c48af9fc416926b72928c39fe396ee63fc51530df8604e9f4e1fa1@0:375:8b1e232a57c5",
+        "document_id": "276077d74b05c3ff9db905e9",
+        "source": "finewiki-zh",
+        "title": "首都",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+        "score": 0.05992763455450023,
+        "snippet": "首都的設立有時會阻礙原有的主要城市的進一步發展。由於舊都里約熱內盧和巴西東南部的人口過於稠密，新都巴西利亞遂設於巴西內陸。\n政治與經濟或文化權力會合的情況並不普遍。傳統首都經濟上會被競爭者超越，朝代或文化的衰落，也意味著首都的破滅，巴比倫就是一個例子。此外，很多現代首都，例如阿布賈、坎培拉和渥太華，特意設於原有的經濟地區以外，而且至今仍未發展成新的工商業中心。\n首都不一定會設立在面積較大的國土上，如赤道幾內亞的馬拉博、丹麥的哥本哈根、甘比亞的班竹，這些都不是島國，首都卻是位於較小的離島。\n一般來說首都通常會特意設在易守難攻的地理位置上，以防其他國家的侵略，但也有國家的首都是設於鄰國附近的邊界旁或是相鄰的地理位置上，如韓國的首爾、老挝的万象、乍得的恩賈梅納、斯洛伐克的布拉迪斯拉发、博兹瓦纳的嘉柏隆里、烏茲別克的塔什干、以及中国明朝的北京。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/1836@88054307@6373295b5c3ad846",
+          "external_id": "zhwiki/1836",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 5,
+          "document_id": "276077d74b05c3ff9db905e9",
+          "title": "首都",
+          "wikiname": "zhwiki",
+          "page_id": 1836,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/1836-88054307-6373295b5c3ad846.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8b1e232a57c5118da2a05490477a7242c75f6c4c619a7c93378e798ca7c02d8d",
+            "start": 552,
+            "end": 927
+          },
+          "context_spans": [
+            {
+              "sha256": "2f8b3ef087acad4c9974ea9315f644bed5714f4197766446849b800cf8b5a2a1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 首都\n"
+            },
+            {
+              "sha256": "21cfa6742a8c37bab1248d7b0d4564c4cb533d3246183fbea0e582a1e5fa962c",
+              "level": 2,
+              "kind": "heading",
+              "start": 544,
+              "end": 552,
+              "text": "## 設立考量\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "8b1e232a57c5118da2a05490477a7242c75f6c4c619a7c93378e798ca7c02d8d",
+          "source_text_sha256": "6f6227e3e5224054f6c9d03ab5a441bf63461eec58ceabce74f25e8e6859160a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+          "version": 88054307,
+          "heading_path": [
+            "# 首都\n",
+            "## 設立考量\n"
+          ],
+          "file_id": "276077d74b05c3ff9db905e9",
+          "atomic": false,
+          "legacy_document_id": "baf570f8af1ebfa81693609e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8b1e232a57c5118da2a05490477a7242c75f6c4c619a7c93378e798ca7c02d8d",
+          "parent_source_id": "verbatim-v1:ccf4fea016c48af9fc416926b72928c39fe396ee63fc51530df8604e9f4e1fa1",
+          "parent_text_sha256": "8b1e232a57c5118da2a05490477a7242c75f6c4c619a7c93378e798ca7c02d8d",
+          "span_start": 0,
+          "span_end": 375,
+          "span_sha256": "8b1e232a57c5118da2a05490477a7242c75f6c4c619a7c93378e798ca7c02d8d",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:15780890cb4349a3d78882a98bb4975b63591b38060f4f9dafc5b1adf79c440a@0:239:cc1e6fc08d9b",
+        "document_id": "276077d74b05c3ff9db905e9",
+        "source": "finewiki-zh",
+        "title": "首都",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+        "score": 0.04372294372294372,
+        "snippet": "在國際政治及外交上，首都的名稱可以直接代表其所在的國家及其中央政府。常見的例子有以“華府”取代美国、“倫敦”取代英国、“巴黎”取代法國、“首爾”取代大韓民國、“吉隆坡”取代馬來西亞等。\n在歷史上，國家或地區的主要經濟中心往往成為政權的焦點，並透過佔領或合併成為首都。倫敦和莫斯科正是這樣。首都無形中吸引有志投身政治的人才，例如律師、新聞媒體及公共政策的研究員，協助政府實施有效的管治。如果首都兼是首要的經濟、文化或知識中心，有時會被稱為「首要城市」，如倫敦和布宜諾斯艾利斯。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/1836@88054307@6373295b5c3ad846",
+          "external_id": "zhwiki/1836",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 3,
+          "document_id": "276077d74b05c3ff9db905e9",
+          "title": "首都",
+          "wikiname": "zhwiki",
+          "page_id": 1836,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/1836-88054307-6373295b5c3ad846.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "cc1e6fc08d9bb3852f6dc3ada4f9d518074650d74d84e044130a4c7c91928958",
+            "start": 305,
+            "end": 544
+          },
+          "context_spans": [
+            {
+              "sha256": "2f8b3ef087acad4c9974ea9315f644bed5714f4197766446849b800cf8b5a2a1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 首都\n"
+            },
+            {
+              "sha256": "d71c91e7d2a09b0a51bbc9b68236bc3e22a6c85f589c8eec28ce8ff59fb88e5d",
+              "level": 2,
+              "kind": "heading",
+              "start": 299,
+              "end": 305,
+              "text": "## 意義\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "cc1e6fc08d9bb3852f6dc3ada4f9d518074650d74d84e044130a4c7c91928958",
+          "source_text_sha256": "6f6227e3e5224054f6c9d03ab5a441bf63461eec58ceabce74f25e8e6859160a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+          "version": 88054307,
+          "heading_path": [
+            "# 首都\n",
+            "## 意義\n"
+          ],
+          "file_id": "276077d74b05c3ff9db905e9",
+          "atomic": false,
+          "legacy_document_id": "baf570f8af1ebfa81693609e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "cc1e6fc08d9bb3852f6dc3ada4f9d518074650d74d84e044130a4c7c91928958",
+          "parent_source_id": "verbatim-v1:15780890cb4349a3d78882a98bb4975b63591b38060f4f9dafc5b1adf79c440a",
+          "parent_text_sha256": "cc1e6fc08d9bb3852f6dc3ada4f9d518074650d74d84e044130a4c7c91928958",
+          "span_start": 0,
+          "span_end": 239,
+          "span_sha256": "cc1e6fc08d9bb3852f6dc3ada4f9d518074650d74d84e044130a4c7c91928958",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:4ef29b86b5574b9151a06cf8709d2a0592508d135872e1859f4347d52a26b8d3@0:197:8fda64a3f220",
+        "document_id": "276077d74b05c3ff9db905e9",
+        "source": "finewiki-zh",
+        "title": "首都",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+        "score": 0.04390451832907076,
+        "snippet": "隨著現代帝國及民族國家崛起，首都已成為國家及政府的象徵，而且具有政治色彩。在古代，多數國家行君主專制，「首都」一般指君主理政和居住的地方城市，所謂「天子腳下，首善之區」，首善之名，出自《漢書·儒林傳序》：“故教化之行也，建首善自京師始。”南宋耐得翁《都城紀勝序》說：杭州“車書混一，人物繁盛，風俗繩厚”，“為今日四方之標准”。不同的是，現代首都的選址、建立，以至遷移，均取決於人為因素。舉例：\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/1836@88054307@6373295b5c3ad846",
+          "external_id": "zhwiki/1836",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 23,
+          "document_id": "276077d74b05c3ff9db905e9",
+          "title": "首都",
+          "wikiname": "zhwiki",
+          "page_id": 1836,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/1836-88054307-6373295b5c3ad846.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8fda64a3f220c0437fbdc594af514243b71d2553f9b72ca6feb5998c062d5386",
+            "start": 2995,
+            "end": 3192
+          },
+          "context_spans": [
+            {
+              "sha256": "2f8b3ef087acad4c9974ea9315f644bed5714f4197766446849b800cf8b5a2a1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 首都\n"
+            },
+            {
+              "sha256": "46a48d6482abd42ee1856efc57026dedc35d92839fa7ba9200579ca51ca06350",
+              "level": 2,
+              "kind": "heading",
+              "start": 2985,
+              "end": 2995,
+              "text": "## 政治象徵意義\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "8fda64a3f220c0437fbdc594af514243b71d2553f9b72ca6feb5998c062d5386",
+          "source_text_sha256": "6f6227e3e5224054f6c9d03ab5a441bf63461eec58ceabce74f25e8e6859160a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+          "version": 88054307,
+          "heading_path": [
+            "# 首都\n",
+            "## 政治象徵意義\n"
+          ],
+          "file_id": "276077d74b05c3ff9db905e9",
+          "atomic": false,
+          "legacy_document_id": "baf570f8af1ebfa81693609e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8fda64a3f220c0437fbdc594af514243b71d2553f9b72ca6feb5998c062d5386",
+          "parent_source_id": "verbatim-v1:4ef29b86b5574b9151a06cf8709d2a0592508d135872e1859f4347d52a26b8d3",
+          "parent_text_sha256": "8fda64a3f220c0437fbdc594af514243b71d2553f9b72ca6feb5998c062d5386",
+          "span_start": 0,
+          "span_end": 197,
+          "span_sha256": "8fda64a3f220c0437fbdc594af514243b71d2553f9b72ca6feb5998c062d5386",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:4f5d10e4dfd8f513015f9a5dea80e211ca274ddee46ad28a0b765c163aaa40e1@0:749:4386d4f93bc3",
+        "document_id": "276077d74b05c3ff9db905e9",
+        "source": "finewiki-zh",
+        "title": "首都",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+        "score": 0.055616656140427295,
+        "snippet": "- 首都重置：曾經是廢墟的雅典，在希臘獨立後被定為首都，以恢復昔日的傳奇光彩。另外，經歷冷戰及兩德統一，柏林再度成為德國的首都。首都重置的例子還有十月革命後、蘇聯以莫斯科作為首都，以區別象徵沙皇統治及由彼得大帝興建的位處芬蘭灣的聖彼德堡。\n- 首都遷移至地理或人口較次要的選址，可能基於經濟或戰略因素（或稱為「前鋒首都」或「先鋒首都」）。彼得大帝把政府由內陸的莫斯科遷至位處芬蘭灣的聖彼德堡，為俄羅斯帝國確立作為歐洲及西方國家為定位；而凱末爾則把政府東遷至安卡拉，以區別象徵奧斯曼的伊斯坦堡。明成祖把國都由南京遷至北京，把中國政治中心北移，以防滿蒙等明長城以北的外族侵擾邊疆。其他例子有東京、阿布賈、阿斯塔纳、巴西利亞、赫爾辛基、伊斯兰堡、奈比多及亞穆蘇克羅。\n- 首都的選址作為政治地域平衡，以代表新國家的統一。例子有伯爾尼、坎培拉、馬德里、渥太華、巴西利亞及華盛頓哥倫比亞特區。坎培拉平衡悉尼和墨爾本；渥太華平衡英語及法語省份；華盛頓哥倫比亞特區平衡美國南北，南北戰爭時期，面臨南方邦聯的進攻，聯邦軍用了大量資源來保衛該地。當時鐵路和電報發達，聯邦政府可選擇遷移費城或紐約，但他們選擇了死守首都。\n- 中華民國政府在抗日戰爭中遷移到重慶市，並定重慶為陪都，戰後始遷回南京市，而在第二次國共內戰失利後再遷往臺北市。在1990年代前，實質首都雖在台北市，卻在教科書上記載南京為首都以呼應其「光復大陸」之政策。但現今絕大多數台灣人已將台北市視為首都，中華民國政府以台北市作為「中央政府所在地」，作為首都的地位，教科書記載的首都也改成台北市。\n- 有時氣候因素也可能成為遷移首都的原因，中美洲國家貝里斯的舊首都貝里斯市由於临海，曾遭到颶風破坏，最後该国政府將首都遷到位處內陸的貝爾墨邦以躲避颶風。\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/1836@88054307@6373295b5c3ad846",
+          "external_id": "zhwiki/1836",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 24,
+          "document_id": "276077d74b05c3ff9db905e9",
+          "title": "首都",
+          "wikiname": "zhwiki",
+          "page_id": 1836,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/1836-88054307-6373295b5c3ad846.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "4386d4f93bc323356e81ef957729e5af2bdf4c3393d523d3172aa31f04d32272",
+            "start": 3192,
+            "end": 3941
+          },
+          "context_spans": [
+            {
+              "sha256": "2f8b3ef087acad4c9974ea9315f644bed5714f4197766446849b800cf8b5a2a1",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 首都\n"
+            },
+            {
+              "sha256": "46a48d6482abd42ee1856efc57026dedc35d92839fa7ba9200579ca51ca06350",
+              "level": 2,
+              "kind": "heading",
+              "start": 2985,
+              "end": 2995,
+              "text": "## 政治象徵意義\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "4386d4f93bc323356e81ef957729e5af2bdf4c3393d523d3172aa31f04d32272",
+          "source_text_sha256": "6f6227e3e5224054f6c9d03ab5a441bf63461eec58ceabce74f25e8e6859160a",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88054307",
+          "version": 88054307,
+          "heading_path": [
+            "# 首都\n",
+            "## 政治象徵意義\n"
+          ],
+          "file_id": "276077d74b05c3ff9db905e9",
+          "atomic": true,
+          "legacy_document_id": "baf570f8af1ebfa81693609e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "4386d4f93bc323356e81ef957729e5af2bdf4c3393d523d3172aa31f04d32272",
+          "parent_source_id": "verbatim-v1:4f5d10e4dfd8f513015f9a5dea80e211ca274ddee46ad28a0b765c163aaa40e1",
+          "parent_text_sha256": "4386d4f93bc323356e81ef957729e5af2bdf4c3393d523d3172aa31f04d32272",
+          "span_start": 0,
+          "span_end": 749,
+          "span_sha256": "4386d4f93bc323356e81ef957729e5af2bdf4c3393d523d3172aa31f04d32272",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      68
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 9,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0073.json"
+  },
+  "review": {
+    "case_id": "basic-0001",
+    "verdict": "pass",
+    "issues": [
+      "redundant_answer"
+    ],
+    "note": "北京与来源1对应，核心事实及引用通过；但同一事实重复四行，属于仍需改进的体验，语义通过不代表体验验收通过。"
+  },
+  "input": {
+    "id": "basic-0001",
+    "suite": "basic",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/cases.jsonl",
+    "origin_index": 1,
+    "original_case": {
+      "question": "中国首都在哪个城市",
+      "expected_titles": [
+        "首都",
+        "中华人民共和国",
+        "北京"
+      ]
+    },
+    "category": "basic",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "中国首都在哪个城市",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "cdc164a3dc1d95ec6977a35b306d8917121cb581d8e116c7eff4deca14da6f59"
+}

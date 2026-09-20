@@ -1,0 +1,68 @@
+{
+  "result": {
+    "case_id": "diverse-0016",
+    "suite": "diverse",
+    "question": "尺八和长笛有什么区别",
+    "http_status": 200,
+    "error": null,
+    "answer": "尺八和长笛是两种不同的乐器，尺八是中国传统竹制管乐器，长笛是西方管乐器。[资料 1]\n尺八的历史可追溯至唐代，长笛的历史则更为悠久，可追溯至古希腊时期。[资料 2]\n尺八的音色偏向空灵、悠远，长笛的音色则更为明亮、清脆。[资料 3]\n尺八的演奏方式通常为吹奏，长笛的演奏方式为吹奏。[资料 4]\n尺八的使用场景多见于中国传统音乐、禅修音乐，长笛的使用场景则广泛见于古典音乐、爵士乐、流行音乐等。[资料 5]\n尺八和长笛的区别主要体现在历史、音色、演奏方式和使用场景上。[资料 6]",
+    "sources": [],
+    "status": "completed",
+    "answer_span": [
+      0,
+      240
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 0,
+      "has_numeric_citation": true,
+      "citation_out_of_range": true,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": false,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0215.json"
+  },
+  "review": {
+    "case_id": "diverse-0016",
+    "verdict": "fail",
+    "issues": [
+      "no_evidence",
+      "unsupported_answer",
+      "citation_out_of_range"
+    ],
+    "note": "检索来源为空，仍生成历史音色使用场景比较并给不存在的资料1至6，无法核查。"
+  },
+  "input": {
+    "id": "diverse-0016",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 16,
+    "original_case": {
+      "case_type": "comparison",
+      "question": "尺八和长笛有什么区别",
+      "expected_titles": [],
+      "expected_titles_all": [
+        "尺八",
+        "长笛"
+      ]
+    },
+    "category": "comparison",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "尺八和长笛有什么区别",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "aec22a520bdb87b44c32954a1f697566a1c18668e4701f44cff1679bdcff9f6b"
+}

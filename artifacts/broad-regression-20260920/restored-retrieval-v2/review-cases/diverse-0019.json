@@ -1,0 +1,493 @@
+{
+  "result": {
+    "case_id": "diverse-0019",
+    "suite": "diverse",
+    "question": "东平是谁",
+    "http_status": 200,
+    "error": null,
+    "answer": "1. 丘东平是谁：丘东平（1910年5月16日—1941年7月24日），原名丘谭月，曾用名丘谭业，字席珍、硕珍。笔名东平，故世称丘东平。男，广东省海丰县人，中国现代作家。[资料 1]\n2. 东平是谁的儿子：丘东平没有明确记载的儿子。[资料 1]\n3. 东平是谁的女儿：丘东平没有明确记载的女儿。[资料 1]\n4. 东平是谁的父亲：丘东平的父亲是丘锦成。[资料 1]\n5. 东平是谁的母亲：丘东平的母亲是黄巧。[资料 1]\n6. 东平是谁的兄弟：丘东平的兄弟姐妹包括五哥丘岛人、二妹丘丽卿、两个弟弟、两个姐姐和八个表兄弟。[资料 1]",
+    "sources": [
+      {
+        "id": "verbatim-v1:431dc06a95993d303ad944729f1ee313c6255ea1348140f72c548f8020861890@0:460:f920dae002c3",
+        "document_id": "72b21e68f97dd9d626f6bb28",
+        "source": "finewiki-zh",
+        "title": "丘东平",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+        "score": 0.09311378536922016,
+        "snippet": "丘东平（1910年5月16日—1941年7月24日），原名丘谭月，曾用名丘谭业，字席珍、硕珍。笔名东平，故世称丘东平。男，广东海丰人，中国现代作家。\n丘东平1926年加入中国共产党，次年参加海陆丰起义。起义失败之后，他流亡香港，并开始他的文学创作生涯。1931年九一八事变爆发后，丘东平返華投身抗日救亡运动，先后参与淞沪抗战、福建事变、两广事变等事件，参加“中国左翼作家联盟”、“中华民族革命同盟”等团体。1937年七七事变爆发后，丘东平投身抗日战争一线。1938年参加新四军，随部队挺进苏南苏北敌后。1941年7月24日，丘东平在苏北反扫荡作战中陣亡。\n丘东平与胡风关系密切，他的大量作品发表在胡风的《七月》杂志上。因此，丘东平被视为七月派的重要代表人物。丘东平的创作主要集中在小说和纪实文学领域，尤其是他创作的大量反映抗日战争的作品，使他被视作中国现代战争文学的开拓者。他的创作风格倾向于在沉郁的气氛中，直追人物的心理性格。丘东平的主要作品有短篇小说集《沉郁的梅冷城》、纪实文学《第七连》、长篇小说《茅山下》等。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7554683@87478166@1df3d16daf6c4257",
+          "external_id": "zhwiki/7554683",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "72b21e68f97dd9d626f6bb28",
+          "title": "丘东平",
+          "wikiname": "zhwiki",
+          "page_id": 7554683,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7554683-87478166-1df3d16daf6c4257.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "f920dae002c314815fb84144f2a02d5186be0a35a30739c2dce5248b9572397b",
+            "start": 6,
+            "end": 466
+          },
+          "context_spans": [
+            {
+              "sha256": "86764d228e9b003cfba8092c118b3064d7775d3c2eed1a195d1dfc1fecb56419",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 6,
+              "text": "# 丘东平\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "f920dae002c314815fb84144f2a02d5186be0a35a30739c2dce5248b9572397b",
+          "source_text_sha256": "019b6cb76b3c1deb443346c4def5394ffa3ae9fd4a811112ecb57ab630fa354e",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+          "version": 87478166,
+          "heading_path": [
+            "# 丘东平\n"
+          ],
+          "file_id": "72b21e68f97dd9d626f6bb28",
+          "atomic": false,
+          "legacy_document_id": "523196f14b7d19eedf81a51d",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "f920dae002c314815fb84144f2a02d5186be0a35a30739c2dce5248b9572397b",
+          "parent_source_id": "verbatim-v1:431dc06a95993d303ad944729f1ee313c6255ea1348140f72c548f8020861890",
+          "parent_text_sha256": "f920dae002c314815fb84144f2a02d5186be0a35a30739c2dce5248b9572397b",
+          "span_start": 0,
+          "span_end": 460,
+          "span_sha256": "f920dae002c314815fb84144f2a02d5186be0a35a30739c2dce5248b9572397b",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:5a110c484a3109f8be0c67af543d77b3d6b7a7b8240159828a10b62e9aeeaf28@0:318:bb565a362b2f",
+        "document_id": "72b21e68f97dd9d626f6bb28",
+        "source": "finewiki-zh",
+        "title": "丘东平",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+        "score": 0.09186805089036228,
+        "snippet": "丘东平父亲丘锦成（又名仲金、筱堂，1871年－1948年），母亲黄巧（1881年－1970年）。丘东平共有兄弟八人，姐妹二人，在家庭中排行第六。丘东平五哥丘岛人曾与丘东平一起参加海陆丰起义，但他在1934年前后在厦门遇难，留下妻子吴笑。1935年初春，丘东平在香港与吴笑结婚，两人婚后育有一女丘丽卿。其后抗日战争爆发，丘东平走上前线，逐渐同吴笑失去联系。1939年11月，丘东平在与胡风的书信中，提到自己有了新女友辛文。辛文，广西人，参加过广西学生军，曾任《江淮日报》记者。1940年年底或1941年年初，丘东平与辛文在盐城结婚。辛文在丘东平牺牲后，改名西平，表示纪念。吴笑则于1950年代初的土地改革中被划为地主，她不忍折磨而自缢。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7554683@87478166@1df3d16daf6c4257",
+          "external_id": "zhwiki/7554683",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 19,
+          "document_id": "72b21e68f97dd9d626f6bb28",
+          "title": "丘东平",
+          "wikiname": "zhwiki",
+          "page_id": 7554683,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7554683-87478166-1df3d16daf6c4257.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "bb565a362b2fdc833a9ff542719c4163d649c141ae2587bd727de7a523be5043",
+            "start": 4162,
+            "end": 4480
+          },
+          "context_spans": [
+            {
+              "sha256": "86764d228e9b003cfba8092c118b3064d7775d3c2eed1a195d1dfc1fecb56419",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 6,
+              "text": "# 丘东平\n"
+            },
+            {
+              "sha256": "88c491e66d3212e5bff3346910730fd71cf459059559e88454ff287d392ceff1",
+              "level": 2,
+              "kind": "heading",
+              "start": 4156,
+              "end": 4162,
+              "text": "## 家庭\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "bb565a362b2fdc833a9ff542719c4163d649c141ae2587bd727de7a523be5043",
+          "source_text_sha256": "019b6cb76b3c1deb443346c4def5394ffa3ae9fd4a811112ecb57ab630fa354e",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+          "version": 87478166,
+          "heading_path": [
+            "# 丘东平\n",
+            "## 家庭\n"
+          ],
+          "file_id": "72b21e68f97dd9d626f6bb28",
+          "atomic": false,
+          "legacy_document_id": "523196f14b7d19eedf81a51d",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "bb565a362b2fdc833a9ff542719c4163d649c141ae2587bd727de7a523be5043",
+          "parent_source_id": "verbatim-v1:5a110c484a3109f8be0c67af543d77b3d6b7a7b8240159828a10b62e9aeeaf28",
+          "parent_text_sha256": "bb565a362b2fdc833a9ff542719c4163d649c141ae2587bd727de7a523be5043",
+          "span_start": 0,
+          "span_end": 318,
+          "span_sha256": "bb565a362b2fdc833a9ff542719c4163d649c141ae2587bd727de7a523be5043",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:65d10c685b9c8fe8e4caa0ebde0b2c14d36c621490714833d4d2062c6a470294@0:641:3e6eacd57b32",
+        "document_id": "72b21e68f97dd9d626f6bb28",
+        "source": "finewiki-zh",
+        "title": "丘东平",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+        "score": 0.09098993357388879,
+        "snippet": "丘东平的创作主要集中在小说和纪实文学领域，主要描绘抗日战争。丘东平也因为大量战争题材的创作，被认为是中国现代战争文学的开拓者。他的创作主要描写大时代中的普通人物，有时会展现中共军队高级指挥员的形象。丘东平曾在书信中谈过自己的创作理念，他主张在紧密联系生活的基础上，认真把握自己的创作事业:680-690。他早期的创作风格倾向于在沉郁的气氛中，直追人物的心理性格。但他加入新四军后，他的创作风格则有所变化，变为充满了乐观主义精神和必胜信念。在文本描写中，他注重人物性格刻画，在激烈的战斗中描绘主人公的情感变化。他的场面描写色彩鲜明、气氛悲壮，具有极其强烈的时代感。对文体发展而言，丘东平将报告文学以时间为中心推进到以人物为中心，极大促进了报告文学这一文体的发展。他未完成的长篇小说《茅山下》，则触及了知识分子如何在革命战争中发挥个人作用的命题，体现了向现实主义的深度发展。丘东平创作的弱点在于，他的文字表达和故事节奏有欠成熟。\n丘东平自开始创作起就被文坛和后世学者关注。早在20世纪30年代，郭沫若就肯定丘东平“抱负之不凡，而他的诗人气质是异常浓厚的”。胡风评论丘东平是对革命文学思想要求“理解最深的一个，也是成就最大的一个”。聂绀弩则称誉他在文坛上是“霸才”。中华人民共和国成立后，由于胡风反革命集团案的发生，身为七月派重要成员的丘东平也受到牵连。在相当一个时期内，中国大陆学界对丘东平的关注不多，且多为批判性论调。直到改革开放和胡风平反后，丘东平的文学史地位才被重新予以肯定。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7554683@87478166@1df3d16daf6c4257",
+          "external_id": "zhwiki/7554683",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 13,
+          "document_id": "72b21e68f97dd9d626f6bb28",
+          "title": "丘东平",
+          "wikiname": "zhwiki",
+          "page_id": 7554683,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7554683-87478166-1df3d16daf6c4257.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "3e6eacd57b32da6d59b21223f5424af85681e76617e9ebebd5e8fde125a95888",
+            "start": 2808,
+            "end": 3449
+          },
+          "context_spans": [
+            {
+              "sha256": "86764d228e9b003cfba8092c118b3064d7775d3c2eed1a195d1dfc1fecb56419",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 6,
+              "text": "# 丘东平\n"
+            },
+            {
+              "sha256": "4cd57b962b84c9175b50f638f7293b306ccef9cf9d184ec97629184518084d26",
+              "level": 2,
+              "kind": "heading",
+              "start": 2791,
+              "end": 2797,
+              "text": "## 创作\n"
+            },
+            {
+              "sha256": "b656a41d10705f34b78b01edd118789be05425f0cebff5be0355ad772b4c94c3",
+              "level": 3,
+              "kind": "heading",
+              "start": 2798,
+              "end": 2808,
+              "text": "### 风格与评述\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "3e6eacd57b32da6d59b21223f5424af85681e76617e9ebebd5e8fde125a95888",
+          "source_text_sha256": "019b6cb76b3c1deb443346c4def5394ffa3ae9fd4a811112ecb57ab630fa354e",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+          "version": 87478166,
+          "heading_path": [
+            "# 丘东平\n",
+            "## 创作\n",
+            "### 风格与评述\n"
+          ],
+          "file_id": "72b21e68f97dd9d626f6bb28",
+          "atomic": false,
+          "legacy_document_id": "523196f14b7d19eedf81a51d",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "3e6eacd57b32da6d59b21223f5424af85681e76617e9ebebd5e8fde125a95888",
+          "parent_source_id": "verbatim-v1:65d10c685b9c8fe8e4caa0ebde0b2c14d36c621490714833d4d2062c6a470294",
+          "parent_text_sha256": "3e6eacd57b32da6d59b21223f5424af85681e76617e9ebebd5e8fde125a95888",
+          "span_start": 0,
+          "span_end": 641,
+          "span_sha256": "3e6eacd57b32da6d59b21223f5424af85681e76617e9ebebd5e8fde125a95888",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:c7d34ca4dffd3d1ef23553a4d45f34ad40aa264b530f4973e6f57f5455bb90fc@0:6:86764d228e9b",
+        "document_id": "72b21e68f97dd9d626f6bb28",
+        "source": "finewiki-zh",
+        "title": "丘东平",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+        "score": 0.08568536726431464,
+        "snippet": "# 丘东平\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7554683@87478166@1df3d16daf6c4257",
+          "external_id": "zhwiki/7554683",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "72b21e68f97dd9d626f6bb28",
+          "title": "丘东平",
+          "wikiname": "zhwiki",
+          "page_id": 7554683,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7554683-87478166-1df3d16daf6c4257.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "86764d228e9b003cfba8092c118b3064d7775d3c2eed1a195d1dfc1fecb56419",
+            "start": 0,
+            "end": 6
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "86764d228e9b003cfba8092c118b3064d7775d3c2eed1a195d1dfc1fecb56419",
+          "source_text_sha256": "019b6cb76b3c1deb443346c4def5394ffa3ae9fd4a811112ecb57ab630fa354e",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+          "version": 87478166,
+          "heading_path": [],
+          "file_id": "72b21e68f97dd9d626f6bb28",
+          "atomic": true,
+          "legacy_document_id": "523196f14b7d19eedf81a51d",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "86764d228e9b003cfba8092c118b3064d7775d3c2eed1a195d1dfc1fecb56419",
+          "parent_source_id": "verbatim-v1:c7d34ca4dffd3d1ef23553a4d45f34ad40aa264b530f4973e6f57f5455bb90fc",
+          "parent_text_sha256": "86764d228e9b003cfba8092c118b3064d7775d3c2eed1a195d1dfc1fecb56419",
+          "span_start": 0,
+          "span_end": 6,
+          "span_sha256": "86764d228e9b003cfba8092c118b3064d7775d3c2eed1a195d1dfc1fecb56419",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1af09fd2f8b28edcde5f058ed5794f0ff585d3106384c761bd7b5487e4dfeb96@0:140:4f74f7a9c6e4",
+        "document_id": "72b21e68f97dd9d626f6bb28",
+        "source": "finewiki-zh",
+        "title": "丘东平",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+        "score": 0.08962955023435554,
+        "snippet": "丘东平生前陆续出版了一批作品集。丘东平阵亡时，他撰写的长篇小说《茅山下》没有完稿。抗日战争胜利后，小说在彭柏山的帮助下，于1945年10月在淮阴正式出版。中华人民共和国成立后，上海新文艺出版社于1953年出版《东平选集》。其后，丘东平的作品陆续整理结集出版。他的主要作品包括：\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7554683@87478166@1df3d16daf6c4257",
+          "external_id": "zhwiki/7554683",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 15,
+          "document_id": "72b21e68f97dd9d626f6bb28",
+          "title": "丘东平",
+          "wikiname": "zhwiki",
+          "page_id": 7554683,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7554683-87478166-1df3d16daf6c4257.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "4f74f7a9c6e4d174337b228a9783e1ca5c9cec2cf880879cb250dca97ff4f351",
+            "start": 3458,
+            "end": 3598
+          },
+          "context_spans": [
+            {
+              "sha256": "86764d228e9b003cfba8092c118b3064d7775d3c2eed1a195d1dfc1fecb56419",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 6,
+              "text": "# 丘东平\n"
+            },
+            {
+              "sha256": "4cd57b962b84c9175b50f638f7293b306ccef9cf9d184ec97629184518084d26",
+              "level": 2,
+              "kind": "heading",
+              "start": 2791,
+              "end": 2797,
+              "text": "## 创作\n"
+            },
+            {
+              "sha256": "8b7011e0d9bb4c75fd75e0c98d4cd826e214832249f95448b2e00ded285510d3",
+              "level": 3,
+              "kind": "heading",
+              "start": 3449,
+              "end": 3458,
+              "text": "### 主要作品\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "4f74f7a9c6e4d174337b228a9783e1ca5c9cec2cf880879cb250dca97ff4f351",
+          "source_text_sha256": "019b6cb76b3c1deb443346c4def5394ffa3ae9fd4a811112ecb57ab630fa354e",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+          "version": 87478166,
+          "heading_path": [
+            "# 丘东平\n",
+            "## 创作\n",
+            "### 主要作品\n"
+          ],
+          "file_id": "72b21e68f97dd9d626f6bb28",
+          "atomic": false,
+          "legacy_document_id": "523196f14b7d19eedf81a51d",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "4f74f7a9c6e4d174337b228a9783e1ca5c9cec2cf880879cb250dca97ff4f351",
+          "parent_source_id": "verbatim-v1:1af09fd2f8b28edcde5f058ed5794f0ff585d3106384c761bd7b5487e4dfeb96",
+          "parent_text_sha256": "4f74f7a9c6e4d174337b228a9783e1ca5c9cec2cf880879cb250dca97ff4f351",
+          "span_start": 0,
+          "span_end": 140,
+          "span_sha256": "4f74f7a9c6e4d174337b228a9783e1ca5c9cec2cf880879cb250dca97ff4f351",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:5d8ecd4a747eff9682845e7a0ff252557d69c858af3968a3ab464f33a3ea252c@0:639:8d8531907985",
+        "document_id": "72b21e68f97dd9d626f6bb28",
+        "source": "finewiki-zh",
+        "title": "丘东平",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+        "score": 0.08896803859490426,
+        "snippet": "丘东平生于廣東省海丰县梅陇镇馬福壟村一个农民兼小商人家庭中，他在家庭中排行第六。丘东平七岁时入村中私塾读书。一年后，他和五哥一起进入小学，先后在梅陇镇瓣香小学、水口乡校、梅岭莲花山麓的学楼就读。在读小学期间，丘东平参加劳动童子团:72-73。1924年，丘东平考入海丰县陆安师范学校学习。陆安师范学校的前身是彭湃的母校海丰中学，他曾多次回母校讲演，因此丘东平入学后，也受到革命文化熏陶。他在学校加入了文学社团晨曦社，积极参与社团活动。1925年，丘东平加入了中国共产主义青年团，成为海丰学校支部秘书。同年10月国民革命军第二次东征胜利后，丘东平离开学校，进入海丰党委干部训练班学习，投身海丰农民运动:200-201。\n1926年1月，丘东平任共青团海丰特委秘书长，参与编辑和出版《海丰青年》杂志。同年，他加入中国共产党，并担任海陆丰地委组织部长郑志云的秘书。1927年，丘东平参与了两次海陆丰起义。1927年11月，在彭湃的领导下，海陆丰苏维埃作为中国第一个苏维埃政府正式建立。这期间，丘东平短期担任彭湃的秘书:201-202。1928年2月，海陆丰苏维埃政权宣告失败，彭湃转移，丘东平留在海陆丰坚持斗争。面对当地民团的清剿，丘东平于8月在家人的掩护下离开家乡，被送往香港。丘东平在流亡香港时，曾从事过学徒、鞋匠、渔夫、小贩、天主教的校对等工作。窘迫的生活之余，丘东平大量阅读高尔基作品，自学英文，从事创作，参加香港第一个新文学团体岛上社的活动，并开始给当地报纸投稿:73。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7554683@87478166@1df3d16daf6c4257",
+          "external_id": "zhwiki/7554683",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 5,
+          "document_id": "72b21e68f97dd9d626f6bb28",
+          "title": "丘东平",
+          "wikiname": "zhwiki",
+          "page_id": 7554683,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7554683-87478166-1df3d16daf6c4257.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8d8531907985c8d55cd8b988e1383ecc5d8855a7f82b41bd12c38f5478293ee4",
+            "start": 484,
+            "end": 1123
+          },
+          "context_spans": [
+            {
+              "sha256": "86764d228e9b003cfba8092c118b3064d7775d3c2eed1a195d1dfc1fecb56419",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 6,
+              "text": "# 丘东平\n"
+            },
+            {
+              "sha256": "6450987af5e3a88b5f8aef9fac2d49c1daf3316ba52275e7fcdd0ecaa477d485",
+              "level": 2,
+              "kind": "heading",
+              "start": 466,
+              "end": 472,
+              "text": "## 生平\n"
+            },
+            {
+              "sha256": "632a93567aa63cb5a1ffb4f4a3ec7a45a935efdd5cb3ac429efb7811e9e2ec37",
+              "level": 3,
+              "kind": "heading",
+              "start": 473,
+              "end": 484,
+              "text": "### 早年投身革命\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "8d8531907985c8d55cd8b988e1383ecc5d8855a7f82b41bd12c38f5478293ee4",
+          "source_text_sha256": "019b6cb76b3c1deb443346c4def5394ffa3ae9fd4a811112ecb57ab630fa354e",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87478166",
+          "version": 87478166,
+          "heading_path": [
+            "# 丘东平\n",
+            "## 生平\n",
+            "### 早年投身革命\n"
+          ],
+          "file_id": "72b21e68f97dd9d626f6bb28",
+          "atomic": false,
+          "legacy_document_id": "523196f14b7d19eedf81a51d",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8d8531907985c8d55cd8b988e1383ecc5d8855a7f82b41bd12c38f5478293ee4",
+          "parent_source_id": "verbatim-v1:5d8ecd4a747eff9682845e7a0ff252557d69c858af3968a3ab464f33a3ea252c",
+          "parent_text_sha256": "8d8531907985c8d55cd8b988e1383ecc5d8855a7f82b41bd12c38f5478293ee4",
+          "span_start": 0,
+          "span_end": 639,
+          "span_sha256": "8d8531907985c8d55cd8b988e1383ecc5d8855a7f82b41bd12c38f5478293ee4",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      266
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 6,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0111.json"
+  },
+  "review": {
+    "case_id": "diverse-0019",
+    "verdict": "fail",
+    "issues": [
+      "unrequested_expansion",
+      "relation_reversal",
+      "contradicts_source",
+      "citation_misalignment"
+    ],
+    "note": "作家丘东平的基本身份正确，但擅自扩展亲属问答；原文2明确女儿丘丽卿，回答却称未记载女儿并将其写成二妹，另造八个表兄弟，全部错误引用不含家庭信息的资料1。未就东平名称歧义说明范围。"
+  },
+  "input": {
+    "id": "diverse-0019",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 19,
+    "original_case": {
+      "case_type": "ambiguity",
+      "question": "东平是谁",
+      "expected_titles": [
+        "东平 (消歧义)",
+        "丘东平"
+      ]
+    },
+    "category": "ambiguity",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "东平是谁",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "f7a9d56682fc764b9f6c276f251aa174e14bd3a66ffb8ad6386d9e3a7d69580b"
+}

@@ -1,0 +1,669 @@
+{
+  "result": {
+    "case_id": "diverse-0013",
+    "suite": "diverse",
+    "question": "阿波罗11号为什么具有历史意义",
+    "http_status": 200,
+    "error": null,
+    "answer": "阿波罗11号为人类首次登月成功奠定基础，具有划时代的历史意义。",
+    "sources": [
+      {
+        "id": "verbatim-v1:9aa31ad80983a5dbcfe347f58d85ad48a53d51f2f9ed6174201387e31831da12@0:9:050a1473f947",
+        "document_id": "0b569890deb851b92b020c9b",
+        "source": "finewiki-zh",
+        "title": "阿波罗11号",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+        "score": 0.06557377049180328,
+        "snippet": "# 阿波罗11号\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/9796@87696264@778abe9b77d22f18",
+          "external_id": "zhwiki/9796",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "0b569890deb851b92b020c9b",
+          "title": "阿波罗11号",
+          "wikiname": "zhwiki",
+          "page_id": 9796,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/9796-87696264-778abe9b77d22f18.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+            "start": 0,
+            "end": 9
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+          "source_text_sha256": "1cc0641a297a9041cb60e3cc8bf8b35d7232037c9169f5bf2a464d63207448dd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+          "version": 87696264,
+          "heading_path": [],
+          "file_id": "0b569890deb851b92b020c9b",
+          "atomic": true,
+          "legacy_document_id": "9a620a17926d9694ca0f6f1c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+          "parent_source_id": "verbatim-v1:9aa31ad80983a5dbcfe347f58d85ad48a53d51f2f9ed6174201387e31831da12",
+          "parent_text_sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+          "span_start": 0,
+          "span_end": 9,
+          "span_sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:a714772ec1a92835dec83764dad924541ec2f2cca586c993ec4e23f272bc15bd@0:357:5dcac1bdc4ff",
+        "document_id": "0b569890deb851b92b020c9b",
+        "source": "finewiki-zh",
+        "title": "阿波罗11号",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+        "score": 0.06451612903225806,
+        "snippet": "- 《月球上的脚印》，比尔·吉布森和巴里·科1969年介绍阿波罗十一号任务的纪录片[182]；\n- 《月球漫步》，西奥·卡米克1971年纪录片[183]；\n- 《阿波罗十一号实录》，1994年六小时纪录片，包含美国广播公司对阿波罗十一号的全面报道[184]；\n- 《阿波罗十一号》：托德·道格拉斯·米勒2019年纪录片，包含1969年修复视频[185][186]；\n- 《逐月》，2019年7月公共广播电视公司连续三晚播出的六小时纪录片，罗伯特·斯通执导，检视阿波罗十一号成行历史。同名书籍已经发布；[187]\n- 《8天：往返月球》，公共广播电视公司与BBC工作室2019年的纪录片，安东尼·菲利普森利用任务录音、新视频片段、航空航天局档案和新闻存档，以及计算机成像再现阿波罗十一号任务的关键时刻[188]。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/9796@87696264@778abe9b77d22f18",
+          "external_id": "zhwiki/9796",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 76,
+          "document_id": "0b569890deb851b92b020c9b",
+          "title": "阿波罗11号",
+          "wikiname": "zhwiki",
+          "page_id": 9796,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/9796-87696264-778abe9b77d22f18.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "5dcac1bdc4ffa8de0616b3935c12f91e18deb79c992aaa2db8b0449ad0a219d0",
+            "start": 22930,
+            "end": 23287
+          },
+          "context_spans": [
+            {
+              "sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 阿波罗11号\n"
+            },
+            {
+              "sha256": "6cb9fb2c777ed129acb1d811f3d58592f0cc47d3b5fdbdc1bcdd4c4305bb3a00",
+              "level": 2,
+              "kind": "heading",
+              "start": 22923,
+              "end": 22930,
+              "text": "## 纪录片\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "5dcac1bdc4ffa8de0616b3935c12f91e18deb79c992aaa2db8b0449ad0a219d0",
+          "source_text_sha256": "1cc0641a297a9041cb60e3cc8bf8b35d7232037c9169f5bf2a464d63207448dd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+          "version": 87696264,
+          "heading_path": [
+            "# 阿波罗11号\n",
+            "## 纪录片\n"
+          ],
+          "file_id": "0b569890deb851b92b020c9b",
+          "atomic": true,
+          "legacy_document_id": "9a620a17926d9694ca0f6f1c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "5dcac1bdc4ffa8de0616b3935c12f91e18deb79c992aaa2db8b0449ad0a219d0",
+          "parent_source_id": "verbatim-v1:a714772ec1a92835dec83764dad924541ec2f2cca586c993ec4e23f272bc15bd",
+          "parent_text_sha256": "5dcac1bdc4ffa8de0616b3935c12f91e18deb79c992aaa2db8b0449ad0a219d0",
+          "span_start": 0,
+          "span_end": 357,
+          "span_sha256": "5dcac1bdc4ffa8de0616b3935c12f91e18deb79c992aaa2db8b0449ad0a219d0",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:fbadba98bb2d20ca14c2572a14ce378cc73bcd9047e8da10a71806135e9e9e61@0:247:f44a91382b6c",
+        "document_id": "0b569890deb851b92b020c9b",
+        "source": "finewiki-zh",
+        "title": "阿波罗11号",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+        "score": 0.06349206349206349,
+        "snippet": "宇航员均配有个人喜好包裹，装有任务期间携带的重要私人物品。阿波罗十一号共把五只各重230克的个人喜好包裹带上太空，三只装在“哥伦比亚号”（每位宇航员一只），两只在“鹰号”。\n阿姆斯特朗放在登月舱的个人喜好包裹装有莱特兄弟1903年莱特飞行器左螺旋桨的木片还有机翼上的布料:527，以及阿波罗一号乘组遗孀交给斯雷顿的镶钻宇航员徽章；这枚徽章原定随阿波罗一号飞上太空，返航后交给斯雷顿，但火灾令任务取消，宇航员遗孀在葬礼后把徽章交给斯雷顿，而阿姆斯特姆把那徽章带上阿波罗十一号。:191–192\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/9796@87696264@778abe9b77d22f18",
+          "external_id": "zhwiki/9796",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 29,
+          "document_id": "0b569890deb851b92b020c9b",
+          "title": "阿波罗11号",
+          "wikiname": "zhwiki",
+          "page_id": 9796,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/9796-87696264-778abe9b77d22f18.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "f44a91382b6c99054e91443a8e1fcfe2bced982420ee59816937653bbe09a1be",
+            "start": 6203,
+            "end": 6450
+          },
+          "context_spans": [
+            {
+              "sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 阿波罗11号\n"
+            },
+            {
+              "sha256": "a844bd19d8b0fe537aa1ab10b092b8c3c96ed7722eb3021856a87deebabc4afe",
+              "level": 2,
+              "kind": "heading",
+              "start": 5486,
+              "end": 5492,
+              "text": "## 准备\n"
+            },
+            {
+              "sha256": "943c6160f6276a9827ec8c226491b90316fd2e1ffae6f4fa6c5b67923ebfbb2f",
+              "level": 3,
+              "kind": "heading",
+              "start": 6195,
+              "end": 6203,
+              "text": "### 纪念品\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "f44a91382b6c99054e91443a8e1fcfe2bced982420ee59816937653bbe09a1be",
+          "source_text_sha256": "1cc0641a297a9041cb60e3cc8bf8b35d7232037c9169f5bf2a464d63207448dd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+          "version": 87696264,
+          "heading_path": [
+            "# 阿波罗11号\n",
+            "## 准备\n",
+            "### 纪念品\n"
+          ],
+          "file_id": "0b569890deb851b92b020c9b",
+          "atomic": false,
+          "legacy_document_id": "9a620a17926d9694ca0f6f1c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "f44a91382b6c99054e91443a8e1fcfe2bced982420ee59816937653bbe09a1be",
+          "parent_source_id": "verbatim-v1:fbadba98bb2d20ca14c2572a14ce378cc73bcd9047e8da10a71806135e9e9e61",
+          "parent_text_sha256": "f44a91382b6c99054e91443a8e1fcfe2bced982420ee59816937653bbe09a1be",
+          "span_start": 0,
+          "span_end": 247,
+          "span_sha256": "f44a91382b6c99054e91443a8e1fcfe2bced982420ee59816937653bbe09a1be",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:ea883df26282b985a84e8e319be48fd4f7f8f0ee319b5e2953fa1dff9d4e8816@0:676:235eabf9bab7",
+        "document_id": "0b569890deb851b92b020c9b",
+        "source": "finewiki-zh",
+        "title": "阿波罗11号",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+        "score": 0.06132688828584351,
+        "snippet": "\n1967年11月20日，航空航天局正式宣布阿波罗九号的替补人员是指令长尼尔·阿姆斯特朗、指令舱驾驶员吉姆·洛弗尔和登月舱驾驶员巴兹·奥尔德林:374。洛弗尔与奥尔德林曾在双子座十二号合作飞行。登月舱设计和制造延误导致阿波罗八号和九号任务调换主乘组和替补乘组，阿姆斯特朗一行改成阿波罗八号替补人员。根据轮换标准，每次任务的替补乘组便是此后第三次任务的主乘组，所以阿波罗十一号就轮到阿姆斯特朗等人执掌。:312–313\n阿波罗八号的指令舱驾驶员迈克尔·科林斯双腿不适，医生诊断发现他的第五到第六节椎骨间骨骼增生，需要手术:288–289。洛弗尔顶替科林斯的位置，后者恢复后加入阿姆斯特朗的小组。弗莱德·海斯充当阿波罗八号替补登月舱驾驶员，奥尔德林是替补指令舱驾驶员。阿波罗十一号乘组都有太空飞行经验:90，此前所有美国载人航天任务只有阿波罗十号也是如此:72，下一次要到1988年的航天飞机任务STS-26:90。\n航空航天局部分人员不愿与奥尔德林合作，迪克·斯雷顿让阿姆斯特朗决定是否要用洛弗尔替换。阿姆斯特朗对与奥尔德林合作没意见，在考虑超过一天后谢绝建议，觉得洛弗尔完全有资格当指令长（后在阿波罗十三号实现）。:338–339\n阿波罗十一号的主乘组完全不像阿波罗十二号那样关系友好、亲密无间，友好合作姿态构建缓慢。阿姆斯特朗以冷漠出名，科林斯自认是独行侠，对奥尔德林建立私谊的主动示好完全不给面子。:434–435奥尔德林和科林斯认为，三人间关系就像“随和客气的陌生人”:359，阿姆斯特朗对此不以为然，自称“与所有人的合作都很顺利”:359。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/9796@87696264@778abe9b77d22f18",
+          "external_id": "zhwiki/9796",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 8,
+          "document_id": "0b569890deb851b92b020c9b",
+          "title": "阿波罗11号",
+          "wikiname": "zhwiki",
+          "page_id": 9796,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/9796-87696264-778abe9b77d22f18.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "235eabf9bab7eaabb9c8890f7786261b702b03eea37541f42428fc9ca4a9caa0",
+            "start": 3102,
+            "end": 3778
+          },
+          "context_spans": [
+            {
+              "sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 阿波罗11号\n"
+            },
+            {
+              "sha256": "812ace1730fd1540b57a1d75e51ba97cbe2c9ab1c574292985bc1ce475655c0d",
+              "level": 2,
+              "kind": "heading",
+              "start": 2747,
+              "end": 2753,
+              "text": "## 人员\n"
+            },
+            {
+              "sha256": "d4064859eb2c1dbc872562fddb748b54748b9d5c33f542d5070c125236d985d0",
+              "level": 3,
+              "kind": "heading",
+              "start": 2754,
+              "end": 2762,
+              "text": "### 主乘组\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "235eabf9bab7eaabb9c8890f7786261b702b03eea37541f42428fc9ca4a9caa0",
+          "source_text_sha256": "1cc0641a297a9041cb60e3cc8bf8b35d7232037c9169f5bf2a464d63207448dd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+          "version": 87696264,
+          "heading_path": [
+            "# 阿波罗11号\n",
+            "## 人员\n",
+            "### 主乘组\n"
+          ],
+          "file_id": "0b569890deb851b92b020c9b",
+          "atomic": false,
+          "legacy_document_id": "9a620a17926d9694ca0f6f1c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "235eabf9bab7eaabb9c8890f7786261b702b03eea37541f42428fc9ca4a9caa0",
+          "parent_source_id": "verbatim-v1:ea883df26282b985a84e8e319be48fd4f7f8f0ee319b5e2953fa1dff9d4e8816",
+          "parent_text_sha256": "235eabf9bab7eaabb9c8890f7786261b702b03eea37541f42428fc9ca4a9caa0",
+          "span_start": 0,
+          "span_end": 676,
+          "span_sha256": "235eabf9bab7eaabb9c8890f7786261b702b03eea37541f42428fc9ca4a9caa0",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:e7e3593bd15fff6331c222907e961c702ba2764dd9b2a29ae97c5029d9bad1ca@0:1161:93d2cfc3c886",
+        "document_id": "0b569890deb851b92b020c9b",
+        "source": "finewiki-zh",
+        "title": "阿波罗11号",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+        "score": 0.05608718766613503,
+        "snippet": "20世纪50年代末到60年代初，美国与苏联陷入冷战:134。1957年10月4日，苏联发射史上首枚人造衛星史普尼克一号，引发国际社会无限联想，西方国家对此深感震惊和恐惧。史普尼克一号表明苏联有从洲际距离投送核武器的能力，对美国军事、经济和技术优势形成重大挑战:13–15。随之而来的史普尼克危機引发太空競賽:1。美国总统德怀特·艾森豪威尔建立美国国家航空航天局（以下简称航空航天局）并启动水星计划:101–106，旨在把人类送到地球轨道:134。但苏联再度抢先一步，宇航员尤里·阿列克谢耶维奇·加加林在1961年4月12日成为太空第一人和地球轨道第一人:332–333。近一个月后，艾伦·谢泼德成为首位美国太空人，在亚轨道飞行15分钟。溅落大西洋并获救后，他接到新总统约翰·肯尼迪的贺电:121。\n\n\n苏联运载火箭的运力更强，为确保两国公平竞争，肯尼迪决定从航空航天局建议中选择超出已有火箭技术范围的方案，最后敲定载人登月:112–117。1961年5月25日，肯尼迪向美国国会发表《国家迫切所需》演说，其中谈到：\n我相信，国家应在本年代（20世纪60年代）结束前把人送上月球并安全返航。这将是本时代最震撼全人类的太空项目，也是最重要、最困难、成本最高昂的远程太空探索项目。我们建议加快发展合适的月球航天器，开发液体和固体燃料火箭，规模远超现有，直到确定哪种方案更佳。我们提议为其他发动机开发与无人驾驶探索另行提供资金，特别是对国家而言至关重要，而且永远不能忽视的领域：确保率先登月者的生命。从极其现实的角度来说，登上月球的不是个人——我们可以肯定，这将是整个国家的成就，是所有人齐心协力把他送上去。——肯尼迪国会演讲节选\n\n\n1962年9月12日，肯尼迪在德克萨斯州休斯敦莱斯大学足球场向约四万群众发表《我們選擇登月》演讲，内容广为流传：\n眼下太空还没有冲突、偏见和民族矛盾，但所有人都面临它的威胁。人类需要竭尽全力才能征服太空，全人类和平协作的机遇可能绝无仅有。或许有人要问，为什么把月球当成目标？他们或许还会问，为什么要登上最高的山峰，35年前又为什么要飞越大西洋？为什么莱斯大学要和德克萨斯大学竞争？我们选择登月！我们决定……在本年代达成登月等目标，不是因为这很简单，而是因为非常困难。如此目标能集中我们最顶尖的技术和力量，我们愿意接受挑战，像面对其他挑战一样不会推迟、志在必胜。\n总统的提议遭遇许多美国人反对，麻省理工学院数学家諾伯特·維納认为计划毫无意义，纯属浪费。登月目标此时已得名阿波罗计划:15。1961年6月，肯尼迪会见苏联部长会议主席尼基塔·谢尔盖耶维奇·赫鲁晓夫，提议合作登月，但赫鲁晓夫没有接受。1963年9月20日，肯尼迪在联合国大会提出协作探索月球。同年肯尼迪遇刺后，协作登月任务构想作废。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/9796@87696264@778abe9b77d22f18",
+          "external_id": "zhwiki/9796",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 3,
+          "document_id": "0b569890deb851b92b020c9b",
+          "title": "阿波罗11号",
+          "wikiname": "zhwiki",
+          "page_id": 9796,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/9796-87696264-778abe9b77d22f18.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "aab3548db38369dbcef76ca7066efe1d0bc4eb1f789ddb7d0b6683661811a750",
+            "start": 814,
+            "end": 2747
+          },
+          "context_spans": [
+            {
+              "sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 阿波罗11号\n"
+            },
+            {
+              "sha256": "2d2b26e64ee00f51f9a09e2d2ca16bf9b00a055ee6d60f99996e9be7b9338819",
+              "level": 2,
+              "kind": "heading",
+              "start": 808,
+              "end": 814,
+              "text": "## 背景\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "aab3548db38369dbcef76ca7066efe1d0bc4eb1f789ddb7d0b6683661811a750",
+          "source_text_sha256": "1cc0641a297a9041cb60e3cc8bf8b35d7232037c9169f5bf2a464d63207448dd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+          "version": 87696264,
+          "heading_path": [
+            "# 阿波罗11号\n",
+            "## 背景\n"
+          ],
+          "file_id": "0b569890deb851b92b020c9b",
+          "atomic": false,
+          "legacy_document_id": "9a620a17926d9694ca0f6f1c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "aab3548db38369dbcef76ca7066efe1d0bc4eb1f789ddb7d0b6683661811a750",
+          "parent_source_id": "verbatim-v1:e7e3593bd15fff6331c222907e961c702ba2764dd9b2a29ae97c5029d9bad1ca",
+          "parent_text_sha256": "aab3548db38369dbcef76ca7066efe1d0bc4eb1f789ddb7d0b6683661811a750",
+          "span_start": 0,
+          "span_end": 1161,
+          "span_sha256": "93d2cfc3c8863794de7259a15fa9252f18a71fd9892d5b0ce50aeb454adb66f5",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:e7e3593bd15fff6331c222907e961c702ba2764dd9b2a29ae97c5029d9bad1ca@995:1933:1789fb26df76",
+        "document_id": "0b569890deb851b92b020c9b",
+        "source": "finewiki-zh",
+        "title": "阿波罗11号",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+        "score": 0.05608718766613503,
+        "snippet": "总统的提议遭遇许多美国人反对，麻省理工学院数学家諾伯特·維納认为计划毫无意义，纯属浪费。登月目标此时已得名阿波罗计划:15。1961年6月，肯尼迪会见苏联部长会议主席尼基塔·谢尔盖耶维奇·赫鲁晓夫，提议合作登月，但赫鲁晓夫没有接受。1963年9月20日，肯尼迪在联合国大会提出协作探索月球。同年肯尼迪遇刺后，协作登月任务构想作废。\n航空航天局很早就决定放弃直接起飞和地球轨道交会方案，采用月球轨道交会，即两个航天器分别在太空飞行后会合，对后来的技术发展影响深远。1962年7月，航空航天局首脑詹姆斯·韦伯宣布采用月球轨道交会方案。:85–86阿波羅太空船将由三部分组成，其中只有可容纳三名宇航员的指令舱会返回地球，服务舱为指令舱提供推进动力、电力、氧气和水，登月舱分两段，下降段用于月表着陆，上升段把宇航员送绕月轨道:72–77。这种设计表明太空船只需当时还在研发的单枚土星五号运载火箭就能发射:48–49。\n阿波罗计划所需技术和工艺早在双子座计划就开始发展:181–182, 205–208。航空航天局采用最新的半导体电子技术推动阿波罗计划，如行星际监测站的金屬氧化物半導體場效電晶體，阿波罗制导计算机采用的硅制集成电路芯片。\n1967年1月27日，古斯·格里森、爱德华·怀特、罗杰·查菲测试阿波罗一号航天器时死于火灾，阿波罗计划马上暂停，全面安全审查接踵而至:214–218。1968年10月，阿波罗七号证明指令舱能在地球轨道正常工作:265–272，同年12月又经阿波罗八号证明绕月轨道飞行能力:274–284。1969年3月阿波罗九号把登月舱带上地球轨道:292–300，同年五月阿波罗十号在绕月轨道为登月“彩排”。1969年7月，阿波罗十一号走出登月最后一步的各方面需求均已就绪。:303–312\n苏联虽然早期领先，但因与土星五号竞争的N1运载火箭开发反复失败逐渐落后，只好采用无人探测器试图抢在美国前把月岩带回地球。月球十五號赶在阿波罗十一号之前抵达月球轨道，但却在着陆期间因故障在危海坠毁，阿姆斯特朗和奥尔德林约在两小时后从月表起飞返航。英国纳菲尔德射电天文实验室的射电望远镜录下月球十五号着陆期间的传输信号，后在2009年7月阿波罗十一号40周年之际公布。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/9796@87696264@778abe9b77d22f18",
+          "external_id": "zhwiki/9796",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 3,
+          "document_id": "0b569890deb851b92b020c9b",
+          "title": "阿波罗11号",
+          "wikiname": "zhwiki",
+          "page_id": 9796,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/9796-87696264-778abe9b77d22f18.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "aab3548db38369dbcef76ca7066efe1d0bc4eb1f789ddb7d0b6683661811a750",
+            "start": 814,
+            "end": 2747
+          },
+          "context_spans": [
+            {
+              "sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 阿波罗11号\n"
+            },
+            {
+              "sha256": "2d2b26e64ee00f51f9a09e2d2ca16bf9b00a055ee6d60f99996e9be7b9338819",
+              "level": 2,
+              "kind": "heading",
+              "start": 808,
+              "end": 814,
+              "text": "## 背景\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "aab3548db38369dbcef76ca7066efe1d0bc4eb1f789ddb7d0b6683661811a750",
+          "source_text_sha256": "1cc0641a297a9041cb60e3cc8bf8b35d7232037c9169f5bf2a464d63207448dd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+          "version": 87696264,
+          "heading_path": [
+            "# 阿波罗11号\n",
+            "## 背景\n"
+          ],
+          "file_id": "0b569890deb851b92b020c9b",
+          "atomic": false,
+          "legacy_document_id": "9a620a17926d9694ca0f6f1c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "aab3548db38369dbcef76ca7066efe1d0bc4eb1f789ddb7d0b6683661811a750",
+          "parent_source_id": "verbatim-v1:e7e3593bd15fff6331c222907e961c702ba2764dd9b2a29ae97c5029d9bad1ca",
+          "parent_text_sha256": "aab3548db38369dbcef76ca7066efe1d0bc4eb1f789ddb7d0b6683661811a750",
+          "span_start": 995,
+          "span_end": 1933,
+          "span_sha256": "1789fb26df760c2d855e138f34ffa7ee859cc6a41a378b434acd171da1496ab3",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:a081a380b82b5ce7871896168d81e2a86b79ca6012cdc261b930d65ccbd200b3@0:550:4ab0ee1c9c6c",
+        "document_id": "0b569890deb851b92b020c9b",
+        "source": "finewiki-zh",
+        "title": "阿波罗11号",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+        "score": 0.05802534944325989,
+        "snippet": "2009年7月15日，《生活》杂志网站发布杂志摄影师拉尔夫·莫尔斯在阿波罗十一号发射前拍摄且一直没公布的照片。同年7月16至24日，航空航天局网站提供40年前的原始任务音频。视频片段还在修复，关键时刻的视频已经可以预览。2010年7月，阿波罗十一号登月舱下降和着陆期间的空对地语音录音和任务控制中心拍摄的视频片段经重新同步首次发布。肯尼迪总统图书馆暨博物馆开设Adobe Flash网站，播放阿波罗十一号发射到登月的传送内容。\n2009年7月20日，贝拉克·奥巴马总统在白宫接见阿姆斯特朗、奥尔德林和科林斯。奥巴马表示：“我们希望其他世代也有仰望藍天的孩子，他們會成为下一個阿姆斯特朗、科林斯和奥尔德林……我们要確保他们啟程時，航空航天局能伸出援手”。8月7日，国会通过佛罗里达州联邦参议员比爾·納爾遜和联邦众议员阿蘭·蓋雷森递交的法案，向三名宇航员授予美国平民最高荣誉：國會金質獎章。\n\n\n阿波罗十一号四十周年期间，英国科学家在接受采访时介绍登月的重要意义：\n（阿波罗十一号任务）是在精湛技术保障下完成，但当时的风险极大……在只想规避风险的今天根本难以想象……阿波罗计划可以说是人类迄今最伟大的技术成就……从那以后，还没有任何成就对人类的激励程度能望阿姆斯特朗、奥尔德林及其后十来名宇航员项背。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/9796@87696264@778abe9b77d22f18",
+          "external_id": "zhwiki/9796",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 72,
+          "document_id": "0b569890deb851b92b020c9b",
+          "title": "阿波罗11号",
+          "wikiname": "zhwiki",
+          "page_id": 9796,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/9796-87696264-778abe9b77d22f18.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "4ab0ee1c9c6c0561781ebb2a6c5f545a533d29ca28457e487d09247be9b43c6f",
+            "start": 21799,
+            "end": 22349
+          },
+          "context_spans": [
+            {
+              "sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 阿波罗11号\n"
+            },
+            {
+              "sha256": "6f15803c5a34072bb75bea18c51816d585dad9f664d927fcc268df23b63b04e2",
+              "level": 2,
+              "kind": "heading",
+              "start": 19225,
+              "end": 19231,
+              "text": "## 影响\n"
+            },
+            {
+              "sha256": "0d86050a233c9c24f10e300f9ddb569a27b6c5a756bcc0379215ef0fb65f5f80",
+              "level": 3,
+              "kind": "heading",
+              "start": 21779,
+              "end": 21788,
+              "text": "### 周年庆典\n"
+            },
+            {
+              "sha256": "80f59f2b88763cfff8b73d8b026972b5d78a2897349a24b407caf40d8d70dbf7",
+              "level": 4,
+              "kind": "heading",
+              "start": 21789,
+              "end": 21799,
+              "text": "#### 四十周年\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "4ab0ee1c9c6c0561781ebb2a6c5f545a533d29ca28457e487d09247be9b43c6f",
+          "source_text_sha256": "1cc0641a297a9041cb60e3cc8bf8b35d7232037c9169f5bf2a464d63207448dd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+          "version": 87696264,
+          "heading_path": [
+            "# 阿波罗11号\n",
+            "## 影响\n",
+            "### 周年庆典\n",
+            "#### 四十周年\n"
+          ],
+          "file_id": "0b569890deb851b92b020c9b",
+          "atomic": false,
+          "legacy_document_id": "9a620a17926d9694ca0f6f1c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "4ab0ee1c9c6c0561781ebb2a6c5f545a533d29ca28457e487d09247be9b43c6f",
+          "parent_source_id": "verbatim-v1:a081a380b82b5ce7871896168d81e2a86b79ca6012cdc261b930d65ccbd200b3",
+          "parent_text_sha256": "4ab0ee1c9c6c0561781ebb2a6c5f545a533d29ca28457e487d09247be9b43c6f",
+          "span_start": 0,
+          "span_end": 550,
+          "span_sha256": "4ab0ee1c9c6c0561781ebb2a6c5f545a533d29ca28457e487d09247be9b43c6f",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:d67007c34f46f89591e2627ac6e0cd29f113b0560858a0fcd2b62ee38cbf6c57@0:564:dccab94545fe",
+        "document_id": "0b569890deb851b92b020c9b",
+        "source": "finewiki-zh",
+        "title": "阿波罗11号",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+        "score": 0.058184143222506396,
+        "snippet": "2015年6月10日，联邦众议员比爾·波西在第114届美国国会期间递交决议，要求美國鑄幣局为阿波罗十一号五十周年设计并销售金、银与包层合金材质纪念币。2019年1月24日，铸币局网站开始向公众销售阿波罗十一号五十周年纪念币。\n2019年3月，包含1969年修复视频的纪录片《阿波罗十一号》IMAX版首映，3月8日开始院线发行。\n2019年7月18至20日，美国国家航空航天博物馆和航空航天局赞助的“阿波罗五十周年节”在哥伦比亚特区国家广场举行，包含观众能动手参与的展品和活动，亚当·萨维奇与航空航天局科学家发表演说。\n美国东部时间7月16至20日每晚9点半到11点半，169米高的華盛頓紀念碑东面经投影显示111米的土星5号火箭图案，期间还有17分钟全动态视频，营造火箭组装和发射效果，结合12米宽的肯尼迪航天中心倒计时画面，还有两块大银幕展现历史视频素材，再现50年前的登月时刻。7月19至20日每晚演出三场，最后一晚适逢周六，并且最后一场演出略有延迟，确保画面上阿姆斯特朗踏上月球的第一步正好是实际登月第一步50年后。\n2019年7月19日，Google涂鸦向阿波罗十一号登月致敬，最后提供YouTube动画视频链接，宇航员科林斯配音。7月19日，唐納·川普总统在椭圆型办公室接见奥尔德林、科林斯，以及阿姆斯特朗的儿子。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/9796@87696264@778abe9b77d22f18",
+          "external_id": "zhwiki/9796",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 74,
+          "document_id": "0b569890deb851b92b020c9b",
+          "title": "阿波罗11号",
+          "wikiname": "zhwiki",
+          "page_id": 9796,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/9796-87696264-778abe9b77d22f18.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "dccab94545fe68811594d97a70a26cccf8a6e37d93a52da2cc596d42740adc26",
+            "start": 22359,
+            "end": 22923
+          },
+          "context_spans": [
+            {
+              "sha256": "050a1473f947ed9a0d42e1bf4d516a2095cefa7f46a1f8bc951df4f1fac23e95",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 阿波罗11号\n"
+            },
+            {
+              "sha256": "6f15803c5a34072bb75bea18c51816d585dad9f664d927fcc268df23b63b04e2",
+              "level": 2,
+              "kind": "heading",
+              "start": 19225,
+              "end": 19231,
+              "text": "## 影响\n"
+            },
+            {
+              "sha256": "0d86050a233c9c24f10e300f9ddb569a27b6c5a756bcc0379215ef0fb65f5f80",
+              "level": 3,
+              "kind": "heading",
+              "start": 21779,
+              "end": 21788,
+              "text": "### 周年庆典\n"
+            },
+            {
+              "sha256": "ec279fd743a36f525b0995cea316aefa3ebf16bda03ea1e586235f609041f4f3",
+              "level": 4,
+              "kind": "heading",
+              "start": 22349,
+              "end": 22359,
+              "text": "#### 五十周年\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "dccab94545fe68811594d97a70a26cccf8a6e37d93a52da2cc596d42740adc26",
+          "source_text_sha256": "1cc0641a297a9041cb60e3cc8bf8b35d7232037c9169f5bf2a464d63207448dd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87696264",
+          "version": 87696264,
+          "heading_path": [
+            "# 阿波罗11号\n",
+            "## 影响\n",
+            "### 周年庆典\n",
+            "#### 五十周年\n"
+          ],
+          "file_id": "0b569890deb851b92b020c9b",
+          "atomic": false,
+          "legacy_document_id": "9a620a17926d9694ca0f6f1c",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "dccab94545fe68811594d97a70a26cccf8a6e37d93a52da2cc596d42740adc26",
+          "parent_source_id": "verbatim-v1:d67007c34f46f89591e2627ac6e0cd29f113b0560858a0fcd2b62ee38cbf6c57",
+          "parent_text_sha256": "dccab94545fe68811594d97a70a26cccf8a6e37d93a52da2cc596d42740adc26",
+          "span_start": 0,
+          "span_end": 564,
+          "span_sha256": "dccab94545fe68811594d97a70a26cccf8a6e37d93a52da2cc596d42740adc26",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      31
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 8,
+      "has_numeric_citation": false,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0339.json"
+  },
+  "review": {
+    "case_id": "diverse-0013",
+    "verdict": "partial",
+    "issues": [
+      "missing_citation",
+      "incomplete_explanation"
+    ],
+    "note": "回答仅称为首次登月奠定基础，没有明确说明任务本身实现首次载人登月，也未展开历史意义；无来源引用。"
+  },
+  "input": {
+    "id": "diverse-0013",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 13,
+    "original_case": {
+      "case_type": "cause",
+      "question": "阿波罗11号为什么具有历史意义",
+      "expected_titles": [
+        "阿波罗11号",
+        "阿波羅11號"
+      ]
+    },
+    "category": "cause",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "阿波罗11号为什么具有历史意义",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "96b30347e188cc51c4f09faa2d80af69165adcc76b3007dcefd44557948c0b1e"
+}

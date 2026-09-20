@@ -1,0 +1,514 @@
+{
+  "result": {
+    "case_id": "wiki_batch2-0023",
+    "suite": "wiki_batch2",
+    "question": "你知道年輕人們何时上映吗？",
+    "http_status": 200,
+    "error": null,
+    "answer": "年轻人們何時上映：1967年[资料 1]。",
+    "sources": [
+      {
+        "id": "verbatim-v1:04fab6f567a377eb682eb371f5f51fc67cace75833ae8f9a6ccee89a9d8f22e8@0:46:80bfa5e699fb",
+        "document_id": "231c8cd2defe47918d245502",
+        "source": "finewiki-zh",
+        "title": "年輕人們",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+        "score": 0.11475409836065575,
+        "snippet": "《年輕人們》（）1967年上映。由俳優座、新星電影社（自主上映）製作。黑白電影，87分。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4032285@84815373@4623ac7b16da7bbb",
+          "external_id": "zhwiki/4032285",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 11,
+          "document_id": "231c8cd2defe47918d245502",
+          "title": "年輕人們",
+          "wikiname": "zhwiki",
+          "page_id": 4032285,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4032285-84815373-4623ac7b16da7bbb.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "80bfa5e699fbde09bce4b3dfd4ffa797af21c9156353e8fe8706375fe9fd521e",
+            "start": 871,
+            "end": 917
+          },
+          "context_spans": [
+            {
+              "sha256": "26e1ba562a501027530fc1f839ebc51f27e698babfcec272e27f5295eced31df",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 年輕人們\n"
+            },
+            {
+              "sha256": "3580e2f311ef455666c2dcccdf83ec5b74287646bf93b86caeb9834724317ebb",
+              "level": 2,
+              "kind": "heading",
+              "start": 801,
+              "end": 807,
+              "text": "## 電影\n"
+            },
+            {
+              "sha256": "4b18b67e68b2108176a1216b67a67a2aeb162f01a1f71397ede63bfc04e24c17",
+              "level": 3,
+              "kind": "heading",
+              "start": 862,
+              "end": 871,
+              "text": "### 年輕人們\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "80bfa5e699fbde09bce4b3dfd4ffa797af21c9156353e8fe8706375fe9fd521e",
+          "source_text_sha256": "901a8356fa5f143d095c2d6c45b9031818ef07db42ab3642163ca462fdd71496",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+          "version": 84815373,
+          "heading_path": [
+            "# 年輕人們\n",
+            "## 電影\n",
+            "### 年輕人們\n"
+          ],
+          "file_id": "231c8cd2defe47918d245502",
+          "atomic": false,
+          "legacy_document_id": "6ba6540ca3bd5e623aaec953",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "80bfa5e699fbde09bce4b3dfd4ffa797af21c9156353e8fe8706375fe9fd521e",
+          "parent_source_id": "verbatim-v1:04fab6f567a377eb682eb371f5f51fc67cace75833ae8f9a6ccee89a9d8f22e8",
+          "parent_text_sha256": "80bfa5e699fbde09bce4b3dfd4ffa797af21c9156353e8fe8706375fe9fd521e",
+          "span_start": 0,
+          "span_end": 46,
+          "span_sha256": "80bfa5e699fbde09bce4b3dfd4ffa797af21c9156353e8fe8706375fe9fd521e",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:187494d8a9263541c47c3aa97f83b27d55f8773b7a67426b9f81ad96530c7605@0:61:d8ac0137960b",
+        "document_id": "231c8cd2defe47918d245502",
+        "source": "finewiki-zh",
+        "title": "年輕人們",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+        "score": 0.11290322580645161,
+        "snippet": "《年輕人的旗》（）1970年11月28日公開。俳優座映画放送製作、「年輕人們」全國上映委員會配給。黑白電影、101分。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4032285@84815373@4623ac7b16da7bbb",
+          "external_id": "zhwiki/4032285",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 23,
+          "document_id": "231c8cd2defe47918d245502",
+          "title": "年輕人們",
+          "wikiname": "zhwiki",
+          "page_id": 4032285,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4032285-84815373-4623ac7b16da7bbb.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "d8ac0137960b2f6444a05ddd1fdaa835402b373667faef9e3b052a0793fb60dd",
+            "start": 1520,
+            "end": 1581
+          },
+          "context_spans": [
+            {
+              "sha256": "26e1ba562a501027530fc1f839ebc51f27e698babfcec272e27f5295eced31df",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 年輕人們\n"
+            },
+            {
+              "sha256": "3580e2f311ef455666c2dcccdf83ec5b74287646bf93b86caeb9834724317ebb",
+              "level": 2,
+              "kind": "heading",
+              "start": 801,
+              "end": 807,
+              "text": "## 電影\n"
+            },
+            {
+              "sha256": "00d28f4830a7ac694d39df191e1e1e2e0834b6e8a3fc8dee4aa4593c594aa3de",
+              "level": 3,
+              "kind": "heading",
+              "start": 1510,
+              "end": 1520,
+              "text": "### 年輕人的旗\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "d8ac0137960b2f6444a05ddd1fdaa835402b373667faef9e3b052a0793fb60dd",
+          "source_text_sha256": "901a8356fa5f143d095c2d6c45b9031818ef07db42ab3642163ca462fdd71496",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+          "version": 84815373,
+          "heading_path": [
+            "# 年輕人們\n",
+            "## 電影\n",
+            "### 年輕人的旗\n"
+          ],
+          "file_id": "231c8cd2defe47918d245502",
+          "atomic": false,
+          "legacy_document_id": "6ba6540ca3bd5e623aaec953",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "d8ac0137960b2f6444a05ddd1fdaa835402b373667faef9e3b052a0793fb60dd",
+          "parent_source_id": "verbatim-v1:187494d8a9263541c47c3aa97f83b27d55f8773b7a67426b9f81ad96530c7605",
+          "parent_text_sha256": "d8ac0137960b2f6444a05ddd1fdaa835402b373667faef9e3b052a0793fb60dd",
+          "span_start": 0,
+          "span_end": 61,
+          "span_sha256": "d8ac0137960b2f6444a05ddd1fdaa835402b373667faef9e3b052a0793fb60dd",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:3030f13fcf96e78ab5d34f8c14b2db737efa7655e34e4a1fbd01a2685bcd0c9c@0:18:8d7355d138e9",
+        "document_id": "231c8cd2defe47918d245502",
+        "source": "finewiki-zh",
+        "title": "年輕人們",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+        "score": 0.1111111111111111,
+        "snippet": "### 年輕人走著 -續年輕人們-\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4032285@84815373@4623ac7b16da7bbb",
+          "external_id": "zhwiki/4032285",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 16,
+          "document_id": "231c8cd2defe47918d245502",
+          "title": "年輕人們",
+          "wikiname": "zhwiki",
+          "page_id": 4032285,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4032285-84815373-4623ac7b16da7bbb.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8d7355d138e9ecf4041c9479d71a65bcf8d07ced4f1ba14401dc9d17f370ceb2",
+            "start": 1178,
+            "end": 1196
+          },
+          "context_spans": [
+            {
+              "sha256": "26e1ba562a501027530fc1f839ebc51f27e698babfcec272e27f5295eced31df",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 年輕人們\n"
+            },
+            {
+              "sha256": "3580e2f311ef455666c2dcccdf83ec5b74287646bf93b86caeb9834724317ebb",
+              "level": 2,
+              "kind": "heading",
+              "start": 801,
+              "end": 807,
+              "text": "## 電影\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "8d7355d138e9ecf4041c9479d71a65bcf8d07ced4f1ba14401dc9d17f370ceb2",
+          "source_text_sha256": "901a8356fa5f143d095c2d6c45b9031818ef07db42ab3642163ca462fdd71496",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+          "version": 84815373,
+          "heading_path": [
+            "# 年輕人們\n",
+            "## 電影\n"
+          ],
+          "file_id": "231c8cd2defe47918d245502",
+          "atomic": true,
+          "legacy_document_id": "6ba6540ca3bd5e623aaec953",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8d7355d138e9ecf4041c9479d71a65bcf8d07ced4f1ba14401dc9d17f370ceb2",
+          "parent_source_id": "verbatim-v1:3030f13fcf96e78ab5d34f8c14b2db737efa7655e34e4a1fbd01a2685bcd0c9c",
+          "parent_text_sha256": "8d7355d138e9ecf4041c9479d71a65bcf8d07ced4f1ba14401dc9d17f370ceb2",
+          "span_start": 0,
+          "span_end": 18,
+          "span_sha256": "8d7355d138e9ecf4041c9479d71a65bcf8d07ced4f1ba14401dc9d17f370ceb2",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:50536a6aa120d0478cf14fba3c8ace7b224f5a8b8006785aa116da3780aebd8c@0:9:4b18b67e68b2",
+        "document_id": "231c8cd2defe47918d245502",
+        "source": "finewiki-zh",
+        "title": "年輕人們",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+        "score": 0.1076923076923077,
+        "snippet": "### 年輕人們\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4032285@84815373@4623ac7b16da7bbb",
+          "external_id": "zhwiki/4032285",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 10,
+          "document_id": "231c8cd2defe47918d245502",
+          "title": "年輕人們",
+          "wikiname": "zhwiki",
+          "page_id": 4032285,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4032285-84815373-4623ac7b16da7bbb.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "4b18b67e68b2108176a1216b67a67a2aeb162f01a1f71397ede63bfc04e24c17",
+            "start": 862,
+            "end": 871
+          },
+          "context_spans": [
+            {
+              "sha256": "26e1ba562a501027530fc1f839ebc51f27e698babfcec272e27f5295eced31df",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 年輕人們\n"
+            },
+            {
+              "sha256": "3580e2f311ef455666c2dcccdf83ec5b74287646bf93b86caeb9834724317ebb",
+              "level": 2,
+              "kind": "heading",
+              "start": 801,
+              "end": 807,
+              "text": "## 電影\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "4b18b67e68b2108176a1216b67a67a2aeb162f01a1f71397ede63bfc04e24c17",
+          "source_text_sha256": "901a8356fa5f143d095c2d6c45b9031818ef07db42ab3642163ca462fdd71496",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+          "version": 84815373,
+          "heading_path": [
+            "# 年輕人們\n",
+            "## 電影\n"
+          ],
+          "file_id": "231c8cd2defe47918d245502",
+          "atomic": true,
+          "legacy_document_id": "6ba6540ca3bd5e623aaec953",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "4b18b67e68b2108176a1216b67a67a2aeb162f01a1f71397ede63bfc04e24c17",
+          "parent_source_id": "verbatim-v1:50536a6aa120d0478cf14fba3c8ace7b224f5a8b8006785aa116da3780aebd8c",
+          "parent_text_sha256": "4b18b67e68b2108176a1216b67a67a2aeb162f01a1f71397ede63bfc04e24c17",
+          "span_start": 0,
+          "span_end": 9,
+          "span_sha256": "4b18b67e68b2108176a1216b67a67a2aeb162f01a1f71397ede63bfc04e24c17",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:9880a25ec86e6c318f0ff308d3a5a95561ba31e5d8d90040240c259e87c5c25c@0:50:ccdd9dd0168e",
+        "document_id": "231c8cd2defe47918d245502",
+        "source": "finewiki-zh",
+        "title": "年輕人們",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+        "score": 0.10606060606060606,
+        "snippet": "《年輕人走著 -續年輕人們-》（）1969年5月10日公開。俳優座製作、松竹配給。白黒、98分。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4032285@84815373@4623ac7b16da7bbb",
+          "external_id": "zhwiki/4032285",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 17,
+          "document_id": "231c8cd2defe47918d245502",
+          "title": "年輕人們",
+          "wikiname": "zhwiki",
+          "page_id": 4032285,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4032285-84815373-4623ac7b16da7bbb.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "ccdd9dd0168e95e68b276aa03ceac11cf2bb9dfa370435f438d464cebd3c40ed",
+            "start": 1196,
+            "end": 1246
+          },
+          "context_spans": [
+            {
+              "sha256": "26e1ba562a501027530fc1f839ebc51f27e698babfcec272e27f5295eced31df",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 年輕人們\n"
+            },
+            {
+              "sha256": "3580e2f311ef455666c2dcccdf83ec5b74287646bf93b86caeb9834724317ebb",
+              "level": 2,
+              "kind": "heading",
+              "start": 801,
+              "end": 807,
+              "text": "## 電影\n"
+            },
+            {
+              "sha256": "8d7355d138e9ecf4041c9479d71a65bcf8d07ced4f1ba14401dc9d17f370ceb2",
+              "level": 3,
+              "kind": "heading",
+              "start": 1178,
+              "end": 1196,
+              "text": "### 年輕人走著 -續年輕人們-\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "ccdd9dd0168e95e68b276aa03ceac11cf2bb9dfa370435f438d464cebd3c40ed",
+          "source_text_sha256": "901a8356fa5f143d095c2d6c45b9031818ef07db42ab3642163ca462fdd71496",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+          "version": 84815373,
+          "heading_path": [
+            "# 年輕人們\n",
+            "## 電影\n",
+            "### 年輕人走著 -續年輕人們-\n"
+          ],
+          "file_id": "231c8cd2defe47918d245502",
+          "atomic": false,
+          "legacy_document_id": "6ba6540ca3bd5e623aaec953",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "ccdd9dd0168e95e68b276aa03ceac11cf2bb9dfa370435f438d464cebd3c40ed",
+          "parent_source_id": "verbatim-v1:9880a25ec86e6c318f0ff308d3a5a95561ba31e5d8d90040240c259e87c5c25c",
+          "parent_text_sha256": "ccdd9dd0168e95e68b276aa03ceac11cf2bb9dfa370435f438d464cebd3c40ed",
+          "span_start": 0,
+          "span_end": 50,
+          "span_sha256": "ccdd9dd0168e95e68b276aa03ceac11cf2bb9dfa370435f438d464cebd3c40ed",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:7da7e12743dae48fe91faf387fbb1b530d7bb7e0a4d255aa6bcdc0e5c76f73c0@0:82:3a92cc59cb9c",
+        "document_id": "231c8cd2defe47918d245502",
+        "source": "finewiki-zh",
+        "title": "年輕人們",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+        "score": 0.10294117647058824,
+        "snippet": "《年輕人們》（日語：，英語：），為1966年由富士電視台所播出的電視連續劇。1967年亦衍伸出電影版、1969年及1990年的舞台劇、2014年的電視劇翻拍版。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/4032285@84815373@4623ac7b16da7bbb",
+          "external_id": "zhwiki/4032285",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "231c8cd2defe47918d245502",
+          "title": "年輕人們",
+          "wikiname": "zhwiki",
+          "page_id": 4032285,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/4032285-84815373-4623ac7b16da7bbb.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "3a92cc59cb9c270f16d9248e9f4436cddcc3cf7288bf99f40c2be016c3b39639",
+            "start": 7,
+            "end": 89
+          },
+          "context_spans": [
+            {
+              "sha256": "26e1ba562a501027530fc1f839ebc51f27e698babfcec272e27f5295eced31df",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 年輕人們\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "3a92cc59cb9c270f16d9248e9f4436cddcc3cf7288bf99f40c2be016c3b39639",
+          "source_text_sha256": "901a8356fa5f143d095c2d6c45b9031818ef07db42ab3642163ca462fdd71496",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=84815373",
+          "version": 84815373,
+          "heading_path": [
+            "# 年輕人們\n"
+          ],
+          "file_id": "231c8cd2defe47918d245502",
+          "atomic": false,
+          "legacy_document_id": "6ba6540ca3bd5e623aaec953",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "3a92cc59cb9c270f16d9248e9f4436cddcc3cf7288bf99f40c2be016c3b39639",
+          "parent_source_id": "verbatim-v1:7da7e12743dae48fe91faf387fbb1b530d7bb7e0a4d255aa6bcdc0e5c76f73c0",
+          "parent_text_sha256": "3a92cc59cb9c270f16d9248e9f4436cddcc3cf7288bf99f40c2be016c3b39639",
+          "span_start": 0,
+          "span_end": 82,
+          "span_sha256": "3a92cc59cb9c270f16d9248e9f4436cddcc3cf7288bf99f40c2be016c3b39639",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      21
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 6,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": false,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 1,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0124.json"
+  },
+  "review": {
+    "case_id": "wiki_batch2-0023",
+    "verdict": "pass",
+    "issues": [
+      "irrelevant_selected_sources"
+    ],
+    "note": "回答电影1967年上映，资料1直接支持，未混用1966年电视剧或两部后续电影日期；来源列表仍夹带后续作品和裸标题。"
+  },
+  "input": {
+    "id": "wiki_batch2-0023",
+    "suite": "wiki_batch2",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+    "origin_index": 23,
+    "original_case": {
+      "question": "你知道年輕人們何时上映吗？",
+      "question_type": "time",
+      "style": "conversational",
+      "expected_title": "年輕人們",
+      "expected_document_id": "6ba6540ca3bd5e623aaec953",
+      "expected_terms": [
+        "1967年"
+      ],
+      "reference": "《年輕人們》（）1967年上映。",
+      "section": "年輕人們 > 電影 > 年輕人們"
+    },
+    "category": "time",
+    "style": "conversational",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "你知道年輕人們何时上映吗？",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "2ae7bf98bd22908a5fbe208e486eb4cd8f1d4515a29c58fbc69ed41bf0f5cd48"
+}

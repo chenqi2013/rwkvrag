@@ -1,0 +1,256 @@
+{
+  "result": {
+    "case_id": "wiki_batch2-0005",
+    "suite": "wiki_batch2",
+    "question": "说下瓦森人口的具体数字。",
+    "http_status": 200,
+    "error": null,
+    "answer": "瓦森人口数字：398人（2018年）[资料 1]。",
+    "sources": [
+      {
+        "id": "verbatim-v1:3f3e1bccfc8a6494692858bb315aa5bea6e0b8eda98dade458a01023b2d95f7a@0:72:ff144e2bc095",
+        "document_id": "20dd765bdf86fe3aa2c0217a",
+        "source": "finewiki-zh",
+        "title": "瓦森",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=87710748",
+        "score": 0.0819672131147541,
+        "snippet": "瓦森（德語：）是瑞士乌里州的市镇，位於該州南部，面積96.88平方公里，海拔高度930米，2018年人口398人，人口密度每平方公里4.1人。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/9124639@87710748@1b58d1e81ce6dcd6",
+          "external_id": "zhwiki/9124639",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "20dd765bdf86fe3aa2c0217a",
+          "title": "瓦森",
+          "wikiname": "zhwiki",
+          "page_id": 9124639,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/9124639-87710748-1b58d1e81ce6dcd6.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "ff144e2bc0955a3dd7be0d616fb053cafdb471eede0539527835bb34670ecc75",
+            "start": 5,
+            "end": 77
+          },
+          "context_spans": [
+            {
+              "sha256": "0789f9cdad5f4a27837e4740b8f05679512a7f80c3b584a3ec2b92c7d1397a4e",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 5,
+              "text": "# 瓦森\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "ff144e2bc0955a3dd7be0d616fb053cafdb471eede0539527835bb34670ecc75",
+          "source_text_sha256": "fb7ff97f981abb4e07e545ac9b6a42cbfa45c964de58d6bdbf7834c85514d69c",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=87710748",
+          "version": 87710748,
+          "heading_path": [
+            "# 瓦森\n"
+          ],
+          "file_id": "20dd765bdf86fe3aa2c0217a",
+          "atomic": false,
+          "legacy_document_id": "58aa8c7cad9f98ea7ab20d89",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "ff144e2bc0955a3dd7be0d616fb053cafdb471eede0539527835bb34670ecc75",
+          "parent_source_id": "verbatim-v1:3f3e1bccfc8a6494692858bb315aa5bea6e0b8eda98dade458a01023b2d95f7a",
+          "parent_text_sha256": "ff144e2bc0955a3dd7be0d616fb053cafdb471eede0539527835bb34670ecc75",
+          "span_start": 0,
+          "span_end": 72,
+          "span_sha256": "ff144e2bc0955a3dd7be0d616fb053cafdb471eede0539527835bb34670ecc75",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:df3e56058771b5a62e49099519742275a45e4c17a98732e1305e6993c8d46565@0:240:990cc309b9d2",
+        "document_id": "51f692e39e8accf4834f9221",
+        "source": "finewiki-zh",
+        "title": "俄罗斯人口",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=84628353",
+        "score": 0.0868550528096571,
+        "snippet": "截至2020年1月2日俄羅斯人口146,801,931人（包含克里米亞） ，而俄羅斯土地面積約1,700萬平方公里。人口密度約每平方公里9人，是世界上人口最稀疏的國家之一。多數人口集中在都會地區。\n俄羅斯人口於苏联解体前的1991年時達到最高點，當時人口為148,689,000，隨後則進入十多年的人口負成長，每年大約減少0.5%的人口，主因為生育率下降及大量移民至他國 。\n至2000年代後期人口減少趨緩，2009年俄羅斯人口15年來首次回到正增長，該年增加23,300人。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/592226@84628353@8cf25429445f9879",
+          "external_id": "zhwiki/592226",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "51f692e39e8accf4834f9221",
+          "title": "俄罗斯人口",
+          "wikiname": "zhwiki",
+          "page_id": 592226,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/592226-84628353-8cf25429445f9879.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "990cc309b9d27a868a2ee3827a3f0ce24519a44e2a720070766abedd8f1ddda7",
+            "start": 8,
+            "end": 248
+          },
+          "context_spans": [
+            {
+              "sha256": "f858d8f54f91c72f05aa8798d946800d2b364fb7ab1389cf0ece049a6a21dc70",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# 俄罗斯人口\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "990cc309b9d27a868a2ee3827a3f0ce24519a44e2a720070766abedd8f1ddda7",
+          "source_text_sha256": "533492f0797e531cab5c00e1e3c4cba5ba8896ec2ec294921cf30f2d7166ddcb",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=84628353",
+          "version": 84628353,
+          "heading_path": [
+            "# 俄罗斯人口\n"
+          ],
+          "file_id": "51f692e39e8accf4834f9221",
+          "atomic": false,
+          "legacy_document_id": "b8a7700c51e36a3c9be9c7f7",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "990cc309b9d27a868a2ee3827a3f0ce24519a44e2a720070766abedd8f1ddda7",
+          "parent_source_id": "verbatim-v1:df3e56058771b5a62e49099519742275a45e4c17a98732e1305e6993c8d46565",
+          "parent_text_sha256": "990cc309b9d27a868a2ee3827a3f0ce24519a44e2a720070766abedd8f1ddda7",
+          "span_start": 0,
+          "span_end": 240,
+          "span_sha256": "990cc309b9d27a868a2ee3827a3f0ce24519a44e2a720070766abedd8f1ddda7",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:2ac5ef815e11e609c318271a1e8436816783c2bc4bd4a554791d8dff593c7e63@0:76:3c0556c4a7d0",
+        "document_id": "7821c02c07f880a0bcc7cc12",
+        "source": "finewiki-zh",
+        "title": "下萨瓦统计区",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=59168256",
+        "score": 0.047619047619047616,
+        "snippet": "下萨瓦统计区（斯洛維尼亞語：） ，是斯洛文尼亚的一个统计区，位於該國東南部。面積968平方公里，人口75,727人(2015年)，最大城市為克爾什科。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/5402771@59168256@3fb0ff1bce5663cd",
+          "external_id": "zhwiki/5402771",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "7821c02c07f880a0bcc7cc12",
+          "title": "下萨瓦统计区",
+          "wikiname": "zhwiki",
+          "page_id": 5402771,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/5402771-59168256-3fb0ff1bce5663cd.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "3c0556c4a7d030fb66848dfbedb6f24ba9c1bb8037db690d7c94f843722974d8",
+            "start": 9,
+            "end": 85
+          },
+          "context_spans": [
+            {
+              "sha256": "67afc3282862cf76812229b8b989c1e2f5cb8904c2bd371d8a2bc9901e584040",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# 下萨瓦统计区\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "3c0556c4a7d030fb66848dfbedb6f24ba9c1bb8037db690d7c94f843722974d8",
+          "source_text_sha256": "2dba46a612c3770390f30c86a38306a48d07586d7b76ba0b747c580c925d11d5",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=59168256",
+          "version": 59168256,
+          "heading_path": [
+            "# 下萨瓦统计区\n"
+          ],
+          "file_id": "7821c02c07f880a0bcc7cc12",
+          "atomic": false,
+          "legacy_document_id": "1465f6ef8a41211341cc9708",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "3c0556c4a7d030fb66848dfbedb6f24ba9c1bb8037db690d7c94f843722974d8",
+          "parent_source_id": "verbatim-v1:2ac5ef815e11e609c318271a1e8436816783c2bc4bd4a554791d8dff593c7e63",
+          "parent_text_sha256": "3c0556c4a7d030fb66848dfbedb6f24ba9c1bb8037db690d7c94f843722974d8",
+          "span_start": 0,
+          "span_end": 76,
+          "span_sha256": "3c0556c4a7d030fb66848dfbedb6f24ba9c1bb8037db690d7c94f843722974d8",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      25
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 3,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": false,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 1,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0095.json"
+  },
+  "review": {
+    "case_id": "wiki_batch2-0005",
+    "verdict": "pass",
+    "issues": [
+      "irrelevant_selected_sources"
+    ],
+    "note": "回答398人并保留2018年口径，引用资料1直接支持；入选来源还夹带俄罗斯与下萨瓦人口，但没有混入最终回答。"
+  },
+  "input": {
+    "id": "wiki_batch2-0005",
+    "suite": "wiki_batch2",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+    "origin_index": 5,
+    "original_case": {
+      "question": "说下瓦森人口的具体数字。",
+      "question_type": "numeric",
+      "style": "colloquial",
+      "expected_title": "瓦森",
+      "expected_document_id": "58aa8c7cad9f98ea7ab20d89",
+      "expected_terms": [
+        "398人"
+      ],
+      "reference": "瓦森（德語：）是瑞士乌里州的市镇，位於該州南部，面積96.88平方公里，海拔高度930米，2018年人口398人，人口密度每平方公里4.1人。",
+      "section": "瓦森"
+    },
+    "category": "numeric",
+    "style": "colloquial",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "说下瓦森人口的具体数字。",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "63db3bdc70346a36c0e40cea2b83665c7b7eeb962c52c69f1ace75dbeb47867d"
+}

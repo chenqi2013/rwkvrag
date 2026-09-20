@@ -1,0 +1,192 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0103",
+    "suite": "wiki_verified",
+    "question": "本岑施維爾的人口是多少？",
+    "http_status": 200,
+    "error": null,
+    "answer": "本岑施維爾的人口是548人。[资料 1]",
+    "sources": [
+      {
+        "id": "verbatim-v1:a60e8d5a8c7c2ba4f61ea5fbc7c9ec7a852a8789ad18859adc1dcd440da446ce@0:85:6f942b6b0bea",
+        "document_id": "409075dc34500d3e23c07e21",
+        "source": "finewiki-zh",
+        "title": "本岑施維爾",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=84911540",
+        "score": 0.08064516129032258,
+        "snippet": "本岑施維爾是瑞士的城鎮，位於該國北部，由阿爾高州負責管轄，面積2.46平方公里，海拔高度459米，2010年人口548，七成人口信奉基督教，人口密度每平方公里223人。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/3509350@84911540@4a47cb7428a1937f",
+          "external_id": "zhwiki/3509350",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "409075dc34500d3e23c07e21",
+          "title": "本岑施維爾",
+          "wikiname": "zhwiki",
+          "page_id": 3509350,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/3509350-84911540-4a47cb7428a1937f.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "6f942b6b0bea84fb2a2e0261f2533d86111d433ad1fb8af14bd0c64a98045d92",
+            "start": 8,
+            "end": 93
+          },
+          "context_spans": [
+            {
+              "sha256": "e8d26d23b802a71af96477b054d422864beda89f8f672a41adbc574c49665d3d",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# 本岑施維爾\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "6f942b6b0bea84fb2a2e0261f2533d86111d433ad1fb8af14bd0c64a98045d92",
+          "source_text_sha256": "a8025ee6c6ed46534deff6ff1cb4de0033a7bbcb03948d5ae309d6ec5865bef7",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=84911540",
+          "version": 84911540,
+          "heading_path": [
+            "# 本岑施維爾\n"
+          ],
+          "file_id": "409075dc34500d3e23c07e21",
+          "atomic": false,
+          "legacy_document_id": "da472b8081a336c8439d36da",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "6f942b6b0bea84fb2a2e0261f2533d86111d433ad1fb8af14bd0c64a98045d92",
+          "parent_source_id": "verbatim-v1:a60e8d5a8c7c2ba4f61ea5fbc7c9ec7a852a8789ad18859adc1dcd440da446ce",
+          "parent_text_sha256": "6f942b6b0bea84fb2a2e0261f2533d86111d433ad1fb8af14bd0c64a98045d92",
+          "span_start": 0,
+          "span_end": 85,
+          "span_sha256": "6f942b6b0bea84fb2a2e0261f2533d86111d433ad1fb8af14bd0c64a98045d92",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:e83eb1b1041e30d4336a45afbd99513f161ebfda421dd4c47de2e0a480a00105@0:75:0317503ad09e",
+        "document_id": "5b7e552d2806622d7f8a3889",
+        "source": "finewiki-zh",
+        "title": "维尔德舍瑙",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=47769692",
+        "score": 0.07604040189641595,
+        "snippet": "维尔德舍瑙（德语：）是奥地利蒂罗尔州库夫施泰因县的一个市镇。总面积97.41平方公里，总人口4182人，人口密度42.9人/平方公里（2006年）。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/3242414@47769692@8af424c3b470fa95",
+          "external_id": "zhwiki/3242414",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "5b7e552d2806622d7f8a3889",
+          "title": "维尔德舍瑙",
+          "wikiname": "zhwiki",
+          "page_id": 3242414,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/3242414-47769692-8af424c3b470fa95.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "0317503ad09ed06eea7f33a30aff102bbaea2f34111d008fc0ef48173499682c",
+            "start": 8,
+            "end": 83
+          },
+          "context_spans": [
+            {
+              "sha256": "f5b3ebce0a19cb9453aeb2549aa5d2b1e381df89b5512da9970692fcd3203d6d",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# 维尔德舍瑙\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "0317503ad09ed06eea7f33a30aff102bbaea2f34111d008fc0ef48173499682c",
+          "source_text_sha256": "6fdbc0158f603a70c3a2b1bb63d3955b7ab25e4708e39348554776ca02526588",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=47769692",
+          "version": 47769692,
+          "heading_path": [
+            "# 维尔德舍瑙\n"
+          ],
+          "file_id": "5b7e552d2806622d7f8a3889",
+          "atomic": false,
+          "legacy_document_id": "9d28e2d27fdc0f0095aa13b4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "0317503ad09ed06eea7f33a30aff102bbaea2f34111d008fc0ef48173499682c",
+          "parent_source_id": "verbatim-v1:e83eb1b1041e30d4336a45afbd99513f161ebfda421dd4c47de2e0a480a00105",
+          "parent_text_sha256": "0317503ad09ed06eea7f33a30aff102bbaea2f34111d008fc0ef48173499682c",
+          "span_start": 0,
+          "span_end": 75,
+          "span_sha256": "0317503ad09ed06eea7f33a30aff102bbaea2f34111d008fc0ef48173499682c",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      20
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": false,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 0,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0200.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0103",
+    "verdict": "pass",
+    "issues": [],
+    "note": "548人口及资料1对应正确，按冻结历史来源核验；来源数字属于2010年，不作为当前人口声明。"
+  },
+  "input": {
+    "id": "wiki_verified-0103",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 103,
+    "original_case": {
+      "question": "本岑施維爾的人口是多少？",
+      "question_type": "numeric",
+      "style": "direct",
+      "expected_title": "本岑施維爾",
+      "expected_document_id": "da472b8081a336c8439d36da",
+      "expected_terms": [
+        "223人"
+      ],
+      "reference": "本岑施維爾是瑞士的城鎮，位於該國北部，由阿爾高州負責管轄，面積2.46平方公里，海拔高度459米，2010年人口548，七成人口信奉基督教，人口密度每平方公里223人。",
+      "section": "本岑施維爾"
+    },
+    "category": "numeric",
+    "style": "direct",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "本岑施維爾的人口是多少？",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "9b35e99901280f5d9cb56d529a5c4b0d3fcb87f7b73d060b6baaca9028eb6b0a"
+}

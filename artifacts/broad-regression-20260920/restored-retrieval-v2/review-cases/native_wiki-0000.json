@@ -1,0 +1,597 @@
+{
+  "result": {
+    "case_id": "native_wiki-0000",
+    "suite": "native_wiki",
+    "question": "旧培训页把CAN FD的ID长度、载荷长度和速率混成一列了。请分别给出它支持的两种消息ID位数、每帧最大实际数据字节数，以及条目给出的最高资料率（Mbit/s）。这个最高速率还受哪些线路条件影响？",
+    "http_status": 200,
+    "error": null,
+    "answer": "- CAN FD 支持的两种消息ID位数：11位、29位\n- CAN FD 每帧最大实际数据字节数：64位元\n- CAN FD 条目给出的最高资料率（Mbit/s）：5\n- 这个最高速率还受哪些线路条件影响：CAN BUS的总线长度、总线上的其他电子控制器及电磁因素",
+    "sources": [
+      {
+        "id": "verbatim-v1:0333b3568826f16a2abc7874b30da484810d1ee7911b261928034f3173377e4b@0:607:06d6e3d54549",
+        "document_id": "47898be6767966e68e50625e",
+        "source": "finewiki-zh",
+        "title": "CAN FD",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=82332849",
+        "score": 0.0819672131147541,
+        "snippet": "CAN FD和傳統CAN的主要差異就是彈性資料率（Flexible Data-Rate、FD）的特點，電子控制器使用CAN FD時，可以動態的切換到不同的資料率，也可以切換為較大或是較小的訊息長度。CAN FD的新增機能包括動態選擇資料率及訊息長度，因此可以用相同時間長度的CAN封包內，傳送更多的訊息。相較於傳統的CAN通訊，較快的資料率以及較大的訊息量都對系統的運作有幫助，電子控制器接收感測器訊息以及傳送控制訊息的速度更快。CAN FD多半會用在現代高性能汽車的電子控制器中。現代的汽車內，當引擎運作時，或是車輛行進中，可能有超過70個電子控制器用CAN FD來交換資訊。\nCAN FD支援11位元以及29位元的訊息ID，每一個CAN頁框（frame）的實際資料量可以超過傳統CAN限制的8位元組，最大可到64位元組。CAN FD的資料率（每秒可以傳輸的位元數）最大可以到傳統CAN的5倍。CAN FD通訊協定也有其他性能的提昇，例如比較容易偵測接收到CAN訊息的錯誤，也可以用軟體動態選擇較快或是較慢的資料率。在同一個CAN網路上的一些感測器可以用較快的速率傳送實際資料，有些感測器則用較慢的速率傳送實際資料。CAN BUS是用二條線連接感測器、控制器及電子控制器。其最快速率會受到CAN電氣條件及組態（例如節點個數、總線長、或是其他電磁因素）的影響，因此這些因素也會影響CAN FD可達到的最快速率。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7035429@82332849@926c046674534634",
+          "external_id": "zhwiki/7035429",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 3,
+          "document_id": "47898be6767966e68e50625e",
+          "title": "CAN FD",
+          "wikiname": "zhwiki",
+          "page_id": 7035429,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7035429-82332849-926c046674534634.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "06d6e3d54549fca44c53f242583115021dfd6aa19ff77e5b4d93343a0a87783e",
+            "start": 484,
+            "end": 1091
+          },
+          "context_spans": [
+            {
+              "sha256": "839cefaef2ecbcc51d154a24358d8ed4f033dd4732a5b910ec9bb32dde4ed939",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# CAN FD\n"
+            },
+            {
+              "sha256": "e70db5db6769545daf8750f2517039fd88355282fc2245256d424c4d83f47b2a",
+              "level": 2,
+              "kind": "heading",
+              "start": 471,
+              "end": 484,
+              "text": "## 和傳統CAN的差異\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "06d6e3d54549fca44c53f242583115021dfd6aa19ff77e5b4d93343a0a87783e",
+          "source_text_sha256": "69a6e2cea663aaebb2569c30ade613d1db78179a6321e9721d0ba3cbf75a35bd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=82332849",
+          "version": 82332849,
+          "heading_path": [
+            "# CAN FD\n",
+            "## 和傳統CAN的差異\n"
+          ],
+          "file_id": "47898be6767966e68e50625e",
+          "atomic": false,
+          "legacy_document_id": "490f8b74a7ec8a9b08a40f5e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "06d6e3d54549fca44c53f242583115021dfd6aa19ff77e5b4d93343a0a87783e",
+          "parent_source_id": "verbatim-v1:0333b3568826f16a2abc7874b30da484810d1ee7911b261928034f3173377e4b",
+          "parent_text_sha256": "06d6e3d54549fca44c53f242583115021dfd6aa19ff77e5b4d93343a0a87783e",
+          "span_start": 0,
+          "span_end": 607,
+          "span_sha256": "06d6e3d54549fca44c53f242583115021dfd6aa19ff77e5b4d93343a0a87783e",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:03d3ca080097b26496f7ffbc4413d81c828ae2f360ef0285f8c31dbcba611daa@0:462:745db75f0077",
+        "document_id": "47898be6767966e68e50625e",
+        "source": "finewiki-zh",
+        "title": "CAN FD",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=82332849",
+        "score": 0.07841191066997519,
+        "snippet": "CAN FD（Controller Area Network Flexible Data-Rate，直譯為彈性資料率的控制器區域網路）是在電子儀器以及控制系統中，傳輸感測器資料以及控制資訊的网络传输协议。此協議是ISO 11898-1控制器區域網路（CAN）的擴展版，用在高性能的車輛中。CAN FD是由罗伯特·博世公司在2011年發展，在2012年推出，配合現代電子控制器（ECU）的需求，將資料率擴展到5Mbit/s，是原來CAN標準的五倍，也允許較大的資料頁框（最大到64位元組（byte），是原來CAN標準的8倍），其CRC欄位也由15位元提昇到17或21位元（bit），以提昇其安全性。\nCAN FD協定是設計來傳送及接收感測器資訊、控制命令，並且可以偵測感測器、控制器及單晶片之間通訊時的通訊錯誤。CAN FD一開始是設計給高性能的車輛電子控制器使用。不過因為標準CAN協定已普遍使用在不同產業中，這些產業也開始使用CAN FD，例如機器人、國防、工業自動化、水下載具、醫療設備、航太設備，以及鑽井感測器等。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7035429@82332849@926c046674534634",
+          "external_id": "zhwiki/7035429",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "47898be6767966e68e50625e",
+          "title": "CAN FD",
+          "wikiname": "zhwiki",
+          "page_id": 7035429,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7035429-82332849-926c046674534634.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "745db75f0077179c6155fddd9705c0feb823ac7ed42ae1c322d6730d9834bb66",
+            "start": 9,
+            "end": 471
+          },
+          "context_spans": [
+            {
+              "sha256": "839cefaef2ecbcc51d154a24358d8ed4f033dd4732a5b910ec9bb32dde4ed939",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# CAN FD\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "745db75f0077179c6155fddd9705c0feb823ac7ed42ae1c322d6730d9834bb66",
+          "source_text_sha256": "69a6e2cea663aaebb2569c30ade613d1db78179a6321e9721d0ba3cbf75a35bd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=82332849",
+          "version": 82332849,
+          "heading_path": [
+            "# CAN FD\n"
+          ],
+          "file_id": "47898be6767966e68e50625e",
+          "atomic": false,
+          "legacy_document_id": "490f8b74a7ec8a9b08a40f5e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "745db75f0077179c6155fddd9705c0feb823ac7ed42ae1c322d6730d9834bb66",
+          "parent_source_id": "verbatim-v1:03d3ca080097b26496f7ffbc4413d81c828ae2f360ef0285f8c31dbcba611daa",
+          "parent_text_sha256": "745db75f0077179c6155fddd9705c0feb823ac7ed42ae1c322d6730d9834bb66",
+          "span_start": 0,
+          "span_end": 462,
+          "span_sha256": "745db75f0077179c6155fddd9705c0feb823ac7ed42ae1c322d6730d9834bb66",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:e4db8ede5529a369290b499bdf6fb9342a44895c63b7b944482e683a8b4c1026@0:332:530017501d38",
+        "document_id": "47898be6767966e68e50625e",
+        "source": "finewiki-zh",
+        "title": "CAN FD",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=82332849",
+        "score": 0.08013312852022529,
+        "snippet": "- CAN FD - A Simple Intro (Incl. Efficiency & Bit Rate Calculator)（页面存档备份，存于）\n- Comparing CAN FD with Classical CAN（页面存档备份，存于）\n- CAN FD: From Theory to Practice（页面存档备份，存于）\n- CAN Bus Protection : Protect What Protects You（页面存档备份，存于）\n- ITREAD01 CAN FD簡介\n- 德州儀器 TI推出首款整合 CAN FD控制器和收發器的系統基礎晶片 （页面存档备份，存于）\n- 旺群儀器 一分鐘瞭解CAN FD（页面存档备份，存于）\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7035429@82332849@926c046674534634",
+          "external_id": "zhwiki/7035429",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 7,
+          "document_id": "47898be6767966e68e50625e",
+          "title": "CAN FD",
+          "wikiname": "zhwiki",
+          "page_id": 7035429,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7035429-82332849-926c046674534634.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "530017501d38c0e8a190936d2a03d7d7c8dcfde990ce5b3e493397ef724d5dda",
+            "start": 1177,
+            "end": 1509
+          },
+          "context_spans": [
+            {
+              "sha256": "839cefaef2ecbcc51d154a24358d8ed4f033dd4732a5b910ec9bb32dde4ed939",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# CAN FD\n"
+            },
+            {
+              "sha256": "6225b2307cc56d866c6822eb69576ff486631f9379d74ea75351904273345e2c",
+              "level": 2,
+              "kind": "heading",
+              "start": 1169,
+              "end": 1177,
+              "text": "## 外部連結\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "530017501d38c0e8a190936d2a03d7d7c8dcfde990ce5b3e493397ef724d5dda",
+          "source_text_sha256": "69a6e2cea663aaebb2569c30ade613d1db78179a6321e9721d0ba3cbf75a35bd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=82332849",
+          "version": 82332849,
+          "heading_path": [
+            "# CAN FD\n",
+            "## 外部連結\n"
+          ],
+          "file_id": "47898be6767966e68e50625e",
+          "atomic": true,
+          "legacy_document_id": "490f8b74a7ec8a9b08a40f5e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "530017501d38c0e8a190936d2a03d7d7c8dcfde990ce5b3e493397ef724d5dda",
+          "parent_source_id": "verbatim-v1:e4db8ede5529a369290b499bdf6fb9342a44895c63b7b944482e683a8b4c1026",
+          "parent_text_sha256": "530017501d38c0e8a190936d2a03d7d7c8dcfde990ce5b3e493397ef724d5dda",
+          "span_start": 0,
+          "span_end": 332,
+          "span_sha256": "530017501d38c0e8a190936d2a03d7d7c8dcfde990ce5b3e493397ef724d5dda",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:9242bb41e9f74e5747f764a67db91bac3d7905d84199e4e6837c14b2e20fc4c4@0:9:839cefaef2ec",
+        "document_id": "47898be6767966e68e50625e",
+        "source": "finewiki-zh",
+        "title": "CAN FD",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=82332849",
+        "score": 0.07814026251526252,
+        "snippet": "# CAN FD\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7035429@82332849@926c046674534634",
+          "external_id": "zhwiki/7035429",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "47898be6767966e68e50625e",
+          "title": "CAN FD",
+          "wikiname": "zhwiki",
+          "page_id": 7035429,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7035429-82332849-926c046674534634.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "839cefaef2ecbcc51d154a24358d8ed4f033dd4732a5b910ec9bb32dde4ed939",
+            "start": 0,
+            "end": 9
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "839cefaef2ecbcc51d154a24358d8ed4f033dd4732a5b910ec9bb32dde4ed939",
+          "source_text_sha256": "69a6e2cea663aaebb2569c30ade613d1db78179a6321e9721d0ba3cbf75a35bd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=82332849",
+          "version": 82332849,
+          "heading_path": [],
+          "file_id": "47898be6767966e68e50625e",
+          "atomic": true,
+          "legacy_document_id": "490f8b74a7ec8a9b08a40f5e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "839cefaef2ecbcc51d154a24358d8ed4f033dd4732a5b910ec9bb32dde4ed939",
+          "parent_source_id": "verbatim-v1:9242bb41e9f74e5747f764a67db91bac3d7905d84199e4e6837c14b2e20fc4c4",
+          "parent_text_sha256": "839cefaef2ecbcc51d154a24358d8ed4f033dd4732a5b910ec9bb32dde4ed939",
+          "span_start": 0,
+          "span_end": 9,
+          "span_sha256": "839cefaef2ecbcc51d154a24358d8ed4f033dd4732a5b910ec9bb32dde4ed939",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:69e1473d19ab7c1f805cca77124604be3552b854b9dd8c9ce955df16f55bec66@0:13:e70db5db6769",
+        "document_id": "47898be6767966e68e50625e",
+        "source": "finewiki-zh",
+        "title": "CAN FD",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=82332849",
+        "score": 0.07462686567164178,
+        "snippet": "## 和傳統CAN的差異\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/7035429@82332849@926c046674534634",
+          "external_id": "zhwiki/7035429",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 2,
+          "document_id": "47898be6767966e68e50625e",
+          "title": "CAN FD",
+          "wikiname": "zhwiki",
+          "page_id": 7035429,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/7035429-82332849-926c046674534634.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "e70db5db6769545daf8750f2517039fd88355282fc2245256d424c4d83f47b2a",
+            "start": 471,
+            "end": 484
+          },
+          "context_spans": [
+            {
+              "sha256": "839cefaef2ecbcc51d154a24358d8ed4f033dd4732a5b910ec9bb32dde4ed939",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 9,
+              "text": "# CAN FD\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "e70db5db6769545daf8750f2517039fd88355282fc2245256d424c4d83f47b2a",
+          "source_text_sha256": "69a6e2cea663aaebb2569c30ade613d1db78179a6321e9721d0ba3cbf75a35bd",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=82332849",
+          "version": 82332849,
+          "heading_path": [
+            "# CAN FD\n"
+          ],
+          "file_id": "47898be6767966e68e50625e",
+          "atomic": true,
+          "legacy_document_id": "490f8b74a7ec8a9b08a40f5e",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "e70db5db6769545daf8750f2517039fd88355282fc2245256d424c4d83f47b2a",
+          "parent_source_id": "verbatim-v1:69e1473d19ab7c1f805cca77124604be3552b854b9dd8c9ce955df16f55bec66",
+          "parent_text_sha256": "e70db5db6769545daf8750f2517039fd88355282fc2245256d424c4d83f47b2a",
+          "span_start": 0,
+          "span_end": 13,
+          "span_sha256": "e70db5db6769545daf8750f2517039fd88355282fc2245256d424c4d83f47b2a",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      133
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 5,
+      "has_numeric_citation": false,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0059.json"
+  },
+  "review": {
+    "case_id": "native_wiki-0000",
+    "verdict": "fail",
+    "issues": [
+      "wrong_unit",
+      "missing_citation"
+    ],
+    "note": "11/29位ID与5Mbit/s基本正确，但64位元组误写成64位元，且没有引用；完整支持证据已经返回。"
+  },
+  "input": {
+    "id": "native_wiki-0000",
+    "suite": "native_wiki",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+    "origin_index": 0,
+    "original_case": {
+      "id": "held_004",
+      "question": "旧培训页把CAN FD的ID长度、载荷长度和速率混成一列了。请分别给出它支持的两种消息ID位数、每帧最大实际数据字节数，以及条目给出的最高资料率（Mbit/s）。这个最高速率还受哪些线路条件影响？",
+      "history": [],
+      "oracle": {
+        "expected_action": "answer",
+        "known_subjects": [
+          {
+            "id": "S1",
+            "description": "CAN FD",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "CAN FD"
+              }
+            ]
+          }
+        ],
+        "active_constraints": [],
+        "requested_goals": [
+          {
+            "id": "G1",
+            "description": "两种消息ID位数",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "两种消息ID位数"
+              },
+              {
+                "message_id": "Q",
+                "quote": "旧培训页把CAN FD的ID长度、载荷长度和速率混成一列了。请分别给出它支持的两种消息ID位数、每帧最大实际数据字节数，以及条目给出的最高资料率（Mbit/s）。这个最高速率还受哪些线路条件影响？"
+              }
+            ]
+          },
+          {
+            "id": "G2",
+            "description": "每帧最大实际数据字节数",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "每帧最大实际数据字节数"
+              },
+              {
+                "message_id": "Q",
+                "quote": "旧培训页把CAN FD的ID长度、载荷长度和速率混成一列了。请分别给出它支持的两种消息ID位数、每帧最大实际数据字节数，以及条目给出的最高资料率（Mbit/s）。这个最高速率还受哪些线路条件影响？"
+              }
+            ]
+          },
+          {
+            "id": "G3",
+            "description": "最高资料率（Mbit/s）",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "最高资料率（Mbit/s）"
+              },
+              {
+                "message_id": "Q",
+                "quote": "旧培训页把CAN FD的ID长度、载荷长度和速率混成一列了。请分别给出它支持的两种消息ID位数、每帧最大实际数据字节数，以及条目给出的最高资料率（Mbit/s）。这个最高速率还受哪些线路条件影响？"
+              }
+            ]
+          },
+          {
+            "id": "G4",
+            "description": "还受哪些线路条件影响",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "还受哪些线路条件影响"
+              },
+              {
+                "message_id": "Q",
+                "quote": "旧培训页把CAN FD的ID长度、载荷长度和速率混成一列了。请分别给出它支持的两种消息ID位数、每帧最大实际数据字节数，以及条目给出的最高资料率（Mbit/s）。这个最高速率还受哪些线路条件影响？"
+              }
+            ]
+          }
+        ],
+        "required_facts": [
+          {
+            "claim": "支持11位及29位消息ID。",
+            "bound_subjects": [
+              "S1"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/7035429",
+                  "page_id": 7035429,
+                  "title": "CAN FD",
+                  "url": "https://zh.wikipedia.org/wiki/CAN_FD",
+                  "language": "zh",
+                  "revision_id": 82332849,
+                  "body_sha256": "69a6e2cea663aaebb2569c30ade613d1db78179a6321e9721d0ba3cbf75a35bd",
+                  "section": "和傳統CAN的差異",
+                  "start": 774,
+                  "end": 1089,
+                  "quote": "CAN FD支援11位元以及29位元的訊息ID，每一個CAN頁框（frame）的實際資料量可以超過傳統CAN限制的8位元組，最大可到64位元組。CAN FD的資料率（每秒可以傳輸的位元數）最大可以到傳統CAN的5倍。CAN FD通訊協定也有其他性能的提昇，例如比較容易偵測接收到CAN訊息的錯誤，也可以用軟體動態選擇較快或是較慢的資料率。在同一個CAN網路上的一些感測器可以用較快的速率傳送實際資料，有些感測器則用較慢的速率傳送實際資料。CAN BUS是用二條線連接感測器、控制器及電子控制器。其最快速率會受到CAN電氣條件及組態（例如節點個數、總線長、或是其他電磁因素）的影響，因此這些因素也會影響CAN FD可達到的最快速率。"
+                }
+              ]
+            ],
+            "id": "F1"
+          },
+          {
+            "claim": "每帧最大实际数据量64字节。",
+            "bound_subjects": [
+              "S1"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/7035429",
+                  "page_id": 7035429,
+                  "title": "CAN FD",
+                  "url": "https://zh.wikipedia.org/wiki/CAN_FD",
+                  "language": "zh",
+                  "revision_id": 82332849,
+                  "body_sha256": "69a6e2cea663aaebb2569c30ade613d1db78179a6321e9721d0ba3cbf75a35bd",
+                  "section": "和傳統CAN的差異",
+                  "start": 774,
+                  "end": 1089,
+                  "quote": "CAN FD支援11位元以及29位元的訊息ID，每一個CAN頁框（frame）的實際資料量可以超過傳統CAN限制的8位元組，最大可到64位元組。CAN FD的資料率（每秒可以傳輸的位元數）最大可以到傳統CAN的5倍。CAN FD通訊協定也有其他性能的提昇，例如比較容易偵測接收到CAN訊息的錯誤，也可以用軟體動態選擇較快或是較慢的資料率。在同一個CAN網路上的一些感測器可以用較快的速率傳送實際資料，有些感測器則用較慢的速率傳送實際資料。CAN BUS是用二條線連接感測器、控制器及電子控制器。其最快速率會受到CAN電氣條件及組態（例如節點個數、總線長、或是其他電磁因素）的影響，因此這些因素也會影響CAN FD可達到的最快速率。"
+                }
+              ],
+              [
+                {
+                  "document_id": "zhwiki/7035429",
+                  "page_id": 7035429,
+                  "title": "CAN FD",
+                  "url": "https://zh.wikipedia.org/wiki/CAN_FD",
+                  "language": "zh",
+                  "revision_id": 82332849,
+                  "body_sha256": "69a6e2cea663aaebb2569c30ade613d1db78179a6321e9721d0ba3cbf75a35bd",
+                  "section": "CAN FD",
+                  "start": 9,
+                  "end": 307,
+                  "quote": "CAN FD（Controller Area Network Flexible Data-Rate，直譯為彈性資料率的控制器區域網路）是在電子儀器以及控制系統中，傳輸感測器資料以及控制資訊的网络传输协议。此協議是ISO 11898-1控制器區域網路（CAN）的擴展版，用在高性能的車輛中。CAN FD是由罗伯特·博世公司在2011年發展，在2012年推出，配合現代電子控制器（ECU）的需求，將資料率擴展到5Mbit/s，是原來CAN標準的五倍，也允許較大的資料頁框（最大到64位元組（byte），是原來CAN標準的8倍），其CRC欄位也由15位元提昇到17或21位元（bit），以提昇其安全性。"
+                }
+              ]
+            ],
+            "id": "F2"
+          },
+          {
+            "claim": "条目给出的最大资料率为5 Mbit/s。",
+            "bound_subjects": [
+              "S1"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/7035429",
+                  "page_id": 7035429,
+                  "title": "CAN FD",
+                  "url": "https://zh.wikipedia.org/wiki/CAN_FD",
+                  "language": "zh",
+                  "revision_id": 82332849,
+                  "body_sha256": "69a6e2cea663aaebb2569c30ade613d1db78179a6321e9721d0ba3cbf75a35bd",
+                  "section": "CAN FD",
+                  "start": 9,
+                  "end": 307,
+                  "quote": "CAN FD（Controller Area Network Flexible Data-Rate，直譯為彈性資料率的控制器區域網路）是在電子儀器以及控制系統中，傳輸感測器資料以及控制資訊的网络传输协议。此協議是ISO 11898-1控制器區域網路（CAN）的擴展版，用在高性能的車輛中。CAN FD是由罗伯特·博世公司在2011年發展，在2012年推出，配合現代電子控制器（ECU）的需求，將資料率擴展到5Mbit/s，是原來CAN標準的五倍，也允許較大的資料頁框（最大到64位元組（byte），是原來CAN標準的8倍），其CRC欄位也由15位元提昇到17或21位元（bit），以提昇其安全性。"
+                }
+              ]
+            ],
+            "id": "F3"
+          },
+          {
+            "claim": "最高速率受CAN电气条件及组态影响，例如节点数、总线长和其他电磁因素。",
+            "bound_subjects": [
+              "S1"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/7035429",
+                  "page_id": 7035429,
+                  "title": "CAN FD",
+                  "url": "https://zh.wikipedia.org/wiki/CAN_FD",
+                  "language": "zh",
+                  "revision_id": 82332849,
+                  "body_sha256": "69a6e2cea663aaebb2569c30ade613d1db78179a6321e9721d0ba3cbf75a35bd",
+                  "section": "和傳統CAN的差異",
+                  "start": 774,
+                  "end": 1089,
+                  "quote": "CAN FD支援11位元以及29位元的訊息ID，每一個CAN頁框（frame）的實際資料量可以超過傳統CAN限制的8位元組，最大可到64位元組。CAN FD的資料率（每秒可以傳輸的位元數）最大可以到傳統CAN的5倍。CAN FD通訊協定也有其他性能的提昇，例如比較容易偵測接收到CAN訊息的錯誤，也可以用軟體動態選擇較快或是較慢的資料率。在同一個CAN網路上的一些感測器可以用較快的速率傳送實際資料，有些感測器則用較慢的速率傳送實際資料。CAN BUS是用二條線連接感測器、控制器及電子控制器。其最快速率會受到CAN電氣條件及組態（例如節點個數、總線長、或是其他電磁因素）的影響，因此這些因素也會影響CAN FD可達到的最快速率。"
+                }
+              ]
+            ],
+            "id": "F4"
+          }
+        ],
+        "excluded": [],
+        "missing_information": [],
+        "required_clarification": [],
+        "minimum_evidence_pages": 1,
+        "required": [
+          "按照用户明示字段和有效历史回答；不得把助手自行追加偏好视为用户要求。",
+          "每个必要事实正确且有真实、实际支持的正式引用；每个多余引用也检查其附着主张。",
+          "无额外关键错误或无据结论，范围、对象与缺失信息处理正确。"
+        ],
+        "forbidden": [
+          "不得由金标证据段背景追加未问日期、单位精度或范围。",
+          "不得把同页但不含该事实的片段或无关页面作为支持。",
+          "不得用思考过程补最终答案；不得把资料未提供说成现实不存在。"
+        ]
+      },
+      "provenance": {
+        "source_experiment": "rwkvrag-wiki-evidence-budget-20260908",
+        "original_split": "holdout",
+        "use": "previously_exposed_development_smoke",
+        "source_inputs_sha256": "7d38ace329779963dd134837aecd54941ed60e44ba3ae74d7aed89c08767d583",
+        "source_gold_sha256": "50edd715fd81cdc545b3a7bd952f840d78ab6876d41496ab9d5a3d8f4938d0ca",
+        "source_input_row_sha256": "ea1ef9f4eed5ed3baa317eeff94e83b6f9ceaec6c35f2f825e9fce2bcde5fc54",
+        "source_gold_row_sha256": "6493f3a152064506995ffeee094eba86fd8f4afb9c800d6bb2a4a10e5169820c",
+        "corpus_manifest_sha256": "35563fa6e5d7c9205cea3d9e1cd5476b01774f11a292dafcfed82fe4d8256ced",
+        "category": "single_document"
+      }
+    },
+    "category": "native_wiki",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "旧培训页把CAN FD的ID长度、载荷长度和速率混成一列了。请分别给出它支持的两种消息ID位数、每帧最大实际数据字节数，以及条目给出的最高资料率（Mbit/s）。这个最高速率还受哪些线路条件影响？",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "0eed65b9fa7911fcb3bc8b4a5d023cdce2f55d81b0dbe63e9ec035ad63b4c402"
+}

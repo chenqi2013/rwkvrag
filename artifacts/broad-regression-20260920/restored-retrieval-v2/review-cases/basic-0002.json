@@ -1,0 +1,66 @@
+{
+  "result": {
+    "case_id": "basic-0002",
+    "suite": "basic",
+    "question": "中国人口最多的省份是哪个省",
+    "http_status": 200,
+    "error": null,
+    "answer": "中国人口最多的省份是广东省[资料 1]。",
+    "sources": [],
+    "status": "completed",
+    "answer_span": [
+      0,
+      20
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 0,
+      "has_numeric_citation": true,
+      "citation_out_of_range": true,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": false,
+      "expected_title_returned": false,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0322.json"
+  },
+  "review": {
+    "case_id": "basic-0002",
+    "verdict": "fail",
+    "issues": [
+      "no_evidence",
+      "citation_out_of_range"
+    ],
+    "note": "来源为空仍给广东及不存在资料1；知识库证据约束未满足，不用常识代替实际支持。"
+  },
+  "input": {
+    "id": "basic-0002",
+    "suite": "basic",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/cases.jsonl",
+    "origin_index": 2,
+    "original_case": {
+      "question": "中国人口最多的省份是哪个省",
+      "expected_titles": [
+        "中华人民共和国各省级行政区人口列表",
+        "河南省",
+        "广东省"
+      ]
+    },
+    "category": "basic",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "中国人口最多的省份是哪个省",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "b240e547d2562fc3070fa08ad45b31873fd32a81d776349603253ea3d62f6547"
+}

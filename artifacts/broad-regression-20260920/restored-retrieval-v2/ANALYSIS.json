@@ -1,0 +1,510 @@
+{
+  "groups": {
+    "suite": {
+      "wiki_verified": {
+        "n": 200,
+        "http_completed": 200,
+        "http_statuses": {
+          "200": 200
+        },
+        "generation_statuses": {
+          "completed": 151,
+          "length": 41,
+          "budget_exceeded": 2,
+          "planner_partial_failure": 6
+        },
+        "no_sources": 2,
+        "expected_article_in_final_sources": 198,
+        "missing_numeric_citations": 50,
+        "out_of_range_citations": 1,
+        "empty_answers": 2,
+        "semantic_accuracy_verified": false
+      },
+      "diverse": {
+        "n": 20,
+        "http_completed": 20,
+        "http_statuses": {
+          "200": 20
+        },
+        "generation_statuses": {
+          "length": 5,
+          "completed": 13,
+          "budget_exceeded": 1,
+          "planner_partial_failure": 1
+        },
+        "no_sources": 2,
+        "expected_article_in_final_sources": 18,
+        "missing_numeric_citations": 6,
+        "out_of_range_citations": 3,
+        "empty_answers": 1,
+        "semantic_accuracy_verified": false
+      },
+      "wiki_batch2": {
+        "n": 200,
+        "http_completed": 200,
+        "http_statuses": {
+          "200": 200
+        },
+        "generation_statuses": {
+          "length": 53,
+          "completed": 144,
+          "planner_partial_failure": 2,
+          "http_error": 1
+        },
+        "no_sources": 6,
+        "expected_article_in_final_sources": 194,
+        "missing_numeric_citations": 40,
+        "out_of_range_citations": 4,
+        "empty_answers": 1,
+        "semantic_accuracy_verified": false
+      },
+      "basic": {
+        "n": 6,
+        "http_completed": 6,
+        "http_statuses": {
+          "200": 6
+        },
+        "generation_statuses": {
+          "length": 1,
+          "completed": 5
+        },
+        "no_sources": 2,
+        "expected_article_in_final_sources": 4,
+        "missing_numeric_citations": 0,
+        "out_of_range_citations": 2,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "native_wiki": {
+        "n": 8,
+        "http_completed": 8,
+        "http_statuses": {
+          "200": 8
+        },
+        "generation_statuses": {
+          "length": 3,
+          "completed": 4,
+          "planner_partial_failure": 1
+        },
+        "no_sources": 1,
+        "expected_article_in_final_sources": 7,
+        "missing_numeric_citations": 2,
+        "out_of_range_citations": 1,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      }
+    },
+    "category": {
+      "cause": {
+        "n": 32,
+        "http_completed": 32,
+        "http_statuses": {
+          "200": 32
+        },
+        "generation_statuses": {
+          "completed": 22,
+          "length": 10
+        },
+        "no_sources": 2,
+        "expected_article_in_final_sources": 30,
+        "missing_numeric_citations": 6,
+        "out_of_range_citations": 2,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "procedure": {
+        "n": 2,
+        "http_completed": 2,
+        "http_statuses": {
+          "200": 2
+        },
+        "generation_statuses": {
+          "length": 1,
+          "completed": 1
+        },
+        "no_sources": 1,
+        "expected_article_in_final_sources": 1,
+        "missing_numeric_citations": 0,
+        "out_of_range_citations": 1,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "time": {
+        "n": 64,
+        "http_completed": 64,
+        "http_statuses": {
+          "200": 64
+        },
+        "generation_statuses": {
+          "completed": 58,
+          "length": 5,
+          "budget_exceeded": 1
+        },
+        "no_sources": 0,
+        "expected_article_in_final_sources": 64,
+        "missing_numeric_citations": 9,
+        "out_of_range_citations": 0,
+        "empty_answers": 1,
+        "semantic_accuracy_verified": false
+      },
+      "agent": {
+        "n": 50,
+        "http_completed": 50,
+        "http_statuses": {
+          "200": 50
+        },
+        "generation_statuses": {
+          "completed": 39,
+          "planner_partial_failure": 2,
+          "length": 9
+        },
+        "no_sources": 1,
+        "expected_article_in_final_sources": 49,
+        "missing_numeric_citations": 5,
+        "out_of_range_citations": 1,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "definition": {
+        "n": 122,
+        "http_completed": 122,
+        "http_statuses": {
+          "200": 122
+        },
+        "generation_statuses": {
+          "length": 25,
+          "completed": 93,
+          "budget_exceeded": 2,
+          "planner_partial_failure": 1,
+          "http_error": 1
+        },
+        "no_sources": 0,
+        "expected_article_in_final_sources": 122,
+        "missing_numeric_citations": 35,
+        "out_of_range_citations": 1,
+        "empty_answers": 3,
+        "semantic_accuracy_verified": false
+      },
+      "location": {
+        "n": 60,
+        "http_completed": 60,
+        "http_statuses": {
+          "200": 60
+        },
+        "generation_statuses": {
+          "length": 18,
+          "completed": 39,
+          "planner_partial_failure": 3
+        },
+        "no_sources": 0,
+        "expected_article_in_final_sources": 60,
+        "missing_numeric_citations": 14,
+        "out_of_range_citations": 0,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "numeric": {
+        "n": 20,
+        "http_completed": 20,
+        "http_statuses": {
+          "200": 20
+        },
+        "generation_statuses": {
+          "completed": 20
+        },
+        "no_sources": 0,
+        "expected_article_in_final_sources": 20,
+        "missing_numeric_citations": 0,
+        "out_of_range_citations": 0,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "basic": {
+        "n": 6,
+        "http_completed": 6,
+        "http_statuses": {
+          "200": 6
+        },
+        "generation_statuses": {
+          "length": 1,
+          "completed": 5
+        },
+        "no_sources": 2,
+        "expected_article_in_final_sources": 4,
+        "missing_numeric_citations": 0,
+        "out_of_range_citations": 2,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "native_wiki": {
+        "n": 8,
+        "http_completed": 8,
+        "http_statuses": {
+          "200": 8
+        },
+        "generation_statuses": {
+          "length": 3,
+          "completed": 4,
+          "planner_partial_failure": 1
+        },
+        "no_sources": 1,
+        "expected_article_in_final_sources": 7,
+        "missing_numeric_citations": 2,
+        "out_of_range_citations": 1,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "list": {
+        "n": 62,
+        "http_completed": 62,
+        "http_statuses": {
+          "200": 62
+        },
+        "generation_statuses": {
+          "length": 29,
+          "completed": 31,
+          "planner_partial_failure": 2
+        },
+        "no_sources": 5,
+        "expected_article_in_final_sources": 57,
+        "missing_numeric_citations": 26,
+        "out_of_range_citations": 1,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "person": {
+        "n": 2,
+        "http_completed": 2,
+        "http_statuses": {
+          "200": 2
+        },
+        "generation_statuses": {
+          "length": 1,
+          "completed": 1
+        },
+        "no_sources": 0,
+        "expected_article_in_final_sources": 2,
+        "missing_numeric_citations": 0,
+        "out_of_range_citations": 1,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "ambiguity": {
+        "n": 2,
+        "http_completed": 2,
+        "http_statuses": {
+          "200": 2
+        },
+        "generation_statuses": {
+          "completed": 1,
+          "length": 1
+        },
+        "no_sources": 0,
+        "expected_article_in_final_sources": 2,
+        "missing_numeric_citations": 0,
+        "out_of_range_citations": 0,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "comparison": {
+        "n": 2,
+        "http_completed": 2,
+        "http_statuses": {
+          "200": 2
+        },
+        "generation_statuses": {
+          "completed": 2
+        },
+        "no_sources": 1,
+        "expected_article_in_final_sources": 1,
+        "missing_numeric_citations": 1,
+        "out_of_range_citations": 1,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "place": {
+        "n": 2,
+        "http_completed": 2,
+        "http_statuses": {
+          "200": 2
+        },
+        "generation_statuses": {
+          "planner_partial_failure": 1,
+          "completed": 1
+        },
+        "no_sources": 0,
+        "expected_article_in_final_sources": 2,
+        "missing_numeric_citations": 0,
+        "out_of_range_citations": 0,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      }
+    },
+    "style": {
+      "instructional": {
+        "n": 106,
+        "http_completed": 106,
+        "http_statuses": {
+          "200": 106
+        },
+        "generation_statuses": {
+          "completed": 74,
+          "planner_partial_failure": 4,
+          "length": 27,
+          "budget_exceeded": 1
+        },
+        "no_sources": 1,
+        "expected_article_in_final_sources": 105,
+        "missing_numeric_citations": 26,
+        "out_of_range_citations": 0,
+        "empty_answers": 1,
+        "semantic_accuracy_verified": false
+      },
+      "unspecified": {
+        "n": 34,
+        "http_completed": 34,
+        "http_statuses": {
+          "200": 34
+        },
+        "generation_statuses": {
+          "length": 9,
+          "completed": 22,
+          "planner_partial_failure": 2,
+          "budget_exceeded": 1
+        },
+        "no_sources": 5,
+        "expected_article_in_final_sources": 29,
+        "missing_numeric_citations": 8,
+        "out_of_range_citations": 6,
+        "empty_answers": 1,
+        "semantic_accuracy_verified": false
+      },
+      "conversational": {
+        "n": 108,
+        "http_completed": 108,
+        "http_statuses": {
+          "200": 108
+        },
+        "generation_statuses": {
+          "completed": 76,
+          "length": 29,
+          "budget_exceeded": 1,
+          "planner_partial_failure": 1,
+          "http_error": 1
+        },
+        "no_sources": 1,
+        "expected_article_in_final_sources": 107,
+        "missing_numeric_citations": 23,
+        "out_of_range_citations": 1,
+        "empty_answers": 2,
+        "semantic_accuracy_verified": false
+      },
+      "colloquial": {
+        "n": 43,
+        "http_completed": 43,
+        "http_statuses": {
+          "200": 43
+        },
+        "generation_statuses": {
+          "completed": 35,
+          "length": 8
+        },
+        "no_sources": 0,
+        "expected_article_in_final_sources": 43,
+        "missing_numeric_citations": 10,
+        "out_of_range_citations": 0,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      },
+      "direct": {
+        "n": 143,
+        "http_completed": 143,
+        "http_statuses": {
+          "200": 143
+        },
+        "generation_statuses": {
+          "completed": 110,
+          "length": 30,
+          "planner_partial_failure": 3
+        },
+        "no_sources": 6,
+        "expected_article_in_final_sources": 137,
+        "missing_numeric_citations": 31,
+        "out_of_range_citations": 4,
+        "empty_answers": 0,
+        "semantic_accuracy_verified": false
+      }
+    }
+  },
+  "model_call_counts": [
+    {
+      "stage": "planner",
+      "status": "completed",
+      "n": 469
+    },
+    {
+      "stage": "planner",
+      "status": "length",
+      "n": 13
+    },
+    {
+      "stage": "resolver",
+      "status": "completed",
+      "n": 20434
+    },
+    {
+      "stage": "writer",
+      "status": "budget_exceeded",
+      "n": 3
+    },
+    {
+      "stage": "writer",
+      "status": "completed",
+      "n": 327
+    },
+    {
+      "stage": "writer",
+      "status": "http_error",
+      "n": 1
+    },
+    {
+      "stage": "writer",
+      "status": "length",
+      "n": 103
+    }
+  ],
+  "manual_review_n": 48,
+  "manual_verdicts": {
+    "fail": 27,
+    "partial": 13,
+    "pass": 8
+  },
+  "manual_by_suite": {
+    "basic": {
+      "fail": 3,
+      "pass": 1,
+      "partial": 2
+    },
+    "diverse": {
+      "fail": 12,
+      "pass": 2,
+      "partial": 6
+    },
+    "native_wiki": {
+      "fail": 7,
+      "partial": 1
+    },
+    "wiki_batch2": {
+      "fail": 2,
+      "pass": 3
+    },
+    "wiki_verified": {
+      "fail": 3,
+      "partial": 4,
+      "pass": 2
+    }
+  },
+  "manual_review_independent": false,
+  "full_dataset_semantic_accuracy_verified": false,
+  "corpus_boundary": "New versioned full-article corpus; not the deleted original index."
+}

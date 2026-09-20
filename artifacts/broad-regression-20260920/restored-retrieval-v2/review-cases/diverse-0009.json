@@ -1,0 +1,1617 @@
+{
+  "result": {
+    "case_id": "diverse-0009",
+    "suite": "diverse",
+    "question": "香港是哪一年回归的",
+    "http_status": 200,
+    "error": null,
+    "answer": "",
+    "sources": [
+      {
+        "id": "verbatim-v1:18e862ef99566b9fb67372287f23a3452c33cf0f2e2d77a39b2e1b8c51d62c42@0:7:43573d53e787",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.09836065573770493,
+        "snippet": "# 香港回歸\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 0,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "heading",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+            "start": 0,
+            "end": 7
+          },
+          "context_spans": [],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": true,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+          "parent_source_id": "verbatim-v1:18e862ef99566b9fb67372287f23a3452c33cf0f2e2d77a39b2e1b8c51d62c42",
+          "parent_text_sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+          "span_start": 0,
+          "span_end": 7,
+          "span_sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:9d7ea1c59f1595f91570badb787ef9873ad245d5d4468f6580ce4fa87381c0d3@0:934:6cff365a6265",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.09425403225806452,
+        "snippet": "1982年3月的電話民意調查《1982 Future of HK Poll》訪問982受訪者對香港前途的希望結果（preferred outcome）和預計將發生結果（probable outcome），以希望而言，1982年3月的香港人70%希望香港維持現狀，15%希望成為「託管地」，希望中國收回香港有4%；以預計將發生以言，1982年3月的香港人43%認為香港將維持現狀，33%認為香港將成為「託管地」，6%認為中國將能收回香港。\n1987年香港交易所主席李福兆兩度提出「香港現在是英國殖民地，即將是中國殖民地，藉此身份香港會繼續繁榮」，此論調代表了被統戰的保守派商人的現實主義。由此，「成為新的殖民地」論調在學術界、台灣輿論、中國大陸輿論廣為傳播。有論文集專門研究1997年後香港的再殖民化。\n1980年代任《香港文匯報》副總編輯的程翔在2018年著書指「大部分人以『心裏不願，嘴裏不講』的態度來面對『回歸』，有能力的都移民作為政治保險；即使基於民族主義而支持『回歸』的大學生，也提出有條件的回歸——在民主的基礎上回歸。」\n1980年代任行政局首席非官守議員的鍾士元指當時香港人都知道，當中很多人在中國受過共產黨迫害並逃到香港，故此他們很害怕共產黨統治。他亦在1982年知道，香港有很多的民意調查顯示「有八成五至九成都不希望由共產黨統治」。\n由於傳出談判破裂，1983年9月香港經濟恐慌，中方揣測是為英國幕後操縱「經濟牌」。9月16日至9月24日，港元曾在一個星期內下跌20%，由7.9港元兌1美元跌至9.6港元兌1美元的歷史低點:243。同一時期，物價一度飛漲，市面出現搶購糧食等情況；恆生指數亦告大幅下跌150點，跌至780點，導致1981年香港股災:49-51。促使香港政府在1983年10月15日起實施聯繫匯率制度，以7.80港元兌1美元的匯率與美元掛鈎，來維繫港元穩定，觸發1982年9月恆隆銀行擠提事件、1983年9月香港搶米風潮，局勢趨穩定始於1983年10月香港政府推出香港聯繫匯率制度，但仍出現香港移民潮。1984年末，無線電視的《八四年香港大事回顧》指「對於香港人來講，無論是否同意中英對於香港的安排，八四年總算能給他們一個明確答案」。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 19,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "6cff365a62654bd8d9e92e09464828cd4ccda53baacfb8d80442e177d2ff0f64",
+            "start": 6119,
+            "end": 7053
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "d98b60bfd7a5944b065bf9ab54809f0ae7a19c76b109dada56d21a06967251ec",
+              "level": 2,
+              "kind": "heading",
+              "start": 4980,
+              "end": 4990,
+              "text": "## 香港前途談判\n"
+            },
+            {
+              "sha256": "f847455cc2ee80d0b0bff82f7da24bc8958b5b88010e65b45268da78178b58f1",
+              "level": 3,
+              "kind": "heading",
+              "start": 6107,
+              "end": 6119,
+              "text": "### 香港市民的取態\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "6cff365a62654bd8d9e92e09464828cd4ccda53baacfb8d80442e177d2ff0f64",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 香港前途談判\n",
+            "### 香港市民的取態\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": false,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "6cff365a62654bd8d9e92e09464828cd4ccda53baacfb8d80442e177d2ff0f64",
+          "parent_source_id": "verbatim-v1:9d7ea1c59f1595f91570badb787ef9873ad245d5d4468f6580ce4fa87381c0d3",
+          "parent_text_sha256": "6cff365a62654bd8d9e92e09464828cd4ccda53baacfb8d80442e177d2ff0f64",
+          "span_start": 0,
+          "span_end": 934,
+          "span_sha256": "6cff365a62654bd8d9e92e09464828cd4ccda53baacfb8d80442e177d2ff0f64",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:d479410094586f5156dc4372e054734fadce0ffcc06c9b3456b3aee057adaefa@0:166:943928102dde",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.09627016129032258,
+        "snippet": "1997年7月1日，香港由英国依據1984年《中英聯合聲明》交还中华人民共和国，香港特別行政區同時成立，史稱「香港回歸」，或稱「香港主权移交」、「香港移交」（英語：）等。雙方代表團出席了交接儀式。此為1842年清朝政府自鴉片戰爭後與英國簽訂《南京條約》割讓香港以來，經歷二戰日本佔領香港及香港重光後，香港政权及治權方再一次變更。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 1,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "943928102ddef4d6cd2063826224d9bcc30ba403cad34df8563cda96e9eb9040",
+            "start": 7,
+            "end": 173
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "943928102ddef4d6cd2063826224d9bcc30ba403cad34df8563cda96e9eb9040",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": false,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "943928102ddef4d6cd2063826224d9bcc30ba403cad34df8563cda96e9eb9040",
+          "parent_source_id": "verbatim-v1:d479410094586f5156dc4372e054734fadce0ffcc06c9b3456b3aee057adaefa",
+          "parent_text_sha256": "943928102ddef4d6cd2063826224d9bcc30ba403cad34df8563cda96e9eb9040",
+          "span_start": 0,
+          "span_end": 166,
+          "span_sha256": "943928102ddef4d6cd2063826224d9bcc30ba403cad34df8563cda96e9eb9040",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:615f3f9849696d1ecb6979e7b2f78c9d337e540452731e2f368ede09a380aa57@0:384:d4e0988c59c9",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.08913987998234285,
+        "snippet": "1989年5月八九學潮令香港人催生了由「英屬香港人」到「既是香港人又是中國人」的香港居民的身份認同轉變。八九民運時，香港人全情投入參與，（5月27日）百萬人上街聲援；整個過程，實際上是一場中國民族主義洗禮，原來出生和成長於英治殖民地的香港人，……在情感上與中國大陸重新連接起來」，「對不少親身經歷過八九民運的50和60世代（即當年20至40歲的香港人）來說，這種‘香港中國人’的混合身份認同，是深印在腦海之中的時代烙印，並主導了八九年至今的民主運動論述 ── 香港人是中國人，中港兩地人民共享‘民主中國’的理想；香港人對建設民主中國有特殊責任，民主中國也是實現民主香港的策略。」由此香港人與失勢的中國改革派合流，香港「充分感到國內華人彼此有着共同的政治命運，而這個政治命運又被看成是不明朗」。此後每年香港均舉辦維園燭光晚會（直至2020年，警方開始禁止六四集會）。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 38,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "d4e0988c59c901b3ecc7d4178c16a5c69a4c5ae6da8db0f0b88336b7baf569cb",
+            "start": 12516,
+            "end": 12900
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "c13707b5c7b35569942467f5d97199f1989b2a72b73e7da07f9566e9b683588d",
+              "level": 2,
+              "kind": "heading",
+              "start": 9949,
+              "end": 9968,
+              "text": "## 談判後至1997年以前的過渡期\n"
+            },
+            {
+              "sha256": "33053d42b4facf55d099c2aa1ca274cfd1f89110754404df53e6dae14c95d563",
+              "level": 3,
+              "kind": "heading",
+              "start": 12490,
+              "end": 12504,
+              "text": "### 1989年學運影響\n"
+            },
+            {
+              "sha256": "696c85e1a69924ab0fd88c8caeb9123db20fb6718af93cb9750ace2bcac8fa73",
+              "level": 4,
+              "kind": "heading",
+              "start": 12505,
+              "end": 12516,
+              "text": "#### 社運及紀念\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "d4e0988c59c901b3ecc7d4178c16a5c69a4c5ae6da8db0f0b88336b7baf569cb",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 談判後至1997年以前的過渡期\n",
+            "### 1989年學運影響\n",
+            "#### 社運及紀念\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": false,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "d4e0988c59c901b3ecc7d4178c16a5c69a4c5ae6da8db0f0b88336b7baf569cb",
+          "parent_source_id": "verbatim-v1:615f3f9849696d1ecb6979e7b2f78c9d337e540452731e2f368ede09a380aa57",
+          "parent_text_sha256": "d4e0988c59c901b3ecc7d4178c16a5c69a4c5ae6da8db0f0b88336b7baf569cb",
+          "span_start": 0,
+          "span_end": 384,
+          "span_sha256": "d4e0988c59c901b3ecc7d4178c16a5c69a4c5ae6da8db0f0b88336b7baf569cb",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:16e621f1d23bf581cbdb807fe2daecfc1f99220aa07f67068a5f991a09cb191e@0:303:bd4c7b054296",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.09207459207459208,
+        "snippet": "香港交接儀式在1997年6月30日即農曆五月廿六（1997年7月1日，即農曆五月廿七）午夜十二點舉行，至子夜工人在中環中區政府合署拆下以龍和獅為標記的舊香港紋章、以及代表英女王伊利沙白二世的皇冠徽號和「E II R」字樣，並且更換为中華人民共和國國徽和香港特別行政區區徽。另外，裝在港督府大門的英國君主的皇冠徽號和「E II R」字樣亦將同時移走拆除，中華人民共和國及香港特別行政區根據《中英聯合聲明》恢復對香港行使主權，結束後正式長達156年的英國人統治時代，中英兩國政府由1984年12月19日正式簽署《中英聯合聲明》後，至1997年7月1日香港政權移交（九七回歸）期間的十多年，被稱為香港過渡期。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 56,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "bd4c7b0542962675bcf632f37a44d589017ceaed5bdc2d1c1452f26ab4409d87",
+            "start": 15545,
+            "end": 15848
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "c13707b5c7b35569942467f5d97199f1989b2a72b73e7da07f9566e9b683588d",
+              "level": 2,
+              "kind": "heading",
+              "start": 9949,
+              "end": 9968,
+              "text": "## 談判後至1997年以前的過渡期\n"
+            },
+            {
+              "sha256": "a828ad0919ec9e125c9b77a3119124d5c2b40a76a2bbc8f29b10e60ad716e12a",
+              "level": 3,
+              "kind": "heading",
+              "start": 15529,
+              "end": 15545,
+              "text": "### 並恢復中國香港行使主權\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "bd4c7b0542962675bcf632f37a44d589017ceaed5bdc2d1c1452f26ab4409d87",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 談判後至1997年以前的過渡期\n",
+            "### 並恢復中國香港行使主權\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": false,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "bd4c7b0542962675bcf632f37a44d589017ceaed5bdc2d1c1452f26ab4409d87",
+          "parent_source_id": "verbatim-v1:16e621f1d23bf581cbdb807fe2daecfc1f99220aa07f67068a5f991a09cb191e",
+          "parent_text_sha256": "bd4c7b0542962675bcf632f37a44d589017ceaed5bdc2d1c1452f26ab4409d87",
+          "span_start": 0,
+          "span_end": 303,
+          "span_sha256": "bd4c7b0542962675bcf632f37a44d589017ceaed5bdc2d1c1452f26ab4409d87",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:069e8a51956facba29be5f7331768d086ccb8186c6541ae7e624450bbb928366@0:537:dfa4cc041c3f",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.030303030303030304,
+        "snippet": "1983年10月英國首相撒切尔夫人致函，雙方可在中國建議之基礎上探討香港之持久性安排；第五、六輪會談中，英方確認不再堅持英國管治，也不謀求任何形式之共管，並理解中國之計劃是建立在1997年後整個香港之主權和管治權應該歸還中國此前提之基礎:388。\n從1984年4月第十二輪會談後，雙方轉入討論過渡時期香港之安排和有關政權移交事項:389。英外交大臣杰弗里·豪訪華時，鄧小平提出由中英雙方設立一個小組，專責處理過渡時期事務而輪流在香港、北京、倫敦開會，豪表示同意雙方在此基礎上討論。但在此後3個多月會談中，英方仍反對在香港設立聯合小組，使談判陷入僵局:389。1984年7月英外交大臣再次訪華，中方表示如果英方同意設立聯合小組並以香港為常駐地，該小組進駐香港之時間以及1997年後是否繼續存在一段時間都可以商量。最後雙方商定設立聯合聯絡小組，並於1988年7月1日進駐香港，2000年1月1日撤銷:389。\n中英通過談判確定：中國收回香港、恢復行使主權，在協議中必須有明確表述。英方不接受中方對香港恢復行使主權之提法，先後提出之草案都具有三個不平等條約有效之含意，中方堅決不能接受:389。最後雙方同意用《聯合聲明》之形式，採用以下表述方式以解決主權歸屬問題之表述:390：\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 27,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "dfa4cc041c3f4efc3ea9ac58ecbaade3d1229cb77f5d718e29a9a1895a116175",
+            "start": 8973,
+            "end": 9510
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "02347c2253c35493bbbe73112f128d1eef384638aefe011745a34b86ec892c9c",
+              "level": 2,
+              "kind": "heading",
+              "start": 7521,
+              "end": 7529,
+              "text": "## 談判交鋒\n"
+            },
+            {
+              "sha256": "2515eb8ad022c8a955c1a9af1afabefae184282a0ef7f94c04384ad7d5b5cab4",
+              "level": 3,
+              "kind": "heading",
+              "start": 8959,
+              "end": 8973,
+              "text": "### 1984年英方讓步\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "dfa4cc041c3f4efc3ea9ac58ecbaade3d1229cb77f5d718e29a9a1895a116175",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 談判交鋒\n",
+            "### 1984年英方讓步\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": false,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "dfa4cc041c3f4efc3ea9ac58ecbaade3d1229cb77f5d718e29a9a1895a116175",
+          "parent_source_id": "verbatim-v1:069e8a51956facba29be5f7331768d086ccb8186c6541ae7e624450bbb928366",
+          "parent_text_sha256": "dfa4cc041c3f4efc3ea9ac58ecbaade3d1229cb77f5d718e29a9a1895a116175",
+          "span_start": 0,
+          "span_end": 537,
+          "span_sha256": "dfa4cc041c3f4efc3ea9ac58ecbaade3d1229cb77f5d718e29a9a1895a116175",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd@0:1025:817f4309e2fc",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.06738126302888293,
+        "snippet": "1. 1 2 3  \n\n  - 英文本：. 1984-12-19  [2021-07-01]. （原始内容存档于2008-03-10） –香港政制及內地事務局網頁. （页面存档备份，存于）\n  - 中文本：. 1984-12-19  [2021-07-01]. （原始内容存档于2013-01-26） –香港政制及內地事務局網頁. （页面存档备份，存于）\n2. 1 2 3  . 闽南师范大学福建省高校特色新型智库两岸一家亲研究院.   [2020-11-02]. （原始内容存档于2021-04-20）. （页面存档备份，存于）\n3. ↑  江澤民. . 人民網. 1997-07-01  [2019-03-26]. （原始内容存档于2019-03-26）. （页面存档备份，存于）\n4. ↑  . 香港電台. 2005年  [2019-03-26]. （原始内容存档于2019-03-26）. （页面存档备份，存于）\n5. ↑  . 新华社. 2012-06-25  [2019-03-26]. （原始内容存档于2019-03-26）. （页面存档备份，存于）\n6. ↑  . 人民日报. 1997-07-01: 1  [2019-03-26]. （原始内容存档于2020-04-08）. （页面存档备份，存于）\n7. ↑  . 工商晚報. 1947-03-20: 頭版. 中國大學生組織一「愛國及保護主權會」，並通過八項議決案，其中包括立即收回旅順、大連、香港及其他失地。\n8. ↑  . 工商晚報. 1948-06-03: 頭版. 註：標題的「我政府」指南京國民政府，當時正值國共內戰。\n9. ↑  . 工商晚報. 1967-06-18: 頭版. 註：當時正值文化大革命與香港六七暴動。\n10. ↑  . 華僑日報. 1988-03-11: 頭版.\n11. ↑  . 華僑日報. 1990-01-10: 頭版.\n12. ↑  夢白. . 中國共產黨新聞網.   [2020-06-07]. （原始内容存档于2018-05-03）. 鄧小平在1982年會見柴契爾夫人時用語就是「收回香港」。見《世紀風采》（2009年） （页面存档备份，存于）\n13. 1 2  黃子華，《秋前算賬》棟篤笑（單口相聲），1997年4月10日－13日、4月16日－19日，6月27日－28日（均於7月1日回歸前公演），香港伊利沙伯體育館。後錄制為同名VCD光盤。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 74,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+            "start": 16975,
+            "end": 29996
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "fe43d604669a28bf4b1adaeddad84e4c708f40995b989f189d6759a4615487be",
+              "level": 2,
+              "kind": "heading",
+              "start": 15848,
+              "end": 15854,
+              "text": "## 後續\n"
+            },
+            {
+              "sha256": "7d5c472255b2e2c791c65bba2201919f1bf6bad8b8787a55d9264125603ee5b7",
+              "level": 3,
+              "kind": "heading",
+              "start": 16968,
+              "end": 16975,
+              "text": "### 引用\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 後續\n",
+            "### 引用\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": true,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "parent_source_id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd",
+          "parent_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "span_start": 0,
+          "span_end": 1025,
+          "span_sha256": "817f4309e2fc3f062664c37086476001c740381046c56297dbe602e8b5fba6bc",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd@925:1733:8ec8b4387509",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.06738126302888293,
+        "snippet": "13. 1 2  黃子華，《秋前算賬》棟篤笑（單口相聲），1997年4月10日－13日、4月16日－19日，6月27日－28日（均於7月1日回歸前公演），香港伊利沙伯體育館。後錄制為同名VCD光盤。\n14. ↑  Johnson, Chalmers. . Asian Survey (University of California Press). 1984, 24 (9): 887, 890  [2020-11-19]. （原始内容存档于2021-03-11）. The Communist party secretary general, Hu Yaobang, stated at a news conference on August 15, 1983: 'We consider the so-called Hong Kong treaties to be unequal. But it is a fact that the treaties exist. Moreover, it is clearly written that the expiration date is June 30, 1997. Therefore, we do not intend to bring forward or postpone this date. We will recover Hong Kong on July 1, 1997. As far as China is concerned, our attitude is one of respect for history.' （页面存档备份，存于）\n15. ↑  . The Christian Science Monitor. 1982-10-01  [2020-11-19]. （原始内容存档于2015-10-03）. （页面存档备份，存于）\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 74,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+            "start": 16975,
+            "end": 29996
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "fe43d604669a28bf4b1adaeddad84e4c708f40995b989f189d6759a4615487be",
+              "level": 2,
+              "kind": "heading",
+              "start": 15848,
+              "end": 15854,
+              "text": "## 後續\n"
+            },
+            {
+              "sha256": "7d5c472255b2e2c791c65bba2201919f1bf6bad8b8787a55d9264125603ee5b7",
+              "level": 3,
+              "kind": "heading",
+              "start": 16968,
+              "end": 16975,
+              "text": "### 引用\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 後續\n",
+            "### 引用\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": true,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "parent_source_id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd",
+          "parent_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "span_start": 925,
+          "span_end": 1733,
+          "span_sha256": "8ec8b43875093fdd22b132a3c4e95a7b332203c97232cba0db62823239cd7e8d",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd@1634:2594:ff67d6eaa68f",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.06738126302888293,
+        "snippet": "15. ↑  . The Christian Science Monitor. 1982-10-01  [2020-11-19]. （原始内容存档于2015-10-03）. （页面存档备份，存于）\n16. ↑  . 中国外交部驻香港特区特派员公署官网. 2000-11-15  [2020-11-19]. （原始内容存档于2007-03-13）. Deng Xiaoping met with Mrs. Thatcher on September 24, 1982. The Chinese Premier had held talks with her before this meeting. And Chinese leaders formally informed the British side that the Chinese Government had decided to recover all of the Hong Kong region in 1997. Also, China offered assurances that it would initiate special policies after recovering Hong Kong. （页面存档备份，存于）\n17. 1 2  . 2017-06-30  [2018-10-28]. （原始内容存档于2018-06-26） –www.bbc.com. （页面存档备份，存于）\n18. ↑  . 香港大公報. 1984-03-09: 4.\n19. ↑   (PDF): 15. 1997  [2020-11-23]. （原始内容存档 (PDF)于2014-04-19）. （页面存档备份，存于）\n20. ↑  盧斯達. . date=2014-03-26 (小明文創).   [2020-11-23]. （原始内容存档于2020-11-23）. （页面存档备份，存于） 刪節版結集於盧斯達. . 小明文創. 2016.\n21. ↑  張學修. . 香港文匯報. 2018-05-08  [2020-11-23]. （原始内容存档于2021-04-08）. （页面存档备份，存于） 作者是全國政協委員、香港中華出入口商會會長.\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 74,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+            "start": 16975,
+            "end": 29996
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "fe43d604669a28bf4b1adaeddad84e4c708f40995b989f189d6759a4615487be",
+              "level": 2,
+              "kind": "heading",
+              "start": 15848,
+              "end": 15854,
+              "text": "## 後續\n"
+            },
+            {
+              "sha256": "7d5c472255b2e2c791c65bba2201919f1bf6bad8b8787a55d9264125603ee5b7",
+              "level": 3,
+              "kind": "heading",
+              "start": 16968,
+              "end": 16975,
+              "text": "### 引用\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 後續\n",
+            "### 引用\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": true,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "parent_source_id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd",
+          "parent_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "span_start": 1634,
+          "span_end": 2594,
+          "span_sha256": "ff67d6eaa68f010a497668e0cfd83224ff36aec6147fe269880965faf762447a",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd@2491:3646:78d9e647354e",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.06738126302888293,
+        "snippet": "21. ↑  張學修. . 香港文匯報. 2018-05-08  [2020-11-23]. （原始内容存档于2021-04-08）. （页面存档备份，存于） 作者是全國政協委員、香港中華出入口商會會長.\n22. ↑  中华人民共和国政府; 大不列颠及北爱尔兰联合王国政府. 中英双方 , 编. . 北京. 1984年12月19日  [2016-06-16]. （原始内容存档于2018年5月28日） （中文）. 一、中华人民共和国政府声明：收回香港地区（包括香港岛、九龙和“新界”，以下称香港）是全中国人民的共同愿望，中华人民共和国政府决定于1997年7月1日对香港恢復行使主权。二、联合王国政府声明：联合王国政府于1997年7月1日将香港交还给中华人民共和国。 （页面存档备份，存于）\n23. ↑  . 北京: 中华人民共和国外交部. 1984-12-19  [2013-10-01]. （原始内容存档于2013-10-04） （中文（简体））. （页面存档备份，存于）\n24. 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35  . 香港: 政府新聞處. 1998  [2006-12-16]. （原始内容存档于2017-05-25）. （页面存档备份，存于）\n25. ↑  s:清史紀事本末/卷四十四：草約成，以聞，帝不許，至是再下宣戰之諭，命奕山爲將軍，楊芳、隆文爲參贊大臣，馳赴廣東，逮琦善入京\n26. ↑  鴉片戰爭 （页面存档备份，存于）. 珠海書院.\n27. ↑  香港歷史博物館撰文.  (PDF). 明報月刊. 2015年12月號: 39-42頁  [2021-06-30]. （原始内容存档 (PDF)于2021-01-25）.\n28. 1 2 3 4 5 6 7 8 9  謝永光. . 香港: 明報出版社. 1996.\n29. ↑   (PDF).   [2015-10-13]. （原始内容存档 (PDF)于2018-09-28）. （页面存档备份，存于）\n30. 1 2  .   [2015-10-14]. （原始内容存档于2015-11-23）. （页面存档备份，存于）\n31. 1 2 3  薩本仁，潘興明. . 上海人民出版社. 1996: 243,278,282頁. ISBN 9787208021952 （中文（中国大陆））.\n32. ↑  余繩武，劉蜀永. . 中國大百科全書出版社. 1995. ISBN 9787500056782.\n33. ↑  劉蜀永. . 社會科學文獻出版社. 2000 （中文（中国大陆））.\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 74,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+            "start": 16975,
+            "end": 29996
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "fe43d604669a28bf4b1adaeddad84e4c708f40995b989f189d6759a4615487be",
+              "level": 2,
+              "kind": "heading",
+              "start": 15848,
+              "end": 15854,
+              "text": "## 後續\n"
+            },
+            {
+              "sha256": "7d5c472255b2e2c791c65bba2201919f1bf6bad8b8787a55d9264125603ee5b7",
+              "level": 3,
+              "kind": "heading",
+              "start": 16968,
+              "end": 16975,
+              "text": "### 引用\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 後續\n",
+            "### 引用\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": true,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "parent_source_id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd",
+          "parent_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "span_start": 2491,
+          "span_end": 3646,
+          "span_sha256": "78d9e647354e2ed3a1f77f8fd7027f5ef97eddc5e6d0523408ab8e8ba4029457",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd@4572:5531:6467b6520a93",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.06738126302888293,
+        "snippet": "50. 1 2  . 搜狐新闻. 2007-06-20  [2017-06-30]. （原始内容存档于2016-06-14）. （页面存档备份，存于）\n51. 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  . 北京: 人民出版社. 1993.\n52. ↑  Cottrell, Robert. . London: John Murray. 1993  [2022-04-15]. ISBN 0-7195-4992-2.\n53. 1 2 3 4  張春生; 許煜. . 新華出版社. 2013: 130-132. 摘錄於. 世代懺悔錄-香港前途考古札記. 2017-10-27  [2020-11-23]. （原始内容存档于2020-11-23）. 其實，英國人從一開始談判就玩弄「三腳凳」…周南解釋道：本來是中英談判，英國侵佔了中國，是兩個主權國家之間的談判。但是他們想把香港作為獨立的第三方拉進來，使談判形成2:1的形勢…剛開始，他們把當時香港政府的一個新聞處長曹廣榮拉進來，準備搞成變相的「第三方」，中方看破他們的企圖，不給曹廣榮辦簽證。……周南說，這就是英方玩弄的「三腳凳」把戲，事實上就是想「以華制華」……1984年6月，行政局首席非官守議員鍾士元，立法局非官守議員鄧蓮如、利國偉等人又以「為民請命」姿態來北京訪問，說港人對中央的「一國兩制」政策缺乏信心，企圖說服中央不要急於收回香港。23日上午，鄧小平接見了他們並作出嚴厲批評。鄧小平說：「你們說香港人沒有信心，其實是你們個人的意見，概括起來就是你們對中國政府所制定的政策不信任。」 Archive.today的存檔，存档日期2020-11-23\n54. 1 2 3 4  . 香港有線新聞. 2001-09-29. 摘錄於. 世代懺悔錄-香港前途考古札記. 2017-10-27  [2020-11-23]. （原始内容存档于2020-11-23）. Archive.today的存檔，存档日期2020-11-23\n55. ↑  . 新浪新闻:重温邓小平“一国两制”讲话专题——轉自新华网. 2004-02-21  [2020-11-23]. （原始内容存档于2004-05-20）. （页面存档备份，存于）\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 74,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+            "start": 16975,
+            "end": 29996
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "fe43d604669a28bf4b1adaeddad84e4c708f40995b989f189d6759a4615487be",
+              "level": 2,
+              "kind": "heading",
+              "start": 15848,
+              "end": 15854,
+              "text": "## 後續\n"
+            },
+            {
+              "sha256": "7d5c472255b2e2c791c65bba2201919f1bf6bad8b8787a55d9264125603ee5b7",
+              "level": 3,
+              "kind": "heading",
+              "start": 16968,
+              "end": 16975,
+              "text": "### 引用\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 後續\n",
+            "### 引用\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": true,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "parent_source_id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd",
+          "parent_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "span_start": 4572,
+          "span_end": 5531,
+          "span_sha256": "6467b6520a93ee381c82a8e8b6daff9002daa74501382a325d208d3f12d79177",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd@10262:11400:faebf29841f3",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.06738126302888293,
+        "snippet": "96. ↑  . 新華網. 2008-03-06  [2017-06-30]. （原始内容存档于2017-11-17）. （页面存档备份，存于）\n97. ↑  陳亦偉. . 秀威出版. : 23. ISBN 9789866732218 （中文（繁體））.\n98. ↑  王岸然. . 香港人民廣播電台. 2007-05-09  [2018-11-01]. （原始内容存档于2019-01-07） （中文（香港））. （页面存档备份，存于）\n99. ↑  . 頭條日報. 2018-10-31  [2018-11-01]. （原始内容存档于2018-10-31） （中文（香港））. （页面存档备份，存于）\n100. ↑  . 香港蘋果日報. 2008-06-05  [2020-12-01]. （原始内容存档于2020-11-30）.\n101. ↑  方志恒. . 立場新聞. 2016-06-03  [2021-06-23]. （原始内容存档于2016-07-21）. （页面存档备份，存于）\n102. ↑  劉青峰; 關小春. . 香港中文大學出版社. 1998年7月: 20-22.\n103. ↑  Hong Kong Volume 509: debated on Thursday 29 June 1989 UK Parliament 的存檔，存档日期2025-07-23.\n104. 1 2 3  House of Commons Hansard Debates for 13 Jul 1989 UK Parliament 的存檔，存档日期2024-07-17.\n105. 1 2  Rethinking Hong Kong L.A. Times Archives 1989-06-21 的存檔，存档日期2025-07-23.\n106. ↑  OFFICIAL GROUP ON CONTINGENCYPLANNING FOR HONG KONG MISC 140 part1 英國國家檔案館 的存檔，存档日期2025-07-23.\n107. ↑  OFFICIAL GROUP ON CONTINGENCYPLANNING FOR HONG KONG MISC 140 part2 英國國家檔案館 的存檔，存档日期2025-07-23.\n108. ↑  . 蘋果日報. 2014-05-17  [2018-03-26]. （原始内容存档于2018-03-16）. （页面存档备份，存于）\n109. ↑   (PDF). 香港立法局. 1990-10-10  [2009-02-27]. （原始内容存档 (PDF)于2009-05-30）. （页面存档备份，存于）\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 74,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+            "start": 16975,
+            "end": 29996
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "fe43d604669a28bf4b1adaeddad84e4c708f40995b989f189d6759a4615487be",
+              "level": 2,
+              "kind": "heading",
+              "start": 15848,
+              "end": 15854,
+              "text": "## 後續\n"
+            },
+            {
+              "sha256": "7d5c472255b2e2c791c65bba2201919f1bf6bad8b8787a55d9264125603ee5b7",
+              "level": 3,
+              "kind": "heading",
+              "start": 16968,
+              "end": 16975,
+              "text": "### 引用\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 後續\n",
+            "### 引用\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": true,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "parent_source_id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd",
+          "parent_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "span_start": 10262,
+          "span_end": 11400,
+          "span_sha256": "faebf29841f334a3df6ed6ec0c62650264bca8994e75c13eb9d9ae0b818c9fd6",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd@11237:12363:57e40639f420",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.06738126302888293,
+        "snippet": "108. ↑  . 蘋果日報. 2014-05-17  [2018-03-26]. （原始内容存档于2018-03-16）. （页面存档备份，存于）\n109. ↑   (PDF). 香港立法局. 1990-10-10  [2009-02-27]. （原始内容存档 (PDF)于2009-05-30）. （页面存档备份，存于）\n110. ↑   (PDF). 香港保安局 (报告) (香港政府統計處). 2008-09  [2018-04-23]. （原始内容存档 (PDF)于2018-10-12）. （页面存档备份，存于）\n111. ↑  李鴻彥. . am730. 2014-07-08  [2020-09-22]. （原始内容存档于2019-05-02）. （页面存档备份，存于）\n112. ↑  蔡錦源. . 立場新聞. 2016-04-28  [2020-09-22]. （原始内容存档于2019-08-19）. （页面存档备份，存于）\n113. 1 2  Editor. . recall-hk. 2024-03-28  [2025-06-12] （英语）.\n114. 1 2  林劍. . 香港01. 2020-05-26  [2025-06-12] （中文（香港））.\n115. ↑  . 七十年代雜誌社. 1989 （中文）.\n116. 1 2  . Matters.   [2022-06-18]. （原始内容存档于2022-06-29） （中文（繁體））. （页面存档备份，存于）\n117. ↑  陳文龍. . The News Lens 關鍵評論網. 2018-06-26  [2022-06-18]. （原始内容存档于2022-07-09） （中文（臺灣））. （页面存档备份，存于）\n118. ↑   (PDF). 香港大學中文系 (九龍城區議會). 2005年11月  [2018-03-27]. （原始内容 (PDF)存档于2015-12-08）. （页面存档备份，存于）\n119. ↑  九龍城寨史話 三聯書店(香港)出版 ISBN 978-962-04-0682-9\n120. ↑   (PDF), 立法局會議過程正式紀錄, 1989-10-11: 24  [2010-09-04], （原始内容存档 (PDF)于2009-05-30） （页面存档备份，存于）\n121. ↑  . 人民日报. 1 July 1997  [10 March 2025].\n122. ↑  . 人民日報 (中国网). 1997-07-07  [2017-07-07]. （原始内容存档于2013-05-20）. （页面存档备份，存于）\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 74,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+            "start": 16975,
+            "end": 29996
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "fe43d604669a28bf4b1adaeddad84e4c708f40995b989f189d6759a4615487be",
+              "level": 2,
+              "kind": "heading",
+              "start": 15848,
+              "end": 15854,
+              "text": "## 後續\n"
+            },
+            {
+              "sha256": "7d5c472255b2e2c791c65bba2201919f1bf6bad8b8787a55d9264125603ee5b7",
+              "level": 3,
+              "kind": "heading",
+              "start": 16968,
+              "end": 16975,
+              "text": "### 引用\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 後續\n",
+            "### 引用\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": true,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "parent_source_id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd",
+          "parent_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "span_start": 11237,
+          "span_end": 12363,
+          "span_sha256": "57e40639f420000642ac3f7f8f00f56a3c2b3b3a957e9675e2963a53ecceb298",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd@12236:13021:ed5a328d347b",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.06738126302888293,
+        "snippet": "121. ↑  . 人民日报. 1 July 1997  [10 March 2025].\n122. ↑  . 人民日報 (中国网). 1997-07-07  [2017-07-07]. （原始内容存档于2013-05-20）. （页面存档备份，存于）\n123. ↑  . 自由亞洲電台. 2022-03-25  [2022-03-28]. （原始内容存档于2022-07-09）. （页面存档备份，存于）\n124. ↑  . 東方日報. 2022-03-26  [2022-03-28]. （原始内容存档于2022-07-09）. （页面存档备份，存于）\n125. ↑  . 明報. 2022-03-25  [2022-03-28]. （原始内容存档于2022-07-09）. （页面存档备份，存于）\n126. ↑  林祖偉. . BBC中文. 2022-01-11  [2022-03-28]. （原始内容存档于2022-07-13）. （页面存档备份，存于）\n127. ↑  美國在台協會：文獻篇: 美國國務卿瑪德蘭．歐布萊特一九九七佛萊斯特講座：美國在東亞的原則與目標美國海軍官校馬里蘭州安納波里斯市一九九七年四月十五日 （页面存档备份，存于）\n128. ↑  美商務部撤銷香港特殊地位 取消出口證豁免 （页面存档备份，存于），經濟日報，2020-6-30\n129. ↑  蕭偉基. . 《亞洲週刊》. 2016-03-28  [2018-10-04]. （原始内容存档于2018-10-04）. （页面存档备份，存于）\n130. ↑  .   [2012-09-30]. （原始内容存档于2013-10-02）. （页面存档备份，存于）\n131. ↑  .   [2012-09-30]. （原始内容存档于2019-05-03）. （页面存档备份，存于）\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 74,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "list",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+            "start": 16975,
+            "end": 29996
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "fe43d604669a28bf4b1adaeddad84e4c708f40995b989f189d6759a4615487be",
+              "level": 2,
+              "kind": "heading",
+              "start": 15848,
+              "end": 15854,
+              "text": "## 後續\n"
+            },
+            {
+              "sha256": "7d5c472255b2e2c791c65bba2201919f1bf6bad8b8787a55d9264125603ee5b7",
+              "level": 3,
+              "kind": "heading",
+              "start": 16968,
+              "end": 16975,
+              "text": "### 引用\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 後續\n",
+            "### 引用\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": true,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "parent_source_id": "verbatim-v1:1a44221b76ac7a3856230393ba35fd8952ba5a3872434a992dafacedc31e11cd",
+          "parent_text_sha256": "c5deec76f39da9c7a46dd0859caf5d225eb32e700870abc6df2e6549df77aedd",
+          "span_start": 12236,
+          "span_end": 13021,
+          "span_sha256": "ed5a328d347bdceedcc512ce77b8d25878016680da312d977a020567ccdf0e78",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:ee67fbf9d5e13f16d2c690e6e9731e92f9f0b81443ce746b52d0423d4affee35@0:161:e80fe8aa65c6",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.08768017174514102,
+        "snippet": "香港市民在1979年前鮮有考慮香港前途問題，但香港政府卻不然。由於新界的《展拓香港界址專條》租約將在1997年6月30日屆滿，而1970年代香港籌劃多項基建，投資回本期往往跨越1997年，香港政府知道租契必須清晰才能籌集資金。1979年3月，香港總督麥理浩到北京向時任中國共產黨中央委員會副主席鄧小平提出香港前途問題。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 15,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "e80fe8aa65c6992a5c59039cafd4fe0141b28fd0accb1bc08a9333e65aba2523",
+            "start": 5000,
+            "end": 5161
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "d98b60bfd7a5944b065bf9ab54809f0ae7a19c76b109dada56d21a06967251ec",
+              "level": 2,
+              "kind": "heading",
+              "start": 4980,
+              "end": 4990,
+              "text": "## 香港前途談判\n"
+            },
+            {
+              "sha256": "ff2ed40474fe6217cdf91a8541a42ce413008da297ffc94483a25087474fd75f",
+              "level": 3,
+              "kind": "heading",
+              "start": 4991,
+              "end": 5000,
+              "text": "### 談判緣起\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "e80fe8aa65c6992a5c59039cafd4fe0141b28fd0accb1bc08a9333e65aba2523",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 香港前途談判\n",
+            "### 談判緣起\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": false,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "e80fe8aa65c6992a5c59039cafd4fe0141b28fd0accb1bc08a9333e65aba2523",
+          "parent_source_id": "verbatim-v1:ee67fbf9d5e13f16d2c690e6e9731e92f9f0b81443ce746b52d0423d4affee35",
+          "parent_text_sha256": "e80fe8aa65c6992a5c59039cafd4fe0141b28fd0accb1bc08a9333e65aba2523",
+          "span_start": 0,
+          "span_end": 161,
+          "span_sha256": "e80fe8aa65c6992a5c59039cafd4fe0141b28fd0accb1bc08a9333e65aba2523",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:3bfc55a2a0dccec63982ad0c687593a76242de193cb121c5a5f22e85501d3d6c@0:927:72318bc1663d",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.0792072493748988,
+        "snippet": "鄧小平於1970年代末首先提出「一國兩制」構思:4。中國官方說法是「對香港恢復行使主權」:v，或者「政權交接」:3。1982年9月24日，鄧小平會見英國首相柴契爾夫人時談話我們對香港問題的基本立場稱：「……關於主權問題，中國在這個問題上沒有回旋餘地。坦率地講，主權問題不是一個可以討論的問題。……」:12\n1982年12月9日，負責香港事務的英國外交及聯邦事務部國務大臣貝爾斯特德勳爵在香港發表意見，提出香港必須作為其中一方參加香港前途談判，并把对香港问题的最终解决方案比作是中英港三方参与的「三角櫈」，但中方代表團堅持香港無權加入為「第三者」參與談判。1984年6月23日，鄧小平接見香港行政局議員鍾士元和鄧蓮如時，鄧小平公開指「只有兩腳櫈」（指中英兩國）、「沒有三腳櫈」、「歡迎你們以個人的身分到北京來」，由此「三腳櫈」的比喻流傳。香港行政局議員甚為不快，鍾士元以包辦婚姻比喻，指當天鄧小平說「無論如何都是中英兩國之間的事。所謂三腳櫈不存在，只有兩腳櫈，香港不應插嘴。當時我暗想，那不是等於盲婚嗎？男女雙方父母討論婚姻事宜，香港就無權參與，但又不敢說出來反駁」；同為香港行政局議員的李鵬飛在2001年指「說中英兩國是兩腳櫈……好像港人前途與港人無關似的」。據中方團長周南等人的回憶錄，中方假定香港政界若參與談判，將一邊倒支持英方立場形成「以華制華」；而鄧小平亦指控香港行政局議員挟持「香港民意」之名，實則只反映一己之見:58-61。由於中方代表團沒邀請香港代表加入，香港人只能加入英國代表團成員。1983年7月，中國政府曾以「不在英國代表團名單」為由拒絕了香港新聞處處長曹廣榮的大陸簽證。\n1984年1月中英各自撤換談判團團長，並達成初步共識，並傳出消息。儘管按照英皇制誥，香港立法局不能對談判或其結果作出任何行動，但大部分議員仍希望協議簽署前舉行沒有法律約束力的辯論 。由此，立法局首席非官守議員羅保在3月14日動議：「任何有關香港前途的建議，在未達成最後協議之前，必須在本局辯論。」（後稱「羅保動議」），最後亦獲得通過。港督尤德則認為立法局議員表達了香港市民對前途的真正感受和意願；但此舉遭中方猛烈抨擊是「節外生枝」、英國背後「搞的小動作」。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 17,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "72318bc1663d7711b2889edeaaad2f674fb13e521c95102908e6fca19e1928c2",
+            "start": 5180,
+            "end": 6107
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "d98b60bfd7a5944b065bf9ab54809f0ae7a19c76b109dada56d21a06967251ec",
+              "level": 2,
+              "kind": "heading",
+              "start": 4980,
+              "end": 4990,
+              "text": "## 香港前途談判\n"
+            },
+            {
+              "sha256": "d41ca40b59bb913ea84c44207a88914ea44dc18dc4a9b8e7a6500b68c6dcede2",
+              "level": 3,
+              "kind": "heading",
+              "start": 5161,
+              "end": 5180,
+              "text": "### 「沒有三腳櫈」：排除香港參與\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "72318bc1663d7711b2889edeaaad2f674fb13e521c95102908e6fca19e1928c2",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 香港前途談判\n",
+            "### 「沒有三腳櫈」：排除香港參與\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": false,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "72318bc1663d7711b2889edeaaad2f674fb13e521c95102908e6fca19e1928c2",
+          "parent_source_id": "verbatim-v1:3bfc55a2a0dccec63982ad0c687593a76242de193cb121c5a5f22e85501d3d6c",
+          "parent_text_sha256": "72318bc1663d7711b2889edeaaad2f674fb13e521c95102908e6fca19e1928c2",
+          "span_start": 0,
+          "span_end": 927,
+          "span_sha256": "72318bc1663d7711b2889edeaaad2f674fb13e521c95102908e6fca19e1928c2",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:b05c327bb8eebf9711af35f10b3ffc9de250f7d2c4780a0811da0d2b355e0ba1@1113:1410:e902f219ab3c",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.03992537313432836,
+        "snippet": "1983年9月鄧小平會見訪華的前英國首相希思時說，英國想用主權換治權是行不通的，勸告英方改變態度，以免出現到1984年9月中國不得不單方面公布解決香港問題方針政策之局面:388。該月香港的經濟恐慌被中方解讀為英國幕後操縱的「經濟牌」。9月16日至9月24日，港元曾在一個星期內下跌20%，由7.9港元兌1美元跌至9.6港元兌1美元的歷史低點:243。同一時期，物價一度飛漲，市面出現搶購糧食等情況；恆生指數亦告大幅下跌150點，跌至780點，導致1981年香港股災:49-51。促使香港政府在1983年10月15日起實施聯繫匯率制度，以7.80港元兌1美元的匯率與美元掛鈎，來維繫港元穩定。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 25,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "d961de4342cae42eb3184bd21bf2cbedf2abc6808707e9250423fb0c5f260d09",
+            "start": 7549,
+            "end": 8959
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "02347c2253c35493bbbe73112f128d1eef384638aefe011745a34b86ec892c9c",
+              "level": 2,
+              "kind": "heading",
+              "start": 7521,
+              "end": 7529,
+              "text": "## 談判交鋒\n"
+            },
+            {
+              "sha256": "0d02b841c9288d9460ee08a5be3757f0d4e70269c0842e888d8eeb7346d6e542",
+              "level": 3,
+              "kind": "heading",
+              "start": 7530,
+              "end": 7549,
+              "text": "### 1983年英方堅持主權換治權\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "d961de4342cae42eb3184bd21bf2cbedf2abc6808707e9250423fb0c5f260d09",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 談判交鋒\n",
+            "### 1983年英方堅持主權換治權\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": false,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "d961de4342cae42eb3184bd21bf2cbedf2abc6808707e9250423fb0c5f260d09",
+          "parent_source_id": "verbatim-v1:b05c327bb8eebf9711af35f10b3ffc9de250f7d2c4780a0811da0d2b355e0ba1",
+          "parent_text_sha256": "d961de4342cae42eb3184bd21bf2cbedf2abc6808707e9250423fb0c5f260d09",
+          "span_start": 1113,
+          "span_end": 1410,
+          "span_sha256": "e902f219ab3c74db97f7b16c8f5e5a4cfc2c8308ee2d404f4193bddd31c86091",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:6e93a6dbbb0e36c801d99ffecd3d289854ca90cd557ee79352fc5f5b42b1945d@0:828:cc3cd90e020d",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.05656816717297247,
+        "snippet": "1949年初，中國共產黨主席毛澤東在西柏坡會見蘇共中央政治局委員米高揚，已提出暫不收回香港的政策並解決港澳問題：「目前，還有一半的領土尚未解放。大陸上的事情比較好辦，把軍隊開去就行了。海島上的事情就比較複雜，須要採取另一種靈活的方式去解決，或者採用和平過渡的方式，這就要花較多的時間了。在這種情況下，急於解決香港、澳門的問題，也就沒有多大意義了。相反，恐怕利用這兩地的原來地位，特別是香港，對我們發展海外關係、進出口貿易更為有利些。總之，要看形勢的發展再作最後決定。」\n1949年中華人民共和國成立後，基於國際考慮，以及中國共產黨对香港有“长期打算，充分利用”的大局部署，中華人民共和國雖然不承認英方對香港的「主權」，但是1950年向英國表明暫時不會「收回」香港。1950年1月6日，英國向中国遞交照會，承認中华人民共和国政府為中国之合法政府。同時英國在軍事上也做出部署，包括使用核武阻止中国大陸武力收復香港的可能。1972年3月13日，中華人民共和國和英國發表聯合公報，英國承認中华人民共和国政府是中國的唯一合法政府，外交關係升為大使級。\n1952年10月，鑑於世界範圍內的「去殖民化」同「民主化」進程，葛量洪與殖民地大臣分別在香港和英國國會同時宣布，香港在這個時期推行大規模政制改革，不合時宜；「但是我們已決定在香港的市政局進行改革，市政局內將會有兩位民選的議席。」:150英國國家檔案館公開的文件顯示，從1950年代開始，香港總督尋求推行民眾選舉，但迫於中國共產黨新政權領導人壓力等多方因素，最終放棄：檔案顯示，主管香港事務的中華人民共和國華僑事務委員會主任廖承志曾在1960年表示，「我們將毫不猶豫採取積極行動，解放香港、九龍和新界。」；另一份文件記述早前兩年一次會議上，中華人民共和國國務院總理周恩来告訴英國一名軍官，任何在香港引入哪怕一點點自治的嘗試，都會被視作“非常不友善的舉動”和“陰謀”，表示這種做法會被認為是讓香港走上獨立道路的手段。\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 11,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "5df498f3f946d6868543cd4c39b43886049622599dad1a7043ea511afa3f7249",
+            "start": 3105,
+            "end": 4980
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "12ee836fa676a7eebc5eec2d173e33eb3d62d4a086bd484887d2795046e48e87",
+              "level": 2,
+              "kind": "heading",
+              "start": 3093,
+              "end": 3105,
+              "text": "## 香港前途問題緣起\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "5df498f3f946d6868543cd4c39b43886049622599dad1a7043ea511afa3f7249",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 香港前途問題緣起\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": false,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "5df498f3f946d6868543cd4c39b43886049622599dad1a7043ea511afa3f7249",
+          "parent_source_id": "verbatim-v1:6e93a6dbbb0e36c801d99ffecd3d289854ca90cd557ee79352fc5f5b42b1945d",
+          "parent_text_sha256": "5df498f3f946d6868543cd4c39b43886049622599dad1a7043ea511afa3f7249",
+          "span_start": 0,
+          "span_end": 828,
+          "span_sha256": "cc3cd90e020da098f18cdeb9f6a8bc1bb5d76d29b90857c367b87301fa2fb987",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:6e93a6dbbb0e36c801d99ffecd3d289854ca90cd557ee79352fc5f5b42b1945d@828:1875:df6389b9025b",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.05656816717297247,
+        "snippet": "由于聯合國规定殖民地拥有独立的权利，法理上當時香港人有權要求自決前途。自1971年聯合國大會2758號決議，中華人民共和國取代中華民國的聯合國「中國」席位和聯合國安全理事會常任理事國後，開始就香港與澳門的主權問題採取外交行動。1972年3月8日，中華人民共和國駐聯合國代表黃华致信聯合國非殖民化特別委員會主席，聲明：「香港、澳門屬於歷史遺留下來的帝國主義強加於中國的一系列不平等條約的結果，香港和澳門是被英國和葡萄牙當局佔領的中國領土的一部分，解決香港、澳門問題完全是屬於中國主權範圍內的問題，根本不屬於通常的所謂殖民地範疇。因此，不應列入殖民宣言中適用的殖民地區的名單之內。我國（中華人民共和國）政府主張，在條件成熟時，用適當的方式和平解決港澳問題，在未解決之前維持現狀」。6月15日，非殖化特別委員會通過包括中華人民共和國意見的決議案。11月2日，聯合國大會於1972年通過了委員會建議的《給予殖民地國家和人民獨立宣言的執行》，從殖民地名單中剔除香港和澳門。往後，香港和澳門無法以殖民地身份獨立，也未能透過聯合國非殖化的努力改革社會制度並及早推進民主，此舉為中華人民共和國接收香港與澳門的主權製造了背景條件。\n中國在1972年公開否定香港、澳門殖民地性質。1997年3月17日，《人民日報》曾刊登文章《為什麼說香港不是殖民地》，解釋官方立場：「迄今為止，英國在香港實行的是典型的殖民式統治，但並不等於香港就是殖民地。因為，通常意義上的殖民地主要是指因外國統治、管轄而喪失了主權的國家。香港是中國領土的一部分，所以，殖民地概念不適用於香港。」1960年代至1970年代中國大陸政局不穩定，以致延遲到1980年代才開始和英國談判歸還香港問題:150。\n大部份香港市民在中英開始詳細談判前，鮮有考慮香港主權的前途問題。但是，由於新界的《展拓香港界址專條》租約將於1997年6月30日屆滿，此事實促成中英兩國政府在1980年代初開始談判關於香港前途問題：香港政府有權就香港島和九龍界限街以南土地批出跨越1997年6月30日的租契，在1970年代初起，在香港籌劃多項大型基建項目，投資回本期往往跨越1997年6月30日，需要向國際籌集資金；中國大陸官方對香港前途問題的立場，以及對新界的土地契約安排，對這些大型基建都有十分關鍵影響，香港政府必須即時處理關於香港在1997年6月30日後政治前途的問題。1979年3月，香港總督麥理浩首度訪問中國大陸，並首次向中國共產黨領導人鄧小平提出香港前途問題。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 11,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "5df498f3f946d6868543cd4c39b43886049622599dad1a7043ea511afa3f7249",
+            "start": 3105,
+            "end": 4980
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "12ee836fa676a7eebc5eec2d173e33eb3d62d4a086bd484887d2795046e48e87",
+              "level": 2,
+              "kind": "heading",
+              "start": 3093,
+              "end": 3105,
+              "text": "## 香港前途問題緣起\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "5df498f3f946d6868543cd4c39b43886049622599dad1a7043ea511afa3f7249",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 香港前途問題緣起\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": false,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "5df498f3f946d6868543cd4c39b43886049622599dad1a7043ea511afa3f7249",
+          "parent_source_id": "verbatim-v1:6e93a6dbbb0e36c801d99ffecd3d289854ca90cd557ee79352fc5f5b42b1945d",
+          "parent_text_sha256": "5df498f3f946d6868543cd4c39b43886049622599dad1a7043ea511afa3f7249",
+          "span_start": 828,
+          "span_end": 1875,
+          "span_sha256": "df6389b9025b7ebae73ceeaaf629f335c8a0d5622c9386ab85654634166c0895",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:4c500e8800b0a8ec94103d3cfb57ba9877c02154c3de9e745144a90de839de9b@0:119:427302a7f40b",
+        "document_id": "acf4bbc6e96c8d2867faa417",
+        "source": "finewiki-zh",
+        "title": "香港回歸",
+        "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+        "score": 0.08601631957130679,
+        "snippet": "在體育方面，香港可獨立以「中國香港」的名義參加國際非外交組織例如國際足聯和奧林匹克運動會等，由中國香港體育協會暨奧林匹克委員會負責，亦擁有獨立的香港足球代表隊。由於主權移交後脫離英聯邦，香港沒有參加1998年及以後舉行之英聯邦運動會。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "snapshot_id": "zhwiki/116447@88406094@5a4f487212b8fe49",
+          "external_id": "zhwiki/116447",
+          "chunker_version": "verbatim-v1",
+          "source": "finewiki-zh",
+          "chunk_order": 66,
+          "document_id": "acf4bbc6e96c8d2867faa417",
+          "title": "香港回歸",
+          "wikiname": "zhwiki",
+          "page_id": 116447,
+          "file": "/home/chase/GitHub/rwkvrag/data/corpora/finewiki-restored-20260920/selected-v2/texts/116447-88406094-5a4f487212b8fe49.md",
+          "content_type": "prose",
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "427302a7f40b19fd67e54604888ba221ce5a33f92bd769ce429c604baba9c9e2",
+            "start": 16178,
+            "end": 16297
+          },
+          "context_spans": [
+            {
+              "sha256": "43573d53e787e23f8f0a99981736ae04a188b38d91ffe443cfa41baad8865a4f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 7,
+              "text": "# 香港回歸\n"
+            },
+            {
+              "sha256": "fe43d604669a28bf4b1adaeddad84e4c708f40995b989f189d6759a4615487be",
+              "level": 2,
+              "kind": "heading",
+              "start": 15848,
+              "end": 15854,
+              "text": "## 後續\n"
+            },
+            {
+              "sha256": "74006269ad32a32cd2544c03d255fb65ea95e543008da1330540208326338449",
+              "level": 3,
+              "kind": "heading",
+              "start": 16148,
+              "end": 16167,
+              "text": "### 香港對外地位（1997年─）\n"
+            },
+            {
+              "sha256": "c26944b3f793386af0e20191576ef6f9b3d5e41546ab40437fd2d6cf7136f3b7",
+              "level": 4,
+              "kind": "heading",
+              "start": 16168,
+              "end": 16178,
+              "text": "#### 國際組織\n"
+            }
+          ],
+          "in_language": "zh",
+          "kind": "finewiki",
+          "chunk_text_sha256": "427302a7f40b19fd67e54604888ba221ce5a33f92bd769ce429c604baba9c9e2",
+          "source_text_sha256": "acc01716ae4e31ec7adb84a2a52805eed4df007aca9700cc1c94baf3275ccb53",
+          "knowledge_base_id": "wiki-restored-20260920",
+          "uri": "https://zh.wikipedia.org/w/index.php?oldid=88406094",
+          "version": 88406094,
+          "heading_path": [
+            "# 香港回歸\n",
+            "## 後續\n",
+            "### 香港對外地位（1997年─）\n",
+            "#### 國際組織\n"
+          ],
+          "file_id": "acf4bbc6e96c8d2867faa417",
+          "atomic": false,
+          "legacy_document_id": "cce6aed15dffdce4786e983a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "427302a7f40b19fd67e54604888ba221ce5a33f92bd769ce429c604baba9c9e2",
+          "parent_source_id": "verbatim-v1:4c500e8800b0a8ec94103d3cfb57ba9877c02154c3de9e745144a90de839de9b",
+          "parent_text_sha256": "427302a7f40b19fd67e54604888ba221ce5a33f92bd769ce429c604baba9c9e2",
+          "span_start": 0,
+          "span_end": 119,
+          "span_sha256": "427302a7f40b19fd67e54604888ba221ce5a33f92bd769ce429c604baba9c9e2",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "budget_exceeded",
+    "answer_span": null,
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": true,
+      "source_count": 20,
+      "has_numeric_citation": false,
+      "citation_out_of_range": false,
+      "generation_status": "budget_exceeded",
+      "refusal_text_indicator": false,
+      "legacy_document_id_returned": null,
+      "restored_expected_document_returned": true,
+      "expected_title_returned": true,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0176.json"
+  },
+  "review": {
+    "case_id": "diverse-0009",
+    "verdict": "fail",
+    "issues": [
+      "budget_exceeded",
+      "empty_answer"
+    ],
+    "note": "香港回归年份普通题返回budget_exceeded和空答案；不能计为正确拒答。"
+  },
+  "input": {
+    "id": "diverse-0009",
+    "suite": "diverse",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/diverse_cases.jsonl",
+    "origin_index": 9,
+    "original_case": {
+      "case_type": "time",
+      "question": "香港是哪一年回归的",
+      "expected_titles": [
+        "香港回歸",
+        "香港回归"
+      ]
+    },
+    "category": "time",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "香港是哪一年回归的",
+      "history": [],
+      "knowledge_base_id": "wiki-restored-20260920",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    }
+  },
+  "raw_file_sha256": "347220b0203c160438c12c6f04db3aaa6a311bb1d501844e18afbfcdbe8f8138"
+}
