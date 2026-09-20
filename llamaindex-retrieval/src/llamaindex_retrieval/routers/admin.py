@@ -31,8 +31,43 @@ from ..schemas import (
     SearchTestRun,
 )
 from ..service import SearchService
+from ..atomic_evidence import AtomicRequest
 
 router = APIRouter(prefix="/v1/admin", tags=["admin"])
+
+
+@router.get("/atomic-evidence/capabilities")
+async def atomic_capabilities(request: Request):
+    svc = request.app.state.atomic_service
+    return {"available": svc.model is not None and svc.reader is not None}
+
+
+@router.post("/knowledge-bases/{knowledge_base_id}/atomic-evidence")
+async def inspect_atomic_evidence(knowledge_base_id: str, payload: AtomicRequest, request: Request):
+    return await request.app.state.atomic_service.inspect(knowledge_base_id, payload)
+
+
+@router.get("/knowledge-bases/{knowledge_base_id}/atomic-evidence")
+async def atomic_history(knowledge_base_id: str, request: Request):
+    service = request.app.state.atomic_service
+    await service.require_kb(knowledge_base_id)
+    return await service.repo.list_atomic_runs(knowledge_base_id)
+
+
+@router.get("/knowledge-bases/{knowledge_base_id}/atomic-evidence/{identity}")
+async def atomic_detail(knowledge_base_id: str, identity: str, request: Request):
+    service = request.app.state.atomic_service
+    await service.require_kb(knowledge_base_id)
+    run = await service.repo.get_atomic_run(knowledge_base_id, identity)
+    if run is None:
+        raise AdminNotFoundError("证据核对记录不存在")
+    try:
+        current = await asyncio.to_thread(service.index.versions.current)
+        freshness = "same_index_version" if current == run.get("index_version") else "index_changed"
+    except Exception:
+        freshness = "unknown"
+    # A saved source snapshot remains inspectable; never relabel it as current text.
+    return {**run, "freshness": freshness}
 
 
 @router.get("/health", response_model=AdminHealth)

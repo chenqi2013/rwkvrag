@@ -1,0 +1,224 @@
+[
+  {
+    "id": "conflict",
+    "status": "completed",
+    "values": [
+      "岚桥 M6 标准模式额定功率为 18 W。",
+      "岚桥 M6 标准模式额定功率为 25 W。"
+    ],
+    "kinds": [
+      "stated",
+      "stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "conflict-variant",
+    "status": "completed",
+    "values": [
+      "岚桥 M6 标准模式额定功率为 25 W。",
+      "岚桥 M6 标准模式额定功率为 18 W。"
+    ],
+    "kinds": [
+      "stated",
+      "stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "conditions",
+    "status": "completed",
+    "values": [
+      "岚桥 M6 标准模式额定功率为 18 W。",
+      "岚桥 M6 增强模式额定功率为 25 W。"
+    ],
+    "kinds": [
+      "stated",
+      "stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "conditions-variant",
+    "status": "completed",
+    "values": [
+      "岚桥 M6 增强模式额定功率为 25 W。",
+      "岚桥 M6 标准模式额定功率为 18 W。"
+    ],
+    "kinds": [
+      "stated",
+      "stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "revision",
+    "status": "completed",
+    "values": [
+      "岚桥 M6 标准模式额定功率为 18 W。",
+      "岚桥 M6 标准模式额定功率核准为 25 W，"
+    ],
+    "kinds": [
+      "stated",
+      "stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "revision-variant",
+    "status": "completed",
+    "values": [
+      "岚桥 M6 标准模式额定功率核准为 25 W，",
+      "岚桥 M6 标准模式额定功率为 18 W。"
+    ],
+    "kinds": [
+      "stated",
+      "stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "zero",
+    "status": "completed",
+    "values": [
+      "松河 T8 首月收到预约 80 台。",
+      null
+    ],
+    "kinds": [
+      "stated",
+      "not_stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      "0 台"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "zero-variant",
+    "status": "completed",
+    "values": [
+      null,
+      "松河 T8 首月收到预约 80 台。"
+    ],
+    "kinds": [
+      "not_stated",
+      "stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      "0 台"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "missing",
+    "status": "completed",
+    "values": [
+      null
+    ],
+    "kinds": [
+      "not_stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      null
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "missing-variant",
+    "status": "completed",
+    "values": [
+      null
+    ],
+    "kinds": [
+      "not_stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      null
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "long_record",
+    "status": "completed",
+    "values": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      "青杉 R7 的复位键应按住 13 秒；"
+    ],
+    "kinds": [
+      "not_stated",
+      "not_stated",
+      "not_stated",
+      "not_stated",
+      "not_stated",
+      "stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      "13 秒"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "long_record-variant",
+    "status": "completed",
+    "values": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      "青杉 R7 的复位键应按住 13 秒；"
+    ],
+    "kinds": [
+      "not_stated",
+      "not_stated",
+      "not_stated",
+      "not_stated",
+      "not_stated",
+      "stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      "13 秒"
+    ],
+    "manual_semantic_review_required": true
+  }
+]

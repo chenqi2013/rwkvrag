@@ -1,4 +1,5 @@
 import type { WikiVersion } from "./types";
+import type { AtomicRequest, AtomicRun, AtomicRunSummary } from "./atomicEvidence";
 import type {
   AdminHealth,
   ChunkItem,
@@ -36,6 +37,12 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 const jsonHeaders = { "Content-Type": "application/json" };
 
 export const api = {
+  atomicCapabilities: () => request<{ available: boolean }>("/v1/admin/atomic-evidence/capabilities"),
+  atomicInspect: (kb: string, payload: AtomicRequest) => request<AtomicRun>(`/v1/admin/knowledge-bases/${encodeURIComponent(kb)}/atomic-evidence`, {
+    method: "POST", headers: jsonHeaders, body: JSON.stringify(payload),
+  }),
+  atomicHistory: (kb: string) => request<AtomicRunSummary[]>(`/v1/admin/knowledge-bases/${encodeURIComponent(kb)}/atomic-evidence`),
+  atomicDetail: (kb: string, id: string) => request<AtomicRun>(`/v1/admin/knowledge-bases/${encodeURIComponent(kb)}/atomic-evidence/${encodeURIComponent(id)}`),
   health: () => request<AdminHealth>("/v1/admin/health"),
   knowledgeBases: () => request<KnowledgeBase[]>("/v1/admin/knowledge-bases"),
   createKnowledgeBase: (values: { name: string; description: string }) =>

@@ -1,0 +1,224 @@
+[
+  {
+    "id": "conflict",
+    "status": "completed",
+    "values": [
+      "岚桥 M6 标准模式额定功率为 18 W。",
+      "岚桥 M6 标准模式额定功率为 25 W。"
+    ],
+    "kinds": [
+      "reader_supported",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "conflict-variant",
+    "status": "completed",
+    "values": [
+      "岚桥 M6 标准模式额定功率为 25 W。\n",
+      "岚桥 M6 标准模式额定功率为 18 W。\n"
+    ],
+    "kinds": [
+      "reader_supported",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "conditions",
+    "status": "completed",
+    "values": [
+      "岚桥 M6 标准模式额定功率为 18 W。",
+      "岚桥 M6 增强模式额定功率为 25 W。"
+    ],
+    "kinds": [
+      "reader_supported",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "conditions-variant",
+    "status": "completed",
+    "values": [
+      "岚桥 M6 增强模式额定功率为 25 W。\n",
+      "岚桥 M6 标准模式额定功率为 18 W。\n"
+    ],
+    "kinds": [
+      "reader_supported",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "revision",
+    "status": "completed",
+    "values": [
+      "已撤回草案：岚桥 M6 标准模式额定功率为 18 W。",
+      "正式更正：岚桥 M6 标准模式额定功率核准为 25 W，原 18 W 记录已撤回。"
+    ],
+    "kinds": [
+      "reader_supported",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "revision-variant",
+    "status": "completed",
+    "values": [
+      "正式更正：岚桥 M6 标准模式额定功率核准为 25 W，原 18 W 记录已撤回。\n",
+      "已撤回草案：岚桥 M6 标准模式额定功率为 18 W。\n"
+    ],
+    "kinds": [
+      "reader_supported",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "zero",
+    "status": "completed",
+    "values": [
+      "松河 T8 首月收到预约 80 台。",
+      "正式记录：松河 T8 首月实际交付 0 台，尚未进入量产。"
+    ],
+    "kinds": [
+      "unconfirmed",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "0 台"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "zero-variant",
+    "status": "completed",
+    "values": [
+      "正式记录：松河 T8 首月实际交付 0 台，尚未进入量产。\n",
+      "松河 T8 首月收到预约 80 台。\n"
+    ],
+    "kinds": [
+      "reader_supported",
+      "unconfirmed"
+    ],
+    "issues": [],
+    "expected_values": [
+      "0 台"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "missing",
+    "status": "completed",
+    "values": [
+      "松河 T8 首月收到预约 80 台；本材料未记载实际交付数量。"
+    ],
+    "kinds": [
+      "unconfirmed"
+    ],
+    "issues": [],
+    "expected_values": [
+      null
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "missing-variant",
+    "status": "completed",
+    "values": [
+      "松河 T8 首月收到预约 80 台；本材料未记载实际交付数量。\n"
+    ],
+    "kinds": [
+      "unconfirmed"
+    ],
+    "issues": [],
+    "expected_values": [
+      null
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "long_record",
+    "status": "completed",
+    "values": [
+      "维护记录 000：青杉 R7 外壳检查完成，本项不规定复位时长。\n",
+      "维护记录 001：青杉 R7 外壳检查完成，本项不规定复位时长。\n",
+      "维护记录 002：青杉 R7 外壳检查完成，本项不规定复位时长。\n",
+      "维护记录 003：青杉 R7 外壳检查完成，本项不规定复位时长。\n",
+      "维护记录 004：青杉 R7 外壳检查完成，本项不规定复位时长。\n",
+      "最终核准：青杉 R7 的复位键应按住 13 秒；校验码为 NIMBUS-731。"
+    ],
+    "kinds": [
+      "unconfirmed",
+      "unconfirmed",
+      "unconfirmed",
+      "unconfirmed",
+      "unconfirmed",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "13 秒"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "long_record-variant",
+    "status": "completed",
+    "values": [
+      "维护记录 000：青杉 R7 外壳检查完成，本项不规定复位时长。\n",
+      "维护记录 001：青杉 R7 外壳检查完成，本项不规定复位时长。\n",
+      "维护记录 002：青杉 R7 外壳检查完成，本项不规定复位时长。\n",
+      "维护记录 003：青杉 R7 外壳检查完成，本项不规定复位时长。\n",
+      "维护记录 004：青杉 R7 外壳检查完成，本项不规定复位时长。\n",
+      "最终核准：青杉 R7 的复位键应按住 13 秒；校验码为 NIMBUS-731。\n"
+    ],
+    "kinds": [
+      "unconfirmed",
+      "unconfirmed",
+      "unconfirmed",
+      "unconfirmed",
+      "unconfirmed",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "13 秒"
+    ],
+    "manual_semantic_review_required": true
+  }
+]

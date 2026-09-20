@@ -1,0 +1,14 @@
+{
+  "api_intercepted": false,
+  "real_model": true,
+  "run_id": "a8568ce86381476886b444da66306e40",
+  "checks": [
+    "actual UI -> OpenSearch -> 7.2B selection -> 2.9B Reader -> MongoDB",
+    "both conflicts retain their exact source highlights",
+    "reload and reopen saved history",
+    "knowledge-base switch clears previous evidence",
+    "390px mobile source drawer, no horizontal page overflow"
+  ],
+  "javascript_errors": [],
+  "mobile_overflow": false
+}

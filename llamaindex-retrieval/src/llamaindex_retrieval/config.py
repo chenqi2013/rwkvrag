@@ -49,6 +49,10 @@ class Settings(BaseSettings):
 
     # The existing pipeline remains available for regression comparisons.
     rag_pipeline: str = Field(default="rwkv", pattern="^(existing|rwkv)$")
+    atomic_model_base_url: str = ""
+    atomic_model_name: str = "rwkv7-g1j-7.2b-20260831-ctx16384"
+    atomic_max_calls: int = Field(default=32, ge=1, le=64)
+    atomic_timeout_seconds: float = Field(default=180, ge=1, le=600)
     native_base_url: str = "http://127.0.0.1:18421/v1"
     native_model: str = "rwkv7-g1j-2.9b-20260831-ctx16384"
     native_api_key: str = ""

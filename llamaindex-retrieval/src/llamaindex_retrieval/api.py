@@ -25,6 +25,7 @@ from .service import SearchService
 from .semantic_query_planning import LanguageModelQueryPlanner
 from .tasks import TaskManager
 from .wiki import WikiService
+from .atomic_evidence import AtomicEvidenceService
 
 
 @asynccontextmanager
@@ -54,11 +55,14 @@ async def lifespan(app: FastAPI):
     app.state.task_manager = task_manager
     app.state.search_service = search
     app.state.admin_service = admin
+    atomic = AtomicEvidenceService(settings, repository, lexical_index)
+    app.state.atomic_service = atomic
     await task_manager.start()
     await wiki.backfill()
     yield
     await task_manager.shutdown()
     await search.aclose()
+    await atomic.aclose()
     lexical_index.close()
     await repository.close()
 

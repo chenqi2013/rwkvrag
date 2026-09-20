@@ -408,3 +408,21 @@ body {
 .citation-source-title { height: auto; padding: 0; white-space: normal; text-align: left; font-weight: 600; margin-bottom: 8px; max-width: 100%; overflow-wrap: anywhere; }
 .citation-preview { margin: 8px 0 !important; white-space: pre-wrap; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
 .citation-full-text { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; line-height: 1.8; padding: 14px; background: #f6f8fb; border: 1px solid #e3e8ef; border-radius: 8px; max-width: 100%; }
+
+/* The evidence review must remain readable while inspecting sources on a phone. */
+.atomic-evidence-page, .atomic-evidence-page .ant-space-item { min-width: 0; }
+.atomic-evidence-page .trace-json { white-space: pre-wrap; overflow-wrap: anywhere; }
+.atomic-evidence-page .ant-btn { max-width: 100%; height: auto; white-space: normal; }
+@media (max-width: 600px) {
+  body:has(.atomic-evidence-page) { min-width: 320px; }
+  .app-shell:has(.atomic-evidence-page) { flex-direction: column !important; }
+  .app-shell:has(.atomic-evidence-page) .app-sider {
+    position: static !important; width: 100% !important; max-width: 100% !important;
+    min-width: 0 !important; flex: none !important;
+  }
+  .app-shell:has(.atomic-evidence-page) .app-sider + .ant-layout { margin-left: 0; min-width: 0; width: 100%; }
+  .app-shell:has(.atomic-evidence-page) .nav-menu { display: flex; flex-wrap: wrap; }
+  .app-shell:has(.atomic-evidence-page) .nav-menu .ant-menu-item { width: 25%; }
+  .app-shell:has(.atomic-evidence-page) .app-header .ant-tag { display: none; }
+  .app-shell:has(.atomic-evidence-page) .app-content { min-width: 0; }
+}

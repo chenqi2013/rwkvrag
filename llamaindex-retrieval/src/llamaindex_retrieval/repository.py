@@ -94,6 +94,7 @@ class MongoRepository:
         self.files = self.database["files"]
         self.jobs = self.database["jobs"]
         self.wiki_versions = self.database["wiki_versions"]
+        self.atomic_runs = self.database["atomic_evidence_runs"]
         self.search_tests = self.database["search_tests"]
         self.search_test_runs = self.database["search_test_runs"]
         self.payloads = AsyncGridFSBucket(self.database, bucket_name="rag_payloads")
@@ -104,6 +105,32 @@ class MongoRepository:
             {"$set": {"status": "running", "stage": "generating", "progress": 20,
                       "started_at": utc_now(), "message": "正在根据原文生成 Wiki 草稿"}})
         return result.modified_count == 1
+
+    async def create_atomic_run(self, run):
+        await self.atomic_runs.insert_one(dict(run))
+
+    async def finish_atomic_run(self, run):
+        # Only a running record can be finalized; completed history is immutable.
+        record = dict(run)
+        payload = await self._store_large_payload(record)
+        if payload:
+            record = {k: run[k] for k in ("id", "knowledge_base_id", "request", "created_at", "status")}
+            record["payload_ref"] = payload
+        result = await self.atomic_runs.replace_one(
+            {"id": run["id"], "knowledge_base_id": run["knowledge_base_id"], "status": "running"}, record)
+        if not result.matched_count:
+            raise RepositoryConflictError("证据核对记录已经结束，不能覆盖")
+
+    async def list_atomic_runs(self, kb):
+        return await self.atomic_runs.find({"knowledge_base_id": kb}, {
+            "_id": 0, "id": 1, "request": 1, "created_at": 1, "status": 1,
+        }).sort("created_at", DESCENDING).limit(50).to_list(length=50)
+
+    async def get_atomic_run(self, kb, identity):
+        record = await self.atomic_runs.find_one({"id": identity, "knowledge_base_id": kb}, {"_id": 0})
+        if record and record.get("payload_ref"):
+            return await self._load_payload(record["payload_ref"])
+        return record
 
     async def save_wiki_version(self, page):
         record = dict(page)
@@ -146,6 +173,8 @@ class MongoRepository:
 
     async def connect(self) -> None:
         await self.client.admin.command("ping")
+        await self.atomic_runs.create_index("id", unique=True)
+        await self.atomic_runs.create_index([("knowledge_base_id", ASCENDING), ("created_at", DESCENDING)])
         await self.knowledge_bases.create_index("id", unique=True)
         await self.knowledge_bases.create_index("name", unique=True)
         await self.files.create_index("id", unique=True)

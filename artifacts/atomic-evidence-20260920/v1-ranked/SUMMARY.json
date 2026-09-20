@@ -1,0 +1,58 @@
+[
+  {
+    "id": "long_record",
+    "status": "completed",
+    "values": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      "按住 13 秒"
+    ],
+    "kinds": [
+      "not_stated",
+      "not_stated",
+      "not_stated",
+      "not_stated",
+      "not_stated",
+      "stated"
+    ],
+    "issues": [],
+    "expected_values": [
+      "13 秒"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "long_record-variant",
+    "status": "incomplete",
+    "values": [
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "kinds": [
+      "not_stated",
+      "not_stated",
+      "not_stated",
+      "not_stated",
+      "not_stated"
+    ],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 4620,
+        "end": 4661,
+        "detail": "quote_not_in_evidence"
+      }
+    ],
+    "expected_values": [
+      "13 秒"
+    ],
+    "manual_semantic_review_required": true
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "qa",
+    "status": "completed",
+    "values": [
+      "问：栖木 A2 支持离线使用吗？\n答：不支持，必须保持网络连接。"
+    ],
+    "kinds": [
+      "unconfirmed"
+    ],
+    "issues": [],
+    "expected_values": [
+      "不支持"
+    ],
+    "manual_semantic_review_required": true
+  }
+]

@@ -1,0 +1,362 @@
+[
+  {
+    "id": "conflict",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 21,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s2",
+        "stage": "extract",
+        "start": 0,
+        "end": 21,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "conflict-variant",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 22,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s2",
+        "stage": "extract",
+        "start": 0,
+        "end": 22,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "conditions",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 21,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s2",
+        "stage": "extract",
+        "start": 0,
+        "end": 21,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "conditions-variant",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 22,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s2",
+        "stage": "extract",
+        "start": 0,
+        "end": 22,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "revision",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 27,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s2",
+        "stage": "extract",
+        "start": 0,
+        "end": 41,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "revision-variant",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 42,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s2",
+        "stage": "extract",
+        "start": 0,
+        "end": 28,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      "18 W",
+      "25 W"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "zero",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 18,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s2",
+        "stage": "extract",
+        "start": 0,
+        "end": 29,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      "0 台"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "zero-variant",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 30,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s2",
+        "stage": "extract",
+        "start": 0,
+        "end": 19,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      "0 台"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "missing",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 31,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      null
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "missing-variant",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 32,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      null
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "long_record",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 33,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 33,
+        "end": 66,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 66,
+        "end": 99,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 99,
+        "end": 132,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 132,
+        "end": 165,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 4620,
+        "end": 4660,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      "13 秒"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "long_record-variant",
+    "status": "incomplete",
+    "values": [],
+    "kinds": [],
+    "issues": [
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 0,
+        "end": 33,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 33,
+        "end": 66,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 66,
+        "end": 99,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 99,
+        "end": 132,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 132,
+        "end": 165,
+        "detail": "model_call_not_completed"
+      },
+      {
+        "source_id": "s1",
+        "stage": "extract",
+        "start": 4620,
+        "end": 4661,
+        "detail": "model_call_not_completed"
+      }
+    ],
+    "expected_values": [
+      "13 秒"
+    ],
+    "manual_semantic_review_required": true
+  }
+]

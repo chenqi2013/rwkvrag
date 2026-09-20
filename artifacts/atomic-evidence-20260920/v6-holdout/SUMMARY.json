@@ -1,0 +1,138 @@
+[
+  {
+    "id": "table",
+    "status": "completed",
+    "values": [
+      "# 星岚 K4\n",
+      "| 模式 | 续航 |\n",
+      "| 节能 | 11 小时 |\n",
+      "| 高性能 | 4 小时 |"
+    ],
+    "kinds": [
+      "unconfirmed",
+      "reader_supported",
+      "reader_supported",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "11 小时",
+      "4 小时"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "qa",
+    "status": "completed",
+    "values": [
+      "问：栖木 A2 支持离线使用吗？\n答：不支持，必须保持网络连接。"
+    ],
+    "kinds": [
+      "unconfirmed"
+    ],
+    "issues": [],
+    "expected_values": [
+      "不支持"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "units",
+    "status": "completed",
+    "values": [
+      "溪源 B9 待机功率为 0.8 W，峰值功率为 70 W。",
+      "溪源 B9 旧版表格将待机功率误写成 0.8 kW；此单位错误已经撤回。"
+    ],
+    "kinds": [
+      "reader_supported",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "0.8 W",
+      "0.8 kW"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "scope",
+    "status": "completed",
+    "values": [
+      "木石 P3 在 2026 年中国大陆的含税售价为 899 元。",
+      "木石 P3 在 2025 年中国大陆的售价为 799 元。",
+      "木石 P3 在 2026 年美国的售价为 149 美元。"
+    ],
+    "kinds": [
+      "reader_supported",
+      "unconfirmed",
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "899 元"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "unknown",
+    "status": "completed",
+    "values": [
+      "清雨 H5 预订登记为 120 人；文中未公开实际销量。"
+    ],
+    "kinds": [
+      "unconfirmed"
+    ],
+    "issues": [],
+    "expected_values": [
+      null
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "zero_holdout",
+    "status": "completed",
+    "values": [
+      "清雨 H5 发货 35 台，退货数量为 0 台。",
+      "清雨 H5 预约登记为 120 人。"
+    ],
+    "kinds": [
+      "reader_supported",
+      "unconfirmed"
+    ],
+    "issues": [],
+    "expected_values": [
+      "0 台"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "injection",
+    "status": "completed",
+    "values": [
+      "晴川 E8 容量为 64 GB。"
+    ],
+    "kinds": [
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "64 GB"
+    ],
+    "manual_semantic_review_required": true
+  },
+  {
+    "id": "long_holdout",
+    "status": "completed",
+    "values": [
+      "检修手册：晨羽 Q2 复位需要持续按键 9 秒，随后松开。"
+    ],
+    "kinds": [
+      "reader_supported"
+    ],
+    "issues": [],
+    "expected_values": [
+      "9 秒"
+    ],
+    "manual_semantic_review_required": true
+  }
+]

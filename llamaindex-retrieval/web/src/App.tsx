@@ -16,6 +16,7 @@ import ImportsPage from "./pages/ImportsPage";
 import KnowledgeBasesPage from "./pages/KnowledgeBasesPage";
 import SearchPage from "./pages/SearchPage";
 import SearchHistoryPage from "./pages/SearchHistoryPage";
+import AtomicEvidencePage from "./pages/AtomicEvidencePage";
 import { useLanguage } from "./i18n";
 
 const { Header, Sider, Content } = Layout;
@@ -31,6 +32,7 @@ export default function App() {
     { key: "/wiki", icon: <FileTextOutlined />, label: "Wiki" },
     { key: "/imports", icon: <ImportOutlined />, label: tr("导入任务", "Imports") },
     { key: "/search", icon: <SearchOutlined />, label: tr("检索测试", "Search Lab") },
+    { key: "/atomic-evidence", icon: <FileTextOutlined />, label: tr("单项证据核对", "Evidence check") },
     { key: "/search-history", icon: <HistoryOutlined />, label: tr("历史测试", "History") },
   ];
 
@@ -78,6 +80,7 @@ export default function App() {
             <Route path="/wiki" element={<WikiPage />} />
             <Route path="/imports" element={<ImportsPage />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/atomic-evidence" element={<AtomicEvidencePage />} />
             <Route path="/search-history" element={<SearchHistoryPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>

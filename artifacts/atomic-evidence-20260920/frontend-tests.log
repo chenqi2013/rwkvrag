@@ -1,0 +1,208 @@
+TAP version 13
+# Subtest: matrix review failures remain visible without editing model output
+ok 1 - matrix review failures remain visible without editing model output
+  ---
+  duration_ms: 0.733245
+  type: 'test'
+  ...
+# Subtest: partial retrieval is visible and preserves the original answer
+ok 2 - partial retrieval is visible and preserves the original answer
+  ---
+  duration_ms: 0.204047
+  type: 'test'
+  ...
+# Subtest: routing failure offers an explicit scope choice without inventing an answer
+ok 3 - routing failure offers an explicit scope choice without inventing an answer
+  ---
+  duration_ms: 0.069263
+  type: 'test'
+  ...
+# Subtest: Shanghai response exposes missing evidence and invalid citation without replacing model output
+ok 4 - Shanghai response exposes missing evidence and invalid citation without replacing model output
+  ---
+  duration_ms: 0.095619
+  type: 'test'
+  ...
+# Subtest: evidence notices tolerate legacy responses and do not infer semantic correctness
+ok 5 - evidence notices tolerate legacy responses and do not infer semantic correctness
+  ---
+  duration_ms: 0.301802
+  type: 'test'
+  ...
+# Subtest: malformed labels and fabricated source quotes are visible without rewriting the answer
+ok 6 - malformed labels and fabricated source quotes are visible without rewriting the answer
+  ---
+  duration_ms: 0.596824
+  type: 'test'
+  ...
+# Subtest: Python code-point bounds preserve emoji, raw text and the original API object
+ok 7 - Python code-point bounds preserve emoji, raw text and the original API object
+  ---
+  duration_ms: 0.146294
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: undefined
+ok 8 - invalid or missing answer_span never exposes thinking as an answer: undefined
+  ---
+  duration_ms: 0.053979
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: null
+ok 9 - invalid or missing answer_span never exposes thinking as an answer: null
+  ---
+  duration_ms: 0.220498
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [0]
+ok 10 - invalid or missing answer_span never exposes thinking as an answer: [0]
+  ---
+  duration_ms: 0.17234
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [-1,2]
+ok 11 - invalid or missing answer_span never exposes thinking as an answer: [-1,2]
+  ---
+  duration_ms: 0.06554
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [3,1]
+ok 12 - invalid or missing answer_span never exposes thinking as an answer: [3,1]
+  ---
+  duration_ms: 0.026366
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [0,999]
+ok 13 - invalid or missing answer_span never exposes thinking as an answer: [0,999]
+  ---
+  duration_ms: 0.018419
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [true,2]
+ok 14 - invalid or missing answer_span never exposes thinking as an answer: [true,2]
+  ---
+  duration_ms: 0.01784
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [0,2.5]
+ok 15 - invalid or missing answer_span never exposes thinking as an answer: [0,2.5]
+  ---
+  duration_ms: 0.024549
+  type: 'test'
+  ...
+# Subtest: invalid or missing answer_span never exposes thinking as an answer: [0,2,3]
+ok 16 - invalid or missing answer_span never exposes thinking as an answer: [0,2,3]
+  ---
+  duration_ms: 0.066119
+  type: 'test'
+  ...
+# Subtest: native completed ignores legacy verification flags and does not claim semantic correctness
+ok 17 - native completed ignores legacy verification flags and does not claim semantic correctness
+  ---
+  duration_ms: 0.070471
+  type: 'test'
+  ...
+# Subtest: resolver partial failure preserves the answer and reports failed evidence reads
+ok 18 - resolver partial failure preserves the answer and reports failed evidence reads
+  ---
+  duration_ms: 0.040242
+  type: 'test'
+  ...
+# Subtest: planner fallback remains visible without changing the model answer
+ok 19 - planner fallback remains visible without changing the model answer
+  ---
+  duration_ms: 0.060448
+  type: 'test'
+  ...
+# Subtest: length-limited output stays explicitly incomplete even with a valid final span
+ok 20 - length-limited output stays explicitly incomplete even with a valid final span
+  ---
+  duration_ms: 0.032495
+  type: 'test'
+  ...
+# Subtest: writer budget rejection distinguishes stage entry from a model generation request
+ok 21 - writer budget rejection distinguishes stage entry from a model generation request
+  ---
+  duration_ms: 0.028432
+  type: 'test'
+  ...
+# Subtest: planner_failed does not invent a Writer call or an insufficient-evidence judgment
+ok 22 - planner_failed does not invent a Writer call or an insufficient-evidence judgment
+  ---
+  duration_ms: 0.040343
+  type: 'test'
+  ...
+# Subtest: retrieval_failed does not invent a Writer call or an insufficient-evidence judgment
+ok 23 - retrieval_failed does not invent a Writer call or an insufficient-evidence judgment
+  ---
+  duration_ms: 0.01808
+  type: 'test'
+  ...
+# Subtest: invalid_materials does not invent a Writer call or an insufficient-evidence judgment
+ok 24 - invalid_materials does not invent a Writer call or an insufficient-evidence judgment
+  ---
+  duration_ms: 0.015325
+  type: 'test'
+  ...
+# Subtest: completed with no writer records remains a missing-record diagnostic
+ok 25 - completed with no writer records remains a missing-record diagnostic
+  ---
+  duration_ms: 0.026486
+  type: 'test'
+  ...
+# Subtest: legacy answer text and existing verification/failure labels stay compatible
+ok 26 - legacy answer text and existing verification/failure labels stay compatible
+  ---
+  duration_ms: 0.040112
+  type: 'test'
+  ...
+# Subtest: source offsets count Unicode code points, including emoji
+ok 27 - source offsets count Unicode code points, including emoji
+  ---
+  duration_ms: 1.379366
+  type: 'test'
+  ...
+# Subtest: changed source or invalid offsets never highlight different evidence
+ok 28 - changed source or invalid offsets never highlight different evidence
+  ---
+  duration_ms: 0.110863
+  type: 'test'
+  ...
+# Subtest: clickable parts preserve original text and never renumber a citation
+ok 29 - clickable parts preserve original text and never renumber a citation
+  ---
+  duration_ms: 0.970575
+  type: 'test'
+  ...
+# Subtest: explicit citation map takes precedence over positional source order
+ok 30 - explicit citation map takes precedence over positional source order
+  ---
+  duration_ms: 0.186715
+  type: 'test'
+  ...
+# Subtest: missing, ambiguous or invalid source bindings never select a different source
+ok 31 - missing, ambiguous or invalid source bindings never select a different source
+  ---
+  duration_ms: 0.074055
+  type: 'test'
+  ...
+# Subtest: only public URL protocols can become links; local files remain saved evidence
+ok 32 - only public URL protocols can become links; local files remain saved evidence
+  ---
+  duration_ms: 0.113549
+  type: 'test'
+  ...
+# Subtest: snapshot lookup uses saved identity and hash rather than a newer page
+ok 33 - snapshot lookup uses saved identity and hash rather than a newer page
+  ---
+  duration_ms: 0.113459
+  type: 'test'
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 65.152272

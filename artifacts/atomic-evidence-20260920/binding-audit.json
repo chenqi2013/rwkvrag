@@ -1,0 +1,182 @@
+[
+  {
+    "group": "v6-final",
+    "id": "conditions-variant",
+    "status": "completed",
+    "calls": 4,
+    "excerpts": 2,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-final",
+    "id": "conditions",
+    "status": "completed",
+    "calls": 4,
+    "excerpts": 2,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-final",
+    "id": "conflict-variant",
+    "status": "completed",
+    "calls": 4,
+    "excerpts": 2,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-final",
+    "id": "conflict",
+    "status": "completed",
+    "calls": 4,
+    "excerpts": 2,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-final",
+    "id": "long_record-variant",
+    "status": "completed",
+    "calls": 7,
+    "excerpts": 6,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-final",
+    "id": "long_record",
+    "status": "completed",
+    "calls": 7,
+    "excerpts": 6,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-final",
+    "id": "missing-variant",
+    "status": "completed",
+    "calls": 2,
+    "excerpts": 1,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-final",
+    "id": "missing",
+    "status": "completed",
+    "calls": 2,
+    "excerpts": 1,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-final",
+    "id": "revision-variant",
+    "status": "completed",
+    "calls": 4,
+    "excerpts": 2,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-final",
+    "id": "revision",
+    "status": "completed",
+    "calls": 4,
+    "excerpts": 2,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-final",
+    "id": "zero-variant",
+    "status": "completed",
+    "calls": 4,
+    "excerpts": 2,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-final",
+    "id": "zero",
+    "status": "completed",
+    "calls": 4,
+    "excerpts": 2,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-holdout",
+    "id": "injection",
+    "status": "completed",
+    "calls": 3,
+    "excerpts": 1,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-holdout",
+    "id": "long_holdout",
+    "status": "completed",
+    "calls": 2,
+    "excerpts": 1,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-holdout",
+    "id": "qa",
+    "status": "completed",
+    "calls": 2,
+    "excerpts": 1,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-holdout",
+    "id": "scope",
+    "status": "completed",
+    "calls": 6,
+    "excerpts": 3,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-holdout",
+    "id": "table",
+    "status": "completed",
+    "calls": 5,
+    "excerpts": 4,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-holdout",
+    "id": "units",
+    "status": "completed",
+    "calls": 4,
+    "excerpts": 2,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-holdout",
+    "id": "unknown",
+    "status": "completed",
+    "calls": 2,
+    "excerpts": 1,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  },
+  {
+    "group": "v6-holdout",
+    "id": "zero_holdout",
+    "status": "completed",
+    "calls": 4,
+    "excerpts": 2,
+    "all_offsets_and_hashes_valid": true,
+    "all_calls_finish_stop": true
+  }
+]
