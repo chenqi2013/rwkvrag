@@ -1,0 +1,58 @@
+{
+  "arm": "fake",
+  "payload": {
+    "model": "rwkvrag-g1j72-vllm-eval",
+    "prompt": [
+      24281,
+      10060,
+      16738,
+      10708,
+      10250,
+      11012,
+      11932,
+      13191,
+      12509,
+      16803,
+      10838,
+      14734,
+      14866,
+      11012,
+      19137,
+      10260,
+      16947,
+      17141,
+      10917,
+      10344,
+      10283,
+      11860,
+      10080,
+      10060,
+      11,
+      5645,
+      10060,
+      61,
+      35762,
+      5439,
+      35762
+    ],
+    "temperature": 1.0,
+    "top_k": 32,
+    "top_p": 0.28,
+    "seed": 11,
+    "presence_penalty": 0,
+    "frequency_penalty": 0,
+    "penalty_decay": 0.996,
+    "max_tokens": 40,
+    "stop_token_ids": [
+      0
+    ],
+    "stop": [
+      "✿",
+      "\nUser:",
+      "\n### User"
+    ],
+    "skip_special_tokens": false,
+    "return_token_ids": true
+  },
+  "raw_response": "{\"id\":\"cmpl-bcb8273690a1b007\",\"object\":\"text_completion\",\"created\":1789886455,\"model\":\"rwkvrag-g1j72-vllm-eval\",\"choices\":[{\"index\":0,\"text\":\">星空低语，时间在指尖流淌。\",\"logprobs\":null,\"finish_reason\":\"stop\",\"stop_reason\":\"✿\",\"token_ids\":[63,13085,15090,10448,16728,19137,13064,17734,11454,12748,11981,13819,13893,10080,10060],\"prompt_logprobs\":null,\"prompt_token_ids\":[24281,10060,16738,10708,10250,11012,11932,13191,12509,16803,10838,14734,14866,11012,19137,10260,16947,17141,10917,10344,10283,11860,10080,10060,11,5645,10060,61,35762,5439,35762],\"routed_experts\":null}],\"service_tier\":null,\"system_fingerprint\":\"vllm-0.1.dev2072+g4b5cebdc2.d20260901-nohash\",\"usage\":{\"prompt_tokens\":31,\"total_tokens\":46,\"completion_tokens\":15,\"prompt_tokens_details\":null,\"completion_tokens_details\":null},\"kv_transfer_params\":null,\"ec_transfer_params\":null,\"metrics\":null}"
+}

@@ -1,0 +1,11 @@
+# /run/user/1001/systemd/transient/rwkvrag-vllm-decode-20260920-attempt2.service
+# This is a transient unit file, created programmatically via the systemd API. Do not edit.
+[Unit]
+Description=/home/chase/rwkvrag/data/services/vllm-decode-20260920/engine/.venv/bin/python /home/chase/rwkvrag/data/services/vllm-decode-20260920/launch.py
+
+[Service]
+RuntimeMaxSec=2h
+WorkingDirectory=/home/chase/rwkvrag/data/services/vllm-decode-20260920/engine
+Environment="CUDA_VISIBLE_DEVICES=GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0" "PYTHONPATH=/home/chase/rwkvrag/data/services/vllm-decode-20260920/engine" "TORCH_CUDA_ARCH_LIST=12.0" "TORCH_EXTENSIONS_DIR=/home/chase/rwkvrag/data/services/vllm-decode-20260920/compile-cache" "MAX_JOBS=4" "OMP_NUM_THREADS=4" "VLLM_WORKER_MULTIPROC_METHOD=spawn" "SETUPTOOLS_SCM_PRETEND_VERSION=0.1.dev2072+g4b5cebdc2.d20260901"
+ExecStart=
+ExecStart="/home/chase/rwkvrag/data/services/vllm-decode-20260920/engine/.venv/bin/python" "/home/chase/rwkvrag/data/services/vllm-decode-20260920/launch.py"

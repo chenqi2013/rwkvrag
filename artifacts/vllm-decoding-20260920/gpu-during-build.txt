@@ -1,0 +1,1 @@
+3, GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0, NVIDIA RTX PRO 6000 Blackwell Workstation Edition, 590.48.01, 31104 MiB, 97887 MiB

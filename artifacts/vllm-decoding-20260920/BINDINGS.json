@@ -1,0 +1,20 @@
+{
+  "files": {
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/vllm-decoding-20260920/ENGINE-SOURCE.json": "b8be05cd8dddcdb9eac88bca6af0ff2486982edd9407328fb6b064fd0c416168",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/vllm-decoding-20260920/schedule.json": "8f716856658698a02c14e439ddc9858f2bfeee2179aec608e59ba371db2780fd",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/vllm-decoding-20260920/prepare.py": "c96ad24fb1d203cf1d2fc7ae4ae1078d5415c9b0d405b880933f8d62d292342d",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/vllm-decoding-20260920/launch.py": "10b7861df48ba99ef0ae7baf18f1602f9173cee05b00123bf14a15c9d1793e8d",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/vllm-decoding-20260920/protocol.py": "5a4c1eeacc11ab5b2ded64b8c26bd8e806ee7a328ff9186485ef1c808b272980",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/vllm-decoding-20260920/analysis.py": "70e7647d70a450bef62dec31f6c0e6836b9bf3fc1daa776728580104dd38895f",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/vllm-decoding-20260920/inputs.json": "da5902aa3ad8a43d6c4c7c03f1b1078fba515ef7a6ffb01b4f61d62856cc4848",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/vllm-decoding-20260920/README.md": "d163121e94a5198dc3e02e00c6d2060eb11e8320241f7f6b13a101a11a1c599c",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/vllm-decoding-20260920/run.py": "b646dc9f5c74e339130416ad7f2f49daf59afe442974838a537b6b4980b78864",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/reader-label-20260920/protocol.py": "d15d4f82e8f19b26dbcdf8510edaec5a5820f96e83a7fd987895bcfdd86766c3",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/evidence-support-20260920/protocol.py": "a6c1f39919bb087e86fd4886e23238541d62e85e3fc1ff6f4ffefea2c91fc957"
+  },
+  "git_commit": "55ba45e806e5febaad3e5f4bad03cb594ba33938",
+  "started_at": "2026-09-20T06:35:56.916185+00:00",
+  "scheduled_calls": 1120,
+  "seen_cases": 160,
+  "source": "local optimized vllm-rwkv; exact deployment binding separately attached"
+}
