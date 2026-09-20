@@ -1,0 +1,124 @@
+{
+  "result": {
+    "case_id": "atomic_fixtures-0004",
+    "suite": "atomic_fixtures",
+    "question": "岚桥 M6的额定功率是什么？",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "岚桥 M6 的额定功率是 25 W。[资料 2]",
+    "sources": [
+      {
+        "id": "atomic_fixtures-0004-s0",
+        "document_id": "atomic_fixtures-0004-d0",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "已撤回草案：岚桥 M6 标准模式额定功率为 18 W。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "atomic_fixtures-0004-s1",
+        "document_id": "atomic_fixtures-0004-d1",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "正式更正：岚桥 M6 标准模式额定功率核准为 25 W，原 18 W 记录已撤回。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      24
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0138.json"
+  },
+  "review": {
+    "case_id": "atomic_fixtures-0004",
+    "verdict": "partial",
+    "issues": [
+      "mode_scope_omitted"
+    ],
+    "note": "资料顺序反转后仍正确采用正式更正25 W、引用2；与variant同样遗漏标准模式限定。"
+  },
+  "input": {
+    "id": "atomic_fixtures-0004",
+    "suite": "atomic_fixtures",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/atomic-evidence-20260920/fixtures.jsonl",
+    "origin_index": 4,
+    "original_case": {
+      "id": "revision",
+      "request": {
+        "object": "岚桥 M6",
+        "attribute": "额定功率",
+        "conditions": ""
+      },
+      "texts": [
+        "已撤回草案：岚桥 M6 标准模式额定功率为 18 W。",
+        "正式更正：岚桥 M6 标准模式额定功率核准为 25 W，原 18 W 记录已撤回。"
+      ],
+      "expected_values": [
+        "18 W",
+        "25 W"
+      ],
+      "expected_kinds": [
+        "stated",
+        "stated"
+      ]
+    },
+    "category": "atomic_fixtures",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "岚桥 M6的额定功率是什么？",
+      "history": [],
+      "materials": [
+        {
+          "id": "atomic_fixtures-0004-s0",
+          "document_id": "atomic_fixtures-0004-d0",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "已撤回草案：岚桥 M6 标准模式额定功率为 18 W。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        },
+        {
+          "id": "atomic_fixtures-0004-s1",
+          "document_id": "atomic_fixtures-0004-d1",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "正式更正：岚桥 M6 标准模式额定功率核准为 25 W，原 18 W 记录已撤回。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "80591f8076d48760263f834f36b021bf603f8c6832456d931df66bdb0f0722e9"
+}

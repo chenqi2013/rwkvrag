@@ -1,0 +1,291 @@
+{
+  "result": {
+    "case_id": "matrix_validation-0003",
+    "suite": "matrix_validation",
+    "question": "比较青川503型与白岭503型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "青川503型：容量为0 L；离线支持为支持离线运行。[资料 1]\n白岭503型：容量为10 L；离线支持为不支持离线运行。[资料 2]",
+    "sources": [
+      {
+        "id": "validation-3-s1@0:26:f86d0c1199f4",
+        "document_id": "validation-3-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "青川503型：容量为0 L；离线支持为支持离线运行。",
+        "metadata": {
+          "parent_source_id": "validation-3-s1",
+          "span_end": 26,
+          "span_sha256": "f86d0c1199f4743ebdcfb9f45c16c745d05d770369e54089443ba59890574bb5",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "validation-3-s2@0:28:58d015b1d402",
+        "document_id": "validation-3-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "白岭503型：容量为10 L；离线支持为不支持离线运行。",
+        "metadata": {
+          "parent_source_id": "validation-3-s2",
+          "span_end": 28,
+          "span_sha256": "58d015b1d40248bae8c224677e764b24b4c1b05df39f57c8cc5b367e528bd1c4",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      67
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0148.json"
+  },
+  "review": {
+    "case_id": "matrix_validation-0003",
+    "verdict": "pass",
+    "issues": [],
+    "note": "0 L与10 L、肯定/否定离线支持完整准确，引用1/2对应。"
+  },
+  "input": {
+    "id": "matrix_validation-0003",
+    "suite": "matrix_validation",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/validation.cases.jsonl",
+    "origin_index": 3,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "validation-3-s1",
+          "id": "validation-3-s1@0:26:f86d0c1199f4",
+          "metadata": {
+            "parent_source_id": "validation-3-s1",
+            "span_end": 26,
+            "span_sha256": "f86d0c1199f4743ebdcfb9f45c16c745d05d770369e54089443ba59890574bb5",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川503型：容量为0 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-3-s2",
+          "id": "validation-3-s2@0:28:58d015b1d402",
+          "metadata": {
+            "parent_source_id": "validation-3-s2",
+            "span_end": 28,
+            "span_sha256": "58d015b1d40248bae8c224677e764b24b4c1b05df39f57c8cc5b367e528bd1c4",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭503型：容量为10 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "history": [],
+      "id": "validation-003",
+      "kind": 3,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "青川503型",
+          "question": "青川503型的容量是什么？",
+          "source_ids": [
+            "validation-3-s1@0:26:f86d0c1199f4"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "青川503型",
+          "question": "青川503型的离线支持是什么？",
+          "source_ids": [
+            "validation-3-s1@0:26:f86d0c1199f4"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "白岭503型",
+          "question": "白岭503型的容量是什么？",
+          "source_ids": [
+            "validation-3-s2@0:28:58d015b1d402"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "白岭503型",
+          "question": "白岭503型的离线支持是什么？",
+          "source_ids": [
+            "validation-3-s2@0:28:58d015b1d402"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "青川503型",
+            "question": "青川503型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "青川503型",
+            "question": "青川503型的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "白岭503型",
+            "question": "白岭503型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "白岭503型",
+            "question": "白岭503型的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "青川503型",
+          "白岭503型"
+        ]
+      },
+      "question": "比较青川503型与白岭503型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "青川503型",
+          "text": "青川503型：容量为0 L；离线支持为支持离线运行。",
+          "values": {
+            "容量": "0 L",
+            "离线支持": "支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "白岭503型",
+          "text": "白岭503型：容量为10 L；离线支持为不支持离线运行。",
+          "values": {
+            "容量": "10 L",
+            "离线支持": "不支持离线运行"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "validation-3-s1",
+          "id": "validation-3-s1@0:26:f86d0c1199f4",
+          "metadata": {
+            "parent_source_id": "validation-3-s1",
+            "span_end": 26,
+            "span_sha256": "f86d0c1199f4743ebdcfb9f45c16c745d05d770369e54089443ba59890574bb5",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川503型：容量为0 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-3-s2",
+          "id": "validation-3-s2@0:28:58d015b1d402",
+          "metadata": {
+            "parent_source_id": "validation-3-s2",
+            "span_end": 28,
+            "span_sha256": "58d015b1d40248bae8c224677e764b24b4c1b05df39f57c8cc5b367e528bd1c4",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭503型：容量为10 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "青川503型的容量：0 L[资料 1]。\n青川503型的离线支持：支持离线运行[资料 1]。\n白岭503型的容量：10 L[资料 2]。\n白岭503型的离线支持：不支持离线运行[资料 2]。"
+    },
+    "category": 3,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "比较青川503型与白岭503型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "validation-3-s1",
+          "id": "validation-3-s1@0:26:f86d0c1199f4",
+          "metadata": {
+            "parent_source_id": "validation-3-s1",
+            "span_end": 26,
+            "span_sha256": "f86d0c1199f4743ebdcfb9f45c16c745d05d770369e54089443ba59890574bb5",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川503型：容量为0 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-3-s2",
+          "id": "validation-3-s2@0:28:58d015b1d402",
+          "metadata": {
+            "parent_source_id": "validation-3-s2",
+            "span_end": 28,
+            "span_sha256": "58d015b1d40248bae8c224677e764b24b4c1b05df39f57c8cc5b367e528bd1c4",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭503型：容量为10 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "fbb85cf432449cd80e651b522da7303dbfc7fb039dd1d8293285b6964e37564c"
+}

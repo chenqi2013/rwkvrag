@@ -1,0 +1,364 @@
+{
+  "result": {
+    "case_id": "matrix_holdout-0006",
+    "suite": "matrix_holdout",
+    "question": "按最后确定的范围逐项比较，并列来源，采用核准资料。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "青川906型：容量49 L；离线支持支持离线运行。[资料 3]\n白岭906型：容量81 L；离线支持不支持离线运行。[资料 1]",
+    "sources": [
+      {
+        "id": "holdout-6-s1@0:28:c49dca7d1f92",
+        "document_id": "holdout-6-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "白岭906型：容量为81 L；离线支持为不支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-6-s1",
+          "span_end": 28,
+          "span_sha256": "c49dca7d1f92a1b2afcbba82757f37ad798b6367319570ae90abcbe1a79fd88e",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "holdout-6-s2@0:33:df960f651d50",
+        "document_id": "holdout-6-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "已废止草案：青川906型容量暂填999 L，本记录不能作为核准值。",
+        "metadata": {
+          "parent_source_id": "holdout-6-s2",
+          "span_end": 33,
+          "span_sha256": "df960f651d50873616429bbe907670b4b220b90abd384ef2ae1383b56c21babe",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "holdout-6-s3@0:27:f69fb7785ba6",
+        "document_id": "holdout-6-s3",
+        "source": "synthetic-matrix",
+        "title": "记录3",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "青川906型：容量为49 L；离线支持为支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-6-s3",
+          "span_end": 27,
+          "span_sha256": "f69fb7785ba6e75a56f9b00159a153a4e1a9917cbec10516befe6a27e494de73",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      64
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 3,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0413.json"
+  },
+  "review": {
+    "case_id": "matrix_holdout-0006",
+    "verdict": "pass",
+    "issues": [
+      "historical_gold_citation_mismatch"
+    ],
+    "note": "正确遵循历史范围且排除草案，真实青川来源3引用正确；旧gold编号2与输入错位，保留原gold。"
+  },
+  "input": {
+    "id": "matrix_holdout-0006",
+    "suite": "matrix_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/holdout.cases.jsonl",
+    "origin_index": 6,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "holdout-6-s1",
+          "id": "holdout-6-s1@0:28:c49dca7d1f92",
+          "metadata": {
+            "parent_source_id": "holdout-6-s1",
+            "span_end": 28,
+            "span_sha256": "c49dca7d1f92a1b2afcbba82757f37ad798b6367319570ae90abcbe1a79fd88e",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭906型：容量为81 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-6-s2",
+          "id": "holdout-6-s2@0:33:df960f651d50",
+          "metadata": {
+            "parent_source_id": "holdout-6-s2",
+            "span_end": 33,
+            "span_sha256": "df960f651d50873616429bbe907670b4b220b90abd384ef2ae1383b56c21babe",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "已废止草案：青川906型容量暂填999 L，本记录不能作为核准值。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-6-s3",
+          "id": "holdout-6-s3@0:27:f69fb7785ba6",
+          "metadata": {
+            "parent_source_id": "holdout-6-s3",
+            "span_end": 27,
+            "span_sha256": "f69fb7785ba6e75a56f9b00159a153a4e1a9917cbec10516befe6a27e494de73",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川906型：容量为49 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ],
+      "history": [
+        {
+          "content": "比较青川906型与白岭906型的容量、离线支持和价格。",
+          "role": "user"
+        },
+        {
+          "content": "撤回价格，只保留容量和离线支持，采用核准资料。",
+          "role": "user"
+        }
+      ],
+      "id": "holdout-006",
+      "kind": 6,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "青川906型",
+          "question": "青川906型的容量是什么？",
+          "source_ids": [
+            "holdout-6-s3@0:27:f69fb7785ba6"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "青川906型",
+          "question": "青川906型的离线支持是什么？",
+          "source_ids": [
+            "holdout-6-s3@0:27:f69fb7785ba6"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "白岭906型",
+          "question": "白岭906型的容量是什么？",
+          "source_ids": [
+            "holdout-6-s1@0:28:c49dca7d1f92"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "白岭906型",
+          "question": "白岭906型的离线支持是什么？",
+          "source_ids": [
+            "holdout-6-s1@0:28:c49dca7d1f92"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "青川906型",
+            "question": "青川906型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "青川906型",
+            "question": "青川906型的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "白岭906型",
+            "question": "白岭906型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "白岭906型",
+            "question": "白岭906型的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "青川906型",
+          "白岭906型"
+        ]
+      },
+      "question": "按最后确定的范围逐项比较，并列来源，采用核准资料。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "白岭906型",
+          "text": "白岭906型：容量为81 L；离线支持为不支持离线运行。",
+          "values": {
+            "容量": "81 L",
+            "离线支持": "不支持离线运行"
+          }
+        },
+        {
+          "eligible": false,
+          "object": "青川906型",
+          "text": "已废止草案：青川906型容量暂填999 L，本记录不能作为核准值。",
+          "values": {
+            "容量": "999 L"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "青川906型",
+          "text": "青川906型：容量为49 L；离线支持为支持离线运行。",
+          "values": {
+            "容量": "49 L",
+            "离线支持": "支持离线运行"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "holdout-6-s1",
+          "id": "holdout-6-s1@0:28:c49dca7d1f92",
+          "metadata": {
+            "parent_source_id": "holdout-6-s1",
+            "span_end": 28,
+            "span_sha256": "c49dca7d1f92a1b2afcbba82757f37ad798b6367319570ae90abcbe1a79fd88e",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭906型：容量为81 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-6-s3",
+          "id": "holdout-6-s3@0:27:f69fb7785ba6",
+          "metadata": {
+            "parent_source_id": "holdout-6-s3",
+            "span_end": 27,
+            "span_sha256": "f69fb7785ba6e75a56f9b00159a153a4e1a9917cbec10516befe6a27e494de73",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川906型：容量为49 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "青川906型的容量：49 L[资料 2]。\n青川906型的离线支持：支持离线运行[资料 2]。\n白岭906型的容量：81 L[资料 1]。\n白岭906型的离线支持：不支持离线运行[资料 1]。"
+    },
+    "category": 6,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "按最后确定的范围逐项比较，并列来源，采用核准资料。",
+      "history": [
+        {
+          "content": "比较青川906型与白岭906型的容量、离线支持和价格。",
+          "role": "user"
+        },
+        {
+          "content": "撤回价格，只保留容量和离线支持，采用核准资料。",
+          "role": "user"
+        }
+      ],
+      "materials": [
+        {
+          "document_id": "holdout-6-s1",
+          "id": "holdout-6-s1@0:28:c49dca7d1f92",
+          "metadata": {
+            "parent_source_id": "holdout-6-s1",
+            "span_end": 28,
+            "span_sha256": "c49dca7d1f92a1b2afcbba82757f37ad798b6367319570ae90abcbe1a79fd88e",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭906型：容量为81 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-6-s2",
+          "id": "holdout-6-s2@0:33:df960f651d50",
+          "metadata": {
+            "parent_source_id": "holdout-6-s2",
+            "span_end": 33,
+            "span_sha256": "df960f651d50873616429bbe907670b4b220b90abd384ef2ae1383b56c21babe",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "已废止草案：青川906型容量暂填999 L，本记录不能作为核准值。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-6-s3",
+          "id": "holdout-6-s3@0:27:f69fb7785ba6",
+          "metadata": {
+            "parent_source_id": "holdout-6-s3",
+            "span_end": 27,
+            "span_sha256": "f69fb7785ba6e75a56f9b00159a153a4e1a9917cbec10516befe6a27e494de73",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川906型：容量为49 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "55aec7635069e01d178b0ac6951a59418d9f4cd6a0c0400fa5b854412ca3c659"
+}

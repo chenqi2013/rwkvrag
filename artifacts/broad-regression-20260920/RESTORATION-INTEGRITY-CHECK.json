@@ -1,0 +1,12 @@
+{
+  "historical_files_verified": 352,
+  "retrieval_questions_preserved": 434,
+  "sole_case_change": "payload.knowledge_base_id",
+  "documentation_links_checked": [
+    "docs/CURRENT.md",
+    "docs/EXPERIMENTS.md",
+    "docs/REGRESSION_POLICY.md",
+    "docs/archive/README.md",
+    "docs/archive/2026-09/broad-qa-v2-results-20260920.md"
+  ]
+}

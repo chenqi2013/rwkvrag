@@ -1,0 +1,288 @@
+{
+  "result": {
+    "case_id": "matrix_holdout-0002",
+    "suite": "matrix_holdout",
+    "question": "比较青川902型与白岭902型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "青川902型：容量为73 L；离线支持为支持离线运行。[资料 1]\n白岭902型：容量未提供；离线支持为不支持离线运行。[资料 2]",
+    "sources": [
+      {
+        "id": "holdout-2-s1@0:27:aa949d963bcb",
+        "document_id": "holdout-2-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "青川902型：容量为73 L；离线支持为支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-2-s1",
+          "span_end": 27,
+          "span_sha256": "aa949d963bcbe18458e7de1af45d32d5a06b807afe345c420443730d56ca8789",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "holdout-2-s2@0:20:8f093ba57fee",
+        "document_id": "holdout-2-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "白岭902型：离线支持为不支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-2-s2",
+          "span_end": 20,
+          "span_sha256": "8f093ba57fee57203fc950d6fd9d991349cdbea530604dff74022d84733628e0",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      66
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0411.json"
+  },
+  "review": {
+    "case_id": "matrix_holdout-0002",
+    "verdict": "pass",
+    "issues": [],
+    "note": "已知三格正确，未知容量明确未提供。"
+  },
+  "input": {
+    "id": "matrix_holdout-0002",
+    "suite": "matrix_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/holdout.cases.jsonl",
+    "origin_index": 2,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "holdout-2-s1",
+          "id": "holdout-2-s1@0:27:aa949d963bcb",
+          "metadata": {
+            "parent_source_id": "holdout-2-s1",
+            "span_end": 27,
+            "span_sha256": "aa949d963bcbe18458e7de1af45d32d5a06b807afe345c420443730d56ca8789",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川902型：容量为73 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-2-s2",
+          "id": "holdout-2-s2@0:20:8f093ba57fee",
+          "metadata": {
+            "parent_source_id": "holdout-2-s2",
+            "span_end": 20,
+            "span_sha256": "8f093ba57fee57203fc950d6fd9d991349cdbea530604dff74022d84733628e0",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭902型：离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "history": [],
+      "id": "holdout-002",
+      "kind": 2,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "青川902型",
+          "question": "青川902型的容量是什么？",
+          "source_ids": [
+            "holdout-2-s1@0:27:aa949d963bcb"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "青川902型",
+          "question": "青川902型的离线支持是什么？",
+          "source_ids": [
+            "holdout-2-s1@0:27:aa949d963bcb"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "not_called",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "白岭902型",
+          "question": "白岭902型的容量是什么？",
+          "source_ids": [],
+          "status": "missing"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "白岭902型",
+          "question": "白岭902型的离线支持是什么？",
+          "source_ids": [
+            "holdout-2-s2@0:20:8f093ba57fee"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "青川902型",
+            "question": "青川902型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "青川902型",
+            "question": "青川902型的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "白岭902型",
+            "question": "白岭902型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "白岭902型",
+            "question": "白岭902型的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "青川902型",
+          "白岭902型"
+        ]
+      },
+      "question": "比较青川902型与白岭902型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "青川902型",
+          "text": "青川902型：容量为73 L；离线支持为支持离线运行。",
+          "values": {
+            "容量": "73 L",
+            "离线支持": "支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "白岭902型",
+          "text": "白岭902型：离线支持为不支持离线运行。",
+          "values": {
+            "离线支持": "不支持离线运行"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "holdout-2-s1",
+          "id": "holdout-2-s1@0:27:aa949d963bcb",
+          "metadata": {
+            "parent_source_id": "holdout-2-s1",
+            "span_end": 27,
+            "span_sha256": "aa949d963bcbe18458e7de1af45d32d5a06b807afe345c420443730d56ca8789",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川902型：容量为73 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-2-s2",
+          "id": "holdout-2-s2@0:20:8f093ba57fee",
+          "metadata": {
+            "parent_source_id": "holdout-2-s2",
+            "span_end": 20,
+            "span_sha256": "8f093ba57fee57203fc950d6fd9d991349cdbea530604dff74022d84733628e0",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭902型：离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "青川902型的容量：73 L[资料 1]。\n青川902型的离线支持：支持离线运行[资料 1]。\n白岭902型的容量：资料不足，无法确定。\n白岭902型的离线支持：不支持离线运行[资料 2]。"
+    },
+    "category": 2,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "比较青川902型与白岭902型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "holdout-2-s1",
+          "id": "holdout-2-s1@0:27:aa949d963bcb",
+          "metadata": {
+            "parent_source_id": "holdout-2-s1",
+            "span_end": 27,
+            "span_sha256": "aa949d963bcbe18458e7de1af45d32d5a06b807afe345c420443730d56ca8789",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川902型：容量为73 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-2-s2",
+          "id": "holdout-2-s2@0:20:8f093ba57fee",
+          "metadata": {
+            "parent_source_id": "holdout-2-s2",
+            "span_end": 20,
+            "span_sha256": "8f093ba57fee57203fc950d6fd9d991349cdbea530604dff74022d84733628e0",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭902型：离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "efd0bd3dfd1e197ffd46cdf8344888b4bdc2ac005cdca23f2c5fe12c8c496ea8"
+}

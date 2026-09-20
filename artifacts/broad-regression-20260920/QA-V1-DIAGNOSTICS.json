@@ -1,0 +1,9 @@
+{
+  "successful_http_records": 64,
+  "retrieval_records": 59,
+  "no_sources": 59,
+  "out_of_range_citation": 56,
+  "scope_invalid": true,
+  "not_a_retrieval_quality_baseline": true,
+  "finding": "Writer receives empty evidence but still emits source labels; wrong harness scope explains missing candidates, not the invented citation content."
+}

@@ -1,0 +1,1482 @@
+{
+  "result": {
+    "case_id": "native_wiki-0001",
+    "suite": "native_wiki",
+    "question": "自动化课程的四张知识卡请分开找依据：IEC 61131-3条目列了哪五种编程语言；IEC 61499用什么执行模型取代循环模型；IEC 62056中的DLMS用户联盟把三份规范文档叫哪三种颜色的书；IEC 61508的安全生命周期包含几个阶段？仅复核库中介绍，不做当前合规认证。",
+    "execution_scope": "current_corpus_retrieval",
+    "http_status": 200,
+    "error": null,
+    "answer": "1. 自动化课程的四张知识卡请分开找依据：IEC 61131-3条目列了哪五种编程语言；IEC 61499用什么执行模型取代循环模型；IEC 62056中的DLMS用户联盟把三份规范文档叫哪三种颜色的书；IEC 61508的安全生命周期包含几个阶段？仅复核库中介绍，不做当前合规认证。\n2. IEC 61131-3条目列了哪五种编程语言\n3. IEC 61499用什么执行模型取代循环模型\n4. IEC 62056中的DLMS用户联盟把三份规范文档叫哪三种颜色的书\n5. IEC 61508的安全生命周期包含几个阶段？仅复核库中介绍，不做当前合规认证。",
+    "sources": [
+      {
+        "id": "verbatim-v1:ca6b94fb30e1396ab6a4617581bf68dd2d04386679ded1b4797ed4d9a015a3c1@0:545:a98bb1f56189",
+        "document_id": "97933b0e27226d553d4a9fe6",
+        "source": "finewiki-zh",
+        "title": "IEC 62056",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_62056",
+        "score": 0.03278688524590164,
+        "snippet": "DLMS（全称Device Language Message Specification，配电线报文规范）是一套由“DLMS User Association（页面存档备份，存于）”开发维护的应用层规范标准，目前已被IEC TC13 WG14纳入IEC 62056系列标准之中。COSEM（全称：Companion Specification for Energy Metering）涵盖了DLMS规约的传输与用户层规范。\nDLMS独立于应用层以下的各个低层，因而也就与通信信道无关，设计用于在计算机集成环境中支持与（能量）分配设备间的消息交换，是由IEC TC57建立并以IEC 61334-4-41发布的国际标准。这个概念被进一步发展成为设备语言报文规范，其目的在于为结构化建模和仪表数据交换提供一个互操作环境，支持任何能量类型如电、水、气或热的计量，应用于远程抄表、远程控制以及增值服务。\nDLMS用户联盟制定了三份规范文档，分别称为绿皮书、黄皮书和蓝皮书。IEC定义的所有DLMS规格文档均以“Electricity metering - Data exchange for meter reading, tariff and load control.” 为标题，包括以下文档：\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q2022972",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/1081264",
+          "chunk_order": 1,
+          "source": "finewiki-zh",
+          "document_id": "97933b0e27226d553d4a9fe6",
+          "title": "IEC 62056",
+          "source_row_index": 1158,
+          "wikiname": "zhwiki",
+          "page_id": 1081264,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "bb3c2cf847983c5db9203de1cd847a15577e8ec863ea69a2470e3d32403cdb73",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 12,
+              "text": "# IEC 62056\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "a98bb1f561899e0cf2c46506adb36a9773c54eae3a07d2efb27a5678a618d732",
+            "start": 12,
+            "end": 557
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "a98bb1f561899e0cf2c46506adb36a9773c54eae3a07d2efb27a5678a618d732",
+          "kind": "finewiki",
+          "source_text_sha256": "d2df18376fe817e94af2f287273b9e2ffb1f4c98042e361029849591c4ac0f07",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_62056",
+          "version": 73050541,
+          "heading_path": [
+            "# IEC 62056\n"
+          ],
+          "date_modified": "2022-08-03T18:43:42Z",
+          "atomic": false,
+          "file_id": "97933b0e27226d553d4a9fe6",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "a98bb1f561899e0cf2c46506adb36a9773c54eae3a07d2efb27a5678a618d732",
+          "parent_source_id": "verbatim-v1:ca6b94fb30e1396ab6a4617581bf68dd2d04386679ded1b4797ed4d9a015a3c1",
+          "parent_text_sha256": "a98bb1f561899e0cf2c46506adb36a9773c54eae3a07d2efb27a5678a618d732",
+          "span_start": 0,
+          "span_end": 545,
+          "span_sha256": "a98bb1f561899e0cf2c46506adb36a9773c54eae3a07d2efb27a5678a618d732",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:8265e1ce04db2449822849766971680ca97d188cf095ddfeff91fe5ad34956a7@0:195:98556c4a6a4b",
+        "document_id": "bce1d8ffcb406ce1b2d92dfd",
+        "source": "finewiki-zh",
+        "title": "IEC 61131-3",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+        "score": 0.046972340848907876,
+        "snippet": "IEC 61131-3是由國際電工委員會（IEC）於1993年12月所制定IEC 61131標準的第3部分，用於規範可程式邏輯控制器（PLC），DCS，IPC，CNC和SCADA的編程系統的標準，應用IEC 61131-3標準已經成為工業控制領域的趨勢。\n在PLC方面，編輯軟體只需符合IEC 61131-3國際標準規範，便可藉由符合各項標準的語言架構，進而能建立任何人皆可瞭解的程式。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q2931263",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/763356",
+          "chunk_order": 1,
+          "source": "finewiki-zh",
+          "document_id": "bce1d8ffcb406ce1b2d92dfd",
+          "title": "IEC 61131-3",
+          "source_row_index": 1118,
+          "wikiname": "zhwiki",
+          "page_id": 763356,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "6d104824c5ce591280136f8bbd7c413521fb7ea38a289be9392bdbc6cd14911e",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 14,
+              "text": "# IEC 61131-3\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "98556c4a6a4bc912c0c060cb457cec3b7d9bb58765a5e15ea133bc7d3f0bcca3",
+            "start": 14,
+            "end": 209
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "98556c4a6a4bc912c0c060cb457cec3b7d9bb58765a5e15ea133bc7d3f0bcca3",
+          "kind": "finewiki",
+          "source_text_sha256": "f3fcd4f8bb10b1f7c05cb114f64b1f53dc990a5f70b093b37846504a5dac9628",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+          "version": 63129618,
+          "heading_path": [
+            "# IEC 61131-3\n"
+          ],
+          "date_modified": "2020-12-09T00:08:24Z",
+          "atomic": false,
+          "file_id": "bce1d8ffcb406ce1b2d92dfd",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "98556c4a6a4bc912c0c060cb457cec3b7d9bb58765a5e15ea133bc7d3f0bcca3",
+          "parent_source_id": "verbatim-v1:8265e1ce04db2449822849766971680ca97d188cf095ddfeff91fe5ad34956a7",
+          "parent_text_sha256": "98556c4a6a4bc912c0c060cb457cec3b7d9bb58765a5e15ea133bc7d3f0bcca3",
+          "span_start": 0,
+          "span_end": 195,
+          "span_sha256": "98556c4a6a4bc912c0c060cb457cec3b7d9bb58765a5e15ea133bc7d3f0bcca3",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:e33487d0386694e6c124a45ff34b45a07fd6e9f2cb4218922924c201294ce1f0@0:486:8c7733b3d2a2",
+        "document_id": "d9f29d0c7ec2e66e24b728b4",
+        "source": "finewiki-zh",
+        "title": "IEC 61499",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61499",
+        "score": 0.05926084440204645,
+        "snippet": "IEC 61499-1定义了分布式系统的体系结构。在IEC 61499中，IEC61131的循环执行模型被事件驱动模型所取代。该模型明确了功能块的执行顺序。如果必要的话，可以通过插入E_CYCLE功能块实现基于循环周期性触发事件的应用，正如在IEC 61499-1的附件A中所提到的。\nIEC 61499使以应用程序为中心的设计成为可能，即先进行整体系统设计，随后将完成设计的功能块网络可以划分为一个或者多个应用程序被分配到不同的设备上。所有使用该系统的设备都被称为设备模型。系统的拓扑结构反映在系统模型中。关于应用的分布被称为映射模型。因此，系统内所有应用程序可被分布部署但仍能连接在一起。\n类似于IEC 61131-3的功能模块，IEC 61499功能模块类型同时明确了接口与逻辑实现方法。不同于IEC 61131-3，IEC 61499的界面在数据变量输入与输出之外，包含了事件输入与输出。各种事件可以通过WITH限制WITH constraints与数据输入与输出相关联。IEC 61499规定了几种功能模块类型，所有的功能模块类型均可包含对服务顺序的行为描述：\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q188109",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/5545987",
+          "chunk_order": 3,
+          "source": "finewiki-zh",
+          "document_id": "d9f29d0c7ec2e66e24b728b4",
+          "title": "IEC 61499",
+          "source_row_index": 1124,
+          "wikiname": "zhwiki",
+          "page_id": 5545987,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "cfe878cc49ce451b234c7c1b2533c416bcfdbf4ed57eb4c07129faafab3755e8",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 12,
+              "text": "# IEC 61499\n"
+            },
+            {
+              "sha256": "5eae68c6fc71b0ca942edfd8c6168fdf0fe281619eb1e4c82861981d23877875",
+              "level": 2,
+              "kind": "heading",
+              "start": 154,
+              "end": 167,
+              "text": "## 第一部分：体系结构\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8c7733b3d2a220b7cd224b31600cdc4728f3b004dea4dc4ccd381a35d2eb1b9a",
+            "start": 167,
+            "end": 653
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "8c7733b3d2a220b7cd224b31600cdc4728f3b004dea4dc4ccd381a35d2eb1b9a",
+          "kind": "finewiki",
+          "source_text_sha256": "fb16510bbdb09cf603039f854c6ebb575a27291beea253cff21a36392f91bd52",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61499",
+          "version": 75694808,
+          "heading_path": [
+            "# IEC 61499\n",
+            "## 第一部分：体系结构\n"
+          ],
+          "date_modified": "2023-01-26T15:19:42Z",
+          "atomic": false,
+          "file_id": "d9f29d0c7ec2e66e24b728b4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8c7733b3d2a220b7cd224b31600cdc4728f3b004dea4dc4ccd381a35d2eb1b9a",
+          "parent_source_id": "verbatim-v1:e33487d0386694e6c124a45ff34b45a07fd6e9f2cb4218922924c201294ce1f0",
+          "parent_text_sha256": "8c7733b3d2a220b7cd224b31600cdc4728f3b004dea4dc4ccd381a35d2eb1b9a",
+          "span_start": 0,
+          "span_end": 486,
+          "span_sha256": "8c7733b3d2a220b7cd224b31600cdc4728f3b004dea4dc4ccd381a35d2eb1b9a",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:7fecd667c75fa07756bea2cb70d59947deec45b6c767188950d0a6ab31f99561@0:123:b8f1dfded872",
+        "document_id": "f9fea43cdecd6b8e78e44089",
+        "source": "finewiki-zh",
+        "title": "IEC 61508",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61508",
+        "score": 0.03252247488101534,
+        "snippet": "IEC 61508标准起源于工業程序控制領域。该标准涵盖了完整的安全生命周期，当制定相关领域特定的功能安全标准时，需要进一步细化说明。\nIEC 61508标准定义的安全生命周期包含16个阶段，各阶段所关注的均是系统安全功能，粗略地可以分为3块：\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q1060017",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/1674322",
+          "chunk_order": 3,
+          "source": "finewiki-zh",
+          "document_id": "f9fea43cdecd6b8e78e44089",
+          "title": "IEC 61508",
+          "source_row_index": 910,
+          "wikiname": "zhwiki",
+          "page_id": 1674322,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "f43b74d2e83600a57ca2fa8f7f6952debf4d59f5805007918066b64fd19e83c3",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 12,
+              "text": "# IEC 61508\n"
+            },
+            {
+              "sha256": "81b8513ba130dff1977a03e999c5cb589b40b385a59d0e2ea4fe38760a169059",
+              "level": 2,
+              "kind": "heading",
+              "start": 327,
+              "end": 333,
+              "text": "## 簡介\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "b8f1dfded872f3b2a941bad02cf29c66164a133495660b940949e97fc13b6c41",
+            "start": 333,
+            "end": 456
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "b8f1dfded872f3b2a941bad02cf29c66164a133495660b940949e97fc13b6c41",
+          "kind": "finewiki",
+          "source_text_sha256": "943ee9f709b4b19278e39546d178de462c1ac1ddba3245be7961f79711796044",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61508",
+          "version": 85921036,
+          "heading_path": [
+            "# IEC 61508\n",
+            "## 簡介\n"
+          ],
+          "date_modified": "2025-02-02T03:22:14Z",
+          "atomic": false,
+          "file_id": "f9fea43cdecd6b8e78e44089",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "b8f1dfded872f3b2a941bad02cf29c66164a133495660b940949e97fc13b6c41",
+          "parent_source_id": "verbatim-v1:7fecd667c75fa07756bea2cb70d59947deec45b6c767188950d0a6ab31f99561",
+          "parent_text_sha256": "b8f1dfded872f3b2a941bad02cf29c66164a133495660b940949e97fc13b6c41",
+          "span_start": 0,
+          "span_end": 123,
+          "span_sha256": "b8f1dfded872f3b2a941bad02cf29c66164a133495660b940949e97fc13b6c41",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:f23a00d1400f3a5c7039f080454268dc0736fa212c2488aa1b7038a450f25743@0:14:6d104824c5ce",
+        "document_id": "bce1d8ffcb406ce1b2d92dfd",
+        "source": "finewiki-zh",
+        "title": "IEC 61131-3",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+        "score": 0.030834914611005692,
+        "snippet": "# IEC 61131-3\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q2931263",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/763356",
+          "chunk_order": 0,
+          "source": "finewiki-zh",
+          "document_id": "bce1d8ffcb406ce1b2d92dfd",
+          "title": "IEC 61131-3",
+          "source_row_index": 1118,
+          "wikiname": "zhwiki",
+          "page_id": 763356,
+          "file": "selected.parquet",
+          "content_type": "heading",
+          "context_spans": [],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "6d104824c5ce591280136f8bbd7c413521fb7ea38a289be9392bdbc6cd14911e",
+            "start": 0,
+            "end": 14
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "6d104824c5ce591280136f8bbd7c413521fb7ea38a289be9392bdbc6cd14911e",
+          "kind": "finewiki",
+          "source_text_sha256": "f3fcd4f8bb10b1f7c05cb114f64b1f53dc990a5f70b093b37846504a5dac9628",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+          "version": 63129618,
+          "heading_path": [],
+          "date_modified": "2020-12-09T00:08:24Z",
+          "atomic": true,
+          "file_id": "bce1d8ffcb406ce1b2d92dfd",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "6d104824c5ce591280136f8bbd7c413521fb7ea38a289be9392bdbc6cd14911e",
+          "parent_source_id": "verbatim-v1:f23a00d1400f3a5c7039f080454268dc0736fa212c2488aa1b7038a450f25743",
+          "parent_text_sha256": "6d104824c5ce591280136f8bbd7c413521fb7ea38a289be9392bdbc6cd14911e",
+          "span_start": 0,
+          "span_end": 14,
+          "span_sha256": "6d104824c5ce591280136f8bbd7c413521fb7ea38a289be9392bdbc6cd14911e",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:713ed470583ab5a9fdde2a92e50d74f75f2cfc5eec1dc8f54302f81588fd60c5@0:117:7987928778d1",
+        "document_id": "f9fea43cdecd6b8e78e44089",
+        "source": "finewiki-zh",
+        "title": "IEC 61508",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61508",
+        "score": 0.029116045245077504,
+        "snippet": "管理及系統技術確保可以避免在生命週期中任一部份出現的錯誤。即使是可靠度最高的保護方式，也可能被從初期概念、風險分析、規格、設計、安裝、維護一直到丟棄過程中導入的錯誤所破壞。IEC61508列出在生命週期的各階段需要應用的相關技術。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q1060017",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/1674322",
+          "chunk_order": 29,
+          "source": "finewiki-zh",
+          "document_id": "f9fea43cdecd6b8e78e44089",
+          "title": "IEC 61508",
+          "source_row_index": 910,
+          "wikiname": "zhwiki",
+          "page_id": 1674322,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "f43b74d2e83600a57ca2fa8f7f6952debf4d59f5805007918066b64fd19e83c3",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 12,
+              "text": "# IEC 61508\n"
+            },
+            {
+              "sha256": "237982db8ce98095089d20246c17ee8c3a71e1027c6b46822b46ea594be42527",
+              "level": 2,
+              "kind": "heading",
+              "start": 2208,
+              "end": 2219,
+              "text": "## 安全完整性等級\n"
+            },
+            {
+              "sha256": "11aeec36e5ae05920da7686e21d37ce42a3c101f4270943625233d31e75a6299",
+              "level": 3,
+              "kind": "heading",
+              "start": 3065,
+              "end": 3083,
+              "text": "### 管理、系統技術、驗證及確認\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "7987928778d10c9819799028f035f4a19766fc96a8ffff6dae151bc248861fbf",
+            "start": 3083,
+            "end": 3200
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "7987928778d10c9819799028f035f4a19766fc96a8ffff6dae151bc248861fbf",
+          "kind": "finewiki",
+          "source_text_sha256": "943ee9f709b4b19278e39546d178de462c1ac1ddba3245be7961f79711796044",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61508",
+          "version": 85921036,
+          "heading_path": [
+            "# IEC 61508\n",
+            "## 安全完整性等級\n",
+            "### 管理、系統技術、驗證及確認\n"
+          ],
+          "date_modified": "2025-02-02T03:22:14Z",
+          "atomic": false,
+          "file_id": "f9fea43cdecd6b8e78e44089",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "7987928778d10c9819799028f035f4a19766fc96a8ffff6dae151bc248861fbf",
+          "parent_source_id": "verbatim-v1:713ed470583ab5a9fdde2a92e50d74f75f2cfc5eec1dc8f54302f81588fd60c5",
+          "parent_text_sha256": "7987928778d10c9819799028f035f4a19766fc96a8ffff6dae151bc248861fbf",
+          "span_start": 0,
+          "span_end": 117,
+          "span_sha256": "7987928778d10c9819799028f035f4a19766fc96a8ffff6dae151bc248861fbf",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:aacdbf78bb407749f4b390559f81f79948a68a8e95cf505b959445a70b0baf20@0:520:6273f7245ca8",
+        "document_id": "bce1d8ffcb406ce1b2d92dfd",
+        "source": "finewiki-zh",
+        "title": "IEC 61131-3",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+        "score": 0.03125763125763126,
+        "snippet": "自動化控制是由許多電子與控制器等元件所組成，在90年代之前其控制器不僅佔用空間大，且迴路流程不易修改與維護，可程式控制器的出現使得這些問題得以決解，它也逐漸取代傳統的繼電器元件控制方式，諸多廠商投入可程式控制器的開發，使的可程式控制器的語法也越來越多，造成使用者在不同廠牌間程式轉換不便的困擾。因此，國際電工委員會便開始收集整理各家控制語法，在1993年制定了IEC 61131-3標準以統一可程式控制器的語法。\nIEC 61131-3規範的語法提出一套可跨不同目標平台的可程式控制器實現機制。規範中透過模組化的規劃與設計，將控制動作分為邏輯運算與硬體動作兩個部份，邏輯部分以共同的描述格式來統一IEC 61131-3所定義的各語法並加以實現，硬體動作則針對各硬體設計專屬之韌體函式庫，使得控制邏輯可以在各目標平台上使用硬體資源，這樣的設計使不同的控制晶片皆可執行以IEC 61131-3語法所設計的控制動作，而設計人員只需學會IEC 61131-3語法，便可使用所支援的控制晶片進行可程式控制器設計。此外，由於所設計的程式碼可以在不同的目標平台間重複使用，因此，透過自行建立的函式庫及利用重複使用的特性，更可縮短自動化流程的開發時程。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q2931263",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/763356",
+          "chunk_order": 3,
+          "source": "finewiki-zh",
+          "document_id": "bce1d8ffcb406ce1b2d92dfd",
+          "title": "IEC 61131-3",
+          "source_row_index": 1118,
+          "wikiname": "zhwiki",
+          "page_id": 763356,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "6d104824c5ce591280136f8bbd7c413521fb7ea38a289be9392bdbc6cd14911e",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 14,
+              "text": "# IEC 61131-3\n"
+            },
+            {
+              "sha256": "338e195a55c61e41d656ce01cd2f1bd00179440889749099503f52a61270664f",
+              "level": 2,
+              "kind": "heading",
+              "start": 209,
+              "end": 215,
+              "text": "## 概述\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "6273f7245ca858b2f0504450e4d906a24e28d28aa746bb6bbbe80772bc1d3140",
+            "start": 215,
+            "end": 735
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "6273f7245ca858b2f0504450e4d906a24e28d28aa746bb6bbbe80772bc1d3140",
+          "kind": "finewiki",
+          "source_text_sha256": "f3fcd4f8bb10b1f7c05cb114f64b1f53dc990a5f70b093b37846504a5dac9628",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+          "version": 63129618,
+          "heading_path": [
+            "# IEC 61131-3\n",
+            "## 概述\n"
+          ],
+          "date_modified": "2020-12-09T00:08:24Z",
+          "atomic": false,
+          "file_id": "bce1d8ffcb406ce1b2d92dfd",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "6273f7245ca858b2f0504450e4d906a24e28d28aa746bb6bbbe80772bc1d3140",
+          "parent_source_id": "verbatim-v1:aacdbf78bb407749f4b390559f81f79948a68a8e95cf505b959445a70b0baf20",
+          "parent_text_sha256": "6273f7245ca858b2f0504450e4d906a24e28d28aa746bb6bbbe80772bc1d3140",
+          "span_start": 0,
+          "span_end": 520,
+          "span_sha256": "6273f7245ca858b2f0504450e4d906a24e28d28aa746bb6bbbe80772bc1d3140",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:971ac9900820c55cce215c8c08feeb717c5be6cad9d486382b65104772f213fd@0:520:8c2c7014081e",
+        "document_id": "f9fea43cdecd6b8e78e44089",
+        "source": "finewiki-zh",
+        "title": "IEC 61508",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61508",
+        "score": 0.030158730158730156,
+        "snippet": "| 分類                     | 定義                     | 範圍（每年的失效率） |\n| ------------------------ | ------------------------ | -------------------- |\n| 頻繁（Frequent）         | 系統生命週期中出現很多次 | > 10−3               |\n| 可能（Probable）         | 系統生命週期中出現數次   | 10−3 至 10−4         |\n| 偶爾（Occasional）       | 系統生命週期中出現一次   | 10−4 至 10−5         |\n| 微乎其微（Remote）       | 系統生命週期不太可能出現 | 10−5 至 10−6         |\n| 幾乎不可能（Improbable） | 非常不可能出現           | 10−6 至 10−7         |\n| 難以置信（Incredible）   | 無法相信會出現的事件     | < 10−7               |\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q1060017",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/1674322",
+          "chunk_order": 11,
+          "source": "finewiki-zh",
+          "document_id": "f9fea43cdecd6b8e78e44089",
+          "title": "IEC 61508",
+          "source_row_index": 910,
+          "wikiname": "zhwiki",
+          "page_id": 1674322,
+          "file": "selected.parquet",
+          "content_type": "table",
+          "context_spans": [
+            {
+              "sha256": "f43b74d2e83600a57ca2fa8f7f6952debf4d59f5805007918066b64fd19e83c3",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 12,
+              "text": "# IEC 61508\n"
+            },
+            {
+              "sha256": "afcc556b04d97c47519780f0f733bc63269db3e39fce7eaf5d6c0148bc97633a",
+              "level": 2,
+              "kind": "heading",
+              "start": 834,
+              "end": 845,
+              "text": "## 危害及風險分析\n"
+            },
+            {
+              "sha256": "c60075731026a435645dccc4ba9ddb213ded00c8232c58df3700b199d160d363",
+              "level": null,
+              "kind": "table_header",
+              "start": 996,
+              "end": 1140,
+              "text": "| 分類                     | 定義                     | 範圍（每年的失效率） |\n| ------------------------ | ------------------------ | -------------------- |\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8c2c7014081ee1ab818b2a01b099aa86ede08cac235632e214e226c4594f6854",
+            "start": 996,
+            "end": 1516
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "8c2c7014081ee1ab818b2a01b099aa86ede08cac235632e214e226c4594f6854",
+          "kind": "finewiki",
+          "source_text_sha256": "943ee9f709b4b19278e39546d178de462c1ac1ddba3245be7961f79711796044",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61508",
+          "version": 85921036,
+          "heading_path": [
+            "# IEC 61508\n",
+            "## 危害及風險分析\n"
+          ],
+          "date_modified": "2025-02-02T03:22:14Z",
+          "atomic": true,
+          "file_id": "f9fea43cdecd6b8e78e44089",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8c2c7014081ee1ab818b2a01b099aa86ede08cac235632e214e226c4594f6854",
+          "parent_source_id": "verbatim-v1:971ac9900820c55cce215c8c08feeb717c5be6cad9d486382b65104772f213fd",
+          "parent_text_sha256": "8c2c7014081ee1ab818b2a01b099aa86ede08cac235632e214e226c4594f6854",
+          "span_start": 0,
+          "span_end": 520,
+          "span_sha256": "8c2c7014081ee1ab818b2a01b099aa86ede08cac235632e214e226c4594f6854",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:05d02a97a3b2d18f17c089f36ccde09d0438cbaf9c745386bca01b3048ed7dd4@0:132:05fd3e35c473",
+        "document_id": "d9f29d0c7ec2e66e24b728b4",
+        "source": "finewiki-zh",
+        "title": "IEC 61499",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61499",
+        "score": 0.044290028665028666,
+        "snippet": "为了方便维护设备中的应用程序，IEC 61499提供了管理模型。设备管理器可以为任何设备资源提供全生命周期维护，并且通过管理指令实现软件工具（例如，配置工具，代理技术）之间的信息交互。通过软件工具的接口及管理指令，可以实现IEC 61499应用程序的动态重构。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q188109",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/5545987",
+          "chunk_order": 5,
+          "source": "finewiki-zh",
+          "document_id": "d9f29d0c7ec2e66e24b728b4",
+          "title": "IEC 61499",
+          "source_row_index": 1124,
+          "wikiname": "zhwiki",
+          "page_id": 5545987,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "cfe878cc49ce451b234c7c1b2533c416bcfdbf4ed57eb4c07129faafab3755e8",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 12,
+              "text": "# IEC 61499\n"
+            },
+            {
+              "sha256": "5eae68c6fc71b0ca942edfd8c6168fdf0fe281619eb1e4c82861981d23877875",
+              "level": 2,
+              "kind": "heading",
+              "start": 154,
+              "end": 167,
+              "text": "## 第一部分：体系结构\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "05fd3e35c47324e954e9b66f3a2906a09ff7dff3298b315feeeb85b72c5e04f7",
+            "start": 986,
+            "end": 1118
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "05fd3e35c47324e954e9b66f3a2906a09ff7dff3298b315feeeb85b72c5e04f7",
+          "kind": "finewiki",
+          "source_text_sha256": "fb16510bbdb09cf603039f854c6ebb575a27291beea253cff21a36392f91bd52",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61499",
+          "version": 75694808,
+          "heading_path": [
+            "# IEC 61499\n",
+            "## 第一部分：体系结构\n"
+          ],
+          "date_modified": "2023-01-26T15:19:42Z",
+          "atomic": false,
+          "file_id": "d9f29d0c7ec2e66e24b728b4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "05fd3e35c47324e954e9b66f3a2906a09ff7dff3298b315feeeb85b72c5e04f7",
+          "parent_source_id": "verbatim-v1:05d02a97a3b2d18f17c089f36ccde09d0438cbaf9c745386bca01b3048ed7dd4",
+          "parent_text_sha256": "05fd3e35c47324e954e9b66f3a2906a09ff7dff3298b315feeeb85b72c5e04f7",
+          "span_start": 0,
+          "span_end": 132,
+          "span_sha256": "05fd3e35c47324e954e9b66f3a2906a09ff7dff3298b315feeeb85b72c5e04f7",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1c0365c7cc0593b832d1cc07701e421c64416e55b3fc04f56e6ad99bd89e4140@0:10:7f1fb7e8146e",
+        "document_id": "bce1d8ffcb406ce1b2d92dfd",
+        "source": "finewiki-zh",
+        "title": "IEC 61131-3",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+        "score": 0.015384615384615385,
+        "snippet": "## 程式語言種類\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q2931263",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/763356",
+          "chunk_order": 4,
+          "source": "finewiki-zh",
+          "document_id": "bce1d8ffcb406ce1b2d92dfd",
+          "title": "IEC 61131-3",
+          "source_row_index": 1118,
+          "wikiname": "zhwiki",
+          "page_id": 763356,
+          "file": "selected.parquet",
+          "content_type": "heading",
+          "context_spans": [
+            {
+              "sha256": "6d104824c5ce591280136f8bbd7c413521fb7ea38a289be9392bdbc6cd14911e",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 14,
+              "text": "# IEC 61131-3\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "7f1fb7e8146e2b6f7af5608b5f4f116a1238a62f1b48ffeb0aae32d13ed19c12",
+            "start": 735,
+            "end": 745
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "7f1fb7e8146e2b6f7af5608b5f4f116a1238a62f1b48ffeb0aae32d13ed19c12",
+          "kind": "finewiki",
+          "source_text_sha256": "f3fcd4f8bb10b1f7c05cb114f64b1f53dc990a5f70b093b37846504a5dac9628",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+          "version": 63129618,
+          "heading_path": [
+            "# IEC 61131-3\n"
+          ],
+          "date_modified": "2020-12-09T00:08:24Z",
+          "atomic": true,
+          "file_id": "bce1d8ffcb406ce1b2d92dfd",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "7f1fb7e8146e2b6f7af5608b5f4f116a1238a62f1b48ffeb0aae32d13ed19c12",
+          "parent_source_id": "verbatim-v1:1c0365c7cc0593b832d1cc07701e421c64416e55b3fc04f56e6ad99bd89e4140",
+          "parent_text_sha256": "7f1fb7e8146e2b6f7af5608b5f4f116a1238a62f1b48ffeb0aae32d13ed19c12",
+          "span_start": 0,
+          "span_end": 10,
+          "span_sha256": "7f1fb7e8146e2b6f7af5608b5f4f116a1238a62f1b48ffeb0aae32d13ed19c12",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:1d4a91e4f1e378788945103a3b5033cfec0bdfbd4a792f6931df491622f128af@0:311:a2ed2045922c",
+        "document_id": "d9f29d0c7ec2e66e24b728b4",
+        "source": "finewiki-zh",
+        "title": "IEC 61499",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61499",
+        "score": 0.04459570280465803,
+        "snippet": "IEC 61499-3与该标准早期的公共可用规范版本相关，并于2008年被撤销。这一部分回答了与IEC 61499标准有关的常见问题，并且以附实例的形式描述了IEC 61499各元素的用途，旨在解决自动化系统工程中的常见问题。\n在其他实例中，IEC 61499-3提供了为远程访问功能模块的实时数据和参数的信息交互功能的服务接口功能模块；介绍了适配器接口的用途为实现面向对象的概念；定义了功能模块网络的初始化算法；介绍了用执行控制图（ECC）实现的简化版的录像机电机控制。此外，映射模块对信息交互模块的影响亦获解释，还有通过管理应用程序进行设备管理及其功能模块、设备管理器功能模块（DEV_MGR)）的原理均有所提及。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q188109",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/5545987",
+          "chunk_order": 9,
+          "source": "finewiki-zh",
+          "document_id": "d9f29d0c7ec2e66e24b728b4",
+          "title": "IEC 61499",
+          "source_row_index": 1124,
+          "wikiname": "zhwiki",
+          "page_id": 5545987,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "cfe878cc49ce451b234c7c1b2533c416bcfdbf4ed57eb4c07129faafab3755e8",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 12,
+              "text": "# IEC 61499\n"
+            },
+            {
+              "sha256": "81f0bf94f6441ecb3336d2646ba9ea6002ea0007dbaa90be0bc23f6ec0c7627b",
+              "level": 2,
+              "kind": "heading",
+              "start": 1310,
+              "end": 1332,
+              "text": "## 第三部分：教程信息（2008年撤销）\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "a2ed2045922cfa718b62727e58990cc0926dd4a8c891f269bcaa912118e1d325",
+            "start": 1332,
+            "end": 1643
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "a2ed2045922cfa718b62727e58990cc0926dd4a8c891f269bcaa912118e1d325",
+          "kind": "finewiki",
+          "source_text_sha256": "fb16510bbdb09cf603039f854c6ebb575a27291beea253cff21a36392f91bd52",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61499",
+          "version": 75694808,
+          "heading_path": [
+            "# IEC 61499\n",
+            "## 第三部分：教程信息（2008年撤销）\n"
+          ],
+          "date_modified": "2023-01-26T15:19:42Z",
+          "atomic": false,
+          "file_id": "d9f29d0c7ec2e66e24b728b4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "a2ed2045922cfa718b62727e58990cc0926dd4a8c891f269bcaa912118e1d325",
+          "parent_source_id": "verbatim-v1:1d4a91e4f1e378788945103a3b5033cfec0bdfbd4a792f6931df491622f128af",
+          "parent_text_sha256": "a2ed2045922cfa718b62727e58990cc0926dd4a8c891f269bcaa912118e1d325",
+          "span_start": 0,
+          "span_end": 311,
+          "span_sha256": "a2ed2045922cfa718b62727e58990cc0926dd4a8c891f269bcaa912118e1d325",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:cf312efcdce72a25541c866baadc6af30b11ea01a967c51c090fb1514f0ca30f@0:256:8bf680164115",
+        "document_id": "f9fea43cdecd6b8e78e44089",
+        "source": "finewiki-zh",
+        "title": "IEC 61508",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61508",
+        "score": 0.05385896581766002,
+        "snippet": "IEC 62061全名為《机械安全与安全有关的电气、电子和可编程电子控制系统的功能安全标准》（Safety of machinery, Functional safety of safety-related electrical, electronic and programmable electronic control systems），是IEC 61508在機械安全的功能安全標準，IEC 62061提供了各類型和機械安全有關的電機控制系統的要求，適用於系統層級的設計，也適用於非複雜的子系統及設備。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q1060017",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/1674322",
+          "chunk_order": 41,
+          "source": "finewiki-zh",
+          "document_id": "f9fea43cdecd6b8e78e44089",
+          "title": "IEC 61508",
+          "source_row_index": 910,
+          "wikiname": "zhwiki",
+          "page_id": 1674322,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "f43b74d2e83600a57ca2fa8f7f6952debf4d59f5805007918066b64fd19e83c3",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 12,
+              "text": "# IEC 61508\n"
+            },
+            {
+              "sha256": "c14059db272b24b0756633aecd872265345f19c14465deddccb83f7cd0adfdec",
+              "level": 2,
+              "kind": "heading",
+              "start": 3200,
+              "end": 3213,
+              "text": "## 產業或特定領域標準\n"
+            },
+            {
+              "sha256": "7f8be6060be0b2c8b955e73bdb26dd641986ab52d724b22397532cb98c2f5aa5",
+              "level": 3,
+              "kind": "heading",
+              "start": 3869,
+              "end": 3876,
+              "text": "### 機械\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8bf6801641158efa9e2a4d384718504189794caff04f20522f6395ef03993a72",
+            "start": 3876,
+            "end": 4132
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "8bf6801641158efa9e2a4d384718504189794caff04f20522f6395ef03993a72",
+          "kind": "finewiki",
+          "source_text_sha256": "943ee9f709b4b19278e39546d178de462c1ac1ddba3245be7961f79711796044",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61508",
+          "version": 85921036,
+          "heading_path": [
+            "# IEC 61508\n",
+            "## 產業或特定領域標準\n",
+            "### 機械\n"
+          ],
+          "date_modified": "2025-02-02T03:22:14Z",
+          "atomic": false,
+          "file_id": "f9fea43cdecd6b8e78e44089",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8bf6801641158efa9e2a4d384718504189794caff04f20522f6395ef03993a72",
+          "parent_source_id": "verbatim-v1:cf312efcdce72a25541c866baadc6af30b11ea01a967c51c090fb1514f0ca30f",
+          "parent_text_sha256": "8bf6801641158efa9e2a4d384718504189794caff04f20522f6395ef03993a72",
+          "span_start": 0,
+          "span_end": 256,
+          "span_sha256": "8bf6801641158efa9e2a4d384718504189794caff04f20522f6395ef03993a72",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:c054114cf869fb9fad72501b321634ca4492a20a3d2e673b5712787defb0b1b6@0:6:338e195a55c6",
+        "document_id": "bce1d8ffcb406ce1b2d92dfd",
+        "source": "finewiki-zh",
+        "title": "IEC 61131-3",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+        "score": 0.015151515151515152,
+        "snippet": "## 概述\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q2931263",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/763356",
+          "chunk_order": 2,
+          "source": "finewiki-zh",
+          "document_id": "bce1d8ffcb406ce1b2d92dfd",
+          "title": "IEC 61131-3",
+          "source_row_index": 1118,
+          "wikiname": "zhwiki",
+          "page_id": 763356,
+          "file": "selected.parquet",
+          "content_type": "heading",
+          "context_spans": [
+            {
+              "sha256": "6d104824c5ce591280136f8bbd7c413521fb7ea38a289be9392bdbc6cd14911e",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 14,
+              "text": "# IEC 61131-3\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "338e195a55c61e41d656ce01cd2f1bd00179440889749099503f52a61270664f",
+            "start": 209,
+            "end": 215
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "338e195a55c61e41d656ce01cd2f1bd00179440889749099503f52a61270664f",
+          "kind": "finewiki",
+          "source_text_sha256": "f3fcd4f8bb10b1f7c05cb114f64b1f53dc990a5f70b093b37846504a5dac9628",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+          "version": 63129618,
+          "heading_path": [
+            "# IEC 61131-3\n"
+          ],
+          "date_modified": "2020-12-09T00:08:24Z",
+          "atomic": true,
+          "file_id": "bce1d8ffcb406ce1b2d92dfd",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "338e195a55c61e41d656ce01cd2f1bd00179440889749099503f52a61270664f",
+          "parent_source_id": "verbatim-v1:c054114cf869fb9fad72501b321634ca4492a20a3d2e673b5712787defb0b1b6",
+          "parent_text_sha256": "338e195a55c61e41d656ce01cd2f1bd00179440889749099503f52a61270664f",
+          "span_start": 0,
+          "span_end": 6,
+          "span_sha256": "338e195a55c61e41d656ce01cd2f1bd00179440889749099503f52a61270664f",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:767e97c04d8d24a6798613f4dfe09b6dd46b6d55f8cb3dad1a8a355a64bb7750@0:142:8d5d13e2bc5f",
+        "document_id": "d9f29d0c7ec2e66e24b728b4",
+        "source": "finewiki-zh",
+        "title": "IEC 61499",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61499",
+        "score": 0.042631281761716544,
+        "snippet": "IEC61499 标准第一版于2005年正式发布，是基于触发式功能块、针对工业过程测量和控制系统的国际标准。IEC61499基于IEC 61131 标准，为分布式控制系统定义了通用的模型。关于IEC 61499的各种概念请查阅Lewis and Zoitl  和Vyatkin 。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q188109",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/5545987",
+          "chunk_order": 1,
+          "source": "finewiki-zh",
+          "document_id": "d9f29d0c7ec2e66e24b728b4",
+          "title": "IEC 61499",
+          "source_row_index": 1124,
+          "wikiname": "zhwiki",
+          "page_id": 5545987,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "cfe878cc49ce451b234c7c1b2533c416bcfdbf4ed57eb4c07129faafab3755e8",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 12,
+              "text": "# IEC 61499\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8d5d13e2bc5fd9d89a799a1c387dac47b511ee0d27d54acce138112b9f1ebc19",
+            "start": 12,
+            "end": 154
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "8d5d13e2bc5fd9d89a799a1c387dac47b511ee0d27d54acce138112b9f1ebc19",
+          "kind": "finewiki",
+          "source_text_sha256": "fb16510bbdb09cf603039f854c6ebb575a27291beea253cff21a36392f91bd52",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61499",
+          "version": 75694808,
+          "heading_path": [
+            "# IEC 61499\n"
+          ],
+          "date_modified": "2023-01-26T15:19:42Z",
+          "atomic": false,
+          "file_id": "d9f29d0c7ec2e66e24b728b4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8d5d13e2bc5fd9d89a799a1c387dac47b511ee0d27d54acce138112b9f1ebc19",
+          "parent_source_id": "verbatim-v1:767e97c04d8d24a6798613f4dfe09b6dd46b6d55f8cb3dad1a8a355a64bb7750",
+          "parent_text_sha256": "8d5d13e2bc5fd9d89a799a1c387dac47b511ee0d27d54acce138112b9f1ebc19",
+          "span_start": 0,
+          "span_end": 142,
+          "span_sha256": "8d5d13e2bc5fd9d89a799a1c387dac47b511ee0d27d54acce138112b9f1ebc19",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:efc5075ce5370cd03ef25bcf09169c5b821a26010247f5ba67ac9406a5505ea0@0:19:ef39a899d339",
+        "document_id": "bce1d8ffcb406ce1b2d92dfd",
+        "source": "finewiki-zh",
+        "title": "IEC 61131-3",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+        "score": 0.014925373134328358,
+        "snippet": "以下詳見於可程式邏輯控制器（PLC）\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q2931263",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/763356",
+          "chunk_order": 5,
+          "source": "finewiki-zh",
+          "document_id": "bce1d8ffcb406ce1b2d92dfd",
+          "title": "IEC 61131-3",
+          "source_row_index": 1118,
+          "wikiname": "zhwiki",
+          "page_id": 763356,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "6d104824c5ce591280136f8bbd7c413521fb7ea38a289be9392bdbc6cd14911e",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 14,
+              "text": "# IEC 61131-3\n"
+            },
+            {
+              "sha256": "7f1fb7e8146e2b6f7af5608b5f4f116a1238a62f1b48ffeb0aae32d13ed19c12",
+              "level": 2,
+              "kind": "heading",
+              "start": 735,
+              "end": 745,
+              "text": "## 程式語言種類\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "ef39a899d339047a29819bbae8b3efdd61010d440b5b98e0090f372ff707fa09",
+            "start": 745,
+            "end": 764
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "ef39a899d339047a29819bbae8b3efdd61010d440b5b98e0090f372ff707fa09",
+          "kind": "finewiki",
+          "source_text_sha256": "f3fcd4f8bb10b1f7c05cb114f64b1f53dc990a5f70b093b37846504a5dac9628",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+          "version": 63129618,
+          "heading_path": [
+            "# IEC 61131-3\n",
+            "## 程式語言種類\n"
+          ],
+          "date_modified": "2020-12-09T00:08:24Z",
+          "atomic": false,
+          "file_id": "bce1d8ffcb406ce1b2d92dfd",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "ef39a899d339047a29819bbae8b3efdd61010d440b5b98e0090f372ff707fa09",
+          "parent_source_id": "verbatim-v1:efc5075ce5370cd03ef25bcf09169c5b821a26010247f5ba67ac9406a5505ea0",
+          "parent_text_sha256": "ef39a899d339047a29819bbae8b3efdd61010d440b5b98e0090f372ff707fa09",
+          "span_start": 0,
+          "span_end": 19,
+          "span_sha256": "ef39a899d339047a29819bbae8b3efdd61010d440b5b98e0090f372ff707fa09",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:a5975df42cae7319fbc526b58854240e1f8472c79ee5c852b037365c23d00c27@0:178:9991d95e345e",
+        "document_id": "bce1d8ffcb406ce1b2d92dfd",
+        "source": "finewiki-zh",
+        "title": "IEC 61131-3",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+        "score": 0.014705882352941176,
+        "snippet": "- 指令表（Instruction List Diagram，ILD）\n- 階梯圖（Ladder Diagram，LD）\n- 功能區塊圖（Function Block Diagram，FBD）\n- 結構化文字（Structured Text Language，STL）\n- 順序功能流程圖（Sequential Function Chart，SFC）\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q2931263",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/763356",
+          "chunk_order": 6,
+          "source": "finewiki-zh",
+          "document_id": "bce1d8ffcb406ce1b2d92dfd",
+          "title": "IEC 61131-3",
+          "source_row_index": 1118,
+          "wikiname": "zhwiki",
+          "page_id": 763356,
+          "file": "selected.parquet",
+          "content_type": "list",
+          "context_spans": [
+            {
+              "sha256": "6d104824c5ce591280136f8bbd7c413521fb7ea38a289be9392bdbc6cd14911e",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 14,
+              "text": "# IEC 61131-3\n"
+            },
+            {
+              "sha256": "7f1fb7e8146e2b6f7af5608b5f4f116a1238a62f1b48ffeb0aae32d13ed19c12",
+              "level": 2,
+              "kind": "heading",
+              "start": 735,
+              "end": 745,
+              "text": "## 程式語言種類\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "9991d95e345e0f3d8e178cc808a38780887f975cb66bb59031964ca6a2abe803",
+            "start": 764,
+            "end": 942
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "9991d95e345e0f3d8e178cc808a38780887f975cb66bb59031964ca6a2abe803",
+          "kind": "finewiki",
+          "source_text_sha256": "f3fcd4f8bb10b1f7c05cb114f64b1f53dc990a5f70b093b37846504a5dac9628",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+          "version": 63129618,
+          "heading_path": [
+            "# IEC 61131-3\n",
+            "## 程式語言種類\n"
+          ],
+          "date_modified": "2020-12-09T00:08:24Z",
+          "atomic": true,
+          "file_id": "bce1d8ffcb406ce1b2d92dfd",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "9991d95e345e0f3d8e178cc808a38780887f975cb66bb59031964ca6a2abe803",
+          "parent_source_id": "verbatim-v1:a5975df42cae7319fbc526b58854240e1f8472c79ee5c852b037365c23d00c27",
+          "parent_text_sha256": "9991d95e345e0f3d8e178cc808a38780887f975cb66bb59031964ca6a2abe803",
+          "span_start": 0,
+          "span_end": 178,
+          "span_sha256": "9991d95e345e0f3d8e178cc808a38780887f975cb66bb59031964ca6a2abe803",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:2d5dbeeed2fffa6e842402570c829adf283e590f98bc3ac45653dff663e59623@0:333:b3984a999e6c",
+        "document_id": "d9f29d0c7ec2e66e24b728b4",
+        "source": "finewiki-zh",
+        "title": "IEC 61499",
+        "uri": "https://zh.wikipedia.org/wiki/IEC_61499",
+        "score": 0.014705882352941176,
+        "snippet": "- 服务接口功能模块（简称“SIFB”）：源代码被隐藏，而且其功能仅通过服务顺序来描述。\n- 基本功能模块（简称“BFB”）：其功能用术语“执行控制图”（ECC）来描述，这类似于一种状态图（UML）。每一种状态都可能触发一个或者多个执行事件（Action）。每一种执行事件都可以关联零个或者一个算法以及零个或者1个事件。各种算法可依照IEC61131-3标准规定实现。\n- 复合功能模块（简称“CFB”）：其功能由功能模块网络来定义。\n- 适配器接口：适配器接口不是真正的功能块。它包含了一种连接中的几种事件和数据关联，并且提供了接口概念，以区分定义和实例。\n- 子应用程序：其功能也由功能模块网络来定义。与复合功能模块（CFB）不同，子应用程序可以被分布部署。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q188109",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/5545987",
+          "chunk_order": 4,
+          "source": "finewiki-zh",
+          "document_id": "d9f29d0c7ec2e66e24b728b4",
+          "title": "IEC 61499",
+          "source_row_index": 1124,
+          "wikiname": "zhwiki",
+          "page_id": 5545987,
+          "file": "selected.parquet",
+          "content_type": "list",
+          "context_spans": [
+            {
+              "sha256": "cfe878cc49ce451b234c7c1b2533c416bcfdbf4ed57eb4c07129faafab3755e8",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 12,
+              "text": "# IEC 61499\n"
+            },
+            {
+              "sha256": "5eae68c6fc71b0ca942edfd8c6168fdf0fe281619eb1e4c82861981d23877875",
+              "level": 2,
+              "kind": "heading",
+              "start": 154,
+              "end": 167,
+              "text": "## 第一部分：体系结构\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "b3984a999e6c1e55364c4d3e27c1c2df8e0936ea4a8d5d70a6647b1906293d71",
+            "start": 653,
+            "end": 986
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "b3984a999e6c1e55364c4d3e27c1c2df8e0936ea4a8d5d70a6647b1906293d71",
+          "kind": "finewiki",
+          "source_text_sha256": "fb16510bbdb09cf603039f854c6ebb575a27291beea253cff21a36392f91bd52",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/IEC_61499",
+          "version": 75694808,
+          "heading_path": [
+            "# IEC 61499\n",
+            "## 第一部分：体系结构\n"
+          ],
+          "date_modified": "2023-01-26T15:19:42Z",
+          "atomic": true,
+          "file_id": "d9f29d0c7ec2e66e24b728b4",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "b3984a999e6c1e55364c4d3e27c1c2df8e0936ea4a8d5d70a6647b1906293d71",
+          "parent_source_id": "verbatim-v1:2d5dbeeed2fffa6e842402570c829adf283e590f98bc3ac45653dff663e59623",
+          "parent_text_sha256": "b3984a999e6c1e55364c4d3e27c1c2df8e0936ea4a8d5d70a6647b1906293d71",
+          "span_start": 0,
+          "span_end": 333,
+          "span_sha256": "b3984a999e6c1e55364c4d3e27c1c2df8e0936ea4a8d5d70a6647b1906293d71",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      276
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 17,
+      "has_numeric_citation": false,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0157.json"
+  },
+  "review": {
+    "case_id": "native_wiki-0001",
+    "verdict": "fail",
+    "issues": [
+      "question_echo",
+      "all_requested_facts_missing",
+      "missing_citations"
+    ],
+    "note": "全部所需事实已在入选来源中（含来源16五种语言、3事件驱动、1书色、4十六阶段），最终答案只是逐项重复问题，没有回答任何事实或正式引用；状态仍为completed。"
+  },
+  "input": {
+    "id": "native_wiki-0001",
+    "suite": "native_wiki",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+    "origin_index": 1,
+    "original_case": {
+      "id": "held_010",
+      "question": "自动化课程的四张知识卡请分开找依据：IEC 61131-3条目列了哪五种编程语言；IEC 61499用什么执行模型取代循环模型；IEC 62056中的DLMS用户联盟把三份规范文档叫哪三种颜色的书；IEC 61508的安全生命周期包含几个阶段？仅复核库中介绍，不做当前合规认证。",
+      "history": [],
+      "oracle": {
+        "expected_action": "answer",
+        "known_subjects": [
+          {
+            "id": "S1",
+            "description": "IEC 61131-3",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "IEC 61131-3"
+              }
+            ]
+          },
+          {
+            "id": "S2",
+            "description": "IEC 61499",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "IEC 61499"
+              }
+            ]
+          },
+          {
+            "id": "S3",
+            "description": "IEC 62056",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "IEC 62056"
+              }
+            ]
+          },
+          {
+            "id": "S4",
+            "description": "IEC 61508",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "IEC 61508"
+              }
+            ]
+          }
+        ],
+        "active_constraints": [],
+        "requested_goals": [
+          {
+            "id": "G1",
+            "description": "哪五种编程语言",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "哪五种编程语言"
+              },
+              {
+                "message_id": "Q",
+                "quote": "自动化课程的四张知识卡请分开找依据：IEC 61131-3条目列了哪五种编程语言；IEC 61499用什么执行模型取代循环模型；IEC 62056中的DLMS用户联盟把三份规范文档叫哪三种颜色的书；IEC 61508的安全生命周期包含几个阶段？仅复核库中介绍，不做当前合规认证。"
+              }
+            ]
+          },
+          {
+            "id": "G2",
+            "description": "用什么执行模型取代循环模型",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "用什么执行模型取代循环模型"
+              },
+              {
+                "message_id": "Q",
+                "quote": "自动化课程的四张知识卡请分开找依据：IEC 61131-3条目列了哪五种编程语言；IEC 61499用什么执行模型取代循环模型；IEC 62056中的DLMS用户联盟把三份规范文档叫哪三种颜色的书；IEC 61508的安全生命周期包含几个阶段？仅复核库中介绍，不做当前合规认证。"
+              }
+            ]
+          },
+          {
+            "id": "G3",
+            "description": "哪三种颜色的书",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "哪三种颜色的书"
+              },
+              {
+                "message_id": "Q",
+                "quote": "自动化课程的四张知识卡请分开找依据：IEC 61131-3条目列了哪五种编程语言；IEC 61499用什么执行模型取代循环模型；IEC 62056中的DLMS用户联盟把三份规范文档叫哪三种颜色的书；IEC 61508的安全生命周期包含几个阶段？仅复核库中介绍，不做当前合规认证。"
+              }
+            ]
+          },
+          {
+            "id": "G4",
+            "description": "包含几个阶段",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "包含几个阶段"
+              },
+              {
+                "message_id": "Q",
+                "quote": "自动化课程的四张知识卡请分开找依据：IEC 61131-3条目列了哪五种编程语言；IEC 61499用什么执行模型取代循环模型；IEC 62056中的DLMS用户联盟把三份规范文档叫哪三种颜色的书；IEC 61508的安全生命周期包含几个阶段？仅复核库中介绍，不做当前合规认证。"
+              }
+            ]
+          }
+        ],
+        "required_facts": [
+          {
+            "claim": "列出指令表、阶梯图、功能区块图、结构化文字和顺序功能流程图。",
+            "bound_subjects": [
+              "S1"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/763356",
+                  "page_id": 763356,
+                  "title": "IEC 61131-3",
+                  "url": "https://zh.wikipedia.org/wiki/IEC_61131-3",
+                  "language": "zh",
+                  "revision_id": 63129618,
+                  "body_sha256": "f3fcd4f8bb10b1f7c05cb114f64b1f53dc990a5f70b093b37846504a5dac9628",
+                  "section": "概述",
+                  "start": 735,
+                  "end": 941,
+                  "quote": "## 程式語言種類\n以下詳見於可程式邏輯控制器（PLC）\n- 指令表（Instruction List Diagram，ILD）\n- 階梯圖（Ladder Diagram，LD）\n- 功能區塊圖（Function Block Diagram，FBD）\n- 結構化文字（Structured Text Language，STL）\n- 順序功能流程圖（Sequential Function Chart，SFC）\n\n"
+                }
+              ]
+            ],
+            "id": "F1"
+          },
+          {
+            "claim": "用事件驱动模型取代循环执行模型。",
+            "bound_subjects": [
+              "S2"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/5545987",
+                  "page_id": 5545987,
+                  "title": "IEC 61499",
+                  "url": "https://zh.wikipedia.org/wiki/IEC_61499",
+                  "language": "zh",
+                  "revision_id": 75694808,
+                  "body_sha256": "fb16510bbdb09cf603039f854c6ebb575a27291beea253cff21a36392f91bd52",
+                  "section": "第一部分：体系结构",
+                  "start": 167,
+                  "end": 309,
+                  "quote": "IEC 61499-1定义了分布式系统的体系结构。在IEC 61499中，IEC61131的循环执行模型被事件驱动模型所取代。该模型明确了功能块的执行顺序。如果必要的话，可以通过插入E_CYCLE功能块实现基于循环周期性触发事件的应用，正如在IEC 61499-1的附件A中所提到的。"
+                }
+              ]
+            ],
+            "id": "F2"
+          },
+          {
+            "claim": "三份文档称绿皮书、黄皮书和蓝皮书。",
+            "bound_subjects": [
+              "S3"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/1081264",
+                  "page_id": 1081264,
+                  "title": "IEC 62056",
+                  "url": "https://zh.wikipedia.org/wiki/IEC_62056",
+                  "language": "zh",
+                  "revision_id": 73050541,
+                  "body_sha256": "d2df18376fe817e94af2f287273b9e2ffb1f4c98042e361029849591c4ac0f07",
+                  "section": "IEC 62056",
+                  "start": 410,
+                  "end": 556,
+                  "quote": "DLMS用户联盟制定了三份规范文档，分别称为绿皮书、黄皮书和蓝皮书。IEC定义的所有DLMS规格文档均以“Electricity metering - Data exchange for meter reading, tariff and load control.” 为标题，包括以下文档："
+                }
+              ]
+            ],
+            "id": "F3"
+          },
+          {
+            "claim": "安全生命周期包含16个阶段。",
+            "bound_subjects": [
+              "S4"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/1674322",
+                  "page_id": 1674322,
+                  "title": "IEC 61508",
+                  "url": "https://zh.wikipedia.org/wiki/IEC_61508",
+                  "language": "zh",
+                  "revision_id": 85921036,
+                  "body_sha256": "943ee9f709b4b19278e39546d178de462c1ac1ddba3245be7961f79711796044",
+                  "section": "簡介",
+                  "start": 401,
+                  "end": 455,
+                  "quote": "IEC 61508标准定义的安全生命周期包含16个阶段，各阶段所关注的均是系统安全功能，粗略地可以分为3块："
+                }
+              ]
+            ],
+            "id": "F4"
+          }
+        ],
+        "excluded": [],
+        "missing_information": [],
+        "required_clarification": [],
+        "minimum_evidence_pages": 4,
+        "required": [
+          "按照用户明示字段和有效历史回答；不得把助手自行追加偏好视为用户要求。",
+          "每个必要事实正确且有真实、实际支持的正式引用；每个多余引用也检查其附着主张。",
+          "无额外关键错误或无据结论，范围、对象与缺失信息处理正确。"
+        ],
+        "forbidden": [
+          "不得由金标证据段背景追加未问日期、单位精度或范围。",
+          "不得把同页但不含该事实的片段或无关页面作为支持。",
+          "不得用思考过程补最终答案；不得把资料未提供说成现实不存在。"
+        ]
+      },
+      "provenance": {
+        "source_experiment": "rwkvrag-wiki-evidence-budget-20260908",
+        "original_split": "holdout",
+        "use": "previously_exposed_development_smoke",
+        "source_inputs_sha256": "7d38ace329779963dd134837aecd54941ed60e44ba3ae74d7aed89c08767d583",
+        "source_gold_sha256": "50edd715fd81cdc545b3a7bd952f840d78ab6876d41496ab9d5a3d8f4938d0ca",
+        "source_input_row_sha256": "e45c9d1462cc89d8cd36fef5f1209e91935a895bb71198f471364de4b364bae0",
+        "source_gold_row_sha256": "8990d3ad38b0bb0a392b6bed70a2c49e8d732fbcdd7f0c909fdda4c7da6585a8",
+        "corpus_manifest_sha256": "35563fa6e5d7c9205cea3d9e1cd5476b01774f11a292dafcfed82fe4d8256ced",
+        "category": "multi_document"
+      }
+    },
+    "category": "native_wiki",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "自动化课程的四张知识卡请分开找依据：IEC 61131-3条目列了哪五种编程语言；IEC 61499用什么执行模型取代循环模型；IEC 62056中的DLMS用户联盟把三份规范文档叫哪三种颜色的书；IEC 61508的安全生命周期包含几个阶段？仅复核库中介绍，不做当前合规认证。",
+      "history": [],
+      "knowledge_base_id": "wiki-5000-20260908",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    },
+    "execution_scope": "current_corpus_retrieval"
+  },
+  "raw_file_sha256": "879d370308c588bc3b8e1af06fcf53c581748d3a823cd352195eb405827b6e9b"
+}

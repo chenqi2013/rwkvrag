@@ -1,0 +1,171 @@
+{
+  "result": {
+    "case_id": "writer_holdout-0003",
+    "suite": "writer_holdout",
+    "question": "分别回答岚石U5的额定功率、冷却方式和去年全球销量；有资料的回答，未记载的明确说明。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "岚石U5的额定功率为 46 W[资料 2]。\n岚石U5的冷却方式为自然散热[资料 2]。\n去年全球销量的资料未收录，无法给出具体数值。",
+    "sources": [
+      {
+        "id": "h4-s1",
+        "document_id": "h4-d1",
+        "source": "synthetic-holdout-20260916",
+        "title": "岚石U5全球销量",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "这是销量报告目录，正文数据尚未收录。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "h4-s2",
+        "document_id": "h4-d2",
+        "source": "synthetic-holdout-20260916",
+        "title": "岚石U5规格",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "岚石 U5 的额定功率为 46 W，冷却方式为自然散热。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      67
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0146.json"
+  },
+  "review": {
+    "case_id": "writer_holdout-0003",
+    "verdict": "pass",
+    "issues": [],
+    "note": "46 W与自然散热均有来源2；销量目录无数据被明确标为无法给具体值，没有编造也没有整题拒答。"
+  },
+  "input": {
+    "id": "writer_holdout-0003",
+    "suite": "writer_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/writer-p0-20260916/holdout.jsonl",
+    "origin_index": 3,
+    "original_case": {
+      "expected_decision": "partial_abstain",
+      "expected_facts": [
+        {
+          "claim": "额定功率46 W。",
+          "id": "F1",
+          "supporting_quotes": [
+            {
+              "end": 28,
+              "material_id": "h4-s2",
+              "quote": "岚石 U5 的额定功率为 46 W，冷却方式为自然散热。",
+              "start": 0
+            }
+          ]
+        },
+        {
+          "claim": "冷却方式自然散热。",
+          "id": "F2",
+          "supporting_quotes": [
+            {
+              "end": 28,
+              "material_id": "h4-s2",
+              "quote": "岚石 U5 的额定功率为 46 W，冷却方式为自然散热。",
+              "start": 0
+            }
+          ]
+        }
+      ],
+      "history": [],
+      "id": "smoke_004",
+      "materials": [
+        {
+          "document_id": "h4-d1",
+          "id": "h4-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "这是销量报告目录，正文数据尚未收录。",
+          "source": "synthetic-holdout-20260916",
+          "title": "岚石U5全球销量",
+          "uri": null
+        },
+        {
+          "document_id": "h4-d2",
+          "id": "h4-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "岚石 U5 的额定功率为 46 W，冷却方式为自然散热。",
+          "source": "synthetic-holdout-20260916",
+          "title": "岚石U5规格",
+          "uri": null
+        }
+      ],
+      "oracle_notes": [
+        "按冻结原文与完整历史逐题复核；每项事实和引用均须有据。",
+        "标题不能替代正文；资料不足不是数值为零；冲突未获裁定不能单选。"
+      ],
+      "phase": "frozen_holdout",
+      "provenance": {
+        "kind": "new_synthetic_author_controlled_holdout",
+        "materials_sha256": "109cfed129ecd03aca8852839c9f21fed87dab7af5d3d95855d02cf9f9ad37f6"
+      },
+      "question": "分别回答岚石U5的额定功率、冷却方式和去年全球销量；有资料的回答，未记载的明确说明。"
+    },
+    "category": "writer_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "分别回答岚石U5的额定功率、冷却方式和去年全球销量；有资料的回答，未记载的明确说明。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "h4-d1",
+          "id": "h4-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "这是销量报告目录，正文数据尚未收录。",
+          "source": "synthetic-holdout-20260916",
+          "title": "岚石U5全球销量",
+          "uri": null
+        },
+        {
+          "document_id": "h4-d2",
+          "id": "h4-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "岚石 U5 的额定功率为 46 W，冷却方式为自然散热。",
+          "source": "synthetic-holdout-20260916",
+          "title": "岚石U5规格",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "1f9efba0f5a7ce2a3b24860a4e2498a55fd7e26addc176d6bbcf71158365ed1d"
+}

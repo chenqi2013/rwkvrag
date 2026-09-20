@@ -1,0 +1,293 @@
+{
+  "result": {
+    "case_id": "matrix_holdout-0001",
+    "suite": "matrix_holdout",
+    "question": "比较岚舟901 1.0版与岚舟901 2.0版的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "岚舟901 1.0版容量为60 L，离线支持为支持离线运行；岚舟901 2.0版容量为3 L，离线支持为不支持离线运行。",
+    "sources": [
+      {
+        "id": "holdout-1-s1@0:31:0d0f105faeb8",
+        "document_id": "holdout-1-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "岚舟901 1.0版：容量为60 L；离线支持为支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-1-s1",
+          "span_end": 31,
+          "span_sha256": "0d0f105faeb85ff71a80fafba668d37aebe33e369ff34143c88827acb5a7f338",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "holdout-1-s2@0:31:10be772dbde7",
+        "document_id": "holdout-1-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "岚舟901 2.0版：容量为3 L；离线支持为不支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-1-s2",
+          "span_end": 31,
+          "span_sha256": "10be772dbde7f694d815e945326c51e2c968ae384e23eea46d299073242458be",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      60
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": false,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0281.json"
+  },
+  "review": {
+    "case_id": "matrix_holdout-0001",
+    "verdict": "partial",
+    "issues": [
+      "missing_citation"
+    ],
+    "note": "两版本四格数值和否定均正确，未提供逐项来源。"
+  },
+  "input": {
+    "id": "matrix_holdout-0001",
+    "suite": "matrix_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/holdout.cases.jsonl",
+    "origin_index": 1,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "holdout-1-s1",
+          "id": "holdout-1-s1@0:31:0d0f105faeb8",
+          "metadata": {
+            "parent_source_id": "holdout-1-s1",
+            "span_end": 31,
+            "span_sha256": "0d0f105faeb85ff71a80fafba668d37aebe33e369ff34143c88827acb5a7f338",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟901 1.0版：容量为60 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-1-s2",
+          "id": "holdout-1-s2@0:31:10be772dbde7",
+          "metadata": {
+            "parent_source_id": "holdout-1-s2",
+            "span_end": 31,
+            "span_sha256": "10be772dbde7f694d815e945326c51e2c968ae384e23eea46d299073242458be",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟901 2.0版：容量为3 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "history": [],
+      "id": "holdout-001",
+      "kind": 1,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "岚舟901 1.0版",
+          "question": "岚舟901 1.0版的容量是什么？",
+          "source_ids": [
+            "holdout-1-s1@0:31:0d0f105faeb8"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "岚舟901 1.0版",
+          "question": "岚舟901 1.0版的离线支持是什么？",
+          "source_ids": [
+            "holdout-1-s1@0:31:0d0f105faeb8"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "岚舟901 2.0版",
+          "question": "岚舟901 2.0版的容量是什么？",
+          "source_ids": [
+            "holdout-1-s2@0:31:10be772dbde7"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "岚舟901 2.0版",
+          "question": "岚舟901 2.0版的离线支持是什么？",
+          "source_ids": [
+            "holdout-1-s2@0:31:10be772dbde7"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "岚舟901 1.0版",
+            "question": "岚舟901 1.0版的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "岚舟901 1.0版",
+            "question": "岚舟901 1.0版的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "岚舟901 2.0版",
+            "question": "岚舟901 2.0版的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "岚舟901 2.0版",
+            "question": "岚舟901 2.0版的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "岚舟901 1.0版",
+          "岚舟901 2.0版"
+        ]
+      },
+      "question": "比较岚舟901 1.0版与岚舟901 2.0版的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "岚舟901 1.0版",
+          "text": "岚舟901 1.0版：容量为60 L；离线支持为支持离线运行。",
+          "values": {
+            "容量": "60 L",
+            "离线支持": "支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "岚舟901 2.0版",
+          "text": "岚舟901 2.0版：容量为3 L；离线支持为不支持离线运行。",
+          "values": {
+            "容量": "3 L",
+            "离线支持": "不支持离线运行"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "holdout-1-s1",
+          "id": "holdout-1-s1@0:31:0d0f105faeb8",
+          "metadata": {
+            "parent_source_id": "holdout-1-s1",
+            "span_end": 31,
+            "span_sha256": "0d0f105faeb85ff71a80fafba668d37aebe33e369ff34143c88827acb5a7f338",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟901 1.0版：容量为60 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-1-s2",
+          "id": "holdout-1-s2@0:31:10be772dbde7",
+          "metadata": {
+            "parent_source_id": "holdout-1-s2",
+            "span_end": 31,
+            "span_sha256": "10be772dbde7f694d815e945326c51e2c968ae384e23eea46d299073242458be",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟901 2.0版：容量为3 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "岚舟901 1.0版的容量：60 L[资料 1]。\n岚舟901 1.0版的离线支持：支持离线运行[资料 1]。\n岚舟901 2.0版的容量：3 L[资料 2]。\n岚舟901 2.0版的离线支持：不支持离线运行[资料 2]。"
+    },
+    "category": 1,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "比较岚舟901 1.0版与岚舟901 2.0版的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "holdout-1-s1",
+          "id": "holdout-1-s1@0:31:0d0f105faeb8",
+          "metadata": {
+            "parent_source_id": "holdout-1-s1",
+            "span_end": 31,
+            "span_sha256": "0d0f105faeb85ff71a80fafba668d37aebe33e369ff34143c88827acb5a7f338",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟901 1.0版：容量为60 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-1-s2",
+          "id": "holdout-1-s2@0:31:10be772dbde7",
+          "metadata": {
+            "parent_source_id": "holdout-1-s2",
+            "span_end": 31,
+            "span_sha256": "10be772dbde7f694d815e945326c51e2c968ae384e23eea46d299073242458be",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟901 2.0版：容量为3 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "e704ea7bb236437e4f6de26bb757fac4373bd6922e1ee42c539e1808c217f94d"
+}

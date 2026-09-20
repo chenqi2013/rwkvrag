@@ -1,0 +1,61 @@
+{
+  "result": {
+    "case_id": "writer_holdout-0002",
+    "suite": "writer_holdout",
+    "question": "仅根据材料，给出虚构探头苇沙T9在发布首季的实际交付数量（台）；无依据请说明无法确定。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 422,
+    "error": {
+      "type": "HTTPStatusError",
+      "detail": "Client error '422 Unprocessable Content' for url 'http://127.0.0.1:18440/v1/material-ask'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422"
+    },
+    "answer": null,
+    "sources": [],
+    "status": null,
+    "answer_span": null,
+    "answer_modified": null,
+    "diagnostics": null,
+    "raw_file": "calls/0399.json"
+  },
+  "review": {
+    "case_id": "writer_holdout-0002",
+    "verdict": "api_contract_failure",
+    "issues": [
+      "empty_materials_rejected"
+    ],
+    "note": "原始空材料请求422；不能计为模型已正确拒答。"
+  },
+  "input": {
+    "id": "writer_holdout-0002",
+    "suite": "writer_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/writer-p0-20260916/holdout.jsonl",
+    "origin_index": 2,
+    "original_case": {
+      "expected_decision": "abstain",
+      "expected_facts": [],
+      "history": [],
+      "id": "smoke_003",
+      "materials": [],
+      "oracle_notes": [
+        "按冻结原文与完整历史逐题复核；每项事实和引用均须有据。",
+        "标题不能替代正文；资料不足不是数值为零；冲突未获裁定不能单选。"
+      ],
+      "phase": "frozen_holdout",
+      "provenance": {
+        "kind": "new_synthetic_author_controlled_holdout",
+        "materials_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "question": "仅根据材料，给出虚构探头苇沙T9在发布首季的实际交付数量（台）；无依据请说明无法确定。"
+    },
+    "category": "writer_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "仅根据材料，给出虚构探头苇沙T9在发布首季的实际交付数量（台）；无依据请说明无法确定。",
+      "history": [],
+      "materials": []
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "ae2bb99f001709078d3985e75aa4029d07a1eb9bf8cad657a4e5d60de52e6fef"
+}

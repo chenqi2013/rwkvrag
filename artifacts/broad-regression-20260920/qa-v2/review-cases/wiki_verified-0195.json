@@ -1,0 +1,98 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0195",
+    "suite": "wiki_verified",
+    "question": "能整理一下毒海浮生的第二輯列表吗？",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "毒海浮生第二輯的集數列表：01、02、03、04、05、06、07、08、09[资料 1]。",
+    "sources": [
+      {
+        "id": "wiki_verified-0195-reference",
+        "document_id": "e625d9dd034c1129f8fba4f0",
+        "source": "retained-historical-reference",
+        "title": "毒海浮生",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "表格字段：集數、播映日期、主題 集數列表：01、02、03、04、05、06、07、08、09",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+          "origin_index": 195
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      46
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 4,
+      "reference_terms_total": 4,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0022.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0195",
+    "verdict": "pass",
+    "issues": [],
+    "note": "完整给出参考中的01至09集数列表，未编造缺失的播映日期或主题，引用1对应。仅证明此短参考范围内回答。"
+  },
+  "input": {
+    "id": "wiki_verified-0195",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 195,
+    "original_case": {
+      "question": "能整理一下毒海浮生的第二輯列表吗？",
+      "question_type": "list",
+      "style": "instructional",
+      "expected_title": "毒海浮生",
+      "expected_document_id": "e625d9dd034c1129f8fba4f0",
+      "expected_terms": [
+        "01",
+        "02",
+        "03",
+        "04"
+      ],
+      "reference": "表格字段：集數、播映日期、主題 集數列表：01、02、03、04、05、06、07、08、09",
+      "section": "毒海浮生 > 每集主題 > 第二輯"
+    },
+    "category": "list",
+    "style": "instructional",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "能整理一下毒海浮生的第二輯列表吗？",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_verified-0195-reference",
+          "document_id": "e625d9dd034c1129f8fba4f0",
+          "title": "毒海浮生",
+          "source": "retained-historical-reference",
+          "snippet": "表格字段：集數、播映日期、主題 集數列表：01、02、03、04、05、06、07、08、09",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+            "origin_index": 195
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "a9166664985744d9de421c8a3c7dc7a923fd280c986ecefd58dc54c17f5f9fef"
+}

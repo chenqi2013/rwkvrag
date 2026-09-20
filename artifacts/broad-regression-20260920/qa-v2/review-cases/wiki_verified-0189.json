@@ -1,0 +1,97 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0189",
+    "suite": "wiki_verified",
+    "question": "你知道奈尔斯属于哪里吗？",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "奈尔斯位于美国纽约州卡尤加县[资料 1]。",
+    "sources": [
+      {
+        "id": "wiki_verified-0189-reference",
+        "document_id": "3d4d5c4ad62c2577c2ef5bd9",
+        "source": "retained-historical-reference",
+        "title": "奈尔斯",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "奈尔斯（英語：）是位于美国纽约州卡尤加县的一个镇，地处卡尤加县东部、奥本东南，坐落于奥瓦斯科湖与斯卡尼阿特勒斯湖之间。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+          "origin_index": 189
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      21
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 0,
+      "reference_terms_total": 3,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0238.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0189",
+    "verdict": "pass",
+    "issues": [],
+    "note": "属于哪里按行政归属准确给出美国纽约州卡尤加县，未要求复述所有湖泊方位，来源对应。"
+  },
+  "input": {
+    "id": "wiki_verified-0189",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 189,
+    "original_case": {
+      "question": "你知道奈尔斯属于哪里吗？",
+      "question_type": "location",
+      "style": "conversational",
+      "expected_title": "奈尔斯",
+      "expected_document_id": "3d4d5c4ad62c2577c2ef5bd9",
+      "expected_terms": [
+        "美国纽约州卡尤加县的一个镇",
+        "地处卡尤加县东部",
+        "奥本东南"
+      ],
+      "reference": "奈尔斯（英語：）是位于美国纽约州卡尤加县的一个镇，地处卡尤加县东部、奥本东南，坐落于奥瓦斯科湖与斯卡尼阿特勒斯湖之间。",
+      "section": "奈尔斯"
+    },
+    "category": "location",
+    "style": "conversational",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "你知道奈尔斯属于哪里吗？",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_verified-0189-reference",
+          "document_id": "3d4d5c4ad62c2577c2ef5bd9",
+          "title": "奈尔斯",
+          "source": "retained-historical-reference",
+          "snippet": "奈尔斯（英語：）是位于美国纽约州卡尤加县的一个镇，地处卡尤加县东部、奥本东南，坐落于奥瓦斯科湖与斯卡尼阿特勒斯湖之间。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+            "origin_index": 189
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "ba79305644e69eb95ef3f576d5dcbed30d88ba0168469a751d77164097ddab19"
+}

@@ -1,0 +1,171 @@
+{
+  "result": {
+    "case_id": "writer_holdout-0007",
+    "suite": "writer_holdout",
+    "question": "根据正式记录，苇沙T9首月实际交付多少台，是否已经进入量产？不要把预约量当交付量。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "根据正式记录，苇沙T9首月实际交付数量为 0 台，尚未进入量产。[资料 2]",
+    "sources": [
+      {
+        "id": "h8-s1",
+        "document_id": "h8-d1",
+        "source": "synthetic-holdout-20260916",
+        "title": "预约登记",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "苇沙T9预约数量为100台，预约不等于交付。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "h8-s2",
+        "document_id": "h8-d2",
+        "source": "synthetic-holdout-20260916",
+        "title": "正式首月交付记录",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "苇沙 T9 首月实际交付数量为 0 台。尚未进入量产，试验样机不计入交付。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      38
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0279.json"
+  },
+  "review": {
+    "case_id": "writer_holdout-0007",
+    "verdict": "pass",
+    "issues": [],
+    "note": "正确0台且尚未量产，引用正式记录2。"
+  },
+  "input": {
+    "id": "writer_holdout-0007",
+    "suite": "writer_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/writer-p0-20260916/holdout.jsonl",
+    "origin_index": 7,
+    "original_case": {
+      "expected_decision": "answer",
+      "expected_facts": [
+        {
+          "claim": "首月实际交付0台。",
+          "id": "F1",
+          "supporting_quotes": [
+            {
+              "end": 37,
+              "material_id": "h8-s2",
+              "quote": "苇沙 T9 首月实际交付数量为 0 台。尚未进入量产，试验样机不计入交付。",
+              "start": 0
+            }
+          ]
+        },
+        {
+          "claim": "尚未进入量产。",
+          "id": "F2",
+          "supporting_quotes": [
+            {
+              "end": 37,
+              "material_id": "h8-s2",
+              "quote": "苇沙 T9 首月实际交付数量为 0 台。尚未进入量产，试验样机不计入交付。",
+              "start": 0
+            }
+          ]
+        }
+      ],
+      "history": [],
+      "id": "smoke_008",
+      "materials": [
+        {
+          "document_id": "h8-d1",
+          "id": "h8-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "苇沙T9预约数量为100台，预约不等于交付。",
+          "source": "synthetic-holdout-20260916",
+          "title": "预约登记",
+          "uri": null
+        },
+        {
+          "document_id": "h8-d2",
+          "id": "h8-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "苇沙 T9 首月实际交付数量为 0 台。尚未进入量产，试验样机不计入交付。",
+          "source": "synthetic-holdout-20260916",
+          "title": "正式首月交付记录",
+          "uri": null
+        }
+      ],
+      "oracle_notes": [
+        "按冻结原文与完整历史逐题复核；每项事实和引用均须有据。",
+        "标题不能替代正文；资料不足不是数值为零；冲突未获裁定不能单选。"
+      ],
+      "phase": "frozen_holdout",
+      "provenance": {
+        "kind": "new_synthetic_author_controlled_holdout",
+        "materials_sha256": "6cec454dcce5624a59463ec70ac2f7161e121ac137284d7e76a513dcfdfde7ea"
+      },
+      "question": "根据正式记录，苇沙T9首月实际交付多少台，是否已经进入量产？不要把预约量当交付量。"
+    },
+    "category": "writer_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "根据正式记录，苇沙T9首月实际交付多少台，是否已经进入量产？不要把预约量当交付量。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "h8-d1",
+          "id": "h8-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "苇沙T9预约数量为100台，预约不等于交付。",
+          "source": "synthetic-holdout-20260916",
+          "title": "预约登记",
+          "uri": null
+        },
+        {
+          "document_id": "h8-d2",
+          "id": "h8-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "苇沙 T9 首月实际交付数量为 0 台。尚未进入量产，试验样机不计入交付。",
+          "source": "synthetic-holdout-20260916",
+          "title": "正式首月交付记录",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "cf84e19fbb26ff5f967297ac951e3daaa946ff8c4b4ac1c28153dafb079261c2"
+}

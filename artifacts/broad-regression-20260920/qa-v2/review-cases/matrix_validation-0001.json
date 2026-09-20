@@ -1,0 +1,291 @@
+{
+  "result": {
+    "case_id": "matrix_validation-0001",
+    "suite": "matrix_validation",
+    "question": "比较岚舟501 1.0版与岚舟501 2.0版的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "岚舟501 1.0版容量为65 L；离线支持为支持离线运行。[资料 1]\n岚舟501 2.0版容量为29 L；离线支持为不支持离线运行。[资料 2]",
+    "sources": [
+      {
+        "id": "validation-1-s1@0:31:50c59ec4b744",
+        "document_id": "validation-1-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "岚舟501 1.0版：容量为65 L；离线支持为支持离线运行。",
+        "metadata": {
+          "parent_source_id": "validation-1-s1",
+          "span_end": 31,
+          "span_sha256": "50c59ec4b744e730e01d2c27c916022854d1ef5cc8f07481dedb9be9574ffc58",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "validation-1-s2@0:32:0553002840bf",
+        "document_id": "validation-1-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "岚舟501 2.0版：容量为29 L；离线支持为不支持离线运行。",
+        "metadata": {
+          "parent_source_id": "validation-1-s2",
+          "span_end": 32,
+          "span_sha256": "0553002840bf307698a7c9b5c4942a64ca4ecf8fcdc14c3f048ab035329d3b80",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      74
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0456.json"
+  },
+  "review": {
+    "case_id": "matrix_validation-0001",
+    "verdict": "pass",
+    "issues": [],
+    "note": "两版本四格及引用全部正确。"
+  },
+  "input": {
+    "id": "matrix_validation-0001",
+    "suite": "matrix_validation",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/validation.cases.jsonl",
+    "origin_index": 1,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "validation-1-s1",
+          "id": "validation-1-s1@0:31:50c59ec4b744",
+          "metadata": {
+            "parent_source_id": "validation-1-s1",
+            "span_end": 31,
+            "span_sha256": "50c59ec4b744e730e01d2c27c916022854d1ef5cc8f07481dedb9be9574ffc58",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟501 1.0版：容量为65 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-1-s2",
+          "id": "validation-1-s2@0:32:0553002840bf",
+          "metadata": {
+            "parent_source_id": "validation-1-s2",
+            "span_end": 32,
+            "span_sha256": "0553002840bf307698a7c9b5c4942a64ca4ecf8fcdc14c3f048ab035329d3b80",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟501 2.0版：容量为29 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "history": [],
+      "id": "validation-001",
+      "kind": 1,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "岚舟501 1.0版",
+          "question": "岚舟501 1.0版的容量是什么？",
+          "source_ids": [
+            "validation-1-s1@0:31:50c59ec4b744"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "岚舟501 1.0版",
+          "question": "岚舟501 1.0版的离线支持是什么？",
+          "source_ids": [
+            "validation-1-s1@0:31:50c59ec4b744"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "岚舟501 2.0版",
+          "question": "岚舟501 2.0版的容量是什么？",
+          "source_ids": [
+            "validation-1-s2@0:32:0553002840bf"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "岚舟501 2.0版",
+          "question": "岚舟501 2.0版的离线支持是什么？",
+          "source_ids": [
+            "validation-1-s2@0:32:0553002840bf"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "岚舟501 1.0版",
+            "question": "岚舟501 1.0版的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "岚舟501 1.0版",
+            "question": "岚舟501 1.0版的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "岚舟501 2.0版",
+            "question": "岚舟501 2.0版的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "岚舟501 2.0版",
+            "question": "岚舟501 2.0版的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "岚舟501 1.0版",
+          "岚舟501 2.0版"
+        ]
+      },
+      "question": "比较岚舟501 1.0版与岚舟501 2.0版的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "岚舟501 1.0版",
+          "text": "岚舟501 1.0版：容量为65 L；离线支持为支持离线运行。",
+          "values": {
+            "容量": "65 L",
+            "离线支持": "支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "岚舟501 2.0版",
+          "text": "岚舟501 2.0版：容量为29 L；离线支持为不支持离线运行。",
+          "values": {
+            "容量": "29 L",
+            "离线支持": "不支持离线运行"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "validation-1-s1",
+          "id": "validation-1-s1@0:31:50c59ec4b744",
+          "metadata": {
+            "parent_source_id": "validation-1-s1",
+            "span_end": 31,
+            "span_sha256": "50c59ec4b744e730e01d2c27c916022854d1ef5cc8f07481dedb9be9574ffc58",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟501 1.0版：容量为65 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-1-s2",
+          "id": "validation-1-s2@0:32:0553002840bf",
+          "metadata": {
+            "parent_source_id": "validation-1-s2",
+            "span_end": 32,
+            "span_sha256": "0553002840bf307698a7c9b5c4942a64ca4ecf8fcdc14c3f048ab035329d3b80",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟501 2.0版：容量为29 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "岚舟501 1.0版的容量：65 L[资料 1]。\n岚舟501 1.0版的离线支持：支持离线运行[资料 1]。\n岚舟501 2.0版的容量：29 L[资料 2]。\n岚舟501 2.0版的离线支持：不支持离线运行[资料 2]。"
+    },
+    "category": 1,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "比较岚舟501 1.0版与岚舟501 2.0版的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "validation-1-s1",
+          "id": "validation-1-s1@0:31:50c59ec4b744",
+          "metadata": {
+            "parent_source_id": "validation-1-s1",
+            "span_end": 31,
+            "span_sha256": "50c59ec4b744e730e01d2c27c916022854d1ef5cc8f07481dedb9be9574ffc58",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟501 1.0版：容量为65 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-1-s2",
+          "id": "validation-1-s2@0:32:0553002840bf",
+          "metadata": {
+            "parent_source_id": "validation-1-s2",
+            "span_end": 32,
+            "span_sha256": "0553002840bf307698a7c9b5c4942a64ca4ecf8fcdc14c3f048ab035329d3b80",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "岚舟501 2.0版：容量为29 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "8e433b3a6814cb909b6efbdce94898849bf20af0905dccabfbebf6e6382c6059"
+}

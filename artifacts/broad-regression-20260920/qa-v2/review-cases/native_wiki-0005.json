@@ -1,0 +1,369 @@
+{
+  "result": {
+    "case_id": "native_wiki-0005",
+    "suite": "native_wiki",
+    "question": "就按已定的三格补齐，给编辑会用。",
+    "execution_scope": "current_corpus_retrieval",
+    "http_status": 200,
+    "error": null,
+    "answer": "[资料 1] 旧博客平台：Ghost。[资料 2] 筹资目标：首次Kickstarter筹款的目标金额。[资料 3] 实际筹资金额：实际筹到的金额。[资料 4] 用时：用时多少天。",
+    "sources": [],
+    "status": "planner_partial_failure",
+    "answer_span": [
+      0,
+      90
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 0,
+      "has_numeric_citation": true,
+      "citation_out_of_range": true,
+      "generation_status": "planner_partial_failure",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0124.json"
+  },
+  "review": {
+    "case_id": "native_wiki-0005",
+    "verdict": "fail",
+    "issues": [
+      "history_resolution_failure",
+      "missing_required_values",
+      "fabricated_citations"
+    ],
+    "note": "长历史已锁定Ghost的首次众筹三字段，但规划部分失败、sources为空；答案只复述字段名称，未给25000/196362英镑和29天，仍输出资料1至4。"
+  },
+  "input": {
+    "id": "native_wiki-0005",
+    "suite": "native_wiki",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+    "origin_index": 5,
+    "original_case": {
+      "id": "held_017",
+      "question": "就按已定的三格补齐，给编辑会用。",
+      "history": [
+        {
+          "role": "user",
+          "content": "下午编辑例会要讨论旧博客软件。我只记得名字像Ghost，搜笔记时还看见一个同名系统；先别替我选，给我分一下可能是哪两种东西。旧稿上没有版本号，我也还没决定介绍功能还是介绍它怎么起步。"
+        },
+        {
+          "role": "assistant",
+          "content": "可以区分Ghost博客平台和GhostBSD操作系统。你是想整理出版工具的来历，还是桌面系统的安装体验？这两条材料不能混在同一份介绍里。"
+        },
+        {
+          "role": "user",
+          "content": "选前面那个博客平台，GhostBSD不用。这次给编辑看，安装命令也先撤掉。我想说说项目怎样筹到第一笔启动资金，但不需要你把它今天的订阅价格搬进来。"
+        },
+        {
+          "role": "assistant",
+          "content": "对象按你选中的博客平台。启动筹资和后来付费托管是两件事，介绍时可以分清它们，先把这次需要的数字定下来。"
+        },
+        {
+          "role": "user",
+          "content": "具体只留三格：首次Kickstarter筹款的目标金额、实际筹到的金额、达到这笔实际筹款用了多少天。两笔钱都保留英镑，别换算成人民币，汇率也不用查。"
+        },
+        {
+          "role": "assistant",
+          "content": "收到，目标额、实际额和用时各占一格，不把后来收入或员工人数当成众筹成果。"
+        },
+        {
+          "role": "user",
+          "content": "我们原来准备用红色标注目标，绿色标注实际，印刷同事说灰度打印看不出区别。这个我自己解决，你只负责核对文字，暂时不用替我做图，也别把配色当成A/B测试效果。我们这张表还会放进会议纪要，之后别人可能单独转发截图，不一定看得到前面的讨论，所以三个栏头我会写全。金额不想只写一个倍数来表现成功，实际值与目标值都需要，免得转发后看不懂。"
+        },
+        {
+          "role": "assistant",
+          "content": "那我按普通文本组织，金额本身不受颜色安排影响。图形表现可以等你们定稿后再做。"
+        },
+        {
+          "role": "user",
+          "content": "旧表头“上线时间”删了。有人可能还会需要，但这次不是发布日期时间轴。如果原文旁边恰好有日期，也不必全部抄进来。"
+        },
+        {
+          "role": "assistant",
+          "content": "明白，移除上线日期，不影响前面三项筹资信息。"
+        },
+        {
+          "role": "user",
+          "content": "我刚才说“不必全部抄”，不是让你省掉天数。那一格正好用来解释为什么大家当时觉得进展快，仍要原文中的实际用时，不能拿两个你猜的日期相减。"
+        },
+        {
+          "role": "assistant",
+          "content": "用时保留，依原文明确给出的时长；没有的日历日期不会补造。"
+        },
+        {
+          "role": "user",
+          "content": "还有同事想把支持过它的公司标志排一排，我说先不要，展现方式容易像我们得到这些公司的背书。公司名字如果只是在旁边出现，没必要加进这张内部资料页。那一排标志后来已经从草稿删了；即使同事在会里随口提起，也只是讨论过的选项，不是我又批准加回来。"
+        },
+        {
+          "role": "assistant",
+          "content": "会保留这次的信息范围，不加支持方名单或替你们表达合作关系。"
+        },
+        {
+          "role": "user",
+          "content": "我已经把例会文档标题改成“博客工具的开端”，只是换个通俗标题，没有另换产品。稍后我说把三格填好，就是刚刚那一组；别回到操作系统或者服务器部署问题上。"
+        },
+        {
+          "role": "assistant",
+          "content": "沿用已选博客平台和三项筹资数据。排版上的“开端”不会被理解成重新查最初公开发布日。"
+        }
+      ],
+      "oracle": {
+        "expected_action": "answer",
+        "known_subjects": [
+          {
+            "id": "S1",
+            "description": "Ghost博客平台",
+            "history_evidence": [
+              {
+                "message_id": "H2",
+                "quote": "Ghost博客平台",
+                "adoption_message_id": "H3"
+              },
+              {
+                "message_id": "H3",
+                "quote": "选前面那个博客平台，GhostBSD不用。这次给编辑看，安装命令也先撤掉。我想说说项目怎样筹到第一笔启动资金，但不需要你把它今天的订阅价格搬进来。"
+              }
+            ]
+          }
+        ],
+        "active_constraints": [],
+        "requested_goals": [
+          {
+            "id": "G1",
+            "description": "目标金额",
+            "history_evidence": [
+              {
+                "message_id": "H5",
+                "quote": "目标金额"
+              },
+              {
+                "message_id": "H5",
+                "quote": "具体只留三格：首次Kickstarter筹款的目标金额、实际筹到的金额、达到这笔实际筹款用了多少天。两笔钱都保留英镑，别换算成人民币，汇率也不用查。"
+              }
+            ]
+          },
+          {
+            "id": "G2",
+            "description": "实际筹到的金额",
+            "history_evidence": [
+              {
+                "message_id": "H5",
+                "quote": "实际筹到的金额"
+              },
+              {
+                "message_id": "H5",
+                "quote": "具体只留三格：首次Kickstarter筹款的目标金额、实际筹到的金额、达到这笔实际筹款用了多少天。两笔钱都保留英镑，别换算成人民币，汇率也不用查。"
+              }
+            ]
+          },
+          {
+            "id": "G3",
+            "description": "用了多少天",
+            "history_evidence": [
+              {
+                "message_id": "H5",
+                "quote": "用了多少天"
+              },
+              {
+                "message_id": "H5",
+                "quote": "具体只留三格：首次Kickstarter筹款的目标金额、实际筹到的金额、达到这笔实际筹款用了多少天。两笔钱都保留英镑，别换算成人民币，汇率也不用查。"
+              }
+            ]
+          }
+        ],
+        "required_facts": [
+          {
+            "claim": "首次Kickstarter筹款目标为25000英镑。",
+            "bound_subjects": [
+              "S1"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/4659204",
+                  "page_id": 4659204,
+                  "title": "Ghost (博客平台)",
+                  "url": "https://zh.wikipedia.org/wiki/Ghost_(%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0)",
+                  "language": "zh",
+                  "revision_id": 80527703,
+                  "body_sha256": "dcb15ac9a18a9552b916aac5346253d99ba2be9b9e6608f152c07ebe344ccfa7",
+                  "section": "历史",
+                  "start": 362,
+                  "end": 469,
+                  "quote": "2013年4月29日，O'Nolan为实施Ghost项目计划在Kickstarter筹款£25,000。而这个新项目在29天内获得£196,362筹款。 成功获得了WooThemes，ENVATO和微软公司的支持。"
+                }
+              ]
+            ],
+            "id": "F1"
+          },
+          {
+            "claim": "实际筹到196362英镑。",
+            "bound_subjects": [
+              "S1"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/4659204",
+                  "page_id": 4659204,
+                  "title": "Ghost (博客平台)",
+                  "url": "https://zh.wikipedia.org/wiki/Ghost_(%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0)",
+                  "language": "zh",
+                  "revision_id": 80527703,
+                  "body_sha256": "dcb15ac9a18a9552b916aac5346253d99ba2be9b9e6608f152c07ebe344ccfa7",
+                  "section": "历史",
+                  "start": 362,
+                  "end": 469,
+                  "quote": "2013年4月29日，O'Nolan为实施Ghost项目计划在Kickstarter筹款£25,000。而这个新项目在29天内获得£196,362筹款。 成功获得了WooThemes，ENVATO和微软公司的支持。"
+                }
+              ]
+            ],
+            "id": "F2"
+          },
+          {
+            "claim": "筹得该实际金额用了29天。",
+            "bound_subjects": [
+              "S1"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/4659204",
+                  "page_id": 4659204,
+                  "title": "Ghost (博客平台)",
+                  "url": "https://zh.wikipedia.org/wiki/Ghost_(%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0)",
+                  "language": "zh",
+                  "revision_id": 80527703,
+                  "body_sha256": "dcb15ac9a18a9552b916aac5346253d99ba2be9b9e6608f152c07ebe344ccfa7",
+                  "section": "历史",
+                  "start": 362,
+                  "end": 469,
+                  "quote": "2013年4月29日，O'Nolan为实施Ghost项目计划在Kickstarter筹款£25,000。而这个新项目在29天内获得£196,362筹款。 成功获得了WooThemes，ENVATO和微软公司的支持。"
+                }
+              ]
+            ],
+            "id": "F3"
+          }
+        ],
+        "excluded": [
+          "GhostBSD",
+          "安装命令",
+          "当前订阅价",
+          "汇率换算",
+          "上线日期",
+          "支持公司名单"
+        ],
+        "missing_information": [],
+        "required_clarification": [],
+        "minimum_evidence_pages": 1,
+        "required": [
+          "按照用户明示字段和有效历史回答；不得把助手自行追加偏好视为用户要求。",
+          "每个必要事实正确且有真实、实际支持的正式引用；每个多余引用也检查其附着主张。",
+          "无额外关键错误或无据结论，范围、对象与缺失信息处理正确。"
+        ],
+        "forbidden": [
+          "不得由金标证据段背景追加未问日期、单位精度或范围。",
+          "不得把同页但不含该事实的片段或无关页面作为支持。",
+          "不得用思考过程补最终答案；不得把资料未提供说成现实不存在。"
+        ]
+      },
+      "provenance": {
+        "source_experiment": "rwkvrag-wiki-evidence-budget-20260908",
+        "original_split": "holdout",
+        "use": "previously_exposed_development_smoke",
+        "source_inputs_sha256": "7d38ace329779963dd134837aecd54941ed60e44ba3ae74d7aed89c08767d583",
+        "source_gold_sha256": "50edd715fd81cdc545b3a7bd952f840d78ab6876d41496ab9d5a3d8f4938d0ca",
+        "source_input_row_sha256": "77b199c3d4ddc3291effb611f7349e42d3e759fd0093a54a7da67a895887e805",
+        "source_gold_row_sha256": "56a316cd84d484a160b8938006a2710e3240363968aa4f78d18f63536dc65d18",
+        "corpus_manifest_sha256": "35563fa6e5d7c9205cea3d9e1cd5476b01774f11a292dafcfed82fe4d8256ced",
+        "category": "long_history"
+      }
+    },
+    "category": "native_wiki",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "就按已定的三格补齐，给编辑会用。",
+      "history": [
+        {
+          "role": "user",
+          "content": "下午编辑例会要讨论旧博客软件。我只记得名字像Ghost，搜笔记时还看见一个同名系统；先别替我选，给我分一下可能是哪两种东西。旧稿上没有版本号，我也还没决定介绍功能还是介绍它怎么起步。"
+        },
+        {
+          "role": "assistant",
+          "content": "可以区分Ghost博客平台和GhostBSD操作系统。你是想整理出版工具的来历，还是桌面系统的安装体验？这两条材料不能混在同一份介绍里。"
+        },
+        {
+          "role": "user",
+          "content": "选前面那个博客平台，GhostBSD不用。这次给编辑看，安装命令也先撤掉。我想说说项目怎样筹到第一笔启动资金，但不需要你把它今天的订阅价格搬进来。"
+        },
+        {
+          "role": "assistant",
+          "content": "对象按你选中的博客平台。启动筹资和后来付费托管是两件事，介绍时可以分清它们，先把这次需要的数字定下来。"
+        },
+        {
+          "role": "user",
+          "content": "具体只留三格：首次Kickstarter筹款的目标金额、实际筹到的金额、达到这笔实际筹款用了多少天。两笔钱都保留英镑，别换算成人民币，汇率也不用查。"
+        },
+        {
+          "role": "assistant",
+          "content": "收到，目标额、实际额和用时各占一格，不把后来收入或员工人数当成众筹成果。"
+        },
+        {
+          "role": "user",
+          "content": "我们原来准备用红色标注目标，绿色标注实际，印刷同事说灰度打印看不出区别。这个我自己解决，你只负责核对文字，暂时不用替我做图，也别把配色当成A/B测试效果。我们这张表还会放进会议纪要，之后别人可能单独转发截图，不一定看得到前面的讨论，所以三个栏头我会写全。金额不想只写一个倍数来表现成功，实际值与目标值都需要，免得转发后看不懂。"
+        },
+        {
+          "role": "assistant",
+          "content": "那我按普通文本组织，金额本身不受颜色安排影响。图形表现可以等你们定稿后再做。"
+        },
+        {
+          "role": "user",
+          "content": "旧表头“上线时间”删了。有人可能还会需要，但这次不是发布日期时间轴。如果原文旁边恰好有日期，也不必全部抄进来。"
+        },
+        {
+          "role": "assistant",
+          "content": "明白，移除上线日期，不影响前面三项筹资信息。"
+        },
+        {
+          "role": "user",
+          "content": "我刚才说“不必全部抄”，不是让你省掉天数。那一格正好用来解释为什么大家当时觉得进展快，仍要原文中的实际用时，不能拿两个你猜的日期相减。"
+        },
+        {
+          "role": "assistant",
+          "content": "用时保留，依原文明确给出的时长；没有的日历日期不会补造。"
+        },
+        {
+          "role": "user",
+          "content": "还有同事想把支持过它的公司标志排一排，我说先不要，展现方式容易像我们得到这些公司的背书。公司名字如果只是在旁边出现，没必要加进这张内部资料页。那一排标志后来已经从草稿删了；即使同事在会里随口提起，也只是讨论过的选项，不是我又批准加回来。"
+        },
+        {
+          "role": "assistant",
+          "content": "会保留这次的信息范围，不加支持方名单或替你们表达合作关系。"
+        },
+        {
+          "role": "user",
+          "content": "我已经把例会文档标题改成“博客工具的开端”，只是换个通俗标题，没有另换产品。稍后我说把三格填好，就是刚刚那一组；别回到操作系统或者服务器部署问题上。"
+        },
+        {
+          "role": "assistant",
+          "content": "沿用已选博客平台和三项筹资数据。排版上的“开端”不会被理解成重新查最初公开发布日。"
+        }
+      ],
+      "knowledge_base_id": "wiki-5000-20260908",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    },
+    "execution_scope": "current_corpus_retrieval"
+  },
+  "raw_file_sha256": "3c737915605308655a495351b0031d75ce51f424f29577a7762b129767718a1a"
+}

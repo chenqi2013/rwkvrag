@@ -1,0 +1,362 @@
+{
+  "result": {
+    "case_id": "matrix_validation-0004",
+    "suite": "matrix_validation",
+    "question": "比较青川504型与白岭504型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "青川504型容量为36 L；离线支持为支持离线运行。[资料 1]\n白岭504型容量为42 L；离线支持为不支持离线运行。[资料 2]\n另一份同范围、无权威排序的记录：青川504型容量为93 L。[资料 3]",
+    "sources": [
+      {
+        "id": "validation-4-s1@0:27:21f8846c83aa",
+        "document_id": "validation-4-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "青川504型：容量为36 L；离线支持为支持离线运行。",
+        "metadata": {
+          "parent_source_id": "validation-4-s1",
+          "span_end": 27,
+          "span_sha256": "21f8846c83aa2e73b360f3155e4696fb1aa947343eecc15ec640c84661acd261",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "validation-4-s2@0:28:0de8c66d3be0",
+        "document_id": "validation-4-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "白岭504型：容量为42 L；离线支持为不支持离线运行。",
+        "metadata": {
+          "parent_source_id": "validation-4-s2",
+          "span_end": 28,
+          "span_sha256": "0de8c66d3be0cd3bc5e22d0a5aec187cd927d1d8f79d3f9be3d234fd9675aac1",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "validation-4-s3@0:30:f9270980f279",
+        "document_id": "validation-4-s3",
+        "source": "synthetic-matrix",
+        "title": "记录3",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "另一份同范围、无权威排序的记录：青川504型容量为93 L。",
+        "metadata": {
+          "parent_source_id": "validation-4-s3",
+          "span_end": 30,
+          "span_sha256": "f9270980f2794faa41f40ff0ee88dcdd0985dff5e1a9b3d7869211032c5222b0",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      103
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 3,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0277.json"
+  },
+  "review": {
+    "case_id": "matrix_validation-0004",
+    "verdict": "partial",
+    "issues": [
+      "conflict_not_explicit"
+    ],
+    "note": "36L与93L均列出且引用正确，但未明确冲突与无法确定唯一值。"
+  },
+  "input": {
+    "id": "matrix_validation-0004",
+    "suite": "matrix_validation",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/validation.cases.jsonl",
+    "origin_index": 4,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "validation-4-s1",
+          "id": "validation-4-s1@0:27:21f8846c83aa",
+          "metadata": {
+            "parent_source_id": "validation-4-s1",
+            "span_end": 27,
+            "span_sha256": "21f8846c83aa2e73b360f3155e4696fb1aa947343eecc15ec640c84661acd261",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川504型：容量为36 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-4-s2",
+          "id": "validation-4-s2@0:28:0de8c66d3be0",
+          "metadata": {
+            "parent_source_id": "validation-4-s2",
+            "span_end": 28,
+            "span_sha256": "0de8c66d3be0cd3bc5e22d0a5aec187cd927d1d8f79d3f9be3d234fd9675aac1",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭504型：容量为42 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        },
+        {
+          "document_id": "validation-4-s3",
+          "id": "validation-4-s3@0:30:f9270980f279",
+          "metadata": {
+            "parent_source_id": "validation-4-s3",
+            "span_end": 30,
+            "span_sha256": "f9270980f2794faa41f40ff0ee88dcdd0985dff5e1a9b3d7869211032c5222b0",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "另一份同范围、无权威排序的记录：青川504型容量为93 L。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ],
+      "history": [],
+      "id": "validation-004",
+      "kind": 4,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "青川504型",
+          "question": "青川504型的容量是什么？",
+          "source_ids": [
+            "validation-4-s1@0:27:21f8846c83aa",
+            "validation-4-s3@0:30:f9270980f279"
+          ],
+          "status": "conflict"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "青川504型",
+          "question": "青川504型的离线支持是什么？",
+          "source_ids": [
+            "validation-4-s1@0:27:21f8846c83aa"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "白岭504型",
+          "question": "白岭504型的容量是什么？",
+          "source_ids": [
+            "validation-4-s2@0:28:0de8c66d3be0"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "白岭504型",
+          "question": "白岭504型的离线支持是什么？",
+          "source_ids": [
+            "validation-4-s2@0:28:0de8c66d3be0"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "青川504型",
+            "question": "青川504型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "青川504型",
+            "question": "青川504型的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "白岭504型",
+            "question": "白岭504型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "白岭504型",
+            "question": "白岭504型的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "青川504型",
+          "白岭504型"
+        ]
+      },
+      "question": "比较青川504型与白岭504型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "青川504型",
+          "text": "青川504型：容量为36 L；离线支持为支持离线运行。",
+          "values": {
+            "容量": "36 L",
+            "离线支持": "支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "白岭504型",
+          "text": "白岭504型：容量为42 L；离线支持为不支持离线运行。",
+          "values": {
+            "容量": "42 L",
+            "离线支持": "不支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "青川504型",
+          "text": "另一份同范围、无权威排序的记录：青川504型容量为93 L。",
+          "values": {
+            "容量": "93 L"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "validation-4-s1",
+          "id": "validation-4-s1@0:27:21f8846c83aa",
+          "metadata": {
+            "parent_source_id": "validation-4-s1",
+            "span_end": 27,
+            "span_sha256": "21f8846c83aa2e73b360f3155e4696fb1aa947343eecc15ec640c84661acd261",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川504型：容量为36 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-4-s2",
+          "id": "validation-4-s2@0:28:0de8c66d3be0",
+          "metadata": {
+            "parent_source_id": "validation-4-s2",
+            "span_end": 28,
+            "span_sha256": "0de8c66d3be0cd3bc5e22d0a5aec187cd927d1d8f79d3f9be3d234fd9675aac1",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭504型：容量为42 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        },
+        {
+          "document_id": "validation-4-s3",
+          "id": "validation-4-s3@0:30:f9270980f279",
+          "metadata": {
+            "parent_source_id": "validation-4-s3",
+            "span_end": 30,
+            "span_sha256": "f9270980f2794faa41f40ff0ee88dcdd0985dff5e1a9b3d7869211032c5222b0",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "另一份同范围、无权威排序的记录：青川504型容量为93 L。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "青川504型的容量存在冲突：36 L[资料 1]；93 L[资料 3]。无法确定唯一值。\n青川504型的离线支持：支持离线运行[资料 1]。\n白岭504型的容量：42 L[资料 2]。\n白岭504型的离线支持：不支持离线运行[资料 2]。"
+    },
+    "category": 4,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "比较青川504型与白岭504型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "validation-4-s1",
+          "id": "validation-4-s1@0:27:21f8846c83aa",
+          "metadata": {
+            "parent_source_id": "validation-4-s1",
+            "span_end": 27,
+            "span_sha256": "21f8846c83aa2e73b360f3155e4696fb1aa947343eecc15ec640c84661acd261",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川504型：容量为36 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-4-s2",
+          "id": "validation-4-s2@0:28:0de8c66d3be0",
+          "metadata": {
+            "parent_source_id": "validation-4-s2",
+            "span_end": 28,
+            "span_sha256": "0de8c66d3be0cd3bc5e22d0a5aec187cd927d1d8f79d3f9be3d234fd9675aac1",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭504型：容量为42 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        },
+        {
+          "document_id": "validation-4-s3",
+          "id": "validation-4-s3@0:30:f9270980f279",
+          "metadata": {
+            "parent_source_id": "validation-4-s3",
+            "span_end": 30,
+            "span_sha256": "f9270980f2794faa41f40ff0ee88dcdd0985dff5e1a9b3d7869211032c5222b0",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "另一份同范围、无权威排序的记录：青川504型容量为93 L。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "cd468398e0b841fb75bed4de82c83c31af2c7aab9f6b0df83a2aa7cc21f985cc"
+}

@@ -1,0 +1,219 @@
+{
+  "result": {
+    "case_id": "writer_holdout-0005",
+    "suite": "writer_holdout",
+    "question": "逐项列出A款2021年、A款2024年、B款2024年的额定流量与离线支持，保留原单位，不换算。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "A款2021年：额定流量 17 L/min，离线支持 不支持[资料 2]。\nA款2024年：额定流量 11 L/min，离线支持 支持[资料 2]。\nB款2024年：额定流量 5 kg/min，离线支持 不支持[资料 2]。",
+    "sources": [
+      {
+        "id": "h6-s1",
+        "document_id": "h6-d1",
+        "source": "synthetic-holdout-20260916",
+        "title": "停用草案",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "此草案已停用，不应用于正式参数：A款2024流量曾暂填99 L/min。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "h6-s2",
+        "document_id": "h6-d2",
+        "source": "synthetic-holdout-20260916",
+        "title": "正式参数表",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "| 型号 | 年份 | 额定流量 | 离线 |\n| --- | --- | --- | --- |\n| A | 2021 | 17 L/min | 不支持 |\n| A | 2024 | 11 L/min | 支持 |\n| B | 2024 | 5 kg/min | 不支持 |",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      112
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0253.json"
+  },
+  "review": {
+    "case_id": "writer_holdout-0005",
+    "verdict": "pass",
+    "issues": [],
+    "note": "表格三对象年份六字段完全正确，保留原单位与否定，未引用废止99 L/min草案。"
+  },
+  "input": {
+    "id": "writer_holdout-0005",
+    "suite": "writer_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/writer-p0-20260916/holdout.jsonl",
+    "origin_index": 5,
+    "original_case": {
+      "expected_decision": "answer",
+      "expected_facts": [
+        {
+          "claim": "A款2021流量17 L/min。",
+          "id": "F1",
+          "supporting_quotes": [
+            {
+              "end": 79,
+              "material_id": "h6-s2",
+              "quote": "| A | 2021 | 17 L/min | 不支持 |",
+              "start": 50
+            }
+          ]
+        },
+        {
+          "claim": "A款2021不支持离线。",
+          "id": "F2",
+          "supporting_quotes": [
+            {
+              "end": 79,
+              "material_id": "h6-s2",
+              "quote": "| A | 2021 | 17 L/min | 不支持 |",
+              "start": 50
+            }
+          ]
+        },
+        {
+          "claim": "A款2024流量11 L/min。",
+          "id": "F3",
+          "supporting_quotes": [
+            {
+              "end": 108,
+              "material_id": "h6-s2",
+              "quote": "| A | 2024 | 11 L/min | 支持 |",
+              "start": 80
+            }
+          ]
+        },
+        {
+          "claim": "A款2024支持离线。",
+          "id": "F4",
+          "supporting_quotes": [
+            {
+              "end": 108,
+              "material_id": "h6-s2",
+              "quote": "| A | 2024 | 11 L/min | 支持 |",
+              "start": 80
+            }
+          ]
+        },
+        {
+          "claim": "B款2024流量5 kg/min。",
+          "id": "F5",
+          "supporting_quotes": [
+            {
+              "end": 138,
+              "material_id": "h6-s2",
+              "quote": "| B | 2024 | 5 kg/min | 不支持 |",
+              "start": 109
+            }
+          ]
+        },
+        {
+          "claim": "B款2024不支持离线。",
+          "id": "F6",
+          "supporting_quotes": [
+            {
+              "end": 138,
+              "material_id": "h6-s2",
+              "quote": "| B | 2024 | 5 kg/min | 不支持 |",
+              "start": 109
+            }
+          ]
+        }
+      ],
+      "history": [],
+      "id": "smoke_006",
+      "materials": [
+        {
+          "document_id": "h6-d1",
+          "id": "h6-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "此草案已停用，不应用于正式参数：A款2024流量曾暂填99 L/min。",
+          "source": "synthetic-holdout-20260916",
+          "title": "停用草案",
+          "uri": null
+        },
+        {
+          "document_id": "h6-d2",
+          "id": "h6-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "| 型号 | 年份 | 额定流量 | 离线 |\n| --- | --- | --- | --- |\n| A | 2021 | 17 L/min | 不支持 |\n| A | 2024 | 11 L/min | 支持 |\n| B | 2024 | 5 kg/min | 不支持 |",
+          "source": "synthetic-holdout-20260916",
+          "title": "正式参数表",
+          "uri": null
+        }
+      ],
+      "oracle_notes": [
+        "按冻结原文与完整历史逐题复核；每项事实和引用均须有据。",
+        "标题不能替代正文；资料不足不是数值为零；冲突未获裁定不能单选。"
+      ],
+      "phase": "frozen_holdout",
+      "provenance": {
+        "kind": "new_synthetic_author_controlled_holdout",
+        "materials_sha256": "2de321cc4491385ee5255341c59cc6b0a71137313e4c4c226d20d7c09fd0d3a5"
+      },
+      "question": "逐项列出A款2021年、A款2024年、B款2024年的额定流量与离线支持，保留原单位，不换算。"
+    },
+    "category": "writer_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "逐项列出A款2021年、A款2024年、B款2024年的额定流量与离线支持，保留原单位，不换算。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "h6-d1",
+          "id": "h6-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "此草案已停用，不应用于正式参数：A款2024流量曾暂填99 L/min。",
+          "source": "synthetic-holdout-20260916",
+          "title": "停用草案",
+          "uri": null
+        },
+        {
+          "document_id": "h6-d2",
+          "id": "h6-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "| 型号 | 年份 | 额定流量 | 离线 |\n| --- | --- | --- | --- |\n| A | 2021 | 17 L/min | 不支持 |\n| A | 2024 | 11 L/min | 支持 |\n| B | 2024 | 5 kg/min | 不支持 |",
+          "source": "synthetic-holdout-20260916",
+          "title": "正式参数表",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "d42fa47359cc025cc4fd8123be0e04f78d0493c3c221657747d3b0977f8073f4"
+}

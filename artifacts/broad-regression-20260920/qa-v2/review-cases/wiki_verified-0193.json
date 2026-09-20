@@ -1,0 +1,100 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0193",
+    "suite": "wiki_verified",
+    "question": "导致香槟集市衰落的原因有哪些？",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "导致香槟集市衰落的原因有：法国国王获得新税收来源，以及法德战争和百年战争对香槟集市造成致命打击[资料 1]。",
+    "sources": [
+      {
+        "id": "wiki_verified-0193-reference",
+        "document_id": "1a2f73559fa66bfa3b7fa243",
+        "source": "retained-historical-reference",
+        "title": "香槟集市",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "曾经保持事实上独立的香槟失去了自治权，法国国王在这个富裕省份发现了新的税收来源，以及不费力就能为战争提供资金的手段。法德战争以及随后的百年战争对香槟集市造成了致命打击。14世纪黑死病肆虐之后，意大利的各个城邦从这场磨难中走出来，获得了经济上的胜利。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+          "origin_index": 193
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      54
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 0,
+      "reference_terms_total": 4,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0447.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0193",
+    "verdict": "partial",
+    "issues": [
+      "missing_fact"
+    ],
+    "note": "税收和战争有依据，但未说明丧失自治权，原因覆盖不全。"
+  },
+  "input": {
+    "id": "wiki_verified-0193",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 193,
+    "original_case": {
+      "question": "导致香槟集市衰落的原因有哪些？",
+      "question_type": "cause",
+      "style": "direct",
+      "expected_title": "香槟集市",
+      "expected_document_id": "1a2f73559fa66bfa3b7fa243",
+      "expected_terms": [
+        "曾经保持事实上独立的香槟失去了自治权",
+        "法国国王在这个富裕省份发现了新的税收来源",
+        "以及不费力就能为战争提供资金的手段",
+        "法德战争以及随后的百年战争对香槟集市造成了致命打"
+      ],
+      "reference": "曾经保持事实上独立的香槟失去了自治权，法国国王在这个富裕省份发现了新的税收来源，以及不费力就能为战争提供资金的手段。法德战争以及随后的百年战争对香槟集市造成了致命打击。14世纪黑死病肆虐之后，意大利的各个城邦从这场磨难中走出来，获得了经济上的胜利。",
+      "section": "香槟集市 > 繁荣与衰落 > 衰落"
+    },
+    "category": "cause",
+    "style": "direct",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "导致香槟集市衰落的原因有哪些？",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_verified-0193-reference",
+          "document_id": "1a2f73559fa66bfa3b7fa243",
+          "title": "香槟集市",
+          "source": "retained-historical-reference",
+          "snippet": "曾经保持事实上独立的香槟失去了自治权，法国国王在这个富裕省份发现了新的税收来源，以及不费力就能为战争提供资金的手段。法德战争以及随后的百年战争对香槟集市造成了致命打击。14世纪黑死病肆虐之后，意大利的各个城邦从这场磨难中走出来，获得了经济上的胜利。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+            "origin_index": 193
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "eb61167d24aded044c328d42d9a43ba0f6d3b3bf360395f240b276151a123617"
+}

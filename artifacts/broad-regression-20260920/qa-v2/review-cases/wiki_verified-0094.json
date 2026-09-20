@@ -1,0 +1,100 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0094",
+    "suite": "wiki_verified",
+    "question": "请简要介绍一下欧拉方法。",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "欧拉方法是一种显型方法，也就是说 {\\\\displaystyle y_{n+1}} 的解是 {\\\\displaystyle y_{i}}, {\\\\displaystyle i\\\\leq n} 的显函数。[资料 1]",
+    "sources": [
+      {
+        "id": "wiki_verified-0094-reference",
+        "document_id": "9b7a0c359e94e06cbf7b3b4a",
+        "source": "retained-historical-reference",
+        "title": "欧拉方法",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "欧拉方法是一種顯型方法，也就是說 {\\displaystyle y_{n+1}} 的解是 {\\displaystyle y_{i}}, {\\displaystyle i\\leq n} 的顯函數。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+          "origin_index": 94
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      107
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 2,
+      "reference_terms_total": 4,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0448.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0094",
+    "verdict": "partial",
+    "issues": [
+      "formula_rendering"
+    ],
+    "note": "文字与参考一致，公式输出额外转义且非可渲染LaTex；原参考自身也残留转义，未声称纯模型根因。"
+  },
+  "input": {
+    "id": "wiki_verified-0094",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 94,
+    "original_case": {
+      "question": "请简要介绍一下欧拉方法。",
+      "question_type": "definition",
+      "style": "instructional",
+      "expected_title": "欧拉方法",
+      "expected_document_id": "9b7a0c359e94e06cbf7b3b4a",
+      "expected_terms": [
+        "欧拉方法是一種顯型方法",
+        "也就是說",
+        "displaystyle",
+        "的解是"
+      ],
+      "reference": "欧拉方法是一種顯型方法，也就是說 {\\displaystyle y_{n+1}} 的解是 {\\displaystyle y_{i}}, {\\displaystyle i\\leq n} 的顯函數。",
+      "section": "欧拉方法 > 欧拉方法的推导"
+    },
+    "category": "definition",
+    "style": "instructional",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "请简要介绍一下欧拉方法。",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_verified-0094-reference",
+          "document_id": "9b7a0c359e94e06cbf7b3b4a",
+          "title": "欧拉方法",
+          "source": "retained-historical-reference",
+          "snippet": "欧拉方法是一種顯型方法，也就是說 {\\displaystyle y_{n+1}} 的解是 {\\displaystyle y_{i}}, {\\displaystyle i\\leq n} 的顯函數。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+            "origin_index": 94
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "46b9ea69d67949d23724249f82001080551898c2e4f033bf4812d5616f292dca"
+}

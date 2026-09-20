@@ -1,0 +1,97 @@
+{
+  "result": {
+    "case_id": "wiki_batch2-0023",
+    "suite": "wiki_batch2",
+    "question": "你知道年輕人們何时上映吗？",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "结论[资料 1]：《年輕人們》于1967年上映。",
+    "sources": [
+      {
+        "id": "wiki_batch2-0023-reference",
+        "document_id": "6ba6540ca3bd5e623aaec953",
+        "source": "retained-historical-reference",
+        "title": "年輕人們",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "《年輕人們》（）1967年上映。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+          "origin_index": 23
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      24
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 1,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0134.json"
+  },
+  "review": {
+    "case_id": "wiki_batch2-0023",
+    "verdict": "pass",
+    "issues": [
+      "citation_before_claim"
+    ],
+    "note": "1967年与唯一参考完全对应。引用在结论前而非紧接句后，属格式偏离，未造成来源对应歧义。"
+  },
+  "input": {
+    "id": "wiki_batch2-0023",
+    "suite": "wiki_batch2",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+    "origin_index": 23,
+    "original_case": {
+      "question": "你知道年輕人們何时上映吗？",
+      "question_type": "time",
+      "style": "conversational",
+      "expected_title": "年輕人們",
+      "expected_document_id": "6ba6540ca3bd5e623aaec953",
+      "expected_terms": [
+        "1967年"
+      ],
+      "reference": "《年輕人們》（）1967年上映。",
+      "section": "年輕人們 > 電影 > 年輕人們"
+    },
+    "category": "time",
+    "style": "conversational",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "你知道年輕人們何时上映吗？",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_batch2-0023-reference",
+          "document_id": "6ba6540ca3bd5e623aaec953",
+          "title": "年輕人們",
+          "source": "retained-historical-reference",
+          "snippet": "《年輕人們》（）1967年上映。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+            "origin_index": 23
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "61615016bb4cd7aad7278372d145a2b0f579688ab9e53aa217ac9b3ceafd81e1"
+}

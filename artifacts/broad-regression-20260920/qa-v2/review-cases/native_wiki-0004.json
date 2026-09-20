@@ -1,0 +1,1261 @@
+{
+  "result": {
+    "case_id": "native_wiki-0004",
+    "suite": "native_wiki",
+    "question": "四份旧开发文档需要各填一格：NativeScript用什么文件定义跨平台用户界面；WinJS 1.0随哪个Windows版本发布；RPG Maker MV的Windows版和手机版分别读取什么音乐格式；Media Foundation首次适用于哪个Windows版本？不要因为都能开发应用就共用同一个答案。",
+    "execution_scope": "current_corpus_retrieval",
+    "http_status": 200,
+    "error": null,
+    "answer": "- NativeScript 用什么文件定义跨平台用户界面？**XML**（资料 2）。\n- WinJS 1.0 随哪个 Windows 版本发布？**Windows 8**（资料 3）。\n- RPG Maker MV 的 Windows 版和手机版分别读取什么音乐格式？**Windows 版读取ogg，手机版读取m4a**（资料 4）。\n- Media Foundation 首次适用于哪个 Windows 版本？**Windows Vista**（资料 6）。",
+    "sources": [
+      {
+        "id": "verbatim-v1:69d607f1e70473348e8dec6b883d2cfbbdfd70d298a1d4e30f7b0e55fd4abea2@0:344:a5cc4ced9061",
+        "document_id": "42e6bfde9b52ad83e6f5992b",
+        "source": "finewiki-zh",
+        "title": "RPG Maker MV",
+        "uri": "https://zh.wikipedia.org/wiki/RPG_Maker_MV",
+        "score": 0.03278688524590164,
+        "snippet": "名稱中的「MV」是指「Multi-View」，即為「多觀點」的意思。遊戲可以發布在Windows、Mac、Android、iOS、網頁瀏覽器等平台。\n基本型態是由HTML5與JavaScript組成，專為在網頁瀏覽器上遊玩所設計，經過轉換也能夠發布在各個平台\nWindows與Mac版使用NW.js格式發布。Android與iOS版使用Crosswalk與Apache Cordova格式發布。Linux與Windows商店版雖然尚未支援，但如果開發環境符合，是可以自行發布的。\n在不同平台上，被讀取的音樂格式是不同的。Windows版使用ogg格式、手機板使用m4a格式。如果沒有必要的文件，遊戲會強制停止。但在測試時難以察覺，這點要注意。\n影片與圖片則建議使用WebM與WebP。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q22128818",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/5397602",
+          "chunk_order": 8,
+          "source": "finewiki-zh",
+          "document_id": "42e6bfde9b52ad83e6f5992b",
+          "title": "RPG Maker MV",
+          "source_row_index": 1145,
+          "wikiname": "zhwiki",
+          "page_id": 5397602,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "0d9e6fe99d808873ec7784f17e189b7ff6a4e502ca3eca6d8e6a528c1433fbc4",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 15,
+              "text": "# RPG Maker MV\n"
+            },
+            {
+              "sha256": "958a460dec2e11836d6488fc362bdf4a75657c85179c89d26e04047ea9d0c875",
+              "level": 2,
+              "kind": "heading",
+              "start": 127,
+              "end": 133,
+              "text": "## 概要\n"
+            },
+            {
+              "sha256": "e92f682345e6fbd41488761c0e3a315c5a8774d614f247cf592f7546f893fcce",
+              "level": 3,
+              "kind": "heading",
+              "start": 498,
+              "end": 508,
+              "text": "### 多平台支援\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "a5cc4ced9061c4d72f95ec98bf7e304aa3d59b5947943d3e6488d1d8e36152e4",
+            "start": 508,
+            "end": 852
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "a5cc4ced9061c4d72f95ec98bf7e304aa3d59b5947943d3e6488d1d8e36152e4",
+          "kind": "finewiki",
+          "source_text_sha256": "fa84f84711a1eddbceab5993af40d93ef5b23897b9a7b169c2f9e28d16efbb3f",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/RPG_Maker_MV",
+          "version": 77676521,
+          "heading_path": [
+            "# RPG Maker MV\n",
+            "## 概要\n",
+            "### 多平台支援\n"
+          ],
+          "date_modified": "2023-06-14T07:13:41Z",
+          "atomic": false,
+          "file_id": "42e6bfde9b52ad83e6f5992b",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "a5cc4ced9061c4d72f95ec98bf7e304aa3d59b5947943d3e6488d1d8e36152e4",
+          "parent_source_id": "verbatim-v1:69d607f1e70473348e8dec6b883d2cfbbdfd70d298a1d4e30f7b0e55fd4abea2",
+          "parent_text_sha256": "a5cc4ced9061c4d72f95ec98bf7e304aa3d59b5947943d3e6488d1d8e36152e4",
+          "span_start": 0,
+          "span_end": 344,
+          "span_sha256": "a5cc4ced9061c4d72f95ec98bf7e304aa3d59b5947943d3e6488d1d8e36152e4",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:38db3492085edf9b85b508c4c724f60840cc2109e5d3d36e7463133e48ef533a@0:267:8ea7fd1f4128",
+        "document_id": "c646d8aa49f09fbfb4f2cc44",
+        "source": "finewiki-zh",
+        "title": "NativeScript",
+        "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+        "score": 0.029726775956284153,
+        "snippet": "NativeScript和所有必需的擴充功能都使用套件管理器npm安裝。使用者可通過命令行或名為NativeScript Sidekick的GUI工具建立、配置和編譯項目。\nNativeScript使用XML文件定義不同平台的用戶界面，再由XML文件中的抽象描述來呼叫不同平台的原生UI元素。使用Angular和TypeScript開發的應用程式可以於目標平台外進行開發。NativeScript使用node.js執行和構建行動版應用程式。NativeScript的目標是在iOS和Android兩個平台之間實現90%的通用代碼。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q28127049",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/8045921",
+          "chunk_order": 5,
+          "source": "finewiki-zh",
+          "document_id": "c646d8aa49f09fbfb4f2cc44",
+          "title": "NativeScript",
+          "source_row_index": 4533,
+          "wikiname": "zhwiki",
+          "page_id": 8045921,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "150da58c64bda7966cedad05fe72555158aa07f14bb771470067ce6c583bec1f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 15,
+              "text": "# NativeScript\n"
+            },
+            {
+              "sha256": "01e63a88f49fc84ace3f3446d2304bef118bac2d75ce6bb7802b25ea03e7ba52",
+              "level": 2,
+              "kind": "heading",
+              "start": 628,
+              "end": 634,
+              "text": "## 架構\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "8ea7fd1f412883cce5ac59f24867e5f97e4515fae5a3e2f7e545c13cba8d2349",
+            "start": 634,
+            "end": 901
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "8ea7fd1f412883cce5ac59f24867e5f97e4515fae5a3e2f7e545c13cba8d2349",
+          "kind": "finewiki",
+          "source_text_sha256": "efe07a32b59dfb993aabbf702556b49028cf079fcbb77c035f682eb616aea537",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+          "version": 75040776,
+          "heading_path": [
+            "# NativeScript\n",
+            "## 架構\n"
+          ],
+          "date_modified": "2022-12-13T11:52:54Z",
+          "atomic": false,
+          "file_id": "c646d8aa49f09fbfb4f2cc44",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "8ea7fd1f412883cce5ac59f24867e5f97e4515fae5a3e2f7e545c13cba8d2349",
+          "parent_source_id": "verbatim-v1:38db3492085edf9b85b508c4c724f60840cc2109e5d3d36e7463133e48ef533a",
+          "parent_text_sha256": "8ea7fd1f412883cce5ac59f24867e5f97e4515fae5a3e2f7e545c13cba8d2349",
+          "span_start": 0,
+          "span_end": 267,
+          "span_sha256": "8ea7fd1f412883cce5ac59f24867e5f97e4515fae5a3e2f7e545c13cba8d2349",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:65fff3e8329b6081daa60013a587ee52c374b7ee586fde347da258f996d1cc95@0:27:9a5cf68fcbdf",
+        "document_id": "502ab4cddc20978bda39236a",
+        "source": "finewiki-zh",
+        "title": "WinJS",
+        "uri": "https://zh.wikipedia.org/wiki/WinJS",
+        "score": 0.01639344262295082,
+        "snippet": "WinJS的首个版本。它随Windows 8发布。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q16689197",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/5708850",
+          "chunk_order": 9,
+          "source": "finewiki-zh",
+          "document_id": "502ab4cddc20978bda39236a",
+          "title": "WinJS",
+          "source_row_index": 1286,
+          "wikiname": "zhwiki",
+          "page_id": 5708850,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "5d0a6c84eb603452476f1e6b252437686ca6d7ae4d9ab26d3131eb716441f78b",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 8,
+              "text": "# WinJS\n"
+            },
+            {
+              "sha256": "889417ba4d9af1ab00a911615ed12f5df5141529965b6647cd24e204d3a61e72",
+              "level": 2,
+              "kind": "heading",
+              "start": 749,
+              "end": 757,
+              "text": "## 版本历史\n"
+            },
+            {
+              "sha256": "496f6941bfdff707f6222984b24e3659b4d9944f918548a002c3c6c3add07d3d",
+              "level": 3,
+              "kind": "heading",
+              "start": 758,
+              "end": 772,
+              "text": "### WinJS 1.0\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "9a5cf68fcbdf09b554257d8a84fbd310ea5303f3c97dfdfa77e06d09ecce37ca",
+            "start": 772,
+            "end": 799
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "9a5cf68fcbdf09b554257d8a84fbd310ea5303f3c97dfdfa77e06d09ecce37ca",
+          "kind": "finewiki",
+          "source_text_sha256": "616c094652e4a00bb1d785e5930d914890d44c7563c31181c5709a2dd87066a0",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/WinJS",
+          "version": 75340131,
+          "heading_path": [
+            "# WinJS\n",
+            "## 版本历史\n",
+            "### WinJS 1.0\n"
+          ],
+          "date_modified": "2023-01-02T13:56:35Z",
+          "atomic": false,
+          "file_id": "502ab4cddc20978bda39236a",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "9a5cf68fcbdf09b554257d8a84fbd310ea5303f3c97dfdfa77e06d09ecce37ca",
+          "parent_source_id": "verbatim-v1:65fff3e8329b6081daa60013a587ee52c374b7ee586fde347da258f996d1cc95",
+          "parent_text_sha256": "9a5cf68fcbdf09b554257d8a84fbd310ea5303f3c97dfdfa77e06d09ecce37ca",
+          "span_start": 0,
+          "span_end": 27,
+          "span_sha256": "9a5cf68fcbdf09b554257d8a84fbd310ea5303f3c97dfdfa77e06d09ecce37ca",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:5842f52a444e5af94f027558eceb1c787e2ec0acff8ed9c1b6cbe855120ac366@0:69:0647d854d7bd",
+        "document_id": "31c6e158c79ac1fb44d06c59",
+        "source": "finewiki-zh",
+        "title": "Media Foundation",
+        "uri": "https://zh.wikipedia.org/wiki/Media_Foundation",
+        "score": 0.031099324975891997,
+        "snippet": "Media Foundation首次適用於Windows Vista,可見諸於media playback applications.\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q1131133",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/1118177",
+          "chunk_order": 15,
+          "source": "finewiki-zh",
+          "document_id": "31c6e158c79ac1fb44d06c59",
+          "title": "Media Foundation",
+          "source_row_index": 4471,
+          "wikiname": "zhwiki",
+          "page_id": 1118177,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "ade2b7066dc9dec8a336d6e1d990606200232dd4ff0f2e02eaa0d8978fae5c5e",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 19,
+              "text": "# Media Foundation\n"
+            },
+            {
+              "sha256": "d9badaa959464f23e96aec8beed5ea71bb2a7fe43dafd86d5a43dead408b783d",
+              "level": 2,
+              "kind": "heading",
+              "start": 1508,
+              "end": 1516,
+              "text": "## 應用支援\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "0647d854d7bd943aa235bfd2faf2d275473fd8f77670249d7aa8c5ec5d35c547",
+            "start": 1516,
+            "end": 1585
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "0647d854d7bd943aa235bfd2faf2d275473fd8f77670249d7aa8c5ec5d35c547",
+          "kind": "finewiki",
+          "source_text_sha256": "43af9dda25868d036db211b858dffc2cf1b5d22d7aecd3b205ffa7f67a41f2cd",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/Media_Foundation",
+          "version": 64173771,
+          "heading_path": [
+            "# Media Foundation\n",
+            "## 應用支援\n"
+          ],
+          "date_modified": "2021-02-07T22:52:16Z",
+          "atomic": false,
+          "file_id": "31c6e158c79ac1fb44d06c59",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "0647d854d7bd943aa235bfd2faf2d275473fd8f77670249d7aa8c5ec5d35c547",
+          "parent_source_id": "verbatim-v1:5842f52a444e5af94f027558eceb1c787e2ec0acff8ed9c1b6cbe855120ac366",
+          "parent_text_sha256": "0647d854d7bd943aa235bfd2faf2d275473fd8f77670249d7aa8c5ec5d35c547",
+          "span_start": 0,
+          "span_end": 69,
+          "span_sha256": "0647d854d7bd943aa235bfd2faf2d275473fd8f77670249d7aa8c5ec5d35c547",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:efc056f0b467e0f58628060acea40b0a8feb48b719f6f0272f651859dfc3e370@0:384:0ba5b774bbf6",
+        "document_id": "c646d8aa49f09fbfb4f2cc44",
+        "source": "finewiki-zh",
+        "title": "NativeScript",
+        "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+        "score": 0.016129032258064516,
+        "snippet": "NativeScript使用XML文件定義不同平台的用戶界面，同時NativeScript使用了跨平台的抽象XML資料來觸發特定於平台的代碼，這些代碼直接與目標平台的原生物件交互，例如說當調用NativeScript Button API的UI抽象時，NativeScript會直接調用iOS上的UIButton或Android上的com.android.widget.Button。\n雖然應用程式可能使用JavaScript、TypeScript、Angular或Vue.js來編寫，但其源始碼不會被編譯或轉譯，而是按原樣直接在設備上執行。此構建方式免除了交叉編譯或轉譯的需求。此外，雖然應用程式的源始碼是使用瀏覽器或包含WebView的行動應用程式中常見的語言編寫，但NativeScript應用程式直接在本機設備上執行，而非操作DOM或呼叫任何瀏覽器來執行。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q28127049",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/8045921",
+          "chunk_order": 7,
+          "source": "finewiki-zh",
+          "document_id": "c646d8aa49f09fbfb4f2cc44",
+          "title": "NativeScript",
+          "source_row_index": 4533,
+          "wikiname": "zhwiki",
+          "page_id": 8045921,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "150da58c64bda7966cedad05fe72555158aa07f14bb771470067ce6c583bec1f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 15,
+              "text": "# NativeScript\n"
+            },
+            {
+              "sha256": "89eded0fb2c37c3cec928fd28abb0070a9d29cba57a95ebb5b7b61ea141cfb1d",
+              "level": 2,
+              "kind": "heading",
+              "start": 901,
+              "end": 917,
+              "text": "## 直接呼叫原生API及控件\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "0ba5b774bbf659e45cd01c34aea3defe4fe0d78951f651e0d6bfaca6f2aaf6fa",
+            "start": 917,
+            "end": 1301
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "0ba5b774bbf659e45cd01c34aea3defe4fe0d78951f651e0d6bfaca6f2aaf6fa",
+          "kind": "finewiki",
+          "source_text_sha256": "efe07a32b59dfb993aabbf702556b49028cf079fcbb77c035f682eb616aea537",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+          "version": 75040776,
+          "heading_path": [
+            "# NativeScript\n",
+            "## 直接呼叫原生API及控件\n"
+          ],
+          "date_modified": "2022-12-13T11:52:54Z",
+          "atomic": false,
+          "file_id": "c646d8aa49f09fbfb4f2cc44",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "0ba5b774bbf659e45cd01c34aea3defe4fe0d78951f651e0d6bfaca6f2aaf6fa",
+          "parent_source_id": "verbatim-v1:efc056f0b467e0f58628060acea40b0a8feb48b719f6f0272f651859dfc3e370",
+          "parent_text_sha256": "0ba5b774bbf659e45cd01c34aea3defe4fe0d78951f651e0d6bfaca6f2aaf6fa",
+          "span_start": 0,
+          "span_end": 384,
+          "span_sha256": "0ba5b774bbf659e45cd01c34aea3defe4fe0d78951f651e0d6bfaca6f2aaf6fa",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:99ff79cf3d5eb9c2ccd58b29502a5ecbd3d34862c0c766fef3f1f392fa381b63@0:409:94a0f7a966af",
+        "document_id": "31c6e158c79ac1fb44d06c59",
+        "source": "finewiki-zh",
+        "title": "Media Foundation",
+        "uri": "https://zh.wikipedia.org/wiki/Media_Foundation",
+        "score": 0.03128054740957967,
+        "snippet": "Media Foundation是微軟在Windows上推出的下一代多媒體開發庫，目的是為Windows平台提供統一的多媒體影音解決方案，開發者可以透過Media Foundation播放影片和聲音文件、進行影音編碼或者多媒體文件轉碼等等工作。Media Foundation是DirectShow為主的舊式多媒體應用程序接口的替代者與繼承者，在微軟的計畫下將逐步汰換DirectShow技術。Media Foundation僅支援Windows Vista或更新的系統。\nMedia Foundation擅長高品質的音訊和視訊播放，高清內容（如HDTV,高清電視）和數位版權管理（DRM）訪問控制。Media Foundation在不同的Windows版本上能力不同，在Windows Vista上僅支持WMV格式，但到了Windows 7後添加了H264編碼支持。Windows 8上則多了數種更高品質的設定。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q1131133",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/1118177",
+          "chunk_order": 1,
+          "source": "finewiki-zh",
+          "document_id": "31c6e158c79ac1fb44d06c59",
+          "title": "Media Foundation",
+          "source_row_index": 4471,
+          "wikiname": "zhwiki",
+          "page_id": 1118177,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "ade2b7066dc9dec8a336d6e1d990606200232dd4ff0f2e02eaa0d8978fae5c5e",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 19,
+              "text": "# Media Foundation\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "94a0f7a966af1f6da30eadf1ea8352451bf045f385eb14b2f8257b13b5ed83ab",
+            "start": 19,
+            "end": 428
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "94a0f7a966af1f6da30eadf1ea8352451bf045f385eb14b2f8257b13b5ed83ab",
+          "kind": "finewiki",
+          "source_text_sha256": "43af9dda25868d036db211b858dffc2cf1b5d22d7aecd3b205ffa7f67a41f2cd",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/Media_Foundation",
+          "version": 64173771,
+          "heading_path": [
+            "# Media Foundation\n"
+          ],
+          "date_modified": "2021-02-07T22:52:16Z",
+          "atomic": false,
+          "file_id": "31c6e158c79ac1fb44d06c59",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "94a0f7a966af1f6da30eadf1ea8352451bf045f385eb14b2f8257b13b5ed83ab",
+          "parent_source_id": "verbatim-v1:99ff79cf3d5eb9c2ccd58b29502a5ecbd3d34862c0c766fef3f1f392fa381b63",
+          "parent_text_sha256": "94a0f7a966af1f6da30eadf1ea8352451bf045f385eb14b2f8257b13b5ed83ab",
+          "span_start": 0,
+          "span_end": 409,
+          "span_sha256": "94a0f7a966af1f6da30eadf1ea8352451bf045f385eb14b2f8257b13b5ed83ab",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:95a778a035623f0500e8cdc00c2266f426234fd72611f792f17bb6e1961576ae@0:87:eb9271b7d2e9",
+        "document_id": "c646d8aa49f09fbfb4f2cc44",
+        "source": "finewiki-zh",
+        "title": "NativeScript",
+        "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+        "score": 0.015873015873015872,
+        "snippet": "自NativeScript 2.0起，開發人員可以使用Angular建置跨平台的專案。除此之外，開發人員使用Angular時可以使用相同的原始碼製作網頁和行動版應用程式。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q28127049",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/8045921",
+          "chunk_order": 13,
+          "source": "finewiki-zh",
+          "document_id": "c646d8aa49f09fbfb4f2cc44",
+          "title": "NativeScript",
+          "source_row_index": 4533,
+          "wikiname": "zhwiki",
+          "page_id": 8045921,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "150da58c64bda7966cedad05fe72555158aa07f14bb771470067ce6c583bec1f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 15,
+              "text": "# NativeScript\n"
+            },
+            {
+              "sha256": "2989d67aba3210d32f795d9e735e6768d9cd7216f542dec61cfd79afb6e13883",
+              "level": 2,
+              "kind": "heading",
+              "start": 1301,
+              "end": 1309,
+              "text": "## 主要功能\n"
+            },
+            {
+              "sha256": "fdda49b8dc457b7327172152cc700e868b2e68caad10c84c41352c014b386763",
+              "level": 3,
+              "kind": "heading",
+              "start": 1558,
+              "end": 1575,
+              "text": "### 與Angular一同使用\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "eb9271b7d2e9c2c718ca523aa88972288c034e15c5b8372990087b7be194b7eb",
+            "start": 1575,
+            "end": 1662
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "eb9271b7d2e9c2c718ca523aa88972288c034e15c5b8372990087b7be194b7eb",
+          "kind": "finewiki",
+          "source_text_sha256": "efe07a32b59dfb993aabbf702556b49028cf079fcbb77c035f682eb616aea537",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+          "version": 75040776,
+          "heading_path": [
+            "# NativeScript\n",
+            "## 主要功能\n",
+            "### 與Angular一同使用\n"
+          ],
+          "date_modified": "2022-12-13T11:52:54Z",
+          "atomic": false,
+          "file_id": "c646d8aa49f09fbfb4f2cc44",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "eb9271b7d2e9c2c718ca523aa88972288c034e15c5b8372990087b7be194b7eb",
+          "parent_source_id": "verbatim-v1:95a778a035623f0500e8cdc00c2266f426234fd72611f792f17bb6e1961576ae",
+          "parent_text_sha256": "eb9271b7d2e9c2c718ca523aa88972288c034e15c5b8372990087b7be194b7eb",
+          "span_start": 0,
+          "span_end": 87,
+          "span_sha256": "eb9271b7d2e9c2c718ca523aa88972288c034e15c5b8372990087b7be194b7eb",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:9944cac167bbd2df22943580357934f5f4d47d5f9eec884509b7ade81d465c5b@0:246:362dd2fdc777",
+        "document_id": "c646d8aa49f09fbfb4f2cc44",
+        "source": "finewiki-zh",
+        "title": "NativeScript",
+        "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+        "score": 0.015625,
+        "snippet": "- NativeScript Sidekick是一個图形用户界面，建構於NativeScript CLI之上。開發人員可以使用NativeScript Sidekick來套用模板、雲端構建應用程式，並將應用程式發佈到公開的應用程式商店。\n- 開發人員可以使用NativeScript Playground在瀏覽器中測試NativeScript，並在實體設備上預覽應用程式。\n- 開發人員可以在NativeScript市集（英語：）獲取擴充功能、預構建應用程式模板和可執行的範例應用程式。\n\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q28127049",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/8045921",
+          "chunk_order": 17,
+          "source": "finewiki-zh",
+          "document_id": "c646d8aa49f09fbfb4f2cc44",
+          "title": "NativeScript",
+          "source_row_index": 4533,
+          "wikiname": "zhwiki",
+          "page_id": 8045921,
+          "file": "selected.parquet",
+          "content_type": "list",
+          "context_spans": [
+            {
+              "sha256": "150da58c64bda7966cedad05fe72555158aa07f14bb771470067ce6c583bec1f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 15,
+              "text": "# NativeScript\n"
+            },
+            {
+              "sha256": "1d8ca01e0be9440219ee5fcd14f2dfc376f85223225cb2062db72cc99fe8c64a",
+              "level": 2,
+              "kind": "heading",
+              "start": 1734,
+              "end": 1746,
+              "text": "## 支援的工具及服務\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "362dd2fdc7778053225063c8a7264cabf667f70c6d22d333e864229e77734eb9",
+            "start": 1746,
+            "end": 1992
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "362dd2fdc7778053225063c8a7264cabf667f70c6d22d333e864229e77734eb9",
+          "kind": "finewiki",
+          "source_text_sha256": "efe07a32b59dfb993aabbf702556b49028cf079fcbb77c035f682eb616aea537",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+          "version": 75040776,
+          "heading_path": [
+            "# NativeScript\n",
+            "## 支援的工具及服務\n"
+          ],
+          "date_modified": "2022-12-13T11:52:54Z",
+          "atomic": true,
+          "file_id": "c646d8aa49f09fbfb4f2cc44",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "362dd2fdc7778053225063c8a7264cabf667f70c6d22d333e864229e77734eb9",
+          "parent_source_id": "verbatim-v1:9944cac167bbd2df22943580357934f5f4d47d5f9eec884509b7ade81d465c5b",
+          "parent_text_sha256": "362dd2fdc7778053225063c8a7264cabf667f70c6d22d333e864229e77734eb9",
+          "span_start": 0,
+          "span_end": 246,
+          "span_sha256": "362dd2fdc7778053225063c8a7264cabf667f70c6d22d333e864229e77734eb9",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:762e284c274208edd70897c5c61697c932b3c62b20b8929b06075a51ec52c60e@0:222:800368528823",
+        "document_id": "c646d8aa49f09fbfb4f2cc44",
+        "source": "finewiki-zh",
+        "title": "NativeScript",
+        "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+        "score": 0.02854251012145749,
+        "snippet": "NativeScript於2015年3月首次公開發布，並在兩個月後發布了1.0.0版本。NativeScript在公開發布後不久就迅速流行起來，短期之內超過1500名Twitter用戶追蹤其Twitter，其Github儲存庫也獲得了3000顆以上的星星。與此同時，NativeScript已有700個擴充功能，分別由Progress官方及開源社區開發。除此之外，也可使用Angular來開發在Web平台和移動平台之間共用的應用程式原始碼。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q28127049",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/8045921",
+          "chunk_order": 3,
+          "source": "finewiki-zh",
+          "document_id": "c646d8aa49f09fbfb4f2cc44",
+          "title": "NativeScript",
+          "source_row_index": 4533,
+          "wikiname": "zhwiki",
+          "page_id": 8045921,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "150da58c64bda7966cedad05fe72555158aa07f14bb771470067ce6c583bec1f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 15,
+              "text": "# NativeScript\n"
+            },
+            {
+              "sha256": "99b0d4d89e4b3bb6521ce06f9ce6dcd47b43b72016efc59d796b092bf01c9359",
+              "level": 2,
+              "kind": "heading",
+              "start": 400,
+              "end": 406,
+              "text": "## 發展\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "80036852882390b130018910c13352e296a2736126bedb6c5589ab1c68a3d3cd",
+            "start": 406,
+            "end": 628
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "80036852882390b130018910c13352e296a2736126bedb6c5589ab1c68a3d3cd",
+          "kind": "finewiki",
+          "source_text_sha256": "efe07a32b59dfb993aabbf702556b49028cf079fcbb77c035f682eb616aea537",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+          "version": 75040776,
+          "heading_path": [
+            "# NativeScript\n",
+            "## 發展\n"
+          ],
+          "date_modified": "2022-12-13T11:52:54Z",
+          "atomic": false,
+          "file_id": "c646d8aa49f09fbfb4f2cc44",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "80036852882390b130018910c13352e296a2736126bedb6c5589ab1c68a3d3cd",
+          "parent_source_id": "verbatim-v1:762e284c274208edd70897c5c61697c932b3c62b20b8929b06075a51ec52c60e",
+          "parent_text_sha256": "80036852882390b130018910c13352e296a2736126bedb6c5589ab1c68a3d3cd",
+          "span_start": 0,
+          "span_end": 222,
+          "span_sha256": "80036852882390b130018910c13352e296a2736126bedb6c5589ab1c68a3d3cd",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:03623055a6767a69c0ae23eeb239900f2d743dc8bb0a4faec64459a3e2c72462@0:236:e15d7c39d438",
+        "document_id": "c646d8aa49f09fbfb4f2cc44",
+        "source": "finewiki-zh",
+        "title": "NativeScript",
+        "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+        "score": 0.015151515151515152,
+        "snippet": "NativeScript的另一個特性為使用映射來呼叫原生API端點。NativeScript不需要在框架和平台API之間單獨綑綁，而是使用映射來獲取有關原生平台API的信息和元數據，因此可以立即使用所有新加入的API。\n使用者也可以使用第三方庫來達成映射的效果。在NativeScript中JavaScript（或TypeScript／Angular）可以直接與呼叫原生代碼，因此無須使用Objective-C、Swift、Java或Kotlin編寫綑綁層（英語：）。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q28127049",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/8045921",
+          "chunk_order": 11,
+          "source": "finewiki-zh",
+          "document_id": "c646d8aa49f09fbfb4f2cc44",
+          "title": "NativeScript",
+          "source_row_index": 4533,
+          "wikiname": "zhwiki",
+          "page_id": 8045921,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "150da58c64bda7966cedad05fe72555158aa07f14bb771470067ce6c583bec1f",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 15,
+              "text": "# NativeScript\n"
+            },
+            {
+              "sha256": "2989d67aba3210d32f795d9e735e6768d9cd7216f542dec61cfd79afb6e13883",
+              "level": 2,
+              "kind": "heading",
+              "start": 1301,
+              "end": 1309,
+              "text": "## 主要功能\n"
+            },
+            {
+              "sha256": "5729db23981e1efa924f21f556cd35833e95a20fa758a628cadcc8418702136c",
+              "level": 3,
+              "kind": "heading",
+              "start": 1310,
+              "end": 1322,
+              "text": "### 原生API對應\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "e15d7c39d4381093dca019f2bd3d34c3520385b581600fad8717007eec633f81",
+            "start": 1322,
+            "end": 1558
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "e15d7c39d4381093dca019f2bd3d34c3520385b581600fad8717007eec633f81",
+          "kind": "finewiki",
+          "source_text_sha256": "efe07a32b59dfb993aabbf702556b49028cf079fcbb77c035f682eb616aea537",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+          "version": 75040776,
+          "heading_path": [
+            "# NativeScript\n",
+            "## 主要功能\n",
+            "### 原生API對應\n"
+          ],
+          "date_modified": "2022-12-13T11:52:54Z",
+          "atomic": false,
+          "file_id": "c646d8aa49f09fbfb4f2cc44",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "e15d7c39d4381093dca019f2bd3d34c3520385b581600fad8717007eec633f81",
+          "parent_source_id": "verbatim-v1:03623055a6767a69c0ae23eeb239900f2d743dc8bb0a4faec64459a3e2c72462",
+          "parent_text_sha256": "e15d7c39d4381093dca019f2bd3d34c3520385b581600fad8717007eec633f81",
+          "span_start": 0,
+          "span_end": 236,
+          "span_sha256": "e15d7c39d4381093dca019f2bd3d34c3520385b581600fad8717007eec633f81",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:493d10238eb8dce36723e9390c4eb9b98fee8d5069d1f7d4fd182804a8fe4ff4@0:118:0e6a39af6ab7",
+        "document_id": "31c6e158c79ac1fb44d06c59",
+        "source": "finewiki-zh",
+        "title": "Media Foundation",
+        "uri": "https://zh.wikipedia.org/wiki/Media_Foundation",
+        "score": 0.015151515151515152,
+        "snippet": "Media Foundation使用Enhanced Video Renderer（EVR）作為渲染器。它可以組合多達16個同步流（simultaneous streams），第一流是一個參考流（reference stream）。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q1131133",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/1118177",
+          "chunk_order": 9,
+          "source": "finewiki-zh",
+          "document_id": "31c6e158c79ac1fb44d06c59",
+          "title": "Media Foundation",
+          "source_row_index": 4471,
+          "wikiname": "zhwiki",
+          "page_id": 1118177,
+          "file": "selected.parquet",
+          "content_type": "prose",
+          "context_spans": [
+            {
+              "sha256": "ade2b7066dc9dec8a336d6e1d990606200232dd4ff0f2e02eaa0d8978fae5c5e",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 19,
+              "text": "# Media Foundation\n"
+            },
+            {
+              "sha256": "01e63a88f49fc84ace3f3446d2304bef118bac2d75ce6bb7802b25ea03e7ba52",
+              "level": 2,
+              "kind": "heading",
+              "start": 428,
+              "end": 434,
+              "text": "## 架構\n"
+            },
+            {
+              "sha256": "9924c9311ad6a7074ae8ebfe629be3122f489420b1a91073343cd7c6e883e874",
+              "level": 3,
+              "kind": "heading",
+              "start": 1142,
+              "end": 1155,
+              "text": "### 增強型視訊渲染器\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "0e6a39af6ab7637b5f7a93de1e22be7ce587eaed0bce025e8c39e4aea2f6074b",
+            "start": 1155,
+            "end": 1273
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "0e6a39af6ab7637b5f7a93de1e22be7ce587eaed0bce025e8c39e4aea2f6074b",
+          "kind": "finewiki",
+          "source_text_sha256": "43af9dda25868d036db211b858dffc2cf1b5d22d7aecd3b205ffa7f67a41f2cd",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/Media_Foundation",
+          "version": 64173771,
+          "heading_path": [
+            "# Media Foundation\n",
+            "## 架構\n",
+            "### 增強型視訊渲染器\n"
+          ],
+          "date_modified": "2021-02-07T22:52:16Z",
+          "atomic": false,
+          "file_id": "31c6e158c79ac1fb44d06c59",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "0e6a39af6ab7637b5f7a93de1e22be7ce587eaed0bce025e8c39e4aea2f6074b",
+          "parent_source_id": "verbatim-v1:493d10238eb8dce36723e9390c4eb9b98fee8d5069d1f7d4fd182804a8fe4ff4",
+          "parent_text_sha256": "0e6a39af6ab7637b5f7a93de1e22be7ce587eaed0bce025e8c39e4aea2f6074b",
+          "span_start": 0,
+          "span_end": 118,
+          "span_sha256": "0e6a39af6ab7637b5f7a93de1e22be7ce587eaed0bce025e8c39e4aea2f6074b",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:93043bfdcb23bb1b91b5206abd14651ef15f6c01e37dedc4bb27baf5a0f7b5cc@0:15:150da58c64bd",
+        "document_id": "c646d8aa49f09fbfb4f2cc44",
+        "source": "finewiki-zh",
+        "title": "NativeScript",
+        "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+        "score": 0.014705882352941176,
+        "snippet": "# NativeScript\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q28127049",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/8045921",
+          "chunk_order": 0,
+          "source": "finewiki-zh",
+          "document_id": "c646d8aa49f09fbfb4f2cc44",
+          "title": "NativeScript",
+          "source_row_index": 4533,
+          "wikiname": "zhwiki",
+          "page_id": 8045921,
+          "file": "selected.parquet",
+          "content_type": "heading",
+          "context_spans": [],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "150da58c64bda7966cedad05fe72555158aa07f14bb771470067ce6c583bec1f",
+            "start": 0,
+            "end": 15
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "150da58c64bda7966cedad05fe72555158aa07f14bb771470067ce6c583bec1f",
+          "kind": "finewiki",
+          "source_text_sha256": "efe07a32b59dfb993aabbf702556b49028cf079fcbb77c035f682eb616aea537",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/NativeScript",
+          "version": 75040776,
+          "heading_path": [],
+          "date_modified": "2022-12-13T11:52:54Z",
+          "atomic": true,
+          "file_id": "c646d8aa49f09fbfb4f2cc44",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "150da58c64bda7966cedad05fe72555158aa07f14bb771470067ce6c583bec1f",
+          "parent_source_id": "verbatim-v1:93043bfdcb23bb1b91b5206abd14651ef15f6c01e37dedc4bb27baf5a0f7b5cc",
+          "parent_text_sha256": "150da58c64bda7966cedad05fe72555158aa07f14bb771470067ce6c583bec1f",
+          "span_start": 0,
+          "span_end": 15,
+          "span_sha256": "150da58c64bda7966cedad05fe72555158aa07f14bb771470067ce6c583bec1f",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      },
+      {
+        "id": "verbatim-v1:67f5c374fd264d74d071f8dc2b9905814b72175180e4c43daf1340c2db7cfc98@0:178:2c4907eeae22",
+        "document_id": "31c6e158c79ac1fb44d06c59",
+        "source": "finewiki-zh",
+        "title": "Media Foundation",
+        "uri": "https://zh.wikipedia.org/wiki/Media_Foundation",
+        "score": 0.014705882352941176,
+        "snippet": "- 可擴展的高清晰度內容和數位版權管理保護（DRM-protected）的內容。\n- 允許DirectX視訊加速用於之外DirectShow的基礎設施。支持DXVA 2.0。\n- MF的可擴展性（extensibility），使不同的內容保護系統一起運作。\n- 使用多媒體類別計劃程序服務（MMCSS），是一個新的系統服務在Windows Vista。\n\n",
+        "metadata": {
+          "source_text_encoding": "utf-8",
+          "wikidata_id": "Q1131133",
+          "chunker_version": "verbatim-v1",
+          "external_id": "zhwiki/1118177",
+          "chunk_order": 12,
+          "source": "finewiki-zh",
+          "document_id": "31c6e158c79ac1fb44d06c59",
+          "title": "Media Foundation",
+          "source_row_index": 4471,
+          "wikiname": "zhwiki",
+          "page_id": 1118177,
+          "file": "selected.parquet",
+          "content_type": "list",
+          "context_spans": [
+            {
+              "sha256": "ade2b7066dc9dec8a336d6e1d990606200232dd4ff0f2e02eaa0d8978fae5c5e",
+              "level": 1,
+              "kind": "heading",
+              "start": 0,
+              "end": 19,
+              "text": "# Media Foundation\n"
+            },
+            {
+              "sha256": "30497aab6c7a471b6773449242f01d089e300408a4b780b4e108b818f60648db",
+              "level": 2,
+              "kind": "heading",
+              "start": 1273,
+              "end": 1290,
+              "text": "## 與DirectShow比較\n"
+            }
+          ],
+          "source_span": {
+            "unit": "unicode_code_points",
+            "sha256": "2c4907eeae22f02a7c16c1c645efad1b9d54e4c86513585ab731d629fd170b27",
+            "start": 1299,
+            "end": 1477
+          },
+          "in_language": "zh",
+          "chunk_text_sha256": "2c4907eeae22f02a7c16c1c645efad1b9d54e4c86513585ab731d629fd170b27",
+          "kind": "finewiki",
+          "source_text_sha256": "43af9dda25868d036db211b858dffc2cf1b5d22d7aecd3b205ffa7f67a41f2cd",
+          "knowledge_base_id": "wiki-5000-20260908",
+          "uri": "https://zh.wikipedia.org/wiki/Media_Foundation",
+          "version": 64173771,
+          "heading_path": [
+            "# Media Foundation\n",
+            "## 與DirectShow比較\n"
+          ],
+          "date_modified": "2021-02-07T22:52:16Z",
+          "atomic": true,
+          "file_id": "31c6e158c79ac1fb44d06c59",
+          "retrieval_origin": "knowledge_base",
+          "indexed_text_sha256": "2c4907eeae22f02a7c16c1c645efad1b9d54e4c86513585ab731d629fd170b27",
+          "parent_source_id": "verbatim-v1:67f5c374fd264d74d071f8dc2b9905814b72175180e4c43daf1340c2db7cfc98",
+          "parent_text_sha256": "2c4907eeae22f02a7c16c1c645efad1b9d54e4c86513585ab731d629fd170b27",
+          "span_start": 0,
+          "span_end": 178,
+          "span_sha256": "2c4907eeae22f02a7c16c1c645efad1b9d54e4c86513585ab731d629fd170b27",
+          "offset_unit": "unicode_characters_in_indexed_chunk",
+          "selection_scope": "binary_query",
+          "field_ids": []
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      233
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 13,
+      "has_numeric_citation": false,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0449.json"
+  },
+  "review": {
+    "case_id": "native_wiki-0004",
+    "verdict": "partial",
+    "issues": [
+      "citation_misalignment",
+      "citation_format"
+    ],
+    "note": "四项事实正确，RPG音乐引用资料4实际是Media Foundation，正确来源是1。括号资料格式也不符合可点击方括号协议。"
+  },
+  "input": {
+    "id": "native_wiki-0004",
+    "suite": "native_wiki",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/native-wiki/fixtures.jsonl",
+    "origin_index": 4,
+    "original_case": {
+      "id": "held_016",
+      "question": "四份旧开发文档需要各填一格：NativeScript用什么文件定义跨平台用户界面；WinJS 1.0随哪个Windows版本发布；RPG Maker MV的Windows版和手机版分别读取什么音乐格式；Media Foundation首次适用于哪个Windows版本？不要因为都能开发应用就共用同一个答案。",
+      "history": [],
+      "oracle": {
+        "expected_action": "answer",
+        "known_subjects": [
+          {
+            "id": "S1",
+            "description": "NativeScript",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "NativeScript"
+              }
+            ]
+          },
+          {
+            "id": "S2",
+            "description": "WinJS 1.0",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "WinJS 1.0"
+              }
+            ]
+          },
+          {
+            "id": "S3",
+            "description": "RPG Maker MV",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "RPG Maker MV"
+              }
+            ]
+          },
+          {
+            "id": "S4",
+            "description": "Media Foundation",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "Media Foundation"
+              }
+            ]
+          }
+        ],
+        "active_constraints": [],
+        "requested_goals": [
+          {
+            "id": "G1",
+            "description": "用什么文件定义跨平台用户界面",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "用什么文件定义跨平台用户界面"
+              },
+              {
+                "message_id": "Q",
+                "quote": "四份旧开发文档需要各填一格：NativeScript用什么文件定义跨平台用户界面；WinJS 1.0随哪个Windows版本发布；RPG Maker MV的Windows版和手机版分别读取什么音乐格式；Media Foundation首次适用于哪个Windows版本？不要因为都能开发应用就共用同一个答案。"
+              }
+            ]
+          },
+          {
+            "id": "G2",
+            "description": "随哪个Windows版本发布",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "随哪个Windows版本发布"
+              },
+              {
+                "message_id": "Q",
+                "quote": "四份旧开发文档需要各填一格：NativeScript用什么文件定义跨平台用户界面；WinJS 1.0随哪个Windows版本发布；RPG Maker MV的Windows版和手机版分别读取什么音乐格式；Media Foundation首次适用于哪个Windows版本？不要因为都能开发应用就共用同一个答案。"
+              }
+            ]
+          },
+          {
+            "id": "G3",
+            "description": "Windows版和手机版分别读取什么音乐格式",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "Windows版和手机版分别读取什么音乐格式"
+              },
+              {
+                "message_id": "Q",
+                "quote": "四份旧开发文档需要各填一格：NativeScript用什么文件定义跨平台用户界面；WinJS 1.0随哪个Windows版本发布；RPG Maker MV的Windows版和手机版分别读取什么音乐格式；Media Foundation首次适用于哪个Windows版本？不要因为都能开发应用就共用同一个答案。"
+              }
+            ]
+          },
+          {
+            "id": "G4",
+            "description": "首次适用于哪个Windows版本",
+            "history_evidence": [
+              {
+                "message_id": "Q",
+                "quote": "首次适用于哪个Windows版本"
+              },
+              {
+                "message_id": "Q",
+                "quote": "四份旧开发文档需要各填一格：NativeScript用什么文件定义跨平台用户界面；WinJS 1.0随哪个Windows版本发布；RPG Maker MV的Windows版和手机版分别读取什么音乐格式；Media Foundation首次适用于哪个Windows版本？不要因为都能开发应用就共用同一个答案。"
+              }
+            ]
+          }
+        ],
+        "required_facts": [
+          {
+            "claim": "NativeScript用XML文件定义用户界面。",
+            "bound_subjects": [
+              "S1"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/8045921",
+                  "page_id": 8045921,
+                  "title": "NativeScript",
+                  "url": "https://zh.wikipedia.org/wiki/NativeScript",
+                  "language": "zh",
+                  "revision_id": 75040776,
+                  "body_sha256": "efe07a32b59dfb993aabbf702556b49028cf079fcbb77c035f682eb616aea537",
+                  "section": "架構",
+                  "start": 721,
+                  "end": 899,
+                  "quote": "NativeScript使用XML文件定義不同平台的用戶界面，再由XML文件中的抽象描述來呼叫不同平台的原生UI元素。使用Angular和TypeScript開發的應用程式可以於目標平台外進行開發。NativeScript使用node.js執行和構建行動版應用程式。NativeScript的目標是在iOS和Android兩個平台之間實現90%的通用代碼。"
+                }
+              ]
+            ],
+            "id": "F1"
+          },
+          {
+            "claim": "WinJS 1.0随Windows 8发布。",
+            "bound_subjects": [
+              "S2"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/5708850",
+                  "page_id": 5708850,
+                  "title": "WinJS",
+                  "url": "https://zh.wikipedia.org/wiki/WinJS",
+                  "language": "zh",
+                  "revision_id": 75340131,
+                  "body_sha256": "616c094652e4a00bb1d785e5930d914890d44c7563c31181c5709a2dd87066a0",
+                  "section": "版本历史",
+                  "start": 758,
+                  "end": 771,
+                  "quote": "### WinJS 1.0"
+                },
+                {
+                  "document_id": "zhwiki/5708850",
+                  "page_id": 5708850,
+                  "title": "WinJS",
+                  "url": "https://zh.wikipedia.org/wiki/WinJS",
+                  "language": "zh",
+                  "revision_id": 75340131,
+                  "body_sha256": "616c094652e4a00bb1d785e5930d914890d44c7563c31181c5709a2dd87066a0",
+                  "section": "WinJS 1.0",
+                  "start": 772,
+                  "end": 797,
+                  "quote": "WinJS的首个版本。它随Windows 8发布。"
+                }
+              ]
+            ],
+            "id": "F2"
+          },
+          {
+            "claim": "MV的Windows版读取ogg，手机版读取m4a。",
+            "bound_subjects": [
+              "S3"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/5397602",
+                  "page_id": 5397602,
+                  "title": "RPG Maker MV",
+                  "url": "https://zh.wikipedia.org/wiki/RPG_Maker_MV",
+                  "language": "zh",
+                  "revision_id": 77676521,
+                  "body_sha256": "fa84f84711a1eddbceab5993af40d93ef5b23897b9a7b169c2f9e28d16efbb3f",
+                  "section": "多平台支援",
+                  "start": 748,
+                  "end": 829,
+                  "quote": "在不同平台上，被讀取的音樂格式是不同的。Windows版使用ogg格式、手機板使用m4a格式。如果沒有必要的文件，遊戲會強制停止。但在測試時難以察覺，這點要注意。"
+                }
+              ]
+            ],
+            "id": "F3"
+          },
+          {
+            "claim": "Media Foundation首次适用于Windows Vista。",
+            "bound_subjects": [
+              "S4"
+            ],
+            "derivation": "direct",
+            "evidence_sets": [
+              [
+                {
+                  "document_id": "zhwiki/1118177",
+                  "page_id": 1118177,
+                  "title": "Media Foundation",
+                  "url": "https://zh.wikipedia.org/wiki/Media_Foundation",
+                  "language": "zh",
+                  "revision_id": 64173771,
+                  "body_sha256": "43af9dda25868d036db211b858dffc2cf1b5d22d7aecd3b205ffa7f67a41f2cd",
+                  "section": "應用支援",
+                  "start": 1516,
+                  "end": 1583,
+                  "quote": "Media Foundation首次適用於Windows Vista,可見諸於media playback applications."
+                }
+              ]
+            ],
+            "id": "F4"
+          }
+        ],
+        "excluded": [],
+        "missing_information": [],
+        "required_clarification": [],
+        "minimum_evidence_pages": 4,
+        "required": [
+          "按照用户明示字段和有效历史回答；不得把助手自行追加偏好视为用户要求。",
+          "每个必要事实正确且有真实、实际支持的正式引用；每个多余引用也检查其附着主张。",
+          "无额外关键错误或无据结论，范围、对象与缺失信息处理正确。"
+        ],
+        "forbidden": [
+          "不得由金标证据段背景追加未问日期、单位精度或范围。",
+          "不得把同页但不含该事实的片段或无关页面作为支持。",
+          "不得用思考过程补最终答案；不得把资料未提供说成现实不存在。"
+        ]
+      },
+      "provenance": {
+        "source_experiment": "rwkvrag-wiki-evidence-budget-20260908",
+        "original_split": "holdout",
+        "use": "previously_exposed_development_smoke",
+        "source_inputs_sha256": "7d38ace329779963dd134837aecd54941ed60e44ba3ae74d7aed89c08767d583",
+        "source_gold_sha256": "50edd715fd81cdc545b3a7bd952f840d78ab6876d41496ab9d5a3d8f4938d0ca",
+        "source_input_row_sha256": "a6cae783ca12bc36cd013645572d23383424e491ecd7b589ee72c9ed76072f55",
+        "source_gold_row_sha256": "8f5cf18b9d19fa4ebe7818d0156ee4fae2c30b88ea4b543ca50f09439f0a76d9",
+        "corpus_manifest_sha256": "35563fa6e5d7c9205cea3d9e1cd5476b01774f11a292dafcfed82fe4d8256ced",
+        "category": "multi_document"
+      }
+    },
+    "category": "native_wiki",
+    "style": "unspecified",
+    "endpoint": "/v1/ask",
+    "payload": {
+      "question": "四份旧开发文档需要各填一格：NativeScript用什么文件定义跨平台用户界面；WinJS 1.0随哪个Windows版本发布；RPG Maker MV的Windows版和手机版分别读取什么音乐格式；Media Foundation首次适用于哪个Windows版本？不要因为都能开发应用就共用同一个答案。",
+      "history": [],
+      "knowledge_base_id": "wiki-5000-20260908",
+      "retrieval_mode": "knowledge_base",
+      "top_k": 3
+    },
+    "execution_scope": "current_corpus_retrieval"
+  },
+  "raw_file_sha256": "838ff6cf2fd2ec9fd72c59808e5d7d584acd5983c74c12bde403124ce8aece8f"
+}

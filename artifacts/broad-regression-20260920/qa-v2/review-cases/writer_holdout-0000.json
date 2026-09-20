@@ -1,0 +1,303 @@
+{
+  "result": {
+    "case_id": "writer_holdout-0000",
+    "suite": "writer_holdout",
+    "question": "分别核对穗川M4的额定转速、雨桥N2的冷却方式、石湾K8的巡检周期、青屿P3故障记录的时区；四项都要原文依据。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "穗川M4的额定转速：730 rpm[资料 5]。\n雨桥N2的冷却方式：自然散热，不安装风扇[资料 4]。\n石湾K8的巡检周期：每 19 天一次[资料 3]。\n青屿P3故障记录的时区：UTC[资料 2]。",
+    "sources": [
+      {
+        "id": "h1-s1",
+        "document_id": "h1-d1",
+        "source": "synthetic-holdout-20260916",
+        "title": "四款设备参数目录",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "本页仅列穗川M4、雨桥N2、石湾K8、青屿P3的名称，不包含参数。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "h1-s2",
+        "document_id": "h1-d2",
+        "source": "synthetic-holdout-20260916",
+        "title": "青屿P3记录说明",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "青屿 P3 的故障记录使用 UTC 时间。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "h1-s3",
+        "document_id": "h1-d3",
+        "source": "synthetic-holdout-20260916",
+        "title": "石湾K8维护说明",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "石湾 K8 的巡检周期为每 19 天一次。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "h1-s4",
+        "document_id": "h1-d4",
+        "source": "synthetic-holdout-20260916",
+        "title": "雨桥N2热设计",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "雨桥 N2 的冷却方式为自然散热，不安装风扇。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "h1-s5",
+        "document_id": "h1-d5",
+        "source": "synthetic-holdout-20260916",
+        "title": "穗川M4转速说明",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "穗川 M4 的额定转速为 730 rpm。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      101
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 5,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0095.json"
+  },
+  "review": {
+    "case_id": "writer_holdout-0000",
+    "verdict": "pass",
+    "issues": [],
+    "note": "四对象四字段完整，730 rpm、自然散热且无风扇、19天、UTC正确，按5/4/3/2来源逆序引用准确。"
+  },
+  "input": {
+    "id": "writer_holdout-0000",
+    "suite": "writer_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/writer-p0-20260916/holdout.jsonl",
+    "origin_index": 0,
+    "original_case": {
+      "expected_decision": "answer",
+      "expected_facts": [
+        {
+          "claim": "穗川 M4 的额定转速为 730 rpm。",
+          "id": "F1",
+          "supporting_quotes": [
+            {
+              "end": 21,
+              "material_id": "h1-s5",
+              "quote": "穗川 M4 的额定转速为 730 rpm。",
+              "start": 0
+            }
+          ]
+        },
+        {
+          "claim": "雨桥 N2 的冷却方式为自然散热，不安装风扇。",
+          "id": "F2",
+          "supporting_quotes": [
+            {
+              "end": 23,
+              "material_id": "h1-s4",
+              "quote": "雨桥 N2 的冷却方式为自然散热，不安装风扇。",
+              "start": 0
+            }
+          ]
+        },
+        {
+          "claim": "石湾 K8 的巡检周期为每 19 天一次。",
+          "id": "F3",
+          "supporting_quotes": [
+            {
+              "end": 21,
+              "material_id": "h1-s3",
+              "quote": "石湾 K8 的巡检周期为每 19 天一次。",
+              "start": 0
+            }
+          ]
+        },
+        {
+          "claim": "青屿 P3 的故障记录使用 UTC 时间。",
+          "id": "F4",
+          "supporting_quotes": [
+            {
+              "end": 21,
+              "material_id": "h1-s2",
+              "quote": "青屿 P3 的故障记录使用 UTC 时间。",
+              "start": 0
+            }
+          ]
+        }
+      ],
+      "history": [],
+      "id": "smoke_001",
+      "materials": [
+        {
+          "document_id": "h1-d1",
+          "id": "h1-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "本页仅列穗川M4、雨桥N2、石湾K8、青屿P3的名称，不包含参数。",
+          "source": "synthetic-holdout-20260916",
+          "title": "四款设备参数目录",
+          "uri": null
+        },
+        {
+          "document_id": "h1-d2",
+          "id": "h1-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "青屿 P3 的故障记录使用 UTC 时间。",
+          "source": "synthetic-holdout-20260916",
+          "title": "青屿P3记录说明",
+          "uri": null
+        },
+        {
+          "document_id": "h1-d3",
+          "id": "h1-s3",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "石湾 K8 的巡检周期为每 19 天一次。",
+          "source": "synthetic-holdout-20260916",
+          "title": "石湾K8维护说明",
+          "uri": null
+        },
+        {
+          "document_id": "h1-d4",
+          "id": "h1-s4",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "雨桥 N2 的冷却方式为自然散热，不安装风扇。",
+          "source": "synthetic-holdout-20260916",
+          "title": "雨桥N2热设计",
+          "uri": null
+        },
+        {
+          "document_id": "h1-d5",
+          "id": "h1-s5",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "穗川 M4 的额定转速为 730 rpm。",
+          "source": "synthetic-holdout-20260916",
+          "title": "穗川M4转速说明",
+          "uri": null
+        }
+      ],
+      "oracle_notes": [
+        "按冻结原文与完整历史逐题复核；每项事实和引用均须有据。",
+        "标题不能替代正文；资料不足不是数值为零；冲突未获裁定不能单选。"
+      ],
+      "phase": "frozen_holdout",
+      "provenance": {
+        "kind": "new_synthetic_author_controlled_holdout",
+        "materials_sha256": "2adff7989d9403b44511e93b760333fdc94474d1a3ac0a621893b8c109a86a69"
+      },
+      "question": "分别核对穗川M4的额定转速、雨桥N2的冷却方式、石湾K8的巡检周期、青屿P3故障记录的时区；四项都要原文依据。"
+    },
+    "category": "writer_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "分别核对穗川M4的额定转速、雨桥N2的冷却方式、石湾K8的巡检周期、青屿P3故障记录的时区；四项都要原文依据。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "h1-d1",
+          "id": "h1-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "本页仅列穗川M4、雨桥N2、石湾K8、青屿P3的名称，不包含参数。",
+          "source": "synthetic-holdout-20260916",
+          "title": "四款设备参数目录",
+          "uri": null
+        },
+        {
+          "document_id": "h1-d2",
+          "id": "h1-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "青屿 P3 的故障记录使用 UTC 时间。",
+          "source": "synthetic-holdout-20260916",
+          "title": "青屿P3记录说明",
+          "uri": null
+        },
+        {
+          "document_id": "h1-d3",
+          "id": "h1-s3",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "石湾 K8 的巡检周期为每 19 天一次。",
+          "source": "synthetic-holdout-20260916",
+          "title": "石湾K8维护说明",
+          "uri": null
+        },
+        {
+          "document_id": "h1-d4",
+          "id": "h1-s4",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "雨桥 N2 的冷却方式为自然散热，不安装风扇。",
+          "source": "synthetic-holdout-20260916",
+          "title": "雨桥N2热设计",
+          "uri": null
+        },
+        {
+          "document_id": "h1-d5",
+          "id": "h1-s5",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "穗川 M4 的额定转速为 730 rpm。",
+          "source": "synthetic-holdout-20260916",
+          "title": "穗川M4转速说明",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "ca9d021c81c8e73f952aaa55e04bc371c06a155dc109b27d8523be2158d88f39"
+}

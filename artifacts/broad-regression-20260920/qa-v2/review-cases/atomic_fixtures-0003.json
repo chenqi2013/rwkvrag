@@ -1,0 +1,125 @@
+{
+  "result": {
+    "case_id": "atomic_fixtures-0003",
+    "suite": "atomic_fixtures",
+    "question": "岚桥 M6的额定功率是什么？",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "岚桥 M6 的额定功率是 25 W。[资料 1]",
+    "sources": [
+      {
+        "id": "atomic_fixtures-0003-s0",
+        "document_id": "atomic_fixtures-0003-d0",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "岚桥 M6 增强模式额定功率为 25 W。\n附件目录：维护联系方式另见服务页。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "atomic_fixtures-0003-s1",
+        "document_id": "atomic_fixtures-0003-d1",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "岚桥 M6 标准模式额定功率为 18 W。\n附件目录：维护联系方式另见服务页。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      24
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0471.json"
+  },
+  "review": {
+    "case_id": "atomic_fixtures-0003",
+    "verdict": "partial",
+    "issues": [
+      "missing_condition",
+      "missing_fact"
+    ],
+    "note": "只答25W，遗漏增强模式条件及标准18W。"
+  },
+  "input": {
+    "id": "atomic_fixtures-0003",
+    "suite": "atomic_fixtures",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/atomic-evidence-20260920/fixtures.jsonl",
+    "origin_index": 3,
+    "original_case": {
+      "id": "conditions-variant",
+      "request": {
+        "object": "岚桥 M6",
+        "attribute": "额定功率",
+        "conditions": ""
+      },
+      "texts": [
+        "岚桥 M6 增强模式额定功率为 25 W。\n附件目录：维护联系方式另见服务页。",
+        "岚桥 M6 标准模式额定功率为 18 W。\n附件目录：维护联系方式另见服务页。"
+      ],
+      "expected_values": [
+        "18 W",
+        "25 W"
+      ],
+      "expected_kinds": [
+        "stated",
+        "stated"
+      ]
+    },
+    "category": "atomic_fixtures",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "岚桥 M6的额定功率是什么？",
+      "history": [],
+      "materials": [
+        {
+          "id": "atomic_fixtures-0003-s0",
+          "document_id": "atomic_fixtures-0003-d0",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "岚桥 M6 增强模式额定功率为 25 W。\n附件目录：维护联系方式另见服务页。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        },
+        {
+          "id": "atomic_fixtures-0003-s1",
+          "document_id": "atomic_fixtures-0003-d1",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "岚桥 M6 标准模式额定功率为 18 W。\n附件目录：维护联系方式另见服务页。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "69500dfcbf393189fd0802a008383e19d255bc7927f5d85139fbd60f376c3805"
+}

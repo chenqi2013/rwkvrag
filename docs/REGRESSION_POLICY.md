@@ -21,7 +21,7 @@
 ## 本次落实
 
 - [Reader 扩大矩阵](../llamaindex-retrieval/eval/broad-reader-20260920/README.md)：原 40/64/160 题库全部成员，外加 960 条新合成题；1,224 条记录、1,184 个唯一题 ID，两组各两轮共 4,896 次调用。
-- [应用 v1 矩阵](../llamaindex-retrieval/eval/broad-qa-20260920/README.md)因误用空知识库中止并保留 66 条记录。[v2 修正版](../llamaindex-retrieval/eval/broad-qa-v2-20260920/README.md)重新执行全部 478 题：400 道历史参考材料、34 道实际检索、44 道原有固定材料。旧 400 题文章不在当前语料，完整检索覆盖仍缺失，必须单列；固定材料运行不能抵消这个缺口。
+- [应用 v1 矩阵](../llamaindex-retrieval/eval/broad-qa-20260920/README.md)因误用空知识库中止并保留 66 条记录。[v2 修正版](../llamaindex-retrieval/eval/broad-qa-v2-20260920/README.md)重新执行全部 478 题：400 道历史参考材料、34 道实际检索、44 道原有固定材料。v2已完整执行，但旧400题采用参考材料的口径仍须单列。随后按用户要求恢复完整文章，新建独立语料索引，已另行启动全部434题实际检索；[恢复后回归](../llamaindex-retrieval/eval/restored-retrieval-v2-20260920/README.md)的完成状态以CURRENT为准，不回填v2结果。
 - [历史保留清单](../llamaindex-retrieval/eval/broad-reader-20260920/HISTORY-RETENTION.json)：对本轮前已存在的 352 个评测、测试与相关文件绑定哈希；本轮检查全部未变。该清单用于保留审计，不宣称其中每个训练文件或旧输出文件都重新执行过。
 
 扩大集的新题由编码助手编写并自查，未经独立标注复核；40 个语义模板族内的换名、换数字、换问法不能包装成 960 种独立能力。新材料一旦用于本轮分析，后续只能作已见回归，不能继续称为盲测。

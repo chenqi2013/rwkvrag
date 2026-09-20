@@ -1,0 +1,11 @@
+{"documents": 512, "nodes": 7448}
+{"documents": 1024, "nodes": 13269}
+{"documents": 1536, "nodes": 15249}
+{"documents": 2048, "nodes": 21013}
+{"documents": 2560, "nodes": 29269}
+{"documents": 3072, "nodes": 34759}
+{"documents": 3584, "nodes": 40660}
+{"documents": 4096, "nodes": 45568}
+{"documents": 4608, "nodes": 49859}
+{"documents": 5120, "nodes": 56115}
+{"index": "rwkvrag-restored-regression-20260920-v1", "alias": "rwkvrag-restored-regression-20260920-v1-active", "knowledge_base_id": "wiki-restored-20260920", "database": "rwkvrag_restored_regression_20260920_v1", "documents": 5577, "nodes": 58594, "all_source_spans_verified": true, "scan_order_content_sha256": "e244537545d7e518541e16e42ec49e17f785edbf0e8ac4eace7a45f67e2aa384", "settings_sha256": "aa1ba5feb157e7e41545c09b10c6091a29082da9cf69b3e3513eb85d00083327", "production_settings_sha256": "949359e947c67e4a38110a52865e016636180833f1a450d10d702306a2845e5b", "changed_configuration_fields": ["mongo_database", "opensearch_index", "upload_dir"], "corpus_manifest_sha256": {"data/corpora/finewiki-restored-20260920/selected-v2/manifest.json": "798f959664870eb1efff6724f3619c163fec3b836e664cfbe68b6c728f938d51", "data/corpora/finewiki-restored-20260920/wikipedia-supplement/manifest.json": "a3747abadfd6446dee3b6b59e93f6d8be29efcb151030e737b6f360c3d60570c"}, "no_model_or_prompt_changes": true, "production_index_unchanged_by_build": true}

@@ -1,0 +1,130 @@
+{
+  "result": {
+    "case_id": "matrix_validation-0007",
+    "suite": "matrix_validation",
+    "question": "比较青川507型与白岭507型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 422,
+    "error": {
+      "type": "HTTPStatusError",
+      "detail": "Client error '422 Unprocessable Content' for url 'http://127.0.0.1:18440/v1/material-ask'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422"
+    },
+    "answer": null,
+    "sources": [],
+    "status": null,
+    "answer_span": null,
+    "answer_modified": null,
+    "diagnostics": null,
+    "raw_file": "calls/0196.json"
+  },
+  "review": {
+    "case_id": "matrix_validation-0007",
+    "verdict": "api_contract_failure",
+    "issues": [
+      "empty_materials_rejected"
+    ],
+    "note": "原始空材料完整保留，API min_length=1返回422，尚未执行缺证据模型回答。保留在478题和66抽查分母。"
+  },
+  "input": {
+    "id": "matrix_validation-0007",
+    "suite": "matrix_validation",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/validation.cases.jsonl",
+    "origin_index": 7,
+    "original_case": {
+      "candidates": [],
+      "history": [],
+      "id": "validation-007",
+      "kind": 7,
+      "matrix": [
+        {
+          "assessment_status": "not_called",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "青川507型",
+          "question": "青川507型的容量是什么？",
+          "source_ids": [],
+          "status": "missing"
+        },
+        {
+          "assessment_status": "not_called",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "青川507型",
+          "question": "青川507型的离线支持是什么？",
+          "source_ids": [],
+          "status": "missing"
+        },
+        {
+          "assessment_status": "not_called",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "白岭507型",
+          "question": "白岭507型的容量是什么？",
+          "source_ids": [],
+          "status": "missing"
+        },
+        {
+          "assessment_status": "not_called",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "白岭507型",
+          "question": "白岭507型的离线支持是什么？",
+          "source_ids": [],
+          "status": "missing"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "青川507型",
+            "question": "青川507型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "青川507型",
+            "question": "青川507型的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "白岭507型",
+            "question": "白岭507型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "白岭507型",
+            "question": "白岭507型的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "青川507型",
+          "白岭507型"
+        ]
+      },
+      "question": "比较青川507型与白岭507型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "records": [],
+      "sources": [],
+      "synthetic": true,
+      "target": "青川507型的容量：资料不足，无法确定。\n青川507型的离线支持：资料不足，无法确定。\n白岭507型的容量：资料不足，无法确定。\n白岭507型的离线支持：资料不足，无法确定。"
+    },
+    "category": 7,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "比较青川507型与白岭507型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "history": [],
+      "materials": []
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "be2ad572db65d4885dfdd6d9d7a2ae29c6b31385c8804994309ab774f95430a6"
+}

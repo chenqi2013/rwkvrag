@@ -1,0 +1,288 @@
+{
+  "result": {
+    "case_id": "matrix_validation-0002",
+    "suite": "matrix_validation",
+    "question": "比较青川502型与白岭502型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "青川502型：容量为66 L；离线支持为支持离线运行。[资料 1]\n白岭502型：容量未提供；离线支持为不支持离线运行。[资料 2]",
+    "sources": [
+      {
+        "id": "validation-2-s1@0:27:7241a2513141",
+        "document_id": "validation-2-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "青川502型：容量为66 L；离线支持为支持离线运行。",
+        "metadata": {
+          "parent_source_id": "validation-2-s1",
+          "span_end": 27,
+          "span_sha256": "7241a2513141d47127a25e4f8e6fc7ce6aa66cd00d5986225605b8b8794bde59",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "validation-2-s2@0:20:c1399f6a12d2",
+        "document_id": "validation-2-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "白岭502型：离线支持为不支持离线运行。",
+        "metadata": {
+          "parent_source_id": "validation-2-s2",
+          "span_end": 20,
+          "span_sha256": "c1399f6a12d2cc21a8c66e9a276e63f85b4ee9fbf30f7e489434ea9026b08e01",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      66
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0033.json"
+  },
+  "review": {
+    "case_id": "matrix_validation-0002",
+    "verdict": "pass",
+    "issues": [],
+    "note": "青川容量66 L和两种离线状态正确；白岭未给容量明确写未提供，没有当作0。来源各自对应。"
+  },
+  "input": {
+    "id": "matrix_validation-0002",
+    "suite": "matrix_validation",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/validation.cases.jsonl",
+    "origin_index": 2,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "validation-2-s1",
+          "id": "validation-2-s1@0:27:7241a2513141",
+          "metadata": {
+            "parent_source_id": "validation-2-s1",
+            "span_end": 27,
+            "span_sha256": "7241a2513141d47127a25e4f8e6fc7ce6aa66cd00d5986225605b8b8794bde59",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川502型：容量为66 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-2-s2",
+          "id": "validation-2-s2@0:20:c1399f6a12d2",
+          "metadata": {
+            "parent_source_id": "validation-2-s2",
+            "span_end": 20,
+            "span_sha256": "c1399f6a12d2cc21a8c66e9a276e63f85b4ee9fbf30f7e489434ea9026b08e01",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭502型：离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "history": [],
+      "id": "validation-002",
+      "kind": 2,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "青川502型",
+          "question": "青川502型的容量是什么？",
+          "source_ids": [
+            "validation-2-s1@0:27:7241a2513141"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "青川502型",
+          "question": "青川502型的离线支持是什么？",
+          "source_ids": [
+            "validation-2-s1@0:27:7241a2513141"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "not_called",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "白岭502型",
+          "question": "白岭502型的容量是什么？",
+          "source_ids": [],
+          "status": "missing"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "白岭502型",
+          "question": "白岭502型的离线支持是什么？",
+          "source_ids": [
+            "validation-2-s2@0:20:c1399f6a12d2"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "青川502型",
+            "question": "青川502型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "青川502型",
+            "question": "青川502型的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "白岭502型",
+            "question": "白岭502型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "白岭502型",
+            "question": "白岭502型的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "青川502型",
+          "白岭502型"
+        ]
+      },
+      "question": "比较青川502型与白岭502型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "青川502型",
+          "text": "青川502型：容量为66 L；离线支持为支持离线运行。",
+          "values": {
+            "容量": "66 L",
+            "离线支持": "支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "白岭502型",
+          "text": "白岭502型：离线支持为不支持离线运行。",
+          "values": {
+            "离线支持": "不支持离线运行"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "validation-2-s1",
+          "id": "validation-2-s1@0:27:7241a2513141",
+          "metadata": {
+            "parent_source_id": "validation-2-s1",
+            "span_end": 27,
+            "span_sha256": "7241a2513141d47127a25e4f8e6fc7ce6aa66cd00d5986225605b8b8794bde59",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川502型：容量为66 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-2-s2",
+          "id": "validation-2-s2@0:20:c1399f6a12d2",
+          "metadata": {
+            "parent_source_id": "validation-2-s2",
+            "span_end": 20,
+            "span_sha256": "c1399f6a12d2cc21a8c66e9a276e63f85b4ee9fbf30f7e489434ea9026b08e01",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭502型：离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "青川502型的容量：66 L[资料 1]。\n青川502型的离线支持：支持离线运行[资料 1]。\n白岭502型的容量：资料不足，无法确定。\n白岭502型的离线支持：不支持离线运行[资料 2]。"
+    },
+    "category": 2,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "比较青川502型与白岭502型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "validation-2-s1",
+          "id": "validation-2-s1@0:27:7241a2513141",
+          "metadata": {
+            "parent_source_id": "validation-2-s1",
+            "span_end": 27,
+            "span_sha256": "7241a2513141d47127a25e4f8e6fc7ce6aa66cd00d5986225605b8b8794bde59",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川502型：容量为66 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-2-s2",
+          "id": "validation-2-s2@0:20:c1399f6a12d2",
+          "metadata": {
+            "parent_source_id": "validation-2-s2",
+            "span_end": 20,
+            "span_sha256": "c1399f6a12d2cc21a8c66e9a276e63f85b4ee9fbf30f7e489434ea9026b08e01",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭502型：离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "ea6cc9a60d8280d214376c8dbb1f99d47baeb3622bfb7a947846357cdbaa889b"
+}

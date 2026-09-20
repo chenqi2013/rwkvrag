@@ -1,0 +1,93 @@
+{
+  "result": {
+    "case_id": "atomic_holdout-0004",
+    "suite": "atomic_holdout",
+    "question": "清雨 H5的实际销量是什么？",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "清雨 H5 的实际销量未公开。[资料 1]",
+    "sources": [
+      {
+        "id": "atomic_holdout-0004-s0",
+        "document_id": "atomic_holdout-0004-d0",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "清雨 H5 预订登记为 120 人；文中未公开实际销量。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      21
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0192.json"
+  },
+  "review": {
+    "case_id": "atomic_holdout-0004",
+    "verdict": "pass",
+    "issues": [],
+    "note": "明确说实际销量未公开，未把120人预订登记当成实际销量，来源1支持。"
+  },
+  "input": {
+    "id": "atomic_holdout-0004",
+    "suite": "atomic_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/atomic-evidence-20260920/holdout.jsonl",
+    "origin_index": 4,
+    "original_case": {
+      "id": "unknown",
+      "request": {
+        "object": "清雨 H5",
+        "attribute": "实际销量",
+        "conditions": ""
+      },
+      "texts": [
+        "清雨 H5 预订登记为 120 人；文中未公开实际销量。"
+      ],
+      "expected_values": [
+        null
+      ]
+    },
+    "category": "atomic_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "清雨 H5的实际销量是什么？",
+      "history": [],
+      "materials": [
+        {
+          "id": "atomic_holdout-0004-s0",
+          "document_id": "atomic_holdout-0004-d0",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "清雨 H5 预订登记为 120 人；文中未公开实际销量。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "737f9b784b19bd8b6abbfb2c589ad0fc625e9a62ee2b3a9eea3919e7ba5b2c96"
+}

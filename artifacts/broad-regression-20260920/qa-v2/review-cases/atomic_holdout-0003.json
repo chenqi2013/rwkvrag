@@ -1,0 +1,143 @@
+{
+  "result": {
+    "case_id": "atomic_holdout-0003",
+    "suite": "atomic_holdout",
+    "question": "木石 P3的售价是什么？所问条件：2026年 中国大陆。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "木石 P3 在 2026 年中国大陆的售价为 899 元。[资料 1]",
+    "sources": [
+      {
+        "id": "atomic_holdout-0003-s0",
+        "document_id": "atomic_holdout-0003-d0",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "木石 P3 在 2026 年中国大陆的含税售价为 899 元。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "atomic_holdout-0003-s1",
+        "document_id": "atomic_holdout-0003-d1",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "木石 P3 在 2025 年中国大陆的售价为 799 元。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "atomic_holdout-0003-s2",
+        "document_id": "atomic_holdout-0003-d2",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "木石 P3 在 2026 年美国的售价为 149 美元。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      35
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 3,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0129.json"
+  },
+  "review": {
+    "case_id": "atomic_holdout-0003",
+    "verdict": "partial",
+    "issues": [
+      "tax_qualifier_omitted"
+    ],
+    "note": "正确匹配2026中国大陆899元，未串入2025或美国价格；原文含税限定没有保留。"
+  },
+  "input": {
+    "id": "atomic_holdout-0003",
+    "suite": "atomic_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/atomic-evidence-20260920/holdout.jsonl",
+    "origin_index": 3,
+    "original_case": {
+      "id": "scope",
+      "request": {
+        "object": "木石 P3",
+        "attribute": "售价",
+        "conditions": "2026年 中国大陆"
+      },
+      "texts": [
+        "木石 P3 在 2026 年中国大陆的含税售价为 899 元。",
+        "木石 P3 在 2025 年中国大陆的售价为 799 元。",
+        "木石 P3 在 2026 年美国的售价为 149 美元。"
+      ],
+      "expected_values": [
+        "899 元"
+      ]
+    },
+    "category": "atomic_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "木石 P3的售价是什么？所问条件：2026年 中国大陆。",
+      "history": [],
+      "materials": [
+        {
+          "id": "atomic_holdout-0003-s0",
+          "document_id": "atomic_holdout-0003-d0",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "木石 P3 在 2026 年中国大陆的含税售价为 899 元。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        },
+        {
+          "id": "atomic_holdout-0003-s1",
+          "document_id": "atomic_holdout-0003-d1",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "木石 P3 在 2025 年中国大陆的售价为 799 元。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        },
+        {
+          "id": "atomic_holdout-0003-s2",
+          "document_id": "atomic_holdout-0003-d2",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "木石 P3 在 2026 年美国的售价为 149 美元。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "7ff772a6aa634550fa73ae0793155d7193aff57b8aa6338d373f6382eea5540c"
+}

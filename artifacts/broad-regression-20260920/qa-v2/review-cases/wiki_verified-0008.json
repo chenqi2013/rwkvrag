@@ -1,0 +1,101 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0008",
+    "suite": "wiki_verified",
+    "question": "突騎施究竟是怎么一步步滅亡的？",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "突騎施的滅亡沒有在提供的資料中說明。",
+    "sources": [
+      {
+        "id": "wiki_verified-0008-reference",
+        "document_id": "a295a870078911b93422e085",
+        "source": "retained-historical-reference",
+        "title": "突騎施",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "766年后黄、黑两姓为葛逻禄役属，其人大多融合於其中。哈薩克汗國有一「撒里烏孫」部，被認為是突騎施。欽察人的脫黑撤巴也被認為是突騎施。撒里烏孫人分布在塔拉斯附近。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+          "origin_index": 8
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      18
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": false,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 0,
+      "reference_terms_total": 4,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0325.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0008",
+    "verdict": "partial",
+    "issues": [
+      "over_refusal",
+      "reference_scope_gap"
+    ],
+    "note": "参考只说明766年后役属与融合，不足完整解释一步步灭亡；但答案完全不报告已知役属融合事实。"
+  },
+  "input": {
+    "id": "wiki_verified-0008",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 8,
+    "original_case": {
+      "question": "突騎施究竟是怎么一步步滅亡的？",
+      "question_type": "cause",
+      "style": "direct",
+      "expected_title": "突騎施",
+      "expected_document_id": "a295a870078911b93422e085",
+      "expected_terms": [
+        "年后黄",
+        "黑两姓为葛逻禄役属",
+        "其人大多融合於其中",
+        "哈薩克汗國有一"
+      ],
+      "reference": "766年后黄、黑两姓为葛逻禄役属，其人大多融合於其中。哈薩克汗國有一「撒里烏孫」部，被認為是突騎施。欽察人的脫黑撤巴也被認為是突騎施。撒里烏孫人分布在塔拉斯附近。",
+      "section": "突騎施 > 历史 > 滅亡"
+    },
+    "category": "cause",
+    "style": "direct",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "突騎施究竟是怎么一步步滅亡的？",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_verified-0008-reference",
+          "document_id": "a295a870078911b93422e085",
+          "title": "突騎施",
+          "source": "retained-historical-reference",
+          "snippet": "766年后黄、黑两姓为葛逻禄役属，其人大多融合於其中。哈薩克汗國有一「撒里烏孫」部，被認為是突騎施。欽察人的脫黑撤巴也被認為是突騎施。撒里烏孫人分布在塔拉斯附近。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+            "origin_index": 8
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "ae1fc0f2cd0e2a991c7dba1e8a2db039dd9c455748e5522f6867376c49ba47e9"
+}

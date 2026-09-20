@@ -1,0 +1,277 @@
+{
+  "result": {
+    "case_id": "writer_holdout-0001",
+    "suite": "writer_holdout",
+    "question": "把刚定下的三项写好。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "澄岚2.1桌面版最多允许7个并发连接[资料 3]。\n澄岚2.1桌面版支持离线运行[资料 3]。\n澄岚2.1桌面版的开发代号为Juniper[资料 3]。",
+    "sources": [
+      {
+        "id": "h2-s1",
+        "document_id": "h2-d1",
+        "source": "synthetic-holdout-20260916",
+        "title": "澄岚2.0桌面版",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "澄岚2.0桌面版最多4个并发连接，不支持离线，开发代号为 Maple。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "h2-s2",
+        "document_id": "h2-d2",
+        "source": "synthetic-holdout-20260916",
+        "title": "澄岚2.1服务器版",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "澄岚2.1服务器版最多70个并发连接，开发代号为 Cedar。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "h2-s3",
+        "document_id": "h2-d3",
+        "source": "synthetic-holdout-20260916",
+        "title": "澄岚2.1桌面版",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "澄岚 2.1 桌面版最多允许 7 个并发连接；支持离线运行；开发代号为 Juniper。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      76
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 3,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0426.json"
+  },
+  "review": {
+    "case_id": "writer_holdout-0001",
+    "verdict": "pass",
+    "issues": [],
+    "note": "历史修正后的2.1桌面版三项齐全，7/支持离线/Juniper及来源3均正确。"
+  },
+  "input": {
+    "id": "writer_holdout-0001",
+    "suite": "writer_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/writer-p0-20260916/holdout.jsonl",
+    "origin_index": 1,
+    "original_case": {
+      "expected_decision": "answer",
+      "expected_facts": [
+        {
+          "claim": "澄岚2.1桌面版最多7个并发连接。",
+          "id": "F1",
+          "supporting_quotes": [
+            {
+              "end": 44,
+              "material_id": "h2-s3",
+              "quote": "澄岚 2.1 桌面版最多允许 7 个并发连接；支持离线运行；开发代号为 Juniper。",
+              "start": 0
+            }
+          ]
+        },
+        {
+          "claim": "澄岚2.1桌面版支持离线运行。",
+          "id": "F2",
+          "supporting_quotes": [
+            {
+              "end": 44,
+              "material_id": "h2-s3",
+              "quote": "澄岚 2.1 桌面版最多允许 7 个并发连接；支持离线运行；开发代号为 Juniper。",
+              "start": 0
+            }
+          ]
+        },
+        {
+          "claim": "澄岚2.1桌面版开发代号为Juniper。",
+          "id": "F3",
+          "supporting_quotes": [
+            {
+              "end": 44,
+              "material_id": "h2-s3",
+              "quote": "澄岚 2.1 桌面版最多允许 7 个并发连接；支持离线运行；开发代号为 Juniper。",
+              "start": 0
+            }
+          ]
+        }
+      ],
+      "history": [
+        {
+          "content": "先比较澄岚2.0服务器版和桌面版的连接上限与价格。",
+          "role": "user"
+        },
+        {
+          "content": "需要确认版本与字段。",
+          "role": "assistant"
+        },
+        {
+          "content": "更正，是澄岚2.1桌面版，服务器版和价格都撤掉。保留并发连接上限，再加是否支持离线和开发代号，三项都要。",
+          "role": "user"
+        },
+        {
+          "content": "当前范围是2.1桌面版的三项。",
+          "role": "assistant"
+        },
+        {
+          "content": "讲义封面用了旧服务器截图，图片我会换，不代表又改回服务器版。图上画了20台终端只是示意，不能作为连接上限。",
+          "role": "user"
+        },
+        {
+          "content": "截图不作为参数证据。",
+          "role": "assistant"
+        },
+        {
+          "content": "发布日期不加，网络协议列表也不要；之前确认的三项保留。",
+          "role": "user"
+        }
+      ],
+      "id": "smoke_002",
+      "materials": [
+        {
+          "document_id": "h2-d1",
+          "id": "h2-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "澄岚2.0桌面版最多4个并发连接，不支持离线，开发代号为 Maple。",
+          "source": "synthetic-holdout-20260916",
+          "title": "澄岚2.0桌面版",
+          "uri": null
+        },
+        {
+          "document_id": "h2-d2",
+          "id": "h2-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "澄岚2.1服务器版最多70个并发连接，开发代号为 Cedar。",
+          "source": "synthetic-holdout-20260916",
+          "title": "澄岚2.1服务器版",
+          "uri": null
+        },
+        {
+          "document_id": "h2-d3",
+          "id": "h2-s3",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "澄岚 2.1 桌面版最多允许 7 个并发连接；支持离线运行；开发代号为 Juniper。",
+          "source": "synthetic-holdout-20260916",
+          "title": "澄岚2.1桌面版",
+          "uri": null
+        }
+      ],
+      "oracle_notes": [
+        "按冻结原文与完整历史逐题复核；每项事实和引用均须有据。",
+        "标题不能替代正文；资料不足不是数值为零；冲突未获裁定不能单选。"
+      ],
+      "phase": "frozen_holdout",
+      "provenance": {
+        "kind": "new_synthetic_author_controlled_holdout",
+        "materials_sha256": "8ce6a999d96d73f0c37f58e2e3502e5cab5152b8090728f16c987c3ea612af09"
+      },
+      "question": "把刚定下的三项写好。"
+    },
+    "category": "writer_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "把刚定下的三项写好。",
+      "history": [
+        {
+          "content": "先比较澄岚2.0服务器版和桌面版的连接上限与价格。",
+          "role": "user"
+        },
+        {
+          "content": "需要确认版本与字段。",
+          "role": "assistant"
+        },
+        {
+          "content": "更正，是澄岚2.1桌面版，服务器版和价格都撤掉。保留并发连接上限，再加是否支持离线和开发代号，三项都要。",
+          "role": "user"
+        },
+        {
+          "content": "当前范围是2.1桌面版的三项。",
+          "role": "assistant"
+        },
+        {
+          "content": "讲义封面用了旧服务器截图，图片我会换，不代表又改回服务器版。图上画了20台终端只是示意，不能作为连接上限。",
+          "role": "user"
+        },
+        {
+          "content": "截图不作为参数证据。",
+          "role": "assistant"
+        },
+        {
+          "content": "发布日期不加，网络协议列表也不要；之前确认的三项保留。",
+          "role": "user"
+        }
+      ],
+      "materials": [
+        {
+          "document_id": "h2-d1",
+          "id": "h2-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "澄岚2.0桌面版最多4个并发连接，不支持离线，开发代号为 Maple。",
+          "source": "synthetic-holdout-20260916",
+          "title": "澄岚2.0桌面版",
+          "uri": null
+        },
+        {
+          "document_id": "h2-d2",
+          "id": "h2-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "澄岚2.1服务器版最多70个并发连接，开发代号为 Cedar。",
+          "source": "synthetic-holdout-20260916",
+          "title": "澄岚2.1服务器版",
+          "uri": null
+        },
+        {
+          "document_id": "h2-d3",
+          "id": "h2-s3",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "澄岚 2.1 桌面版最多允许 7 个并发连接；支持离线运行；开发代号为 Juniper。",
+          "source": "synthetic-holdout-20260916",
+          "title": "澄岚2.1桌面版",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "d024a75acf162250191ef92873829843d92a9d3a8624bd1047fcc31573da72d5"
+}

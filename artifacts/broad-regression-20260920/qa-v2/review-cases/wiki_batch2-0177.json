@@ -1,0 +1,95 @@
+{
+  "result": {
+    "case_id": "wiki_batch2-0177",
+    "suite": "wiki_batch2",
+    "question": "字母主义国际是谁创建的？",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "字母主义国际由居伊·德波和Gil J. Wolman创建[资料 1]。",
+    "sources": [
+      {
+        "id": "wiki_batch2-0177-reference",
+        "document_id": "37b3b9bf59b09e364cc7b5ff",
+        "source": "retained-historical-reference",
+        "title": "字母主义国际",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "字母主义国际由居伊·德波和Gil J. Wolman创建，成员包括由Isidore Isou的字母派团体分裂而出的Jean-Louis Brau和Serge Berna。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+          "origin_index": 177
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      35
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 1,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0085.json"
+  },
+  "review": {
+    "case_id": "wiki_batch2-0177",
+    "verdict": "pass",
+    "issues": [],
+    "note": "准确给出两位创建者，没有把其他成员误当创建者，引用1对应。"
+  },
+  "input": {
+    "id": "wiki_batch2-0177",
+    "suite": "wiki_batch2",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+    "origin_index": 177,
+    "original_case": {
+      "question": "字母主义国际是谁创建的？",
+      "question_type": "agent",
+      "style": "direct",
+      "expected_title": "字母主义国际",
+      "expected_document_id": "37b3b9bf59b09e364cc7b5ff",
+      "expected_terms": [
+        "居伊·德波和Gil J. Wolman"
+      ],
+      "reference": "字母主义国际由居伊·德波和Gil J. Wolman创建，成员包括由Isidore Isou的字母派团体分裂而出的Jean-Louis Brau和Serge Berna。",
+      "section": "字母主义国际"
+    },
+    "category": "agent",
+    "style": "direct",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "字母主义国际是谁创建的？",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_batch2-0177-reference",
+          "document_id": "37b3b9bf59b09e364cc7b5ff",
+          "title": "字母主义国际",
+          "source": "retained-historical-reference",
+          "snippet": "字母主义国际由居伊·德波和Gil J. Wolman创建，成员包括由Isidore Isou的字母派团体分裂而出的Jean-Louis Brau和Serge Berna。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+            "origin_index": 177
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "390ade83b9ac4831fb089690427f8efb49275aa9e869adec40b579208c29778d"
+}

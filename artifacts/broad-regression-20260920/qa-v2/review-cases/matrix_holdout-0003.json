@@ -1,0 +1,291 @@
+{
+  "result": {
+    "case_id": "matrix_holdout-0003",
+    "suite": "matrix_holdout",
+    "question": "比较青川903型与白岭903型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "青川903型：容量为0 L；离线支持为支持离线运行。[资料 2]\n白岭903型：容量为67 L；离线支持为不支持离线运行。[资料 1]",
+    "sources": [
+      {
+        "id": "holdout-3-s1@0:28:231ff5e9623e",
+        "document_id": "holdout-3-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "白岭903型：容量为67 L；离线支持为不支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-3-s1",
+          "span_end": 28,
+          "span_sha256": "231ff5e9623e49996652af5fec0e886f3bafd282bc82d3a57f2650641aa2d5df",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "holdout-3-s2@0:26:395bb93f8c95",
+        "document_id": "holdout-3-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "青川903型：容量为0 L；离线支持为支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-3-s2",
+          "span_end": 26,
+          "span_sha256": "395bb93f8c95857eca65cca8ae79cfcec2832198f76691d3a906861f3a95c3fb",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      67
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0050.json"
+  },
+  "review": {
+    "case_id": "matrix_holdout-0003",
+    "verdict": "pass",
+    "issues": [],
+    "note": "0 L未被当缺失；两个对象四项事实正确，按来源2/1逆序引用仍正确。"
+  },
+  "input": {
+    "id": "matrix_holdout-0003",
+    "suite": "matrix_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/holdout.cases.jsonl",
+    "origin_index": 3,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "holdout-3-s1",
+          "id": "holdout-3-s1@0:28:231ff5e9623e",
+          "metadata": {
+            "parent_source_id": "holdout-3-s1",
+            "span_end": 28,
+            "span_sha256": "231ff5e9623e49996652af5fec0e886f3bafd282bc82d3a57f2650641aa2d5df",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭903型：容量为67 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-3-s2",
+          "id": "holdout-3-s2@0:26:395bb93f8c95",
+          "metadata": {
+            "parent_source_id": "holdout-3-s2",
+            "span_end": 26,
+            "span_sha256": "395bb93f8c95857eca65cca8ae79cfcec2832198f76691d3a906861f3a95c3fb",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川903型：容量为0 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "history": [],
+      "id": "holdout-003",
+      "kind": 3,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "青川903型",
+          "question": "青川903型的容量是什么？",
+          "source_ids": [
+            "holdout-3-s2@0:26:395bb93f8c95"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "青川903型",
+          "question": "青川903型的离线支持是什么？",
+          "source_ids": [
+            "holdout-3-s2@0:26:395bb93f8c95"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "白岭903型",
+          "question": "白岭903型的容量是什么？",
+          "source_ids": [
+            "holdout-3-s1@0:28:231ff5e9623e"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "白岭903型",
+          "question": "白岭903型的离线支持是什么？",
+          "source_ids": [
+            "holdout-3-s1@0:28:231ff5e9623e"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "青川903型",
+            "question": "青川903型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "青川903型",
+            "question": "青川903型的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "白岭903型",
+            "question": "白岭903型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "白岭903型",
+            "question": "白岭903型的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "青川903型",
+          "白岭903型"
+        ]
+      },
+      "question": "比较青川903型与白岭903型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "白岭903型",
+          "text": "白岭903型：容量为67 L；离线支持为不支持离线运行。",
+          "values": {
+            "容量": "67 L",
+            "离线支持": "不支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "青川903型",
+          "text": "青川903型：容量为0 L；离线支持为支持离线运行。",
+          "values": {
+            "容量": "0 L",
+            "离线支持": "支持离线运行"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "holdout-3-s1",
+          "id": "holdout-3-s1@0:28:231ff5e9623e",
+          "metadata": {
+            "parent_source_id": "holdout-3-s1",
+            "span_end": 28,
+            "span_sha256": "231ff5e9623e49996652af5fec0e886f3bafd282bc82d3a57f2650641aa2d5df",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭903型：容量为67 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-3-s2",
+          "id": "holdout-3-s2@0:26:395bb93f8c95",
+          "metadata": {
+            "parent_source_id": "holdout-3-s2",
+            "span_end": 26,
+            "span_sha256": "395bb93f8c95857eca65cca8ae79cfcec2832198f76691d3a906861f3a95c3fb",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川903型：容量为0 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "青川903型的容量：0 L[资料 2]。\n青川903型的离线支持：支持离线运行[资料 2]。\n白岭903型的容量：67 L[资料 1]。\n白岭903型的离线支持：不支持离线运行[资料 1]。"
+    },
+    "category": 3,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "比较青川903型与白岭903型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "holdout-3-s1",
+          "id": "holdout-3-s1@0:28:231ff5e9623e",
+          "metadata": {
+            "parent_source_id": "holdout-3-s1",
+            "span_end": 28,
+            "span_sha256": "231ff5e9623e49996652af5fec0e886f3bafd282bc82d3a57f2650641aa2d5df",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭903型：容量为67 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-3-s2",
+          "id": "holdout-3-s2@0:26:395bb93f8c95",
+          "metadata": {
+            "parent_source_id": "holdout-3-s2",
+            "span_end": 26,
+            "span_sha256": "395bb93f8c95857eca65cca8ae79cfcec2832198f76691d3a906861f3a95c3fb",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川903型：容量为0 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "c070b9108dd98d717afdf91a1d63df46cc5ae05a217947849972b0cb04479491"
+}

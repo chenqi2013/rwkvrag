@@ -1,0 +1,104 @@
+{
+  "scopes": {
+    "fixed_historical_reference": {
+      "n": 400,
+      "http_completed": 400,
+      "http_statuses": {
+        "200": 400
+      },
+      "generation_statuses": {
+        "completed": 397,
+        "length": 3
+      },
+      "no_sources": 0,
+      "missing_numeric_citations": 29,
+      "out_of_range_citations": 0,
+      "empty_answers": 0,
+      "semantic_accuracy_verified": false
+    },
+    "current_corpus_retrieval": {
+      "n": 34,
+      "http_completed": 34,
+      "http_statuses": {
+        "200": 34
+      },
+      "generation_statuses": {
+        "length": 4,
+        "planner_partial_failure": 4,
+        "completed": 26
+      },
+      "no_sources": 21,
+      "missing_numeric_citations": 7,
+      "out_of_range_citations": 19,
+      "empty_answers": 0,
+      "semantic_accuracy_verified": false
+    },
+    "original_fixed_material": {
+      "n": 44,
+      "http_completed": 41,
+      "http_statuses": {
+        "200": 41,
+        "422": 3
+      },
+      "generation_statuses": {
+        "completed": 41,
+        "http_failed": 3
+      },
+      "no_sources": 0,
+      "missing_numeric_citations": 3,
+      "out_of_range_citations": 2,
+      "empty_answers": 0,
+      "semantic_accuracy_verified": false
+    }
+  },
+  "manual_review_n": 66,
+  "manual_verdicts": {
+    "partial": 22,
+    "pass": 31,
+    "fail": 10,
+    "api_contract_failure": 3
+  },
+  "manual_by_suite": {
+    "atomic_fixtures": {
+      "fail": 2,
+      "partial": 7,
+      "pass": 3
+    },
+    "atomic_holdout": {
+      "pass": 6,
+      "partial": 2
+    },
+    "matrix_holdout": {
+      "partial": 2,
+      "pass": 5,
+      "api_contract_failure": 1
+    },
+    "matrix_validation": {
+      "pass": 6,
+      "api_contract_failure": 1,
+      "partial": 1
+    },
+    "native_wiki": {
+      "fail": 7,
+      "partial": 1
+    },
+    "wiki_batch2": {
+      "partial": 3,
+      "pass": 2
+    },
+    "wiki_verified": {
+      "pass": 3,
+      "partial": 5,
+      "fail": 1
+    },
+    "writer_holdout": {
+      "pass": 6,
+      "partial": 1,
+      "api_contract_failure": 1
+    }
+  },
+  "full_historical_retrieval_coverage_restored": false,
+  "historical_reference_cases_with_missing_original_corpus": 400,
+  "manual_review_independent": false,
+  "full_dataset_semantic_accuracy_verified": false
+}

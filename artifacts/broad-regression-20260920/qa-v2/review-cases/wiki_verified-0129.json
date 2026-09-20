@@ -1,0 +1,95 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0129",
+    "suite": "wiki_verified",
+    "question": "说下高階組合語言背后的發明者。",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "高階組合語言是由藍道爾·海德發明的[资料 1]。",
+    "sources": [
+      {
+        "id": "wiki_verified-0129-reference",
+        "document_id": "366e01f93e42884a9e8b9b87",
+        "source": "retained-historical-reference",
+        "title": "高階組合語言",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "高階組合語言（英語：，縮寫：HLA）是一種由藍道爾·海德發明的組合語言，它允许使用更高级的语言结构（類似高階語言的語法）来帮助初学者和资深汇编语言开发者。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+          "origin_index": 129
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      24
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 1,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0294.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0129",
+    "verdict": "pass",
+    "issues": [],
+    "note": "发明者与所给历史参考一致，引用正确。"
+  },
+  "input": {
+    "id": "wiki_verified-0129",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 129,
+    "original_case": {
+      "question": "说下高階組合語言背后的發明者。",
+      "question_type": "agent",
+      "style": "colloquial",
+      "expected_title": "高階組合語言",
+      "expected_document_id": "366e01f93e42884a9e8b9b87",
+      "expected_terms": [
+        "藍道爾·海德"
+      ],
+      "reference": "高階組合語言（英語：，縮寫：HLA）是一種由藍道爾·海德發明的組合語言，它允许使用更高级的语言结构（類似高階語言的語法）来帮助初学者和资深汇编语言开发者。",
+      "section": "高階組合語言"
+    },
+    "category": "agent",
+    "style": "colloquial",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "说下高階組合語言背后的發明者。",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_verified-0129-reference",
+          "document_id": "366e01f93e42884a9e8b9b87",
+          "title": "高階組合語言",
+          "source": "retained-historical-reference",
+          "snippet": "高階組合語言（英語：，縮寫：HLA）是一種由藍道爾·海德發明的組合語言，它允许使用更高级的语言结构（類似高階語言的語法）来帮助初学者和资深汇编语言开发者。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+            "origin_index": 129
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "544b0db1d1e922cbfad72903196267e6c4097ce30d09b0299318893ab3805513"
+}

@@ -1,0 +1,99 @@
+{
+  "result": {
+    "case_id": "wiki_batch2-0070",
+    "suite": "wiki_batch2",
+    "question": "你知道蕭琮是干什么的吗？",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "萧琮是东阳王[资料 1]。",
+    "sources": [
+      {
+        "id": "wiki_batch2-0070-reference",
+        "document_id": "322a922e929704445ea58154",
+        "source": "retained-historical-reference",
+        "title": "蕭琮",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "蕭琮最早封東陽王，後被立為皇太子。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+          "origin_index": 70
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      13
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 0,
+      "reference_terms_total": 2,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0004.json"
+  },
+  "review": {
+    "case_id": "wiki_batch2-0070",
+    "verdict": "partial",
+    "issues": [
+      "omitted_later_role",
+      "temporal_scope"
+    ],
+    "note": "回答只说萧琮是东阳王，遗漏参考材料中后被立为皇太子的身份变化；引用对应原材料，但未保留先后范围。"
+  },
+  "input": {
+    "id": "wiki_batch2-0070",
+    "suite": "wiki_batch2",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+    "origin_index": 70,
+    "original_case": {
+      "question": "你知道蕭琮是干什么的吗？",
+      "question_type": "definition",
+      "style": "conversational",
+      "expected_title": "蕭琮",
+      "expected_document_id": "322a922e929704445ea58154",
+      "expected_terms": [
+        "蕭琮最早封東陽王",
+        "後被立為皇太子"
+      ],
+      "reference": "蕭琮最早封東陽王，後被立為皇太子。",
+      "section": "蕭琮 > 生平"
+    },
+    "category": "definition",
+    "style": "conversational",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "你知道蕭琮是干什么的吗？",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_batch2-0070-reference",
+          "document_id": "322a922e929704445ea58154",
+          "title": "蕭琮",
+          "source": "retained-historical-reference",
+          "snippet": "蕭琮最早封東陽王，後被立為皇太子。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+            "origin_index": 70
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "5b46b4d3be3eb30613350aae71a048f52952822984e940c7000fbca5ff1c7480"
+}

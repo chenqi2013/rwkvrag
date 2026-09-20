@@ -1,0 +1,97 @@
+{
+  "result": {
+    "case_id": "wiki_batch2-0005",
+    "suite": "wiki_batch2",
+    "question": "说下瓦森人口的具体数字。",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "瓦森人口数字：398人[资料 1]。",
+    "sources": [
+      {
+        "id": "wiki_batch2-0005-reference",
+        "document_id": "58aa8c7cad9f98ea7ab20d89",
+        "source": "retained-historical-reference",
+        "title": "瓦森",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "瓦森（德語：）是瑞士乌里州的市镇，位於該州南部，面積96.88平方公里，海拔高度930米，2018年人口398人，人口密度每平方公里4.1人。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+          "origin_index": 5
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      18
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 1,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0101.json"
+  },
+  "review": {
+    "case_id": "wiki_batch2-0005",
+    "verdict": "partial",
+    "issues": [
+      "date_scope_omitted"
+    ],
+    "note": "人口398人正确且有引用，但遗漏原文限定的2018年；不能将历史人口无日期地作为通用人口数字。"
+  },
+  "input": {
+    "id": "wiki_batch2-0005",
+    "suite": "wiki_batch2",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+    "origin_index": 5,
+    "original_case": {
+      "question": "说下瓦森人口的具体数字。",
+      "question_type": "numeric",
+      "style": "colloquial",
+      "expected_title": "瓦森",
+      "expected_document_id": "58aa8c7cad9f98ea7ab20d89",
+      "expected_terms": [
+        "398人"
+      ],
+      "reference": "瓦森（德語：）是瑞士乌里州的市镇，位於該州南部，面積96.88平方公里，海拔高度930米，2018年人口398人，人口密度每平方公里4.1人。",
+      "section": "瓦森"
+    },
+    "category": "numeric",
+    "style": "colloquial",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "说下瓦森人口的具体数字。",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_batch2-0005-reference",
+          "document_id": "58aa8c7cad9f98ea7ab20d89",
+          "title": "瓦森",
+          "source": "retained-historical-reference",
+          "snippet": "瓦森（德語：）是瑞士乌里州的市镇，位於該州南部，面積96.88平方公里，海拔高度930米，2018年人口398人，人口密度每平方公里4.1人。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+            "origin_index": 5
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "d8bc6a032700137dce8303bfe2c0440658a084f5295043083434ae172eddecd5"
+}

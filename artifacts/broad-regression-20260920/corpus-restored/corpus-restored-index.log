@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/corpus-restore-20260920/build_index.py", line 112, in <module>
+    main()
+    ~~~~^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/corpus-restore-20260920/build_index.py", line 35, in main
+    assert not search.indices.exists(INDEX) and not search.indices.exists(INDEX + '-active')
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/opensearchpy/client/utils.py", line 176, in _wrapped
+    return func(*args, params=params, headers=headers, **kwargs)
+TypeError: IndicesClient.exists() takes 1 positional argument but 2 positional arguments (and 2 keyword-only arguments) were given

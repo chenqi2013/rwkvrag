@@ -1,0 +1,362 @@
+{
+  "result": {
+    "case_id": "matrix_holdout-0004",
+    "suite": "matrix_holdout",
+    "question": "比较青川904型与白岭904型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "青川904型容量为13 L；离线支持为支持离线运行。[资料 1]\n白岭904型容量为36 L；离线支持为不支持离线运行。[资料 2]\n另一份同范围、无权威排序的记录：青川904型容量为93 L。[资料 3]",
+    "sources": [
+      {
+        "id": "holdout-4-s1@0:27:6d90c057df5f",
+        "document_id": "holdout-4-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "青川904型：容量为13 L；离线支持为支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-4-s1",
+          "span_end": 27,
+          "span_sha256": "6d90c057df5ffc24b561cf2c9ee99c43629dcc7a36462f2ad09779359320531b",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "holdout-4-s2@0:28:1c752a1d5d12",
+        "document_id": "holdout-4-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "白岭904型：容量为36 L；离线支持为不支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-4-s2",
+          "span_end": 28,
+          "span_sha256": "1c752a1d5d124af88d5da87ac7bb1780cade487ed9e10aa04d503416fe78af57",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "holdout-4-s3@0:30:d9c4cc4ca6d4",
+        "document_id": "holdout-4-s3",
+        "source": "synthetic-matrix",
+        "title": "记录3",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "另一份同范围、无权威排序的记录：青川904型容量为93 L。",
+        "metadata": {
+          "parent_source_id": "holdout-4-s3",
+          "span_end": 30,
+          "span_sha256": "d9c4cc4ca6d427418236649a8fc974ab2dc99bba572d90c139ce10e8e58034a2",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      103
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 3,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0014.json"
+  },
+  "review": {
+    "case_id": "matrix_holdout-0004",
+    "verdict": "partial",
+    "issues": [
+      "conflict_not_explicit"
+    ],
+    "note": "两条容量13 L/93 L及各自来源均保留，但未按题目要求明确冲突或无法确定唯一值；第一句直接断言13 L。其余字段和引用正确。"
+  },
+  "input": {
+    "id": "matrix_holdout-0004",
+    "suite": "matrix_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/holdout.cases.jsonl",
+    "origin_index": 4,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "holdout-4-s1",
+          "id": "holdout-4-s1@0:27:6d90c057df5f",
+          "metadata": {
+            "parent_source_id": "holdout-4-s1",
+            "span_end": 27,
+            "span_sha256": "6d90c057df5ffc24b561cf2c9ee99c43629dcc7a36462f2ad09779359320531b",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川904型：容量为13 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-4-s2",
+          "id": "holdout-4-s2@0:28:1c752a1d5d12",
+          "metadata": {
+            "parent_source_id": "holdout-4-s2",
+            "span_end": 28,
+            "span_sha256": "1c752a1d5d124af88d5da87ac7bb1780cade487ed9e10aa04d503416fe78af57",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭904型：容量为36 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-4-s3",
+          "id": "holdout-4-s3@0:30:d9c4cc4ca6d4",
+          "metadata": {
+            "parent_source_id": "holdout-4-s3",
+            "span_end": 30,
+            "span_sha256": "d9c4cc4ca6d427418236649a8fc974ab2dc99bba572d90c139ce10e8e58034a2",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "另一份同范围、无权威排序的记录：青川904型容量为93 L。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ],
+      "history": [],
+      "id": "holdout-004",
+      "kind": 4,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "青川904型",
+          "question": "青川904型的容量是什么？",
+          "source_ids": [
+            "holdout-4-s1@0:27:6d90c057df5f",
+            "holdout-4-s3@0:30:d9c4cc4ca6d4"
+          ],
+          "status": "conflict"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "青川904型",
+          "question": "青川904型的离线支持是什么？",
+          "source_ids": [
+            "holdout-4-s1@0:27:6d90c057df5f"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "白岭904型",
+          "question": "白岭904型的容量是什么？",
+          "source_ids": [
+            "holdout-4-s2@0:28:1c752a1d5d12"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "白岭904型",
+          "question": "白岭904型的离线支持是什么？",
+          "source_ids": [
+            "holdout-4-s2@0:28:1c752a1d5d12"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "青川904型",
+            "question": "青川904型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "青川904型",
+            "question": "青川904型的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "白岭904型",
+            "question": "白岭904型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "白岭904型",
+            "question": "白岭904型的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "青川904型",
+          "白岭904型"
+        ]
+      },
+      "question": "比较青川904型与白岭904型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "青川904型",
+          "text": "青川904型：容量为13 L；离线支持为支持离线运行。",
+          "values": {
+            "容量": "13 L",
+            "离线支持": "支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "白岭904型",
+          "text": "白岭904型：容量为36 L；离线支持为不支持离线运行。",
+          "values": {
+            "容量": "36 L",
+            "离线支持": "不支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "青川904型",
+          "text": "另一份同范围、无权威排序的记录：青川904型容量为93 L。",
+          "values": {
+            "容量": "93 L"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "holdout-4-s1",
+          "id": "holdout-4-s1@0:27:6d90c057df5f",
+          "metadata": {
+            "parent_source_id": "holdout-4-s1",
+            "span_end": 27,
+            "span_sha256": "6d90c057df5ffc24b561cf2c9ee99c43629dcc7a36462f2ad09779359320531b",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川904型：容量为13 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-4-s2",
+          "id": "holdout-4-s2@0:28:1c752a1d5d12",
+          "metadata": {
+            "parent_source_id": "holdout-4-s2",
+            "span_end": 28,
+            "span_sha256": "1c752a1d5d124af88d5da87ac7bb1780cade487ed9e10aa04d503416fe78af57",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭904型：容量为36 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-4-s3",
+          "id": "holdout-4-s3@0:30:d9c4cc4ca6d4",
+          "metadata": {
+            "parent_source_id": "holdout-4-s3",
+            "span_end": 30,
+            "span_sha256": "d9c4cc4ca6d427418236649a8fc974ab2dc99bba572d90c139ce10e8e58034a2",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "另一份同范围、无权威排序的记录：青川904型容量为93 L。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "青川904型的容量存在冲突：13 L[资料 1]；93 L[资料 3]。无法确定唯一值。\n青川904型的离线支持：支持离线运行[资料 1]。\n白岭904型的容量：36 L[资料 2]。\n白岭904型的离线支持：不支持离线运行[资料 2]。"
+    },
+    "category": 4,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "比较青川904型与白岭904型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "holdout-4-s1",
+          "id": "holdout-4-s1@0:27:6d90c057df5f",
+          "metadata": {
+            "parent_source_id": "holdout-4-s1",
+            "span_end": 27,
+            "span_sha256": "6d90c057df5ffc24b561cf2c9ee99c43629dcc7a36462f2ad09779359320531b",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川904型：容量为13 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-4-s2",
+          "id": "holdout-4-s2@0:28:1c752a1d5d12",
+          "metadata": {
+            "parent_source_id": "holdout-4-s2",
+            "span_end": 28,
+            "span_sha256": "1c752a1d5d124af88d5da87ac7bb1780cade487ed9e10aa04d503416fe78af57",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭904型：容量为36 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-4-s3",
+          "id": "holdout-4-s3@0:30:d9c4cc4ca6d4",
+          "metadata": {
+            "parent_source_id": "holdout-4-s3",
+            "span_end": 30,
+            "span_sha256": "d9c4cc4ca6d427418236649a8fc974ab2dc99bba572d90c139ce10e8e58034a2",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "另一份同范围、无权威排序的记录：青川904型容量为93 L。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "6a6fffac24f466ab5c32153f8538bb678092d5db572c2ad43ee7063f6319a641"
+}

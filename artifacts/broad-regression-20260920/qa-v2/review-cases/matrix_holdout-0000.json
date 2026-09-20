@@ -1,0 +1,291 @@
+{
+  "result": {
+    "case_id": "matrix_holdout-0000",
+    "suite": "matrix_holdout",
+    "question": "比较青川900型与白岭900型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "青川900型：容量为82 L；离线支持为支持离线运行。[资料 2]\n白岭900型：容量为24 L；离线支持为不支持离线运行。[资料 1]",
+    "sources": [
+      {
+        "id": "holdout-0-s1@0:28:68b696837284",
+        "document_id": "holdout-0-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "白岭900型：容量为24 L；离线支持为不支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-0-s1",
+          "span_end": 28,
+          "span_sha256": "68b696837284576ac057c7a1c14bfa3e6cce867fb4979781a25f16cb9186a414",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "holdout-0-s2@0:27:d53695656f48",
+        "document_id": "holdout-0-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "青川900型：容量为82 L；离线支持为支持离线运行。",
+        "metadata": {
+          "parent_source_id": "holdout-0-s2",
+          "span_end": 27,
+          "span_sha256": "d53695656f482f45bb62b3a4ce2dbdcb4c5f4743fdac0beeee5f80f39e259cdc",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      68
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0458.json"
+  },
+  "review": {
+    "case_id": "matrix_holdout-0000",
+    "verdict": "pass",
+    "issues": [],
+    "note": "四格及反向资料顺序引用正确。"
+  },
+  "input": {
+    "id": "matrix_holdout-0000",
+    "suite": "matrix_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/holdout.cases.jsonl",
+    "origin_index": 0,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "holdout-0-s1",
+          "id": "holdout-0-s1@0:28:68b696837284",
+          "metadata": {
+            "parent_source_id": "holdout-0-s1",
+            "span_end": 28,
+            "span_sha256": "68b696837284576ac057c7a1c14bfa3e6cce867fb4979781a25f16cb9186a414",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭900型：容量为24 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-0-s2",
+          "id": "holdout-0-s2@0:27:d53695656f48",
+          "metadata": {
+            "parent_source_id": "holdout-0-s2",
+            "span_end": 27,
+            "span_sha256": "d53695656f482f45bb62b3a4ce2dbdcb4c5f4743fdac0beeee5f80f39e259cdc",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川900型：容量为82 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "history": [],
+      "id": "holdout-000",
+      "kind": 0,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "青川900型",
+          "question": "青川900型的容量是什么？",
+          "source_ids": [
+            "holdout-0-s2@0:27:d53695656f48"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "青川900型",
+          "question": "青川900型的离线支持是什么？",
+          "source_ids": [
+            "holdout-0-s2@0:27:d53695656f48"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "白岭900型",
+          "question": "白岭900型的容量是什么？",
+          "source_ids": [
+            "holdout-0-s1@0:28:68b696837284"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "白岭900型",
+          "question": "白岭900型的离线支持是什么？",
+          "source_ids": [
+            "holdout-0-s1@0:28:68b696837284"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "青川900型",
+            "question": "青川900型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "青川900型",
+            "question": "青川900型的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "白岭900型",
+            "question": "白岭900型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "白岭900型",
+            "question": "白岭900型的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "青川900型",
+          "白岭900型"
+        ]
+      },
+      "question": "比较青川900型与白岭900型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "白岭900型",
+          "text": "白岭900型：容量为24 L；离线支持为不支持离线运行。",
+          "values": {
+            "容量": "24 L",
+            "离线支持": "不支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "青川900型",
+          "text": "青川900型：容量为82 L；离线支持为支持离线运行。",
+          "values": {
+            "容量": "82 L",
+            "离线支持": "支持离线运行"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "holdout-0-s1",
+          "id": "holdout-0-s1@0:28:68b696837284",
+          "metadata": {
+            "parent_source_id": "holdout-0-s1",
+            "span_end": 28,
+            "span_sha256": "68b696837284576ac057c7a1c14bfa3e6cce867fb4979781a25f16cb9186a414",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭900型：容量为24 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-0-s2",
+          "id": "holdout-0-s2@0:27:d53695656f48",
+          "metadata": {
+            "parent_source_id": "holdout-0-s2",
+            "span_end": 27,
+            "span_sha256": "d53695656f482f45bb62b3a4ce2dbdcb4c5f4743fdac0beeee5f80f39e259cdc",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川900型：容量为82 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "青川900型的容量：82 L[资料 2]。\n青川900型的离线支持：支持离线运行[资料 2]。\n白岭900型的容量：24 L[资料 1]。\n白岭900型的离线支持：不支持离线运行[资料 1]。"
+    },
+    "category": 0,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "比较青川900型与白岭900型的容量和离线支持，逐项给出来源，未记载或冲突请明确说明。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "holdout-0-s1",
+          "id": "holdout-0-s1@0:28:68b696837284",
+          "metadata": {
+            "parent_source_id": "holdout-0-s1",
+            "span_end": 28,
+            "span_sha256": "68b696837284576ac057c7a1c14bfa3e6cce867fb4979781a25f16cb9186a414",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭900型：容量为24 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "holdout-0-s2",
+          "id": "holdout-0-s2@0:27:d53695656f48",
+          "metadata": {
+            "parent_source_id": "holdout-0-s2",
+            "span_end": 27,
+            "span_sha256": "d53695656f482f45bb62b3a4ce2dbdcb4c5f4743fdac0beeee5f80f39e259cdc",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川900型：容量为82 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "9c4d7e3ce03ccea10287bdbf0106021c694ad654e383ed8dcb14f913fd90cce0"
+}

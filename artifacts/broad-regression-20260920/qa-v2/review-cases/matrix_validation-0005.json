@@ -1,0 +1,291 @@
+{
+  "result": {
+    "case_id": "matrix_validation-0005",
+    "suite": "matrix_validation",
+    "question": "比较青川505型与白岭505型的流量和离线支持，逐项给出来源，未记载或冲突请明确说明。保留原单位，不要直接排名。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "青川505型：流量为4 L/min；离线支持为支持离线运行。[资料 2]\n白岭505型：流量为29 kg/min；离线支持为不支持离线运行。[资料 1]",
+    "sources": [
+      {
+        "id": "validation-5-s1@0:53:7827006655f4",
+        "document_id": "validation-5-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "白岭505型：流量为29 kg/min；离线支持为不支持离线运行。资料没有提供介质密度，也没有可比性结论。",
+        "metadata": {
+          "parent_source_id": "validation-5-s1",
+          "span_end": 53,
+          "span_sha256": "7827006655f422420e0a410fde5a9e61949733dbf6132ece306af1bbe581a6a5",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "validation-5-s2@0:50:494fa94274aa",
+        "document_id": "validation-5-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "青川505型：流量为4 L/min；离线支持为支持离线运行。资料没有提供介质密度，也没有可比性结论。",
+        "metadata": {
+          "parent_source_id": "validation-5-s2",
+          "span_end": 50,
+          "span_sha256": "494fa94274aa03aff2fadeaf144fac35e2a6cd04f70d0a95dc0dedf9d7f2efc0",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      76
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0248.json"
+  },
+  "review": {
+    "case_id": "matrix_validation-0005",
+    "verdict": "pass",
+    "issues": [],
+    "note": "4 L/min与29 kg/min及离线肯定/否定正确，引用2/1准确，未违反不排名要求；未额外解释密度差异。"
+  },
+  "input": {
+    "id": "matrix_validation-0005",
+    "suite": "matrix_validation",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/validation.cases.jsonl",
+    "origin_index": 5,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "validation-5-s1",
+          "id": "validation-5-s1@0:53:7827006655f4",
+          "metadata": {
+            "parent_source_id": "validation-5-s1",
+            "span_end": 53,
+            "span_sha256": "7827006655f422420e0a410fde5a9e61949733dbf6132ece306af1bbe581a6a5",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭505型：流量为29 kg/min；离线支持为不支持离线运行。资料没有提供介质密度，也没有可比性结论。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-5-s2",
+          "id": "validation-5-s2@0:50:494fa94274aa",
+          "metadata": {
+            "parent_source_id": "validation-5-s2",
+            "span_end": 50,
+            "span_sha256": "494fa94274aa03aff2fadeaf144fac35e2a6cd04f70d0a95dc0dedf9d7f2efc0",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川505型：流量为4 L/min；离线支持为支持离线运行。资料没有提供介质密度，也没有可比性结论。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "history": [],
+      "id": "validation-005",
+      "kind": 5,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "流量",
+          "id": "c1",
+          "object": "青川505型",
+          "question": "青川505型的流量是什么？",
+          "source_ids": [
+            "validation-5-s2@0:50:494fa94274aa"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "青川505型",
+          "question": "青川505型的离线支持是什么？",
+          "source_ids": [
+            "validation-5-s2@0:50:494fa94274aa"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "流量",
+          "id": "c3",
+          "object": "白岭505型",
+          "question": "白岭505型的流量是什么？",
+          "source_ids": [
+            "validation-5-s1@0:53:7827006655f4"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "白岭505型",
+          "question": "白岭505型的离线支持是什么？",
+          "source_ids": [
+            "validation-5-s1@0:53:7827006655f4"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "流量",
+            "id": "c1",
+            "object": "青川505型",
+            "question": "青川505型的流量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "青川505型",
+            "question": "青川505型的离线支持是什么？"
+          },
+          {
+            "dimension": "流量",
+            "id": "c3",
+            "object": "白岭505型",
+            "question": "白岭505型的流量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "白岭505型",
+            "question": "白岭505型的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "流量",
+          "离线支持"
+        ],
+        "objects": [
+          "青川505型",
+          "白岭505型"
+        ]
+      },
+      "question": "比较青川505型与白岭505型的流量和离线支持，逐项给出来源，未记载或冲突请明确说明。保留原单位，不要直接排名。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "白岭505型",
+          "text": "白岭505型：流量为29 kg/min；离线支持为不支持离线运行。资料没有提供介质密度，也没有可比性结论。",
+          "values": {
+            "流量": "29 kg/min",
+            "离线支持": "不支持离线运行"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "青川505型",
+          "text": "青川505型：流量为4 L/min；离线支持为支持离线运行。资料没有提供介质密度，也没有可比性结论。",
+          "values": {
+            "流量": "4 L/min",
+            "离线支持": "支持离线运行"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "validation-5-s1",
+          "id": "validation-5-s1@0:53:7827006655f4",
+          "metadata": {
+            "parent_source_id": "validation-5-s1",
+            "span_end": 53,
+            "span_sha256": "7827006655f422420e0a410fde5a9e61949733dbf6132ece306af1bbe581a6a5",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭505型：流量为29 kg/min；离线支持为不支持离线运行。资料没有提供介质密度，也没有可比性结论。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-5-s2",
+          "id": "validation-5-s2@0:50:494fa94274aa",
+          "metadata": {
+            "parent_source_id": "validation-5-s2",
+            "span_end": 50,
+            "span_sha256": "494fa94274aa03aff2fadeaf144fac35e2a6cd04f70d0a95dc0dedf9d7f2efc0",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川505型：流量为4 L/min；离线支持为支持离线运行。资料没有提供介质密度，也没有可比性结论。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "青川505型的流量：4 L/min[资料 2]。\n青川505型的离线支持：支持离线运行[资料 2]。\n白岭505型的流量：29 kg/min[资料 1]。\n白岭505型的离线支持：不支持离线运行[资料 1]。\n两者流量单位不同，资料未给密度，不能直接判断谁更大。"
+    },
+    "category": 5,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "比较青川505型与白岭505型的流量和离线支持，逐项给出来源，未记载或冲突请明确说明。保留原单位，不要直接排名。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "validation-5-s1",
+          "id": "validation-5-s1@0:53:7827006655f4",
+          "metadata": {
+            "parent_source_id": "validation-5-s1",
+            "span_end": 53,
+            "span_sha256": "7827006655f422420e0a410fde5a9e61949733dbf6132ece306af1bbe581a6a5",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭505型：流量为29 kg/min；离线支持为不支持离线运行。资料没有提供介质密度，也没有可比性结论。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-5-s2",
+          "id": "validation-5-s2@0:50:494fa94274aa",
+          "metadata": {
+            "parent_source_id": "validation-5-s2",
+            "span_end": 50,
+            "span_sha256": "494fa94274aa03aff2fadeaf144fac35e2a6cd04f70d0a95dc0dedf9d7f2efc0",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川505型：流量为4 L/min；离线支持为支持离线运行。资料没有提供介质密度，也没有可比性结论。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "d9e5110e0c4df512deeb46f25edbb0adc069e5746fe2124fa6d48fb60eb930fc"
+}

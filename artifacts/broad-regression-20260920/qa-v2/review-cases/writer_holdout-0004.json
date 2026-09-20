@@ -1,0 +1,171 @@
+{
+  "result": {
+    "case_id": "writer_holdout-0004",
+    "suite": "writer_holdout",
+    "question": "柏津S4 3.0的储水容量到底是多少？两份记录没有权威排序或更正声明，若无法确定，分别列出记载并说明冲突。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "柏津S4 3.0的储水容量记载不一致：甲记录写道：柏津 S4 的储水容量是 9 L。[资料 1]；乙记录写道：柏津 S4 的储水容量是 12 L。[资料 2]。",
+    "sources": [
+      {
+        "id": "h5-s1",
+        "document_id": "h5-d1",
+        "source": "synthetic-holdout-20260916",
+        "title": "甲记录",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "版本号同为 3.0 的甲记录写道：柏津 S4 的储水容量是 9 L。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "h5-s2",
+        "document_id": "h5-d2",
+        "source": "synthetic-holdout-20260916",
+        "title": "乙记录",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "版本号同为 3.0 的乙记录写道：柏津 S4 的储水容量是 12 L。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      80
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0405.json"
+  },
+  "review": {
+    "case_id": "writer_holdout-0004",
+    "verdict": "pass",
+    "issues": [],
+    "note": "明确记载不一致，分别列9L/12L及各自来源，没有擅选权威。"
+  },
+  "input": {
+    "id": "writer_holdout-0004",
+    "suite": "writer_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/writer-p0-20260916/holdout.jsonl",
+    "origin_index": 4,
+    "original_case": {
+      "expected_decision": "partial_abstain",
+      "expected_facts": [
+        {
+          "claim": "甲记录记载9 L。",
+          "id": "F1",
+          "supporting_quotes": [
+            {
+              "end": 34,
+              "material_id": "h5-s1",
+              "quote": "版本号同为 3.0 的甲记录写道：柏津 S4 的储水容量是 9 L。",
+              "start": 0
+            }
+          ]
+        },
+        {
+          "claim": "乙记录记载12 L。",
+          "id": "F2",
+          "supporting_quotes": [
+            {
+              "end": 35,
+              "material_id": "h5-s2",
+              "quote": "版本号同为 3.0 的乙记录写道：柏津 S4 的储水容量是 12 L。",
+              "start": 0
+            }
+          ]
+        }
+      ],
+      "history": [],
+      "id": "smoke_005",
+      "materials": [
+        {
+          "document_id": "h5-d1",
+          "id": "h5-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "版本号同为 3.0 的甲记录写道：柏津 S4 的储水容量是 9 L。",
+          "source": "synthetic-holdout-20260916",
+          "title": "甲记录",
+          "uri": null
+        },
+        {
+          "document_id": "h5-d2",
+          "id": "h5-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "版本号同为 3.0 的乙记录写道：柏津 S4 的储水容量是 12 L。",
+          "source": "synthetic-holdout-20260916",
+          "title": "乙记录",
+          "uri": null
+        }
+      ],
+      "oracle_notes": [
+        "按冻结原文与完整历史逐题复核；每项事实和引用均须有据。",
+        "标题不能替代正文；资料不足不是数值为零；冲突未获裁定不能单选。"
+      ],
+      "phase": "frozen_holdout",
+      "provenance": {
+        "kind": "new_synthetic_author_controlled_holdout",
+        "materials_sha256": "117915259b53826f243a3bdc69dd9ddb93318e2305fd1ed84ee710a96fdcf784"
+      },
+      "question": "柏津S4 3.0的储水容量到底是多少？两份记录没有权威排序或更正声明，若无法确定，分别列出记载并说明冲突。"
+    },
+    "category": "writer_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "柏津S4 3.0的储水容量到底是多少？两份记录没有权威排序或更正声明，若无法确定，分别列出记载并说明冲突。",
+      "history": [],
+      "materials": [
+        {
+          "document_id": "h5-d1",
+          "id": "h5-s1",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "版本号同为 3.0 的甲记录写道：柏津 S4 的储水容量是 9 L。",
+          "source": "synthetic-holdout-20260916",
+          "title": "甲记录",
+          "uri": null
+        },
+        {
+          "document_id": "h5-d2",
+          "id": "h5-s2",
+          "metadata": {
+            "synthetic": true
+          },
+          "score": 1.0,
+          "snippet": "版本号同为 3.0 的乙记录写道：柏津 S4 的储水容量是 12 L。",
+          "source": "synthetic-holdout-20260916",
+          "title": "乙记录",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "d21c022698fe349b3f447cab896a14f950f3bf741c44226a07152345dba41730"
+}

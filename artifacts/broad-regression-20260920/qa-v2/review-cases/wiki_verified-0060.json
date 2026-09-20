@@ -1,0 +1,98 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0060",
+    "suite": "wiki_verified",
+    "question": "辽宁鸿祥实业集团是哪一年成立的？",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "辽宁鸿祥实业集团是2000年1月成立的[资料 1]。",
+    "sources": [
+      {
+        "id": "wiki_verified-0060-reference",
+        "document_id": "7802ea3dc8b0ca72c904bfc6",
+        "source": "retained-historical-reference",
+        "title": "辽宁鸿祥实业集团",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "辽宁鸿祥实业集团下属的全资、控股、合资合营公司有：丹东鸿祥实业发展有限公司（2000年1月成立，法定代表人马晓红）、辽宁鸿祥国际货运代理有限公司（2001年10月成立，法定代表人马晓杰）、辽宁鸿祥国际旅行社有限公司（2005年2月成立，法定代表人马晓红）、丹东鸿祥边境贸易信息咨询服务有限公司（2010年10月成立，法定代表人马晓红）、丹东柳京酒店、沈阳七宝山饭店。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+          "origin_index": 60
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      26
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 1,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0217.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0060",
+    "verdict": "fail",
+    "issues": [
+      "entity_relation_mismatch",
+      "reference_scope_problem"
+    ],
+    "note": "把下属丹东鸿祥实业发展有限公司的2000年1月成立日期当集团成立日期。保留的参考本身列子公司日期，不能直接支持集团；原题/参考可能存在标注范围问题，未修改原金标。"
+  },
+  "input": {
+    "id": "wiki_verified-0060",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 60,
+    "original_case": {
+      "question": "辽宁鸿祥实业集团是哪一年成立的？",
+      "question_type": "time",
+      "style": "direct",
+      "expected_title": "辽宁鸿祥实业集团",
+      "expected_document_id": "7802ea3dc8b0ca72c904bfc6",
+      "expected_terms": [
+        "2000年1月"
+      ],
+      "reference": "辽宁鸿祥实业集团下属的全资、控股、合资合营公司有：丹东鸿祥实业发展有限公司（2000年1月成立，法定代表人马晓红）、辽宁鸿祥国际货运代理有限公司（2001年10月成立，法定代表人马晓杰）、辽宁鸿祥国际旅行社有限公司（2005年2月成立，法定代表人马晓红）、丹东鸿祥边境贸易信息咨询服务有限公司（2010年10月成立，法定代表人马晓红）、丹东柳京酒店、沈阳七宝山饭店。",
+      "section": "辽宁鸿祥实业集团 > 简介"
+    },
+    "category": "time",
+    "style": "direct",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "辽宁鸿祥实业集团是哪一年成立的？",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_verified-0060-reference",
+          "document_id": "7802ea3dc8b0ca72c904bfc6",
+          "title": "辽宁鸿祥实业集团",
+          "source": "retained-historical-reference",
+          "snippet": "辽宁鸿祥实业集团下属的全资、控股、合资合营公司有：丹东鸿祥实业发展有限公司（2000年1月成立，法定代表人马晓红）、辽宁鸿祥国际货运代理有限公司（2001年10月成立，法定代表人马晓杰）、辽宁鸿祥国际旅行社有限公司（2005年2月成立，法定代表人马晓红）、丹东鸿祥边境贸易信息咨询服务有限公司（2010年10月成立，法定代表人马晓红）、丹东柳京酒店、沈阳七宝山饭店。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+            "origin_index": 60
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "296133000fe849ef8bed68b5130a548b9d2208f4593992e6e8014c0cea0344d0"
+}

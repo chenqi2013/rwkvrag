@@ -1,0 +1,93 @@
+{
+  "result": {
+    "case_id": "atomic_holdout-0001",
+    "suite": "atomic_holdout",
+    "question": "栖木 A2的离线使用支持是什么？",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "栖木 A2 的离线使用支持是否定的，必须保持网络连接。[资料 1]",
+    "sources": [
+      {
+        "id": "atomic_holdout-0001-s0",
+        "document_id": "atomic_holdout-0001-d0",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "问：栖木 A2 支持离线使用吗？\n答：不支持，必须保持网络连接。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      33
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0386.json"
+  },
+  "review": {
+    "case_id": "atomic_holdout-0001",
+    "verdict": "pass",
+    "issues": [],
+    "note": "正确不支持离线，否定和引用正确。"
+  },
+  "input": {
+    "id": "atomic_holdout-0001",
+    "suite": "atomic_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/atomic-evidence-20260920/holdout.jsonl",
+    "origin_index": 1,
+    "original_case": {
+      "id": "qa",
+      "request": {
+        "object": "栖木 A2",
+        "attribute": "离线使用支持",
+        "conditions": ""
+      },
+      "texts": [
+        "问：栖木 A2 支持离线使用吗？\n答：不支持，必须保持网络连接。"
+      ],
+      "expected_values": [
+        "不支持"
+      ]
+    },
+    "category": "atomic_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "栖木 A2的离线使用支持是什么？",
+      "history": [],
+      "materials": [
+        {
+          "id": "atomic_holdout-0001-s0",
+          "document_id": "atomic_holdout-0001-d0",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "问：栖木 A2 支持离线使用吗？\n答：不支持，必须保持网络连接。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "ee254808a150fac8c07da4c6dc65098ee7c491ad1ca9825654a3370c553605c4"
+}

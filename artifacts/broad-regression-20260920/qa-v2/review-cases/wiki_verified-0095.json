@@ -1,0 +1,98 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0095",
+    "suite": "wiki_verified",
+    "question": "想去圣保罗使徒科学信息与技术大学，它的位置在哪里？",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "圣保罗使徒科学信息与技术大学位于北马其顿[资料 1]。",
+    "sources": [
+      {
+        "id": "wiki_verified-0095-reference",
+        "document_id": "993d9af5a360d8d21b925c37",
+        "source": "retained-historical-reference",
+        "title": "圣保罗使徒科学信息与技术大学",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "圣保罗使徒科学信息与技术大学 (UIST)，是一所位于北马其顿的国立大学，坐落在奥赫里德。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+          "origin_index": 95
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      27
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 0,
+      "reference_terms_total": 2,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0056.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0095",
+    "verdict": "partial",
+    "issues": [
+      "location_incomplete"
+    ],
+    "note": "只给北马其顿，遗漏材料明确的奥赫里德；对想去该校的位置问题信息不完整，已有引用支持国家。"
+  },
+  "input": {
+    "id": "wiki_verified-0095",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 95,
+    "original_case": {
+      "question": "想去圣保罗使徒科学信息与技术大学，它的位置在哪里？",
+      "question_type": "location",
+      "style": "conversational",
+      "expected_title": "圣保罗使徒科学信息与技术大学",
+      "expected_document_id": "993d9af5a360d8d21b925c37",
+      "expected_terms": [
+        "北马其顿的国立大学",
+        "坐落在奥赫里德"
+      ],
+      "reference": "圣保罗使徒科学信息与技术大学 (UIST)，是一所位于北马其顿的国立大学，坐落在奥赫里德。",
+      "section": "圣保罗使徒科学信息与技术大学"
+    },
+    "category": "location",
+    "style": "conversational",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "想去圣保罗使徒科学信息与技术大学，它的位置在哪里？",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_verified-0095-reference",
+          "document_id": "993d9af5a360d8d21b925c37",
+          "title": "圣保罗使徒科学信息与技术大学",
+          "source": "retained-historical-reference",
+          "snippet": "圣保罗使徒科学信息与技术大学 (UIST)，是一所位于北马其顿的国立大学，坐落在奥赫里德。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+            "origin_index": 95
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "59fdb754ddd83370c72da9fc447af4ca953a271ed06a2271261a8949722e5a22"
+}

@@ -1,0 +1,102 @@
+{
+  "result": {
+    "case_id": "wiki_batch2-0031",
+    "suite": "wiki_batch2",
+    "question": "Toy (歌曲)在排行和銷量認證方面都包括什么？",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "Toy (歌曲)在排行和銷量認證方面都包括美國（《告示牌》Dance Club Songs）、美國（《告示牌》Hot Dance/Electronic Songs）、排行榜（2018年）、排行榜（2019年）、美國（《告示牌》Hot Dance/Electronic Songs）[资料 1]。",
+    "sources": [
+      {
+        "id": "wiki_batch2-0031-reference",
+        "document_id": "becc97d03379615b8294e910",
+        "source": "retained-historical-reference",
+        "title": "Toy (歌曲)",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "表格字段：排行榜（2018年）、排名 排行榜（2018年）列表：美國（《告示牌》Dance Club Songs）、美國（《告示牌》Hot Dance/Electronic Songs）、排行榜（2019年）、美國（《告示牌》Hot Dance/Electronic Songs）",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+          "origin_index": 31
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      147
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 4,
+      "reference_terms_total": 4,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0472.json"
+  },
+  "review": {
+    "case_id": "wiki_batch2-0031",
+    "verdict": "partial",
+    "issues": [
+      "reference_scope_gap",
+      "table_header_as_fact",
+      "missing_uncertainty"
+    ],
+    "note": "参考本身为扁平表字段列表，未含销量认证；答案把年份表头当枚举内容，未说明认证资料不足。"
+  },
+  "input": {
+    "id": "wiki_batch2-0031",
+    "suite": "wiki_batch2",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+    "origin_index": 31,
+    "original_case": {
+      "question": "Toy (歌曲)在排行和銷量認證方面都包括什么？",
+      "question_type": "list",
+      "style": "direct",
+      "expected_title": "Toy (歌曲)",
+      "expected_document_id": "becc97d03379615b8294e910",
+      "expected_terms": [
+        "美國（《告示牌》Dance Club Songs）",
+        "美國（《告示牌》Hot Dance/Electronic Songs）",
+        "排行榜（2019年）",
+        "美國（《告示牌》Hot Dance/Electronic Songs）"
+      ],
+      "reference": "表格字段：排行榜（2018年）、排名 排行榜（2018年）列表：美國（《告示牌》Dance Club Songs）、美國（《告示牌》Hot Dance/Electronic Songs）、排行榜（2019年）、美國（《告示牌》Hot Dance/Electronic Songs）",
+      "section": "Toy (歌曲) > 排行和銷量認證"
+    },
+    "category": "list",
+    "style": "direct",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "Toy (歌曲)在排行和銷量認證方面都包括什么？",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_batch2-0031-reference",
+          "document_id": "becc97d03379615b8294e910",
+          "title": "Toy (歌曲)",
+          "source": "retained-historical-reference",
+          "snippet": "表格字段：排行榜（2018年）、排名 排行榜（2018年）列表：美國（《告示牌》Dance Club Songs）、美國（《告示牌》Hot Dance/Electronic Songs）、排行榜（2019年）、美國（《告示牌》Hot Dance/Electronic Songs）",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_batch2.json",
+            "origin_index": 31
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "0393706f684454e68f63efcd8e586ac8d634639a206a644b506b43543c2d76d4"
+}

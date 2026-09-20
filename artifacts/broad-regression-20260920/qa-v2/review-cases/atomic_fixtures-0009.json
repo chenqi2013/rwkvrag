@@ -1,0 +1,96 @@
+{
+  "result": {
+    "case_id": "atomic_fixtures-0009",
+    "suite": "atomic_fixtures",
+    "question": "松河 T8的首月实际交付数量是什么？",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "松河 T8 首月实际交付数量未记载。[资料 1]",
+    "sources": [
+      {
+        "id": "atomic_fixtures-0009-s0",
+        "document_id": "atomic_fixtures-0009-d0",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "松河 T8 首月收到预约 80 台；本材料未记载实际交付数量。\n附件目录：维护联系方式另见服务页。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      24
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0282.json"
+  },
+  "review": {
+    "case_id": "atomic_fixtures-0009",
+    "verdict": "pass",
+    "issues": [],
+    "note": "正确未记载，不把预约80当实际交付。"
+  },
+  "input": {
+    "id": "atomic_fixtures-0009",
+    "suite": "atomic_fixtures",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/atomic-evidence-20260920/fixtures.jsonl",
+    "origin_index": 9,
+    "original_case": {
+      "id": "missing-variant",
+      "request": {
+        "object": "松河 T8",
+        "attribute": "首月实际交付数量",
+        "conditions": ""
+      },
+      "texts": [
+        "松河 T8 首月收到预约 80 台；本材料未记载实际交付数量。\n附件目录：维护联系方式另见服务页。"
+      ],
+      "expected_values": [
+        null
+      ],
+      "expected_kinds": [
+        "not_stated"
+      ]
+    },
+    "category": "atomic_fixtures",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "松河 T8的首月实际交付数量是什么？",
+      "history": [],
+      "materials": [
+        {
+          "id": "atomic_fixtures-0009-s0",
+          "document_id": "atomic_fixtures-0009-d0",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "松河 T8 首月收到预约 80 台；本材料未记载实际交付数量。\n附件目录：维护联系方式另见服务页。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "80a49d9e0eda7bf73118aa3f9426a37bf7f32e249aad8929af7abb54de0a380a"
+}

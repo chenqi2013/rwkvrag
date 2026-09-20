@@ -1,0 +1,97 @@
+{
+  "result": {
+    "case_id": "atomic_holdout-0000",
+    "suite": "atomic_holdout",
+    "question": "星岚 K4的续航是什么？",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "星岚 K4 的续航为 11 小时[资料 1]。",
+    "sources": [
+      {
+        "id": "atomic_holdout-0000-s0",
+        "document_id": "atomic_holdout-0000-d0",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "# 星岚 K4\n| 模式 | 续航 |\n| --- | --- |\n| 节能 | 11 小时 |\n| 高性能 | 4 小时 |",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      23
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0404.json"
+  },
+  "review": {
+    "case_id": "atomic_holdout-0000",
+    "verdict": "partial",
+    "issues": [
+      "missing_condition",
+      "missing_fact"
+    ],
+    "note": "只给11小时，遗漏节能条件和高性能4小时。"
+  },
+  "input": {
+    "id": "atomic_holdout-0000",
+    "suite": "atomic_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/atomic-evidence-20260920/holdout.jsonl",
+    "origin_index": 0,
+    "original_case": {
+      "id": "table",
+      "request": {
+        "object": "星岚 K4",
+        "attribute": "续航",
+        "conditions": ""
+      },
+      "texts": [
+        "# 星岚 K4\n| 模式 | 续航 |\n| --- | --- |\n| 节能 | 11 小时 |\n| 高性能 | 4 小时 |"
+      ],
+      "expected_values": [
+        "11 小时",
+        "4 小时"
+      ]
+    },
+    "category": "atomic_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "星岚 K4的续航是什么？",
+      "history": [],
+      "materials": [
+        {
+          "id": "atomic_holdout-0000-s0",
+          "document_id": "atomic_holdout-0000-d0",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "# 星岚 K4\n| 模式 | 续航 |\n| --- | --- |\n| 节能 | 11 小时 |\n| 高性能 | 4 小时 |",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "f11f088ddfddbe23392870d6ad519a3048d8abbc6b30854c35aa4ff66e1dc489"
+}

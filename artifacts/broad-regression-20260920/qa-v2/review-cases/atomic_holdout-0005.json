@@ -1,0 +1,117 @@
+{
+  "result": {
+    "case_id": "atomic_holdout-0005",
+    "suite": "atomic_holdout",
+    "question": "清雨 H5的退货数量是什么？",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "清雨 H5 的退货数量是 0 台。[资料 1]",
+    "sources": [
+      {
+        "id": "atomic_holdout-0005-s0",
+        "document_id": "atomic_holdout-0005-d0",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "清雨 H5 发货 35 台，退货数量为 0 台。",
+        "metadata": {
+          "synthetic": true
+        }
+      },
+      {
+        "id": "atomic_holdout-0005-s1",
+        "document_id": "atomic_holdout-0005-d1",
+        "source": "synthetic-regression",
+        "title": "原始测试材料",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "清雨 H5 预约登记为 120 人。",
+        "metadata": {
+          "synthetic": true
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      23
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 2,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0381.json"
+  },
+  "review": {
+    "case_id": "atomic_holdout-0005",
+    "verdict": "pass",
+    "issues": [],
+    "note": "退货0台正确且未混淆35台发货或120人预约。"
+  },
+  "input": {
+    "id": "atomic_holdout-0005",
+    "suite": "atomic_holdout",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/atomic-evidence-20260920/holdout.jsonl",
+    "origin_index": 5,
+    "original_case": {
+      "id": "zero_holdout",
+      "request": {
+        "object": "清雨 H5",
+        "attribute": "退货数量",
+        "conditions": ""
+      },
+      "texts": [
+        "清雨 H5 发货 35 台，退货数量为 0 台。",
+        "清雨 H5 预约登记为 120 人。"
+      ],
+      "expected_values": [
+        "0 台"
+      ]
+    },
+    "category": "atomic_holdout",
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "清雨 H5的退货数量是什么？",
+      "history": [],
+      "materials": [
+        {
+          "id": "atomic_holdout-0005-s0",
+          "document_id": "atomic_holdout-0005-d0",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "清雨 H5 发货 35 台，退货数量为 0 台。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        },
+        {
+          "id": "atomic_holdout-0005-s1",
+          "document_id": "atomic_holdout-0005-d1",
+          "source": "synthetic-regression",
+          "title": "原始测试材料",
+          "snippet": "清雨 H5 预约登记为 120 人。",
+          "score": 1.0,
+          "metadata": {
+            "synthetic": true
+          }
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "4b687803bd98c312f61516c78b4f11789efd5fd6f663f4bc0f9b6d544810ed88"
+}

@@ -1,0 +1,97 @@
+{
+  "result": {
+    "case_id": "wiki_verified-0103",
+    "suite": "wiki_verified",
+    "question": "本岑施維爾的人口是多少？",
+    "execution_scope": "fixed_historical_reference",
+    "http_status": 200,
+    "error": null,
+    "answer": "本岑施維爾的人口是548人[资料 1]。",
+    "sources": [
+      {
+        "id": "wiki_verified-0103-reference",
+        "document_id": "da472b8081a336c8439d36da",
+        "source": "retained-historical-reference",
+        "title": "本岑施維爾",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "本岑施維爾是瑞士的城鎮，位於該國北部，由阿爾高州負責管轄，面積2.46平方公里，海拔高度459米，2010年人口548，七成人口信奉基督教，人口密度每平方公里223人。",
+        "metadata": {
+          "reference_only": true,
+          "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+          "origin_index": 103
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      20
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 1,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": true,
+      "expected_title_returned": null,
+      "reference_terms_matched": 0,
+      "reference_terms_total": 1,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0216.json"
+  },
+  "review": {
+    "case_id": "wiki_verified-0103",
+    "verdict": "partial",
+    "issues": [
+      "date_scope_omitted"
+    ],
+    "note": "人口548正确，遗漏材料限定的2010年，引用来源正确。"
+  },
+  "input": {
+    "id": "wiki_verified-0103",
+    "suite": "wiki_verified",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+    "origin_index": 103,
+    "original_case": {
+      "question": "本岑施維爾的人口是多少？",
+      "question_type": "numeric",
+      "style": "direct",
+      "expected_title": "本岑施維爾",
+      "expected_document_id": "da472b8081a336c8439d36da",
+      "expected_terms": [
+        "223人"
+      ],
+      "reference": "本岑施維爾是瑞士的城鎮，位於該國北部，由阿爾高州負責管轄，面積2.46平方公里，海拔高度459米，2010年人口548，七成人口信奉基督教，人口密度每平方公里223人。",
+      "section": "本岑施維爾"
+    },
+    "category": "numeric",
+    "style": "direct",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "本岑施維爾的人口是多少？",
+      "history": [],
+      "materials": [
+        {
+          "id": "wiki_verified-0103-reference",
+          "document_id": "da472b8081a336c8439d36da",
+          "title": "本岑施維爾",
+          "source": "retained-historical-reference",
+          "snippet": "本岑施維爾是瑞士的城鎮，位於該國北部，由阿爾高州負責管轄，面積2.46平方公里，海拔高度459米，2010年人口548，七成人口信奉基督教，人口密度每平方公里223人。",
+          "score": 1.0,
+          "metadata": {
+            "reference_only": true,
+            "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/wiki_qa_200_diverse_cases_verified.json",
+            "origin_index": 103
+          }
+        }
+      ]
+    },
+    "execution_scope": "fixed_historical_reference"
+  },
+  "raw_file_sha256": "e4925226ce51568c04f74b57cc713979a4badd35e40ace9ed84e1125ed953a63"
+}

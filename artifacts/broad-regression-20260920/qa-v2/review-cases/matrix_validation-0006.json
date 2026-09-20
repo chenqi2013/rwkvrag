@@ -1,0 +1,364 @@
+{
+  "result": {
+    "case_id": "matrix_validation-0006",
+    "suite": "matrix_validation",
+    "question": "按最后确定的范围逐项比较，并列来源，采用核准资料。",
+    "execution_scope": "original_fixed_material",
+    "http_status": 200,
+    "error": null,
+    "answer": "青川506型：容量67 L；离线支持支持离线运行。[资料 1]\n白岭506型：容量85 L；离线支持不支持离线运行。[资料 3]",
+    "sources": [
+      {
+        "id": "validation-6-s1@0:27:1b174e869e09",
+        "document_id": "validation-6-s1",
+        "source": "synthetic-matrix",
+        "title": "记录1",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "青川506型：容量为67 L；离线支持为支持离线运行。",
+        "metadata": {
+          "parent_source_id": "validation-6-s1",
+          "span_end": 27,
+          "span_sha256": "1b174e869e09637554b0d2b4a1f5d000fdae1c354b56417ef763b42fb888d739",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "validation-6-s2@0:33:5051a7687145",
+        "document_id": "validation-6-s2",
+        "source": "synthetic-matrix",
+        "title": "记录2",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "已废止草案：青川506型容量暂填999 L，本记录不能作为核准值。",
+        "metadata": {
+          "parent_source_id": "validation-6-s2",
+          "span_end": 33,
+          "span_sha256": "5051a76871456247acd410f84403637d1039791a986ba049868afb8a0331cf49",
+          "span_start": 0
+        }
+      },
+      {
+        "id": "validation-6-s3@0:28:0b181770e5c3",
+        "document_id": "validation-6-s3",
+        "source": "synthetic-matrix",
+        "title": "记录3",
+        "uri": null,
+        "score": 1.0,
+        "snippet": "白岭506型：容量为85 L；离线支持为不支持离线运行。",
+        "metadata": {
+          "parent_source_id": "validation-6-s3",
+          "span_end": 28,
+          "span_sha256": "0b181770e5c30a9dca7b1f9f1730f3f272c38d5b898dd715edf2f8d61776a927",
+          "span_start": 0
+        }
+      }
+    ],
+    "status": "completed",
+    "answer_span": [
+      0,
+      64
+    ],
+    "answer_modified": false,
+    "diagnostics": {
+      "empty_answer": false,
+      "source_count": 3,
+      "has_numeric_citation": true,
+      "citation_out_of_range": false,
+      "generation_status": "completed",
+      "refusal_text_indicator": false,
+      "expected_document_returned": null,
+      "expected_title_returned": null,
+      "reference_terms_matched": null,
+      "reference_terms_total": null,
+      "semantic_accuracy_verified": false
+    },
+    "raw_file": "calls/0373.json"
+  },
+  "review": {
+    "case_id": "matrix_validation-0006",
+    "verdict": "pass",
+    "issues": [
+      "historical_gold_citation_mismatch"
+    ],
+    "note": "四格与历史范围均正确，废止999排除。真实白岭来源3引用正确；旧gold编号2未同步草案插入，应保留差异而不误判答案。"
+  },
+  "input": {
+    "id": "matrix_validation-0006",
+    "suite": "matrix_validation",
+    "origin": "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/eval/task-matrix-20260920/data-v4/validation.cases.jsonl",
+    "origin_index": 6,
+    "original_case": {
+      "candidates": [
+        {
+          "document_id": "validation-6-s1",
+          "id": "validation-6-s1@0:27:1b174e869e09",
+          "metadata": {
+            "parent_source_id": "validation-6-s1",
+            "span_end": 27,
+            "span_sha256": "1b174e869e09637554b0d2b4a1f5d000fdae1c354b56417ef763b42fb888d739",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川506型：容量为67 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-6-s2",
+          "id": "validation-6-s2@0:33:5051a7687145",
+          "metadata": {
+            "parent_source_id": "validation-6-s2",
+            "span_end": 33,
+            "span_sha256": "5051a76871456247acd410f84403637d1039791a986ba049868afb8a0331cf49",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "已废止草案：青川506型容量暂填999 L，本记录不能作为核准值。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        },
+        {
+          "document_id": "validation-6-s3",
+          "id": "validation-6-s3@0:28:0b181770e5c3",
+          "metadata": {
+            "parent_source_id": "validation-6-s3",
+            "span_end": 28,
+            "span_sha256": "0b181770e5c30a9dca7b1f9f1730f3f272c38d5b898dd715edf2f8d61776a927",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭506型：容量为85 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ],
+      "history": [
+        {
+          "content": "比较青川506型与白岭506型的容量、离线支持和价格。",
+          "role": "user"
+        },
+        {
+          "content": "撤回价格，只保留容量和离线支持，采用核准资料。",
+          "role": "user"
+        }
+      ],
+      "id": "validation-006",
+      "kind": 6,
+      "matrix": [
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c1",
+          "object": "青川506型",
+          "question": "青川506型的容量是什么？",
+          "source_ids": [
+            "validation-6-s1@0:27:1b174e869e09"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c2",
+          "object": "青川506型",
+          "question": "青川506型的离线支持是什么？",
+          "source_ids": [
+            "validation-6-s1@0:27:1b174e869e09"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "容量",
+          "id": "c3",
+          "object": "白岭506型",
+          "question": "白岭506型的容量是什么？",
+          "source_ids": [
+            "validation-6-s3@0:28:0b181770e5c3"
+          ],
+          "status": "supported"
+        },
+        {
+          "assessment_status": "completed",
+          "dimension": "离线支持",
+          "id": "c4",
+          "object": "白岭506型",
+          "question": "白岭506型的离线支持是什么？",
+          "source_ids": [
+            "validation-6-s3@0:28:0b181770e5c3"
+          ],
+          "status": "supported"
+        }
+      ],
+      "plan": {
+        "cells": [
+          {
+            "dimension": "容量",
+            "id": "c1",
+            "object": "青川506型",
+            "question": "青川506型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c2",
+            "object": "青川506型",
+            "question": "青川506型的离线支持是什么？"
+          },
+          {
+            "dimension": "容量",
+            "id": "c3",
+            "object": "白岭506型",
+            "question": "白岭506型的容量是什么？"
+          },
+          {
+            "dimension": "离线支持",
+            "id": "c4",
+            "object": "白岭506型",
+            "question": "白岭506型的离线支持是什么？"
+          }
+        ],
+        "conditions": [],
+        "dimensions": [
+          "容量",
+          "离线支持"
+        ],
+        "objects": [
+          "青川506型",
+          "白岭506型"
+        ]
+      },
+      "question": "按最后确定的范围逐项比较，并列来源，采用核准资料。",
+      "records": [
+        {
+          "eligible": true,
+          "object": "青川506型",
+          "text": "青川506型：容量为67 L；离线支持为支持离线运行。",
+          "values": {
+            "容量": "67 L",
+            "离线支持": "支持离线运行"
+          }
+        },
+        {
+          "eligible": false,
+          "object": "青川506型",
+          "text": "已废止草案：青川506型容量暂填999 L，本记录不能作为核准值。",
+          "values": {
+            "容量": "999 L"
+          }
+        },
+        {
+          "eligible": true,
+          "object": "白岭506型",
+          "text": "白岭506型：容量为85 L；离线支持为不支持离线运行。",
+          "values": {
+            "容量": "85 L",
+            "离线支持": "不支持离线运行"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "document_id": "validation-6-s1",
+          "id": "validation-6-s1@0:27:1b174e869e09",
+          "metadata": {
+            "parent_source_id": "validation-6-s1",
+            "span_end": 27,
+            "span_sha256": "1b174e869e09637554b0d2b4a1f5d000fdae1c354b56417ef763b42fb888d739",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川506型：容量为67 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-6-s3",
+          "id": "validation-6-s3@0:28:0b181770e5c3",
+          "metadata": {
+            "parent_source_id": "validation-6-s3",
+            "span_end": 28,
+            "span_sha256": "0b181770e5c30a9dca7b1f9f1730f3f272c38d5b898dd715edf2f8d61776a927",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭506型：容量为85 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ],
+      "synthetic": true,
+      "target": "青川506型的容量：67 L[资料 1]。\n青川506型的离线支持：支持离线运行[资料 1]。\n白岭506型的容量：85 L[资料 2]。\n白岭506型的离线支持：不支持离线运行[资料 2]。"
+    },
+    "category": 6,
+    "style": "unspecified",
+    "endpoint": "/v1/material-ask",
+    "payload": {
+      "question": "按最后确定的范围逐项比较，并列来源，采用核准资料。",
+      "history": [
+        {
+          "content": "比较青川506型与白岭506型的容量、离线支持和价格。",
+          "role": "user"
+        },
+        {
+          "content": "撤回价格，只保留容量和离线支持，采用核准资料。",
+          "role": "user"
+        }
+      ],
+      "materials": [
+        {
+          "document_id": "validation-6-s1",
+          "id": "validation-6-s1@0:27:1b174e869e09",
+          "metadata": {
+            "parent_source_id": "validation-6-s1",
+            "span_end": 27,
+            "span_sha256": "1b174e869e09637554b0d2b4a1f5d000fdae1c354b56417ef763b42fb888d739",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "青川506型：容量为67 L；离线支持为支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录1",
+          "uri": null
+        },
+        {
+          "document_id": "validation-6-s2",
+          "id": "validation-6-s2@0:33:5051a7687145",
+          "metadata": {
+            "parent_source_id": "validation-6-s2",
+            "span_end": 33,
+            "span_sha256": "5051a76871456247acd410f84403637d1039791a986ba049868afb8a0331cf49",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "已废止草案：青川506型容量暂填999 L，本记录不能作为核准值。",
+          "source": "synthetic-matrix",
+          "title": "记录2",
+          "uri": null
+        },
+        {
+          "document_id": "validation-6-s3",
+          "id": "validation-6-s3@0:28:0b181770e5c3",
+          "metadata": {
+            "parent_source_id": "validation-6-s3",
+            "span_end": 28,
+            "span_sha256": "0b181770e5c30a9dca7b1f9f1730f3f272c38d5b898dd715edf2f8d61776a927",
+            "span_start": 0
+          },
+          "score": 1.0,
+          "snippet": "白岭506型：容量为85 L；离线支持为不支持离线运行。",
+          "source": "synthetic-matrix",
+          "title": "记录3",
+          "uri": null
+        }
+      ]
+    },
+    "execution_scope": "original_fixed_material"
+  },
+  "raw_file_sha256": "db27f07146048712849d84601feb495da94108c3ffb9a49909774c944129a08b"
+}

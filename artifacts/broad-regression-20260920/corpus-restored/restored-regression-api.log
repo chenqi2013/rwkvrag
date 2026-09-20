@@ -1,0 +1,98 @@
+INFO:     Started server process [752262]
+INFO:     Waiting for application startup.
+ERROR:    Traceback (most recent call last):
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/starlette/routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 232, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ~~~~~~~~~~~~~~~~^^^^^
+  File "/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 232, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ~~~~~~~~~~~~~~~~^^^^^
+  File "/home/chase/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/src/llamaindex_retrieval/api.py", line 36, in lifespan
+    await repository.connect()
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/src/llamaindex_retrieval/repository.py", line 184, in connect
+    await self.files.create_index(
+        [("knowledge_base_id", ASCENDING), ("sha256", ASCENDING)], unique=True
+    )
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/collection.py", line 2396, in create_index
+    return (await self._create_indexes([index], session, **cmd_options))[0]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/_csot.py", line 115, in csot_wrapper
+    return await func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/collection.py", line 2276, in _create_indexes
+    return await self.database.client._retryable_write(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        False, inner, session, _Op.CREATE_INDEXES
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/mongo_client.py", line 2117, in _retryable_write
+    return await self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/mongo_client.py", line 1990, in _retry_with_session
+    return await self._retry_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/_csot.py", line 115, in csot_wrapper
+    return await func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/mongo_client.py", line 2029, in _retry_internal
+    return await _ClientConnectionRetryable(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+    ).run()
+    ^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/mongo_client.py", line 2821, in run
+    res = await self._read() if self._is_read else await self._write()
+                                                   ^^^^^^^^^^^^^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/mongo_client.py", line 3024, in _write
+    return await self._func(self._session, conn, self._retryable)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/collection.py", line 2266, in inner
+    await self._command(
+    ...<6 lines>...
+    )
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/collection.py", line 614, in _command
+    return await conn.command(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<14 lines>...
+    )
+    ^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/helpers.py", line 53, in inner
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/pool.py", line 403, in command
+    return await command(
+           ^^^^^^^^^^^^^^
+    ...<22 lines>...
+    )
+    ^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/asynchronous/network.py", line 212, in command
+    helpers_shared._check_command_response(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        response_doc,
+        ^^^^^^^^^^^^^
+    ...<2 lines>...
+        parse_write_concern_error=parse_write_concern_error,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/.venv/lib/python3.13/site-packages/pymongo/helpers_shared.py", line 274, in _check_command_response
+    raise DuplicateKeyError(errmsg, code, response, max_wire_version)
+pymongo.errors.DuplicateKeyError: Index build failed: 65238e08-eaa0-4189-880c-5ce8d82df71f: Collection rwkvrag_restored_regression_20260920_v1.files ( 79064e74-538c-4a82-8df3-8d9e3774d598 ) :: caused by :: E11000 duplicate key error collection: rwkvrag_restored_regression_20260920_v1.files index: knowledge_base_id_1_sha256_1 dup key: { knowledge_base_id: "wiki-restored-20260920", sha256: "0c7d58cf26f62ede1c3a0e23d09590e8165aef41b8de2884c7cf399a59114057" }, full error: {'ok': 0.0, 'errmsg': 'Index build failed: 65238e08-eaa0-4189-880c-5ce8d82df71f: Collection rwkvrag_restored_regression_20260920_v1.files ( 79064e74-538c-4a82-8df3-8d9e3774d598 ) :: caused by :: E11000 duplicate key error collection: rwkvrag_restored_regression_20260920_v1.files index: knowledge_base_id_1_sha256_1 dup key: { knowledge_base_id: "wiki-restored-20260920", sha256: "0c7d58cf26f62ede1c3a0e23d09590e8165aef41b8de2884c7cf399a59114057" }', 'code': 11000, 'codeName': 'DuplicateKey', 'keyPattern': {'knowledge_base_id': 1, 'sha256': 1}, 'keyValue': {'knowledge_base_id': 'wiki-restored-20260920', 'sha256': '0c7d58cf26f62ede1c3a0e23d09590e8165aef41b8de2884c7cf399a59114057'}}
+
+ERROR:    Application startup failed. Exiting.
