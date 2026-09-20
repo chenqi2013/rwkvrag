@@ -1,0 +1,18 @@
+{
+  "base_commit": "da8368c36d53b734cd1872d76a0bb73afbf5e7ed",
+  "model_calls": 0,
+  "source_hashes": {
+    "llamaindex-retrieval/src/llamaindex_retrieval/atomic_evidence.py": "d3b454b491ea4baac08f88305b600c1b74a1ad3bdd92f5fc77967e54dbaf4f00",
+    "llamaindex-retrieval/src/llamaindex_retrieval/verbatim_chunking.py": "d7ad7f58207b5602b0b819c43ca684a826f3fad822573bb1ae4f5fba3aa2b4d5",
+    "llamaindex-retrieval/src/llamaindex_retrieval/reader_prompt.py": "700b8b6731102a824b734f038467d4bd92001b00e965ac728f728f9b13ec188e",
+    "llamaindex-retrieval/src/llamaindex_retrieval/rwkvos_batch.py": "8842be2e1d2f423e424ee84c8ad826dd9c6ec832ac1c1667a7fe54e36a0ae3b4",
+    "llamaindex-retrieval/eval/g1j72-20260920/serve_72.py": "1cc89e21cf6e3b7341cbbddb5132e1efab2bcb5a673ddb5fb81baed34befc759",
+    "llamaindex-retrieval/eval/table-presentation-inspection-20260920/inspect_layout.py": "80882223d958e4ea800f54e94b3272ea401525219b9076c328593d4af71d2f53"
+  },
+  "documentation_links": {
+    "checked": 199,
+    "broken": []
+  },
+  "app_code_changed": false,
+  "inspection_assertions_passed": true
+}

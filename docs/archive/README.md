@@ -6,6 +6,7 @@
 
 | 报告 | 原路径 |
 | --- | --- |
+| [表格呈现检查：重复表头与实验设计](2026-09/table-presentation-inspection-20260920.md) | 新检查报告，未执行模型对照 |
 | [Reader 标签扩大复验：收益与退步](2026-09/reader-label-replication-20260920.md) | 新报告，直接存入历史区 |
 | [Reader 输出标签单变量对照](2026-09/reader-label-results-20260920.md) | 新报告，直接存入历史区 |
 | [知识维护第四批：正式文档修订与失败恢复](2026-09/document-revisions-20260919.md) | docs/document-revisions-20260919.md |
