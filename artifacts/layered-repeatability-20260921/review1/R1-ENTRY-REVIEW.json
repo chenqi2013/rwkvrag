@@ -1,0 +1,12 @@
+{
+  "r0_complete": true,
+  "repeatability_passed": false,
+  "stable_inputs": 432,
+  "inputs": 442,
+  "assess_variants": 5,
+  "assessment_review": "3 format-only; 1 same erroneous Wednesday claim with name added; 1 wording/unit-detail variation. No observed change of comparison/eligibility direction among these 5, but byte determinism failed.",
+  "decision": "Proceed with pre-frozen R1 as repeated diagnostic, not deterministic causal proof or promotion. Same upstream for both arms; report both rounds and disagreements.",
+  "drift_root_cause": "unresolved; service not restarted and exact input/request pins match. Imported State requests bypass prefix cache in deployed source, so prefix cache alone is not established as cause.",
+  "r1_commit": "ee68218c",
+  "r0_summary_sha256": "7f9df3f5a03fed65230b742696804587821342c8d69e258e339fc2085936f637"
+}

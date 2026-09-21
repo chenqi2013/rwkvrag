@@ -1,0 +1,63 @@
+{
+  "1:zero": {
+    "semantic": {
+      "pass": 87,
+      "partial": 22,
+      "fail": 32
+    },
+    "combined": {
+      "pass": 87,
+      "partial": 22,
+      "fail": 32
+    }
+  },
+  "1:2000": {
+    "semantic": {
+      "partial": 46,
+      "fail": 55,
+      "pass": 40
+    },
+    "combined": {
+      "partial": 44,
+      "fail": 68,
+      "pass": 29
+    }
+  },
+  "2:zero": {
+    "semantic": {
+      "pass": 87,
+      "partial": 22,
+      "fail": 32
+    },
+    "combined": {
+      "pass": 87,
+      "partial": 22,
+      "fail": 32
+    }
+  },
+  "2:2000": {
+    "semantic": {
+      "partial": 47,
+      "fail": 55,
+      "pass": 39
+    },
+    "combined": {
+      "partial": 45,
+      "fail": 68,
+      "pass": 28
+    }
+  },
+  "scope": "Known stage-local diagnostics; implementer review, no independent accuracy or end-to-end score. Pass/partial/fail are descriptive post-hoc labels relative to pre-frozen expectations. Structural errors remain separately visible.",
+  "issue_counts": {
+    "1:zero": {},
+    "1:2000": {
+      "empty_input": 22,
+      "nonempty_input": 3
+    },
+    "2:zero": {},
+    "2:2000": {
+      "empty_input": 22,
+      "nonempty_input": 3
+    }
+  }
+}

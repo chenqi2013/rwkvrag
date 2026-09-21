@@ -1,0 +1,132 @@
+[
+  {
+    "ordinal": 29,
+    "index": 30,
+    "stage": "observe",
+    "classification": "source_selection_changed",
+    "note": "同来源空集变选中，属于上游证据覆盖变化；本轮固定下游输入，不传播变化。",
+    "reviewer": "Codex implementer; not independent",
+    "bound_output_hashes": [
+      "39bd278ed0b636c4b36e7968d44500718f291b72616314c379a20ed5f86524ba",
+      "080afe7528c17ef352bc66d3d90b207a7e06b2d1914cf41c6eec857c86f6b511",
+      "b01f7d940f7f43e5d7b6ef73bd4813f895178e66a32387f5dda2b83116fbdd5a"
+    ]
+  },
+  {
+    "ordinal": 41,
+    "index": 30,
+    "stage": "writer",
+    "classification": "writer_provenance_changed",
+    "note": "事实值仍67/85及支持/不支持；第一种输出误将E6/E8等核准记录称废止，另一种省略引用，两种均未达最终引用要求。",
+    "reviewer": "Codex implementer; not independent",
+    "bound_output_hashes": [
+      "b9864ebfbedfd164f45ce31ff4685ff2d6cb14197134910049a7d370b53d6790",
+      "bbf93b954d97400e20083f3163eaae7d907b19c332e33c0974d017fa1a047c02",
+      "66287110216acc56e36f59afff682959a7f7c6836e274be219d06eede414ac2e"
+    ]
+  },
+  {
+    "ordinal": 113,
+    "index": 45,
+    "stage": "assess",
+    "classification": "wording_only_existing_error",
+    "note": "添加馆名，仍把未记载的周三说成3场；两种都存在同一语义错误。",
+    "reviewer": "Codex implementer; not independent",
+    "bound_output_hashes": [
+      "16e933ec2ae9c6a14e034a9c51152a6a02f4af3df7848603cfe53ed9f2eac79d",
+      "a1591a001cdcc4da4de4a9017e194244435be21695904d5104573565158c910f",
+      "71bc879d8be7fda3b2fa38d466fa56d096d96dd01180a48dbbd06025839b455e"
+    ]
+  },
+  {
+    "ordinal": 133,
+    "index": 46,
+    "stage": "assess",
+    "classification": "format_only",
+    "note": "同一未知结论及空证据集合，仅空白变化。",
+    "reviewer": "Codex implementer; not independent",
+    "bound_output_hashes": [
+      "13120475ed44bb10dbbd58708010a2187c8bade12d7c5b694f62014569031eb3",
+      "fc6d749118395f423eb493f390c580329f9ef5794610445c968942ecfb1c9a41",
+      "db524bb06fba856dbbb37a6b66d696bd846f27f93356fe6e3bd635a875ff3623"
+    ]
+  },
+  {
+    "ordinal": 203,
+    "index": 52,
+    "stage": "plan",
+    "classification": "planner_contract_failure",
+    "note": "8个任务变13个任务；后者超过上限8。保留所有轮次，不能择优。",
+    "reviewer": "Codex implementer; not independent",
+    "bound_output_hashes": [
+      "e4fcd4cc87dd588d5796d64a56099bb6d153a7a88787532872328b380e9e8995",
+      "a7f5985ba3a88ac151c6c3c6802230e62b1c5b94a97300c2abd6116e339a8533",
+      "3fe46564a7e2f44f9c9fc76504f2b12045bb27192ebf6c09197b675198a64235"
+    ]
+  },
+  {
+    "ordinal": 238,
+    "index": 54,
+    "stage": "assess",
+    "classification": "format_only",
+    "note": "同一无法判断结论和空证据列表，仅空白变化。",
+    "reviewer": "Codex implementer; not independent",
+    "bound_output_hashes": [
+      "562dcecd682ea744c787cb8631e7a77d35072d91229f58c81f8039c006269a6b",
+      "4049b2a333444a5d5c3752b67dfbe777a9d5d66117bb7822313db33a992ee00b",
+      "b4c2b91a96309fa3e0a5bf0dcb7dc7230070e12aa582e838dcecc1114aa4f108"
+    ]
+  },
+  {
+    "ordinal": 250,
+    "index": 54,
+    "stage": "assess",
+    "classification": "detail_variation",
+    "note": "一版带小时单位、一版省略；均把续航时间称用户任务中的时间，此阶段没有原始用户要求。",
+    "reviewer": "Codex implementer; not independent",
+    "bound_output_hashes": [
+      "2b3830c5a85abac05ae3ffac0eaab307efe67421568eca55495e942ef4500f0b",
+      "51a85b584dbeec7ae3f101dfcba82b4eb2a4d143ca163092dfb6920587c96f90",
+      "d0d6efb94c8ccbe820997b7554b93c5413a3ad6dc9109d9da841017fc574f88d"
+    ]
+  },
+  {
+    "ordinal": 254,
+    "index": 54,
+    "stage": "writer",
+    "classification": "wording_only_existing_error",
+    "note": "两版均错误认定乙9小时满足至少10并推荐乙；表述改变，硬条件错荐未解决。",
+    "reviewer": "Codex implementer; not independent",
+    "bound_output_hashes": [
+      "7423c8cbbf755274d6730c862c03eb29c4da1fb56ccdce7149530999a4b35b12",
+      "b92921e4d3b4654b1b6244265dc3ee04688529c47184967ccd2f666693b2c911",
+      "df3872e3cab1c5a1e2792b30f520d1b0137177f4f746c5a7f55ef80b690c9c1d"
+    ]
+  },
+  {
+    "ordinal": 385,
+    "index": 100,
+    "stage": "assess",
+    "classification": "format_only",
+    "note": "同一无法判断和E9，只有JSON空白变化。",
+    "reviewer": "Codex implementer; not independent",
+    "bound_output_hashes": [
+      "038e88bccf86b8be119017617139f0b37e6cdd15642edc9ab3cdb364e5cdd4d5",
+      "587db0601d527023c89ba44c3ece21eb372631edc879569aa7e69504b6ec051b",
+      "94198adecf12057027371a784e5c138102c57fadd2f75791503999cf68ccb125"
+    ]
+  },
+  {
+    "ordinal": 392,
+    "index": 130,
+    "stage": "observe",
+    "classification": "source_selection_changed",
+    "note": "同一来源空集变选中；不能声称完整链路上游稳定。",
+    "reviewer": "Codex implementer; not independent",
+    "bound_output_hashes": [
+      "66f5a9973e6107ca6b33f95a0f099cf96f95b61edd2ad4a6414c0393bd4c6e5d",
+      "35017dabfc1cd3c5fe109b906ceebf9448ce8164c51f81f429a2f9eb337e2afd",
+      "00d0d3bf017c1e14e3c02acd23623fa3175d77d59cbbb5be485788e6db833370"
+    ]
+  }
+]

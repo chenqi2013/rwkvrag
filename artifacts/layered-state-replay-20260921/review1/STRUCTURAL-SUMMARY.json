@@ -1,0 +1,19 @@
+{
+  "planned": 564,
+  "counts": {
+    "1:zero:recorded": 141,
+    "1:2000:recorded": 141,
+    "2:zero:recorded": 141,
+    "2:2000:recorded": 141,
+    "1:2000:unknown_evidence_id": 25,
+    "2:2000:unknown_evidence_id": 25
+  },
+  "errors": [],
+  "cross_round_drift": {
+    "zero": [],
+    "2000": [
+      43
+    ]
+  },
+  "semantic_accuracy_verified": false
+}

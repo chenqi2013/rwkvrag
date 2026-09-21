@@ -1,0 +1,6 @@
+{
+  "service": "MainPID=0\nExecMainStatus=0\nActiveState=inactive",
+  "gpu": "3, GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0, 20775 MiB",
+  "search_router": "active",
+  "state_cleanup": "Both DROP responses 200; final trained DROP used_bytes=0. Capabilities before service stop showed state_count=0, used_bytes=0."
+}

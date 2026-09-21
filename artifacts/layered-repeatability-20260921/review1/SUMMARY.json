@@ -1,0 +1,32 @@
+{
+  "planned": 1326,
+  "recorded": 1326,
+  "input_count": 442,
+  "stable_inputs": 432,
+  "unstable_or_incomplete_inputs": 10,
+  "by_stage": {
+    "plan:total": 20,
+    "plan:stable": 19,
+    "observe:total": 261,
+    "observe:stable": 259,
+    "assess:total": 141,
+    "assess:stable": 136,
+    "writer:total": 20,
+    "writer:stable": 18,
+    "observe:unstable_or_incomplete": 2,
+    "writer:unstable_or_incomplete": 2,
+    "assess:unstable_or_incomplete": 5,
+    "plan:unstable_or_incomplete": 1
+  },
+  "errors": [],
+  "historical_text_differences_by_round": {
+    "1": 7,
+    "2": 6,
+    "3": 7
+  },
+  "finish_reason_counts": {
+    "stop": 1323,
+    "length": 3
+  },
+  "semantic_accuracy_verified": false
+}
