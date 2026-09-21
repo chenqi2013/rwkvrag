@@ -1,0 +1,75 @@
+{
+  "metrics": {
+    "baseline-round1": {
+      "records": 188,
+      "length": 15,
+      "facts_complete": 121,
+      "strict_pass": 87,
+      "repetition_confirmed": 15,
+      "runaway_copying": 0,
+      "hard_condition_wrong_recommendation": 7,
+      "empty_evidence_fabrication": 3
+    },
+    "baseline-round2": {
+      "records": 188,
+      "length": 15,
+      "facts_complete": 121,
+      "strict_pass": 87,
+      "repetition_confirmed": 15,
+      "runaway_copying": 0,
+      "hard_condition_wrong_recommendation": 7,
+      "empty_evidence_fabrication": 3
+    },
+    "decision-round1": {
+      "records": 188,
+      "length": 31,
+      "facts_complete": 114,
+      "strict_pass": 55,
+      "repetition_confirmed": 35,
+      "runaway_copying": 1,
+      "hard_condition_wrong_recommendation": 15,
+      "empty_evidence_fabrication": 4
+    },
+    "decision-round2": {
+      "records": 188,
+      "length": 33,
+      "facts_complete": 112,
+      "strict_pass": 53,
+      "repetition_confirmed": 37,
+      "runaway_copying": 1,
+      "hard_condition_wrong_recommendation": 16,
+      "empty_evidence_fabrication": 4
+    }
+  },
+  "cross_round_changed_ordinals": {
+    "baseline": [
+      49,
+      67,
+      99,
+      136,
+      169,
+      176,
+      182
+    ],
+    "decision": [
+      14,
+      33,
+      35,
+      55,
+      57,
+      61,
+      75,
+      82,
+      102,
+      115,
+      127,
+      158,
+      176,
+      183
+    ]
+  },
+  "all_752_wire_and_review_bindings_verified": true,
+  "promotion": "failed",
+  "reason": "candidate repetition and ordinary regressions; hard-condition misrecommendations increased",
+  "reviewer": "task implementer, not independent"
+}

@@ -1,0 +1,110 @@
+{
+  "records": [
+    {
+      "id": "rag-products",
+      "status": "planner_partial_failure",
+      "stage_status": {
+        "planner": "failed",
+        "resolver": "completed",
+        "writer": "completed"
+      },
+      "sources": 7,
+      "answer_chars": 2247,
+      "elapsed_s": 40.75931723701069
+    },
+    {
+      "id": "agent-frameworks",
+      "status": "length",
+      "stage_status": {
+        "planner": "completed",
+        "resolver": "completed",
+        "writer": "failed"
+      },
+      "sources": 6,
+      "answer_chars": 2796,
+      "elapsed_s": 31.78445333999116
+    },
+    {
+      "id": "document-parsers",
+      "status": "length",
+      "stage_status": {
+        "planner": "failed",
+        "resolver": "completed",
+        "writer": "failed"
+      },
+      "sources": 9,
+      "answer_chars": 2501,
+      "elapsed_s": 35.265108855004655
+    },
+    {
+      "id": "vector-backends",
+      "status": "length",
+      "stage_status": {
+        "planner": "failed",
+        "resolver": "failed",
+        "writer": "failed"
+      },
+      "sources": 11,
+      "answer_chars": 2375,
+      "elapsed_s": 39.68540999898687
+    },
+    {
+      "id": "llm-serving",
+      "status": "length",
+      "stage_status": {
+        "planner": "completed",
+        "resolver": "completed",
+        "writer": "failed"
+      },
+      "sources": 7,
+      "answer_chars": 2462,
+      "elapsed_s": 35.23202677900554
+    },
+    {
+      "id": "knowledge-maintenance",
+      "status": "length",
+      "stage_status": {
+        "planner": "failed",
+        "resolver": "failed",
+        "writer": "failed"
+      },
+      "sources": 1,
+      "answer_chars": 2783,
+      "elapsed_s": 40.61812994000502
+    },
+    {
+      "id": "rag-offline-followup",
+      "status": "planner_partial_failure",
+      "stage_status": {
+        "planner": "failed",
+        "resolver": "completed",
+        "writer": "completed"
+      },
+      "sources": 0,
+      "answer_chars": 2261,
+      "elapsed_s": 28.877551748009864
+    },
+    {
+      "id": "rag-six-projects-followup",
+      "status": "retrieval_failed",
+      "stage_status": {
+        "planner": "failed",
+        "resolver": "not_called",
+        "writer": "not_called"
+      },
+      "sources": 0,
+      "answer_chars": 0,
+      "elapsed_s": 19.78554658801295
+    }
+  ],
+  "counts": {
+    "planner_partial_failure": 2,
+    "length": 5,
+    "retrieval_failed": 1
+  },
+  "review_pass": 0,
+  "review_fail": 8,
+  "reviewer": "implementer, not independent",
+  "wire_hashes_verified": true,
+  "current_scope": "candidate diagnostic; not production or baseline model accuracy"
+}

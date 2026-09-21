@@ -1,0 +1,17 @@
+Sep 21 14:05:17 rwkv-82 systemd[22930]: Started rwkvrag-writer-convergence-20260921.service - /home/chase/rwkvrag/data/services/vllm-decode-20260920/engine/.venv/bin/python /home/chase/rwkvrag/llamaindex-retrieval/eval/writer-convergence-20260921/run.py.
+Sep 21 14:05:17 rwkv-82 python[1440165]: Traceback (most recent call last):
+Sep 21 14:05:17 rwkv-82 python[1440165]:   File "/home/chase/rwkvrag/llamaindex-retrieval/eval/writer-convergence-20260921/run.py", line 82, in <module>
+Sep 21 14:05:17 rwkv-82 python[1440165]:     if __name__=='__main__':main()
+Sep 21 14:05:17 rwkv-82 python[1440165]:                             ^^^^^^
+Sep 21 14:05:17 rwkv-82 python[1440165]:   File "/home/chase/rwkvrag/llamaindex-retrieval/eval/writer-convergence-20260921/run.py", line 25, in main
+Sep 21 14:05:17 rwkv-82 python[1440165]:     assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest() == expected, name
+Sep 21 14:05:17 rwkv-82 python[1440165]:                           ^^^^^^^^^^^^^^^^^^^^^^^^
+Sep 21 14:05:17 rwkv-82 python[1440165]:   File "/usr/lib/python3.12/pathlib.py", line 1021, in read_bytes
+Sep 21 14:05:17 rwkv-82 python[1440165]:     with self.open(mode='rb') as f:
+Sep 21 14:05:17 rwkv-82 python[1440165]:          ^^^^^^^^^^^^^^^^^^^^
+Sep 21 14:05:17 rwkv-82 python[1440165]:   File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+Sep 21 14:05:17 rwkv-82 python[1440165]:     return io.open(self, mode, buffering, encoding, errors, newline)
+Sep 21 14:05:17 rwkv-82 python[1440165]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sep 21 14:05:17 rwkv-82 python[1440165]: FileNotFoundError: [Errno 2] No such file or directory: '/home/chase/rwkvrag/llamaindex-retrieval/eval/model-size-paired-20260921/run_v2.py'
+Sep 21 14:05:17 rwkv-82 systemd[22930]: rwkvrag-writer-convergence-20260921.service: Main process exited, code=exited, status=1/FAILURE
+Sep 21 14:05:17 rwkv-82 systemd[22930]: rwkvrag-writer-convergence-20260921.service: Failed with result 'exit-code'.
