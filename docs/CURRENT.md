@@ -52,6 +52,14 @@
 
 [结构契约说明](https://github.com/chenqi2013/rwkvrag/blob/ac604fbf/docs/archive/2026-09/choice-contract-implementation-20260920.md)；[引用显示候选](https://github.com/chenqi2013/rwkvrag/blob/40e55e72/docs/archive/2026-09/citation-groups-20260920.md)。本轮仅引入选择契约模块及其测试，引用显示和交互候选仍未合并。
 
+### 2026-09-21 正式服务只读复核
+
+- 正式18440 `/health` 与 `/v1/admin/health` 返回正常；MongoDB正常，OpenSearch为green，当前活动索引报告46,051个检索文档（不是源文件数）。
+- 正式18423 `/health` 返回ready，实际模型仍为 `rwkv7-g1j-2.9b-20260831-ctx16384`；设置中的Writer State为 `writer-trace-300`。7.2B实验结果尚未晋级正式服务。
+- 18437 `/v1/models` 返回 `rwkv7-g1j-1.5b-search-router-state-v6r2`；配置指向本地RWKV-SearchReader，网络检索预算为最多2个查询、每查询2条结果、每份阅读材料3000字符。
+- `wiki_auto_generate=true`，表示自动草稿流程启用；本次未重新执行网页抓取、完整混合问答或Wiki生成，不代表内容质量验收通过。此前证据见[混合检索](archive/2026-09/hybrid-search-20260919.md)与[自动Wiki](archive/2026-09/automatic-wiki-20260919.md)。
+- 已导出160题历史回答、20题Writer三轮输出和141节点两组双轮输出，含原始输入及失败；本地入口 `data/reports/test-questions-and-answers-20260921/README.md`。这次导出没有新模型调用。
+
 ## 5. 本次受控模型回放已完成
 
 [完整报告](archive/2026-09/layered-controlled-replay-results-20260921.md)。已运行1,890次新模型调用，0次训练更新，所有失败保留。
