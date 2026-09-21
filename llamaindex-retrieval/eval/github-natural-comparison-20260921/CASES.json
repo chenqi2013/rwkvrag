@@ -1,0 +1,122 @@
+[
+  {
+    "id": "rag-products",
+    "question": "RAGFlow 和 Dify 哪个好？WeKnora、AnythingLLM、Open WebUI 也一起看看，我们公司想做个知识库。",
+    "parent_id": null,
+    "retrieval_mode": "web",
+    "knowledge_base_id": null,
+    "rubric": [
+      "全部项目覆盖且不串用功能与来源",
+      "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+      "区分明确支持、需额外集成、未说明和版本限制",
+      "有证据的比较结论与条件化建议，不编性能排名",
+      "多轮保留最新条件并撤回过期建议",
+      "无持续复读，关键引用可回到实际选中原文"
+    ]
+  },
+  {
+    "id": "agent-frameworks",
+    "question": "LangGraph、LlamaIndex、Haystack、AutoGen、CrewAI 到底怎么选？我们人不多，想做个能查公司资料、也能上网查资料的助手，碰到说法不一致最好还能继续查。",
+    "parent_id": null,
+    "retrieval_mode": "web",
+    "knowledge_base_id": null,
+    "rubric": [
+      "全部项目覆盖且不串用功能与来源",
+      "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+      "区分明确支持、需额外集成、未说明和版本限制",
+      "有证据的比较结论与条件化建议，不编性能排名",
+      "多轮保留最新条件并撤回过期建议",
+      "无持续复读，关键引用可回到实际选中原文"
+    ]
+  },
+  {
+    "id": "document-parsers",
+    "question": "Docling、Marker、MinerU、PaddleOCR、Unstructured 哪个处理文档更好？我们主要是中文扫描 PDF，也有双栏论文、表格和办公文件，要拿来做知识库。",
+    "parent_id": null,
+    "retrieval_mode": "web",
+    "knowledge_base_id": null,
+    "rubric": [
+      "全部项目覆盖且不串用功能与来源",
+      "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+      "区分明确支持、需额外集成、未说明和版本限制",
+      "有证据的比较结论与条件化建议，不编性能排名",
+      "多轮保留最新条件并撤回过期建议",
+      "无持续复读，关键引用可回到实际选中原文"
+    ]
+  },
+  {
+    "id": "vector-backends",
+    "question": "pgvector、Qdrant、Milvus、Weaviate、OpenSearch，做公司的知识库用哪个好？先小范围试，后面人会多，文档也经常更新，不同人能看的资料还不一样。我们不想维护太复杂。",
+    "parent_id": null,
+    "retrieval_mode": "web",
+    "knowledge_base_id": null,
+    "rubric": [
+      "全部项目覆盖且不串用功能与来源",
+      "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+      "区分明确支持、需额外集成、未说明和版本限制",
+      "有证据的比较结论与条件化建议，不编性能排名",
+      "多轮保留最新条件并撤回过期建议",
+      "无持续复读，关键引用可回到实际选中原文"
+    ]
+  },
+  {
+    "id": "llm-serving",
+    "question": "Ollama、llama.cpp、vLLM、SGLang 有什么区别？我先在自己电脑上用，以后可能放到一台 GPU 服务器上给同事一起用，该怎么选？",
+    "parent_id": null,
+    "retrieval_mode": "web",
+    "knowledge_base_id": null,
+    "rubric": [
+      "全部项目覆盖且不串用功能与来源",
+      "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+      "区分明确支持、需额外集成、未说明和版本限制",
+      "有证据的比较结论与条件化建议，不编性能排名",
+      "多轮保留最新条件并撤回过期建议",
+      "无持续复读，关键引用可回到实际选中原文"
+    ]
+  },
+  {
+    "id": "knowledge-maintenance",
+    "question": "WeKnora、RAGFlow、Dify、AnythingLLM、FastGPT，哪个更适合长期管公司的知识？我想整理成 Wiki，能查原文，文档改了别还答旧内容，人工改过的也能找到历史版本。",
+    "parent_id": null,
+    "retrieval_mode": "web",
+    "knowledge_base_id": null,
+    "rubric": [
+      "全部项目覆盖且不串用功能与来源",
+      "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+      "区分明确支持、需额外集成、未说明和版本限制",
+      "有证据的比较结论与条件化建议，不编性能排名",
+      "多轮保留最新条件并撤回过期建议",
+      "无持续复读，关键引用可回到实际选中原文"
+    ]
+  },
+  {
+    "id": "rag-offline-followup",
+    "question": "我们只有一台服务器，16GB 显存，资料不能传出去，中文扫描件和表格挺多，维护的人也不多。那刚才这几个，你还会这么选吗？",
+    "parent_id": "rag-products",
+    "retrieval_mode": "web",
+    "knowledge_base_id": null,
+    "rubric": [
+      "全部项目覆盖且不串用功能与来源",
+      "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+      "区分明确支持、需额外集成、未说明和版本限制",
+      "有证据的比较结论与条件化建议，不编性能排名",
+      "多轮保留最新条件并撤回过期建议",
+      "无持续复读，关键引用可回到实际选中原文"
+    ]
+  },
+  {
+    "id": "rag-six-projects-followup",
+    "question": "FastGPT 也加进来看看。Wiki 先不做了，最重要是能查到回答的原文，文档更新后别答旧的。前面说的机器和离线要求不变，最后先试哪两个？怎么试？",
+    "parent_id": "rag-offline-followup",
+    "retrieval_mode": "web",
+    "knowledge_base_id": null,
+    "rubric": [
+      "全部项目覆盖且不串用功能与来源",
+      "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+      "区分明确支持、需额外集成、未说明和版本限制",
+      "有证据的比较结论与条件化建议，不编性能排名",
+      "多轮保留最新条件并撤回过期建议",
+      "无持续复读，关键引用可回到实际选中原文"
+    ]
+  }
+]
