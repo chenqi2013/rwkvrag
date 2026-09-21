@@ -569,6 +569,9 @@ class RWKVPipeline:
         return prompt
 
     async def _write(self, task: str, sources: list[SourceItem], fields: list[str]):
+        if self.settings.native_writer_pipeline == "typed_funnel_v10":
+            from .typed_funnel_v10 import write_funnel
+            return await write_funnel(self, task, sources)
         if self.settings.native_writer_pipeline == "typed_funnel_v8":
             from .typed_funnel_v8 import write_funnel
             return await write_funnel(self, task, sources)
