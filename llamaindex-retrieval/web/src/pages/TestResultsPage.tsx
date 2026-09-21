@@ -25,7 +25,9 @@ export default function TestResultsPage() {
     return a.raw_text.split(/(\[资料\s*\d+(?:\s*[,，、]\s*(?:资料\s*)?\d+)*\])/g).map((part, i) => {
       if (!/^\[资料/.test(part)) return part;
       const ids = part.match(/\d+/g) || [];
-      return <span key={i}>{ids.map((id, j) => <button key={j} className="comparison-citation" onClick={() => setSource(a.sources.find(s => s.label.replace(/\s/g, "") === `资料${Number(id)}`) || {label:`资料 ${id}`,text:"该编号没有对应的已选证据。保留原回答，未补齐引用。"})}>{ids.length === 1 ? part : `[资料${id}]`}</button>)}</span>;
+      const open = (id: string) => setSource(a.sources.find(s => s.label.replace(/\s/g, "") === `资料${Number(id)}`) || {label:`资料 ${id}`,text:"该编号没有对应的已选证据。保留原回答，未补齐引用。"});
+      if (ids.length === 1) return <button key={i} className="comparison-citation" onClick={() => open(ids[0])}>{part}</button>;
+      return <span key={i}>{part.split(/(\d+)/).map((piece, j) => /^\d+$/.test(piece) ? <button key={j} className="comparison-citation" onClick={() => open(piece)}>{piece}</button> : piece)}</span>;
     });
   }
   return <div className="model-comparison">
