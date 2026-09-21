@@ -1,0 +1,83 @@
+[
+  {
+    "quote": "RAGFlow 和 Dify 哪个好？",
+    "allowed_actions": [
+      "其他"
+    ]
+  },
+  {
+    "quote": "FastGPT 也加进来看看。",
+    "allowed_actions": [
+      "其他"
+    ]
+  },
+  {
+    "quote": "我们公司想做个知识库。",
+    "allowed_actions": [
+      "其他"
+    ]
+  },
+  {
+    "quote": "我们只有一台服务器，",
+    "allowed_actions": [
+      "必须满足"
+    ]
+  },
+  {
+    "quote": "16GB 显存，",
+    "allowed_actions": [
+      "必须满足"
+    ]
+  },
+  {
+    "quote": "资料不能传出去，",
+    "allowed_actions": [
+      "必须满足"
+    ]
+  },
+  {
+    "quote": "中文扫描件和表格挺多，",
+    "allowed_actions": [
+      "必须满足",
+      "优先考虑"
+    ]
+  },
+  {
+    "quote": "维护的人也不多。",
+    "allowed_actions": [
+      "优先考虑",
+      "必须满足"
+    ]
+  },
+  {
+    "quote": "Wiki 先不做了，",
+    "allowed_actions": [
+      "不再要求"
+    ]
+  },
+  {
+    "quote": "最重要是能查到回答的原文，",
+    "allowed_actions": [
+      "必须满足",
+      "优先考虑"
+    ]
+  },
+  {
+    "quote": "文档更新后别答旧的。",
+    "allowed_actions": [
+      "必须满足"
+    ]
+  },
+  {
+    "quote": "最后先试哪两个？",
+    "allowed_actions": [
+      "其他"
+    ]
+  },
+  {
+    "quote": "两项都要分别引用。",
+    "allowed_actions": [
+      "其他"
+    ]
+  }
+]
