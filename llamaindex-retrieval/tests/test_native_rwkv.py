@@ -328,3 +328,20 @@ async def test_closed_client_returns_diagnostic_trace_without_losing_request():
     assert result.trace["http"][0]["error_type"] == "RuntimeError"
     assert result.trace["completion_attempted"] is False
     assert_wire(result.trace["http"][0])
+
+
+def test_budget_preflight_never_requests_completion_and_retains_wire():
+    calls = []
+    def handler(request):
+        calls.append(request.url.path)
+        assert request.url.path == '/tokenize'
+        return httpx.Response(200, json=token_response())
+    async def run():
+        async with client(handler) as model:
+            return await model.complete(MESSAGES, check_only=True, stage='writer_budget')
+    result = asyncio.run(run())
+    assert result.status == result.trace['status'] == 'completed'
+    assert result.raw_text is None
+    assert result.trace['budget_only'] and not result.trace['completion_attempted']
+    assert calls == ['/tokenize']
+    assert_wire(result.trace['http'][0])

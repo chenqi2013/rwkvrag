@@ -241,6 +241,7 @@ class NativeRWKVClient:
         top_p: float = 1.0, top_k: int = 0, presence_penalty: float = 0.0,
         frequency_penalty: float = 0.0, seed: int | None = None,
         stage: str = "reader", evidence_ids: Sequence[str] = (), trace: dict | None = None,
+        check_only: bool = False,
     ) -> NativeRWKVResult:
         record = trace if trace is not None else {}
         record.update(
@@ -307,6 +308,10 @@ class NativeRWKVClient:
                         "tokenize", record,
                     )
                     input_tokens = self._check_budget(token_data, max_tokens, record)
+                    if check_only:
+                        status = "completed"
+                        record["budget_only"] = True
+                        return NativeRWKVResult(status, None, None, record)
                     record["completion_attempted"] = True
                     data = await self._post(self.base_url + "/completions", payload, "completion", record)
                     record["usage"] = data.get("usage")

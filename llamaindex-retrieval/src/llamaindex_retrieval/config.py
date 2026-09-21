@@ -58,6 +58,7 @@ class Settings(BaseSettings):
     native_api_key: str = ""
     native_transport: Literal["native", "rwkvos_batch"] = "native"
     native_completion_protocol: Literal["native", "g1j_plain"] = "native"
+    native_writer_budget_policy: Literal["disabled", "whole_sources"] = "disabled"
     native_writer_prefill: Literal["<think", "<think></think"] = "<think"
     native_writer_prompt_protocol: Literal[
         "task_first", "evidence_first", "evidence_checked", "decision"

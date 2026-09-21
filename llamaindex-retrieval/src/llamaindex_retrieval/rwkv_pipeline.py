@@ -543,7 +543,7 @@ class RWKVPipeline:
             }))
         return evidence, [event for _, group_events in resolved for event in group_events]
 
-    async def _write(self, task: str, sources: list[SourceItem], fields: list[str]):
+    def _writer_prompt(self, task: str, sources: list[SourceItem], fields: list[str]):
         evidence = [{"label": f"资料 {i}", "id": source.id, "title": source.title,
             "uri": source.uri, "text": source.snippet,
             "context_spans": source.metadata.get("context_spans", []),
@@ -564,13 +564,25 @@ class RWKVPipeline:
             prompt = writer_prompt_checked(task, evidence, fields)
         elif self.settings.native_writer_prompt_protocol == "decision":
             prompt = writer_prompt_decision(task, evidence, fields)
-        return await self._call(prompt, stage="writer",
+        return prompt
+
+    async def _write(self, task: str, sources: list[SourceItem], fields: list[str]):
+        if self.settings.native_writer_budget_policy == "whole_sources":
+            from .writer_budget import write_with_budget
+            return await write_with_budget(self, task, sources, fields)
+        return await self._call(self._writer_prompt(task, sources, fields), stage="writer",
             max_tokens=self.settings.generation_max_tokens, sources=sources)
 
     def _response(self, answer, sources, retrieval, events, status, started):
         # Citation labels can be audited syntactically. This is NOT entailment.
         writer_trace = next((event for event in reversed(events)
-                             if event.get("stage") == "writer"), {})
+                             if event.get("stage") in {"writer", "writer_budget"}), {})
+        packing = writer_trace.get("evidence_budget")
+        if packing is not None:
+            by_id = {source.id: source for source in sources}
+            sources = [by_id[identity] for identity in packing["included_source_ids"]]
+            retrieval = {**retrieval, "writer_evidence_budget": packing,
+                         "writer_source_count": len(sources)}
         bounds = model_answer_bounds(answer, writer_trace)
         final_span = answer[bounds[0]:bounds[1]] if bounds else ""
         citation_audit = audit_citations(
