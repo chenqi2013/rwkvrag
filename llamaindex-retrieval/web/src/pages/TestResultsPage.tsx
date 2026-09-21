@@ -3,7 +3,7 @@ import { Alert, Button, Card, Drawer, Select, Space, Spin, Tag, Typography } fro
 import "./modelComparison.css";
 
 type Source = { label: string; text: string; url?: string };
-type Answer = { label: string; raw_text: string; finish_reason?: string; elapsed_s: number; notes: string; sources: Source[]; queries?: { query: string; status: string }[]; funnel?: { task?: unknown; facts?: unknown[]; cells?: unknown[]; field_summaries?: unknown[]; failures?: unknown[] }; trace?: unknown };
+type Answer = { label: string; raw_text: string; finish_reason?: string; elapsed_s: number; notes: string; sources: Source[]; queries?: { query: string; status: string }[]; funnel?: { task?: unknown; facts?: unknown[]; cells?: unknown[]; field_summaries?: unknown[]; conditions?: unknown[]; candidates?: unknown[]; decision?: unknown; failures?: unknown[] }; trace?: unknown };
 type Case = { id: string; question: string; answers: Answer[] };
 type Dataset = { title: string; summary: string; cases: Case[] };
 
@@ -64,6 +64,9 @@ export default function TestResultsPage() {
             <details><summary>逐字事实与来源</summary><pre>{JSON.stringify(a.funnel.facts, null, 2)}</pre></details>
             <details><summary>逐对象逐字段核验</summary><pre>{JSON.stringify(a.funnel.cells, null, 2)}</pre></details>
             <details><summary>同维度汇总</summary><pre>{JSON.stringify(a.funnel.field_summaries, null, 2)}</pre></details>
+            {a.funnel.conditions && <details><summary>生效硬条件判断</summary><pre>{JSON.stringify(a.funnel.conditions, null, 2)}</pre></details>}
+            {a.funnel.candidates && <details><summary>候选资格</summary><pre>{JSON.stringify(a.funnel.candidates, null, 2)}</pre></details>}
+            {a.funnel.decision && <details><summary>最终选择依据</summary><pre>{JSON.stringify(a.funnel.decision, null, 2)}</pre></details>}
             {!!a.funnel.failures?.length && <details open><summary>失败节点</summary><pre>{JSON.stringify(a.funnel.failures, null, 2)}</pre></details>}
           </details>}
           {a.queries && <details open><summary>检索词与执行状态（{a.queries.length}条）</summary>

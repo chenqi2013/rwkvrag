@@ -59,7 +59,7 @@ class Settings(BaseSettings):
     native_transport: Literal["native", "rwkvos_batch"] = "native"
     native_completion_protocol: Literal["native", "g1j_plain"] = "native"
     native_funnel_max_calls: int = Field(default=128, ge=4, le=512)
-    native_writer_pipeline: Literal["single", "funnel_v1", "typed_funnel_v5"] = "single"
+    native_writer_pipeline: Literal["single", "funnel_v1", "typed_funnel_v5", "typed_funnel_v8"] = "single"
     native_writer_budget_policy: Literal["disabled", "whole_sources"] = "disabled"
     native_writer_prefill: Literal["<think", "<think></think"] = "<think"
     native_writer_prompt_protocol: Literal[
@@ -131,9 +131,9 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_reader_state_protocol(self) -> "Settings":
-        if self.native_writer_pipeline == "typed_funnel_v5" and (
+        if self.native_writer_pipeline in {"typed_funnel_v5", "typed_funnel_v8"} and (
                 self.native_transport != "native" or self.native_completion_protocol != "g1j_plain"):
-            raise ValueError("typed_funnel_v5 requires native g1j_plain structured-output transport")
+            raise ValueError("typed funnel requires native g1j_plain structured-output transport")
         if self.native_completion_protocol == "g1j_plain" and (
                 self.native_transport != "native"
                 or any(value != "<think></think" for value in (

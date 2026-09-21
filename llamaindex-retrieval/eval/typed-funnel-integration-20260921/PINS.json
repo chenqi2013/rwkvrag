@@ -1,0 +1,15 @@
+{
+  "llamaindex-retrieval/eval/typed-funnel-integration-20260921/INPUTS.json": "05e1af7a4ee70f9f5459448615a3379fe3c020bd19ac567a4b4b4d87d0a7ac08",
+  "llamaindex-retrieval/eval/typed-funnel-integration-20260921/run.py": "971cf25aa3ee336781b96e8bd2a06531a4154a81c06e72da0b2a8a0546d124b4",
+  "llamaindex-retrieval/eval/typed-funnel-integration-20260921/PLAN.md": "565b86ef273412e8bf5ee31df252cfd29b8fdbda91beffad91a6a32dc092c650",
+  "llamaindex-retrieval/src/llamaindex_retrieval/typed_funnel_v8.py": "e4c3764f9ff1130da38a8c0215f9b708da2b908c6969cffa80cdbc7df4c5ec9d",
+  "llamaindex-retrieval/src/llamaindex_retrieval/typed_funnel_v7.py": "cd337749344131ad37d4079675ae9db0266f978dd737b6e820e11203b48a7d3a",
+  "llamaindex-retrieval/src/llamaindex_retrieval/typed_funnel_contract_v7.py": "8bf49a49d8e2d800aa2a4c0ecd30ad47b6798ba33e65b37a4107750128ffaa65",
+  "llamaindex-retrieval/src/llamaindex_retrieval/typed_funnel_contract.py": "b38243257ef64d9b7d740b11623cb333e2bdefb23c265cf391a57e3d01c4023a",
+  "llamaindex-retrieval/src/llamaindex_retrieval/rwkv_pipeline.py": "5925fb85a5eb692484215b8e6979ce6d276ce40e9e6e386f60e08b0eaaa156a0",
+  "llamaindex-retrieval/src/llamaindex_retrieval/native_rwkv.py": "e095d68f0094de9b60b614765929458a8272fe1d9364f248fb23f4cf5beabafd",
+  "llamaindex-retrieval/src/llamaindex_retrieval/structured_native.py": "2b9a75015da7457755401c14dc55121577a84ada4cebeb63e2f37c9857e4cba2",
+  "llamaindex-retrieval/src/llamaindex_retrieval/config.py": "677239bfcf6669fd3b38646db5d1607b104f94d6d05c8985d83a64bef8ae261f",
+  "llamaindex-retrieval/src/llamaindex_retrieval/model_client.py": "6bdaaf3631f3360433e9de3d147520aa88a8328d6df516eb0f3bf31a7b12da23",
+  "llamaindex-retrieval/src/llamaindex_retrieval/writer_prompt.py": "dd6fccafb8bde63405ab74ed62c136de8a1b415d107dd66fe75dab120c9f5942"
+}
