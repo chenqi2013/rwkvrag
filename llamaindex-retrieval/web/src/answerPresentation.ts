@@ -5,6 +5,15 @@ type Label = [string, string];
 export function evidenceWarnings(response?: Pick<AskResponse, "generation" | "sources">): Label[] {
   if (!response) return [];
   const warnings: Label[] = [];
+  const calls = Array.isArray(response.generation.model_calls) ? response.generation.model_calls : [];
+  const last = [...calls].reverse().find((call): call is Record<string, unknown> =>
+    !!call && typeof call === "object" && "evidence_budget" in call);
+  const budget = last?.evidence_budget as { omitted_source_ids?: unknown[]; status?: string } | undefined;
+  if (budget?.omitted_source_ids?.length) {
+    warnings.push([`有 ${budget.omitted_source_ids.length} 份已选证据因输入容量限制未参与本次回答，比较可能不完整。`,
+      `${budget.omitted_source_ids.length} selected evidence items did not fit the input capacity; the comparison may be incomplete.`]);
+  }
+
   if (response.generation.planner_fallback === "original_question") {
     warnings.push(["规划失败，本次使用原问题检索；请核对历史指代和问题范围。",
       "Planning failed; retrieval used the original question. Check history references and scope."]);

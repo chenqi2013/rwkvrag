@@ -174,3 +174,12 @@ test("legacy answer text and existing verification/failure labels stay compatibl
   assert.equal(answerPresentation({ answer: "旧拒答", generation: {} }).label[1],
     "Insufficient evidence; not generated");
 });
+
+test('omitted evidence is visible without mutating the answer or its citation map', () => {
+  const response = {answer: '原回答', sources: [{}], generation: {model_calls: [
+    {stage: 'writer', evidence_budget: {status: 'partial', omitted_source_ids: ['a', 'b']}}
+  ]}};
+  const original = JSON.stringify(response);
+  assert.match(evidenceWarnings(response)[0][1], /2 selected evidence items/);
+  assert.equal(JSON.stringify(response), original);
+});
