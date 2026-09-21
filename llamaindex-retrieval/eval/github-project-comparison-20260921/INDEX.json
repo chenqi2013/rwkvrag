@@ -1,0 +1,36 @@
+{
+  "rwkvrag-local-use-v1": {
+    "aliases": {
+      "rwkvrag-local-use-v1-active": {
+        "is_write_index": true
+      }
+    },
+    "settings": {
+      "index": {
+        "replication": {
+          "type": "DOCUMENT"
+        },
+        "refresh_interval": "1s",
+        "number_of_shards": "1",
+        "provided_name": "rwkvrag-local-use-v1",
+        "creation_date": "1789003484333",
+        "analysis": {
+          "analyzer": {
+            "rwkvrag_tokens": {
+              "filter": [
+                "lowercase"
+              ],
+              "type": "custom",
+              "tokenizer": "whitespace"
+            }
+          }
+        },
+        "number_of_replicas": "0",
+        "uuid": "gx80sbIZQKSDxuwdzP4UuA",
+        "version": {
+          "created": "137297827"
+        }
+      }
+    }
+  }
+}
