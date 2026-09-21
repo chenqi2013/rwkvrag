@@ -89,3 +89,9 @@
 已有[分层设计](LAYERED_REASONING_DESIGN.md)、[回放计划](LAYERED_REPLAY_PLAN.md)和[离线验证报告](archive/2026-09/layered-offline-validation-20260921.md)。离线协议和回放工具已实现，完整新问答链路尚未接入。模型负责语义决定，代码只审计，不改写或补齐原答案。
 
 阅读：[架构规则](../llamaindex-retrieval/ARCHITECTURE_RULES.md)、[证据契约](EVIDENCE.md)、[实验规则](EXPERIMENTS.md)、[旧题保留](REGRESSION_POLICY.md)、[历史迁移表](archive/MIGRATION-20260920.json)。
+
+## 7. 模型大小配对复验（2026-09-21，准备执行）
+
+用户要求直接测试，并指出此前已有7.2B优势。核实[旧28题对照](archive/2026-09/g1j72-test-report-20260920.md)：事实完整性7.2B零State为26/28、2.9B零State为22/28、Writer300为20/28；严格引用分别16/28、16/28、14/28。此前“没有模型配对测试”的对话表述错误，现明确更正；后续分层失败不能抹掉这个有限开发集结论。
+
+新[冻结方案](../llamaindex-retrieval/eval/model-size-paired-20260921/PLAN.md)保留旧28和全部160，共188条题目成员、两模型各两轮，计划752次。用本地优化vllm-rwkv、相同固定材料直接回答，零State，只换模型；分别评审事实/引用/复读/长度，复核由实现者完成，非独立盲测。正式模型不切换。2.9B现有原权重需转换并逐tensor核验；结果未产生。
