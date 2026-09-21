@@ -1,0 +1,15 @@
+{
+  "archive_sha256": "297679e3cb2f129ae9fdc7f5ccc5a8c022a9073d7a447c55635986f79e44432b",
+  "files": {
+    "data/quality-runs/typed-funnel-v10-integration-20260921/run1/SUMMARY.json": "a10f69de670a1147038f787b17047e988ac82a1ab4411a9936e3f5e4062fa231",
+    "data/quality-runs/typed-funnel-v10-integration-20260921/REVIEW.json": "ad11afc5e3a067bbcfdad67005acde512ed1f333ba88778571caa14fb58813a9",
+    "data/quality-runs/typed-funnel-v10-integration-20260921/REVIEW-CORRECTIONS.json": "ce4698344959f3a2833f415c4d8b4239a6af171faab8af05c5960a4d421d442a",
+    "data/quality-runs/typed-funnel-v10-integration-20260921/STRUCTURAL-AUDIT.json": "f1c0924a7802818c0273e46c4e2ed2cb20146c68a66b82fb168b0d4fb37744c1",
+    "data/quality-runs/typed-funnel-integration-20260921/REVIEW-CORRECTIONS.json": "41a1a686967b5e30a413bde78fa0682fb7681476611a50f6f589a5998625f2bf",
+    "data/quality-runs/typed-funnel-integration-20260921/STRUCTURAL-AUDIT.json": "2301bc2fed5f3fab32ef3881fa64454b07432018e33f899e78f4d04e438bb7b4",
+    "data/quality-runs/typed-funnel-20260921/service/CLEANUP.json": "653583c02a3dd4c61a6dfe0f7d1f8017c1fa8ef0f0c3ebc5071d346c747f148a",
+    "data/quality-runs/typed-funnel-20260921/service/service-1.log": "811a9a226e7301101e125348dcc75ccbe6f063d09bc89c19dc4d3b209418df43",
+    "data/frontend-model-comparison-20260921/TYPED-FUNNEL-BROWSER-CHECK.json": "1c754de4847ad29ca44ebe1c1ffdd81030708e1a0b59ddd75d9f88ca197856b0",
+    "data/frontend-model-comparison-20260921/typed-funnel-first.png": "00541a378044878b803bb1b917b35fe517025bdd2a68c82cd6ed5956e0c53345"
+  }
+}

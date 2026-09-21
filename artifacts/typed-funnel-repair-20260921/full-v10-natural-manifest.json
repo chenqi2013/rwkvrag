@@ -1,0 +1,13 @@
+{
+  "archive_sha256": "8c35c35f843ae625d1b634f5aa366137ae735b11aa1027924929d6332ec49836",
+  "files": {
+    "data/quality-runs/typed-funnel-v10-integration-20260921/run1/000.json": "5655c4d534d5e3837b80b193ba64d7f25f3229662770ccfa88a0dd64e0c106fa",
+    "data/quality-runs/typed-funnel-v10-integration-20260921/run1/001.json": "446b84a4d74372f3eadfd41227fd70bf17956e4ef8f55190853a8437587637b0",
+    "data/quality-runs/typed-funnel-v10-integration-20260921/run1/002.json": "a9d0b40d7831cd803cc3fc4e037a06b753d9bb0f527a417dbee577d2c4fdd550",
+    "data/quality-runs/typed-funnel-v10-integration-20260921/run1/003.json": "ec3dfb4027b791107cf97b12b7237dc11f5b3478da199036ff15b5a39b5dcd92",
+    "data/quality-runs/typed-funnel-v10-integration-20260921/run1/004.json": "9aa347fddca6b87ae02599cc5f7e377d43377875c433e8532ac7d23ee68eedbb",
+    "data/quality-runs/typed-funnel-v10-integration-20260921/run1/005.json": "03d17e7b5dbd1217675fee9579496e86abcd0347a45ed70688198b40ccfbb004",
+    "data/quality-runs/typed-funnel-v10-integration-20260921/run1/006.json": "a3235509ade5c6478945f73aef7abe8709bed335a6b8fd192f552627560863cc",
+    "data/quality-runs/typed-funnel-v10-integration-20260921/run1/007.json": "a150e342f0c7ae9879fa4f4604477d5b3ca3d24373400cea0aebf60ea68ee035"
+  }
+}

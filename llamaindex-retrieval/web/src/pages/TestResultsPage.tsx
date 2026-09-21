@@ -3,12 +3,12 @@ import { Alert, Button, Card, Drawer, Select, Space, Spin, Tag, Typography } fro
 import "./modelComparison.css";
 
 type Source = { label: string; text: string; url?: string };
-type Answer = { label: string; raw_text: string; finish_reason?: string; elapsed_s: number; notes: string; sources: Source[]; queries?: { query: string; status: string }[]; funnel?: { task?: unknown; facts?: unknown[]; cells?: unknown[]; field_summaries?: unknown[]; conditions?: unknown[]; candidates?: unknown[]; decision?: unknown; failures?: unknown[] }; trace?: unknown };
-type Case = { id: string; question: string; answers: Answer[] };
+type Answer = { label: string; raw_text: string; finish_reason?: string; elapsed_s: number; notes: string; sources: Source[]; queries?: { query: string; status: string }[]; funnel?: { task?: unknown; facts?: unknown[]; cells?: unknown[]; field_summaries?: unknown[]; conditions?: unknown[]; candidates?: unknown[]; decision?: unknown; call_budget?: unknown; failures?: unknown[] }; trace?: unknown };
+type Case = { id: string; question: string; answers: Answer[]; history?: {role: string; content: string}[]; input_sources?: Source[] };
 type Dataset = { title: string; summary: string; cases: Case[] };
 
 export default function TestResultsPage() {
-  const [suite, setSuite] = useState("funnel-repairs-20260921");
+  const [suite, setSuite] = useState("typed-funnel-20260921");
   const [data, setData] = useState<Dataset>();
   const [error, setError] = useState("");
   const [index, setIndex] = useState(0);
@@ -33,6 +33,7 @@ export default function TestResultsPage() {
   return <div className="model-comparison">
     <Typography.Title level={3}>真实检索与复读测试</Typography.Title>
     <Select aria-label="测试集合" value={suite} onChange={setSuite} style={{width:320}} options={[
+      {value:"typed-funnel-20260921",label:"Typed漏斗 · 条件与候选资格"},
       {value:"funnel-repairs-20260921",label:"真实比较修复 · 分层过程"},
       {value:"github-natural-comparison-20260921",label:"大型 GitHub 比较 · 自然问法"},
       {value:"github-project-comparison-paced-20260921",label:"大型 GitHub 比较 · 低频实时检索"},
@@ -48,7 +49,10 @@ export default function TestResultsPage() {
         <Button disabled={index >= data.cases.length-1} onClick={() => setIndex(index+1)}>下一题</Button>
         <a href={`${import.meta.env.BASE_URL}experiments/${suite}.json`} download>下载全部回答与证据</a>
       </Space>
-      {current && <><Card title={current.id}><Typography.Title level={4}>{current.question}</Typography.Title></Card>
+      {current && <><Card title={current.id}><Typography.Title level={4}>{current.question}</Typography.Title>
+          {!!current.history?.length && <details><summary>本题使用的原始对话历史</summary>{current.history.map((message, i) => <div key={i}><Tag>{message.role}</Tag><pre>{message.content}</pre></div>)}</details>}
+          {current.input_sources && <details><summary>进入漏斗前的已选材料（{current.input_sources.length}份）</summary><p>这些材料用于检查在哪一层丢失了证据；回答内的引用仍按各版本实际使用的来源映射。</p>{current.input_sources.map((item, i) => <p key={i}><Button onClick={() => setSource(item)}>{i + 1}. 查看输入原文</Button></p>)}</details>}
+        </Card>
         {current.answers.map((a,i)=><Card key={i} title={a.label} style={{marginTop:16}}>
           <Space><Tag>{a.finish_reason || "见执行记录"}</Tag><Tag>{a.elapsed_s.toFixed(2)} 秒</Tag></Space>
           <pre className="comparison-raw" data-testid="raw-answer">{answerText(a)}</pre>
@@ -66,7 +70,8 @@ export default function TestResultsPage() {
             <details><summary>同维度汇总</summary><pre>{JSON.stringify(a.funnel.field_summaries, null, 2)}</pre></details>
             {a.funnel.conditions && <details><summary>生效硬条件判断</summary><pre>{JSON.stringify(a.funnel.conditions, null, 2)}</pre></details>}
             {a.funnel.candidates && <details><summary>候选资格</summary><pre>{JSON.stringify(a.funnel.candidates, null, 2)}</pre></details>}
-            {a.funnel.decision && <details><summary>最终选择依据</summary><pre>{JSON.stringify(a.funnel.decision, null, 2)}</pre></details>}
+            {!!a.funnel.decision && <details><summary>最终选择依据</summary><pre>{JSON.stringify(a.funnel.decision, null, 2)}</pre></details>}
+            {!!a.funnel.call_budget && <details><summary>调用预算与未检查材料</summary><pre>{JSON.stringify(a.funnel.call_budget, null, 2)}</pre></details>}
             {!!a.funnel.failures?.length && <details open><summary>失败节点</summary><pre>{JSON.stringify(a.funnel.failures, null, 2)}</pre></details>}
           </details>}
           {a.queries && <details open><summary>检索词与执行状态（{a.queries.length}条）</summary>

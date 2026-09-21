@@ -43,3 +43,7 @@
 [迁移清单](MIGRATION-20260920.json)记录原路径、新路径和迁移前 SHA-256；基线提交为 77c74f9e。原始文件可以从该提交读取。本次只整理叙述文档，未修改冻结实验目录、原始 trace、模型和训练数据。
 
 维护中的原子证据契约和 assessment 提案已分别改用 [EVIDENCE](../EVIDENCE.md) 与 [ASSESSMENTS](../ASSESSMENTS.md)。
+
+## 2026-09-21 Typed漏斗修复
+
+- [工程修复、原子13条与完整36题结果及限制](2026-09/typed-funnel-repair-20260921.md)
