@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "scope": "offline transport/provenance only; no semantic accuracy measurement",
+  "model_calls": 0,
+  "training_updates": 0,
+  "result_count": 320,
+  "trace_count": 7085,
+  "stages": {
+    "zero:observe": 2135,
+    "zero:assess": 1089,
+    "zero:writer": 152,
+    "zero:plan": 156,
+    "2000:observe": 2149,
+    "2000:assess": 1096,
+    "2000:plan": 156,
+    "2000:writer": 152
+  },
+  "results": {
+    "zero:completed": 151,
+    "zero:unsupported_input": 4,
+    "zero:plan_failed": 4,
+    "zero:incomplete": 1,
+    "2000:completed": 101,
+    "2000:incomplete": 51,
+    "2000:unsupported_input": 4,
+    "2000:plan_failed": 4
+  },
+  "assessment_issues": {
+    "2000:unknown_evidence_id": 138,
+    "2000:invalid_json": 4
+  },
+  "transport_errors": [],
+  "changed_source_files": [],
+  "focused_trace_count": 884,
+  "common_assess_inputs": 141,
+  "r0_three_repetitions_calls": 1326,
+  "r1_ab_ba_calls": 564,
+  "execution_ready": false,
+  "remaining": [
+    "fresh engine/model/State bindings",
+    "reviewed semantic gold",
+    "frozen execution budget"
+  ]
+}
