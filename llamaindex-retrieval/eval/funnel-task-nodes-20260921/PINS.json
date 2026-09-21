@@ -1,0 +1,17 @@
+{
+  "llamaindex-retrieval/eval/funnel-task-nodes-20260921/INPUTS.json": "80040acd54e1f733cf1359e9ea1dbc0b8255773d4236b57edb53e44cc8d0a66d",
+  "llamaindex-retrieval/eval/funnel-task-nodes-20260921/run.py": "690e12931a2c884ca6be9fa94ed311d794b2127ca304badc879572175bf55aa9",
+  "llamaindex-retrieval/eval/funnel-task-nodes-20260921/PLAN.md": "26268c59b57124a64b46d9bea1490bbf4ba2331549e63625215a14a38fb1f7f0",
+  "llamaindex-retrieval/src/llamaindex_retrieval/typed_funnel_v9.py": "48937f12e7f4068856c3e061ce290a4f54dcb405336114db8cf7e934350d7165",
+  "llamaindex-retrieval/src/llamaindex_retrieval/typed_funnel_v8.py": "e4c3764f9ff1130da38a8c0215f9b708da2b908c6969cffa80cdbc7df4c5ec9d",
+  "llamaindex-retrieval/src/llamaindex_retrieval/typed_funnel_v7.py": "cd337749344131ad37d4079675ae9db0266f978dd737b6e820e11203b48a7d3a",
+  "llamaindex-retrieval/src/llamaindex_retrieval/typed_funnel_contract_v7.py": "8bf49a49d8e2d800aa2a4c0ecd30ad47b6798ba33e65b37a4107750128ffaa65",
+  "llamaindex-retrieval/src/llamaindex_retrieval/typed_funnel_contract.py": "b38243257ef64d9b7d740b11623cb333e2bdefb23c265cf391a57e3d01c4023a",
+  "llamaindex-retrieval/src/llamaindex_retrieval/funnel_task.py": "b902a3e1962341951ccf9bf99261ab5060be0b725180a7cb785b74fd8981683f",
+  "llamaindex-retrieval/src/llamaindex_retrieval/funnel_call_budget.py": "44420c0f3f6adff390b17324e65d6491b5f4e7c82033c7aba7fe6d11a4bde876",
+  "llamaindex-retrieval/src/llamaindex_retrieval/rwkv_pipeline.py": "5925fb85a5eb692484215b8e6979ce6d276ce40e9e6e386f60e08b0eaaa156a0",
+  "llamaindex-retrieval/src/llamaindex_retrieval/native_rwkv.py": "e095d68f0094de9b60b614765929458a8272fe1d9364f248fb23f4cf5beabafd",
+  "llamaindex-retrieval/src/llamaindex_retrieval/structured_native.py": "2b9a75015da7457755401c14dc55121577a84ada4cebeb63e2f37c9857e4cba2",
+  "llamaindex-retrieval/src/llamaindex_retrieval/config.py": "677239bfcf6669fd3b38646db5d1607b104f94d6d05c8985d83a64bef8ae261f",
+  "llamaindex-retrieval/src/llamaindex_retrieval/model_client.py": "6bdaaf3631f3360433e9de3d147520aa88a8328d6df516eb0f3bf31a7b12da23"
+}
