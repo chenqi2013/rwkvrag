@@ -1,0 +1,11 @@
+{
+  "questions": 36,
+  "unique_answers": 108,
+  "rendered_checks": 144,
+  "raw_text_unchanged": true,
+  "default_candidate_only": true,
+  "history_expandable": true,
+  "empty_vs_lost_distinct": true,
+  "citation_drawer_exact": true,
+  "page_errors": []
+}

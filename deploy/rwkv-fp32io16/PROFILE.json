@@ -1,0 +1,19 @@
+{
+  "protocol": "rwkv-fp32io16-runtime-v1",
+  "engine": "/home/chase/rwkvrag/data/services/vllm-decode-20260920/engine",
+  "model": "/mnt/nas-model/g1j/hf/rwkv7-g1j-7.2b-20260831-ctx16384",
+  "gpu_uuid": "GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0",
+  "machine_id": "bcd164d5ad3a4ab3b0790412e32e69f3",
+  "port": 18426,
+  "provider": "FlashRWKV2",
+  "provider_version": "0.1.0a13",
+  "kernel_mode": "fp32io16",
+  "weights_io_dtype": "float16",
+  "recurrent_state_dtype": "float32",
+  "kernel_api": "infer_tmix_wkv7_recurrent_fp32io16_forward_varlen",
+  "state_api": "prepare_tmix_wkv7_recurrent_fp32io16_state_from_tensor",
+  "engine_files": {
+    "vllm/model_executor/models/rwkv.py": "16f32d8b4f4ff3817e99f580dca5e6340777b65324abe90b01b3c33141948e99",
+    "vllm/v1/attention/backends/rwkv_attn.py": "7f325621e8b4b6062e792415ebf00bc8c69c5e02e87beb4e4392f8ebdc2582a8"
+  }
+}

@@ -595,7 +595,9 @@ class RWKVPipeline:
         if funnel is not None:
             by_id = {source.id: source for source in sources}
             sources = [by_id[identity] for identity in funnel.get("writer_source_ids", [])]
-            retrieval = {**retrieval, "funnel": funnel}
+            from .evidence_flow import evidence_flow
+            flow = evidence_flow(funnel)
+            retrieval = {**retrieval, "funnel": funnel, "evidence_flow": flow}
             upstream = writer_trace.get("upstream_calls", [])
             events = [*events[:-1], *upstream, events[-1]]
             if status == "completed" and funnel.get("failures"):
@@ -644,6 +646,7 @@ class RWKVPipeline:
             "provider_finish_reason": writer_trace.get("provider_finish_reason"),
             "model_calls": events, "elapsed_ms": round((monotonic() - started) * 1000),
             "evidence_count": len(sources),
+            **({"evidence_flow": retrieval["evidence_flow"]} if "evidence_flow" in retrieval else {}),
             "citation_map": {str(i): source.id for i, source in enumerate(sources, 1)},
             "citation_audit": citation_audit,
         })
