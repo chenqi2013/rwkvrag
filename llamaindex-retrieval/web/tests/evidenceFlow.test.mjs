@@ -31,3 +31,9 @@ test('completed execution never displays a semantic success label', () => {
   assert.match(executionLabel('length'),/回答未完成/);
   assert.match(executionLabel('funnel_partial_failure'),/部分处理失败/);
 });
+
+test('unknown diagnostic protocols retain the existing no-evidence warning', () => {
+  const notes=evidenceWarnings({sources:[],generation:{evidence_flow:{protocol:'future-v99'}}});
+  assert.equal(notes.length,1);
+  assert.match(notes[0][0],/未返回有效证据/);
+});

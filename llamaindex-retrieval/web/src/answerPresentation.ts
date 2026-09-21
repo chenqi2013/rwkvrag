@@ -24,7 +24,7 @@ export function evidenceWarnings(response?: Pick<AskResponse, "generation" | "so
     warnings.push(["部分检索未成功，回答可能只使用了剩余来源；请查看运行记录。",
       "Some retrieval requests failed; the answer may use only the remaining sources. Check the trace."]);
   }
-  if (response.sources.length === 0 && !flow) {
+  if (response.sources.length === 0 && flow?.protocol !== "evidence-flow-v1") {
     warnings.push(["本次未返回有效证据，下面的模型输出没有可核对的来源。",
       "No evidence was returned. The model output below has no sources to check."]);
   }

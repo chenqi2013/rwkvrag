@@ -19,7 +19,7 @@
 ## 检查
 
 - 126项相关后端测试通过：包括实际响应过滤来源后仍保留输入计数、失败/未检查与有效证据共存、空输入和空选择分开、原始回答及事件不变。
-- 38项前端测试通过：执行完成不显示语义成功，引用/原文/旧响应兼容与新故障提示。
+- 39项前端测试通过：执行完成不显示语义成功，引用/原文/旧响应兼容与新故障提示。
 - TypeScript/Vite构建成功，保留现存包体大小提示；Python检查有现存Starlette/httpx弃用警告。
 - 浏览器逐题检查默认最近版本、展开历史、108份原始回答（144次呈现检查）、引用抽屉、真正空输入与处理后空证据两种提示，无脚本错误。
 - [验收记录与截图](../../../artifacts/evidence-flow-presentation-20260921/README.md)。
@@ -27,3 +27,11 @@
 ## 未解决与部署边界
 
 本次不会纠正模型已生成的“原文没有”错误句子；通过独立诊断明确指出该结论没有被执行结果证明。生成侧如何正确承接处理状态、对象/字段/版本绑定、硬条件理解、冲突保留和复读仍待新版本模型验证。当前默认生产推理链和模型均未改动。
+
+## 追加：用户指定RWKV kernel与fp32io16
+
+已核对本地及服务器实际源码：引擎仅使用FlashRWKV2，`mamba_ssm_cache_dtype=float32`会选择`infer_tmix_wkv7_recurrent_fp32io16_forward_varlen`，权重与IO的float16不等于FP16 recurrent kernel。此前服务记录也使用float32 State；历史笼统“FP16”描述不能用于判断kernel精度或推断质量根因。
+
+新增[启动配置](../../../deploy/rwkv-fp32io16/README.md)，默认仅检查，模型启动显式选择start。服务器已放置配置并完成CPU预检，关键源码哈希、FlashRWKV2 0.1.0a13版本、fp32io16 forward/State API全部匹配；4项保护测试验证FP16 State/错误kernel模式被拒绝。没有启动模型、没有GPU kernel实跑，不把预检当质量验证。
+
+[服务器原始预检](../../../artifacts/evidence-flow-presentation-20260921/RWKV-FP32IO16-PREFLIGHT.json)。

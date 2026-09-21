@@ -8,13 +8,13 @@
 
 18446隔离预览已更新：默认只看最近完成的实验v10（明确标为未上线），历史v4/v8可展开；执行状态用中文说明，逐题诊断置于回答前。新的诊断快照保留全部36题108份原文和来源，旧快照未修改。v10中21题有最终证据、12题有输入却无最终证据、3题无输入，三者分开提示。**这是执行诊断/展示修复，没有新模型生成，也不表示语义错误已修好。**
 
-126项相关后端检查、38项前端检查通过，前端构建成功；浏览器验收记录见[续修报告](archive/2026-09/evidence-flow-presentation-20260921.md)。
+126项相关后端检查、39项前端检查通过，前端构建成功；浏览器验收记录见[续修报告](archive/2026-09/evidence-flow-presentation-20260921.md)。
 
 ## 模型启动约束（用户最新要求）
 
 后续启动使用RWKV/FlashRWKV2的`fp32io16` recurrent kernel：循环State为FP32，权重/IO为FP16；不得使用FP16 recurrent State路径。当前核对的本地引擎通过`--mamba-ssm-cache-dtype float32`选择该kernel，`--dtype float16`仅指定IO/权重，不等于FP16 recurrent kernel。此前实验启动记录也有float32 State，旧报告笼统写“FP16”不能当成kernel精度结论。
 
-新增[显式启动配置与检查器](../deploy/rwkv-fp32io16/README.md)，核对实际引擎源码哈希、FlashRWKV2版本及fp32io16 API，异常不降级。配置更新不代表已启动模型；本次没有占用GPU或切换正式服务。
+新增[显式启动配置与检查器](../deploy/rwkv-fp32io16/README.md)，核对实际引擎源码哈希、FlashRWKV2版本及fp32io16 API，异常不降级。服务器CPU预检已通过：源码哈希、FlashRWKV2 0.1.0a13与fp32io16 API匹配；4项启动精度保护测试通过。预检未启动模型、未执行GPU kernel或质量测试，正式服务未切换。
 
 ## 1. 主目标与当前判断
 
