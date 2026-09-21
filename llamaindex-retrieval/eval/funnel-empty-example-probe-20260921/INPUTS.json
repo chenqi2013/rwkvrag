@@ -1,0 +1,873 @@
+[
+  {
+    "id": "old28/comparison_smoke_001/funnel_fact:s1:O2:F2",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"乙型\", \"field\": \"离线支持\", \"source_title\": \"\", \"units\": {\"E1\": \"乙型容量为 12 L，不支持离线。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"乙型\", \"field\": \"离线支持\", \"source_title\": \"\", \"units\": {\"E1\": \"乙型容量为 12 L，不支持离线。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_001/funnel_fact:s1:O2:F1",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"乙型\", \"field\": \"容量\", \"source_title\": \"\", \"units\": {\"E1\": \"乙型容量为 12 L，不支持离线。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"乙型\", \"field\": \"容量\", \"source_title\": \"\", \"units\": {\"E1\": \"乙型容量为 12 L，不支持离线。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_001/funnel_fact:s2:O1:F2",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"甲型\", \"field\": \"离线支持\", \"source_title\": \"\", \"units\": {\"E1\": \"甲型容量为 8 L，支持离线。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"甲型\", \"field\": \"离线支持\", \"source_title\": \"\", \"units\": {\"E1\": \"甲型容量为 8 L，支持离线。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_001/funnel_fact:s2:O1:F1",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"甲型\", \"field\": \"容量\", \"source_title\": \"\", \"units\": {\"E1\": \"甲型容量为 8 L，支持离线。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"甲型\", \"field\": \"容量\", \"source_title\": \"\", \"units\": {\"E1\": \"甲型容量为 8 L，支持离线。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_002/funnel_fact:s1:O2:F1",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"白榆2.0\", \"field\": \"并发上限\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆2.0并发上限为 18，支持加密。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"白榆2.0\", \"field\": \"并发上限\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆2.0并发上限为 18，支持加密。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_002/funnel_fact:s1:O2:F2",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"白榆2.0\", \"field\": \"加密支持\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆2.0并发上限为 18，支持加密。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"白榆2.0\", \"field\": \"加密支持\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆2.0并发上限为 18，支持加密。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_002/funnel_fact:s2:O1:F2",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"白榆1.0\", \"field\": \"加密支持\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆1.0并发上限为 6，不支持加密。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"白榆1.0\", \"field\": \"加密支持\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆1.0并发上限为 6，不支持加密。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_002/funnel_fact:s2:O1:F1",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"白榆1.0\", \"field\": \"并发上限\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆1.0并发上限为 6，不支持加密。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"白榆1.0\", \"field\": \"并发上限\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆1.0并发上限为 6，不支持加密。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_003/funnel_fact:s1:O1:F1",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"甲站\", \"field\": \"故障次数\", \"source_title\": \"\", \"units\": {\"E1\": \"甲站故障次数为 0 次，停机时长为 0 小时。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"甲站\", \"field\": \"故障次数\", \"source_title\": \"\", \"units\": {\"E1\": \"甲站故障次数为 0 次，停机时长为 0 小时。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_003/funnel_fact:s1:O1:F2",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"甲站\", \"field\": \"停机时长\", \"source_title\": \"\", \"units\": {\"E1\": \"甲站故障次数为 0 次，停机时长为 0 小时。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"甲站\", \"field\": \"停机时长\", \"source_title\": \"\", \"units\": {\"E1\": \"甲站故障次数为 0 次，停机时长为 0 小时。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_003/funnel_fact:s2:O2:F1",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"乙站\", \"field\": \"故障次数\", \"source_title\": \"\", \"units\": {\"E1\": \"乙站故障次数为 2 次；停机时长未记载。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"乙站\", \"field\": \"故障次数\", \"source_title\": \"\", \"units\": {\"E1\": \"乙站故障次数为 2 次；停机时长未记载。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_003/funnel_fact:s2:O2:F2",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"乙站\", \"field\": \"停机时长\", \"source_title\": \"\", \"units\": {\"E1\": \"乙站故障次数为 2 次；停机时长未记载。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"乙站\", \"field\": \"停机时长\", \"source_title\": \"\", \"units\": {\"E1\": \"乙站故障次数为 2 次；停机时长未记载。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  },
+  {
+    "id": "old28/comparison_smoke_004/funnel_fact:s2:O1:F1",
+    "prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"水泵A\", \"field\": \"流量\", \"source_title\": \"\", \"units\": {\"E1\": \"水泵A额定流量为 11 L/min。\"}}\n\nAssistant: <think></think>\n",
+    "parameters": {
+      "model": "paired-eval",
+      "max_tokens": 384,
+      "temperature": 1,
+      "top_p": 1,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stream": false,
+      "stop": [
+        "✿",
+        "\nUser:",
+        "\n### User"
+      ],
+      "stop_token_ids": [
+        0
+      ],
+      "ignore_eos": false,
+      "add_special_tokens": false,
+      "seed": 11,
+      "return_token_ids": true,
+      "skip_special_tokens": false,
+      "penalty_decay": 0.996,
+      "structured_outputs": {
+        "json": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "maxLength": 240,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Value"
+            },
+            "unit_ids": {
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E1"
+                ]
+              },
+              "maxItems": 3,
+              "title": "Unit Ids",
+              "type": "array"
+            }
+          },
+          "required": [
+            "value",
+            "unit_ids"
+          ],
+          "title": "AtomicValue",
+          "type": "object"
+        }
+      }
+    },
+    "baseline_raw_text": "{\"value\": null, \"unit_ids\": []}",
+    "candidate_prompt": "User: 只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。\n{\"object\": \"水泵A\", \"field\": \"流量\", \"source_title\": \"\", \"units\": {\"E1\": \"水泵A额定流量为 11 L/min。\"}}\n\nAssistant: <think></think>\n",
+    "expected_scope": "case original evidence; implementer review required"
+  }
+]
