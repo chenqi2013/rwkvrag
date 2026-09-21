@@ -133,6 +133,7 @@ class NativeRWKVClient:
         self, *, base_url: str, model: str, api_key: str = "",
         timeout_seconds: float = 120, context_window_tokens: int = 16384,
         max_concurrency: int = 32, transport: httpx.AsyncBaseTransport | None = None,
+        prompt_protocol: str = "native",
     ) -> None:
         url = httpx.URL(base_url)
         if (url.scheme not in {"http", "https"} or not url.host or url.userinfo
@@ -153,6 +154,9 @@ class NativeRWKVClient:
         self.model = model
         self.context_window_tokens = context_window_tokens
         self.timeout_seconds = timeout_seconds
+        if prompt_protocol not in {"native", "g1j_plain"}:
+            raise ValueError("unsupported prompt protocol")
+        self.prompt_protocol = prompt_protocol
         self._headers = {"Content-Type": "application/json"}
         if api_key:
             self._headers["Authorization"] = f"Bearer {api_key}"
@@ -216,7 +220,7 @@ class NativeRWKVClient:
         if (type(count) is not int or count < 1 or not isinstance(tokens, list)
                 or len(tokens) != count or any(type(token) is not int or token < 0 for token in tokens)):
             raise _ProtocolError("tokenizer count must match its complete token ID list")
-        if tokens[0] != 0 or tokens.count(0) != 1:
+        if self.prompt_protocol == "native" and (tokens[0] != 0 or tokens.count(0) != 1):
             raise _ProtocolError("tokenizer must return exactly one BOS/EOS 0 at the start")
         if type(server_limit) is not int or server_limit < 1:
             raise _ProtocolError("tokenizer must report a positive server context limit")
@@ -225,7 +229,7 @@ class NativeRWKVClient:
             "input_tokens": count, "reserved_output_tokens": output_tokens,
             "configured_context_window": self.context_window_tokens,
             "server_context_window": server_limit, "effective_context_window": effective_limit,
-            "single_bos_verified": True, "fits": count + output_tokens <= effective_limit,
+            "single_bos_verified": self.prompt_protocol == "native", "fits": count + output_tokens <= effective_limit,
         }
         if count + output_tokens > effective_limit:
             raise _BudgetError("complete prompt plus reserved output exceeds context window")
@@ -252,6 +256,13 @@ class NativeRWKVClient:
         finish_reason = None
         try:
             native = render_native_prompt(messages, assistant_prefill)
+            if self.prompt_protocol == "g1j_plain":
+                if (native.prefill != "<think></think" or len(messages) != 1
+                        or messages[0]["role"] != "user"):
+                    raise ValueError("g1j_plain requires one user message and closed no-think prefix")
+                native = NativePrompt("User: " + messages[0]["content"] + "\n\nAssistant: <think></think>\n",
+                                      "<think></think>", None)
+                record["prompt_protocol"] = "g1j_plain"
             if type(max_tokens) is not int or max_tokens < 1:
                 raise ValueError("max_tokens must be a positive integer")
             for name, value, low, high in (
@@ -278,6 +289,9 @@ class NativeRWKVClient:
             }
             if seed is not None:
                 payload["seed"] = seed
+            if self.prompt_protocol == "g1j_plain":
+                payload.update(add_special_tokens=False, return_token_ids=True, skip_special_tokens=False,
+                               penalty_decay=0.996, stop=["✿", "\nUser:", "\n### User"])
             record.update(
                 prompt=native.prompt, prompt_sha256=sha256(native.prompt.encode("utf-8")).hexdigest(),
                 prefill=native.prefill, delimiter_escape=native.delimiter_escape,
@@ -289,7 +303,7 @@ class NativeRWKVClient:
                 async with asyncio.timeout(self.timeout_seconds):
                     token_data = await self._post(
                         self.base_url.removesuffix("/v1") + "/tokenize",
-                        {"model": self.model, "prompt": native.prompt, "add_special_tokens": True},
+                        {"model": self.model, "prompt": native.prompt, "add_special_tokens": payload["add_special_tokens"]},
                         "tokenize", record,
                     )
                     input_tokens = self._check_budget(token_data, max_tokens, record)
@@ -315,6 +329,12 @@ class NativeRWKVClient:
                             or usage["prompt_tokens"] != input_tokens):
                         raise _ProtocolError("completion prompt_tokens must equal server tokenizer count")
                     bounds = inspect_envelope(raw_text, native.prefill)
+                    if self.prompt_protocol == "g1j_plain":
+                        if choice.get("prompt_token_ids") != token_data["tokens"]:
+                            raise _ProtocolError("completion input tokens must match tokenization")
+                        record["input_token_ids"] = choice["prompt_token_ids"]
+                        record["output_token_ids"] = choice.get("token_ids")
+                        bounds = (0, len(raw_text)) if raw_text.strip() else None
                     record["envelope"] = {
                         "valid": bounds is not None,
                         "answer_span": {"start": bounds[0], "end": bounds[1],

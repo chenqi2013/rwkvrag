@@ -17,6 +17,7 @@ from .lexical_index import LexicalIndex, LexicalResult
 from .model_client import model_answer_bounds, model_client_class, model_client_options
 from .schemas import AskResponse, ConversationMessage, SearchRequest, SourceItem
 from .writer_prompt import writer_prompt_checked, writer_prompt_v2
+from .writer_decision_prompt import writer_prompt_decision
 from .reader_prompt import binary_query_prompt, parse_binary_decision
 from .web_retrieval import SearchReaderAdapter, deduplicate_web_groups, interleave
 
@@ -341,6 +342,8 @@ class RWKVPipeline:
             [{"role": "user", "content": prompt}], max_tokens=max_tokens,
             stage=stage, evidence_ids=tuple(source.id for source in sources),
             assistant_prefill=prefill,
+            **({"temperature": 1.0, "top_p": 1.0, "top_k": 1, "seed": 11}
+               if self.settings.native_completion_protocol == "g1j_plain" else {}),
             **({"trace": trace} if trace is not None else {}),
             **({"state_role": state_role} if state_role is not None and self.settings.native_transport == "rwkvos_batch" else {}),
         )
@@ -559,6 +562,8 @@ class RWKVPipeline:
             prompt = writer_prompt_v2(task, evidence, fields)
         elif self.settings.native_writer_prompt_protocol == "evidence_checked":
             prompt = writer_prompt_checked(task, evidence, fields)
+        elif self.settings.native_writer_prompt_protocol == "decision":
+            prompt = writer_prompt_decision(task, evidence, fields)
         return await self._call(prompt, stage="writer",
             max_tokens=self.settings.generation_max_tokens, sources=sources)
 

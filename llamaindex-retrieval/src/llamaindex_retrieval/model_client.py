@@ -42,6 +42,8 @@ def model_client_options(settings, **overrides):
                        batch_wait_ms=settings.rwkvos_batch_wait_ms)
     else:
         options["api_key"] = settings.native_api_key
+        if settings.native_completion_protocol != "native":
+            options["prompt_protocol"] = settings.native_completion_protocol
     options.update(overrides)
     return options
 
@@ -51,9 +53,9 @@ def model_answer_bounds(raw_text, trace):
     if not isinstance(raw_text, str):
         return None
     transport = trace.get("transport", "native")
-    if transport == "native":
+    if transport == "native" and trace.get("prompt_protocol") != "g1j_plain":
         return inspect_envelope(raw_text, trace.get("prefill", "<think"))
-    if transport != "rwkvos_batch":
+    if transport != "rwkvos_batch" and not (transport == "native" and trace.get("prompt_protocol") == "g1j_plain"):
         return None
     envelope = trace.get("envelope")
     if not isinstance(envelope, dict) or envelope.get("valid") is not True:

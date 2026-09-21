@@ -57,9 +57,10 @@ class Settings(BaseSettings):
     native_model: str = "rwkv7-g1j-2.9b-20260831-ctx16384"
     native_api_key: str = ""
     native_transport: Literal["native", "rwkvos_batch"] = "native"
+    native_completion_protocol: Literal["native", "g1j_plain"] = "native"
     native_writer_prefill: Literal["<think", "<think></think"] = "<think"
     native_writer_prompt_protocol: Literal[
-        "task_first", "evidence_first", "evidence_checked"
+        "task_first", "evidence_first", "evidence_checked", "decision"
     ] = "task_first"
     rwkvos_cf_access_client_id: SecretStr = SecretStr("")
     rwkvos_cf_access_client_secret: SecretStr = SecretStr("")
@@ -127,6 +128,11 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_reader_state_protocol(self) -> "Settings":
+        if self.native_completion_protocol == "g1j_plain" and (
+                self.native_transport != "native"
+                or any(value != "<think></think" for value in (
+                    self.native_planner_prefill, self.native_resolver_prefill, self.native_writer_prefill))):
+            raise ValueError("g1j_plain requires native transport and closed no-think prefixes")
         if (set(self.rwkvos_matrix_state_ids) - {"plan", "reader", "assessment", "followup", "review", "writer"}
                 or any(not value.strip() for value in self.rwkvos_matrix_state_ids.values())):
             raise ValueError("Invalid matrix state role or empty state ID")
