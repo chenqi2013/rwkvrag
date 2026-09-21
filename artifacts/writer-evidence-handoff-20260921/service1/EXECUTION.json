@@ -1,0 +1,8 @@
+{
+  "freeze_commit": "38d3a62e",
+  "freeze_pushed_before_model_start": true,
+  "model_requests_recorded": 144,
+  "model_readiness_evidence": "MODELS.json and RUNTIME.log",
+  "kernel_dispatch_evidence": "Pinned engine source hashes and FP32 recurrent State launch arguments; no GPU profiler kernel trace was collected",
+  "preflight_note": "PREFLIGHT.json was recorded before exec, so its model_started/runtime_kernel_executed flags remain false; later readiness and actual call records are separate evidence."
+}

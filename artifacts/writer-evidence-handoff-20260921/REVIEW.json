@@ -1,0 +1,430 @@
+{
+  "method": "Implementer semantic diagnosis against frozen prompts, evidence_flow, selected evidence and retained upstream sources; not independent evaluation or overall QA accuracy.",
+  "summary_zh": "7.2B零State、RWKV fp32io16，固定同一36题上游，基线/候选各两轮共144次新Writer调用。只对12题加入处理状态，24题提示不变；未新联网。候选仍编数值、误读处理记录，未过门槛、未接入正式链路；24道对照中4道本轮输出漂移。这里展示全部原回答与实际引用，成功拒答不算完成比较。",
+  "gate_passed": false,
+  "deployed": false,
+  "faithful_processing_explanation_cases_both_rounds": [
+    3,
+    22,
+    31
+  ],
+  "target_cases_with_unsupported_facts_or_processing_details": [
+    6,
+    20,
+    24,
+    25,
+    26,
+    27,
+    32,
+    33,
+    34
+  ],
+  "control_within_run_drift_cases": [
+    1,
+    7,
+    10,
+    18
+  ],
+  "control_historical_new_length_cases": [
+    10,
+    14
+  ],
+  "cases": {
+    "0": {
+      "id": "natural/00",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。预算下游执行恢复，9个事实通过核验；仍将检索方式当部署方式，重复结论直到上限。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。预算下游执行恢复，9个事实通过核验；仍将检索方式当部署方式，重复结论直到上限。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "1": {
+      "id": "natural/01",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。最终输出触顶，不能作为完整回答；节点失败与原文保留。 追加复核：补充诊断：把15分钟部署耗时归到成本，输出提示词和任务图，随后反复展开未知项直到上限。 第二轮两组尾部文字不同，但都复制内部提示/证据结构并复读触顶。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。最终输出触顶，不能作为完整回答；节点失败与原文保留。 追加复核：补充诊断：把15分钟部署耗时归到成本，输出提示词和任务图，随后反复展开未知项直到上限。 第二轮两组尾部文字不同，但都复制内部提示/证据结构并复读触顶。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "2": {
+      "id": "natural/02",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。只回答MinerU的一条描述，漏掉其他四个项目与选型判断。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。只回答MinerU的一条描述，漏掉其他四个项目与选型判断。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "3": {
+      "id": "natural/03",
+      "target": true,
+      "baseline": {
+        "notes": "没有最终证据，未推荐具体产品；未解释已有6份材料为何未形成证据。"
+      },
+      "candidate": {
+        "notes": "两轮均说明92个失败节点、没有可引用证据，未编产品能力。仍要求用户补材料，未实现系统恢复检索/处理；不能算比较题已答对。"
+      },
+      "faithful_processing_explanation_both_rounds": true
+    },
+    "4": {
+      "id": "natural/04",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。重复输出[资料2]直至2048上限，没有有效比较。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。重复输出[资料2]直至2048上限，没有有效比较。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "5": {
+      "id": "natural/05",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。本题输入零来源，能说明无法核实且不造编号；只通过空材料拒答边界，不代表完成知识选型。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。本题输入零来源，能说明无法核实且不造编号；只通过空材料拒答边界，不代表完成知识选型。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "6": {
+      "id": "natural/06",
+      "target": true,
+      "baseline": {
+        "notes": "第一轮在零最终证据下编写各产品能力并推荐RAGFlow/Dify；第二轮变成长列表拒答并复读触顶。同一基线输入仍不稳定。"
+      },
+      "candidate": {
+        "notes": "两轮不再输出具体产品推荐，均能说明105个失败节点；但把未检查任务272错读为0，第一轮进一步声称全部工作完成。处理状态仍失真，不通过。"
+      },
+      "faithful_processing_explanation_both_rounds": false
+    },
+    "7": {
+      "id": "natural/07",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。六项目多轮问题重复未知字段直到上限，未给出可信的两候选及试用方案。 第二轮两组尾部重复字段不同，均触顶；这道题的提示完全相同。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。六项目多轮问题重复未知字段直到上限，未给出可信的两候选及试用方案。 第二轮两组尾部重复字段不同，均触顶；这道题的提示完全相同。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "8": {
+      "id": "old28/comparison_smoke_001",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。8L/12L与支持/不支持离线均保留，并引用两侧实际来源。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。8L/12L与支持/不支持离线均保留，并引用两侧实际来源。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "9": {
+      "id": "old28/comparison_smoke_002",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。把白榆1.0否定套到2.0，漏2.0并发18与加密支持。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。把白榆1.0否定套到2.0，漏2.0并发18与加密支持。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "10": {
+      "id": "old28/comparison_smoke_003",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。0次/0小时/2次/未记载均区分，引用对应来源；末尾两句略重复，但非失控复读。 第一轮能结束，第二轮两组均持续复读到2048token；相同输入跨轮不稳定。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。0次/0小时/2次/未记载均区分，引用对应来源；末尾两句略重复，但非失控复读。 第一轮能结束，第二轮两组均持续复读到2048token；相同输入跨轮不稳定。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "11": {
+      "id": "old28/comparison_smoke_004",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。仅保留水泵11L/min，漏另一对象的不同单位流量。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。仅保留水泵11L/min，漏另一对象的不同单位流量。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "12": {
+      "id": "old28/comparison_smoke_005",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。实施日期漏答，把日期问题扩出大量无关字段，并编造编号、复读触顶。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。实施日期漏答，把日期问题扩出大量无关字段，并编造编号、复读触顶。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "13": {
+      "id": "old28/comparison_smoke_006",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。有甲设备16W的原文却答未知；同一句重复两次。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。有甲设备16W的原文却答未知；同一句重复两次。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "14": {
+      "id": "old28/comparison_smoke_007",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。完整列出南仓90/95与北仓120及三份引用，并保留南仓两个不同记载，不擅自择一。 本轮四次均在正确列出90/95/120平方米后复读触顶，与历史能结束的原输出不同。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。完整列出南仓90/95与北仓120及三份引用，并保留南仓两个不同记载，不擅自择一。 本轮四次均在正确列出90/95/120平方米后复读触顶，与历史能结束的原输出不同。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "15": {
+      "id": "old28/comparison_smoke_008",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。本题无材料，正确说明无法核实价格和离线能力，无虚构编号。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。本题无材料，正确说明无法核实价格和离线能力，无虚构编号。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "16": {
+      "id": "old28/regression_smoke_001",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。四对象的转速、冷却、周期、时区全部保留且各自引用正确；有3个非最终节点失败，执行仍标部分失败。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。四对象的转速、冷却、周期、时区全部保留且各自引用正确；有3个非最终节点失败，执行仍标部分失败。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "17": {
+      "id": "old28/regression_smoke_002",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。多轮版本任务漏离线支持并保留已不相关对象，未完整完成三项要求。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。多轮版本任务漏离线支持并保留已不相关对象，未完整完成三项要求。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "18": {
+      "id": "old28/regression_smoke_003",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。无法确定虚构探头交付量，无产品数值幻觉；空证据边界回答。 第一轮同提示的基线/候选措辞不同，核心仍是无法确定实际交付量；第二轮两组一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。无法确定虚构探头交付量，无产品数值幻觉；空证据边界回答。 第一轮同提示的基线/候选措辞不同，核心仍是无法确定实际交付量；第二轮两组一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "19": {
+      "id": "old28/regression_smoke_004",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。功率46W、自然散热、销量未记载基本完整，但没有来源引用。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。功率46W、自然散热、销量未记载基本完整，但没有来源引用。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "20": {
+      "id": "old28/regression_smoke_005",
+      "target": true,
+      "baseline": {
+        "notes": "两轮均把原文9L/12L编成3.0L/3.5L；Writer实际没有最终证据，不能列事实数值。"
+      },
+      "candidate": {
+        "notes": "两轮均编造约30L/约40L。真正上游记载是9L/12L，本次没有把这些未入选证据传给Writer。仍然编造，不通过。"
+      },
+      "faithful_processing_explanation_both_rounds": false
+    },
+    "21": {
+      "id": "old28/regression_smoke_006",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。表格只留下2024年A的11L/min，漏其他年份/对象，否定离线事实丢失。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。表格只留下2024年A的11L/min，漏其他年份/对象，否定离线事实丢失。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "22": {
+      "id": "old28/regression_smoke_007",
+      "target": true,
+      "baseline": {
+        "notes": "两轮均断言最终核准段未包含复位时长和校验码；实际是上游处理未形成证据。"
+      },
+      "candidate": {
+        "notes": "两轮均说明一个节点失败、无可引用证据，没有编复位时长/校验码或断言原文缺失。仍要求补材料重问，未完成原始问题。"
+      },
+      "faithful_processing_explanation_both_rounds": true
+    },
+    "23": {
+      "id": "old28/regression_smoke_008",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。从预约不等于交付推断0台、且漏正式量产状态；数字碰巧吻合也不能当有依据。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。从预约不等于交付推断0台、且漏正式量产状态；数字碰巧吻合也不能当有依据。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "24": {
+      "id": "old28/controlled_single",
+      "target": true,
+      "baseline": {
+        "notes": "两轮均错称原记录只有产品名、没有功率信息；实际原文明确18W，范围短语校验失败丢失事实。"
+      },
+      "candidate": {
+        "notes": "两轮均说还有未检查工作，但实际未检查数为0；还把没有来源编号作为失败原因，处理状态解释错误。"
+      },
+      "faithful_processing_explanation_both_rounds": false
+    },
+    "25": {
+      "id": "old28/controlled_agreement",
+      "target": true,
+      "baseline": {
+        "notes": "两轮均错称原记录没有功率信息；原子范围校验失败不等于原文未记载。"
+      },
+      "candidate": {
+        "notes": "两轮都补写了逐来源的提取情况，第一轮说提取结果为空/未包含参数，第二轮编写来源编号1/2。Writer只收到总数，未收到逐来源结果或引用编号，不能作这种描述。"
+      },
+      "faithful_processing_explanation_both_rounds": false
+    },
+    "26": {
+      "id": "old28/controlled_conflict",
+      "target": true,
+      "baseline": {
+        "notes": "两轮均错称原记录没有功率信息，未保留真实冲突。"
+      },
+      "candidate": {
+        "notes": "两轮都补写逐来源提取情况；第二轮给出不可引用的来源编号1/2。总量处理记录不支持这些逐来源陈述，冲突仍未恢复。"
+      },
+      "faithful_processing_explanation_both_rounds": false
+    },
+    "27": {
+      "id": "old28/controlled_conflict_reversed",
+      "target": true,
+      "baseline": {
+        "notes": "两轮均错称原记录没有功率信息，反转输入顺序也未恢复冲突。"
+      },
+      "candidate": {
+        "notes": "两轮均编写来源编号1/2及逐来源提取细节；只收到聚合处理状态，没有可引用编号，不能据此解释每一来源的内容。"
+      },
+      "faithful_processing_explanation_both_rounds": false
+    },
+    "28": {
+      "id": "old28/controlled_conditions",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。把增强模式25W套到标准模式，误称两模式相同。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。把增强模式25W套到标准模式，误称两模式相同。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "29": {
+      "id": "old28/controlled_revision",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。使用旧18W并漏有效更正和旧值作废状态。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。使用旧18W并漏有效更正和旧值作废状态。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "30": {
+      "id": "old28/controlled_zero",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。把预约80台当实际交付；又把量产未知写成未量产。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。把预约80台当实际交付；又把量产未知写成未量产。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    },
+    "31": {
+      "id": "old28/controlled_missing",
+      "target": true,
+      "baseline": {
+        "notes": "两轮均说明无可用来源核实实际交付量，但未说明输入存在而最终证据为空。"
+      },
+      "candidate": {
+        "notes": "两轮均区分处理未形成证据与产品数值，失败数0/未检查数0正确；没有把未记录当0交付。仍未恢复原文明确未记录这一证据，不能算原题完整回答。"
+      },
+      "faithful_processing_explanation_both_rounds": true
+    },
+    "32": {
+      "id": "old28/controlled_long_agreement",
+      "target": true,
+      "baseline": {
+        "notes": "两轮均错称原记录没有功率信息；长材料的数值解析失败被误说成原文缺事实。"
+      },
+      "candidate": {
+        "notes": "两轮均补写逐来源的提取结果；第一轮编来源编号1/2，第二轮说提取结果为空/未包含参数。聚合状态不能支持这种逐来源结论。"
+      },
+      "faithful_processing_explanation_both_rounds": false
+    },
+    "33": {
+      "id": "old28/controlled_long_conflict",
+      "target": true,
+      "baseline": {
+        "notes": "两轮均错称原记录没有功率信息；长材料中的真实冲突未到达Writer。"
+      },
+      "candidate": {
+        "notes": "两轮均编写来源编号1/2与逐来源细节；没有入选证据，不能借此解释原来源或恢复冲突。"
+      },
+      "faithful_processing_explanation_both_rounds": false
+    },
+    "34": {
+      "id": "old28/controlled_long_conflict_reversed",
+      "target": true,
+      "baseline": {
+        "notes": "两轮均错称原记录没有功率信息；反转长材料顺序未恢复冲突。"
+      },
+      "candidate": {
+        "notes": "两轮均补写逐来源的提取情况；第一轮编来源编号1/2，第二轮说提取结果为空/未包含参数。仍未忠实限制在聚合处理信息内。"
+      },
+      "faithful_processing_explanation_both_rounds": false
+    },
+    "35": {
+      "id": "old28/controlled_units",
+      "target": false,
+      "baseline": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。仅保留C的14L/min，漏D的9kg/min，无法完成不同量纲比较。 追加复核：审读数值更正：D的原文为22kg/min，不是9kg/min；遗漏D的事实及量纲比较失败结论不变。 四次新输出一致。"
+      },
+      "candidate": {
+        "notes": "本题两组提示逐字不变，属于保留的普通题/有证据对照。仅保留C的14L/min，漏D的9kg/min，无法完成不同量纲比较。 追加复核：审读数值更正：D的原文为22kg/min，不是9kg/min；遗漏D的事实及量纲比较失败结论不变。 四次新输出一致。"
+      },
+      "faithful_processing_explanation_both_rounds": null
+    }
+  }
+}

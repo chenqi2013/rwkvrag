@@ -4,12 +4,12 @@ import "./modelComparison.css";
 import { evidenceFlowNotices, executionLabel, type EvidenceFlow } from "../evidenceFlow";
 
 type Source = { label: string; text: string; url?: string };
-type Answer = { role?: "candidate" | "historical"; evidence_flow?: EvidenceFlow; label: string; raw_text: string; finish_reason?: string; elapsed_s: number; notes: string; sources: Source[]; queries?: { query: string; status: string }[]; funnel?: { task?: unknown; facts?: unknown[]; cells?: unknown[]; field_summaries?: unknown[]; conditions?: unknown[]; candidates?: unknown[]; decision?: unknown; call_budget?: unknown; failures?: unknown[] }; trace?: unknown };
+type Answer = { role?: "candidate" | "baseline" | "historical"; evidence_flow?: EvidenceFlow; label: string; raw_text: string; finish_reason?: string; elapsed_s: number; notes: string; sources: Source[]; queries?: { query: string; status: string }[]; funnel?: { task?: unknown; facts?: unknown[]; cells?: unknown[]; field_summaries?: unknown[]; conditions?: unknown[]; candidates?: unknown[]; decision?: unknown; call_budget?: unknown; failures?: unknown[] }; trace?: unknown };
 type Case = { id: string; question: string; answers: Answer[]; history?: {role: string; content: string}[]; input_sources?: Source[] };
-type Dataset = { title: string; summary: string; cases: Case[] };
+type Dataset = { title: string; summary: string; paired?: boolean; cases: Case[] };
 
 export default function TestResultsPage() {
-  const [suite, setSuite] = useState("typed-funnel-diagnostics-20260921");
+  const [suite, setSuite] = useState("writer-evidence-handoff-20260921");
   const [showHistory, setShowHistory] = useState(false);
   const [data, setData] = useState<Dataset>();
   const [error, setError] = useState("");
@@ -23,7 +23,7 @@ export default function TestResultsPage() {
     return () => controller.abort();
   }, [suite]);
   const current = data?.cases[index];
-  const hasVersions = current?.answers.some(a => a.role === "candidate");
+  const hasVersions = !data?.paired && current?.answers.some(a => a.role === "candidate");
   const visibleAnswers = current?.answers.filter(a => !hasVersions || showHistory || a.role === "candidate")
     .slice().sort((a,b) => Number(b.role === "candidate") - Number(a.role === "candidate"));
   useEffect(() => { setSource(undefined); }, [suite, index]);
@@ -39,7 +39,8 @@ export default function TestResultsPage() {
   return <div className="model-comparison">
     <Typography.Title level={3}>真实检索与复读测试</Typography.Title>
     <Select aria-label="测试集合" value={suite} onChange={setSuite} style={{width:320}} options={[
-      {value:"typed-funnel-diagnostics-20260921",label:"最近实验结果 · 故障定位"},
+      {value:"writer-evidence-handoff-20260921",label:"Writer处理状态 · 双轮原始回答对照"},
+      {value:"typed-funnel-diagnostics-20260921",label:"上一阶段 · v10故障定位"},
       {value:"typed-funnel-20260921",label:"历史快照 · v4/v8/v10原始对照"},
       {value:"funnel-repairs-20260921",label:"真实比较修复 · 分层过程"},
       {value:"github-natural-comparison-20260921",label:"大型 GitHub 比较 · 自然问法"},
@@ -61,17 +62,17 @@ export default function TestResultsPage() {
           {!!current.history?.length && <details><summary>本题使用的原始对话历史</summary>{current.history.map((message, i) => <div key={i}><Tag>{message.role}</Tag><pre>{message.content}</pre></div>)}</details>}
           {current.input_sources && <details><summary>进入漏斗前的已选材料（{current.input_sources.length}份）</summary><p>这些材料用于检查在哪一层丢失了证据；回答内的引用仍按各版本实际使用的来源映射。</p>{current.input_sources.map((item, i) => <p key={i}><Button onClick={() => setSource(item)}>{i + 1}. 查看输入原文</Button></p>)}</details>}
         </Card>
-        {visibleAnswers?.map((a,i)=><Card key={`${index}:${a.label}:${i}`} title={<Space wrap><Tag color={a.role === "candidate" ? "orange" : "default"}>{a.role === "candidate" ? "最近实验结果 · v10" : a.role === "historical" ? "修复前历史版本" : "归档结果"}</Tag>{a.label}</Space>} style={{marginTop:16}}>
+        {visibleAnswers?.map((a,i)=><Card key={`${index}:${a.label}:${i}`} title={<Space wrap><Tag color={a.role === "candidate" ? "orange" : "default"}>{a.role === "candidate" ? "实验候选 · 未上线" : a.role === "baseline" ? "同轮基线" : a.role === "historical" ? "修复前历史版本" : "归档结果"}</Tag>{a.label}</Space>} style={{marginTop:16}}>
           <Space wrap><Tag>{executionLabel(a.finish_reason)}</Tag><Tag>{a.elapsed_s.toFixed(2)} 秒</Tag></Space>
           {evidenceFlowNotices(a.evidence_flow).map(([notice], n) => <Alert key={n} type="warning" title={notice} style={{marginTop:8}} />)}
-          {a.role === "candidate" && <Alert type="info" title={`本题诊断：${a.notes}`} style={{marginTop:8}} />}
+          {(a.role === "candidate" || data.paired) && <Alert type="info" title={`本题诊断：${a.notes}`} style={{marginTop:8}} />}
           <pre className="comparison-raw" data-testid="raw-answer">{answerText(a)}</pre>
           {!a.raw_text && <Alert type="warning" title={a.finish_reason === "budget_exceeded"
             ? "已选证据超出模型输入预算，本次没有生成回答。下方保留检索证据和执行记录。"
             : a.finish_reason === "retrieval_failed"
               ? "检索失败，本次没有生成回答。失败原因见下方执行记录。"
               : "本次没有生成回答，请查看执行状态和记录。"} />}
-          {a.role !== "candidate" && <details><summary>历史审读说明（不代表当前版本状态）</summary><p>{a.notes}</p></details>}
+          {a.role !== "candidate" && !data.paired && <details><summary>历史审读说明（不代表当前版本状态）</summary><p>{a.notes}</p></details>}
           {a.funnel && <details><summary>分层过程与失败记录</summary>
             <p>原子事实 {a.funnel.facts?.length || 0} 条 · 对象字段核验 {a.funnel.cells?.length || 0} 项 · 维度汇总 {a.funnel.field_summaries?.length || 0} 项 · 阶段失败 {a.funnel.failures?.length || 0} 项</p>
             <details><summary>有效任务</summary><pre>{JSON.stringify(a.funnel.task, null, 2)}</pre></details>

@@ -1,0 +1,581 @@
+{
+  "recorded": 144,
+  "frozen_pins_verified": true,
+  "baseline_or_control_input_checks": {
+    "True": 120,
+    "None": 24
+  },
+  "groups": {
+    "baseline-r1": {
+      "statuses": {
+        "length": 6,
+        "completed": 30
+      },
+      "total_elapsed_s": 135.6950271570022
+    },
+    "baseline-r2": {
+      "statuses": {
+        "length": 8,
+        "completed": 28
+      },
+      "total_elapsed_s": 162.78009410499908
+    },
+    "candidate-r1": {
+      "statuses": {
+        "length": 6,
+        "completed": 30
+      },
+      "total_elapsed_s": 136.7094144620005
+    },
+    "candidate-r2": {
+      "statuses": {
+        "length": 7,
+        "completed": 29
+      },
+      "total_elapsed_s": 152.6239849119993
+    }
+  },
+  "comparisons": [
+    {
+      "ordinal": 0,
+      "id": "natural/00",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 1,
+      "id": "natural/01",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": false,
+      "paired_equal": {
+        "1": true,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 2,
+      "id": "natural/02",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 3,
+      "id": "natural/03",
+      "target": true,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 4,
+      "id": "natural/04",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 5,
+      "id": "natural/05",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 6,
+      "id": "natural/06",
+      "target": true,
+      "baseline_rounds_equal": false,
+      "candidate_rounds_equal": false,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": false
+      }
+    },
+    {
+      "ordinal": 7,
+      "id": "natural/07",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": false,
+      "paired_equal": {
+        "1": true,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 8,
+      "id": "old28/comparison_smoke_001",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 9,
+      "id": "old28/comparison_smoke_002",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 10,
+      "id": "old28/comparison_smoke_003",
+      "target": false,
+      "baseline_rounds_equal": false,
+      "candidate_rounds_equal": false,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": false
+      }
+    },
+    {
+      "ordinal": 11,
+      "id": "old28/comparison_smoke_004",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 12,
+      "id": "old28/comparison_smoke_005",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 13,
+      "id": "old28/comparison_smoke_006",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 14,
+      "id": "old28/comparison_smoke_007",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": false,
+        "2": false
+      }
+    },
+    {
+      "ordinal": 15,
+      "id": "old28/comparison_smoke_008",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 16,
+      "id": "old28/regression_smoke_001",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 17,
+      "id": "old28/regression_smoke_002",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 18,
+      "id": "old28/regression_smoke_003",
+      "target": false,
+      "baseline_rounds_equal": false,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": false,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": false,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 19,
+      "id": "old28/regression_smoke_004",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 20,
+      "id": "old28/regression_smoke_005",
+      "target": true,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": false,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 21,
+      "id": "old28/regression_smoke_006",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 22,
+      "id": "old28/regression_smoke_007",
+      "target": true,
+      "baseline_rounds_equal": false,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": false
+      }
+    },
+    {
+      "ordinal": 23,
+      "id": "old28/regression_smoke_008",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 24,
+      "id": "old28/controlled_single",
+      "target": true,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 25,
+      "id": "old28/controlled_agreement",
+      "target": true,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": false,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 26,
+      "id": "old28/controlled_conflict",
+      "target": true,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": false,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 27,
+      "id": "old28/controlled_conflict_reversed",
+      "target": true,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 28,
+      "id": "old28/controlled_conditions",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 29,
+      "id": "old28/controlled_revision",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 30,
+      "id": "old28/controlled_zero",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 31,
+      "id": "old28/controlled_missing",
+      "target": true,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 32,
+      "id": "old28/controlled_long_agreement",
+      "target": true,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": false,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 33,
+      "id": "old28/controlled_long_conflict",
+      "target": true,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 34,
+      "id": "old28/controlled_long_conflict_reversed",
+      "target": true,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": false,
+      "paired_equal": {
+        "1": false,
+        "2": false
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "ordinal": 35,
+      "id": "old28/controlled_units",
+      "target": false,
+      "baseline_rounds_equal": true,
+      "candidate_rounds_equal": true,
+      "paired_equal": {
+        "1": true,
+        "2": true
+      },
+      "baseline_historical_equal": {
+        "1": true,
+        "2": true
+      }
+    }
+  ],
+  "semantic_review": "Separate implementer review; no automatic correctness inference."
+}

@@ -49,3 +49,5 @@
 - [工程修复、原子13条与完整36题结果及限制](2026-09/typed-funnel-repair-20260921.md)
 
 - [证据流转诊断与历史/当前结果区分](2026-09/evidence-flow-presentation-20260921.md)
+
+- [Writer处理状态交接：144次双轮调用、漂移与失败诊断](2026-09/writer-evidence-handoff-20260921.md)

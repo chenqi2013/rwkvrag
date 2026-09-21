@@ -1,0 +1,10 @@
+{
+  "unit": "rwkvrag-evidence-handoff-20260921.service",
+  "MainPID": 0,
+  "ActiveState": "inactive",
+  "SubState": "dead",
+  "gpu_uuid": "GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0",
+  "before_memory_MiB": 20775,
+  "after_memory_MiB": 20775,
+  "port_18426_forward_cancelled": true
+}
