@@ -567,6 +567,9 @@ class RWKVPipeline:
         return prompt
 
     async def _write(self, task: str, sources: list[SourceItem], fields: list[str]):
+        if self.settings.native_writer_pipeline == "funnel_v1":
+            from .funnel_writer import write_funnel
+            return await write_funnel(self, task, sources)
         if self.settings.native_writer_budget_policy == "whole_sources":
             from .writer_budget import write_with_budget
             return await write_with_budget(self, task, sources, fields)
@@ -577,6 +580,15 @@ class RWKVPipeline:
         # Citation labels can be audited syntactically. This is NOT entailment.
         writer_trace = next((event for event in reversed(events)
                              if event.get("stage") in {"writer", "writer_budget"}), {})
+        funnel = writer_trace.get("funnel")
+        if funnel is not None:
+            by_id = {source.id: source for source in sources}
+            sources = [by_id[identity] for identity in funnel.get("writer_source_ids", [])]
+            retrieval = {**retrieval, "funnel": funnel}
+            upstream = writer_trace.get("upstream_calls", [])
+            events = [*events[:-1], *upstream, events[-1]]
+            if status == "completed" and funnel.get("failures"):
+                status = "funnel_partial_failure"
         packing = writer_trace.get("evidence_budget")
         if packing is not None:
             by_id = {source.id: source for source in sources}
@@ -601,7 +613,8 @@ class RWKVPipeline:
         return AskResponse(answer=answer if answer is not None else "",
                            sources=sources, retrieval=retrieval, generation={
             "pipeline": "rwkv", "prompt_version": PROMPT_VERSION,
-            "writer_prompt_protocol": self.settings.native_writer_prompt_protocol,
+            "writer_prompt_protocol": funnel["protocol"] if funnel else self.settings.native_writer_prompt_protocol,
+            "writer_pipeline": self.settings.native_writer_pipeline,
             "plan_protocol": self.settings.native_plan_protocol,
             "task_source": self.settings.native_task_source,
             "selection_protocol": ({"task_units": TASK_SELECTION_PROTOCOL_VERSION,

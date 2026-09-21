@@ -92,7 +92,9 @@ export function answerPresentation(response?: Pick<AskResponse, "answer" | "gene
   const answerText = spanValid ? characters.slice(span[0], span[1]).join("") : "";
   let color = "orange";
   let label: Label;
-  if (status === "answer_quality_failed") {
+  if (status === "funnel_partial_failure") {
+    label = ["已生成，部分分层核验失败；请核对来源", "Generated; some reasoning stages failed. Check sources."];
+  } else if (status === "answer_quality_failed") {
     label = ["答案未通过模型内容检查，请核对原文", "Answer failed model review; check source evidence"];
   } else if (status === "answer_review_failed") {
     label = ["已生成，内容检查未完成", "Generated; content review did not complete"];
