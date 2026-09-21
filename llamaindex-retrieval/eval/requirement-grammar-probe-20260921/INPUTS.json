@@ -1,0 +1,226 @@
+[
+  {
+    "ordinal": 0,
+    "input": {
+      "quote": "RAGFlow 和 Dify 哪个好？",
+      "allowed_actions": [
+        "其他"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：RAGFlow 和 Dify 哪个好？"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"其他\",\n  \"requirement\": \"RAGFlow 和 Dify 哪个好？\"\n}",
+    "source_sha256": "e815bfe4195043e6ff68671b4746d135ac75399142f6887b0ea858671a4b41e3"
+  },
+  {
+    "ordinal": 1,
+    "input": {
+      "quote": "FastGPT 也加进来看看。",
+      "allowed_actions": [
+        "其他"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：FastGPT 也加进来看看。"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"其他\",\n  \"requirement\": \"FastGPT 也加进来看看。\"\n}",
+    "source_sha256": "e6b0c50394b188ca460a285351c8ca371ffb038bfde1737660a433fc3a77ef5f"
+  },
+  {
+    "ordinal": 2,
+    "input": {
+      "quote": "我们公司想做个知识库。",
+      "allowed_actions": [
+        "其他"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：我们公司想做个知识库。"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"其他\",\n  \"requirement\": \"我们公司想做个知识库。\"\n}",
+    "source_sha256": "342ff611d8feb180848e71be0cd237dab357de7a5c49e30aef415446f41d8e35"
+  },
+  {
+    "ordinal": 3,
+    "input": {
+      "quote": "我们只有一台服务器，",
+      "allowed_actions": [
+        "必须满足"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：我们只有一台服务器，"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"不再要求\",\n  \"requirement\": \"我们只有一台服务器\"\n}",
+    "source_sha256": "0a86b117873876daf801a8c120923873c51895f49b3af52e15390b32d5bfc777"
+  },
+  {
+    "ordinal": 4,
+    "input": {
+      "quote": "16GB 显存，",
+      "allowed_actions": [
+        "必须满足"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：16GB 显存，"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"不再要求\",\n  \"requirement\": \"16GB 显存\"\n}",
+    "source_sha256": "b508057927a436c381896c3e4d99ebd3902d1220356dcda62dc2b5bb0a0ef8e6"
+  },
+  {
+    "ordinal": 5,
+    "input": {
+      "quote": "资料不能传出去，",
+      "allowed_actions": [
+        "必须满足"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：资料不能传出去，"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"不再要求\",\n  \"requirement\": \"资料不能传出去\"\n}",
+    "source_sha256": "3bbe88b05473773ff87240e70cef9a7672b89753fb99845b6aa7d139a864bb2e"
+  },
+  {
+    "ordinal": 6,
+    "input": {
+      "quote": "中文扫描件和表格挺多，",
+      "allowed_actions": [
+        "必须满足",
+        "优先考虑"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：中文扫描件和表格挺多，"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"其他\",\n  \"requirement\": \"中文扫描件和表格挺多\"\n}",
+    "source_sha256": "51747dec998c15f366eaa4200135bce9a42230f5947f202c1f010ca7880a60c1"
+  },
+  {
+    "ordinal": 7,
+    "input": {
+      "quote": "维护的人也不多。",
+      "allowed_actions": [
+        "优先考虑",
+        "必须满足"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：维护的人也不多。"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"不再要求\",\n  \"requirement\": \"维护的人也不多\"\n}",
+    "source_sha256": "dd840822e9318798068543b04fea33eacffaff67cc2940fcb98518bf758c2942"
+  },
+  {
+    "ordinal": 8,
+    "input": {
+      "quote": "Wiki 先不做了，",
+      "allowed_actions": [
+        "不再要求"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：Wiki 先不做了，"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"不再要求\",\n  \"requirement\": \"Wiki 先不做了\"\n}",
+    "source_sha256": "6f63de3f9cf9fd5177a3aef68ad9fb8213e7e55de0bded7cd6d3c7762594501c"
+  },
+  {
+    "ordinal": 9,
+    "input": {
+      "quote": "最重要是能查到回答的原文，",
+      "allowed_actions": [
+        "必须满足",
+        "优先考虑"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：最重要是能查到回答的原文，"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"其他\",\n  \"requirement\": \"最重要是能查到回答的原文\"\n}",
+    "source_sha256": "9574939559fd2353c442aeee107d7f4e185cf17a4d68d2bf82b23b09d68f6930"
+  },
+  {
+    "ordinal": 10,
+    "input": {
+      "quote": "文档更新后别答旧的。",
+      "allowed_actions": [
+        "必须满足"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：文档更新后别答旧的。"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"不再要求\",\n  \"requirement\": \"文档更新后别答旧的\"\n}",
+    "source_sha256": "6e66d451b48f1f9a6b19d2ad37ac6b9513f70e1587358be30acd60890de16383"
+  },
+  {
+    "ordinal": 11,
+    "input": {
+      "quote": "最后先试哪两个？",
+      "allowed_actions": [
+        "其他"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：最后先试哪两个？"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"其他\",\n  \"requirement\": \"最后先试哪两个？\"\n}",
+    "source_sha256": "98df64190270d02aa33dc06a2dfc6a46f379b9d59b727e5b3961bc25a8717e5b"
+  },
+  {
+    "ordinal": 12,
+    "input": {
+      "quote": "两项都要分别引用。",
+      "allowed_actions": [
+        "其他"
+      ]
+    },
+    "messages": [
+      {
+        "role": "user",
+        "content": "判断这句话对产品选型条件做了什么变更，输出action和requirement。action：提出必须满足的具体能力/环境/数值限制为“必须满足”；提出优先考虑的具体属性为“优先考虑”；取消或暂缓功能需求为“不再要求”；仅列举产品、提出比较问题、说明笼统项目目标、要求回答格式为“其他”。requirement只写这句话的具体需求内容，保留否定和数值，不扩展；其他用null。取消需求不等于要求产品不能具备该功能。\n原话：两项都要分别引用。"
+      }
+    ],
+    "baseline_raw_text": "{\n  \"action\": \"不再要求\",\n  \"requirement\": \"两项都要分别引用\"\n}",
+    "source_sha256": "0cfe57498e8988de70a4ecae272ac75a282c4d37f7a452b6ae63aa12393e3690"
+  }
+]
