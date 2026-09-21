@@ -50,6 +50,24 @@ def main():
                 "trace":{"retrieval":response.get("retrieval"),"generation":gen,"http_status":row.get("http_status")}}]
         cases.append({"id":c["id"],"question":c["question"],"answers":answers})
     publish("live-comparison-20260921",{"title":"12道真实联网及知识库联合比较", "summary":f"已记录{done}/12题；10题web、2题hybrid。实时SearchReader/Tavily搜索，模型自行规划、选证据、写回答。候选诊断，不代表正式服务已修复；实现者审读，非独立盲测。", "cases":cases})
+    root = ROOT / "data/quality-runs/github-project-comparison-20260921/run1"
+    planned = json.loads((ROOT / "llamaindex-retrieval/eval/github-project-comparison-20260921/CASES.json").read_text())
+    review_file = ROOT / "data/quality-runs/github-project-comparison-20260921/REVIEW.json"
+    reviews = json.loads(review_file.read_text()) if review_file.exists() else {}
+    cases = []; main_done = 0
+    for ordinal, c in enumerate(planned):
+        f = root / f"{ordinal:02d}.json"; answers = []
+        if f.exists():
+            main_done += 1; row=json.loads(f.read_text()); response=row.get("response",{});gen=response.get("generation",{})
+            text=response.get("answer", "")
+            if "raw_model_answer" in gen: assert text == gen["raw_model_answer"]
+            answers=[{"label":"大型项目比较 · 7.2B零State · 候选诊断", "raw_text":text,
+                "finish_reason":gen.get("provider_finish_reason") or row["status"],"elapsed_s":row["elapsed_s"],
+                "notes":reviews.get(c["id"],{}).get("notes","语义待审读；执行成功不等于比较完整。") if row["status"]=="recorded" else row.get("error","请求失败"),
+                "sources":[{"label":f"资料 {i}","text":v["snippet"],"url":v.get("uri")} for i,v in enumerate(response.get("sources",[]),1)],
+                "trace":{"request":row["request"],"retrieval":response.get("retrieval"),"generation":gen,"http_status":row.get("http_status")}}]
+        cases.append({"id":c["id"],"question":c["question"],"answers":answers})
+    publish("github-project-comparison-20260921",{"title":"大型 GitHub 多项目比较 · 主验收", "summary":f"已记录{main_done}/8次问答：6个首轮场景比较4～5项目，2个真实多轮问题扩至6项目。重点检查覆盖、相对优势、适用场景、引用和条件遵循。实时联网候选诊断，非独立盲测，不代表商业验收。", "cases":cases})
     print(f"Published {count} controlled records and {done} real retrieval records")
 
 if __name__ == "__main__":main()
