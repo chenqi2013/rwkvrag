@@ -1,0 +1,112 @@
+[
+  {
+    "ordinal": 1,
+    "key_sha256_prefix": "54b25aacadf0",
+    "started_at": "2026-09-21T07:26:16.671074+00:00",
+    "status": 401,
+    "headers": {
+      "Date": "Mon, 21 Sep 2026 07:26:16 GMT"
+    },
+    "error_body": "{\"detail\":{\"error\":\"The account associated with this API key has been deactivated. If you wish to reactivate your subscription, please contact our team at support@tavily.com.\"}}",
+    "elapsed_s": 0.975
+  },
+  {
+    "ordinal": 2,
+    "key_sha256_prefix": "d87fe4457c0a",
+    "started_at": "2026-09-21T07:26:23.647027+00:00",
+    "status": 401,
+    "headers": {
+      "Date": "Mon, 21 Sep 2026 07:26:22 GMT"
+    },
+    "error_body": "{\"detail\":{\"error\":\"The account associated with this API key has been deactivated. If you wish to reactivate your subscription, please contact our team at support@tavily.com.\"}}",
+    "elapsed_s": 0.995
+  },
+  {
+    "ordinal": 3,
+    "key_sha256_prefix": "8aa38045ea1b",
+    "started_at": "2026-09-21T07:26:30.643086+00:00",
+    "status": 401,
+    "headers": {
+      "Date": "Mon, 21 Sep 2026 07:26:29 GMT"
+    },
+    "error_body": "{\"detail\":{\"error\":\"The account associated with this API key has been deactivated. If you wish to reactivate your subscription, please contact our team at support@tavily.com.\"}}",
+    "elapsed_s": 0.975
+  },
+  {
+    "ordinal": 4,
+    "key_sha256_prefix": "e5cf2f0a6d45",
+    "started_at": "2026-09-21T07:26:37.623786+00:00",
+    "status": 401,
+    "headers": {
+      "Date": "Mon, 21 Sep 2026 07:26:35 GMT"
+    },
+    "error_body": "{\"detail\":{\"error\":\"The account associated with this API key has been deactivated. If you wish to reactivate your subscription, please contact our team at support@tavily.com.\"}}",
+    "elapsed_s": 0.964
+  },
+  {
+    "ordinal": 5,
+    "key_sha256_prefix": "f6b78c8ee3c5",
+    "started_at": "2026-09-21T07:26:41.639340+00:00",
+    "status": 401,
+    "headers": {
+      "Date": "Mon, 21 Sep 2026 07:26:42 GMT"
+    },
+    "error_body": "{\"detail\":{\"error\":\"The account associated with this API key has been deactivated. If you wish to reactivate your subscription, please contact our team at support@tavily.com.\"}}",
+    "elapsed_s": 0.98
+  },
+  {
+    "ordinal": 6,
+    "key_sha256_prefix": "3c5104a07e8c",
+    "started_at": "2026-09-21T07:26:48.628706+00:00",
+    "status": 401,
+    "headers": {
+      "Date": "Mon, 21 Sep 2026 07:26:48 GMT"
+    },
+    "error_body": "{\"detail\":{\"error\":\"The account associated with this API key has been deactivated. If you wish to reactivate your subscription, please contact our team at support@tavily.com.\"}}",
+    "elapsed_s": 0.998
+  },
+  {
+    "ordinal": 7,
+    "key_sha256_prefix": "537ad36a2f38",
+    "started_at": "2026-09-21T07:26:55.631546+00:00",
+    "status": 401,
+    "headers": {
+      "Date": "Mon, 21 Sep 2026 07:26:54 GMT"
+    },
+    "error_body": "{\"detail\":{\"error\":\"The account associated with this API key has been deactivated. If you wish to reactivate your subscription, please contact our team at support@tavily.com.\"}}",
+    "elapsed_s": 0.969
+  },
+  {
+    "ordinal": 8,
+    "key_sha256_prefix": "021fae6d974b",
+    "started_at": "2026-09-21T07:27:02.610300+00:00",
+    "status": 401,
+    "headers": {
+      "Date": "Mon, 21 Sep 2026 07:27:01 GMT"
+    },
+    "error_body": "{\"detail\":{\"error\":\"The account associated with this API key has been deactivated. If you wish to reactivate your subscription, please contact our team at support@tavily.com.\"}}",
+    "elapsed_s": 0.933
+  },
+  {
+    "ordinal": 9,
+    "key_sha256_prefix": "0ba4e46d7355",
+    "started_at": "2026-09-21T07:27:09.546639+00:00",
+    "status": 401,
+    "headers": {
+      "Date": "Mon, 21 Sep 2026 07:27:07 GMT"
+    },
+    "error_body": "{\"detail\":{\"error\":\"The account associated with this API key has been deactivated. If you wish to reactivate your subscription, please contact our team at support@tavily.com.\"}}",
+    "elapsed_s": 0.984
+  },
+  {
+    "ordinal": 10,
+    "key_sha256_prefix": "8eefb51f052f",
+    "started_at": "2026-09-21T07:27:13.567213+00:00",
+    "status": 401,
+    "headers": {
+      "Date": "Mon, 21 Sep 2026 07:27:13 GMT"
+    },
+    "error_body": "{\"detail\":{\"error\":\"The account associated with this API key has been deactivated. If you wish to reactivate your subscription, please contact our team at support@tavily.com.\"}}",
+    "elapsed_s": 0.991
+  }
+]

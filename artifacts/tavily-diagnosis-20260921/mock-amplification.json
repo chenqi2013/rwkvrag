@@ -1,0 +1,27 @@
+{
+  "network_requests": 0,
+  "configured_fake_keys": 8,
+  "rows": [
+    {
+      "fresh_process_simulation": 0,
+      "query_in_process": 0,
+      "http_attempts": 8
+    },
+    {
+      "fresh_process_simulation": 0,
+      "query_in_process": 1,
+      "http_attempts": 0
+    },
+    {
+      "fresh_process_simulation": 1,
+      "query_in_process": 0,
+      "http_attempts": 8
+    },
+    {
+      "fresh_process_simulation": 1,
+      "query_in_process": 1,
+      "http_attempts": 0
+    }
+  ],
+  "method": "reset only process globals between simulated fresh processes; real TavilyProvider._post with mocked HTTP"
+}
