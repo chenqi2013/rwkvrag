@@ -88,6 +88,34 @@ def main():
                 "trace":{"request":row["request"],"retrieval":response.get("retrieval"),"generation":gen,"http_status":row.get("http_status")}}]
         cases.append({"id":c["id"],"question":c["question"],"answers":answers})
     publish("github-project-comparison-paced-20260921",{"title":"大型 GitHub 多项目比较 · 低频实时检索", "summary":f"已记录{finished}/8次：{statuses}。单凭据串行检索，间隔至少6秒，首个提供方异常后熔断。6个首轮与2个真实历史追问；7.2B零State候选诊断，非正式部署或商业验收。", "cases":cases})
+    root = ROOT / "data/quality-runs/github-natural-comparison-20260921/run1"
+    review_file = root.parent / "REVIEW.json"
+    reviews = json.loads(review_file.read_text()) if review_file.exists() else {}
+    planned = json.loads((ROOT / "llamaindex-retrieval/eval/github-natural-comparison-20260921/CASES.json").read_text())
+    cases = []; finished = 0; statuses = {}
+    for ordinal, c in enumerate(planned):
+        f = root / f"{ordinal:02d}.json"; answers = []
+        if f.exists():
+            finished += 1; row = json.loads(f.read_text()); response = row.get("response", {}); gen = response.get("generation", {})
+            text = response.get("answer", "")
+            if gen.get("raw_model_answer") is not None: assert text == gen["raw_model_answer"]
+            status = gen.get("status") or row["status"]; statuses[status] = statuses.get(status, 0) + 1
+            answers = [{"label":"自然问法 · 实时联网 · 7.2B零State", "raw_text":text,
+                "finish_reason":status,"elapsed_s":row["elapsed_s"],
+                "queries":[{"query":q.get("query", ""),"status":q.get("status", "unknown")} for q in response.get("retrieval",{}).get("web_search",[])],
+                "notes":reviews.get(c["id"],{}).get("notes","语义待审读；联网返回不等于比较结论可靠。"),
+                "sources":[{"label":f"资料 {i}","text":v["snippet"],"url":v.get("uri")} for i,v in enumerate(response.get("sources",[]),1)],
+                "trace":{"request":row["request"],"retrieval":response.get("retrieval"),"generation":gen,"http_status":row.get("http_status")}}]
+        replay = root.parent / "baseline-writer-replay2" / f"{ordinal:02d}.json"
+        if replay.exists() and answers:
+            rr=json.loads(replay.read_text()); rv=root.parent / "BASELINE-REVIEW.json"
+            br=json.loads(rv.read_text()) if rv.exists() else {}
+            answers.append({"label":"原Writer · 同一已选证据回放（未重新联网）", "raw_text":rr.get("raw_text") or "",
+                "finish_reason":rr["status"],"elapsed_s":rr["elapsed_s"],
+                "notes":br.get(c["id"],{}).get("notes","固定证据事后诊断，语义待审读；不代表完整链路改善。"),
+                "sources":answers[0]["sources"],"trace":rr.get("trace")})
+        cases.append({"id":c["id"],"question":c["question"],"answers":answers})
+    publish("github-natural-comparison-20260921",{"title":"大型 GitHub 比较 · 自然问法", "summary":f"已记录{finished}/8次：{statuses}。单凭据串行检索，间隔至少6秒，首个提供方异常后熔断。6个首轮与2个真实历史追问；7.2B零State候选诊断，非正式部署或商业验收。", "cases":cases})
     print(f"Published {count} controlled records and {done} real retrieval records")
 
 if __name__ == "__main__":main()

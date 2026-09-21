@@ -1,0 +1,15 @@
+{
+  "data/quality-runs/github-natural-comparison-20260921/REVIEW.json": "80e9971e998b2baeddb9ba42dd4ed1a4e9f8f031a939493892b51e749257e512",
+  "data/quality-runs/github-natural-comparison-20260921/AUDIT.json": "69adab984fc5da2fa01496b55aa3e702bdfbefbc536cb241735d4f81706b14bf",
+  "data/quality-runs/github-natural-comparison-20260921/BASELINE-REVIEW.json": "f5303b4a41553ceff199578199650f497647639adbb8ef35c746b095423e561e",
+  "data/quality-runs/github-natural-comparison-20260921/BASELINE-AUDIT.json": "e1d8c5bd4274d8e69b5ab848e026d4f5589593f1c7d6b9ec44a4280a109849f4",
+  "data/quality-runs/github-natural-comparison-20260921/baseline-writer-replay1/FAILED.json": "2dc0879aeb462ffbc87523cbaea10e5cd804a4ee33fdffbfcf8857ad25396fae",
+  "data/quality-runs/github-natural-comparison-20260921/baseline-writer-replay2/00.json": "9cef6c7999e09a5c5e9318325916699cc96a049a6fbb40613f6e31170d6d9263",
+  "data/quality-runs/github-natural-comparison-20260921/baseline-writer-replay2/01.json": "4c06bbb44b757cda8d2bd1fe56218f0acb25b9fa66a277766764f9a3366d45fe",
+  "data/quality-runs/github-natural-comparison-20260921/baseline-writer-replay2/02.json": "d6cf13d743a19200677e112506af05e3186ab8998c230aa14b41218b2f9b5c3e",
+  "data/quality-runs/github-natural-comparison-20260921/baseline-writer-replay2/03.json": "763d81d635bda4ac91b8b4a82d5e8c05d237495f4204e2ed85a6dda6451650c2",
+  "data/quality-runs/github-natural-comparison-20260921/baseline-writer-replay2/04.json": "e819815221a2a74bd3c4787f29f07afce5808cdf87fa8ff1370dce3f7a9609a9",
+  "data/quality-runs/github-natural-comparison-20260921/baseline-writer-replay2/05.json": "e6cae9ac38d2d6910cdf2ea085cca49901a8776720acb3114476c5a6cef38e8b",
+  "data/quality-runs/github-natural-comparison-20260921/baseline-writer-replay2/06.json": "3aa7f45ba4c803368185f9750d7ccc0f9a3a9113986a52080619ec985f8b2b2d",
+  "data/quality-runs/github-natural-comparison-20260921/baseline-writer-replay2/07.json": "a75a0442e3777e5d4ca10a84308d3898f82266743c856294910a8f604a0cc216"
+}
