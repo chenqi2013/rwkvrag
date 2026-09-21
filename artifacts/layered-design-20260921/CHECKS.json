@@ -1,0 +1,19 @@
+{
+  "status": "BINDINGS_VERIFIED_NOT_SEMANTIC_TEST",
+  "full_pairs": 160,
+  "raw_results": 320,
+  "focus_pairs": 20,
+  "focused_trace_files": 884,
+  "model_calls": 0,
+  "training_updates": 0,
+  "source_root": "data/quality-runs/g1j72-state-layered-2k-20260920/run4",
+  "verifier_sha256": "6014b680b001cd9fd6b0cb62aca18a15ba67dff98367526a16d2861c9cd799f7",
+  "input_integrity_sha256": "3b431b080e1b3e017ee9f711688c06f7fe221ab8adf0d42d476a7df2d385f96e",
+  "checked_at": "2026-09-21 11:10 Asia/Shanghai",
+  "command": "python3 artifacts/layered-design-20260921/verify.py --source-root data/quality-runs/g1j72-state-layered-2k-20260920/run4 --plan docs/LAYERED_REPLAY_PLAN.md",
+  "additional_checks": [
+    "focused result pins match full manifest",
+    "focused trace membership complete",
+    "stage and prompt/raw output hash metadata match source traces"
+  ]
+}
