@@ -1,0 +1,237 @@
+[
+  {
+    "id": "natural/00",
+    "question": "RAGFlow 和 Dify 哪个好？WeKnora、AnythingLLM、Open WebUI 也一起看看，我们公司想做个知识库。",
+    "history": []
+  },
+  {
+    "id": "natural/01",
+    "question": "LangGraph、LlamaIndex、Haystack、AutoGen、CrewAI 到底怎么选？我们人不多，想做个能查公司资料、也能上网查资料的助手，碰到说法不一致最好还能继续查。",
+    "history": []
+  },
+  {
+    "id": "natural/02",
+    "question": "Docling、Marker、MinerU、PaddleOCR、Unstructured 哪个处理文档更好？我们主要是中文扫描 PDF，也有双栏论文、表格和办公文件，要拿来做知识库。",
+    "history": []
+  },
+  {
+    "id": "natural/03",
+    "question": "pgvector、Qdrant、Milvus、Weaviate、OpenSearch，做公司的知识库用哪个好？先小范围试，后面人会多，文档也经常更新，不同人能看的资料还不一样。我们不想维护太复杂。",
+    "history": []
+  },
+  {
+    "id": "natural/04",
+    "question": "Ollama、llama.cpp、vLLM、SGLang 有什么区别？我先在自己电脑上用，以后可能放到一台 GPU 服务器上给同事一起用，该怎么选？",
+    "history": []
+  },
+  {
+    "id": "natural/05",
+    "question": "WeKnora、RAGFlow、Dify、AnythingLLM、FastGPT，哪个更适合长期管公司的知识？我想整理成 Wiki，能查原文，文档改了别还答旧内容，人工改过的也能找到历史版本。",
+    "history": []
+  },
+  {
+    "id": "natural/06",
+    "question": "我们只有一台服务器，16GB 显存，资料不能传出去，中文扫描件和表格挺多，维护的人也不多。那刚才这几个，你还会这么选吗？",
+    "history": [
+      {
+        "role": "user",
+        "content": "RAGFlow 和 Dify 哪个好？WeKnora、AnythingLLM、Open WebUI 也一起看看，我们公司想做个知识库。"
+      },
+      {
+        "role": "assistant",
+        "content": ""
+      }
+    ]
+  },
+  {
+    "id": "natural/07",
+    "question": "FastGPT 也加进来看看。Wiki 先不做了，最重要是能查到回答的原文，文档更新后别答旧的。前面说的机器和离线要求不变，最后先试哪两个？怎么试？",
+    "history": [
+      {
+        "role": "user",
+        "content": "RAGFlow 和 Dify 哪个好？WeKnora、AnythingLLM、Open WebUI 也一起看看，我们公司想做个知识库。"
+      },
+      {
+        "role": "assistant",
+        "content": ""
+      },
+      {
+        "role": "user",
+        "content": "我们只有一台服务器，16GB 显存，资料不能传出去，中文扫描件和表格挺多，维护的人也不多。那刚才这几个，你还会这么选吗？"
+      },
+      {
+        "role": "assistant",
+        "content": "[资料 1] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 2] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 3] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 4] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 5] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 6] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 7] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 8] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 9] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 10] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 11] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 12] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 13] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 14] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 15] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 16] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 17] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 18] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 19] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 20] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 21] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 22] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 23] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 24] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 25] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 26] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 27] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 28] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 29] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 30] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 31] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 32] 证明 Dify 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 33] 证明 RAGFlow 是一个开源 RAG 平台，支持 Python 框架（LangChain/LlamaIndex）快速搭建端到端 RAG 解决方案，并提供可视化界面。  \n[资料 34] 证明 Dify 是一个开源 RAG "
+      }
+    ]
+  },
+  {
+    "id": "old28/comparison_smoke_001",
+    "question": "比较甲型和乙型的容量、离线支持，两项都要分别引用。",
+    "history": []
+  },
+  {
+    "id": "old28/comparison_smoke_002",
+    "question": "比较白榆1.0和2.0的并发上限和加密支持，不要混用版本。",
+    "history": []
+  },
+  {
+    "id": "old28/comparison_smoke_003",
+    "question": "对比甲站与乙站的故障次数和停机时长；未记载的项目请说明。",
+    "history": []
+  },
+  {
+    "id": "old28/comparison_smoke_004",
+    "question": "比较水泵A和粉料泵B的流量，保留原单位，并说明能否直接判断谁更大。",
+    "history": []
+  },
+  {
+    "id": "old28/comparison_smoke_005",
+    "question": "比较团队实施日期与产品公开发布日期，不能把它们当成同一天。",
+    "history": []
+  },
+  {
+    "id": "old28/comparison_smoke_006",
+    "question": "比较甲设备和乙设备的核准功率，忽略已经废止的数值。",
+    "history": []
+  },
+  {
+    "id": "old28/comparison_smoke_007",
+    "question": "对比南仓和北仓的面积。南仓两份记录没有权威排序，不要擅自选一个值。",
+    "history": []
+  },
+  {
+    "id": "old28/comparison_smoke_008",
+    "question": "对比星舟桌面版和服务器版的价格与离线能力；无材料时不要猜测。",
+    "history": []
+  },
+  {
+    "id": "old28/regression_smoke_001",
+    "question": "分别核对穗川M4的额定转速、雨桥N2的冷却方式、石湾K8的巡检周期、青屿P3故障记录的时区；四项都要原文依据。",
+    "history": []
+  },
+  {
+    "id": "old28/regression_smoke_002",
+    "question": "把刚定下的三项写好。",
+    "history": [
+      {
+        "content": "先比较澄岚2.0服务器版和桌面版的连接上限与价格。",
+        "role": "user"
+      },
+      {
+        "content": "需要确认版本与字段。",
+        "role": "assistant"
+      },
+      {
+        "content": "更正，是澄岚2.1桌面版，服务器版和价格都撤掉。保留并发连接上限，再加是否支持离线和开发代号，三项都要。",
+        "role": "user"
+      },
+      {
+        "content": "当前范围是2.1桌面版的三项。",
+        "role": "assistant"
+      },
+      {
+        "content": "讲义封面用了旧服务器截图，图片我会换，不代表又改回服务器版。图上画了20台终端只是示意，不能作为连接上限。",
+        "role": "user"
+      },
+      {
+        "content": "截图不作为参数证据。",
+        "role": "assistant"
+      },
+      {
+        "content": "发布日期不加，网络协议列表也不要；之前确认的三项保留。",
+        "role": "user"
+      }
+    ]
+  },
+  {
+    "id": "old28/regression_smoke_003",
+    "question": "仅根据材料，给出虚构探头苇沙T9在发布首季的实际交付数量（台）；无依据请说明无法确定。",
+    "history": []
+  },
+  {
+    "id": "old28/regression_smoke_004",
+    "question": "分别回答岚石U5的额定功率、冷却方式和去年全球销量；有资料的回答，未记载的明确说明。",
+    "history": []
+  },
+  {
+    "id": "old28/regression_smoke_005",
+    "question": "柏津S4 3.0的储水容量到底是多少？两份记录没有权威排序或更正声明，若无法确定，分别列出记载并说明冲突。",
+    "history": []
+  },
+  {
+    "id": "old28/regression_smoke_006",
+    "question": "逐项列出A款2021年、A款2024年、B款2024年的额定流量与离线支持，保留原单位，不换算。",
+    "history": []
+  },
+  {
+    "id": "old28/regression_smoke_007",
+    "question": "根据长记录最后的最终核准段，复位键应按住几秒，校验码是什么？逐项引用原文。",
+    "history": []
+  },
+  {
+    "id": "old28/regression_smoke_008",
+    "question": "根据正式记录，苇沙T9首月实际交付多少台，是否已经进入量产？不要把预约量当交付量。",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_single",
+    "question": "依据记录，青岭 R6 标准模式额定功率是多少？逐项引用。若无法确定唯一值，保留不同记录。",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_agreement",
+    "question": "依据记录，青岭 R6 标准模式额定功率是多少？逐项引用。若无法确定唯一值，保留不同记录。",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_conflict",
+    "question": "依据记录，青岭 R6 标准模式额定功率是多少？逐项引用。若无法确定唯一值，保留不同记录。",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_conflict_reversed",
+    "question": "依据记录，青岭 R6 标准模式额定功率是多少？逐项引用。若无法确定唯一值，保留不同记录。",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_conditions",
+    "question": "青岭 R6 标准模式和增强模式分别是多少功率？这是否是同条件冲突？",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_revision",
+    "question": "青岭 R6 当前有效的标准模式核准功率是多少？说明旧值的状态。",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_zero",
+    "question": "松岚 V8 首月实际交付多少台？是否进入量产？",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_missing",
+    "question": "松岚 V8 首月实际交付多少台？",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_long_agreement",
+    "question": "依据记录，青岭 R6 标准模式额定功率是多少？逐项引用。若无法确定唯一值，保留不同记录。",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_long_conflict",
+    "question": "依据记录，青岭 R6 标准模式额定功率是多少？逐项引用。若无法确定唯一值，保留不同记录。",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_long_conflict_reversed",
+    "question": "依据记录，青岭 R6 标准模式额定功率是多少？逐项引用。若无法确定唯一值，保留不同记录。",
+    "history": []
+  },
+  {
+    "id": "old28/controlled_units",
+    "question": "比较水泵 C 的体积流量和粉料泵 D 的质量流量，能否直接确定谁更大？",
+    "history": []
+  }
+]
