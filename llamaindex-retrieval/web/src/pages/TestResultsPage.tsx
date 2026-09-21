@@ -3,12 +3,12 @@ import { Alert, Button, Card, Drawer, Select, Space, Spin, Tag, Typography } fro
 import "./modelComparison.css";
 
 type Source = { label: string; text: string; url?: string };
-type Answer = { label: string; raw_text: string; finish_reason?: string; elapsed_s: number; notes: string; sources: Source[]; queries?: { query: string; status: string }[]; trace?: unknown };
+type Answer = { label: string; raw_text: string; finish_reason?: string; elapsed_s: number; notes: string; sources: Source[]; queries?: { query: string; status: string }[]; funnel?: { task?: unknown; facts?: unknown[]; cells?: unknown[]; field_summaries?: unknown[]; failures?: unknown[] }; trace?: unknown };
 type Case = { id: string; question: string; answers: Answer[] };
 type Dataset = { title: string; summary: string; cases: Case[] };
 
 export default function TestResultsPage() {
-  const [suite, setSuite] = useState("github-natural-comparison-20260921");
+  const [suite, setSuite] = useState("funnel-repairs-20260921");
   const [data, setData] = useState<Dataset>();
   const [error, setError] = useState("");
   const [index, setIndex] = useState(0);
@@ -33,6 +33,7 @@ export default function TestResultsPage() {
   return <div className="model-comparison">
     <Typography.Title level={3}>真实检索与复读测试</Typography.Title>
     <Select aria-label="测试集合" value={suite} onChange={setSuite} style={{width:320}} options={[
+      {value:"funnel-repairs-20260921",label:"真实比较修复 · 分层过程"},
       {value:"github-natural-comparison-20260921",label:"大型 GitHub 比较 · 自然问法"},
       {value:"github-project-comparison-paced-20260921",label:"大型 GitHub 比较 · 低频实时检索"},
       {value:"github-project-comparison-20260921",label:"大型 GitHub 比较 · 原联网失败记录"},
@@ -57,11 +58,19 @@ export default function TestResultsPage() {
               ? "检索失败，本次没有生成回答。失败原因见下方执行记录。"
               : "本次没有生成回答，请查看执行状态和记录。"} />}
           <Alert type="info" title={a.notes} />
+          {a.funnel && <details open><summary>分层过程与失败记录</summary>
+            <p>原子事实 {a.funnel.facts?.length || 0} 条 · 对象字段核验 {a.funnel.cells?.length || 0} 项 · 维度汇总 {a.funnel.field_summaries?.length || 0} 项 · 阶段失败 {a.funnel.failures?.length || 0} 项</p>
+            <details><summary>有效任务</summary><pre>{JSON.stringify(a.funnel.task, null, 2)}</pre></details>
+            <details><summary>逐字事实与来源</summary><pre>{JSON.stringify(a.funnel.facts, null, 2)}</pre></details>
+            <details><summary>逐对象逐字段核验</summary><pre>{JSON.stringify(a.funnel.cells, null, 2)}</pre></details>
+            <details><summary>同维度汇总</summary><pre>{JSON.stringify(a.funnel.field_summaries, null, 2)}</pre></details>
+            {!!a.funnel.failures?.length && <details open><summary>失败节点</summary><pre>{JSON.stringify(a.funnel.failures, null, 2)}</pre></details>}
+          </details>}
           {a.queries && <details open><summary>检索词与执行状态（{a.queries.length}条）</summary>
             <ol>{a.queries.map((q, j) => <li key={j}><Tag>{q.status}</Tag>{q.query}</li>)}</ol>
           </details>}
           <details><summary>已选证据（{a.sources.length}份）</summary>{a.sources.map((s,j)=><p key={j}><Button onClick={()=>setSource(s)}>{s.label} · 查看原文</Button> {s.url && <a href={s.url} target="_blank" rel="noreferrer">访问来源</a>}</p>)}</details>
-          <details><summary>完整检索与生成记录</summary><pre>{JSON.stringify(a.trace,null,2)}</pre></details>
+          <details><summary>检索与生成记录</summary><pre>{JSON.stringify(a.trace,null,2)}</pre></details>
         </Card>)}
       </>}
     </>}
