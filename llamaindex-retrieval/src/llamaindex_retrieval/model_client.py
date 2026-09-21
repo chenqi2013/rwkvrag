@@ -4,6 +4,9 @@ from .native_rwkv import NativeRWKVClient, inspect_envelope
 
 
 def model_client_class(settings):
+    if settings.native_writer_pipeline == "typed_funnel_v5":
+        from .structured_native import StructuredNativeRWKVClient
+        return StructuredNativeRWKVClient
     if settings.native_transport == "rwkvos_batch":
         from .rwkvos_batch import RwkvosBatchClient
         return RwkvosBatchClient

@@ -1,0 +1,756 @@
+[
+  {
+    "id": "old28/comparison_smoke_001/funnel_fact:s1:O2:F2",
+    "object": "乙型",
+    "field": {
+      "name": "离线支持",
+      "question": "离线支持是什么？",
+      "value_type": "boolean"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "乙型容量为 12 L，不支持离线。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"乙型\", \"field\": \"离线支持\", \"source_title\": \"\", \"units\": {\"E1\": \"乙型容量为 12 L，不支持离线。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": false,
+      "unit": null
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_001/funnel_fact:s1:O2:F1",
+    "object": "乙型",
+    "field": {
+      "name": "容量",
+      "question": "容量是什么？",
+      "value_type": "quantity"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "乙型容量为 12 L，不支持离线。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"乙型\", \"field\": \"容量\", \"source_title\": \"\", \"units\": {\"E1\": \"乙型容量为 12 L，不支持离线。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": "12",
+      "unit": "L"
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_001/funnel_fact:s2:O1:F2",
+    "object": "甲型",
+    "field": {
+      "name": "离线支持",
+      "question": "离线支持是什么？",
+      "value_type": "boolean"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "甲型容量为 8 L，支持离线。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"甲型\", \"field\": \"离线支持\", \"source_title\": \"\", \"units\": {\"E1\": \"甲型容量为 8 L，支持离线。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": true,
+      "unit": null
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_001/funnel_fact:s2:O1:F1",
+    "object": "甲型",
+    "field": {
+      "name": "容量",
+      "question": "容量是什么？",
+      "value_type": "quantity"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "甲型容量为 8 L，支持离线。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"甲型\", \"field\": \"容量\", \"source_title\": \"\", \"units\": {\"E1\": \"甲型容量为 8 L，支持离线。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": "8",
+      "unit": "L"
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_002/funnel_fact:s1:O2:F1",
+    "object": "白榆2.0",
+    "field": {
+      "name": "并发上限",
+      "question": "并发上限是什么？",
+      "value_type": "quantity"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "白榆2.0并发上限为 18，支持加密。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"白榆2.0\", \"field\": \"并发上限\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆2.0并发上限为 18，支持加密。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": "18",
+      "unit": null
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_002/funnel_fact:s1:O2:F2",
+    "object": "白榆2.0",
+    "field": {
+      "name": "加密支持",
+      "question": "加密支持是什么？",
+      "value_type": "boolean"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "白榆2.0并发上限为 18，支持加密。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"白榆2.0\", \"field\": \"加密支持\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆2.0并发上限为 18，支持加密。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": true,
+      "unit": null
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_002/funnel_fact:s2:O1:F2",
+    "object": "白榆1.0",
+    "field": {
+      "name": "加密支持",
+      "question": "加密支持是什么？",
+      "value_type": "boolean"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "白榆1.0并发上限为 6，不支持加密。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"白榆1.0\", \"field\": \"加密支持\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆1.0并发上限为 6，不支持加密。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": false,
+      "unit": null
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_002/funnel_fact:s2:O1:F1",
+    "object": "白榆1.0",
+    "field": {
+      "name": "并发上限",
+      "question": "并发上限是什么？",
+      "value_type": "quantity"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "白榆1.0并发上限为 6，不支持加密。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"白榆1.0\", \"field\": \"并发上限\", \"source_title\": \"\", \"units\": {\"E1\": \"白榆1.0并发上限为 6，不支持加密。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": "6",
+      "unit": null
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_003/funnel_fact:s1:O1:F1",
+    "object": "甲站",
+    "field": {
+      "name": "故障次数",
+      "question": "故障次数是什么？",
+      "value_type": "quantity"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "甲站故障次数为 0 次，停机时长为 0 小时。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"甲站\", \"field\": \"故障次数\", \"source_title\": \"\", \"units\": {\"E1\": \"甲站故障次数为 0 次，停机时长为 0 小时。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": "0",
+      "unit": "次"
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_003/funnel_fact:s1:O1:F2",
+    "object": "甲站",
+    "field": {
+      "name": "停机时长",
+      "question": "停机时长是什么？",
+      "value_type": "quantity"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "甲站故障次数为 0 次，停机时长为 0 小时。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"甲站\", \"field\": \"停机时长\", \"source_title\": \"\", \"units\": {\"E1\": \"甲站故障次数为 0 次，停机时长为 0 小时。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": "0",
+      "unit": "小时"
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_003/funnel_fact:s2:O2:F1",
+    "object": "乙站",
+    "field": {
+      "name": "故障次数",
+      "question": "故障次数是什么？",
+      "value_type": "quantity"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "乙站故障次数为 2 次；停机时长未记载。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"乙站\", \"field\": \"故障次数\", \"source_title\": \"\", \"units\": {\"E1\": \"乙站故障次数为 2 次；停机时长未记载。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": "2",
+      "unit": "次"
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_003/funnel_fact:s2:O2:F2",
+    "object": "乙站",
+    "field": {
+      "name": "停机时长",
+      "question": "停机时长是什么？",
+      "value_type": "quantity"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "乙站故障次数为 2 次；停机时长未记载。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"乙站\", \"field\": \"停机时长\", \"source_title\": \"\", \"units\": {\"E1\": \"乙站故障次数为 2 次；停机时长未记载。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": false,
+      "value": null,
+      "unit": null
+    }
+  },
+  {
+    "id": "old28/comparison_smoke_004/funnel_fact:s2:O1:F1",
+    "object": "水泵A",
+    "field": {
+      "name": "流量",
+      "question": "流量是什么？",
+      "value_type": "quantity"
+    },
+    "source": {
+      "id": "s1",
+      "document_id": "d1",
+      "source": "frozen-regression",
+      "title": "",
+      "snippet": "水泵A额定流量为 11 L/min。",
+      "score": 1,
+      "metadata": {}
+    },
+    "baseline_prompt": "只提取这一个对象的这一个字段，不能用其他对象或字段的值代替。保留原文的版本、范围、单位和否定；没有依据时value为null且unit_ids为空数组。有依据时value写事实值，unit_ids选择真正支持它的原文片段编号，最多3个。不需要抄写原文。只输出JSON，结构：{\"value\":null,\"unit_ids\":[]}。\n{\"object\": \"水泵A\", \"field\": \"流量\", \"source_title\": \"\", \"units\": {\"E1\": \"水泵A额定流量为 11 L/min。\"}}",
+    "baseline_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit_ids": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "E1"
+            ]
+          },
+          "maxItems": 3,
+          "title": "Unit Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "value",
+        "unit_ids"
+      ],
+      "title": "AtomicValue",
+      "type": "object"
+    },
+    "gold": {
+      "observed": true,
+      "value": "11",
+      "unit": "L/min"
+    }
+  }
+]

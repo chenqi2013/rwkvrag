@@ -334,7 +334,8 @@ class RWKVPipeline:
     async def aclose(self):
         await self.model.aclose()
 
-    async def _call(self, prompt: str, *, stage: str, max_tokens: int, sources=(), trace=None, state_role=None):
+    async def _call(self, prompt: str, *, stage: str, max_tokens: int, sources=(), trace=None, state_role=None,
+                    structured_schema=None):
         prefill = {"planner": self.settings.native_planner_prefill,
                    "resolver": self.settings.native_resolver_prefill,
                    "writer": self.settings.native_writer_prefill}.get(stage, "<think")
@@ -345,6 +346,7 @@ class RWKVPipeline:
             **({"temperature": 1.0, "top_p": 1.0, "top_k": 1, "seed": 11}
                if self.settings.native_completion_protocol == "g1j_plain" else {}),
             **({"trace": trace} if trace is not None else {}),
+            **({"structured_schema": structured_schema} if structured_schema is not None else {}),
             **({"state_role": state_role} if state_role is not None and self.settings.native_transport == "rwkvos_batch" else {}),
         )
 
@@ -567,6 +569,9 @@ class RWKVPipeline:
         return prompt
 
     async def _write(self, task: str, sources: list[SourceItem], fields: list[str]):
+        if self.settings.native_writer_pipeline == "typed_funnel_v5":
+            from .typed_funnel import write_funnel
+            return await write_funnel(self, task, sources)
         if self.settings.native_writer_pipeline == "funnel_v1":
             from .funnel_writer import write_funnel
             return await write_funnel(self, task, sources)
