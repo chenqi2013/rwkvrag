@@ -1,0 +1,95 @@
+{
+  "scope": "Read-only post-hoc audit; normalized onset is diagnostic, not a new repetition score",
+  "new_model_calls": 0,
+  "old28": {
+    "direct-29-zero": {
+      "byte_identical_prompts": 28,
+      "finish_counts": {
+        "stop": 25,
+        "length": 3
+      },
+      "length_ordinals": [
+        5,
+        7,
+        26
+      ],
+      "request_parameters": {
+        "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+        "max_tokens": 2048,
+        "top_p": 0,
+        "alpha_presence": 0,
+        "alpha_frequency": 0,
+        "stream": false,
+        "stop_tokens": [
+          0
+        ],
+        "state_id": null
+      }
+    },
+    "direct-29-tuned": {
+      "byte_identical_prompts": 28,
+      "finish_counts": {
+        "stop": 28
+      },
+      "length_ordinals": [],
+      "request_parameters": {
+        "model": "rwkv7-g1j-2.9b-20260831-ctx16384",
+        "max_tokens": 2048,
+        "top_p": 0,
+        "alpha_presence": 0,
+        "alpha_frequency": 0,
+        "stream": false,
+        "stop_tokens": [
+          0
+        ],
+        "state_id": "writer-trace-300"
+      }
+    },
+    "direct-72-zero": {
+      "byte_identical_prompts": 28,
+      "finish_counts": {
+        "stop": 28
+      },
+      "length_ordinals": [],
+      "request_parameters": {
+        "model": "rwkv7-g1j-7.2b-20260831-ctx16384",
+        "max_tokens": 2048,
+        "top_p": 0,
+        "alpha_presence": 0,
+        "alpha_frequency": 0,
+        "stream": false,
+        "stop_tokens": [
+          0
+        ],
+        "state_id": null
+      }
+    }
+  },
+  "models": {
+    "2.9b": {
+      "loops": 29,
+      "input_token_range": [
+        428,
+        4819
+      ],
+      "all_loops_at_2048_without_eos0": true,
+      "all_loop_answers_identical_between_rounds": true,
+      "old28_finish": {
+        "stop": 26,
+        "length": 2
+      }
+    },
+    "7.2b": {
+      "loops": 15,
+      "input_token_range": [
+        439,
+        537
+      ],
+      "all_loops_at_2048_without_eos0": true,
+      "all_loop_answers_identical_between_rounds": true,
+      "old28_finish": {
+        "stop": 28
+      }
+    }
+  }
+}

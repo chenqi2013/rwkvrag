@@ -1,0 +1,7 @@
+{
+  "artifacts/g1j72-20260920/raw-traces.tar.gz": "578f9bd7c9f5eb7b9379b2bbfd381d10269c196ea269db0363ddb8c146d945a2",
+  "artifacts/model-size-paired-20260921/raw-run2.tar.gz": "91c6204b7adc7bf217e3dbd918c2aed8060e74ef26bb745a38c0e4f032407f6a",
+  "artifacts/model-size-paired-20260921/review1/REVIEW.json": "0149fe732151842a8f3c676b259577c1174bcef4d742e0d861b6f8b08274b031",
+  "llamaindex-retrieval/eval/model-size-paired-20260921/INPUTS.json": "eb65dc5b705d26b0d8b29c2a647de7fbd01010ad57dbc8fa9627280b0f8dd795",
+  "llamaindex-retrieval/eval/repetition-audit-20260921/audit.py": "7a344bed9da8b269bf2b26d9064fe69ef1b5a5003d110ead33ee17fd0ecefdd0"
+}
