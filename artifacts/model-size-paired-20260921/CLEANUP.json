@@ -1,0 +1,24 @@
+{
+  "verified_at": "2026-09-21T05:33:17.074794+00:00",
+  "experiment_unit": "MainPID=0\nActiveState=inactive",
+  "gpu3": "3, GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0, 20775 MiB",
+  "health": {
+    "http://127.0.0.1:18440/health": {
+      "status_code": 200,
+      "status": "ok"
+    },
+    "http://127.0.0.1:18423/health": {
+      "status_code": 200,
+      "ready": true,
+      "model": "rwkv7-g1j-2.9b-20260831-ctx16384"
+    },
+    "http://127.0.0.1:18437/v1/models": {
+      "status_code": 200,
+      "data": [
+        {
+          "id": "rwkv7-g1j-1.5b-search-router-state-v6r2"
+        }
+      ]
+    }
+  }
+}

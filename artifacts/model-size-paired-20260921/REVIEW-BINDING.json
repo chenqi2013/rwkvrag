@@ -1,0 +1,6 @@
+{
+  "llamaindex-retrieval/eval/model-size-paired-20260921/export_results.py": "c67e83d40cd5ff56affda695e050ce2067f7598bdfe969539f2d3e1b64304a5d",
+  "llamaindex-retrieval/eval/model-size-paired-20260921/summarize_review.py": "fe5149688ac49bf5081fe1a8e164676e5b1ef6f5a3a77320fbab65995c68a24b",
+  "artifacts/model-size-paired-20260921/review1/annotations.json": "57d0f56c0d2085cfc2d5ca5e0d23177dd7ecf21e9785f271321d89f7cd2bf42e",
+  "artifacts/model-size-paired-20260921/RAW-MANIFEST.json": "c1007761f37863ccb9fb6b38337c00905bb4815dae35b08e007465072c69a144"
+}

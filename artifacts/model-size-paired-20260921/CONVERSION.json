@@ -1,0 +1,28 @@
+{
+  "source": "/mnt/nas-model/g1j/rwkv7-g1j-2.9b-20260831-ctx16384.pth",
+  "source_sha256": "966f3420f833532aae3fb1fd6326533b08d43d23b7b03eaa2f0694a30b64a239",
+  "source_tensors": 1062,
+  "verified_tensors": 1059,
+  "dropped_unused_layer0": [
+    "blocks.0.att.v0",
+    "blocks.0.att.v1",
+    "blocks.0.att.v2"
+  ],
+  "mapping_script_sha256": "ca809983604b1badc2bcf6a65bcc06464a24b9430d28bcf92b5bcbe09c56b69c",
+  "tensor_values_unchanged": true,
+  "config_shapes_verified": true,
+  "files": {
+    "model-00001-of-00004.safetensors": "5fbb7b8e9fb8b1b42c81b6f22fab1c08c9ffe3334a42f7f59fb1d0927813bc01",
+    "tools_generation_config.json": "0c1640099111453f7c1c414078b8d2fa8a5c6d83b8f76f5dd64b32d9e32ceeb8",
+    "model-00003-of-00004.safetensors": "2b43124d034de46a551c0e36f6a173c0ea1b8a2afc55f0ecfa863e634470b869",
+    "model.safetensors.index.json": "99f765ab43ce64d1bbbe2cdeadc7ff7484eb8e1abf6e78ee311c782a63a13304",
+    "generation_config.json": "f0c49199e4f629b302c4d6f40e5554dbb1e231f5be36e8eaf4cacacde9737c49",
+    "fake_think_generation_config.json": "6237305c896509a524ec464e8b150f6ea44f780886ebee6801e8bf67a96ef176",
+    "model-00002-of-00004.safetensors": "e52a17f8aba6bddd6a3027f307ad8cd3ece756aa3cb26a7ca7f2ab7ccda8f3d5",
+    "config.json": "efca1bf3b48c22cbf1ce79317137c2facda0acd8d16ed8abfed803473a22a6a5",
+    "model-00004-of-00004.safetensors": "2ed28c464e233fb7a06aa90d63db5a02a18d80764c3c8f3dbc8d1df3bae1150c",
+    "tokenizer_config.json": "1250319d373cb4e5522437a91d42a74d3823f4d9985f387c4a611029977922ba",
+    "tokenizer.json": "2a0e5b9fc90098eaa992bb725a58ef085d102707a26b58f6cf722d8ebeb6fa67",
+    "chat_template.jinja": "e3c8d024dbe4a48ab5a25a23f322400d99a0e0d82fae535924b5d1a461ea92c2"
+  }
+}

@@ -17,6 +17,7 @@ import KnowledgeBasesPage from "./pages/KnowledgeBasesPage";
 import SearchPage from "./pages/SearchPage";
 import SearchHistoryPage from "./pages/SearchHistoryPage";
 import AtomicEvidencePage from "./pages/AtomicEvidencePage";
+import ModelComparisonPage from "./pages/ModelComparisonPage";
 import { useLanguage } from "./i18n";
 
 const { Header, Sider, Content } = Layout;
@@ -34,6 +35,7 @@ export default function App() {
     { key: "/search", icon: <SearchOutlined />, label: tr("检索测试", "Search Lab") },
     { key: "/atomic-evidence", icon: <FileTextOutlined />, label: tr("单项证据核对", "Evidence check") },
     { key: "/search-history", icon: <HistoryOutlined />, label: tr("历史测试", "History") },
+    { key: "/model-comparison", icon: <FileTextOutlined />, label: tr("模型对照", "Model Comparison") },
   ];
 
   return (
@@ -82,6 +84,7 @@ export default function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/atomic-evidence" element={<AtomicEvidencePage />} />
             <Route path="/search-history" element={<SearchHistoryPage />} />
+            <Route path="/model-comparison" element={<ModelComparisonPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Content>

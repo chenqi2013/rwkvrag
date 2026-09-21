@@ -1,0 +1,14 @@
+.model-comparison { max-width: 1500px; margin: 0 auto; font-size: 14px; }
+.comparison-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 16px 0; }
+.comparison-metrics { display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; }
+.comparison-metrics strong { display: block; font-size: 22px; margin-top: 6px; }
+.repeat-count { color: #b42318; }
+.comparison-controls { margin: 10px 0; }
+.model-comparison pre, .comparison-source { white-space: pre-wrap; overflow-wrap: anywhere; font: 14px/1.8 ui-monospace, "Microsoft YaHei", monospace; }
+.comparison-raw { max-height: 540px; overflow-y: auto; background: #f8fafc; padding: 16px; border: 1px solid #e2e8f0; border-radius: 6px; }
+.comparison-note { border-left: 3px solid #d4a72c; padding-left: 10px; line-height: 1.7; }
+.comparison-citation { border: 0; padding: 0; background: transparent; color: #175cd3; cursor: pointer; font: inherit; text-decoration: underline; }
+.comparison-citation.missing { color: #b42318; }
+.model-comparison summary { cursor: pointer; margin: 12px 0; }
+.model-comparison code { overflow-wrap: anywhere; }
+@media (max-width: 900px) { .comparison-grid { grid-template-columns: 1fr; } }

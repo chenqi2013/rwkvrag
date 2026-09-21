@@ -1,0 +1,98 @@
+{
+  "calls": 752,
+  "case_memberships": 188,
+  "distinct_prompts": 180,
+  "all_raw_response_and_input_hashes_verified": true,
+  "semantic_scoring": "requires manual review; no accuracy inferred",
+  "groups": {
+    "2.9b-round1": {
+      "count": 188,
+      "finish_reasons": {
+        "stop": 159,
+        "length": 29
+      },
+      "repetition_candidates": [
+        78,
+        86,
+        166,
+        184
+      ],
+      "output_tokens": 71249,
+      "elapsed_ms_median": 492.0301320962608
+    },
+    "2.9b-round2": {
+      "count": 188,
+      "finish_reasons": {
+        "stop": 159,
+        "length": 29
+      },
+      "repetition_candidates": [
+        78,
+        86,
+        166,
+        184
+      ],
+      "output_tokens": 71249,
+      "elapsed_ms_median": 489.1757629811764
+    },
+    "7.2b-round1": {
+      "count": 188,
+      "finish_reasons": {
+        "stop": 173,
+        "length": 15
+      },
+      "repetition_candidates": [
+        35,
+        65,
+        67,
+        86,
+        91,
+        124,
+        144,
+        184
+      ],
+      "output_tokens": 44181,
+      "elapsed_ms_median": 748.3228058554232
+    },
+    "7.2b-round2": {
+      "count": 188,
+      "finish_reasons": {
+        "stop": 173,
+        "length": 15
+      },
+      "repetition_candidates": [
+        35,
+        65,
+        67,
+        86,
+        91,
+        124,
+        144,
+        184
+      ],
+      "output_tokens": 44279,
+      "elapsed_ms_median": 742.3151801340282
+    }
+  },
+  "drift": {
+    "2.9b": [],
+    "7.2b": [
+      80,
+      99,
+      136,
+      176,
+      182
+    ]
+  },
+  "output_token_drift": {
+    "2.9b": [],
+    "7.2b": [
+      80,
+      99,
+      136,
+      176,
+      182
+    ]
+  },
+  "paired_request_bytes_equal": true
+}

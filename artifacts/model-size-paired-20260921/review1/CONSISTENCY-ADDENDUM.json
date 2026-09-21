@@ -1,0 +1,47 @@
+{
+  "policy": "比较题允许按对象/条件并列正确数值；仅在用户明确询问谁更大/选谁/能否唯一时要求对应决定。选择可用唯一明确合格对象表达，不要求固定关键词。复读与截断另外计分，不自动把正确事实判错。所有更正保留旧审读。",
+  "changes": [
+    {
+      "key": "2.9b/1/85",
+      "before": {
+        "facts_complete": false,
+        "citations_correct": false,
+        "repetition_confirmed": true,
+        "hard_condition_wrong_recommendation": false,
+        "hard_condition_error": false,
+        "unsupported_fabrication": false,
+        "notes": "持续比较不合格乙续航较长，未给最终合格选择；合并引用且循环"
+      },
+      "after": {
+        "facts_complete": true,
+        "citations_correct": false,
+        "repetition_confirmed": true,
+        "hard_condition_wrong_recommendation": false,
+        "hard_condition_error": false,
+        "unsupported_fabrication": false,
+        "notes": "持续比较不合格乙续航较长，未给最终合格选择；合并引用且循环；一致性复核：已明确唯一合格甲与不合格乙，认可事实/筛选结论；循环、结束和引用仍判失败，不要求固定出现选择二字"
+      }
+    },
+    {
+      "key": "2.9b/1/127",
+      "before": {
+        "facts_complete": false,
+        "citations_correct": false,
+        "repetition_confirmed": true,
+        "hard_condition_wrong_recommendation": false,
+        "hard_condition_error": false,
+        "unsupported_fabrication": false,
+        "notes": "不断列参数及资格/容量，未收束为最终选择；合并引用或引用不支持所附判断，见原始输出"
+      },
+      "after": {
+        "facts_complete": true,
+        "citations_correct": false,
+        "repetition_confirmed": true,
+        "hard_condition_wrong_recommendation": false,
+        "hard_condition_error": false,
+        "unsupported_fabrication": false,
+        "notes": "不断列参数及资格/容量，未收束为最终选择；合并引用或引用不支持所附判断，见原始输出；一致性复核：已明确唯一合格甲与不合格乙，认可事实/筛选结论；循环、结束和引用仍判失败，不要求固定出现选择二字"
+      }
+    }
+  ]
+}

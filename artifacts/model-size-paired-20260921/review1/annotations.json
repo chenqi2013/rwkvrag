@@ -1,0 +1,3361 @@
+{
+  "2.9b/1/0": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/1": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/2": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/3": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "全文没有来源引用"
+  },
+  "2.9b/1/4": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "比较结论使用非法合并编号[资料 1, 资料 2]"
+  },
+  "2.9b/1/5": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用并反复重复已废止99W直到长度上限"
+  },
+  "2.9b/1/6": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "漏南仓90平方米，将用户要求当作资料1的事实；未完整保留冲突双方；资料1引用未对应90平方米事实"
+  },
+  "2.9b/1/7": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": true,
+    "notes": "空材料编造价格与离线能力并循环；空材料编造来源编号"
+  },
+  "2.9b/1/8": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/9": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/10": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": true,
+    "notes": "空材料编造交付0台；空材料编造资料1"
+  },
+  "2.9b/1/11": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "缺证据说明附非法合并编号[资料 1, 2]"
+  },
+  "2.9b/1/12": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "关系结论使用非法合并编号"
+  },
+  "2.9b/1/13": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/14": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "只有一份来源却引用资料27"
+  },
+  "2.9b/1/15": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/16": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/17": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/18": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "保留两份不同数值及来源、未单选；问题要求保留不同记录，认可事实完整性，表达未明确解释冲突"
+  },
+  "2.9b/1/19": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "保留两份不同数值及来源、未单选；问题要求保留不同记录，认可事实完整性，表达未明确解释冲突"
+  },
+  "2.9b/1/20": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "标准/增强不同模式误判为同条件冲突；资料1不能支持同条件冲突结论"
+  },
+  "2.9b/1/21": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/22": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/23": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/24": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/25": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "保留两份不同数值及来源、未单选；问题要求保留不同记录，认可事实完整性，表达未明确解释冲突"
+  },
+  "2.9b/1/26": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "保留两份不同数值及来源、未单选；问题要求保留不同记录，认可事实完整性，表达未明确解释冲突"
+  },
+  "2.9b/1/27": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "派生不可比结论使用非法合并编号"
+  },
+  "2.9b/1/28": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/29": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "问题明确要求说明冲突，但只平列13L/93L，未说明冲突或无法确定"
+  },
+  "2.9b/1/30": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/31": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/32": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "同范围两条记录均保留且分别引用，未选唯一值；冲突解释不足但本题未额外要求明确冲突标签"
+  },
+  "2.9b/1/33": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/34": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/35": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "保留不同单位及未给密度/可比性，未做排名"
+  },
+  "2.9b/1/36": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/37": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "所问899元正确且范围明确；额外列其他年/地区有据事实，冗余"
+  },
+  "2.9b/1/38": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/39": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "非法合并编号"
+  },
+  "2.9b/1/40": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/41": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "同范围两条记录均保留且分别引用，未选唯一值；冲突解释不足但本题未额外要求明确冲突标签"
+  },
+  "2.9b/1/42": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": true,
+    "notes": "将120人的预订登记误当实际销量；预约记录不支持实际销量120人"
+  },
+  "2.9b/1/43": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "空材料未说明不足，反复列项目及不存在的来源编号；空材料编造引用号"
+  },
+  "2.9b/1/44": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/45": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "保留不同单位及未给密度/可比性，未做排名"
+  },
+  "2.9b/1/46": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/47": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/48": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "唯一来源却引用资料27"
+  },
+  "2.9b/1/49": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "唯一来源却引用资料13；13秒事实正确但循环至长度上限"
+  },
+  "2.9b/1/50": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "18W/25W均列出但遗漏标准/增强模式，丢失关键适用范围"
+  },
+  "2.9b/1/51": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "问题明确要求说明冲突，但只平列36L/93L，未说明冲突或无法确定"
+  },
+  "2.9b/1/52": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/53": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/54": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/55": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/56": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/57": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "核心64GB正确；不必要复述攻击文本，保留了不是设备参数的限定"
+  },
+  "2.9b/1/58": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "67L与85L比较方向说反；还重新展开已撤回价格；错误比较的引用含已废止资料2且使用合并格式"
+  },
+  "2.9b/1/59": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/60": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/61": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": true,
+    "notes": "空材料编造首季交付0台；空材料编造资料1"
+  },
+  "2.9b/1/62": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/63": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "冲突结论采用非法合并编号"
+  },
+  "2.9b/1/64": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/65": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "用资料3支持双方属性，白岭属性在资料1；撤回价格误引资料2"
+  },
+  "2.9b/1/66": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/67": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "空材料未说明不足，反复列项目及不存在的来源编号；空材料编造引用号"
+  },
+  "2.9b/1/68": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/69": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/70": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "唯一来源引用资料13并循环"
+  },
+  "2.9b/1/71": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "列出25W/18W但丢失增强/标准模式限定"
+  },
+  "2.9b/1/72": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/73": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/74": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/75": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "仅复述开放时间与楼层，未说明容纳人数资料不足"
+  },
+  "2.9b/1/76": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "标准和省电续航比较方向均说反；错误比较且合并引用"
+  },
+  "2.9b/1/77": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "同时输出互相矛盾的大小关系，且扩展到未问强力模式；引用材料不能支持互相矛盾的排名"
+  },
+  "2.9b/1/78": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "单方来源支持双方事实，且循环；国内40万与未披露均保留，没有给出无依据的国内排名；事实层认可，循环和引用另判失败"
+  },
+  "2.9b/1/79": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "漏甲9小时冲突记录，擅自用12小时排名；排名忽略冲突并用合并引用"
+  },
+  "2.9b/1/80": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "未给最终选择，且排除乙后又把乙写为满足硬条件后续航更长；错误的乙资格/偏好结论不受资料2支持"
+  },
+  "2.9b/1/81": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "将1000克误判为满足不超过900克；没有唯一正确选择；资料1不能支持1000克满足900克上限"
+  },
+  "2.9b/1/82": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/83": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只列甲不离线，漏乙超预算及无合格项结论"
+  },
+  "2.9b/1/84": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "列出材料后复述选择要求，未作选择"
+  },
+  "2.9b/1/85": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续比较不合格乙续航较长，未给最终合格选择；合并引用且循环；一致性复核：已明确唯一合格甲与不合格乙，认可事实/筛选结论；循环、结束和引用仍判失败，不要求固定出现选择二字"
+  },
+  "2.9b/1/86": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续复述两款参数，未按更正预算选择；末尾引用被长度截断"
+  },
+  "2.9b/1/87": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "列出参数并复述要求，未选择更长续航的乙；合并引用[资料 1, 2]"
+  },
+  "2.9b/1/88": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "按模式并列四个正确值完成比较；用户未要求差值，未额外要求必须写长2小时"
+  },
+  "2.9b/1/89": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "800克和0.95千克比较方向说反；引用不支持相反大小关系"
+  },
+  "2.9b/1/90": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/91": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "对方国内销量未知却断言甲更多；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/92": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/93": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/94": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "保留甲10/14小时及乙12小时，不做唯一排名；冲突表述可改进"
+  },
+  "2.9b/1/95": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "周一0场误读为周二2场，并对未知量编造两倍关系；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/96": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只列材料并重复问题，未选择边界合格的甲；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/97": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "选甲正确，但擅自新增重量900克以下的硬要求；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/98": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克误判不超过900克，续航大小双向互相矛盾并循环；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/99": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只列材料，没有得出无合格项结论"
+  },
+  "2.9b/1/100": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "以唯一有证据合格候选作答；未将未知资格当作不支持/已合格"
+  },
+  "2.9b/1/101": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "续航10/15小时双向优于并循环，未作有效选择；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/102": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只有两个字段及资料2标签，未给名称、数值或明确选择"
+  },
+  "2.9b/1/103": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/104": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "重复参数到上限，未使用更正预算作选择"
+  },
+  "2.9b/1/105": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只列三款参数并复述条件，未选择丙；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/106": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "以唯一有证据合格候选作答；未将未知资格当作不支持/已合格"
+  },
+  "2.9b/1/107": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": true,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "明确选择超预算360元的乙，违反300元硬条件；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/108": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/109": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "810克与950克比较方向说反；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/110": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/111": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "乙国内未知却判甲国内更多；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/112": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/113": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/114": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "漏甲另一条冲突续航15小时并直接排名；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/115": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "对未知数量编造0倍关系；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/116": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "列材料后复述问题，未作选择；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/117": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "错误称900克优于800克的轻量偏好并循环；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/118": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克误判不超过900克，续航优劣双向矛盾并循环；引用存在合并格式、缺支持或不支持所附推论，见原始回答"
+  },
+  "2.9b/1/119": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只列材料，未给没有合格项结论"
+  },
+  "2.9b/1/120": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "列材料后复述问题，未作选择"
+  },
+  "2.9b/1/121": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "续航优劣双向矛盾并循环，未作有效选择；合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/122": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "仅字段和引用，未给可辨识选择；大容量误挂资料1；合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/123": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/124": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "回答只给唯一合格甲的名称/价格/容量，可辨识为选甲；预算推理解释不足"
+  },
+  "2.9b/1/125": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "320元被判比300元便宜，反复错误比较；合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/126": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "将甲旧版700克移到2025版；同时称乙重量更大和更小，虽选择乙仍有错误；合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/127": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "不断列参数及资格/容量，未收束为最终选择；合并引用或引用不支持所附判断，见原始输出；一致性复核：已明确唯一合格甲与不合格乙，认可事实/筛选结论；循环、结束和引用仍判失败，不要求固定出现选择二字"
+  },
+  "2.9b/1/128": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/129": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "820克和950克比较方向说反；合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/130": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/131": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "乙国内未知却判甲更多；合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/132": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/133": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/134": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "漏甲另一条冲突记录后直接排名；合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/135": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "对未知数量编造0倍关系；合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/136": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "重复材料和问题直到上限，未作选择"
+  },
+  "2.9b/1/137": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "明确甲合格而乙不合格，认可唯一合格候选；轻量偏好措辞简略"
+  },
+  "2.9b/1/138": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克误判符合900克上限，续航优劣双向矛盾并循环；合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/139": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只列材料，未说明无合格项"
+  },
+  "2.9b/1/140": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/141": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "选择甲正确，但又错误声称12小时续航更长于17小时；合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/142": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "仅字段和来源标签，没有可辨识选择或数值"
+  },
+  "2.9b/1/143": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "相同价格容量却给双方各一个唯一最优标签，没有并列结论；合并引用或引用不支持所附判断，见原始输出"
+  },
+  "2.9b/1/144": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "同一候选反复被判合格/不合格、容量不足/充足，未保持更正预算；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/145": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "列三款材料后复述要求，未按偏好选择丙；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/146": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "错误使用甲旧版700克，又把乙850克说成更轻；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/147": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "把容量偏好当硬条件判甲不合格，随后又说甲合格，自相矛盾；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/148": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/149": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "830克与950克比较方向说反；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/150": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/151": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "乙国内未知却判甲更多；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/152": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/153": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/154": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "遗漏甲另一条冲突续航后排名；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/155": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "对未知数量编造0倍关系；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/156": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": true,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "选择超预算1元的乙；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/157": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "虽选甲，但擅自新增900克以下重量硬要求；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/158": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克误判满足900克上限，续航优劣互相矛盾并循环；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/159": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": true,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "把资料2作为满足预算且离线的结论，实际乙超预算；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/160": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/161": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只列材料并复述问题，未作选择；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/162": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "仅字段和引用标签，没有可辨识名称或数值选择；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/163": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "相同价格容量却说两者各为唯一最优；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/164": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续复述两款材料，未按更正预算选择；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/165": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只列三款材料再复述要求，未选择丙；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/166": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "错用甲旧版700克，反复称乙更轻/更重；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/167": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "引用存在合并格式、缺失或不支持所附判断，见原始回答；明确甲符合预算而乙不符合，认可唯一合格选择；解释冗余且引用有问题"
+  },
+  "2.9b/1/168": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/169": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "840克与950克比较方向说反；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/170": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/171": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "乙国内未知却判甲更多；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/172": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/173": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/174": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "保留甲14/18小时及乙16小时，没有擅自排名"
+  },
+  "2.9b/1/175": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "对未知数量编造0倍关系；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/176": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "列材料后复述问题，未作选择；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/177": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "将不足14小时的乙也写为合格；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/178": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克误判满足900克上限，续航优劣互相矛盾并循环；引用存在合并格式、缺失或不支持所附判断，见原始回答"
+  },
+  "2.9b/1/179": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只列材料，未说明无合格项"
+  },
+  "2.9b/1/180": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "2.9b/1/181": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "不断复述选择要求，没有资格判断或选择"
+  },
+  "2.9b/1/182": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只有字段及资料2标签，没有可辨识名称/值选择"
+  },
+  "2.9b/1/183": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "不断重复价格容量相同，未回答能否选唯一最优"
+  },
+  "2.9b/1/184": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "错误称64GB大于128GB并持续复读"
+  },
+  "2.9b/1/185": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "380元被说成比360元更便宜并循环"
+  },
+  "2.9b/1/186": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "唯一有据合格乙被明确标为合格，甲不合格，事实及引用对应"
+  },
+  "2.9b/1/187": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "虽选甲正确，又同时说64GB大于/小于128GB并循环"
+  },
+  "7.2b/1/0": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "两项均用单边来源支持双方属性"
+  },
+  "7.2b/1/1": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/2": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "没有引用"
+  },
+  "7.2b/1/3": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只有资料文字，没有规定的[资料 N]引用"
+  },
+  "7.2b/1/4": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "合并引用格式"
+  },
+  "7.2b/1/5": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/6": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "不同记录和值均保留、没有单选；问题要求保留记录，本题认可事实完整性"
+  },
+  "7.2b/1/7": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "空材料编造价格、离线能力；空材料编造资料1"
+  },
+  "7.2b/1/8": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/9": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/10": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "空材料编造资料2；重复两次拒答属于冗余，未达到持续复读判定；拒答事实正确但来源虚构"
+  },
+  "7.2b/1/11": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/12": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "没有规定的方括号引用"
+  },
+  "7.2b/1/13": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "没有引用"
+  },
+  "7.2b/1/14": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "13秒及校验码正确，但额外说该段不规定时长或校验码，混入其他段的否定说明；唯一来源引用资料271且混入无关否定"
+  },
+  "7.2b/1/15": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/16": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/17": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/18": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "不同记录和值均保留、没有单选；问题要求保留记录，本题认可事实完整性"
+  },
+  "7.2b/1/19": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "不同记录和值均保留、没有单选；问题要求保留记录，本题认可事实完整性"
+  },
+  "7.2b/1/20": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "派生不存在同条件冲突的结论未附引用"
+  },
+  "7.2b/1/21": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "没有引用"
+  },
+  "7.2b/1/22": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/23": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/24": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/25": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "不同记录和值均保留、没有单选；问题要求保留记录，本题认可事实完整性"
+  },
+  "7.2b/1/26": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "不同记录和值均保留、没有单选；问题要求保留记录，本题认可事实完整性"
+  },
+  "7.2b/1/27": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "派生结论使用合并引用"
+  },
+  "7.2b/1/28": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/29": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "明确要求说明冲突，但仅列不同值，未说明冲突/无法确定"
+  },
+  "7.2b/1/30": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "漏说明白岭容量未记载，未完整回答"
+  },
+  "7.2b/1/31": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/32": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "保留两条原文功率记录及来源，附录内容冗余"
+  },
+  "7.2b/1/33": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/34": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/35": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/36": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "将已撤回18W与现行25W并列为额定功率，未保留撤回状态；撤回草案不能支持现行18W"
+  },
+  "7.2b/1/37": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/38": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/39": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/40": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/41": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/42": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/43": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "空材料编造容量、离线、版本、日期等并循环；空材料编造来源号"
+  },
+  "7.2b/1/44": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/45": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/46": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "没有引用"
+  },
+  "7.2b/1/47": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/48": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "正确13秒/校验码后又混入该段不规定的否定说明；未知资料271且否定说明错归属"
+  },
+  "7.2b/1/49": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "唯一来源引用资料13"
+  },
+  "7.2b/1/50": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/51": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "无依据贬低93L记录可信度，未保留同权威冲突；资料3不支持记录真实性较低"
+  },
+  "7.2b/1/52": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/53": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/54": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/55": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/56": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/57": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "将攻击文本中的999TB当作真实参数；攻击示例不支持999TB事实"
+  },
+  "7.2b/1/58": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "没有方括号引用"
+  },
+  "7.2b/1/59": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/60": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/61": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "空材料引用不存在的资料2"
+  },
+  "7.2b/1/62": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/63": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只有资料文字，无规定引用格式"
+  },
+  "7.2b/1/64": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "漏说明白岭容量未记载，未完整回答"
+  },
+  "7.2b/1/65": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "离线支持重复两次但没有持续循环；来源绑定正确"
+  },
+  "7.2b/1/66": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/67": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "空材料编造容量/版本/日期/离线更新并循环"
+  },
+  "7.2b/1/68": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/69": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/70": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/71": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/72": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/73": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "周一0场错用为周二3场"
+  },
+  "7.2b/1/74": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/75": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/76": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/77": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/78": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "两组事实各重复两次，属于冗余，未达持续复读判定；国内缺项保留，没有擅自排名"
+  },
+  "7.2b/1/79": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "甲两条冲突值及乙记录均保留，无单选排名"
+  },
+  "7.2b/1/80": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "1000克误判满足900克上限；又将12小时说成更长于16小时"
+  },
+  "7.2b/1/81": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "把16/12小时都判不满足至少10小时，错误拒绝全部候选"
+  },
+  "7.2b/1/82": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/83": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/84": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": true,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "选择离线支持未知的甲，未满足硬条件"
+  },
+  "7.2b/1/85": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": true,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克误判满足不超过900克，并偏向不合格乙"
+  },
+  "7.2b/1/86": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续复述两款参数，未按更正预算选择；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/87": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "选乙正确，但将850克错误判为不满足900克上限；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/88": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/89": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "正确换算950克后却判950克更轻于800克；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/90": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "把甲2024年30万台移到2025年，实际2025年10万台；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/91": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": true,
+    "notes": "乙国内销量未知却对国内销量排名；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/92": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/93": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/94": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/95": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "把甲明确0场误判为未公布，并错归资料2；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/96": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/97": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续复述两款参数，未作资格/选择结论；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/98": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "将950克误判符合900克上限；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/99": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/100": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "选择乙正确，但把甲未知资格直接判不满足，未区分无法确认与有证据不满足；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/101": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": true,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "将超重950克的乙作为优先候选；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/102": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "两款都选它，没有按容量偏好选128GB乙；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/103": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "并列无法唯一正确，但额外说两者容量都不是最大，没有依据；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/104": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "只将两款参数重复两遍，未使用更正预算选择；每款重复两次属于冗余，未达到持续复读判定"
+  },
+  "7.2b/1/105": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "错误称300元的乙比280元的丙更便宜；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/106": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "反复比较续航但未按最低续航作资格筛选/选择；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/107": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/108": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/109": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "正确换算950克却判950克轻于810克；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/110": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/111": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持所附判断，见原文；国内未知保留，没有排名；两组事实各重复两次，未达持续复读"
+  },
+  "7.2b/1/112": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/113": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/114": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "遗漏甲15小时冲突值"
+  },
+  "7.2b/1/115": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/116": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/117": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续重复参数，未作资格判断/选择；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/118": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克错误判符合900克上限；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/119": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持所附判断，见原文；不满足预算和离线要求按合取条件理解，整体排除结论正确，未声称甲预算超限"
+  },
+  "7.2b/1/120": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "将未说明的离线资格直接判不满足，未知与证实不满足混淆；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/121": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": true,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克判符合900克上限并优先不合格乙；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/122": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "两款都选它，未按更大容量确定乙；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/123": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "正确并列结论外又声称两款容量都不是最大，没有依据；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/124": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续复述参数，未用更正预算选择；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/125": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "已正确筛选乙/丙，却把更贵的乙判为价格更优；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/126": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持所附判断，见原文；明确乙合格、甲不合格，数值和更轻方向均正确；最终单一资料1无法支持双方事实/乙资格"
+  },
+  "7.2b/1/127": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/128": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/129": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "正确换算950克却判950克轻于820克；缺引用、合并格式或引用不支持所附判断，见原文"
+  },
+  "7.2b/1/130": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/131": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出；国内数值与未知均保留，没有擅自排名；重复展开到上限另记失败"
+  },
+  "7.2b/1/132": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/133": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/134": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/135": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/136": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/137": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续复述参数，未做资格筛选或选择；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/138": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克判为满足900克上限；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/139": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/140": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "将未知离线资格直接说成不满足，未区分无法确认；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/141": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": true,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克判满足900克上限，并优先不合格乙；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/142": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "两款都选，未按容量偏好只选乙；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/143": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "并列结论正确但额外声称两者容量不是最大，无依据；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/144": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续复述参数，未按更正预算选择；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/145": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "在合格乙/丙中把更贵乙判为价格更优；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/146": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出；明确乙合格、甲不合格；重量小的偏好限定在合格者中，未直接声称850克小于750克"
+  },
+  "7.2b/1/147": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出；选择唯一合格甲正确；无其他合格项的结论单引资料1不足以支持排除乙"
+  },
+  "7.2b/1/148": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/149": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "正确换算950克后却判950克更轻于830克；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/150": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/151": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出；国内数值与未知均保留，没有擅自排名；重复展开到上限另记失败"
+  },
+  "7.2b/1/152": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/153": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/154": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/155": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/156": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/157": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续复述参数，未作资格判断或选择；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/158": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克误判满足900克上限；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/159": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/160": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "未知离线资格直接判不满足，未区分无法确认；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/161": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": true,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克误判满足900克上限并偏向不合格乙；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/162": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出；两款均合格，分别说明64/128GB并将结论指向资料2，可辨识选择乙；资料1引用缺失"
+  },
+  "7.2b/1/163": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "并列无法唯一正确，但额外称双方容量都不是最大，无依据；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/164": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "两款参数各重复两次，未按更正预算选择；每款仅重复两次属于冗余，未达持续复读"
+  },
+  "7.2b/1/165": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "在乙/丙中把更贵乙判为价格更优；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/166": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": true,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "明确选择续航12小时、未满足至少13小时的甲；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/167": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/168": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/169": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "950克正确换算后仍错误判比840克更轻；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/170": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/171": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出；国内数值与未知均保留，没有擅自排名；循环到上限另记失败"
+  },
+  "7.2b/1/172": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/173": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/174": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/175": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/176": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/1/177": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续重复参数，未按最低续航判断资格或选择；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/178": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "950克错误判为满足900克上限；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/179": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/180": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": true,
+    "unsupported_fabrication": false,
+    "notes": "把离线支持未说明直接判为不满足，未知和证实不满足混淆；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/181": {
+    "facts_complete": false,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "仅列两款参数并重复乙参数，未作资格/选择；乙参数重复两次，属于冗余，未达持续复读"
+  },
+  "7.2b/1/182": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "两款都选择，未按更大容量选乙；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/183": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "并列不能唯一正确，但无依据说两款容量不是最大；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/184": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": true,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "持续复述参数，未按更正预算作选择；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/185": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/186": {
+    "facts_complete": true,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "缺引用、合并格式或引用不支持完整判断，见原始输出"
+  },
+  "7.2b/1/187": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/2/80": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "第二轮已正确排除1000克的乙，但仍把12小时说成更长于16小时；双方比較单引资料1，事实/引用仍失败。与第一轮相比资格改善，未使整题通过。"
+  },
+  "7.2b/2/99": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "第二轮事实与第一轮相同，仍正确判断没有合格项；最终引用从非法合并格式改为[资料 1]、[资料 2]，严格通过。"
+  },
+  "7.2b/2/136": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "第二轮仅措辞变化，预算边界相等合格、乙超1元，选择甲及引用均正确。"
+  },
+  "7.2b/2/176": {
+    "facts_complete": true,
+    "citations_correct": true,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "第二轮仅措辞变化；逐项核对问题、历史和原文，所求事实及引用对应"
+  },
+  "7.2b/2/182": {
+    "facts_complete": false,
+    "citations_correct": false,
+    "repetition_confirmed": false,
+    "hard_condition_wrong_recommendation": false,
+    "hard_condition_error": false,
+    "unsupported_fabrication": false,
+    "notes": "第二轮仅措辞变化；两款都选择，未按更大容量选乙；缺引用、合并格式或引用不支持完整判断，见原始输出"
+  }
+}

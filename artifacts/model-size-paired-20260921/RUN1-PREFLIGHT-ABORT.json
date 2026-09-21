@@ -1,0 +1,6 @@
+{
+  "generated_calls": 0,
+  "reason": "stopped during model hash preflight before service launch; new v2 restarts all four rounds equally",
+  "empty_run_directory_retained": true,
+  "unit_log": "Sep 21 12:56:05 rwkv-82 systemd[22930]: Started rwkvrag-model-size-paired-20260921.service - /home/chase/rwkvrag/data/services/vllm-decode-20260920/engine/.venv/bin/python /home/chase/rwkvrag/data/experiments/model-size-paired-20260921/frozen/run.py.\nSep 21 12:58:05 rwkv-82 systemd[22930]: Stopping rwkvrag-model-size-paired-20260921.service - /home/chase/rwkvrag/data/services/vllm-decode-20260920/engine/.venv/bin/python /home/chase/rwkvrag/data/experiments/model-size-paired-20260921/frozen/run.py...\nSep 21 12:58:05 rwkv-82 systemd[22930]: Stopped rwkvrag-model-size-paired-20260921.service - /home/chase/rwkvrag/data/services/vllm-decode-20260920/engine/.venv/bin/python /home/chase/rwkvrag/data/experiments/model-size-paired-20260921/frozen/run.py.\nSep 21 12:58:05 rwkv-82 systemd[22930]: rwkvrag-model-size-paired-20260921.service: Consumed 37.288s CPU time, 21.9M memory peak, 0B memory swap peak.\n"
+}

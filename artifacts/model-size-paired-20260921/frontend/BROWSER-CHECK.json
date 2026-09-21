@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "checks": [
+    "raw DOM equals source for both model answers",
+    "citation opens exact source and closes",
+    "7.2 repetition filter has 15 cases",
+    "round2 strict count88",
+    "missing citation explicitly rejected",
+    "empty search",
+    "backend health proxy"
+  ],
+  "pageErrors": []
+}
