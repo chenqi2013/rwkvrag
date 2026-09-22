@@ -27,6 +27,8 @@ V3已对诊断快照的227条进展完成父子项差量二审：162通过、65�
 
 最终评测输入按不改动JSONL行字节的规则分成四个互斥批次：新24题、旧188题、旧434题加36题双变体、来源分离的dev/holdout。每批均做零State和训练State双轮配对，运行失败或过长输出原样保留；四批总成员与原评测输入必须完全相等。分批只用于控制长任务与定位失败，不能只展示有利批次。[分批器](../scripts/state_progression/shard_eval_v1.py)。
 
+新24题按训练前冻结的[逐题人工判读标准](../llamaindex-retrieval/eval/state-fresh-github-semantic-v1/RUBRIC.md)检查全部96份零/训练State双轮原回答。人工记录必须绑定原文哈希且每份有理由；[汇总器](../scripts/state_progression/score_fresh_v1.py)仅在96份齐全时统计普通/比较分组、逐轮等级、新退步和稳定收益。实现者人工判读不是独立盲审，固定证据题也不是联网检索效果。
+
 评测诊断和原始结果页使用`analyze_eval_v2.py`与`render_eval_v2.py`：若单题只给出原编号为`资料 4`的来源，引用`[资料 4]`按原编号核对，点击也打开该来源，不能按列表位置误判为`资料 1`。这只修复诊断与展示，不改提示、模型原文或语义评分。
 
 独立的零更新速度/显存基准选取当前诊断集最长7216 token、Resolver中位附近1081 token、Writer中位附近619 token三条完整样本。GPU3 fp32io16前后向分别6.84/0.83/0.50秒，进程峰值reserved分别28.63/18.31/17.67GB；0次更新，原State与冻结基座未改。输入与脚本哈希见`artifacts/state-progression-20260922/BENCHMARK-PINS.json`及`benchmark-v1/`。诊断集仍在扩充，不能从三条速度推断正式全量耗时或答案质量。
