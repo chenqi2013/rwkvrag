@@ -9,3 +9,5 @@
 对上述固定12项运行V1提示试点：8项正常判决，其中4项通过、4项拒绝；另4项因高思考输出未在2048 token预算内正常结束而按失败拒绝。正常判决中的4项拒绝与人工确认的伪推进一致，未据此推断总体精度。[V1试点收据](../../../artifacts/state-progression-20260922/progress-delta-pilot-v1/SUMMARY.json)保留。后续使用仅提高审读输出上限至8192 token的[V2执行器](../../../scripts/state_progression/progress_delta_audit_v2.py)，提示、被审样本和验收规则不改；新运行目录保存完整原始请求与响应，不能补写V1失败记录。
 
 同12项V2试点11项正常判决，其中6项通过、5项拒绝，1项用完8192思考token仍未产出完整答案；该失败是模型审读失败，不是样本语义通过或拒绝的证据。[V2试点收据](../../../artifacts/state-progression-20260922/progress-delta-pilot-v2/SUMMARY.json)保留。完整发布审读改用[V3执行器](../../../scripts/state_progression/progress_delta_audit_v3.py)，仅将审读输出上限设为16384，与主批高强度审读相同；失败继续保留且拒绝。试点中五项明确伪推进均被V2拒绝；这一检查仍不足以证明其他样本的标签质量。
+
+若完整发布集比诊断快照多出进展样本，V3另开补充审读目录。最终[排除表合并器](../../../scripts/state_progression/progress_delta_exclusions_v1.py)逐个核对审读样本ID、完整行哈希、原审读输入文件哈希及覆盖率；只允许一个判决对应一个最终进展样本。任一未审、重复或内容变化都阻断发布。二审拒绝和失败并入来源隔离/工程隔离排除表后重新导出，不修改已有审读记录。
