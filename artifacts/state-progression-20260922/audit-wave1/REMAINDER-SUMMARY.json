@@ -1,0 +1,10 @@
+{
+  "jobs": 115,
+  "accepted": 594,
+  "failed_jobs": 3,
+  "planned_jobs": 115,
+  "conservative_cost_usd": 3.040344000000003,
+  "stopped": false,
+  "independent_review": false,
+  "training_exported": false
+}

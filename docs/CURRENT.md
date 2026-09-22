@@ -12,7 +12,7 @@
 
 [关联数据方案](../llamaindex-retrieval/statetune/progression-v2-20260922/PLAN.md)和[原子补充方案](../llamaindex-retrieval/statetune/progression-atomic-v3-20260922/PLAN.md)按来源族预先分集；同模型教师生成与复核都不算独立验收。历史失败只用于统计主要缺陷：事实与来源绑定、处理状态读解、回答收束；原始错误输出不改写成训练答案。详细生成/审读结果随新版本归档，旧运行保持不可变。
 
-已冻结[24道新GitHub README固定证据题](../llamaindex-retrieval/eval/state-fresh-github-20260922-v1/README.md)，12道普通、12道多项目比较，使用与工程训练来源不同的12个仓库；没有教师答案标签。另已采集24个工程仓库官方README并冻结[比较训练材料协议](../llamaindex-retrieval/statetune/progression-engineering-v4-20260922/PLAN.md)，候选生成和审读进行中，不能把候选数量当训练量。新题仅检验固定证据回答，完整检索仍需单独验收。
+已冻结[24道新GitHub README固定证据题](../llamaindex-retrieval/eval/state-fresh-github-20260922-v1/README.md)，12道普通、12道多项目比较，使用与工程训练来源不同的12个仓库；没有教师答案标签。另已采集24个工程仓库官方README并冻结[比较训练材料协议](../llamaindex-retrieval/statetune/progression-engineering-v4-20260922/PLAN.md)。工程批79组审读完成，683条通过目标级审读；中断补齐批115组审读完成，594条通过目标级审读，均还需最终去重、隔离及token准入，不能把审读数当训练量。[审读收据](../artifacts/state-progression-20260922/audit-wave1/)。新题仅检验固定证据回答，完整检索仍需单独验收。
 
 工程README首轮产生827条候选，抽查已通过审读的进展样本发现有新增无关证据的伪推进。首轮训练已将工程`progress`全部135条候选隔离（9条与来源隔离重合、额外126条）；其余工程候选继续审读，原V2/V3的进展候选仍可逐项准入。[质量检查](archive/2026-09/state-progression-engineering-quality-20260922.md)。
 
