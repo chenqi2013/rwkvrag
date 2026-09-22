@@ -1,0 +1,15 @@
+{
+  "source_release_summary_sha256": "429725404208e3fd1c6e7ad5f78034a310c8a62f288047c67b66554dffd7708c",
+  "sample_sha256": "31fdc7a0cf7e7c4b30f80a2210109f42e395e745e605150f6b22a1cc7433d12f",
+  "ids": [
+    "0dfdaffc607c6c8dac1e:a2",
+    "2a4847e066f82f70f5fa:a1",
+    "2905df27263525ce1400:s1"
+  ],
+  "tokens": [
+    7216,
+    1081,
+    619
+  ],
+  "optimizer_updates": 0
+}
