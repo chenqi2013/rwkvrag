@@ -1,0 +1,32 @@
+{
+  "samples": [
+    {
+      "id": "0dfdaffc607c6c8dac1e:a2",
+      "role": "resolver",
+      "tokens": 7216,
+      "seconds_forward_backward": 6.842202099971473,
+      "loss": 0.3675312101840973,
+      "peak_reserved_bytes": 28632416256
+    },
+    {
+      "id": "2a4847e066f82f70f5fa:a1",
+      "role": "resolver",
+      "tokens": 1081,
+      "seconds_forward_backward": 0.8306977692991495,
+      "loss": 0.2439952790737152,
+      "peak_reserved_bytes": 18314428416
+    },
+    {
+      "id": "2905df27263525ce1400:s1",
+      "role": "writer",
+      "tokens": 619,
+      "seconds_forward_backward": 0.496979545801878,
+      "loss": 1.588438630104065,
+      "peak_reserved_bytes": 17666408448
+    }
+  ],
+  "optimizer_updates": 0,
+  "elapsed_s": 231.4379112906754,
+  "quality_verified": false,
+  "production_promoted": false
+}

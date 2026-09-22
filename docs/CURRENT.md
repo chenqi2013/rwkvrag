@@ -8,6 +8,8 @@
 
 7.2B原生State训练入口已实现，固定fp32io16、FP32循环State、学习率1e-5、两轮、只训练初始State。8222物理GPU3的新训练入口含50GiB进程显存限制，已完成零更新数值预检：零/非零State、16/64 token四组全词表logits差均为0，argmax一致，梯度有限；[原始收据](../artifacts/state-progression-20260922/preflight-v2/NUMERICAL-PREFLIGHT.json)。尚未通过最终训练集最长样本预检，**没有训练结果或生产服务切换**。至少2000条真正复核与隔离后训练样本为启动门槛，数量不能代替质量。
 
+另用当前诊断集做了三条完整样本的零更新速度/显存试验：最长7216 token前后向6.84秒、进程峰值reserved 28.63GB；1081 token 0.83秒、619 token 0.50秒，所有样本0次优化器更新。[基准收据](../artifacts/state-progression-20260922/benchmark-v1/COMPLETED.json)。这证明所测长度在限制内，不代表最终完整数据或训练耗时已经验收。
+
 [关联数据方案](../llamaindex-retrieval/statetune/progression-v2-20260922/PLAN.md)和[原子补充方案](../llamaindex-retrieval/statetune/progression-atomic-v3-20260922/PLAN.md)按来源族预先分集；同模型教师生成与复核都不算独立验收。历史失败只用于统计主要缺陷：事实与来源绑定、处理状态读解、回答收束；原始错误输出不改写成训练答案。详细生成/审读结果随新版本归档，旧运行保持不可变。
 
 已冻结[24道新GitHub README固定证据题](../llamaindex-retrieval/eval/state-fresh-github-20260922-v1/README.md)，12道普通、12道多项目比较，使用与工程训练来源不同的12个仓库；没有教师答案标签。另已采集24个工程仓库官方README并冻结[比较训练材料协议](../llamaindex-retrieval/statetune/progression-engineering-v4-20260922/PLAN.md)，候选生成和审读进行中，不能把候选数量当训练量。新题仅检验固定证据回答，完整检索仍需单独验收。

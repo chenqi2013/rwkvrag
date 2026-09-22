@@ -12,6 +12,8 @@
 
 训练固定用户指定的7.2B、fp32io16与FP32循环State，只更新初始State，Resolver和Writer分角色从零State开始；学习率1e-5，2轮，累积4，最终轮作为评测候选。8222物理GPU3的新训练入口带50GiB进程显存限制，已通过零优化更新数值预检：零/非零State、16/64 token全词表logits与原生forward最大差0、argmax全一致、反向梯度有限；收据在`artifacts/state-progression-20260922/preflight-v2/`。最终数据最长样本前后向与实际训练仍未执行；训练不自动升级生产。对照实验锁定同模型、提示、证据和解码，只改变初始State，逐题公布新增退步和原始输出。
 
+独立的零更新速度/显存基准选取当前诊断集最长7216 token、Resolver中位附近1081 token、Writer中位附近619 token三条完整样本。GPU3 fp32io16前后向分别6.84/0.83/0.50秒，进程峰值reserved分别28.63/18.31/17.67GB；0次更新，原State与冻结基座未改。输入与脚本哈希见`artifacts/state-progression-20260922/BENCHMARK-PINS.json`及`benchmark-v1/`。诊断集仍在扩充，不能从三条速度推断正式全量耗时或答案质量。
+
 [训练配置](../scripts/state_progression/TRAINING.json) · [关联数据方案](../llamaindex-retrieval/statetune/progression-v2-20260922/PLAN.md) · [当前状态](CURRENT.md)
 
 ## 上一阶段：Writer处理状态交接验证完成

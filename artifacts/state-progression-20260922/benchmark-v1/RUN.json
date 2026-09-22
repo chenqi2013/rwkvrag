@@ -1,0 +1,7 @@
+{
+  "config_sha256": "a82ca6ec5ce4b6bf4f5f90f94717fdf86e4dac12fcdff6a28f3b45192a86731c",
+  "data_sha256": "31fdc7a0cf7e7c4b30f80a2210109f42e395e745e605150f6b22a1cc7433d12f",
+  "script_sha256": "ac4b61601518383effa70d301ab7d3a7ce6b1349341766c694f7918f91cf6cf7",
+  "trainer_sha256": "d573a6b21dce246d762ff8813ba1c33c914ca4da20f828c63e07864456c69a6e",
+  "optimizer_updates": 0
+}
