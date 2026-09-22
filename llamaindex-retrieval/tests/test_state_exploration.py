@@ -106,7 +106,7 @@ def test_unqualified_higher_score_cannot_hide_qualified_candidate():
 
 @pytest.mark.parametrize('negative_weight', [1, 2, 4])
 def test_negative_weight_is_global_mean_one(negative_weight):
-    from train_balanced_state import example_weights
+    from example_weights import example_weights
     from types import SimpleNamespace
     vocab = SimpleNamespace(by_id={0: b'', 1: b'NONE', 2: b'E1'})
     rows = [{'id': str(i), 'prompt_tokens': 1, 'input_ids': [2, token, 0]}

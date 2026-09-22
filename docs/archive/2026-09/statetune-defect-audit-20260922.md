@@ -27,6 +27,6 @@
 
 6项盘点/去重保护测试通过；加上缺题拒绝检查后，完整统计与保存汇总逐项一致。源文件SHA复核通过，归档逐成员哈希核对通过。没有新模型调用、训练更新、GPU分配、生产提示或服务修改。
 
-现有target-only loss和EOS编码器可复用；旧`statetune/train_state.py`绑定21样本/11步旧试验，不能直接当新大规模训练入口。新训练须单独冻结适配器、数据、分集、提示、模型/State协议和配置，GitHub备份后再运行。
+现有target-only loss和EOS编码器可复用。新训练须单独冻结适配器、数据、分集、提示、模型/State协议和配置，GitHub备份后再运行。
 
 [数据方案与显式标注](../../../llamaindex-retrieval/statetune/defect-led-20260922/README.md) · [原记录、统计与113组标注任务](../../../artifacts/statetune-defects-20260922/README.md)。

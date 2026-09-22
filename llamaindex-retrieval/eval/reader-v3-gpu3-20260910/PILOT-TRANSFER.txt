@@ -1,4 +1,0 @@
-llamaindex-retrieval/eval/reader-v3-gpu3-20260910/PILOT.json
-llamaindex-retrieval/eval/reader-v3-gpu3-20260910/launch-server.sh
-llamaindex-retrieval/eval/reader-v3-gpu3-20260910/run/preflight/COMPLETED.json
-llamaindex-retrieval/eval/reader-v3-gpu3-20260910/run/preflight/STARTED.json

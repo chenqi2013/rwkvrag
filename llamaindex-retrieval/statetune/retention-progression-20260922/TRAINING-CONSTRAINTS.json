@@ -1,0 +1,16 @@
+{
+  "status": "design_not_executed_or_bound_to_trainer",
+  "trainable_parameters": "initial_state_only",
+  "model": "rwkv7-g1j-7.2b-20260831-ctx16384",
+  "kernel": "fp32io16",
+  "recurrent_state_dtype": "float32",
+  "learning_rate_min": 0.000001,
+  "learning_rate_max": 0.0001,
+  "initial_candidate_learning_rate": 0.00001,
+  "initial_candidate_schedule": "constant",
+  "optional_controlled_learning_rate_candidates": [0.0001, 0.00001, 0.000001],
+  "candidate_selection_split": "dev",
+  "holdout_for_selection": false,
+  "minimum_accepted_training_examples": 2000,
+  "automatic_production_promotion": false
+}

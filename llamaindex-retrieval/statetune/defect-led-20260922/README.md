@@ -36,7 +36,7 @@
 
 ## 与现有训练链路的衔接
 
-可复用`state_tokens.encode_training`的原始prompt边界、target-only loss及EOS编码，以及`state_training.read_training_tokens`的SHA、样本数和掩码检查。不能直接运行旧`statetune/train_state.py`：它是21样本/11步的冻结试验脚本，不能改历史契约来承载新训练。
+可复用`state_tokens.encode_training`的原始prompt边界、target-only loss及EOS编码，以及`state_training.read_training_tokens`的SHA、样本数和掩码检查。新训练使用独立冻结的适配器与契约。
 
 新训练须另建版本，固定7.2B、RWKV fp32io16、同提示和解码，冻结正确的State导入/导出协议和源文件哈希；先上传GitHub，再做GPU预检和零State对照。仅在8222已授权GPU3运行。当前没有训练配置、token导出或优化器更新。
 

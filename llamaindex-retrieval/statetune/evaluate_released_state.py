@@ -20,7 +20,7 @@ from evaluate_state import generate
 
 
 REQUIRED_CODE = ["statetune/evaluate_released_state.py", "statetune/preflight_state.py",
-                 "statetune/evaluate_state.py", "statetune/train_state.py",
+                 "statetune/evaluate_state.py",
                  "statetune/pilot_runtime.py", "src/llamaindex_retrieval/state_tokens.py",
                  "src/llamaindex_retrieval/state_training.py"]
 ZERO_SHA = "f4503080abf4210de4240c9e58a7375001043e7fc3d1f3a8d5aceca6c3254fd3"
