@@ -1,0 +1,30 @@
+{
+  "release": "data/statetune/progression-release-20260922/diagnostic-v5",
+  "release_pins": {
+    "train.jsonl": "bdb69bc173f24d1a8ec37d69b3d7bc3f7618998ce496dd2dc9d39ca2ab24283f",
+    "dev.jsonl": "4932518ea2dd039518e477095c3a2dd4d1e795b7b7500d78ab4b05c1f860f773",
+    "holdout.jsonl": "9402107f678aa2770cb1fabf78997c4478c40acdda69b2c6e8801c58170ea706"
+  },
+  "target_ids": [
+    "28c0d7a7cf5d9b659f50:w4",
+    "28c0d7a7cf5d9b659f50:w9",
+    "397e5056b29afae2b448:p1",
+    "4a948a688970966b16f8:p4",
+    "4b3448dc635c88eb28a9:p3",
+    "610d08182414bef7b6ae:p2",
+    "68dc927968cda03f7a53:w11",
+    "68dc927968cda03f7a53:w7",
+    "71248a129ef18ff0d88d:p1",
+    "a113da948c33c4e4b652:w4",
+    "atomic-97bf4984d5aa6e272a4e:w7",
+    "d60f8f54fc01082d9c1d:w9"
+  ],
+  "script_sha256": "361e0795bcb9ba29ce884f80c591ebe2e7d03a8985ceed7c5026a7ea48ad3d55",
+  "prompt_sha256": "07f3a36253af5b417381f3c11304bbe82abc098e6ec294c34552c8e9df9b5b4a",
+  "review_model": "deepseek-flash",
+  "thinking": "enabled",
+  "reasoning_effort": "high",
+  "max_tokens": 8192,
+  "same_teacher_not_independent": true,
+  "fail_closed": true
+}

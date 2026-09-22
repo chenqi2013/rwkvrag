@@ -7,3 +7,5 @@
 此前隔离全部工程README的135条进展候选，仅覆盖那个批次的伪推进。本检查说明原V2/V3/V5仍有同类问题，因此新增[进展差量二次审读器](../../../scripts/state_progression/progress_delta_audit_v1.py)和[严格判读提示](../../../scripts/state_progression/progress_delta_review_v1.txt)：要求与父项比较，子项有受可见证据支持的新相关事实、纠错或满足新用户要求；重复拒答、冗余改写、无关来源及只建议以后检索均拒绝。审读结果只用于训练准入，失败保留且默认拒绝，不能改原目标或推理答案。同一DeepSeek教师审读仍非独立质量证明；最终需要对其结果再抽查。二次审读后须重新导出、重新验收全部预登记数量和多样性门槛，过线前不做优化器更新。
 
 对上述固定12项运行V1提示试点：8项正常判决，其中4项通过、4项拒绝；另4项因高思考输出未在2048 token预算内正常结束而按失败拒绝。正常判决中的4项拒绝与人工确认的伪推进一致，未据此推断总体精度。[V1试点收据](../../../artifacts/state-progression-20260922/progress-delta-pilot-v1/SUMMARY.json)保留。后续使用仅提高审读输出上限至8192 token的[V2执行器](../../../scripts/state_progression/progress_delta_audit_v2.py)，提示、被审样本和验收规则不改；新运行目录保存完整原始请求与响应，不能补写V1失败记录。
+
+同12项V2试点11项正常判决，其中6项通过、5项拒绝，1项用完8192思考token仍未产出完整答案；该失败是模型审读失败，不是样本语义通过或拒绝的证据。[V2试点收据](../../../artifacts/state-progression-20260922/progress-delta-pilot-v2/SUMMARY.json)保留。完整发布审读改用[V3执行器](../../../scripts/state_progression/progress_delta_audit_v3.py)，仅将审读输出上限设为16384，与主批高强度审读相同；失败继续保留且拒绝。试点中五项明确伪推进均被V2拒绝；这一检查仍不足以证明其他样本的标签质量。
