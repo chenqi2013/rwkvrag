@@ -1,0 +1,7 @@
+{
+  "3e5ea0b122a1847cb4cc:p5": "progress_parent_already_says_minimize_memory; child only names that same task",
+  "1d1aaec5da853bd28deb:w15": "progress_parent_already_identifies_P768_camera; child repeats it under reworded request",
+  "399b74c38362cfc4b5d8:w7": "progress_parent_already_corrects_false_engine_premise; child adds no manufacturer evidence",
+  "e019e80043afd46cf403:p2": "progress_same_question_already_answered; child adds ancillary background without resolving a gap",
+  "a113da948c33c4e4b652:w4": "progress_new_what_is_it_question_is_not_answered; child repeats Netscape_7_2_release_statement"
+}

@@ -11,3 +11,5 @@
 同12项V2试点11项正常判决，其中6项通过、5项拒绝，1项用完8192思考token仍未产出完整答案；该失败是模型审读失败，不是样本语义通过或拒绝的证据。[V2试点收据](../../../artifacts/state-progression-20260922/progress-delta-pilot-v2/SUMMARY.json)保留。完整发布审读改用[V3执行器](../../../scripts/state_progression/progress_delta_audit_v3.py)，仅将审读输出上限设为16384，与主批高强度审读相同；失败继续保留且拒绝。试点中五项明确伪推进均被V2拒绝；这一检查仍不足以证明其他样本的标签质量。
 
 若完整发布集比诊断快照多出进展样本，V3另开补充审读目录。最终[排除表合并器](../../../scripts/state_progression/progress_delta_exclusions_v1.py)逐个核对审读样本ID、完整行哈希、原审读输入文件哈希及覆盖率；只允许一个判决对应一个最终进展样本。任一未审、重复或内容变化都阻断发布。二审拒绝和失败并入来源隔离/工程隔离排除表后重新导出，不修改已有审读记录。
+
+诊断快照227项V3完整二审结束：162通过、65拒绝、0失败，训练分区123通过/51拒绝，开发23/8，留出16/6。保守费用收据0.5601美元。[输入与总量收据](../../../artifacts/state-progression-20260922/progress-delta-diagnostic-v3/SUMMARY.json)。按父子答案相似度复看高风险通过项并抽查低相似通过项，又发现5条首轮和V3都放行的伪推进，分别是父项已含相同事实、缺少所问制造商证据、同题已答而只加旁枝，或子项未真正回答新问。逐ID理由冻结于[人工隔离表](../../../artifacts/state-progression-20260922/manual-progress-v1/EXCLUSIONS.json)：训练4条、开发1条。它们只影响数据准入，不形成运行时题目规则。V2基础排除324条与人工5条形成[基础排除表V3](../../../artifacts/state-progression-20260922/admission-exclusions-v3/SUMMARY.json)，共329条；仍未叠加完整二审拒绝项，不能称最终发布。人工复核为实现者检查，不是独立盲审，也未穷尽全部语义错误。

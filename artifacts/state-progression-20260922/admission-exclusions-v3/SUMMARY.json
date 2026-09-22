@@ -1,0 +1,14 @@
+{
+  "base_count": 324,
+  "manual_count": 5,
+  "manual_by_split": {
+    "train": 4,
+    "dev": 1
+  },
+  "combined_count": 329,
+  "base_sha256": "df30d02492eedfaa00471744466357d0d89b7fd3668ca7cc8fcedf72cc4aa796",
+  "manual_sha256": "4a10a132a50d98552ca258406d795a53969805d6cc56325cc7790210b9a83446",
+  "diagnostic_v5_summary_sha256": "394189e2d4064d049f2b9baa5d24230a108e6d3a36e1775231e9a1569a1edfa8",
+  "delta_v3_summary_sha256": "414e1968b25a76d0e7f8448657abcdc307e444546ff97da30c0abceec3a16d30",
+  "training_only_quarantine": true
+}

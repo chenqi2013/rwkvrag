@@ -1,0 +1,10 @@
+{
+  "reviewed": 227,
+  "accepted": 162,
+  "rejected_or_failed": 65,
+  "planned": 227,
+  "conservative_cost_usd": 0.5600777999999994,
+  "stopped": false,
+  "independent_review": false,
+  "training_exported": false
+}
