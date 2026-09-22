@@ -1,0 +1,300 @@
+[
+  {
+    "job_id": "0c355b6c254692117f58",
+    "split": "train",
+    "input_sha256": "b5a9d682fef17d09020f525935c27865faf3708056dd491975f8031ce8004428",
+    "excluded_items": 9,
+    "hits": [
+      [
+        "source_title",
+        "S2",
+        [
+          "restored434/wiki_verified-0010"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "3b801f4e571f7f181518",
+    "split": "train",
+    "input_sha256": "319363834753008d2e152136cb409c5241021520f36c2aebabecd6fdf280f81d",
+    "excluded_items": 13,
+    "hits": [
+      [
+        "source_title",
+        "S2",
+        [
+          "restored434/wiki_verified-0053"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "47b4f6f62d5691b147c7",
+    "split": "train",
+    "input_sha256": "a381ea261be23f6209f5d1a7658053fad8f03d1d47371048cfa0fd9a842d18dd",
+    "excluded_items": 6,
+    "hits": [
+      [
+        "source_title",
+        "S1",
+        [
+          "restored434/wiki_batch2-0054"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "5a779933859e8680a27c",
+    "split": "train",
+    "input_sha256": "64370bfdcadfb9fa29ee5e7c5224a5271328bcd288763171b49352b45991399c",
+    "excluded_items": 7,
+    "hits": [
+      [
+        "source_title",
+        "S2",
+        [
+          "restored434/wiki_verified-0178"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "9089cb7208ae7da7c4df",
+    "split": "train",
+    "input_sha256": "560726a17247fc7071441fd30e2dc89cc59f990a0c7cfee69dc95bb7a0f7f526",
+    "excluded_items": 7,
+    "hits": [
+      [
+        "source_title",
+        "S1",
+        [
+          "restored434/wiki_verified-0005"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "9f650bec9e40a3210b50",
+    "split": "train",
+    "input_sha256": "4dadae38ca4fa328707b1a2e6974b42ce8e44786fa037c0580ed9c10a0728761",
+    "excluded_items": 11,
+    "hits": [
+      [
+        "source_title",
+        "S2",
+        [
+          "restored434/wiki_batch2-0045",
+          "restored434/wiki_batch2-0124",
+          "restored434/wiki_verified-0005",
+          "restored434/wiki_verified-0042"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "aacc29e9903c966144e1",
+    "split": "dev",
+    "input_sha256": "e21bd26e3e999e72c99341a52911d6eaed775468246b5daf1683dc4db8c7031d",
+    "excluded_items": 5,
+    "hits": [
+      [
+        "source_title",
+        "S1",
+        [
+          "restored434/wiki_verified-0166"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "c6c3d5fc9af65d99a16f",
+    "split": "train",
+    "input_sha256": "2d6b2409dd064e0b7d1df69a83656e2717987e6de92e82cf0ae46f4c60a6ba0e",
+    "excluded_items": 7,
+    "hits": [
+      [
+        "source_title",
+        "S1",
+        [
+          "restored434/wiki_batch2-0005"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "cc32cb9c73c9a8b423b8",
+    "split": "train",
+    "input_sha256": "c056fa2268b63bfa2b5955154df64f3613a4983a036c551107f3cf25c46f06d0",
+    "excluded_items": 12,
+    "hits": [
+      [
+        "source_title",
+        "S1",
+        [
+          "restored434/wiki_verified-0027"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "e3528e9338c820c17fa7",
+    "split": "train",
+    "input_sha256": "5faffef492717df4267ede00c78e8f4e7c4af1e7db32f91d31bea0b55e045908",
+    "excluded_items": 10,
+    "hits": [
+      [
+        "source_title",
+        "S2",
+        [
+          "restored434/wiki_verified-0121",
+          "restored434/wiki_verified-0173"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "atomic-47b4f6f62d5691b147c7",
+    "split": "train",
+    "input_sha256": "5fc8f3e6c1468804b8119ea5a9518518842e31a76df84dec97fa57dd21afe092",
+    "excluded_items": 6,
+    "hits": [
+      [
+        "source_title",
+        "S1",
+        [
+          "restored434/wiki_batch2-0054"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "atomic-cc32cb9c73c9a8b423b8",
+    "split": "train",
+    "input_sha256": "d81e7f6443677d0d38ca7d74b74fc72590fd88f82cb7af9b40655835eed7e478",
+    "excluded_items": 21,
+    "hits": [
+      [
+        "source_title",
+        "S1",
+        [
+          "restored434/wiki_verified-0027"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "engineering-packaging-008783aad7d5",
+    "split": "dev",
+    "input_sha256": "b213650729996e575ba8a5239c8806e58fcbd68a1a68b5b53d16c1caa48ca286",
+    "excluded_items": 17,
+    "hits": [
+      [
+        "evidence_span_48",
+        "S1",
+        [
+          "python_quality-comparison-01",
+          "python_quality-comparison-02",
+          "python_quality-comparison-03",
+          "python_quality-comparison-04",
+          "python_quality-ordinary-01"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "engineering-packaging-237ba3212219",
+    "split": "dev",
+    "input_sha256": "5d6566827a19fa791cf9bb65aaf71d81dbef9ad3665a6407c9ac46c8d9f44c79",
+    "excluded_items": 9,
+    "hits": [
+      [
+        "evidence_span_48",
+        "S1",
+        [
+          "python_quality-comparison-01",
+          "python_quality-comparison-02",
+          "python_quality-comparison-03",
+          "python_quality-comparison-04",
+          "python_quality-ordinary-01"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "engineering-packaging-26465815fe46",
+    "split": "dev",
+    "input_sha256": "f914313a31ea418a83119e2350a595aab03acb07fc065104cae11a1056e39b3f",
+    "excluded_items": 15,
+    "hits": [
+      [
+        "evidence_span_48",
+        "S1",
+        [
+          "python_quality-comparison-01",
+          "python_quality-comparison-02",
+          "python_quality-comparison-03",
+          "python_quality-comparison-04",
+          "python_quality-ordinary-01"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "engineering-packaging-3125ac113879",
+    "split": "dev",
+    "input_sha256": "b2d128015f2ba4b0ba117d3e557c4467dcaf0f6ae51a379dd4ef3078d4fcc04b",
+    "excluded_items": 7,
+    "hits": [
+      [
+        "evidence_span_48",
+        "S1",
+        [
+          "python_quality-comparison-01",
+          "python_quality-comparison-02",
+          "python_quality-comparison-03",
+          "python_quality-comparison-04",
+          "python_quality-ordinary-01"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "engineering-packaging-5ad99ebfc9c6",
+    "split": "dev",
+    "input_sha256": "67cd7d0d219dcebc7d7ff72572ec77e95f71fecca42c00fcfc7629b9d3930c9c",
+    "excluded_items": 5,
+    "hits": [
+      [
+        "evidence_span_48",
+        "S1",
+        [
+          "python_quality-comparison-01",
+          "python_quality-comparison-02",
+          "python_quality-comparison-03",
+          "python_quality-comparison-04",
+          "python_quality-ordinary-01"
+        ]
+      ]
+    ]
+  },
+  {
+    "job_id": "engineering-packaging-afe1fa64714c",
+    "split": "dev",
+    "input_sha256": "2bead1240e652cff5725a73ef3ae89e8d74fae2803d18d7d8b1e7ed261f71c34",
+    "excluded_items": 2,
+    "hits": [
+      [
+        "evidence_span_48",
+        "S1",
+        [
+          "python_quality-comparison-01",
+          "python_quality-comparison-02",
+          "python_quality-comparison-03",
+          "python_quality-comparison-04",
+          "python_quality-ordinary-01"
+        ]
+      ]
+    ]
+  }
+]
