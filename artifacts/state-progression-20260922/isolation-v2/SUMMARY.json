@@ -1,0 +1,19 @@
+{
+  "historical_cases": 694,
+  "historical_cases_sha256": "3284fb1567d9cf2126c6d89baeab5567d4fe9939143d90bb67afb38bafa23386",
+  "historic_questions": 682,
+  "historic_evidence_records": 2775,
+  "input_roots": [
+    "data/statetune/progression-v2-20260922",
+    "data/statetune/progression-atomic-v3-20260922"
+  ],
+  "scanned": {
+    "jobs_with_candidates": 665,
+    "candidate_items": 6635,
+    "jobs_without_candidates": 52
+  },
+  "quarantined_jobs": 12,
+  "quarantined_items": 114,
+  "screen": "normalized title; sampled informative 48-character literal evidence spans; exact or >=0.86 question similarity",
+  "limits": "This screen cannot prove semantic independence; all historic cases remain seen regression only."
+}
