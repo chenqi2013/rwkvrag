@@ -23,12 +23,14 @@ def repeated_span(value,size=40):
 
 
 def cite_issue(value,evidence):
-    labels={f'资料 {i}' for i in range(1,len(evidence)+1)}
     found=re.findall(r'\[资料\s*\d+\]',value)
+    if evidence is None:
+        return {'citation_count':len(found),'invalid_citations':[],'verification':'evidence_not_in_case_record'}
+    labels={f'资料 {i}' for i in range(1,len(evidence)+1)}
     bad=[x for x in found if x[1:-1].strip() not in labels]
     malformed=re.findall(r'\[资料[^\]]*\]',value)
     malformed=[x for x in malformed if x not in found]
-    return {'citation_count':len(found),'invalid_citations':bad+malformed}
+    return {'citation_count':len(found),'invalid_citations':bad+malformed,'verification':'syntax_and_label_range_only'}
 
 
 def main(args):
@@ -46,7 +48,7 @@ def main(args):
             outputs={arm:record_map[(case['id'],round_no,arm)] for arm in ('zero','trained')}
             flags={}
             for arm,row in outputs.items():
-                citations=cite_issue(row['raw_text'],case.get('evidence',[]))
+                citations=cite_issue(row['raw_text'],case.get('evidence'))
                 repeat=repeated_span(row['raw_text'])
                 flags[arm]=dict(citations,repeat=repeat,status=row['status'],output_tokens=len(row['generated_ids']))
                 totals[arm+'/'+case['category']+'/'+row['status']]+=1

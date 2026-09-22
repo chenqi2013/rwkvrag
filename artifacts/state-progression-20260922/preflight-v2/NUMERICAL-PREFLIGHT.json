@@ -1,0 +1,30 @@
+[
+  {
+    "nonzero": false,
+    "tokens": 16,
+    "max_logit_difference": 0.0,
+    "all_argmax_match": true
+  },
+  {
+    "nonzero": false,
+    "tokens": 64,
+    "max_logit_difference": 0.0,
+    "all_argmax_match": true
+  },
+  {
+    "nonzero": true,
+    "tokens": 16,
+    "max_logit_difference": 0.0,
+    "all_argmax_match": true
+  },
+  {
+    "nonzero": true,
+    "tokens": 64,
+    "max_logit_difference": 0.0,
+    "all_argmax_match": true
+  },
+  {
+    "backward_loss": 7.289388179779053,
+    "optimizer_updates": 0
+  }
+]
