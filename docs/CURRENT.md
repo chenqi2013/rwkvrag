@@ -6,7 +6,7 @@
 
 用户要求用新材料学习缺陷和后续推进，原始能力通过独立新题及逐题旧回归检查，旧题/旧答案不进入训练。五批共9025条首审候选，经严格目标审读、旧694题与新24题来源隔离、去重、完整token编码、父子差量二审及人工高风险排除，形成训练3940、开发490、留出502条的[发布集V1](archive/2026-09/state-progression-release-v1-20260922.md)。训练normal 2318、defect 1418、progress 204，所有数量与多样性门槛通过；全部260条发布推进样本逐行哈希匹配已通过的二审。数据准入不是语义质量或产品效果证明。
 
-7.2B原生State训练入口固定fp32io16、FP32循环State、学习率1e-5、两轮、只训练初始State。8222物理GPU3的`rwkvrag-state-release-v1-train.service`已启动，使用3940条发布集训练输入及其SHA-256绑定，含50GiB进程显存限制。此前零更新数值预检的零/非零State、16/64 token全词表logits差均为0，argmax一致，梯度有限；[原始收据](../artifacts/state-progression-20260922/preflight-v2/NUMERICAL-PREFLIGHT.json)。本次最终最长样本预检与优化器更新结果尚待收据确认；**没有训练完成、质量胜出或生产服务切换**。
+7.2B原生State训练入口固定fp32io16、FP32循环State、学习率1e-5、两轮、只训练初始State。8222物理GPU3的`rwkvrag-state-release-v1-train.service`运行中，使用3940条发布集训练输入及其SHA-256绑定，含50GiB进程显存限制。此前零更新数值预检的零/非零State、16/64 token全词表logits差均为0，argmax一致，梯度有限；[原始收据](../artifacts/state-progression-20260922/preflight-v2/NUMERICAL-PREFLIGHT.json)。本次最终最长7508-token样本完整前后向已通过，损失有限、0次更新时进程预留峰值29.70GB；随后已开始写入Resolver更新。**没有训练完成、质量胜出或生产服务切换**。
 
 评测输入已按[冻结绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)准备为1710个成员、计划6840份零/训练State双轮原始回答：新24题、旧694题及来源分离的开发/留出992题。3项因原运行无Writer提示或输入超限标为不支持，成员仍保留；这些是固定证据评测，不是实时检索。
 
