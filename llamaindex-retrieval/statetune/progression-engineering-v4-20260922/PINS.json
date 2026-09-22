@@ -1,0 +1,12 @@
+{
+  "llamaindex-retrieval/statetune/progression-engineering-v4-20260922/JOBS.jsonl": "286e26e274146e12b60661aadc2e0d78282150804473b0d08fb1d0c4a2236276",
+  "llamaindex-retrieval/statetune/progression-engineering-v4-20260922/MANIFEST.json": "d6233290791ff468bccd90a29b9603a1155f670b34077f9764beb5d96e8d329e",
+  "llamaindex-retrieval/statetune/progression-engineering-v4-20260922/generate.txt": "3146677ec4edccd729ef8dfe913babfa646e4da41b801d4bd552a88f47c36949",
+  "llamaindex-retrieval/statetune/progression-engineering-v4-20260922/review.txt": "ea4e088829b2038edac70aba2e09eb1eea076ee144c9138783903941532da1af",
+  "llamaindex-retrieval/statetune/progression-engineering-v4-20260922/material.txt": "c909b1bbf1dc9df26efc190cdf67d66e3789955bd448953cd4c908b1c13b4720",
+  "llamaindex-retrieval/statetune/progression-engineering-v4-20260922/CONFIG.json": "3fba5924e31b6134cf02e0aea02c2e097eef18ebb7202288ceda7267be8909c9",
+  "llamaindex-retrieval/statetune/progression-engineering-v4-20260922/PLAN.md": "82d845b0c31cf90ed997cd80427d54b50411669469d58fd56b79b27276f55cea",
+  "scripts/state_progression/generate_engineering_v4.py": "ca7277dfcff794d72671984ca11d838d95995d7e6c39d56bb8a517bb863bc4c6",
+  "scripts/statetune_broad/contracts.py": "bf2732c1a0e8b2bbbc04720be5aa198717310ef877e97d70ab118425470574f9",
+  "llamaindex-retrieval/src/llamaindex_retrieval/writer_prompt.py": "dd6fccafb8bde63405ab74ed62c136de8a1b415d107dd66fe75dab120c9f5942"
+}

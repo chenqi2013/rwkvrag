@@ -1,0 +1,242 @@
+[
+  {
+    "repo": "apache/airflow",
+    "blob_sha": "7e49de2a1ea248a85415227ff92af955ba677438",
+    "sha256": "56475872e413d26d62a744660a6856c0a75e05ee5fdf48974f925f5f5001188b",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/apache--airflow.md",
+    "url": "https://api.github.com/repos/apache/airflow/git/blobs/7e49de2a1ea248a85415227ff92af955ba677438",
+    "html_url": "https://github.com/apache/airflow/blob/main/README.md",
+    "family": "workflow",
+    "split": "train"
+  },
+  {
+    "repo": "PrefectHQ/prefect",
+    "blob_sha": "41fdd5bfe7383409410dd571904a23e46ebec947",
+    "sha256": "755a4de39a3959a2ca1c9c897dedb591217c3c38a11c026abb948333ca9e4077",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/PrefectHQ--prefect.md",
+    "url": "https://api.github.com/repos/PrefectHQ/prefect/git/blobs/41fdd5bfe7383409410dd571904a23e46ebec947",
+    "html_url": "https://github.com/PrefectHQ/prefect/blob/main/README.md",
+    "family": "workflow",
+    "split": "train"
+  },
+  {
+    "repo": "dagster-io/dagster",
+    "blob_sha": "93aed1dec84d15801939d969d284f84ccd145143",
+    "sha256": "c67be78a0355a34b38964ba3e64fa615604e175afbc00bef4506afd4bf0a0b34",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/dagster-io--dagster.md",
+    "url": "https://api.github.com/repos/dagster-io/dagster/git/blobs/93aed1dec84d15801939d969d284f84ccd145143",
+    "html_url": "https://github.com/dagster-io/dagster/blob/master/README.md",
+    "family": "workflow",
+    "split": "train"
+  },
+  {
+    "repo": "kestra-io/kestra",
+    "blob_sha": "6809a0872e51dde2ffdc1761bf81bd3aa5e9c39d",
+    "sha256": "d8aa9a33dcf1ae132830f4041d17fafd58f0c37ea46047b6441d49775aec67e8",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/kestra-io--kestra.md",
+    "url": "https://api.github.com/repos/kestra-io/kestra/git/blobs/6809a0872e51dde2ffdc1761bf81bd3aa5e9c39d",
+    "html_url": "https://github.com/kestra-io/kestra/blob/develop/README.md",
+    "family": "workflow",
+    "split": "train"
+  },
+  {
+    "repo": "qdrant/qdrant",
+    "blob_sha": "cf4c1c5213148ed9d6388654f9d3e75b06504bc9",
+    "sha256": "f1455d12252bf40235ad0128d8e98b2cd6d42583e441ac832b01f4daf08df2e4",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/qdrant--qdrant.md",
+    "url": "https://api.github.com/repos/qdrant/qdrant/git/blobs/cf4c1c5213148ed9d6388654f9d3e75b06504bc9",
+    "html_url": "https://github.com/qdrant/qdrant/blob/master/README.md",
+    "family": "vector",
+    "split": "train"
+  },
+  {
+    "repo": "milvus-io/milvus",
+    "blob_sha": "fd07f01107c1ddfa1605e1e70b730b909820928a",
+    "sha256": "8fedcdc9023fcd061a54405bf0d83afb4516c7ec053b2efd22476473ce10153f",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/milvus-io--milvus.md",
+    "url": "https://api.github.com/repos/milvus-io/milvus/git/blobs/fd07f01107c1ddfa1605e1e70b730b909820928a",
+    "html_url": "https://github.com/milvus-io/milvus/blob/master/README.md",
+    "family": "vector",
+    "split": "train"
+  },
+  {
+    "repo": "weaviate/weaviate",
+    "blob_sha": "1249afc998bb8857afa3dd5cb859e2a9bdcb33bc",
+    "sha256": "0123d30defd019c4b5ead051aa2c977431c4c6d6657cad81bd8a8faa7bbc87c5",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/weaviate--weaviate.md",
+    "url": "https://api.github.com/repos/weaviate/weaviate/git/blobs/1249afc998bb8857afa3dd5cb859e2a9bdcb33bc",
+    "html_url": "https://github.com/weaviate/weaviate/blob/main/README.md",
+    "family": "vector",
+    "split": "train"
+  },
+  {
+    "repo": "chroma-core/chroma",
+    "blob_sha": "305e502cb004ab943add38050c272debfaf5e1bb",
+    "sha256": "a71f91e5fadfb03772be1f76b0bab7116eea1bfc6cc9bc4fb190ce95dd275264",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/chroma-core--chroma.md",
+    "url": "https://api.github.com/repos/chroma-core/chroma/git/blobs/305e502cb004ab943add38050c272debfaf5e1bb",
+    "html_url": "https://github.com/chroma-core/chroma/blob/main/README.md",
+    "family": "vector",
+    "split": "train"
+  },
+  {
+    "repo": "prometheus/prometheus",
+    "blob_sha": "0465897e5cc16963a84fa6ba56b64b5dfa764009",
+    "sha256": "0d2f3f6f3d19ed74c6302168f95d18f12a7e1041e89dcceadca6f2de860f828d",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/prometheus--prometheus.md",
+    "url": "https://api.github.com/repos/prometheus/prometheus/git/blobs/0465897e5cc16963a84fa6ba56b64b5dfa764009",
+    "html_url": "https://github.com/prometheus/prometheus/blob/main/README.md",
+    "family": "observability",
+    "split": "train"
+  },
+  {
+    "repo": "grafana/grafana",
+    "blob_sha": "7b768e029f8ad89feae45d31bce9a57d42d9cf5c",
+    "sha256": "fc8a867bf09f319b9288746ab0148faff2e92ed39cd702252ce59161e576c019",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/grafana--grafana.md",
+    "url": "https://api.github.com/repos/grafana/grafana/git/blobs/7b768e029f8ad89feae45d31bce9a57d42d9cf5c",
+    "html_url": "https://github.com/grafana/grafana/blob/main/README.md",
+    "family": "observability",
+    "split": "train"
+  },
+  {
+    "repo": "VictoriaMetrics/VictoriaMetrics",
+    "blob_sha": "518fdea1989291a3f4bf6e6bab414feb8a1479eb",
+    "sha256": "6411c595be1cad0f9256e00b89c0d8547a90e1c8d1e9380e475baf9c086880d8",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/VictoriaMetrics--VictoriaMetrics.md",
+    "url": "https://api.github.com/repos/VictoriaMetrics/VictoriaMetrics/git/blobs/518fdea1989291a3f4bf6e6bab414feb8a1479eb",
+    "html_url": "https://github.com/VictoriaMetrics/VictoriaMetrics/blob/master/README.md",
+    "family": "observability",
+    "split": "train"
+  },
+  {
+    "repo": "jaegertracing/jaeger",
+    "blob_sha": "8187375645c864d76986b785d70f048103eef480",
+    "sha256": "669d40843b9ef5242c798cc4f055c3a1da6ba76d4a01603f616614246f9318d9",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/jaegertracing--jaeger.md",
+    "url": "https://api.github.com/repos/jaegertracing/jaeger/git/blobs/8187375645c864d76986b785d70f048103eef480",
+    "html_url": "https://github.com/jaegertracing/jaeger/blob/main/README.md",
+    "family": "observability",
+    "split": "train"
+  },
+  {
+    "repo": "fastapi/fastapi",
+    "blob_sha": "bd7e9e96b015b92f219c596710c96a89068488c8",
+    "sha256": "63efc8b172d4ec8d06568e303032bfbf729587124e3ebdc60df5548ba3c30642",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/fastapi--fastapi.md",
+    "url": "https://api.github.com/repos/fastapi/fastapi/git/blobs/bd7e9e96b015b92f219c596710c96a89068488c8",
+    "html_url": "https://github.com/fastapi/fastapi/blob/master/README.md",
+    "family": "web",
+    "split": "train"
+  },
+  {
+    "repo": "pallets/flask",
+    "blob_sha": "64f56cac4f9d60020a39b9c2f803b1846796cf6d",
+    "sha256": "1f2de14735b1ee9d3a342fa7c5d5e87b95727276c0a56c8a9d77221f37880602",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/pallets--flask.md",
+    "url": "https://api.github.com/repos/pallets/flask/git/blobs/64f56cac4f9d60020a39b9c2f803b1846796cf6d",
+    "html_url": "https://github.com/pallets/flask/blob/main/README.md",
+    "family": "web",
+    "split": "train"
+  },
+  {
+    "repo": "django/django",
+    "blob_sha": "f6209e36d8c42a53ead51fa236f0b3f46fdc5e39",
+    "sha256": "34c0989b01e1cb8ee592522872fdc28d13cb711e60bae0b792cc907538e6da55",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/django--django.md",
+    "url": "https://api.github.com/repos/django/django/git/blobs/f6209e36d8c42a53ead51fa236f0b3f46fdc5e39",
+    "html_url": "https://github.com/django/django/blob/main/README.rst",
+    "family": "web",
+    "split": "train"
+  },
+  {
+    "repo": "litestar-org/litestar",
+    "blob_sha": "726bb6788c31704b23ce125e3a63519ab37266a4",
+    "sha256": "dd0e0a26d4b0fb54d155a354eb44bc46b1ea0521ade5bdbb7c990f0211c7609c",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/litestar-org--litestar.md",
+    "url": "https://api.github.com/repos/litestar-org/litestar/git/blobs/726bb6788c31704b23ce125e3a63519ab37266a4",
+    "html_url": "https://github.com/litestar-org/litestar/blob/main/README.md",
+    "family": "web",
+    "split": "train"
+  },
+  {
+    "repo": "astral-sh/uv",
+    "blob_sha": "66caaf9ccc62add8c63de8e71184c9b7677377ad",
+    "sha256": "57a84a5a635f30e3a26541ebc16ca690944a7750f05713b1af92d3170b58f704",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/astral-sh--uv.md",
+    "url": "https://api.github.com/repos/astral-sh/uv/git/blobs/66caaf9ccc62add8c63de8e71184c9b7677377ad",
+    "html_url": "https://github.com/astral-sh/uv/blob/main/README.md",
+    "family": "packaging",
+    "split": "dev"
+  },
+  {
+    "repo": "python-poetry/poetry",
+    "blob_sha": "62a8894c0f330db68c5a3d70a5f09cb16d13692c",
+    "sha256": "e073b37572ac444b70fc5481d8bfacf6ac0b7aaa90e3bbc68099fd3233b59230",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/python-poetry--poetry.md",
+    "url": "https://api.github.com/repos/python-poetry/poetry/git/blobs/62a8894c0f330db68c5a3d70a5f09cb16d13692c",
+    "html_url": "https://github.com/python-poetry/poetry/blob/main/README.md",
+    "family": "packaging",
+    "split": "dev"
+  },
+  {
+    "repo": "pdm-project/pdm",
+    "blob_sha": "62d1db0d3bc7a9cd96941cf551bf9ee1c2679f0a",
+    "sha256": "c1dba09fbd9ab8219e43374e72d2caa0d90a7316fd18127a98a7968c28b56a49",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/pdm-project--pdm.md",
+    "url": "https://api.github.com/repos/pdm-project/pdm/git/blobs/62d1db0d3bc7a9cd96941cf551bf9ee1c2679f0a",
+    "html_url": "https://github.com/pdm-project/pdm/blob/main/README.md",
+    "family": "packaging",
+    "split": "dev"
+  },
+  {
+    "repo": "pypa/pipenv",
+    "blob_sha": "67f6a1fbb0fc7d588257856e9cdc9aa9820c6cd1",
+    "sha256": "89d258456d4789975b06f7f4f00c4cf1381a60f3ac01b92a306315d745fcaddf",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/pypa--pipenv.md",
+    "url": "https://api.github.com/repos/pypa/pipenv/git/blobs/67f6a1fbb0fc7d588257856e9cdc9aa9820c6cd1",
+    "html_url": "https://github.com/pypa/pipenv/blob/main/README.md",
+    "family": "packaging",
+    "split": "dev"
+  },
+  {
+    "repo": "apache/superset",
+    "blob_sha": "0dde0dbc618f287adc56221c34ea7698eaa2da97",
+    "sha256": "92b78c078265d1ce22d12d2563d6ce5056e89fe44baa71c60e116055ad6a4a46",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/apache--superset.md",
+    "url": "https://api.github.com/repos/apache/superset/git/blobs/0dde0dbc618f287adc56221c34ea7698eaa2da97",
+    "html_url": "https://github.com/apache/superset/blob/master/README.md",
+    "family": "analytics",
+    "split": "holdout"
+  },
+  {
+    "repo": "metabase/metabase",
+    "blob_sha": "0724c61a87c07294fdd3788d4ab4a14218fc9f50",
+    "sha256": "518acb35ba7d06ae7be3cc065e35d705cecef516562d122fffd55d08699615a7",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/metabase--metabase.md",
+    "url": "https://api.github.com/repos/metabase/metabase/git/blobs/0724c61a87c07294fdd3788d4ab4a14218fc9f50",
+    "html_url": "https://github.com/metabase/metabase/blob/master/README.md",
+    "family": "analytics",
+    "split": "holdout"
+  },
+  {
+    "repo": "getredash/redash",
+    "blob_sha": "ae6e16befe820db1e85f12937fdb792b5cc33cd2",
+    "sha256": "3989c99aada63f02bb56c4947f7cdc5099433c4432bec7104ef5fc913a468aa6",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/getredash--redash.md",
+    "url": "https://api.github.com/repos/getredash/redash/git/blobs/ae6e16befe820db1e85f12937fdb792b5cc33cd2",
+    "html_url": "https://github.com/getredash/redash/blob/master/README.md",
+    "family": "analytics",
+    "split": "holdout"
+  },
+  {
+    "repo": "lightdash/lightdash",
+    "blob_sha": "5ef3711b982d60d4bc0be1198b721b3dd8961a15",
+    "sha256": "79eae62898d4cd86057a503aee3dd2eea38023ab5c1317973f47c488912b6205",
+    "path": "data/corpora/progression-engineering-20260922-v3/readmes/lightdash--lightdash.md",
+    "url": "https://api.github.com/repos/lightdash/lightdash/git/blobs/5ef3711b982d60d4bc0be1198b721b3dd8961a15",
+    "html_url": "https://github.com/lightdash/lightdash/blob/main/README.md",
+    "family": "analytics",
+    "split": "holdout"
+  }
+]
