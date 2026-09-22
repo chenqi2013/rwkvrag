@@ -12,6 +12,8 @@
 
 已冻结[24道新GitHub README固定证据题](../llamaindex-retrieval/eval/state-fresh-github-20260922-v1/README.md)，12道普通、12道多项目比较，使用与工程训练来源不同的12个仓库；没有教师答案标签。另已采集24个工程仓库官方README并冻结[比较训练材料协议](../llamaindex-retrieval/statetune/progression-engineering-v4-20260922/PLAN.md)，候选生成和审读进行中，不能把候选数量当训练量。新题仅检验固定证据回答，完整检索仍需单独验收。
 
+工程README首轮产生827条候选，抽查已通过审读的进展样本发现有新增无关证据的伪推进。首轮训练已将工程`progress`全部135条候选隔离（9条与来源隔离重合、额外126条）；其余工程候选继续审读，原V2/V3的进展候选仍可逐项准入。[质量检查](archive/2026-09/state-progression-engineering-quality-20260922.md)。
+
 ## 最近完成：Writer接收处理状态的双轮模型验证
 
 本次数据准备的详细记录见[2026-09-22缺陷盘点报告](archive/2026-09/statetune-defect-audit-20260922.md)。以下为此前模型验证结果。

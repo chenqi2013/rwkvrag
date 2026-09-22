@@ -1,0 +1,12 @@
+{
+  "isolation_sha256": "e770ae79b29037e3e3c9054b46263887662224d0294dc40b7339bc4ecdd1593b",
+  "engineering_results": 81,
+  "engineering_progress": {
+    "all_engineering_progress_candidates": 135,
+    "additional_quarantine": 126,
+    "already_isolated": 9
+  },
+  "total_excluded_items": 295,
+  "basis": "Manual stratified review found accepted progress using newly added irrelevant project documents; quarantine entire engineering progress stratum for first State run.",
+  "other_progression_candidates": "Original V2 and atomic V3 remain subject to strict audit and export gates."
+}
