@@ -1,0 +1,5 @@
+# Interrupted V2 generation completion, immutable V5 run
+
+The first 640-job V2 job file was frozen before generation. Pilot and interrupted bulk runs wrote 517 unique completed result files. This version selects exactly the other 123 job IDs, in original order, without retrying any completed result, including failed jobs. The precise membership and prior source hash are in `SOURCE-SELECTION.json`; the subset keeps original source-family and train/dev/holdout assignment. No old evaluation questions or answers are added as jobs.
+
+Generation prompts, compilation rules, model, and initial student protocol are byte-identical to V2; this run uses a new frozen folder, new runner pathname, and new output folder so old requests and failures remain unchanged. The resulting candidate labels still require the same historical plus fresh evaluation isolation screen, high-thinking per-target review, de-duplication and full token-length checks before any training. Candidate count is not admitted training count.
