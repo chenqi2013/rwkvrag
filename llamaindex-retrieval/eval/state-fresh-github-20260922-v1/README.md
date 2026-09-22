@@ -1,0 +1,7 @@
+# Fresh official README fixed-evidence questions
+
+This set was frozen before State training. It has 24 manually authored questions over 12 official GitHub README blobs: 12 ordinary and 12 multi-project comparison or selection questions. Every repository is distinct from the 24 repositories used to prepare engineering training candidates. The 24 questions have no exact normalized match among the 682 historical nonempty questions. README bytes were checked against Git blob SHA-1 and SHA-256; each evidence text is a literal prefix of its pinned README. Longest fixed Writer input is 7281 tokens, plus a 2048-token output allowance within the 16384-token context.
+
+Cases have no teacher answer labels. Score zero-State and trained-State raw replies against the same exact prompt, checking every requested project/criterion, literal evidence support, correct citation and uncertainty, and any newly introduced error. The evidence contains source `title` metadata; this is an experimental Writer input variant. Historical fixed Writer prompts separately check the current prompt style. These are fixed-evidence comparisons, not live retrieval or a claim of full product quality. The author chose the questions and saw the source material, but did not train on these questions.
+
+`CASES.jsonl`, `MANIFEST.json`, the original README blobs and their hashes are frozen. Never adjust this set after seeing model outputs; create a new version instead.

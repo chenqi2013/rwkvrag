@@ -1,0 +1,122 @@
+[
+  {
+    "repo": "psf/requests",
+    "family": "http_clients",
+    "blob_sha": "4e5c44555c02f127cd0cca2efa8b22716c78ee23",
+    "sha256": "2a9268c9be5f4dc9abe9105740be7c5234babc3dd2b25eb11ca376c538a0c67b",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/psf--requests.md",
+    "snippet_sha256": "2a9268c9be5f4dc9abe9105740be7c5234babc3dd2b25eb11ca376c538a0c67b",
+    "snippet_characters": 2894,
+    "blob_uri": "https://api.github.com/repos/psf/requests/git/blobs/4e5c44555c02f127cd0cca2efa8b22716c78ee23"
+  },
+  {
+    "repo": "encode/httpx",
+    "family": "http_clients",
+    "blob_sha": "2ccecd578c3dfdd4fa1f7fc493309cfc944f7cb3",
+    "sha256": "d58f476c1273c9c06c978467c6596620d3840ea8c99ba9d32300ab3286f0e0c3",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/encode--httpx.md",
+    "snippet_sha256": "d58f476c1273c9c06c978467c6596620d3840ea8c99ba9d32300ab3286f0e0c3",
+    "snippet_characters": 4941,
+    "blob_uri": "https://api.github.com/repos/encode/httpx/git/blobs/2ccecd578c3dfdd4fa1f7fc493309cfc944f7cb3"
+  },
+  {
+    "repo": "aio-libs/aiohttp",
+    "family": "http_clients",
+    "blob_sha": "0f8790be1f8b376dc1da8549d30a094bfb58bc2d",
+    "sha256": "8536c66dfc86d31bccfeb892e7d3d11374925a589c93a9d9c26389b6d549d666",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/aio-libs--aiohttp.md",
+    "snippet_sha256": "f1e29e7e43462fb2503654458c684e1953d100258d2c5f42dfebd5ced4892430",
+    "snippet_characters": 5000,
+    "blob_uri": "https://api.github.com/repos/aio-libs/aiohttp/git/blobs/0f8790be1f8b376dc1da8549d30a094bfb58bc2d"
+  },
+  {
+    "repo": "urllib3/urllib3",
+    "family": "http_clients",
+    "blob_sha": "c9fa5a99850b097c814c7e08704ad72ca4cc420b",
+    "sha256": "02ddd5e3a7d3d85a7c9dfaf97687805def91530b48adf20ed7df03ea83f14359",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/urllib3--urllib3.md",
+    "snippet_sha256": "6e053454066aba4cda07eafcda38c0142c04bd5b4b3a232c33e49998caa22331",
+    "snippet_characters": 5000,
+    "blob_uri": "https://api.github.com/repos/urllib3/urllib3/git/blobs/c9fa5a99850b097c814c7e08704ad72ca4cc420b"
+  },
+  {
+    "repo": "pandas-dev/pandas",
+    "family": "analytics_stack",
+    "blob_sha": "d2eb7fbb3f6af25086675d8ff8f15a0ad7103a1a",
+    "sha256": "5c63b18d017b2200be7474166621177a311f461a9a5cf15813b865bacb4f2b9b",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/pandas-dev--pandas.md",
+    "snippet_sha256": "4a1af94a81c56125642f15a8b457d3197ca5cf6ad83de2862918dfc1444cbd1a",
+    "snippet_characters": 5000,
+    "blob_uri": "https://api.github.com/repos/pandas-dev/pandas/git/blobs/d2eb7fbb3f6af25086675d8ff8f15a0ad7103a1a"
+  },
+  {
+    "repo": "pola-rs/polars",
+    "family": "analytics_stack",
+    "blob_sha": "081f4554d80229dc46d2b4a17c6ec738a75be11d",
+    "sha256": "34ae7397cdce21d11b86261faa8c792b4ab502afaff817f1af26a6c22baa1f9f",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/pola-rs--polars.md",
+    "snippet_sha256": "3f64a570f5d4bbf2a1607d7f470d95ca1170727a43780578d5ff12309c2b606d",
+    "snippet_characters": 5000,
+    "blob_uri": "https://api.github.com/repos/pola-rs/polars/git/blobs/081f4554d80229dc46d2b4a17c6ec738a75be11d"
+  },
+  {
+    "repo": "duckdb/duckdb",
+    "family": "analytics_stack",
+    "blob_sha": "62a575f9e8e82d1bbbba89ce140b3803af28fdbe",
+    "sha256": "907b44f4727089c4475a5f9342e76ed2cdb39cac5619feb4ed9c5c065f5cc559",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/duckdb--duckdb.md",
+    "snippet_sha256": "907b44f4727089c4475a5f9342e76ed2cdb39cac5619feb4ed9c5c065f5cc559",
+    "snippet_characters": 3480,
+    "blob_uri": "https://api.github.com/repos/duckdb/duckdb/git/blobs/62a575f9e8e82d1bbbba89ce140b3803af28fdbe"
+  },
+  {
+    "repo": "apache/arrow",
+    "family": "analytics_stack",
+    "blob_sha": "7ba3f56fce388c2ce16001f2cfa26f3d22d476ae",
+    "sha256": "a8240517de55f26840b8d798cba46d2159ee62cf3a9ea8758565db7fe2db86e7",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/apache--arrow.md",
+    "snippet_sha256": "adcf1909b15e926b319b94f4dc761d7556102458cad1309be897ce4148184e45",
+    "snippet_characters": 5000,
+    "blob_uri": "https://api.github.com/repos/apache/arrow/git/blobs/7ba3f56fce388c2ce16001f2cfa26f3d22d476ae"
+  },
+  {
+    "repo": "astral-sh/ruff",
+    "family": "python_quality",
+    "blob_sha": "dc44251289f9d8651268f2e4f82d62628489b0c1",
+    "sha256": "0580fcf404e8635855850a35d76c9c83c56ae5bea0d2c4ee26fc920fa10a6f20",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/astral-sh--ruff.md",
+    "snippet_sha256": "da0ae99c254d0c9d52d93f51de1271e09085452f97e6e29104a831fc624d7eb0",
+    "snippet_characters": 5000,
+    "blob_uri": "https://api.github.com/repos/astral-sh/ruff/git/blobs/dc44251289f9d8651268f2e4f82d62628489b0c1"
+  },
+  {
+    "repo": "psf/black",
+    "family": "python_quality",
+    "blob_sha": "ec7eb91dc9153154259b21214273e6cf4ff67d9d",
+    "sha256": "e49e9c7f0a9094ebb45de2f058060ab213a85cd57849d2fd759f26ed58c73fc5",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/psf--black.md",
+    "snippet_sha256": "14cdeea77937a755740fe8e984e344856bf60a2f3c670d61ac4b0bf64b7d61d7",
+    "snippet_characters": 5000,
+    "blob_uri": "https://api.github.com/repos/psf/black/git/blobs/ec7eb91dc9153154259b21214273e6cf4ff67d9d"
+  },
+  {
+    "repo": "PyCQA/isort",
+    "family": "python_quality",
+    "blob_sha": "522b27d3ddd0f76bb24541fcca5e8df26104d817",
+    "sha256": "0feaa2929549b0d4f1f5a7a2ff444048af47761682c8688d9f80cf741e366415",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/PyCQA--isort.md",
+    "snippet_sha256": "73efa841e120f0344431684f39e6a8f74829b331c285388822995e2c3cd47b64",
+    "snippet_characters": 5000,
+    "blob_uri": "https://api.github.com/repos/PyCQA/isort/git/blobs/522b27d3ddd0f76bb24541fcca5e8df26104d817"
+  },
+  {
+    "repo": "python/mypy",
+    "family": "python_quality",
+    "blob_sha": "8040566b18eff8246f733484e960d6b4ccad4a25",
+    "sha256": "5b404b806a7be9844b7e17e6e7e4622811c2a6a6f3987c45444a9c4ddd3925a7",
+    "readme_path": "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/readmes/python--mypy.md",
+    "snippet_sha256": "b411c40030687cf0e51290c8d5a2781e9ea967cb40c1c3290c5fb21354d4ff1b",
+    "snippet_characters": 5000,
+    "blob_uri": "https://api.github.com/repos/python/mypy/git/blobs/8040566b18eff8246f733484e960d6b4ccad4a25"
+  }
+]

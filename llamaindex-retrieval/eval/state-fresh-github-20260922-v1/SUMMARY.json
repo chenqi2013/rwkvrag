@@ -1,0 +1,11 @@
+{
+  "repositories": 12,
+  "cases": 24,
+  "ordinary": 12,
+  "comparison": 12,
+  "training_source_repositories_overlap": 0,
+  "question_author": "human-authored by project agent, not teacher",
+  "raw_answers_or_gold_present": false,
+  "material_frozen_before_training": true,
+  "cases_sha256": "e35aa627eb6234fc44e66c2113add957d524b0e81b2bfa283cfc7c55380dedae"
+}
