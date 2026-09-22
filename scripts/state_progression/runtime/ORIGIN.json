@@ -1,0 +1,11 @@
+{
+  "source": "/home/chase/GitHub/RWKV-LH-project-statetune-r8-20260921/source/rwkv_lh",
+  "host": "rwkv-8222",
+  "copied_files": {
+    "statetune_core.py": "d3eade966d98abd41fb7e23fa6abf91d83fddd158c4fdc4a1dd10ed2cfeb1793",
+    "statetune_native_recurrence.py": "6807e2e16918afe262ba2026f284d4c1c3b0a70f60eee9c81094dc4b43196338",
+    "rwkv7_layout.py": "89a605f59246dd3b35afb44be540232b83b4a85c4b9687230689109bea0f9aff",
+    "statetune_native_model.py": "6eb06ed9760874092cc5065f191b29a900310c3f9b2973aac2ac4aae73bdc7ac"
+  },
+  "purpose": "Numerical implementation only; no source project data or training settings imported."
+}
