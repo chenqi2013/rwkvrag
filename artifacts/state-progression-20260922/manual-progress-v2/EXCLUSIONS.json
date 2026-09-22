@@ -1,0 +1,9 @@
+{
+  "fd7e098dfe290d0b9feb:w6": "Parent already answers submarine service outcome (grounded and scuttled); child adds crew transport, not a missing fact about the vessel outcome.",
+  "f69da4b1a0010c3d8afd:w6": "New annex C corridor detail does not resolve or narrow the missing security staffing and coordination for 24-hour passage D; conclusion repeats parent.",
+  "e148e5f0eb140ca89e76:p3": "Child adds an unrelated June 4 event while the new June 30 co-occurrence question remains unsupported; no relevant new evidence.",
+  "d01a7b8bee1636b66496:p6": "Child switches from whether attacker was wanted before the bombing to a spouse relationship, leaving original evidence gap unchanged.",
+  "d01a7b8bee1636b66496:p7": "Child switches from unresolved pre-attack threat information to post-attack security measures; does not advance original unresolved task.",
+  "e7cb35a8da9557d83b78:w9": "Parent already gives planned location and stated cancellation reason; child adds criticism and later Putin statement without resolving a missing reason.",
+  "repair-v6-522d2696a6970b2bb783:p3": "Child has the same visible source set and only reorganizes the already complete parent budget and audit answer; no new fact or requirement resolved."
+}

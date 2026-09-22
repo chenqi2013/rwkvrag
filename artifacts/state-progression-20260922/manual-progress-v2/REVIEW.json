@@ -1,0 +1,65 @@
+[
+  {
+    "id": "fd7e098dfe290d0b9feb:w6",
+    "split": "train",
+    "row_sha256": "2e05578094ff336ab6f8329abd9a5f331ca38906dd664229fa20dac034cf78cd",
+    "parent_id": "fd7e098dfe290d0b9feb:w5",
+    "parent_row_sha256": "2170f34765f476b521f77466969b2b47d53728fba0d56071c1e2e6aaaa56263d",
+    "audit_result_row_sha256": "2e05578094ff336ab6f8329abd9a5f331ca38906dd664229fa20dac034cf78cd",
+    "human_reason": "Parent already answers submarine service outcome (grounded and scuttled); child adds crew transport, not a missing fact about the vessel outcome."
+  },
+  {
+    "id": "f69da4b1a0010c3d8afd:w6",
+    "split": "train",
+    "row_sha256": "593a8c01823f11932cf7fe80075575c9149368b1e0e95b17739bcb2d23947a73",
+    "parent_id": "f69da4b1a0010c3d8afd:w5",
+    "parent_row_sha256": "a64575e45bf12c6b1519c411af1c7c66ed80cd6c016858c0a6918c4a300d44c6",
+    "audit_result_row_sha256": "593a8c01823f11932cf7fe80075575c9149368b1e0e95b17739bcb2d23947a73",
+    "human_reason": "New annex C corridor detail does not resolve or narrow the missing security staffing and coordination for 24-hour passage D; conclusion repeats parent."
+  },
+  {
+    "id": "e148e5f0eb140ca89e76:p3",
+    "split": "train",
+    "row_sha256": "c1d8abfcd938e4c346cd98ca44803b6bff2d6ddff6c3283a82998214c965eced",
+    "parent_id": "e148e5f0eb140ca89e76:d3",
+    "parent_row_sha256": "62ffc69107ad5935fe66004e11e42b23f910e5f4c952b6696dd5f803785eaadd",
+    "audit_result_row_sha256": "c1d8abfcd938e4c346cd98ca44803b6bff2d6ddff6c3283a82998214c965eced",
+    "human_reason": "Child adds an unrelated June 4 event while the new June 30 co-occurrence question remains unsupported; no relevant new evidence."
+  },
+  {
+    "id": "d01a7b8bee1636b66496:p6",
+    "split": "train",
+    "row_sha256": "8f34fb5ee3a6b2063882bd5a928861e2f1386b595a9e2ef820062c610e426545",
+    "parent_id": "d01a7b8bee1636b66496:d1",
+    "parent_row_sha256": "574624019d007247fbeda28b8300c2ad2b92fabe74ca65a0300475e632983688",
+    "audit_result_row_sha256": "8f34fb5ee3a6b2063882bd5a928861e2f1386b595a9e2ef820062c610e426545",
+    "human_reason": "Child switches from whether attacker was wanted before the bombing to a spouse relationship, leaving original evidence gap unchanged."
+  },
+  {
+    "id": "d01a7b8bee1636b66496:p7",
+    "split": "train",
+    "row_sha256": "c7cb1db4924d5290ff4076dbeb82423029c94d778787cb7f4007c29e5fd920c6",
+    "parent_id": "d01a7b8bee1636b66496:d2",
+    "parent_row_sha256": "c77094fb70e5fff42991f16e428182e746ffaf27cd00d8cdfdfc41493c3b265a",
+    "audit_result_row_sha256": "c7cb1db4924d5290ff4076dbeb82423029c94d778787cb7f4007c29e5fd920c6",
+    "human_reason": "Child switches from unresolved pre-attack threat information to post-attack security measures; does not advance original unresolved task."
+  },
+  {
+    "id": "e7cb35a8da9557d83b78:w9",
+    "split": "train",
+    "row_sha256": "ed80c178ebeba2a0c21a33ddca04f5c30725a85f1e5a83deb39fca7ce8dcacb3",
+    "parent_id": "e7cb35a8da9557d83b78:w6",
+    "parent_row_sha256": "dfbf0c6f3b5a7857e61356bfc9c9769f508490d5914c000132ebad73dabbad08",
+    "audit_result_row_sha256": "ed80c178ebeba2a0c21a33ddca04f5c30725a85f1e5a83deb39fca7ce8dcacb3",
+    "human_reason": "Parent already gives planned location and stated cancellation reason; child adds criticism and later Putin statement without resolving a missing reason."
+  },
+  {
+    "id": "repair-v6-522d2696a6970b2bb783:p3",
+    "split": "train",
+    "row_sha256": "843c1b7263695898301d58c0225d127e7401fa6769a34c7e1d849f6780ece129",
+    "parent_id": "repair-v6-522d2696a6970b2bb783:p2",
+    "parent_row_sha256": "43e26a02a95efb25da23c1748973e9f70841d002d66d165295bbe8ff55667bde",
+    "audit_result_row_sha256": "843c1b7263695898301d58c0225d127e7401fa6769a34c7e1d849f6780ece129",
+    "human_reason": "Child has the same visible source set and only reorganizes the already complete parent budget and audit answer; no new fact or requirement resolved."
+  }
+]

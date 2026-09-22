@@ -1,0 +1,23 @@
+{
+  "version": "state-progression-release-v1-20260922",
+  "source_git_commit": "22d720a1",
+  "release_dir": "data/statetune/progression-release-20260922/release-v1",
+  "release_summary_sha256": "72ef9dbba8e6ca10d53971444a70a65f9e92edbafd37ec9d427e3bdf8447b6f4",
+  "release_files_sha256": {
+    "dev.jsonl": "f1dfac3da2e140aae3cf9c03e14917f387126971fb21e88060745870e1bfb80a",
+    "train.jsonl": "a7bb1adf1d21e47789b7b169d488d32e0e56924c226063877fe0b45a4f61aa89",
+    "holdout.jsonl": "fc00d568c3216e8ab0c7dd4a78ef66eadd52a8c8df2383d6539ac4bfec29adf5"
+  },
+  "validation_sha256": "90b7476238c2a92f7a41cd9ed35792a5d569924d995fa823b5cf8a901938769b",
+  "progress_verification_sha256": "c6cdff7782ea5cb1ed55425f5100d0dd2ed85ba93a884909574efe0c6702c2ad",
+  "final_exclusions_sha256": "5e38d15d25973f0ca65a4c142d002bdb5d5b7cd00adbaca9ff4c44b74f0d026d",
+  "manual_progress_v2_sha256": "0c0246ff33db6aa2fc7a0e80e207efadc01e76d37b99943d1aaa742c9bfe21ac",
+  "train_examples": 3940,
+  "train_progress": 204,
+  "max_sequence_tokens": 7508,
+  "historical_evaluation_rows_in_training": 0,
+  "v7_pilot_rows_in_training": 0,
+  "teacher_review_independent": false,
+  "quality_demonstrated": false,
+  "training_started": false
+}

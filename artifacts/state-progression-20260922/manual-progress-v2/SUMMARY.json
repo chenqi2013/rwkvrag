@@ -1,0 +1,9 @@
+{
+  "reviewed_high_risk_subset": 62,
+  "new_manual_rejections": 7,
+  "scope": "new main-batch accepted train progress plus V6 accepted train progress; targeted human inspection, not blind or exhaustive semantic validation",
+  "release_input": "data/statetune/progression-release-20260922/pre-delta-v10",
+  "release_summary_sha256": "fc9941b157a6995322a1def7997d720a7b819da723ab678f303de5d1b71647c4",
+  "delta_audit": "V3 high-thinking same teacher",
+  "independent_review": false
+}
