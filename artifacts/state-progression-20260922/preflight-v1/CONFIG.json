@@ -1,0 +1,33 @@
+{
+  "learning_rate": 1e-05,
+  "epochs": 2,
+  "accumulation": 4,
+  "seed": 20260922,
+  "max_tokens": 8192,
+  "minimum_train_examples": 2000,
+  "max_seconds": 43200,
+  "max_reserved_bytes": 53687091200,
+  "engine_root": "/home/chase/GitHub/RWKV-LH-full-trace-runtime-r2-20260911/engine",
+  "base": {
+    "path": "/mnt/nas-model/g1j/rwkv7-g1j-7.2b-20260831-ctx16384.pth",
+    "sha256": "e3091a579c23ea7ebce9a0ad1ecfbda27082eeecd64d7f0474016e626df8f9c3"
+  },
+  "extension": {
+    "path": "/home/chase/GitHub/RWKV-LH-direct-statetune-r1-20260913/native_build/rwkv_lh_r26_decay_fp32.so",
+    "sha256": "5bb22738563eb5c863f8cb0b55f5b5993861256bc61c9abaf750d72145e044da"
+  },
+  "external_pins": {
+    "/home/chase/GitHub/RWKV-LH-full-trace-runtime-r2-20260911/engine/vllm/model_executor/models/rwkv7.py": "e3fd69925ea29075a3399b7d63c15a59e92343c572c93b22a48d7546fe64c8dd",
+    "/home/chase/GitHub/RWKV-LH-full-trace-runtime-r2-20260911/engine/vllm/rwkv7_ops.abi3.so": "3e478f379d6b1fa5265a0bdd99da25ce3a1f6e1983eff5d5cd28ff4b4620a949",
+    "/home/chase/GitHub/RWKV-LH-full-trace-runtime-r2-20260911/engine/vllm/rwkv7_custom_ops.py": "1f322e740b195bfe10f2c53cfec0cb467babbde954b1b9ddeec532c550f04884"
+  },
+  "source_pins": {
+    "train.py": "c86137f8e71081100df7e0cf73f438394490d4aba6616a85f71c06373995558d",
+    "runtime/rwkv_lh/__init__.py": "82112bc775d78062f82d850aea7ba6fd8972afdf2b37867f7b5dcb47327bd7dc",
+    "runtime/rwkv_lh/statetune_core.py": "d3eade966d98abd41fb7e23fa6abf91d83fddd158c4fdc4a1dd10ed2cfeb1793",
+    "runtime/rwkv_lh/statetune_native_recurrence.py": "6807e2e16918afe262ba2026f284d4c1c3b0a70f60eee9c81094dc4b43196338",
+    "runtime/rwkv_lh/rwkv7_layout.py": "89a605f59246dd3b35afb44be540232b83b4a85c4b9687230689109bea0f9aff",
+    "runtime/rwkv_lh/statetune_native_model.py": "6eb06ed9760874092cc5065f191b29a900310c3f9b2973aac2ac4aae73bdc7ac",
+    "model_config/config.json": "f44542b291c31ebcb03b0f1739e87379b4823ddee0de8f86572d11894df8ca57"
+  }
+}
