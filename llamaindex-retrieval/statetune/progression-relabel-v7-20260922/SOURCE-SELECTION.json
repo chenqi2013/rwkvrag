@@ -1,0 +1,1155 @@
+{
+  "jobs": 114,
+  "source_groups": 57,
+  "focus_modes": [
+    "comparison",
+    "lifecycle"
+  ],
+  "split": "train",
+  "historical_question_inputs": 0,
+  "historical_answer_inputs": 0,
+  "source_type": "new_v6_fictional_training_only",
+  "jobs_sha256": "6d954096d0b6ee45bbd3c5c9d7d41a95221418ba8dce8c30fbfd52df574d192e",
+  "source_receipts": [
+    {
+      "job_id": "relabel-v7-1070d1c032b631f2fcd6",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-b12832382832046e29b4",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-b12832382832046e29b4.json",
+      "source_result_sha256": "646ae5e98b8fa03f714a8b8dc76a9562ada8af4b03bccb3e3e7d513a2a25d3a5",
+      "source_families": [
+        "progress-repair-v6/manufacturing/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-e8a436eb52a1d096b9ec",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-b12832382832046e29b4",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-b12832382832046e29b4.json",
+      "source_result_sha256": "646ae5e98b8fa03f714a8b8dc76a9562ada8af4b03bccb3e3e7d513a2a25d3a5",
+      "source_families": [
+        "progress-repair-v6/manufacturing/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-bc8fcf2d133aeb7a1e3e",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-51d36ae9b9cb00178e0d",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-51d36ae9b9cb00178e0d.json",
+      "source_result_sha256": "797e1da4347202b76c69f9c85ab2cbf1572c6e8e0cc11e307509e89213ba3705",
+      "source_families": [
+        "progress-repair-v6/procurement/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-ff603a3471bfc05803a1",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-51d36ae9b9cb00178e0d",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-51d36ae9b9cb00178e0d.json",
+      "source_result_sha256": "797e1da4347202b76c69f9c85ab2cbf1572c6e8e0cc11e307509e89213ba3705",
+      "source_families": [
+        "progress-repair-v6/procurement/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-afc239618fee5d6ff68b",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-fcc6b2ed8c5493e295b2",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-fcc6b2ed8c5493e295b2.json",
+      "source_result_sha256": "58c2ae0fb05005f60fc31faaba559f1500f1c896d4b4ae4d5f89ec52fded2e2f",
+      "source_families": [
+        "progress-repair-v6/transport/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-3c85c29fa56edc6b9288",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-fcc6b2ed8c5493e295b2",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-fcc6b2ed8c5493e295b2.json",
+      "source_result_sha256": "58c2ae0fb05005f60fc31faaba559f1500f1c896d4b4ae4d5f89ec52fded2e2f",
+      "source_families": [
+        "progress-repair-v6/transport/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-192d95715a99b1d280ec",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-4abac2083f4d23d8fc87",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-4abac2083f4d23d8fc87.json",
+      "source_result_sha256": "d27c11b34264237763da7ee82d197964507f8dd395a746b0605f57b91fa929ee",
+      "source_families": [
+        "progress-repair-v6/research/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-1f2fa226a87a53ec4e84",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-4abac2083f4d23d8fc87",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-4abac2083f4d23d8fc87.json",
+      "source_result_sha256": "d27c11b34264237763da7ee82d197964507f8dd395a746b0605f57b91fa929ee",
+      "source_families": [
+        "progress-repair-v6/research/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-172d4fb3b847bb53be2a",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-25b6d047447c406611fc",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/pilot-v1/results/repair-v6-25b6d047447c406611fc.json",
+      "source_result_sha256": "b75ae8047aff6012eaf8f4435dae2652bb1de593930ef4f59692a4d90f1b8434",
+      "source_families": [
+        "progress-repair-v6/software_ops/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-c368d620495c482a4dbb",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-25b6d047447c406611fc",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/pilot-v1/results/repair-v6-25b6d047447c406611fc.json",
+      "source_result_sha256": "b75ae8047aff6012eaf8f4435dae2652bb1de593930ef4f59692a4d90f1b8434",
+      "source_families": [
+        "progress-repair-v6/software_ops/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-38245e40a2c2fe15e76b",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-d7b2d2d10f962dc1cd36",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-d7b2d2d10f962dc1cd36.json",
+      "source_result_sha256": "4a9a37b42bf67389034678acf90be68678a82283f5d979edaabebf3d31acbc32",
+      "source_families": [
+        "progress-repair-v6/transport/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-d9b794a18b1b05c7d4ac",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-d7b2d2d10f962dc1cd36",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-d7b2d2d10f962dc1cd36.json",
+      "source_result_sha256": "4a9a37b42bf67389034678acf90be68678a82283f5d979edaabebf3d31acbc32",
+      "source_families": [
+        "progress-repair-v6/transport/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-d198dcbf97839c09f964",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-ea2c9abd0c1e4e0bf7fb",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-ea2c9abd0c1e4e0bf7fb.json",
+      "source_result_sha256": "a3bd85d34eb3b65bbd9c945b1b95c9ff78390378e9e4243339fe0896e0884349",
+      "source_families": [
+        "progress-repair-v6/environment/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-40ff8cb1a582a2c1f5fc",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-ea2c9abd0c1e4e0bf7fb",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-ea2c9abd0c1e4e0bf7fb.json",
+      "source_result_sha256": "a3bd85d34eb3b65bbd9c945b1b95c9ff78390378e9e4243339fe0896e0884349",
+      "source_families": [
+        "progress-repair-v6/environment/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-2a986d86f81b26819f3a",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-642ccb70ead8500cf11a",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-642ccb70ead8500cf11a.json",
+      "source_result_sha256": "1cd16b9614e662f67927d47eb37d9f645e1d7acdd8e33168fb066b17beff1077",
+      "source_families": [
+        "progress-repair-v6/emergency_ops/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-30a40eefc62005b45bd2",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-642ccb70ead8500cf11a",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-642ccb70ead8500cf11a.json",
+      "source_result_sha256": "1cd16b9614e662f67927d47eb37d9f645e1d7acdd8e33168fb066b17beff1077",
+      "source_families": [
+        "progress-repair-v6/emergency_ops/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-33ad469a8645eb4cabcd",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-93a8a12711f9b6a9dcef",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-93a8a12711f9b6a9dcef.json",
+      "source_result_sha256": "8b1cb3665f9266b8515d0a83e69ed02c76cbaa1792b74595cedc59d79f33cae4",
+      "source_families": [
+        "progress-repair-v6/agriculture_food/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-bd36d3bd9afd4f5b9432",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-93a8a12711f9b6a9dcef",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-93a8a12711f9b6a9dcef.json",
+      "source_result_sha256": "8b1cb3665f9266b8515d0a83e69ed02c76cbaa1792b74595cedc59d79f33cae4",
+      "source_families": [
+        "progress-repair-v6/agriculture_food/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-c9880052b36987c82d26",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-58d5cc35a55255574927",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-58d5cc35a55255574927.json",
+      "source_result_sha256": "c82feae39c7e12793efa06740a4a9f76aaa1d045b1041c490364c472d75a0e92",
+      "source_families": [
+        "progress-repair-v6/agriculture_food/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-3c8e81859bc3f69150f7",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-58d5cc35a55255574927",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-58d5cc35a55255574927.json",
+      "source_result_sha256": "c82feae39c7e12793efa06740a4a9f76aaa1d045b1041c490364c472d75a0e92",
+      "source_families": [
+        "progress-repair-v6/agriculture_food/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-6cc885f0031f58f86bfb",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-d6c2bc26cb19297f3427",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-d6c2bc26cb19297f3427.json",
+      "source_result_sha256": "9d8d8418e4bb08db1f13ffe00c5df817ebef873624b5aadb28d3d1a70cb1e990",
+      "source_families": [
+        "progress-repair-v6/public_admin/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-fcb50b5b116cf7993395",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-d6c2bc26cb19297f3427",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-d6c2bc26cb19297f3427.json",
+      "source_result_sha256": "9d8d8418e4bb08db1f13ffe00c5df817ebef873624b5aadb28d3d1a70cb1e990",
+      "source_families": [
+        "progress-repair-v6/public_admin/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-42e80b38b8f032d0ce5a",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-20fdbbfe4d6b0bfddc58",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-20fdbbfe4d6b0bfddc58.json",
+      "source_result_sha256": "996aa8e09c1170053e52c268bb60ffa215045344b8ee71449e80d996635155c9",
+      "source_families": [
+        "progress-repair-v6/research/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-fbf0c1aa0719894f143d",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-20fdbbfe4d6b0bfddc58",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-20fdbbfe4d6b0bfddc58.json",
+      "source_result_sha256": "996aa8e09c1170053e52c268bb60ffa215045344b8ee71449e80d996635155c9",
+      "source_families": [
+        "progress-repair-v6/research/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-49ae1785e24e73d9627e",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-7d367ff2d0001a7a7651",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-7d367ff2d0001a7a7651.json",
+      "source_result_sha256": "d0bfa5b1807760b40f6861cd2d757fac9c8210652aa841c2a690876adcde8e04",
+      "source_families": [
+        "progress-repair-v6/transport/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-fe5dc3d756619819521c",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-7d367ff2d0001a7a7651",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-7d367ff2d0001a7a7651.json",
+      "source_result_sha256": "d0bfa5b1807760b40f6861cd2d757fac9c8210652aa841c2a690876adcde8e04",
+      "source_families": [
+        "progress-repair-v6/transport/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-7467b21dab394904b1eb",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-aeaa86fb92c6b08be621",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-aeaa86fb92c6b08be621.json",
+      "source_result_sha256": "f1cb6cc6f08544b22c34b0bdbdd9d14059a4ffe48198560f822bafb399ec66ab",
+      "source_families": [
+        "progress-repair-v6/sports/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-c5f419f010a928aeb9d8",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-aeaa86fb92c6b08be621",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-aeaa86fb92c6b08be621.json",
+      "source_result_sha256": "f1cb6cc6f08544b22c34b0bdbdd9d14059a4ffe48198560f822bafb399ec66ab",
+      "source_families": [
+        "progress-repair-v6/sports/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-96e17324c4b008b62532",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-88da5d7961a3e286bf58",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-88da5d7961a3e286bf58.json",
+      "source_result_sha256": "e7506c09efc82397eeb78f28efb1b9f0f7880bf7534ba73dd5eb6f87df998bbf",
+      "source_families": [
+        "progress-repair-v6/transport/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-b8ef0e8bfaa9b493fe5e",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-88da5d7961a3e286bf58",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-88da5d7961a3e286bf58.json",
+      "source_result_sha256": "e7506c09efc82397eeb78f28efb1b9f0f7880bf7534ba73dd5eb6f87df998bbf",
+      "source_families": [
+        "progress-repair-v6/transport/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-da1257e2835d37195e17",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-1e6d31b8c583eb738a50",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-1e6d31b8c583eb738a50.json",
+      "source_result_sha256": "9f7b52dda7bca72e781033460fea3e252a68f551aeff3f61cb209d87915a7ef7",
+      "source_families": [
+        "progress-repair-v6/arts_media/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-f0f3cf8112689eb19cfe",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-1e6d31b8c583eb738a50",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-1e6d31b8c583eb738a50.json",
+      "source_result_sha256": "9f7b52dda7bca72e781033460fea3e252a68f551aeff3f61cb209d87915a7ef7",
+      "source_families": [
+        "progress-repair-v6/arts_media/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-53fd931219cff7d7064f",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-e9568c5d8b730241d54b",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-e9568c5d8b730241d54b.json",
+      "source_result_sha256": "2ab812aa7ded268d644933723497ac196ddb165163252386b3a28cc5a3de799c",
+      "source_families": [
+        "progress-repair-v6/emergency_ops/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-1dc38800eceb5f550ceb",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-e9568c5d8b730241d54b",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-e9568c5d8b730241d54b.json",
+      "source_result_sha256": "2ab812aa7ded268d644933723497ac196ddb165163252386b3a28cc5a3de799c",
+      "source_families": [
+        "progress-repair-v6/emergency_ops/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-ca6ba9c391a2c38fe566",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-d85fb684c7f228e73e2d",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-d85fb684c7f228e73e2d.json",
+      "source_result_sha256": "13bf278353532aceb72bd4ea99e0e594cb895d32953a8126f11fc78827c6894c",
+      "source_families": [
+        "progress-repair-v6/emergency_ops/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-7b6bcd1eb168cac71774",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-d85fb684c7f228e73e2d",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-d85fb684c7f228e73e2d.json",
+      "source_result_sha256": "13bf278353532aceb72bd4ea99e0e594cb895d32953a8126f11fc78827c6894c",
+      "source_families": [
+        "progress-repair-v6/emergency_ops/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-6d53c0e6975490b2d8f0",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-c3ca5c2bcc7671040e97",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-c3ca5c2bcc7671040e97.json",
+      "source_result_sha256": "1614dc936f1b97c7355bc3341d5550c3110f98d8c7ecc4a59839fa259341734b",
+      "source_families": [
+        "progress-repair-v6/manufacturing/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-201c637b78f690a7ea42",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-c3ca5c2bcc7671040e97",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-c3ca5c2bcc7671040e97.json",
+      "source_result_sha256": "1614dc936f1b97c7355bc3341d5550c3110f98d8c7ecc4a59839fa259341734b",
+      "source_families": [
+        "progress-repair-v6/manufacturing/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-4ef1eb4e58b11147a3e9",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-145cdcd595441b49cfc7",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-145cdcd595441b49cfc7.json",
+      "source_result_sha256": "3d1b2d2d12a5db57d3f86f514a1536fad887e902a50f95ca94673d3b416395eb",
+      "source_families": [
+        "progress-repair-v6/agriculture_food/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-8f81eb2f3c48f610d2fe",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-145cdcd595441b49cfc7",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-145cdcd595441b49cfc7.json",
+      "source_result_sha256": "3d1b2d2d12a5db57d3f86f514a1536fad887e902a50f95ca94673d3b416395eb",
+      "source_families": [
+        "progress-repair-v6/agriculture_food/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-9d7245ac8ecdd8b5f604",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-be58600019febf106338",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-be58600019febf106338.json",
+      "source_result_sha256": "077a602e7607cf70b5b6502ce3eaa925766b54914751c59384d097989dd765f5",
+      "source_families": [
+        "progress-repair-v6/emergency_ops/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-e64e57c42b0988923d1a",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-be58600019febf106338",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-be58600019febf106338.json",
+      "source_result_sha256": "077a602e7607cf70b5b6502ce3eaa925766b54914751c59384d097989dd765f5",
+      "source_families": [
+        "progress-repair-v6/emergency_ops/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-ee1aacc51b824e4247b1",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-d5964db3b8f4dcf7a0c9",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-d5964db3b8f4dcf7a0c9.json",
+      "source_result_sha256": "e717637506d77fb1c9f56f415f179557b6c3a7af3409aacef7b92ce5c6137c0c",
+      "source_families": [
+        "progress-repair-v6/transport/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-8812781b553132f46a1a",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-d5964db3b8f4dcf7a0c9",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-d5964db3b8f4dcf7a0c9.json",
+      "source_result_sha256": "e717637506d77fb1c9f56f415f179557b6c3a7af3409aacef7b92ce5c6137c0c",
+      "source_families": [
+        "progress-repair-v6/transport/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-b4ab83a71c5121d481ef",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-3aadbcee527d379b844b",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/pilot-v1/results/repair-v6-3aadbcee527d379b844b.json",
+      "source_result_sha256": "b2ee12b5f81094d5add63d49018ca795ab8b6e6d9c0d8387ac3a0b7bb8c5d2a8",
+      "source_families": [
+        "progress-repair-v6/software_ops/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-ea706c9048e47a68ac4f",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-3aadbcee527d379b844b",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/pilot-v1/results/repair-v6-3aadbcee527d379b844b.json",
+      "source_result_sha256": "b2ee12b5f81094d5add63d49018ca795ab8b6e6d9c0d8387ac3a0b7bb8c5d2a8",
+      "source_families": [
+        "progress-repair-v6/software_ops/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-914c380ef3e5a3a3488d",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-3a3afe811f0eb10badbc",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-3a3afe811f0eb10badbc.json",
+      "source_result_sha256": "9b346217bb7d0a6f5d86f6bf7bc0cc3ce07ccc3c78c9131a51ca3d2e2802429f",
+      "source_families": [
+        "progress-repair-v6/public_admin/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-2afaf84fec31bd39931b",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-3a3afe811f0eb10badbc",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-3a3afe811f0eb10badbc.json",
+      "source_result_sha256": "9b346217bb7d0a6f5d86f6bf7bc0cc3ce07ccc3c78c9131a51ca3d2e2802429f",
+      "source_families": [
+        "progress-repair-v6/public_admin/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-1c09aa0d097d0502dbee",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-33ca2a25e01cb31e46f4",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-33ca2a25e01cb31e46f4.json",
+      "source_result_sha256": "b4f2fe4dafb341a1d8b2a018591f2044b3c5c30c8f2b719c5e1e91ecce287c01",
+      "source_families": [
+        "progress-repair-v6/education/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-bc8dc25c902c0a9cfdcf",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-33ca2a25e01cb31e46f4",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-33ca2a25e01cb31e46f4.json",
+      "source_result_sha256": "b4f2fe4dafb341a1d8b2a018591f2044b3c5c30c8f2b719c5e1e91ecce287c01",
+      "source_families": [
+        "progress-repair-v6/education/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-96c169febf1c0fe9a503",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-2c5a8f890d5c2e7855c9",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-2c5a8f890d5c2e7855c9.json",
+      "source_result_sha256": "e76b44b6b6835f44faeec8ae1553085712f458ba4a74f54c8762034f3114c966",
+      "source_families": [
+        "progress-repair-v6/agriculture_food/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-364d0e1b36ef1a5e262d",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-2c5a8f890d5c2e7855c9",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-2c5a8f890d5c2e7855c9.json",
+      "source_result_sha256": "e76b44b6b6835f44faeec8ae1553085712f458ba4a74f54c8762034f3114c966",
+      "source_families": [
+        "progress-repair-v6/agriculture_food/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-3f66ac5bee36a1239171",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-bcf0b043a350ba99807c",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-bcf0b043a350ba99807c.json",
+      "source_result_sha256": "b5bc6864db710d65f550e9d5c9cd5303056c0342b094f348fb2847432da57d06",
+      "source_families": [
+        "progress-repair-v6/procurement/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-e9ec5af7f5149c0cf3ac",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-bcf0b043a350ba99807c",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-bcf0b043a350ba99807c.json",
+      "source_result_sha256": "b5bc6864db710d65f550e9d5c9cd5303056c0342b094f348fb2847432da57d06",
+      "source_families": [
+        "progress-repair-v6/procurement/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-451a13869df698a61ea5",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-64d1360020a8433080ca",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-64d1360020a8433080ca.json",
+      "source_result_sha256": "95a7b29d5eca4a98c6b71765200257cd1f9976f2c7653d576723736224158e5f",
+      "source_families": [
+        "progress-repair-v6/research/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-96b747b0fd8e773094f5",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-64d1360020a8433080ca",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-64d1360020a8433080ca.json",
+      "source_result_sha256": "95a7b29d5eca4a98c6b71765200257cd1f9976f2c7653d576723736224158e5f",
+      "source_families": [
+        "progress-repair-v6/research/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-ec8bcff1b07d500e3f2a",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-99384ff9c4a8f3e902ca",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/pilot-v1/results/repair-v6-99384ff9c4a8f3e902ca.json",
+      "source_result_sha256": "e63b91be8ea5cae4d9f05260b0635f6db20df743819c30041011f0a3fd6f4f5c",
+      "source_families": [
+        "progress-repair-v6/software_ops/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-d62ff7b9e004c13f3ab7",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-99384ff9c4a8f3e902ca",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/pilot-v1/results/repair-v6-99384ff9c4a8f3e902ca.json",
+      "source_result_sha256": "e63b91be8ea5cae4d9f05260b0635f6db20df743819c30041011f0a3fd6f4f5c",
+      "source_families": [
+        "progress-repair-v6/software_ops/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-2d0d7eb0ced0893a3559",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-dca70138379d5e0e5102",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/pilot-v1/results/repair-v6-dca70138379d5e0e5102.json",
+      "source_result_sha256": "baa46afde90e283d69fd1e2125272fbe7298dbdc7be251d2eea40a86b9499027",
+      "source_families": [
+        "progress-repair-v6/software_ops/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-7fa6df654126264736cc",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-dca70138379d5e0e5102",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/pilot-v1/results/repair-v6-dca70138379d5e0e5102.json",
+      "source_result_sha256": "baa46afde90e283d69fd1e2125272fbe7298dbdc7be251d2eea40a86b9499027",
+      "source_families": [
+        "progress-repair-v6/software_ops/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-3d2e84e4b239d43e9a96",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-ebdc79ae9e245b402abe",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-ebdc79ae9e245b402abe.json",
+      "source_result_sha256": "89b0a7a4d7cd68ed7e8e4e318f79b960904923f32dff72b7903354f8a017ecad",
+      "source_families": [
+        "progress-repair-v6/sports/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-425abe422af5a6172e94",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-ebdc79ae9e245b402abe",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-ebdc79ae9e245b402abe.json",
+      "source_result_sha256": "89b0a7a4d7cd68ed7e8e4e318f79b960904923f32dff72b7903354f8a017ecad",
+      "source_families": [
+        "progress-repair-v6/sports/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-15892d6c88b1a58b0436",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-bb1ef169a7328fd3ef6b",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-bb1ef169a7328fd3ef6b.json",
+      "source_result_sha256": "7ccffa5a7f2b7e9ecb934bb435476e9d8fa48a481cb142b99597ab9bfc65363f",
+      "source_families": [
+        "progress-repair-v6/arts_media/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-462780f4a01de59be209",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-bb1ef169a7328fd3ef6b",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-bb1ef169a7328fd3ef6b.json",
+      "source_result_sha256": "7ccffa5a7f2b7e9ecb934bb435476e9d8fa48a481cb142b99597ab9bfc65363f",
+      "source_families": [
+        "progress-repair-v6/arts_media/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-2f1c275dbf6cac804f78",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-4cf5d49502a5ffa13955",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-4cf5d49502a5ffa13955.json",
+      "source_result_sha256": "d15a51822d7981e9ec9af7975080f8ee45436a13f80c1c30f91132e3eaca2ecc",
+      "source_families": [
+        "progress-repair-v6/education/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-059d3580306f8f209312",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-4cf5d49502a5ffa13955",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-4cf5d49502a5ffa13955.json",
+      "source_result_sha256": "d15a51822d7981e9ec9af7975080f8ee45436a13f80c1c30f91132e3eaca2ecc",
+      "source_families": [
+        "progress-repair-v6/education/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-28f218ae94cfd83d8d6e",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-72877d834f9a37a772ba",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-72877d834f9a37a772ba.json",
+      "source_result_sha256": "dea03a4b0a4a467852911e052abc4b9c249bcefeea51f94a8dfb6e892eadcdc7",
+      "source_families": [
+        "progress-repair-v6/arts_media/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-9dfeba024f549d63a31f",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-72877d834f9a37a772ba",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-72877d834f9a37a772ba.json",
+      "source_result_sha256": "dea03a4b0a4a467852911e052abc4b9c249bcefeea51f94a8dfb6e892eadcdc7",
+      "source_families": [
+        "progress-repair-v6/arts_media/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-0005d5c4adfc2fa658c0",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-70b5d576f443fc490f83",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-70b5d576f443fc490f83.json",
+      "source_result_sha256": "4bc10216f03d454dfb23222bfe7eac98479e2e89eeeeb95106faec2cc41f3ab4",
+      "source_families": [
+        "progress-repair-v6/sports/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-ca36b42a6c32548407d2",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-70b5d576f443fc490f83",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-70b5d576f443fc490f83.json",
+      "source_result_sha256": "4bc10216f03d454dfb23222bfe7eac98479e2e89eeeeb95106faec2cc41f3ab4",
+      "source_families": [
+        "progress-repair-v6/sports/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-e1f98837651b70b76779",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-afd1897df5b859d92d4e",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-afd1897df5b859d92d4e.json",
+      "source_result_sha256": "5c0e4d04338afa9345c6d2a95ea3c0455cc19e5a5b65f6345c9cda4bdfa692a7",
+      "source_families": [
+        "progress-repair-v6/manufacturing/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-576f888addd38a65b672",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-afd1897df5b859d92d4e",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-afd1897df5b859d92d4e.json",
+      "source_result_sha256": "5c0e4d04338afa9345c6d2a95ea3c0455cc19e5a5b65f6345c9cda4bdfa692a7",
+      "source_families": [
+        "progress-repair-v6/manufacturing/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-cc2f4690d9151130e58a",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-abcab44dd26149236d33",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-abcab44dd26149236d33.json",
+      "source_result_sha256": "22bff38acd7d1977481412a8f0e2eca75bd42d02724d0183582d7f6ffb934393",
+      "source_families": [
+        "progress-repair-v6/procurement/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-e9a17c6894ed0e5ef0a5",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-abcab44dd26149236d33",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-abcab44dd26149236d33.json",
+      "source_result_sha256": "22bff38acd7d1977481412a8f0e2eca75bd42d02724d0183582d7f6ffb934393",
+      "source_families": [
+        "progress-repair-v6/procurement/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-43c9bbd7bc2466149d2f",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-2f5570d7d99843e7dcdf",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-2f5570d7d99843e7dcdf.json",
+      "source_result_sha256": "7a04dad410adf910ac85b11c9469a105ccd4f186b53e8b3b864a0c841d6dab4b",
+      "source_families": [
+        "progress-repair-v6/environment/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-46c551014111cc51de0f",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-2f5570d7d99843e7dcdf",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-2f5570d7d99843e7dcdf.json",
+      "source_result_sha256": "7a04dad410adf910ac85b11c9469a105ccd4f186b53e8b3b864a0c841d6dab4b",
+      "source_families": [
+        "progress-repair-v6/environment/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-37a1dedeef25d40221b7",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-522d2696a6970b2bb783",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-522d2696a6970b2bb783.json",
+      "source_result_sha256": "565c948391608c93a21c8913240a4c7bb8d138d559be05d225be65081e2cf38d",
+      "source_families": [
+        "progress-repair-v6/public_admin/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-28a2e0e650f1b1612d3e",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-522d2696a6970b2bb783",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-522d2696a6970b2bb783.json",
+      "source_result_sha256": "565c948391608c93a21c8913240a4c7bb8d138d559be05d225be65081e2cf38d",
+      "source_families": [
+        "progress-repair-v6/public_admin/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-173a13d07abd59a1b7cb",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-07e1919f5339b063c646",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-07e1919f5339b063c646.json",
+      "source_result_sha256": "9ca4b1b719cc67e7cd0b2766162ca333bf24c063253b03f7e0a549aaad1447a5",
+      "source_families": [
+        "progress-repair-v6/procurement/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-6fd82433d8bb70fcf626",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-07e1919f5339b063c646",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-07e1919f5339b063c646.json",
+      "source_result_sha256": "9ca4b1b719cc67e7cd0b2766162ca333bf24c063253b03f7e0a549aaad1447a5",
+      "source_families": [
+        "progress-repair-v6/procurement/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-9491233f84d9a6db8fb7",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-908315e428bbc0c0fd65",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-908315e428bbc0c0fd65.json",
+      "source_result_sha256": "21fbd5fb10f3c0211987d2a3b47616cb0f7a86c12d16b14bdfe4f899e859301a",
+      "source_families": [
+        "progress-repair-v6/education/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-d6252a4c02f15e8fa4cb",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-908315e428bbc0c0fd65",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-908315e428bbc0c0fd65.json",
+      "source_result_sha256": "21fbd5fb10f3c0211987d2a3b47616cb0f7a86c12d16b14bdfe4f899e859301a",
+      "source_families": [
+        "progress-repair-v6/education/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-c308e052d4327f6ba5e8",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-103b86bf21d7bf62fffb",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-103b86bf21d7bf62fffb.json",
+      "source_result_sha256": "ea269cf04cfe81eb13fb2466f77d82aeb3a183c251243e89ecec9cba802fcad9",
+      "source_families": [
+        "progress-repair-v6/agriculture_food/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-4af298311d14b04d79a7",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-103b86bf21d7bf62fffb",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-103b86bf21d7bf62fffb.json",
+      "source_result_sha256": "ea269cf04cfe81eb13fb2466f77d82aeb3a183c251243e89ecec9cba802fcad9",
+      "source_families": [
+        "progress-repair-v6/agriculture_food/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-437c2312b0e73edd0ac6",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-f8927ded383e997598c4",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-f8927ded383e997598c4.json",
+      "source_result_sha256": "f5df5ef7220758c8881d3abbbe8e472b748b9023c3c2f85d989952093a316300",
+      "source_families": [
+        "progress-repair-v6/environment/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-e866df802cd5f9282488",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-f8927ded383e997598c4",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-f8927ded383e997598c4.json",
+      "source_result_sha256": "f5df5ef7220758c8881d3abbbe8e472b748b9023c3c2f85d989952093a316300",
+      "source_families": [
+        "progress-repair-v6/environment/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-6ac2c95844b98fbbbb4e",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-c8a27d79fd3a1b22e9bd",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-c8a27d79fd3a1b22e9bd.json",
+      "source_result_sha256": "e5538a53539e5aabb5529ea4f63cbd5b555fa8695c2d85e678b4ddbd3d94eb27",
+      "source_families": [
+        "progress-repair-v6/education/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-ed434cc62075cc276f58",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-c8a27d79fd3a1b22e9bd",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-c8a27d79fd3a1b22e9bd.json",
+      "source_result_sha256": "e5538a53539e5aabb5529ea4f63cbd5b555fa8695c2d85e678b4ddbd3d94eb27",
+      "source_families": [
+        "progress-repair-v6/education/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-a2e5d460cffe47323403",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-438161501da24b5ae360",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/pilot-v1/results/repair-v6-438161501da24b5ae360.json",
+      "source_result_sha256": "4ec74463a1d4cc1616095fbd79dd0d41e2774880a06318e22f76a3f515e070d6",
+      "source_families": [
+        "progress-repair-v6/software_ops/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-756b7ce11d569d9081a5",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-438161501da24b5ae360",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/pilot-v1/results/repair-v6-438161501da24b5ae360.json",
+      "source_result_sha256": "4ec74463a1d4cc1616095fbd79dd0d41e2774880a06318e22f76a3f515e070d6",
+      "source_families": [
+        "progress-repair-v6/software_ops/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-0e1948236fedfa30ec02",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-87223b0ea9b72c11c3e6",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-87223b0ea9b72c11c3e6.json",
+      "source_result_sha256": "f3e65ae371da73c311a41175c7e8e7be483d319daa3ece5918fbca4cff178997",
+      "source_families": [
+        "progress-repair-v6/education/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-e574f756d7799fa6de44",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-87223b0ea9b72c11c3e6",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-87223b0ea9b72c11c3e6.json",
+      "source_result_sha256": "f3e65ae371da73c311a41175c7e8e7be483d319daa3ece5918fbca4cff178997",
+      "source_families": [
+        "progress-repair-v6/education/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-4fa3f93a103e4dc9dd85",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-55a0d80a14c46a004a26",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-55a0d80a14c46a004a26.json",
+      "source_result_sha256": "2078bebf681438458218e81703b7f5c4494911603692fae2bc5288e439b6fbb3",
+      "source_families": [
+        "progress-repair-v6/sports/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-a91e068bb6b920afcff3",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-55a0d80a14c46a004a26",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-55a0d80a14c46a004a26.json",
+      "source_result_sha256": "2078bebf681438458218e81703b7f5c4494911603692fae2bc5288e439b6fbb3",
+      "source_families": [
+        "progress-repair-v6/sports/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-2c831906d9f04466832a",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-6a9acc964bc1dea3b8c1",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-6a9acc964bc1dea3b8c1.json",
+      "source_result_sha256": "aa09f02268e30f230e2c54797e70c70d5a6c051a578df2b77fd5dc29ce24e862",
+      "source_families": [
+        "progress-repair-v6/public_admin/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-f0d521271f166fff5cf5",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-6a9acc964bc1dea3b8c1",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-6a9acc964bc1dea3b8c1.json",
+      "source_result_sha256": "aa09f02268e30f230e2c54797e70c70d5a6c051a578df2b77fd5dc29ce24e862",
+      "source_families": [
+        "progress-repair-v6/public_admin/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-3d92d591f0c47a8513dd",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-075bfc922bb2cc3825f0",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-075bfc922bb2cc3825f0.json",
+      "source_result_sha256": "b14ef0f121a64b0b12b0b831473579e8f5a5b838838a412535ae46614ed4ee79",
+      "source_families": [
+        "progress-repair-v6/manufacturing/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-4f51c68625010c563ef0",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-075bfc922bb2cc3825f0",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-075bfc922bb2cc3825f0.json",
+      "source_result_sha256": "b14ef0f121a64b0b12b0b831473579e8f5a5b838838a412535ae46614ed4ee79",
+      "source_families": [
+        "progress-repair-v6/manufacturing/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-d2b1bf608ff3a571f6fe",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-ed1d1a1f43e651e64e67",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-ed1d1a1f43e651e64e67.json",
+      "source_result_sha256": "f2eb2ac0accd0f36c187286f63c66d6de1a38903b1fef252e18403ba0fed6b39",
+      "source_families": [
+        "progress-repair-v6/research/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-c0f86b199fb20f022c75",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-ed1d1a1f43e651e64e67",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-ed1d1a1f43e651e64e67.json",
+      "source_result_sha256": "f2eb2ac0accd0f36c187286f63c66d6de1a38903b1fef252e18403ba0fed6b39",
+      "source_families": [
+        "progress-repair-v6/research/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-041b249469936d99e610",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-5f159425067a1b53ef7e",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-5f159425067a1b53ef7e.json",
+      "source_result_sha256": "8f0bb2883f3451a775133ad854976b16338cf67ad4424bdf9f32137ad965ca4d",
+      "source_families": [
+        "progress-repair-v6/research/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-8ce2fc8b9126d23186e4",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-5f159425067a1b53ef7e",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-5f159425067a1b53ef7e.json",
+      "source_result_sha256": "8f0bb2883f3451a775133ad854976b16338cf67ad4424bdf9f32137ad965ca4d",
+      "source_families": [
+        "progress-repair-v6/research/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-5461701bf35141a0914f",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-fe8bb3afa68ba0f50bc7",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-fe8bb3afa68ba0f50bc7.json",
+      "source_result_sha256": "e9c065b490885565014f9a5f3ffd271f9f3c82574e0573273241ef188b98b758",
+      "source_families": [
+        "progress-repair-v6/arts_media/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-d104471c083330195bc2",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-fe8bb3afa68ba0f50bc7",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-fe8bb3afa68ba0f50bc7.json",
+      "source_result_sha256": "e9c065b490885565014f9a5f3ffd271f9f3c82574e0573273241ef188b98b758",
+      "source_families": [
+        "progress-repair-v6/arts_media/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-633ab4a36c432a4014fb",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-2ba66cf3cb4539122427",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-2ba66cf3cb4539122427.json",
+      "source_result_sha256": "0dba4e5ad3a2ecd5ffe17df689b6efae7f5cad8ddfa5acd0bf82caeceae4432f",
+      "source_families": [
+        "progress-repair-v6/emergency_ops/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-2dd5e84e34e2d3a363b9",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-2ba66cf3cb4539122427",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-2ba66cf3cb4539122427.json",
+      "source_result_sha256": "0dba4e5ad3a2ecd5ffe17df689b6efae7f5cad8ddfa5acd0bf82caeceae4432f",
+      "source_families": [
+        "progress-repair-v6/emergency_ops/04"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-1c0869093abea5b84081",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-0740b10620d27b970635",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-0740b10620d27b970635.json",
+      "source_result_sha256": "aaae06d13f4a2b696a42ea9b140c8ccf39552b389206cb16c2396a6b4a659e6c",
+      "source_families": [
+        "progress-repair-v6/arts_media/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-dbeb5d77dfa838525dc8",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-0740b10620d27b970635",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-0740b10620d27b970635.json",
+      "source_result_sha256": "aaae06d13f4a2b696a42ea9b140c8ccf39552b389206cb16c2396a6b4a659e6c",
+      "source_families": [
+        "progress-repair-v6/arts_media/05"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-c369063272b92e7e23c3",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-b09da5844e7f4b180ca2",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-b09da5844e7f4b180ca2.json",
+      "source_result_sha256": "5a6c639ccc3cc2897dba9a54010b4f07de50a81a6e907475371b4e9446f4648f",
+      "source_families": [
+        "progress-repair-v6/procurement/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-65c605b0c1f068ab292a",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-b09da5844e7f4b180ca2",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-b09da5844e7f4b180ca2.json",
+      "source_result_sha256": "5a6c639ccc3cc2897dba9a54010b4f07de50a81a6e907475371b4e9446f4648f",
+      "source_families": [
+        "progress-repair-v6/procurement/03"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-48783a14484ecbaaaa81",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-4e859b87551df2cf6b97",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-4e859b87551df2cf6b97.json",
+      "source_result_sha256": "49225ee61a398cabebaca82c4bc6d8ee0fdbca5d6a043d3d9f148bd850684a08",
+      "source_families": [
+        "progress-repair-v6/environment/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-16b92e53bf473170bb5a",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-4e859b87551df2cf6b97",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-4e859b87551df2cf6b97.json",
+      "source_result_sha256": "49225ee61a398cabebaca82c4bc6d8ee0fdbca5d6a043d3d9f148bd850684a08",
+      "source_families": [
+        "progress-repair-v6/environment/01"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-e15f186480ae6e893c47",
+      "mode": "comparison",
+      "source_job_id": "repair-v6-c0313b4e4392e4f7c759",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-c0313b4e4392e4f7c759.json",
+      "source_result_sha256": "3ec5cf558479130479bdc8576ed25a2daa713c25d5983c0789aa012cd664cdbf",
+      "source_families": [
+        "progress-repair-v6/environment/02"
+      ]
+    },
+    {
+      "job_id": "relabel-v7-bca7c9117e37d6042932",
+      "mode": "lifecycle",
+      "source_job_id": "repair-v6-c0313b4e4392e4f7c759",
+      "source_result_path": "data/statetune/progression-repair-v6-20260922/bulk-v1/results/repair-v6-c0313b4e4392e4f7c759.json",
+      "source_result_sha256": "3ec5cf558479130479bdc8576ed25a2daa713c25d5983c0789aa012cd664cdbf",
+      "source_families": [
+        "progress-repair-v6/environment/02"
+      ]
+    }
+  ]
+}
