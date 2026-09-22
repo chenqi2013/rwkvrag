@@ -1,0 +1,392 @@
+{
+  "questions": 36,
+  "model_calls": 2391,
+  "purpose_counts": {
+    "funnel_task_overview": 36,
+    "funnel_field_type": 110,
+    "funnel_requirement_quotes": 36,
+    "funnel_requirement": 42,
+    "funnel_source_objects": 132,
+    "funnel_fact": 1072,
+    "funnel_fact_verify": 392,
+    "funnel_cell": 384,
+    "funnel_relation": 110,
+    "writer": 36,
+    "fact_quantity_binding": 41
+  },
+  "failure_records": 731,
+  "failure_records_with_trace": 726,
+  "unique_failed_call_ids": 726,
+  "errors": {
+    "": {
+      "occurrences": 5,
+      "affected_questions": [
+        0,
+        2,
+        4,
+        6,
+        7
+      ],
+      "distinct_prompts": 0,
+      "distinct_exact_material_bundles": 5
+    },
+    "Unterminated string starting at: line 3 column 18 (char 44)": {
+      "occurrences": 4,
+      "affected_questions": [
+        4,
+        6,
+        7
+      ],
+      "distinct_prompts": 4,
+      "distinct_exact_material_bundles": 4
+    },
+    "Unterminated string starting at: line 3 column 18 (char 45)": {
+      "occurrences": 7,
+      "affected_questions": [
+        7
+      ],
+      "distinct_prompts": 7,
+      "distinct_exact_material_bundles": 7
+    },
+    "Unterminated string starting at: line 5 column 19 (char 356)": {
+      "occurrences": 4,
+      "affected_questions": [
+        6
+      ],
+      "distinct_prompts": 4,
+      "distinct_exact_material_bundles": 1
+    },
+    "ambiguous quote occurrence": {
+      "occurrences": 2,
+      "affected_questions": [
+        33,
+        34
+      ],
+      "distinct_prompts": 1,
+      "distinct_exact_material_bundles": 1
+    },
+    "conflict requires multiple observations": {
+      "occurrences": 27,
+      "affected_questions": [
+        7
+      ],
+      "distinct_prompts": 27,
+      "distinct_exact_material_bundles": 27
+    },
+    "duplicate or foreign dependency": {
+      "occurrences": 4,
+      "affected_questions": [
+        0,
+        2,
+        3,
+        6
+      ],
+      "distinct_prompts": 3,
+      "distinct_exact_material_bundles": 3
+    },
+    "invalid decimal scalar representation": {
+      "occurrences": 34,
+      "affected_questions": [
+        2,
+        3,
+        4,
+        16,
+        32,
+        33,
+        34
+      ],
+      "distinct_prompts": 31,
+      "distinct_exact_material_bundles": 10
+    },
+    "model stage did not complete: length": {
+      "occurrences": 5,
+      "affected_questions": [
+        0,
+        7
+      ],
+      "distinct_prompts": 5,
+      "distinct_exact_material_bundles": 5
+    },
+    "quantity must preserve its source spelling": {
+      "occurrences": 16,
+      "affected_questions": [
+        3,
+        4,
+        12,
+        16,
+        21
+      ],
+      "distinct_prompts": 16,
+      "distinct_exact_material_bundles": 9
+    },
+    "quote not verbatim in supplied source": {
+      "occurrences": 397,
+      "affected_questions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        22
+      ],
+      "distinct_prompts": 397,
+      "distinct_exact_material_bundles": 22
+    },
+    "scope not verbatim in supplied source": {
+      "occurrences": 226,
+      "affected_questions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        20,
+        21,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "distinct_prompts": 214,
+      "distinct_exact_material_bundles": 24
+    }
+  },
+  "scope_literal_observations": {
+    "quote_is_literal": 226,
+    "value_is_literal_in_quote": 129,
+    "scope_equals_title": 101,
+    "scope_equals_object": 11
+  },
+  "cases": [
+    {
+      "ordinal": 0,
+      "model_calls": 280,
+      "final_source_count": 2,
+      "writer_status": "length"
+    },
+    {
+      "ordinal": 1,
+      "model_calls": 166,
+      "final_source_count": 2,
+      "writer_status": "length"
+    },
+    {
+      "ordinal": 2,
+      "model_calls": 229,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 3,
+      "model_calls": 261,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 4,
+      "model_calls": 255,
+      "final_source_count": 2,
+      "writer_status": "length"
+    },
+    {
+      "ordinal": 5,
+      "model_calls": 60,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 6,
+      "model_calls": 259,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 7,
+      "model_calls": 273,
+      "final_source_count": 1,
+      "writer_status": "length"
+    },
+    {
+      "ordinal": 8,
+      "model_calls": 29,
+      "final_source_count": 2,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 9,
+      "model_calls": 24,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 10,
+      "model_calls": 24,
+      "final_source_count": 2,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 11,
+      "model_calls": 19,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 12,
+      "model_calls": 73,
+      "final_source_count": 1,
+      "writer_status": "length"
+    },
+    {
+      "ordinal": 13,
+      "model_calls": 22,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 14,
+      "model_calls": 20,
+      "final_source_count": 3,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 15,
+      "model_calls": 12,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 16,
+      "model_calls": 63,
+      "final_source_count": 4,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 17,
+      "model_calls": 51,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 18,
+      "model_calls": 7,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 19,
+      "model_calls": 23,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 20,
+      "model_calls": 13,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 21,
+      "model_calls": 31,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 22,
+      "model_calls": 21,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 23,
+      "model_calls": 17,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 24,
+      "model_calls": 9,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 25,
+      "model_calls": 11,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 26,
+      "model_calls": 11,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 27,
+      "model_calls": 11,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 28,
+      "model_calls": 17,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 29,
+      "model_calls": 22,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 30,
+      "model_calls": 17,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 31,
+      "model_calls": 8,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 32,
+      "model_calls": 11,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 33,
+      "model_calls": 11,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 34,
+      "model_calls": 11,
+      "final_source_count": 0,
+      "writer_status": "completed"
+    },
+    {
+      "ordinal": 35,
+      "model_calls": 20,
+      "final_source_count": 1,
+      "writer_status": "completed"
+    }
+  ],
+  "semantic_error_rate": null,
+  "limits": [
+    "First validation failure can mask other errors; these are not exclusive semantic causes.",
+    "Exact material bundles are not independent documents or template families.",
+    "Historical regression inputs are diagnostic-only, never unseen evaluation data.",
+    "No failed model output is a gold target; all generation jobs require annotation."
+  ],
+  "annotation_jobs": 113
+}

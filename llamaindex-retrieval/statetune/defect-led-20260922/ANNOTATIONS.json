@@ -1,0 +1,55 @@
+[
+  {
+    "case": 0,
+    "call_id": "c77c6e1b-55af-4924-96e3-a8dbd6948067",
+    "defect": "evidence_binding",
+    "target": {"evidence_ids": ["E1"], "quote": "RAGFlow 对专业领域文档和大规模数据场景支持较好，能提供高保真、有依据的回答。", "value": "专业领域文档和大规模数据场景", "source_scope": null},
+    "rationale": "只依据这次提供的材料作答，不认证产品现实能力。适用场景有逐字依据，E1支持；原文没有限定版本、日期或模式，不能编成RAGFlow官方文档。"
+  },
+  {
+    "case": 0,
+    "call_id": "8999c38f-f996-45d0-8aaf-1a1d13089e9a",
+    "defect": "evidence_binding",
+    "target": {"evidence_ids": [], "quote": null, "value": null, "source_scope": null},
+    "rationale": "问题是AnythingLLM的社区活跃度；原文讲一般RAG集成耗时。引文与value虽然逐字存在，却既不支持指定字段，也不专指该对象。不能只把scope改成null然后保留错误事实。"
+  },
+  {
+    "case": 0,
+    "call_id": "5fa10f7e-b2bd-468d-aa70-6a806c7f939b",
+    "defect": "evidence_binding",
+    "target": {"evidence_ids": [], "quote": null, "value": null, "source_scope": null},
+    "rationale": "输入要求Dify的适用场景，证据这部分描述AnythingLLM及DocsGPT；不能把AnythingLLM的customizable当成Dify的适用场景。"
+  },
+  {
+    "case": 20,
+    "call_id": "652fc677-3122-4450-9524-2cddd292197a",
+    "defect": "evidence_binding",
+    "target": {"evidence_ids": ["E1"], "quote": "版本号同为 3.0 的甲记录写道：柏津 S4 的储水容量是 9 L。", "value": "9 L", "source_scope": "版本号同为 3.0"},
+    "rationale": "这是单来源节点，保留甲记录9L与逐字版本范围，不在此处消解另一来源的12L冲突。对象名不能代替范围。"
+  },
+  {
+    "case": 24,
+    "call_id": "08682b79-db8a-4631-a56d-4e14738be20e",
+    "defect": "evidence_binding",
+    "target": {"evidence_ids": ["E1"], "quote": "青岭 R6 的标准模式额定功率为 18 W。", "value": "18 W", "source_scope": "标准模式"},
+    "rationale": "范围直接摘录标准模式，不删去原文的“的”后拼接对象名；18W和单位有直接依据。"
+  },
+  {
+    "writer_record": "006-candidate-r1.json",
+    "defect": "processing_state",
+    "target": "本次已有13份材料进入处理，但105个处理节点失败，另有272项任务尚未检查，最终没有形成可引用证据。因此暂时无法可靠比较这些项目是否满足你的条件，需要先恢复失败处理并核对剩余材料。这不表示原文没有相关信息，也不能据此判断产品不支持这些能力。",
+    "rationale": "精确读取input_source_count=13、failed_node_count=105、unexamined_job_count=272、writer_source_count=0；failed_cell_count=0不能替代未检查任务数。没有产品能力或来源编号可补写。"
+  },
+  {
+    "writer_record": "024-candidate-r1.json",
+    "defect": "processing_state",
+    "target": "已有材料进入处理，但一个处理节点失败，最终没有形成可引用证据，所以本次还不能可靠回答额定功率。需要先恢复失败节点并核对原文；未检查任务计数为0并不代表原文没有答案，也不能据此编出功率或引用编号。",
+    "rationale": "区分失败节点1、未检查任务0和最终证据0；不能说仍有未检查工作，也不能断言原文无功率。"
+  },
+  {
+    "writer_record": "010-baseline-r2.json",
+    "defect": "termination",
+    "target": "- 故障次数：甲站0次[资料 1]，乙站2次[资料 2]，甲站更少。\n- 停机时长：甲站0小时[资料 1]；乙站未记载，无法比较两站的停机时长[资料 2]。",
+    "rationale": "覆盖两对象两字段及缺失项后结束，不重复列举同一事实。这个目标用于训练收束，不宣称能够修复同输入的底层数值漂移。"
+  }
+]
