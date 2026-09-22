@@ -10,6 +10,8 @@
 
 [关联数据方案](../llamaindex-retrieval/statetune/progression-v2-20260922/PLAN.md)和[原子补充方案](../llamaindex-retrieval/statetune/progression-atomic-v3-20260922/PLAN.md)按来源族预先分集；同模型教师生成与复核都不算独立验收。历史失败只用于统计主要缺陷：事实与来源绑定、处理状态读解、回答收束；原始错误输出不改写成训练答案。详细生成/审读结果随新版本归档，旧运行保持不可变。
 
+已冻结[24道新GitHub README固定证据题](../llamaindex-retrieval/eval/state-fresh-github-20260922-v1/README.md)，12道普通、12道多项目比较，使用与工程训练来源不同的12个仓库；没有教师答案标签。另已采集24个工程仓库官方README并冻结[比较训练材料协议](../llamaindex-retrieval/statetune/progression-engineering-v4-20260922/PLAN.md)，候选生成和审读进行中，不能把候选数量当训练量。新题仅检验固定证据回答，完整检索仍需单独验收。
+
 ## 最近完成：Writer接收处理状态的双轮模型验证
 
 本次数据准备的详细记录见[2026-09-22缺陷盘点报告](archive/2026-09/statetune-defect-audit-20260922.md)。以下为此前模型验证结果。
