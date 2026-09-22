@@ -1,0 +1,24 @@
+{
+  "evaluation_cases": 718,
+  "evaluation_case_pins": {
+    "/home/chase/GitHub/rwkvrag/data/statetune/progression-evaluation-20260922/historical-v1/cases.jsonl": "3284fb1567d9cf2126c6d89baeab5567d4fe9939143d90bb67afb38bafa23386",
+    "llamaindex-retrieval/eval/state-fresh-github-20260922-v1/CASES.jsonl": "e35aa627eb6234fc44e66c2113add957d524b0e81b2bfa283cfc7c55380dedae"
+  },
+  "historic_questions": 706,
+  "historic_evidence_records": 2835,
+  "input_roots": [
+    "data/statetune/progression-v2-20260922",
+    "data/statetune/progression-atomic-v3-20260922",
+    "data/statetune/progression-engineering-v4-20260922",
+    "data/statetune/progression-remainder-v5-20260922"
+  ],
+  "scanned": {
+    "jobs_with_candidates": 862,
+    "candidate_items": 8559,
+    "jobs_without_candidates": 59
+  },
+  "quarantined_jobs": 21,
+  "quarantined_items": 198,
+  "screen": "normalized title; sampled informative 48-character literal evidence spans; exact or >=0.86 question similarity",
+  "limits": "This screen cannot prove semantic independence; all historic cases remain seen regression only."
+}
