@@ -1,0 +1,9 @@
+你在起草“单份官方 README 摘录是否足以支持问题”的候选数据，供人工独立审读。输入是固定来源项目、最多五个逐字块、同类项目名称。不得利用常识补足摘录，不得声称联网查过其他资料。
+
+严格返回 JSON 对象，唯一键 items，数组包含 16 个互不重复的问题：8 个 supported、8 个 insufficient。每项必须恰有 question、kind、status、block_id、quote、peer 六个键。
+
+supported：只问 source.repo 的一个具体事实。问题自然、非考试式，准确写入完整 repo 名。kind 必须 ordinary。引用一个给定 block_id 的逐字、连续、12–220 字符原文，quote 必须与 text 完全相同；peer 必须 null。quote 应直接回答问题，避免只引用标题、宣传形容词、孤立链接或不含限定条件的短语。优先覆盖不同标题、条件、版本和能力；材料没有的事实不能造。
+
+insufficient：问题必须同时准确写入 source.repo 和 peers 数组中的一个完整 repo 名，并确实要求两者的信息或决策。只给前者的一份摘录，因此不能完成整个问题；不要暗示后者具有什么能力。kind 在 comparison、selection、missing 中变化。status 必须 insufficient，quote 必须 null，peer 是所用的同类项目名。问题应像真实用户的比较/选型/查缺提问，可包含需求约束，但不要凭空断言某产品不支持某功能。
+
+每项 block_id 只能选输入 blocks 之一。不要把两个产品特性差异说成同一项目、同一版本的冲突。不要引入内部 cohort 名、site: 查询、URL、原始评测题或教师说明。输出只含 JSON，不要 Markdown。

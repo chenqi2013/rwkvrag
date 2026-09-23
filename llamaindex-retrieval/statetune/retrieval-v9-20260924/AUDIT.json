@@ -1,0 +1,48 @@
+{
+  "schema": "retrieval_review_audit_v9",
+  "candidate_sha256": "03ca94918d66b3d8d35a9909c9956cc31dbce76c7d39199f0cfebfec215d4169",
+  "selection_sha256": "eb7d8a67e7772f1d48a2f1dec10dde86df951f790076d1b6620fbffa6a919f24",
+  "rows": 5462,
+  "roles": {
+    "plan": 2400,
+    "evidence": 2034,
+    "followup": 1028
+  },
+  "kind_counts": {
+    "ordinary": 2284,
+    "comparison": 1122,
+    "selection": 825,
+    "history": 577,
+    "missing": 500,
+    "conflict": 154
+  },
+  "train_families": 152,
+  "largest_family_fraction": 0.019956060051263273,
+  "unique_question_fraction": 0.943061149761992,
+  "max_tokens": 1130,
+  "min_tokens": 147,
+  "over_8192": 0,
+  "mask_eos_checked": 5462,
+  "audit_admitted": false,
+  "issue_counts": {
+    "independent semantic review missing": 5462,
+    "conflict rows 154 below minimum 300": 1
+  },
+  "issue_examples": [
+    "train-v4-ocr_tools-003:5: independent review not recorded",
+    "train-log_collectors-006:6: independent review not recorded",
+    "train-build_systems-012:0: independent review not recorded",
+    "train-v4-package_managers-000:1: independent review not recorded",
+    "train-backup_tools-000:4: independent review not recorded",
+    "train-backup_tools-006:2: independent review not recorded",
+    "train-v4-database_clients-010:7: independent review not recorded",
+    "train-v4-code_editors-000:1: independent review not recorded",
+    "train-reverse_proxies-000:2: independent review not recorded",
+    "train-v4-serverless_platforms-003:3: independent review not recorded",
+    "train-v4-game_engines-007:6: independent review not recorded",
+    "train-v4-task_queues-010:7: independent review not recorded"
+  ],
+  "independent_review": false,
+  "admitted_training_rows": 0,
+  "training_started": false
+}

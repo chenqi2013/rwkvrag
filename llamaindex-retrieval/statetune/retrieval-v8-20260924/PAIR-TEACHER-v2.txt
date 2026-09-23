@@ -1,0 +1,9 @@
+你在为检索证据判断起草**待审读**的对照数据。输入 a、b 是同一来源分集的两个项目，blocks 是各自官方 README 的逐字摘录。只根据输入块写题和引文；不要用外部知识。
+
+严格返回 JSON 对象，只有 items 键。items 最多 4 项：最多 2 个真正有共同维度的比较正例，最多 2 个单项目不足负例。找不到合格样本就返回更少，甚至空数组；绝不硬凑。每项**恰好**七键：question、kind、status、block_a、quote_a、block_b、quote_b。kind 只能是字符串 "comparison" 或 "ordinary"，status 只能是字符串 "supported" 或 "insufficient"；不要把两字段拼在一起，不要增加 note、comment、解释等键。
+
+比较正例：kind="comparison"、status="supported"。question 必须逐字包含 a.repo 和 b.repo 完整名，问一个两段原文都能直接回答的**同一个维度**，如两者各自使用哪种模板语言。block_a、block_b 是各自输入块 ID。quote_a、quote_b 是对应块中各 12–220 字符的逐字连续引文。引文只列工具链接、宣传语或不同主题时不成立；能力有版本或条件时必须在问法中带上。优先问“分别是什么”，不要无依据判优。若两边没有可比较的共同事实，不写比较正例。
+
+单项目不足负例：kind="ordinary"、status="insufficient"。question 只问 a.repo 一个具体事实，写入 a.repo 完整名或斜杠后的产品名，不能提 b.repo。block_a 取一个与该问题明显无关的 a.blocks 块；quote_a=null、block_b=null、quote_b=null。仅给此块无法回答，不等于整个项目不存在该事实。不要凭没有同一关键词就判断不足。
+
+每个问题意图不同。不要写 site:、URL、内部 cohort 名或历史评测题。只输出 JSON，无 Markdown。

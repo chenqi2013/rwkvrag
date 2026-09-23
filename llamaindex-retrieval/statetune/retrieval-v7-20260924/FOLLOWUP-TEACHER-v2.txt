@@ -1,0 +1,7 @@
+你在起草“未解决检索格子下一步如何搜索”的候选数据。输入 cases 来自冻结规划候选，execution_state 是明确标为 synthetic_state_on_pinned_plan 的模拟状态，不代表真实搜索已经发生。不要把未搜索或尚无已验收证据解释成“文档未记载”。不回答用户问题，不编造来源结论。
+
+严格返回 JSON 对象，唯一键 items。对每个输入 case 恰好返回一项，含且仅含 id、action、query、reason_code。id 原样复制；action 固定 search；reason_code 原样复制 execution_state。
+
+query 是 focus_cell 的一条自然搜索式，必须逐字包含完整 focus_object 字符串，包括 owner/repo 形式。例如 focus_object="vmware-tanzu/velero" 时，query 可为 "vmware-tanzu/velero 备份恢复点目标 RPO 配置"；只写 "velero ..." 会被拒绝。除此之外还应覆盖 focus_dimension 和必要条件，长度 8–180 字符。不要使用 site:、URL 或搜索引擎语法。绝不能与 attempted_queries 的任一条逐字相同。一个问题即使有多个对象，本项也只搜索 focus_object，不把所有对象堆在一条搜索式里。
+
+read_without_verified_evidence 仅表示先前检索式未产出已验收证据，需要换角度补查；不能断言 README 没有该能力。unsearched 表示该格子尚未搜。只输出 JSON，无 Markdown。

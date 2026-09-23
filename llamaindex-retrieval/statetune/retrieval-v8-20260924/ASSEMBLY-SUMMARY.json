@@ -1,0 +1,177 @@
+{
+  "schema": "retrieval_review_queue_v8",
+  "candidate_rows": 8943,
+  "review_queue_rows": 5421,
+  "all_splits": {
+    "train": 8049,
+    "dev": 361,
+    "heldout": 533
+  },
+  "all_role_status": {
+    "plan:": 3270,
+    "evidence:supported": 1591,
+    "evidence:insufficient": 3054,
+    "followup:unsearched": 528,
+    "followup:read_without_verified_evidence": 350,
+    "followup:no_unresolved_cells": 150
+  },
+  "review_roles": {
+    "plan": 2400,
+    "evidence": 1993,
+    "followup": 1028
+  },
+  "review_kinds": {
+    "ordinary": 2284,
+    "comparison": 1122,
+    "selection": 825,
+    "history": 577,
+    "missing": 459,
+    "conflict": 154
+  },
+  "review_evidence_kind_status": {
+    "ordinary:supported": 700,
+    "ordinary:insufficient": 654,
+    "comparison:insufficient": 224,
+    "selection:insufficient": 121,
+    "missing:insufficient": 55,
+    "comparison:supported": 239
+  },
+  "unique_normalized_questions": 5110,
+  "audit": {
+    "admitted": false,
+    "rows": 5421,
+    "train_rows": 5421,
+    "train_roles": {
+      "plan": 2400,
+      "evidence": 1993,
+      "followup": 1028
+    },
+    "train_kinds": {
+      "ordinary": 2284,
+      "comparison": 1122,
+      "selection": 825,
+      "history": 577,
+      "missing": 459,
+      "conflict": 154
+    },
+    "train_families": 152,
+    "largest_train_family_fraction": 0.020106991330012914,
+    "unique_question_fraction": 0.9426305109758347,
+    "limits": "Integrity and isolation checks only; semantic labels and runtime prompt alignment need separate review."
+  },
+  "audit_issue_counts": {
+    "independent review missing": 5421,
+    "missing rows 459 below minimum 500": 1,
+    "conflict rows 154 below minimum 300": 1,
+    "largest source family exceeds train share limit": 1
+  },
+  "audit_examples": [
+    "train-v4-ocr_tools-003:5: independent review not recorded",
+    "train-log_collectors-006:6: independent review not recorded",
+    "train-build_systems-012:0: independent review not recorded",
+    "train-v4-package_managers-000:1: independent review not recorded",
+    "train-backup_tools-000:4: independent review not recorded",
+    "train-backup_tools-006:2: independent review not recorded",
+    "train-v4-database_clients-010:7: independent review not recorded",
+    "train-v4-code_editors-000:1: independent review not recorded",
+    "train-reverse_proxies-000:2: independent review not recorded",
+    "train-v4-serverless_platforms-003:3: independent review not recorded",
+    "train-v4-game_engines-007:6: independent review not recorded",
+    "train-v4-task_queues-010:7: independent review not recorded",
+    "train-database_clients-000:7: independent review not recorded",
+    "train-search_cli-000:3: independent review not recorded",
+    "train-v4-code_editors-003:5: independent review not recorded",
+    "train-reverse_proxies-006:0: independent review not recorded",
+    "train-v4-static_site_generators-000:4: independent review not recorded",
+    "train-code_editors-006:4: independent review not recorded",
+    "train-game_engines-006:2: independent review not recorded",
+    "train-v4-javascript_testing-003:0: independent review not recorded"
+  ],
+  "candidate_sha256": "03ca94918d66b3d8d35a9909c9956cc31dbce76c7d39199f0cfebfec215d4169",
+  "review_queue_sha256": "7bf3a3ae1fd2949025467c95fcc3cdcbbaebd3df8e2832a7aeaa74c25d95405b",
+  "input_hashes": {
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/statetune/retrieval-v4-20260924/SOURCES-CURATED.json": "e3c88a03e0694455770f2ca0878914d9bf5da39c29d5a7c909fcdd4e5b4e6afa",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/statetune/retrieval-v3-20260924/PLAN-CANDIDATES.jsonl": "3d75b8cd78a1629586d165082e7580727dd8b2ebfbd0e5b8612fdd034eba7eb0",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/statetune/retrieval-v4-20260924/PLAN-CANDIDATES-ADDED.jsonl": "2924ae5b1dae5ead59a2908d5142adefedac5b679acb0dddea7bf41f045a2ab6",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/statetune/retrieval-v7-20260924/EVIDENCE-JOBS.jsonl": "ec91b631c7a75ac696246dbac2ff5fca3fb5f4e4e8dedc91c652aecb0f3bb3ed",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/statetune/retrieval-v7-20260924/FOLLOWUP-JOBS.jsonl": "e914f24fd34e535097dc63ba6e4573069195afadd31e2d8a599452ee92eca3c8",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/statetune/retrieval-v8-20260924/PAIR-JOBS.jsonl": "880ac60c8f033607bfc588140f63a723965e47388c8ce58ef8a51b24460a67f9"
+  },
+  "run_receipts": [
+    {
+      "path": "data/quality-runs/retrieval-state-v7-20260924/evidence-v2-000-003",
+      "run_sha256": "f6ea2c96ae05d1a2094791be2c7724464c087cb9e7d22883246dbba72f3e8f53",
+      "summary_sha256": "d7379713f86bd9089b2065706d9f35d231ef5d29b4dd91c8b1a459d6023d5a7c",
+      "rows": 46,
+      "failures": 2,
+      "cost_upper_usd": 0.0342375
+    },
+    {
+      "path": "data/quality-runs/retrieval-state-v7-20260924/evidence-pilot-002",
+      "run_sha256": "92117a3618525054c02177303a39a139ceac9b9ab75490f276cade1af5d9f3ff",
+      "summary_sha256": "f52d2eac1e6dd9ff1541428874286bad486b00733fee26d1fcf31941232a571b",
+      "rows": 77,
+      "failures": 3,
+      "cost_upper_usd": 0.02229
+    },
+    {
+      "path": "data/quality-runs/retrieval-state-v7-20260924/evidence-v2-008-191",
+      "run_sha256": "01ae19967b5531d8033e1dcd0a28748141575b6d9544c2d415fa64622783bdf1",
+      "summary_sha256": "a5967f6430fa34c38dd2c2906fbd496b1732f7e3c40eb3949834c24eb22b67a3",
+      "rows": 2708,
+      "failures": 230,
+      "cost_upper_usd": 0.4309323000000001
+    },
+    {
+      "path": "data/quality-runs/retrieval-state-v7-20260924/followup-v2-000-024",
+      "run_sha256": "3567a36b65d17c14f7efbb6681a6dd7d6ffee1de3a3ce9f5beceea20bfa03f2c",
+      "summary_sha256": "c1be3517d4c9f165b2ce982620d66bd463d5306730f5a1c24b374bc625ec4a70",
+      "rows": 24,
+      "failures": 0,
+      "cost_upper_usd": 0.4367874000000002
+    },
+    {
+      "path": "data/quality-runs/retrieval-state-v7-20260924/followup-pilot-002",
+      "run_sha256": "e0f18a4f63e58ba89bcf365560d72ae1073fe080a36d3b03eb1426ca1aeaf641",
+      "summary_sha256": "c8b6d6225aedcf808dff1fe3ddaee6156f6b99891000ca80861291cd02e8b81b",
+      "rows": 23,
+      "failures": 2,
+      "cost_upper_usd": 0.027886499999999998
+    },
+    {
+      "path": "data/quality-runs/retrieval-state-v7-20260924/followup-v2-048-900",
+      "run_sha256": "de493dbc447d31ab9a1a45dc0f637190556dabf9d22c102d2fb7e1ced880cf1a",
+      "summary_sha256": "0bc27b1fe8eead5b6595a3d4edc5b5cab6f16c26900d148bd90ae664707e81cf",
+      "rows": 831,
+      "failures": 42,
+      "cost_upper_usd": 0.6247064999999999
+    },
+    {
+      "path": "data/quality-runs/retrieval-state-v8-20260924/pair-v2-000-006",
+      "run_sha256": "c56c3667d1f6c2e14fd7d855a8dbd6793aed6434cd235538f174f070496b982a",
+      "summary_sha256": "faac49ad4beeef659902ca90a966e966689332c86b5e0117a5e7b88e1a660ae0",
+      "rows": 9,
+      "failures": 3,
+      "cost_upper_usd": 0.019098
+    },
+    {
+      "path": "data/quality-runs/retrieval-state-v8-20260924/pair-pilot-002",
+      "run_sha256": "7c8a32721f95c154575fdc32c1247a2af6a7c4c91738037eebde525c917be83f",
+      "summary_sha256": "784c4bc81bd4add4d288934e8a22137c05a24022b6b3fc850b8e3491909d5b89",
+      "rows": 10,
+      "failures": 2,
+      "cost_upper_usd": 0.013436100000000001
+    },
+    {
+      "path": "data/quality-runs/retrieval-state-v8-20260924/pair-v2-014-438",
+      "run_sha256": "145d9b651d4244cbeb6e894d88fb45ed4869c559e95996c38cd14a0da341ea95",
+      "summary_sha256": "b0ab47b237b84198fae0937e9e2a7843a7278c9c411d1b54aa117be23c6d6aa5",
+      "rows": 490,
+      "failures": 261,
+      "cost_upper_usd": 0.43408950000000035
+    }
+  ],
+  "independent_review": false,
+  "admitted_training_rows": 0,
+  "training_started": false
+}

@@ -1,6 +1,6 @@
 # 当前状态
 
-更新：2026-09-24（Asia/Shanghai）。**本轮只准备检索 StateTune 数据，不训练、不切换正式模型。** 新来源共训练152、开发15、盲留出24个仓库族；规划候选3,270条，但独立语义复核和证据/补查标签仍缺，准入训练数为0。旧 StateTune 发布集V1的7.2B双角色训练已完成；6840/6840份冻结原始回归输出已齐，旧题仅完成机械汇总，新24题成对语义验收未通过，多项目比较没有提升。[本轮数据报告](archive/2026-09/retrieval-statetune-data-curation-20260924.md)、[旧训练完成](archive/2026-09/state-progression-training-completion-20260923.md)、[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)、[旧题机械汇总](archive/2026-09/state-regression-mechanical-20260923.md)。
+更新：2026-09-24（Asia/Shanghai）。**本轮只生成检索 StateTune 数据，不训练、不切换正式模型。** V8 完整池 8,943 条结构候选；V9 选出 5,462 条待审读样本（规划2,400、证据2,034、补查/停止1,028），跨152个训练仓库族，来源字节、旧题禁入、token/mask/EOS 等机械检查通过，最长1,130 token。独立语义复核仍缺，**准入训练数为0**；同范围冲突仅154/300，作者固定抽样的24条双来源比较正例中15条引文错位、1条不完整，不能直接训练。旧 StateTune 发布集V1的7.2B双角色训练已完成；6840/6840份冻结原始回归输出已齐，旧题仅完成机械汇总，新24题成对语义验收未通过，多项目比较没有提升。[新数据报告](archive/2026-09/retrieval-dataset-v9-20260924.md)、[前批数据报告](archive/2026-09/retrieval-statetune-data-curation-20260924.md)、[旧训练完成](archive/2026-09/state-progression-training-completion-20260923.md)、[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)、[旧题机械汇总](archive/2026-09/state-regression-mechanical-20260923.md)。
 
 ## 当前主线：数据隔离、审读与StateTune训练
 

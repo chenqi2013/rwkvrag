@@ -1,0 +1,11 @@
+{
+  "jobs": 438,
+  "splits": {
+    "train": 373,
+    "dev": 29,
+    "heldout": 36
+  },
+  "v7_evidence_jobs_sha256": "ec91b631c7a75ac696246dbac2ff5fca3fb5f4e4e8dedc91c652aecb0f3bb3ed",
+  "source_manifest_sha256": "e3c88a03e0694455770f2ca0878914d9bf5da39c29d5a7c909fcdd4e5b4e6afa",
+  "training_started": false
+}

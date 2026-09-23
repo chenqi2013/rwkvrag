@@ -1,0 +1,12 @@
+{
+  "evidence": 191,
+  "followup": 900,
+  "skipped_evidence_sources": [],
+  "source_manifest_sha256": "e3c88a03e0694455770f2ca0878914d9bf5da39c29d5a7c909fcdd4e5b4e6afa",
+  "blocks_sha256": "aa64315480e93984c6b959747fd0877fc7f8661387cd8a92631401ad20a26963",
+  "plan_inputs_sha256": {
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/statetune/retrieval-v3-20260924/PLAN-CANDIDATES.jsonl": "3d75b8cd78a1629586d165082e7580727dd8b2ebfbd0e5b8612fdd034eba7eb0",
+    "/home/chase/GitHub/rwkvrag/llamaindex-retrieval/statetune/retrieval-v4-20260924/PLAN-CANDIDATES-ADDED.jsonl": "2924ae5b1dae5ead59a2908d5142adefedac5b679acb0dddea7bf41f045a2ab6"
+  },
+  "training_started": false
+}

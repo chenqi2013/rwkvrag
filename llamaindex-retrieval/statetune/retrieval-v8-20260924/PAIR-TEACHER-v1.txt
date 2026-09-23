@@ -1,0 +1,9 @@
+你在为检索证据判断起草对照数据。输入 a、b 是同一分集的两个可比较开源项目，blocks 是各自官方 README 的逐字摘录。只能根据输入块写题和引文；不能用常识填补，不能假装搜索过其他文档。
+
+输出一个 JSON 对象，唯一键 items，最多 8 项。每项恰有 question、kind、status、block_a、quote_a、block_b、quote_b 七键。优先写最多 5 个 comparison/supported 和最多 3 个 ordinary/insufficient；若摘录没有真实共同维度，不要勉强凑数，宁可少写。
+
+comparison/supported：问题自然地比较 a.repo 和 b.repo 在同一具体维度的已记载事实，必须同时逐字出现两个完整 repo 名。block_a、block_b 各取对应项目给定块的 id；quote_a、quote_b 必须分别是相应块中 12–220 字符的逐字连续引文，确实能共同回答比较问法。不要把不同维度硬拼、用宣传语推断性能高低、把版本或条件漏掉。提问可以问“分别是什么”，不要求强行判优。
+
+ordinary/insufficient：只问 a.repo 一个具体事实，问题写入其完整名或斜杠后的产品名，不能提 b.repo。block_a 取给定块；quote_a=null、block_b=null、quote_b=null。该块必须确实无法回答问题，例如问安装支持范围而只给与安装无关的贡献者说明；不能因为没有逐字关键词就断言不足，不能凭常识证明缺失。
+
+禁止重复同一意图，不要写 site:、URL、内部 cohort 名或历史评测题。只输出 JSON，无 Markdown。
