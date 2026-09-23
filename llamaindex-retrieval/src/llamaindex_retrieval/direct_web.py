@@ -14,6 +14,14 @@ import httpx
 MAX_RESPONSE_BYTES = 8 * 1024 * 1024
 
 
+class WebProviderError(RuntimeError):
+    """Stable, credential-free failure code for saved retrieval traces."""
+
+    def __init__(self, code):
+        self.safe_code = code
+        super().__init__(code)
+
+
 def _sha(value: str) -> str:
     return hashlib.sha256(value.encode()).hexdigest()
 
@@ -27,20 +35,20 @@ async def _json_response(client, method, url, *, timeout, headers=None, params=N
         async with client.stream(method, url, headers=headers, params=params, json=body,
                                  timeout=timeout) as response:
             if response.status_code >= 400:
-                raise RuntimeError(f"web_upstream_http_{response.status_code}")
+                raise WebProviderError(f"web_upstream_http_{response.status_code}")
             chunks, size = [], 0
             async for chunk in response.aiter_bytes():
                 size += len(chunk)
                 if size > MAX_RESPONSE_BYTES:
-                    raise RuntimeError("web_upstream_response_too_large")
+                    raise WebProviderError("web_upstream_response_too_large")
                 chunks.append(chunk)
         value = json.loads(b"".join(chunks))
         if not isinstance(value, dict):
-            raise ValueError("web_upstream_not_object")
+            raise WebProviderError("web_upstream_not_object")
         return value
     except (httpx.HTTPError, UnicodeError, json.JSONDecodeError):
         # Upstream errors may contain credentials or request URLs. Keep them out of traces.
-        raise RuntimeError("web_upstream_failed") from None
+        raise WebProviderError("web_upstream_failed") from None
 
 
 def _public_url(value):
@@ -82,11 +90,11 @@ async def _route(request, settings):
     base = request.get("router_base_url") or settings.searchreader_router_base_url
     model = request.get("router_model") or settings.searchreader_router_model
     if not base or not model:
-        raise RuntimeError("web_router_not_configured")
+        raise WebProviderError("web_router_not_configured")
     parsed_base = urlsplit(base)
     if (parsed_base.scheme not in {"http", "https"} or not parsed_base.hostname
             or parsed_base.username or parsed_base.password):
-        raise ValueError("invalid_web_router_url")
+        raise WebProviderError("web_router_invalid_url")
     prompt = _router_prompt(request["messages"])
     if settings.web_router_protocol == "completions":
         body = {"model": model, "prompt": _wire_prompt(prompt), "stream": False,
@@ -123,7 +131,7 @@ async def _search(request, settings):
     if provider == "tavily":
         key = settings.web_tavily_api_key.get_secret_value()
         if not key:
-            raise RuntimeError("web_tavily_key_not_configured")
+            raise WebProviderError("web_tavily_key_not_configured")
         endpoint = "https://api.tavily.com/search"
         method = "POST"
         headers = {"Authorization": "Bearer " + key}
@@ -134,7 +142,7 @@ async def _search(request, settings):
         base = settings.web_searxng_base_url
         parsed = urlsplit(base)
         if parsed.scheme not in {"http", "https"} or not parsed.hostname or parsed.username or parsed.password:
-            raise RuntimeError("web_searxng_not_configured")
+            raise WebProviderError("web_searxng_not_configured")
         endpoint = base.rstrip("/") + "/search"
         method = "GET"
         headers = {"Accept": "application/json"}
@@ -147,7 +155,7 @@ async def _search(request, settings):
                                        params=params, body=body, timeout=settings.web_search_timeout)
     results = payload.get("results")
     if not isinstance(results, list):
-        raise ValueError("web_upstream_results_not_array")
+        raise WebProviderError("web_upstream_results_not_array")
     hits = []
     for item in results:
         if not isinstance(item, dict):

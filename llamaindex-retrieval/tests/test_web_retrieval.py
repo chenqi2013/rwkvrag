@@ -216,6 +216,7 @@ async def test_single_repository_upstream_error_does_not_expose_credential(monke
     with pytest.raises(RuntimeError, match="^web_upstream_http_401$") as caught:
         await SearchReaderAdapter(config).search("q")
     assert "test-secret" not in str(caught.value)
+    assert caught.value.safe_code == "web_upstream_http_401"
 
 
 @pytest.mark.asyncio
@@ -240,6 +241,21 @@ async def test_single_repository_provider_reaches_hybrid_pipeline_without_second
     assert response.retrieval["web_search"][0]["snapshots"][0]["text"] == \
         "Web release note with full context"
     assert response.answer == model.last_writer_raw
+
+
+@pytest.mark.asyncio
+async def test_single_repository_provider_failure_exposes_safe_code_in_trace(monkeypatch):
+    monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
+        transport=httpx.MockTransport(lambda request: httpx.Response(
+            401, text="secret-in-provider-body")), trust_env=False))
+    pipeline = RWKVPipeline(settings(web_search_provider="tavily",
+        web_tavily_api_key="test-secret", web_search_results=1, web_search_max_queries=1),
+        FakeIndex({"q": [hit("private:1", "Private evidence")]}),
+        FakeModel(plan={"queries": ["q"], "fields": ["q"]}))
+    response = await pipeline.ask(SearchRequest(question="q", retrieval_mode="hybrid"))
+    assert response.generation["status"] == "retrieval_partial_failure"
+    assert response.retrieval["provider_failures"][0]["error_code"] == "web_upstream_http_401"
+    assert "secret-in-provider-body" not in response.model_dump_json()
 
 
 def test_invalid_scope_rejected():

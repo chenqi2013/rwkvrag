@@ -13,6 +13,7 @@ from time import monotonic
 
 from .config import Settings
 from .citation_audit import audit_citations
+from .direct_web import WebProviderError
 from .lexical_index import LexicalIndex, LexicalResult
 from .model_client import model_answer_bounds, model_client_class, model_client_options
 from .schemas import AskResponse, ConversationMessage, SearchRequest, SourceItem
@@ -417,6 +418,8 @@ class RWKVPipeline:
                 succeeded += 1
             except Exception as error:
                 failure = {"provider": "web", "query": query, "error": type(error).__name__}
+                if isinstance(error, WebProviderError):
+                    failure["error_code"] = error.safe_code
                 failures.append(failure)
                 web_trace.append({"query_index": index, "status": "failed", **failure})
 
