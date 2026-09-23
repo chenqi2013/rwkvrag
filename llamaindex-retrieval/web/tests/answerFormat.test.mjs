@@ -42,6 +42,14 @@ test("repeated claim with rotating source numbers is hidden", () => {
   assert.equal(safeHistoryAnswer(raw, response), undefined);
 });
 
+test("a long paragraph duplicated once is hidden even if every source number exists", () => {
+  const paragraph = "Requests 和 HTTPX 的定位需要分别核对各自材料，异步和同步支持也须分开说明。".repeat(2);
+  const raw = `${paragraph}[资料 1]\n${paragraph}[资料 2]`;
+  const result = formatAnswer(raw, response);
+  assert.equal(result.blocked, true);
+  assert.equal(result.repeated, true);
+});
+
 test("valid answer is carried into conversation history unchanged", () => {
   const raw = "HTTPX 有同步与异步接口[资料 2]。";
   assert.equal(safeHistoryAnswer(raw, response), raw);

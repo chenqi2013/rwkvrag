@@ -14,16 +14,17 @@ const validTag = /^\[(?:资料|Source)\s*[1-9]\d*\]$/;
 function repeatedLongSpan(text: string): boolean {
   const normalized = text.replace(/\[(?:资料|Source)\s*[^\]\r\n]*\]/g, "")
     .replace(/\s+/g, "").toLowerCase();
-  const width = 32;
-  const positions = new Map<string, number[]>();
-  for (let i = 0; i + width <= normalized.length; i++) {
-    const span = normalized.slice(i, i + width);
-    const seen = positions.get(span);
-    if (!seen) {
-      positions.set(span, [i]);
-    } else if (i - seen[seen.length - 1] >= width) {
-      seen.push(i);
-      if (seen.length >= 3) return true;
+  for (const [width, minimum] of [[96, 2], [32, 3]]) {
+    const positions = new Map<string, number[]>();
+    for (let i = 0; i + width <= normalized.length; i++) {
+      const span = normalized.slice(i, i + width);
+      const seen = positions.get(span);
+      if (!seen) {
+        positions.set(span, [i]);
+      } else if (i - seen[seen.length - 1] >= width) {
+        seen.push(i);
+        if (seen.length >= minimum) return true;
+      }
     }
   }
   return false;

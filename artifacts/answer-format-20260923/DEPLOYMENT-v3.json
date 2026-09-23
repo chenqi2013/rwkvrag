@@ -1,0 +1,14 @@
+{
+  "verified_at_utc": "2026-09-23T01:47:39.426564+00:00",
+  "frontend_release": "/home/chase/GitHub/rwkvrag/data/services/local-app/releases/answer-format-20260923-v3/web",
+  "served_asset": "index-BJ1irsOc.js",
+  "served_asset_sha256": "bed3b63ec43e8de531df326c4dc2adce10ebd052a3f3add6660f30dd73be96b0",
+  "viewer_sha256": "fcda95d7d4469d4ff45dbd9be2b4384ccdcd4a8ebd2b4402d02ef6e1f1809b38",
+  "api_health": "ok",
+  "mongodb_ok": true,
+  "opensearch_ok": true,
+  "backend_changed": false,
+  "remote_model_changed": false,
+  "validation": "45 web unit tests passed; TypeScript/Vite build passed; served asset, viewer, API/Mongo/OpenSearch verified",
+  "behavior": "invalid citations and 2x long or 3x short repeated spans hide main answer; raw retained; blocked answer excluded from conversation history and history preview"
+}
