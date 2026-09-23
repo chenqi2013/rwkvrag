@@ -1,0 +1,21 @@
+{
+  "id": "four-project-conflict/judge_project/岚阙",
+  "suite": "layered_oracle_v2_seen_protocol",
+  "category": "judge_project",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "zero",
+  "prompt_sha256": "551ebacb719418911f1c00c5b75c0e78c215b1b8a7d9699e750b11740d70ddf2",
+  "raw_text": "rejected",
+  "generated_ids": [
+    42155,
+    1843,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "72656a6563746564",
+  "utf8_valid": true,
+  "elapsed_s": 0.13161590602248907,
+  "input_tokens": 338,
+  "state_sha256": null
+}

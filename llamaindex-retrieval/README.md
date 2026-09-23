@@ -124,4 +124,12 @@ Writer 提示词实验与 canonical 模板校正见 [第二轮报告](../docs/ar
 
 本仓库也提供可选的内置 Tavily 或 SearXNG 检索适配器，不需要另行安装 SearchReader 源码。复制 `.env.example` 后，设置 `RWKVRAG_WEB_SEARCH_PROVIDER=tavily` 与私有的 `RWKVRAG_WEB_TAVILY_API_KEY`，或设置 `RWKVRAG_WEB_SEARCH_PROVIDER=searxng` 与 `RWKVRAG_WEB_SEARXNG_BASE_URL`。这只配置网络材料来源；OpenSearch、MongoDB 和 RWKV 模型端点仍按上文部署。调用 `/v1/ask` 并传 `retrieval_mode: "web"` 可只用网络资料，传 `"hybrid"` 可合并网络和知识库资料。返回的网络原文快照、检索时间和来源仍在 trace 与引用面板中。
 
+```bash
+curl -sS http://127.0.0.1:8080/v1/search \
+  -H 'Content-Type: application/json' \
+  -d '{"question":"FastAPI 与 Starlette 最新发布说明有什么差异？","retrieval_mode":"web","top_k":5}'
+```
+
+这一步只检查网络检索与来源快照；完整回答用相同问题调用 `/v1/ask`。混合模式改传 `"retrieval_mode":"hybrid"` 并指定自己的 `knowledge_base_id`。不要把上面的命令成功当作答案正确。
+
 `"auto"` 需要额外配置 `RWKVRAG_SEARCHREADER_ROUTER_BASE_URL`、`RWKVRAG_SEARCHREADER_ROUTER_MODEL`，以及模型服务需要时的 `RWKVRAG_WEB_ROUTER_API_KEY`；它让模型判断是否补网。选择器未配置或输出不合协议时会明确失败，不会改用关键词规则。现有 `WEB_SEARCH_PROVIDER=searchreader` 仍使用本地 SearchReader 项目和其已有配置。内置网络检索的单元与模拟传输测试已覆盖快照、引用身份和凭据不进入 trace；真实提供方与多项目端到端质量需要单独实测，不能从配置可用推断通过。

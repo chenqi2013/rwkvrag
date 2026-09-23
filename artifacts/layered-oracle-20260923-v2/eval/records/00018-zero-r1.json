@@ -1,0 +1,21 @@
+{
+  "id": "six-project-version-and-names/judge_project/沐桥 Edge",
+  "suite": "layered_oracle_v2_seen_protocol",
+  "category": "judge_project",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "zero",
+  "prompt_sha256": "476bbdd257628f5a1bfb5e20e766773b6943fa65a8bf9a84826f059450222f96",
+  "raw_text": "rejected",
+  "generated_ids": [
+    42155,
+    1843,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "72656a6563746564",
+  "utf8_valid": true,
+  "elapsed_s": 0.12549122422933578,
+  "input_tokens": 310,
+  "state_sha256": null
+}

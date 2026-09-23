@@ -1,0 +1,12 @@
+{
+  "scenarios_sha256": "5451c4465317a2e39a69706db3464774305d01bd6e371e4f326a83f2dce4af7e",
+  "prepare_sha256": "4eadfc114b432224ffbfb155fd740d4038d69f0de525893632ea93bc669916f1",
+  "vocab_sha256": "8324476023347dec2964625ccb2075c864d250a9c6d9a74f36daba628de8c008",
+  "cases_sha256": "aef01680f9ef4a4c15b8875cc7b54258b05bab720da236cc598c329344291c47",
+  "members": 30,
+  "planned_raw_records": 120,
+  "seen_scenarios": true,
+  "gold_fact_intervention": true,
+  "live_retrieval": false,
+  "old_inputs_unchanged": true
+}

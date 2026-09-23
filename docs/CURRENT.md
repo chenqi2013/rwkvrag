@@ -1,6 +1,6 @@
 # 当前状态
 
-更新：2026-09-23（Asia/Shanghai）。**StateTune发布集V1的7.2B双角色训练已完成；新24题成对语义验收未通过，多项目比较没有提升，正式模型不切换。独立逐层 Oracle 诊断发现 Gold 事实下的资格判断失败和 Gold 决策下的无引用回答；新V2协议配对复测正在GPU3运行，其余冻结回归仍在运行。** 训练收据见[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)，[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)及[逐层诊断](archive/2026-09/layered-oracle-diagnosis-20260923.md)保留原文和边界。
+更新：2026-09-23（Asia/Shanghai）。**StateTune发布集V1的7.2B双角色训练已完成；新24题成对语义验收未通过，多项目比较没有提升，正式模型不切换。独立逐层 Oracle V1/V2诊断确认：数组格式可修，但资格误判与Writer无效引用未修好；其余冻结回归仍在运行。** 训练收据见[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)、[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)、[V1诊断](archive/2026-09/layered-oracle-diagnosis-20260923.md)和[V2复测](archive/2026-09/layered-oracle-v2-results-20260923.md)。
 
 ## 当前主线：数据隔离、审读与StateTune训练
 
@@ -12,7 +12,9 @@
 
 另已完成新的[逐层 Oracle 诊断 V1](archive/2026-09/layered-oracle-diagnosis-20260923.md)：4 组新虚构材料、2/3/4/6 个项目、抽取/Gold 事实比较/Gold 决策 Writer 共 12 成员，零/训练 State 双轮 48 份原始输出，GPU3 独立服务成功，旧回归未中断。Gold 事实给定时两组完整决策均 0/4；项目资格零组 6/15、训练组 4/15；Gold 决策下 Writer 全部自然停止但 8 个不同回答都没有来源引用。本轮没有新训练、检索或正式链路切换；格式与内容的事后评分分开保存。
 
-正在运行[逐层 Oracle V2](../llamaindex-retrieval/eval/layered-oracle-20260923-v2/PLAN.md)：复用这4组**已见**材料但冻结23个新协议成员，分别检查直接JSON数组抽取、15次单项目Gold事实资格判断、4次标准Writer提示词加Gold决策后的引用。零/训练State双轮计划92份原始输出；该批不是新留出集、真实检索或生产提示词逐字回放，结果出齐并人工审读前不称修复成功。旧V1原文和原队列不动。
+[逐层 Oracle V2](archive/2026-09/layered-oracle-v2-results-20260923.md)已完成：同4组**已见**材料上23个新协议成员、92份零/训练State双轮原始输出齐全且逐token复现。JSON数组结构两组均4/4，但严格事实全对零组1/4、训练组0/4；单项目资格两组仅6/15；标准Writer的4组完整答案两组均0/4，零组2组复读触顶，训练组仍有编造引用和大型比较错位。实现者审读，不是独立盲审、真实检索或生产逐字回放；没有新训练或正式模型切换。旧V1原文和原队列不动。
+
+[逐硬条件 Oracle V3](../llamaindex-retrieval/eval/layered-oracle-20260923-v3/PLAN.md)已准备30个新协议成员：同一批**已见**Gold事实每次只给一个硬条件的对应字段，隔离V2仍把GPU偏好和多硬条件同放在判断输入里的影响。模型运行尚未完成；不能据此推断v10条件节点已修复。
 
 2026-09-23新增[前端答案格式转换层](../llamaindex-retrieval/web/src/answerFormat.ts)：搜索、历史和Wiki共用展示组件在引用编号不存在、格式损坏，或长片段重复两次、较短片段重复三次时隐藏主答案；原文可展开核对，API返回和历史原文不改。被隐藏的答案也不会进入新一轮对话历史或历史列表摘要。45项前端测试和构建通过；本机18440页面已切到`answer-format-20260923-v3`，实际返回新JS且API/Mongo/OpenSearch健康。[发布与同批事后核对](archive/2026-09/answer-format-v3-20260923.md)显示32份完整正确回答均保持显示，但64份错误回答仍有10份可见。格式层不能证明编号存在的引用确实支持结论，也不能识别所有语义幻觉；远端正式模型和后端链路未切换。
 

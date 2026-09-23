@@ -1,0 +1,29 @@
+{
+  "inputs_sha256": "9bd4353a9932a0a24278f33fb7f4a06b1a0202df57444adc8cbc848cfea436e6",
+  "training_receipt_sha256": "8abe88dec5a2a7bfe44ef827dd319bab956c8960b86d2d2bd51a3460be92d18d",
+  "states": {
+    "resolver": {
+      "role": "resolver",
+      "epoch": 2,
+      "path": "/home/chase/rwkvrag/data/experiments/state-progression-20260922/train-release-v1/resolver/epoch-2.pth",
+      "sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25",
+      "dtype": "float32",
+      "layout": "H,V,K"
+    },
+    "writer": {
+      "role": "writer",
+      "epoch": 2,
+      "path": "/home/chase/rwkvrag/data/experiments/state-progression-20260922/train-release-v1/writer/epoch-2.pth",
+      "sha256": "e820b7f0d908d2bb313e3f5b37e53cd191b442149f85bda9d60efb6d0d5461a1",
+      "dtype": "float32",
+      "layout": "H,V,K"
+    }
+  },
+  "vocab_sha256": "8324476023347dec2964625ccb2075c864d250a9c6d9a74f36daba628de8c008",
+  "config_sha256": "09abf562b6b13c04c7601694648c084103fd1a6bf3a05fbd28d4a35ae7e63e8b",
+  "evaluator_sha256": "785a8c9c0d72c8e703640f9ffab0fb1dec83559eb6691e91896554f7480c22f6",
+  "decode": "greedy_argmax",
+  "rounds": 2,
+  "raw_answers_unchanged": true,
+  "live_retrieval": false
+}

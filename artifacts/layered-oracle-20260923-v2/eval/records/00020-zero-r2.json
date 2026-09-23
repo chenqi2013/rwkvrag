@@ -1,0 +1,21 @@
+{
+  "id": "six-project-version-and-names/judge_project/木桥 Cloud",
+  "suite": "layered_oracle_v2_seen_protocol",
+  "category": "judge_project",
+  "state_role": "resolver",
+  "round": 2,
+  "arm": "zero",
+  "prompt_sha256": "8d0dac154171711800078d8c188f4fdf0435132e268d4398d014f82f51bff380",
+  "raw_text": "rejected",
+  "generated_ids": [
+    42155,
+    1843,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "72656a6563746564",
+  "utf8_valid": true,
+  "elapsed_s": 0.12475028354674578,
+  "input_tokens": 306,
+  "state_sha256": null
+}

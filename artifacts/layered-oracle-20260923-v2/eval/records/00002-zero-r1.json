@@ -1,0 +1,21 @@
+{
+  "id": "two-project-basic/judge_project/银榫",
+  "suite": "layered_oracle_v2_seen_protocol",
+  "category": "judge_project",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "zero",
+  "prompt_sha256": "580f4f64f216a62052dae7056b05dc1c26fc9a534c7602eb9831a6fbee22c6e1",
+  "raw_text": "rejected",
+  "generated_ids": [
+    42155,
+    1843,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "72656a6563746564",
+  "utf8_valid": true,
+  "elapsed_s": 0.15702501125633717,
+  "input_tokens": 304,
+  "state_sha256": null
+}

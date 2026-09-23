@@ -1,0 +1,21 @@
+{
+  "id": "three-project-open-world/judge_project/白榫",
+  "suite": "layered_oracle_v2_seen_protocol",
+  "category": "judge_project",
+  "state_role": "resolver",
+  "round": 2,
+  "arm": "trained",
+  "prompt_sha256": "70ee711aeb6af1fb7a0c077d0cc41f80b944d7297f338ff2a5151b50c2b81f19",
+  "raw_text": "rejected",
+  "generated_ids": [
+    42155,
+    1843,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "72656a6563746564",
+  "utf8_valid": true,
+  "elapsed_s": 0.12528459168970585,
+  "input_tokens": 304,
+  "state_sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25"
+}

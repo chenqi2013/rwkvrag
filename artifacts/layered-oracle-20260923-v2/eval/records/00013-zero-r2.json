@@ -1,0 +1,20 @@
+{
+  "id": "four-project-conflict/judge_project/梭羽",
+  "suite": "layered_oracle_v2_seen_protocol",
+  "category": "judge_project",
+  "state_role": "resolver",
+  "round": 2,
+  "arm": "zero",
+  "prompt_sha256": "863398b0db80ce64ed9ba3981c6a0505ee1defce3991af4aed90bdb2add17243",
+  "raw_text": "eligible",
+  "generated_ids": [
+    53933,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "656c696769626c65",
+  "utf8_valid": true,
+  "elapsed_s": 0.09846110455691814,
+  "input_tokens": 266,
+  "state_sha256": null
+}

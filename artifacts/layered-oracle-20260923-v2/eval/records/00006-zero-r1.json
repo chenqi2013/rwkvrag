@@ -1,0 +1,21 @@
+{
+  "id": "three-project-open-world/judge_project/赤桁",
+  "suite": "layered_oracle_v2_seen_protocol",
+  "category": "judge_project",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "zero",
+  "prompt_sha256": "f77ce8171ddb1fabe051d168efd1ef5f6d627cfafc2dc2d03f133d63b7ad1aa6",
+  "raw_text": "rejected",
+  "generated_ids": [
+    42155,
+    1843,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "72656a6563746564",
+  "utf8_valid": true,
+  "elapsed_s": 0.12536419183015823,
+  "input_tokens": 302,
+  "state_sha256": null
+}

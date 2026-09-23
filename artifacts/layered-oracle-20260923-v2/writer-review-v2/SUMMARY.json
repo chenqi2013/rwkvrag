@@ -1,0 +1,18 @@
+{
+  "counts": {
+    "trained/all_claims_supported_by_selected_text": 1,
+    "trained/decision_preserved": 2,
+    "trained/distinct_cases": 4,
+    "trained/full_answer": 0,
+    "zero/all_claims_supported_by_selected_text": 2,
+    "zero/decision_preserved": 2,
+    "zero/distinct_cases": 4,
+    "zero/full_answer": 0
+  },
+  "distinct_answers": 8,
+  "raw_records_bound": 16,
+  "run_sha256": "2a4cd40ce0c505127a0f7b6f2c03653a83cf85d93d48600e9af2f42f24f0f8cd",
+  "review_script_sha256": "ccb0fa910b3b3c1d6572616fc645651093fe483e534b2fda87298de03e0e34e7",
+  "reviewer": "implementer_not_independent",
+  "limits": "Seen fictional evidence; subjective review; duplicate rounds are not new coverage."
+}

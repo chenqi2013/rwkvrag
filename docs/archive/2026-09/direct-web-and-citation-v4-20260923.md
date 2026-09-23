@@ -11,6 +11,7 @@
 
 - 后端相关测试124项通过，包含模型路由、知识库+网络组合、Tavily/SearXNG模拟HTTP、来源快照和凭据不泄漏；ruff通过。前端46项测试与TypeScript/Vite构建通过。
 - 一次低频真实Tavily查询使用本机既有SearchReader配置中的首个凭据，返回`401`。没有轮换密钥重试；因此内置提供方的真实外网成功、引用语义及多项目问答均**未验收**。
+- 内置适配器使用本机正在运行的1.5B StateTune选择器进行了两条实际模型调用：查GitHub最新版本输出严格`true`，普通Python概念解释输出严格`false`。这是接线冒烟检查，不是分类准确率验收。
 - 本机18440页面已切到独立不可变目录`answer-format-20260923-v4`，静态JS实际返回且SHA与[部署收据](../../../artifacts/answer-format-20260923/DEPLOYMENT-v4.json)一致；API、MongoDB、OpenSearch健康。后端进程重启加载了新源码，但当前设置仍走旧SearchReader提供方和原2.9B模型，未切换7.2B或训练State。
 
 ## 仍需完成

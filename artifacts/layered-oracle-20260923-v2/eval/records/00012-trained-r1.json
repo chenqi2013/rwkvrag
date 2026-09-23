@@ -1,0 +1,21 @@
+{
+  "id": "four-project-conflict/judge_project/霁环",
+  "suite": "layered_oracle_v2_seen_protocol",
+  "category": "judge_project",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "trained",
+  "prompt_sha256": "b44b8ee385bc6fa4f1b3e1d5d4a1d6da4b4aa8552511a089730675ac4ad970d1",
+  "raw_text": "rejected",
+  "generated_ids": [
+    42155,
+    1843,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "72656a6563746564",
+  "utf8_valid": true,
+  "elapsed_s": 0.12517575081437826,
+  "input_tokens": 306,
+  "state_sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25"
+}

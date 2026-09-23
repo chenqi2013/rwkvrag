@@ -1,0 +1,15 @@
+{
+  "unit": "rwkvrag-layered-oracle-v2.service",
+  "host": "rwkv-8222",
+  "physical_gpu_index": 3,
+  "gpu_uuid": "GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0",
+  "kernel_profile_log": "Preprocessing RWKV7 weights with profile=fp32io16 and GEMM accumulation=fp32",
+  "memory_mib_before": 39234,
+  "memory_mib_during_observed": 55867,
+  "memory_mib_after": 39234,
+  "result": "success",
+  "exec_main_status": 0,
+  "raw_records": 92,
+  "old_eval_queue_after": "active/running",
+  "caveat": "Log and FP32 State config verified; no GPU profiler trace captured."
+}

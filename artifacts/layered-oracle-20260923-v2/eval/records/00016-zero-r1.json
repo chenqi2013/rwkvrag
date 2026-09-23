@@ -1,0 +1,21 @@
+{
+  "id": "six-project-version-and-names/judge_project/沐桥 Core",
+  "suite": "layered_oracle_v2_seen_protocol",
+  "category": "judge_project",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "zero",
+  "prompt_sha256": "f4866a76abc1d8f96e3f3f37f61717c7717cd4de6abbe45fc1c6da3f7592dfd7",
+  "raw_text": "rejected",
+  "generated_ids": [
+    42155,
+    1843,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "72656a6563746564",
+  "utf8_valid": true,
+  "elapsed_s": 0.1342718182131648,
+  "input_tokens": 380,
+  "state_sha256": null
+}
