@@ -1,0 +1,12 @@
+{
+  "verified_at_utc": "2026-09-23T01:26:56.845067+00:00",
+  "frontend_release": "/home/chase/GitHub/rwkvrag/data/services/local-app/releases/answer-format-20260923/web",
+  "served_asset": "index-D3muHlzo.js",
+  "served_asset_sha256": "7e6bb5d1429813bbfec6412f9b0d3dcfaecb3580e6563b77b43b3a6816ee4e57",
+  "api_health": "ok",
+  "mongodb_ok": true,
+  "opensearch_ok": true,
+  "backend_changed": false,
+  "remote_model_changed": false,
+  "validation": "43 web unit tests passed; TypeScript/Vite production build passed; served asset and health verified"
+}
