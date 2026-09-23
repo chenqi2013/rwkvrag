@@ -22,6 +22,9 @@ export default function CitedAnswer({ text, response }: { text: string; response
     {formatted.blocked && <Alert type="warning" showIcon
       title={tr("回答因引用或复读异常已从展示中隐藏", "Answer hidden from display due to citation or repetition errors")}
       description={tr("模型原文仍可在下方展开核对；这里没有自动补引用或修改事实。", "Open the raw model answer below to inspect it. No citation or fact was repaired.")} />}
+    {!formatted.blocked && formatted.missingCitations && <Alert type="warning" showIcon
+      title={tr("回答没有引用任何已保存的资料", "The answer cites none of its saved sources")}
+      description={tr("下方资料只能说明本次提供了哪些材料，不能证明回答中的结论；请逐项核对原文。", "The source list shows what was provided, not which claims it supports. Check each claim against the original text.")} />}
     {formatted.text ? <Typography.Paragraph className="result-snippet answer-body" copyable={{ text: formatted.text }}>
       {citationParts(formatted.text).map((part, i) => part.label === undefined ? part.text : <button
         type="button" key={i} className={`citation-link${citedSource(response, part.label) ? "" : " citation-missing"}`}

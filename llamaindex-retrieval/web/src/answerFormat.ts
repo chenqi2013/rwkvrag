@@ -6,6 +6,7 @@ export type FormattedAnswer = {
   blocked: boolean;
   invalidLabels: string[];
   repeated: boolean;
+  missingCitations: boolean;
 };
 
 const candidateTag = /\[(?:资料|Source)\s*[^\]\r\n]*(?:\]|$)/g;
@@ -33,15 +34,20 @@ function repeatedLongSpan(text: string): boolean {
 /** A display gate. The response and saved raw answer are never rewritten. */
 export function formatAnswer(text: string, response: Pick<AskResponse, "sources" | "generation">): FormattedAnswer {
   const invalid = new Set<string>();
+  let cited = false;
   for (const tag of text.matchAll(candidateTag)) {
     if (!validTag.test(tag[0])) invalid.add(tag[0]);
   }
   for (const part of citationParts(text)) {
-    if (part.label !== undefined && !citedSource(response, part.label)) invalid.add(part.text);
+    if (part.label !== undefined) {
+      if (citedSource(response, part.label)) cited = true;
+      else invalid.add(part.text);
+    }
   }
   const repeated = repeatedLongSpan(text);
   const blocked = invalid.size > 0 || repeated;
-  return { text: blocked ? "" : text, blocked, invalidLabels: [...invalid], repeated };
+  return { text: blocked ? "" : text, blocked, invalidLabels: [...invalid], repeated,
+    missingCitations: response.sources.length > 0 && text.trim().length > 0 && !cited };
 }
 
 export function safeHistoryAnswer(text: string, response: Pick<AskResponse, "sources" | "generation">): string | undefined {

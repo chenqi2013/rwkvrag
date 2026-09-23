@@ -1,0 +1,18 @@
+{
+  "source_scenarios_sha256": "5451c4465317a2e39a69706db3464774305d01bd6e371e4f326a83f2dce4af7e",
+  "prepare_sha256": "cfb7a74ae9b201c6b21b608acae570ecc74d4b0e1cfd6afa1627aac219a20ed8",
+  "writer_prompt_sha256": "dd6fccafb8bde63405ab74ed62c136de8a1b415d107dd66fe75dab120c9f5942",
+  "vocab_sha256": "8324476023347dec2964625ccb2075c864d250a9c6d9a74f36daba628de8c008",
+  "cases_sha256": "9bd4353a9932a0a24278f33fb7f4a06b1a0202df57444adc8cbc848cfea436e6",
+  "members": 23,
+  "planned_raw_records": 92,
+  "stage_members": {
+    "extract_array": 4,
+    "judge_project": 15,
+    "writer_standard": 4
+  },
+  "seen_scenarios": true,
+  "live_retrieval": false,
+  "production_prompt_exact": false,
+  "old_inputs_unchanged": true
+}

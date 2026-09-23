@@ -10,7 +10,7 @@ const response = {
 test("valid cited answer stays byte-for-byte visible", () => {
   const raw = "Requests 发出 HTTP 请求[资料 1]；HTTPX 支持异步客户端[资料 2]。";
   assert.deepEqual(formatAnswer(raw, response), {
-    text: raw, blocked: false, invalidLabels: [], repeated: false,
+    text: raw, blocked: false, invalidLabels: [], repeated: false, missingCitations: false,
   });
 });
 
@@ -18,7 +18,7 @@ test("fabricated source labels hide the whole answer without altering its raw so
   const raw = "可靠事实[资料 1]。编造来源的结论[资料 7]。";
   const snapshot = JSON.stringify(response);
   assert.deepEqual(formatAnswer(raw, response), {
-    text: "", blocked: true, invalidLabels: ["[资料 7]"], repeated: false,
+    text: "", blocked: true, invalidLabels: ["[资料 7]"], repeated: false, missingCitations: false,
   });
   assert.equal(JSON.stringify(response), snapshot);
   assert.match(raw, /编造来源/);
@@ -53,4 +53,14 @@ test("a long paragraph duplicated once is hidden even if every source number exi
 test("valid answer is carried into conversation history unchanged", () => {
   const raw = "HTTPX 有同步与异步接口[资料 2]。";
   assert.equal(safeHistoryAnswer(raw, response), raw);
+});
+
+test("saved sources without an actual citation are explicitly marked, never cited automatically", () => {
+  const raw = "HTTPX 支持异步接口。";
+  const result = formatAnswer(raw, response);
+  assert.equal(result.missingCitations, true);
+  assert.equal(result.blocked, false);
+  assert.equal(result.text, raw);
+  assert.equal(safeHistoryAnswer(raw, response), raw);
+  assert.equal(formatAnswer("资料不足，无法判断。", { sources: [], generation: {} }).missingCitations, false);
 });
