@@ -31,9 +31,14 @@ class Settings(BaseSettings):
     chunk_overlap: int = Field(default=64, ge=1, le=1024)
     candidate_k: int = Field(default=40, ge=5, le=200)
     searchreader_project_dir: Path | None = None
+    web_search_provider: Literal["searchreader", "tavily", "searxng"] = "searchreader"
+    web_tavily_api_key: SecretStr = SecretStr("")
+    web_searxng_base_url: str = ""
     searchreader_router_base_url: str | None = None
     searchreader_router_model: str | None = None
     searchreader_router_state_sha256: str | None = None
+    web_router_api_key: SecretStr = SecretStr("local")
+    web_router_protocol: Literal["completions", "chat"] = "completions"
     searchreader_router_timeout: float = Field(default=25, ge=1, le=120)
     web_search_results: int = Field(default=2, ge=1, le=10)
     web_search_max_queries: int = Field(default=2, ge=1, le=8)

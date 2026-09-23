@@ -1,0 +1,15 @@
+{
+  "verified_at_utc": "2026-09-23T03:15:17.426893+00:00",
+  "frontend_release": "/home/chase/GitHub/rwkvrag/data/services/local-app/releases/answer-format-20260923-v4/web",
+  "served_asset": "index-u5ne8cJ1.js",
+  "served_asset_sha256": "7f3c51d9d02af1169c4da8cca0f8d2e368873ef5944a70e4d305d6e44d8b3fbb",
+  "served_index_sha256": "26bae809ed69151fe102e25983f620675c5c9bfa2f61cda4d03ffb0f1d149ef1",
+  "api_health": "ok",
+  "mongodb_ok": true,
+  "opensearch_ok": true,
+  "backend_code_reloaded": true,
+  "configured_web_provider": "searchreader (unchanged default)",
+  "remote_model_changed": false,
+  "validation": "46 web unit tests, TypeScript/Vite build, served asset and API storage health",
+  "behavior": "Warnings mark saved evidence with no citation; raw answer and source snapshots stay unchanged."
+}

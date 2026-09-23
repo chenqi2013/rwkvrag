@@ -1,10 +1,14 @@
 import asyncio
 from dataclasses import replace
 import sys
+from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
+import httpx
 import pytest
+from pydantic import SecretStr
 
+from llamaindex_retrieval import direct_web
 from llamaindex_retrieval.repository import search_answer_status, search_failure_category
 from llamaindex_retrieval.rwkv_pipeline import RWKVPipeline
 from llamaindex_retrieval.schemas import SearchRequest
@@ -145,6 +149,71 @@ async def test_provider_error_body_is_not_exposed(tmp_path):
     adapter = SearchReaderAdapter(settings(searchreader_project_dir=root))
     with pytest.raises(RuntimeError, match="^searchreader_provider_failed$"):
         await adapter.search("q")
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("provider", ["tavily", "searxng"])
+async def test_single_repository_web_provider_preserves_source_snapshot(monkeypatch, provider):
+    def handler(request):
+        if provider == "tavily":
+            assert request.headers["Authorization"] == "Bearer test-secret"
+            assert request.url.path == "/search"
+            return httpx.Response(200, json={"results": [
+                {"url": "https://example.org/a", "title": "A", "content": "summary",
+                 "raw_content": "verbatim original page", "score": 0.8},
+                {"url": "file:///private", "content": "discard"}]})
+        assert request.url.params["format"] == "json"
+        return httpx.Response(200, json={"results": [
+            {"url": "https://example.org/a", "title": "A", "content": "verbatim snippet"}]})
+
+    monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
+        transport=httpx.MockTransport(handler), trust_env=False))
+    config = SimpleNamespace(web_search_provider=provider, web_search_concurrency=1,
+        web_search_timeout=3, web_search_results=2, web_search_material_characters=8,
+        web_tavily_api_key=SecretStr("test-secret"),
+        web_searxng_base_url="http://127.0.0.1:8888",
+        searchreader_router_base_url=None, searchreader_router_model=None,
+        searchreader_router_state_sha256=None)
+    hits, trace = await SearchReaderAdapter(config).search("natural words")
+    assert len(hits) == 1
+    expected = "verbatim original page" if provider == "tavily" else "verbatim snippet"
+    assert hits[0].text == expected[:8]
+    assert trace["snapshots"][0]["text"] == expected
+    assert hits[0].metadata["content_status"] == ("fetched" if provider == "tavily" else "snippet_only")
+    assert "test-secret" not in str(trace)
+
+
+@pytest.mark.asyncio
+async def test_single_repository_router_uses_model_output_without_keyword_fallback(monkeypatch):
+    def handler(request):
+        assert request.url.path == "/v1/completions"
+        return httpx.Response(200, json={"choices": [{"text": "true"}]})
+
+    monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
+        transport=httpx.MockTransport(handler), trust_env=False))
+    config = SimpleNamespace(web_search_provider="tavily", web_search_concurrency=1,
+        searchreader_router_base_url="http://127.0.0.1:1234/v1",
+        searchreader_router_model="state-router", searchreader_router_state_sha256="frozen",
+        searchreader_router_timeout=2, web_router_protocol="completions",
+        web_router_api_key=SecretStr("router-secret"))
+    decision = await SearchReaderAdapter(config).decide([
+        {"role": "user", "content": "比一下最新版本"}])
+    assert decision["needs_search"] is True
+    assert decision["configured_state_sha256"] == "frozen"
+    assert "router-secret" not in str(decision)
+
+
+@pytest.mark.asyncio
+async def test_single_repository_upstream_error_does_not_expose_credential(monkeypatch):
+    monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
+        transport=httpx.MockTransport(lambda request: httpx.Response(
+            401, text="test-secret is invalid")), trust_env=False))
+    config = SimpleNamespace(web_search_provider="tavily", web_search_concurrency=1,
+        web_search_timeout=3, web_search_results=2, web_search_material_characters=100,
+        web_tavily_api_key=SecretStr("test-secret"))
+    with pytest.raises(RuntimeError, match="^web_upstream_http_401$") as caught:
+        await SearchReaderAdapter(config).search("q")
+    assert "test-secret" not in str(caught.value)
 
 
 def test_invalid_scope_rejected():

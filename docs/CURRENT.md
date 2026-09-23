@@ -1,6 +1,6 @@
 # 当前状态
 
-更新：2026-09-23（Asia/Shanghai）。**StateTune发布集V1的7.2B双角色训练已完成；新24题成对语义验收未通过，多项目比较没有提升，正式模型不切换。独立逐层 Oracle 诊断也发现 Gold 事实下的资格判断失败和 Gold 决策下的无引用回答；其余冻结回归仍在运行。** 训练收据见[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)，[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)及[逐层诊断](archive/2026-09/layered-oracle-diagnosis-20260923.md)保留原文和边界。
+更新：2026-09-23（Asia/Shanghai）。**StateTune发布集V1的7.2B双角色训练已完成；新24题成对语义验收未通过，多项目比较没有提升，正式模型不切换。独立逐层 Oracle 诊断发现 Gold 事实下的资格判断失败和 Gold 决策下的无引用回答；新V2协议配对复测正在GPU3运行，其余冻结回归仍在运行。** 训练收据见[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)，[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)及[逐层诊断](archive/2026-09/layered-oracle-diagnosis-20260923.md)保留原文和边界。
 
 ## 当前主线：数据隔离、审读与StateTune训练
 
@@ -12,7 +12,11 @@
 
 另已完成新的[逐层 Oracle 诊断 V1](archive/2026-09/layered-oracle-diagnosis-20260923.md)：4 组新虚构材料、2/3/4/6 个项目、抽取/Gold 事实比较/Gold 决策 Writer 共 12 成员，零/训练 State 双轮 48 份原始输出，GPU3 独立服务成功，旧回归未中断。Gold 事实给定时两组完整决策均 0/4；项目资格零组 6/15、训练组 4/15；Gold 决策下 Writer 全部自然停止但 8 个不同回答都没有来源引用。本轮没有新训练、检索或正式链路切换；格式与内容的事后评分分开保存。
 
+正在运行[逐层 Oracle V2](../llamaindex-retrieval/eval/layered-oracle-20260923-v2/PLAN.md)：复用这4组**已见**材料但冻结23个新协议成员，分别检查直接JSON数组抽取、15次单项目Gold事实资格判断、4次标准Writer提示词加Gold决策后的引用。零/训练State双轮计划92份原始输出；该批不是新留出集、真实检索或生产提示词逐字回放，结果出齐并人工审读前不称修复成功。旧V1原文和原队列不动。
+
 2026-09-23新增[前端答案格式转换层](../llamaindex-retrieval/web/src/answerFormat.ts)：搜索、历史和Wiki共用展示组件在引用编号不存在、格式损坏，或长片段重复两次、较短片段重复三次时隐藏主答案；原文可展开核对，API返回和历史原文不改。被隐藏的答案也不会进入新一轮对话历史或历史列表摘要。45项前端测试和构建通过；本机18440页面已切到`answer-format-20260923-v3`，实际返回新JS且API/Mongo/OpenSearch健康。[发布与同批事后核对](archive/2026-09/answer-format-v3-20260923.md)显示32份完整正确回答均保持显示，但64份错误回答仍有10份可见。格式层不能证明编号存在的引用确实支持结论，也不能识别所有语义幻觉；远端正式模型和后端链路未切换。
+
+前端新增“有已保存资料但正文零引用”的明确警示，既不替模型补引用，也不把资料列表当事实支持。46项前端测试和构建通过；本机18440已切到`answer-format-20260923-v4`并核对新资源、API/Mongo/OpenSearch健康。后端新增[单仓库内置网络适配器](../llamaindex-retrieval/src/llamaindex_retrieval/direct_web.py)：可选Tavily或SearXNG，强制`web`/`hybrid`模式无需SearchReader源码；`auto`仍需配置模型选择器，旧SearchReader路径保留。124项相关后端测试与lint通过；一次低频Tavily实网探测返回401，所以真实供应商连通与完整RAG质量**未通过验收**，不能从模拟测试推断商用可用。部署与边界见[本轮报告](archive/2026-09/direct-web-and-citation-v4-20260923.md)。
 
 另用当前诊断集做了三条完整样本的零更新速度/显存试验：最长7216 token前后向6.84秒、进程峰值reserved 28.63GB；1081 token 0.83秒、619 token 0.50秒，所有样本0次优化器更新。[基准收据](../artifacts/state-progression-20260922/benchmark-v1/COMPLETED.json)。这证明所测长度在限制内，不代表最终完整数据或训练耗时已经验收。
 

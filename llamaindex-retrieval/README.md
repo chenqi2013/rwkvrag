@@ -121,3 +121,7 @@ Writer 提示词实验与 canonical 模板校正见 [第二轮报告](../docs/ar
 ## 自动联网与混合检索
 
 管理页默认由 SearchReader 的 1.5B StateTune 选择器判断是否补充网络材料；API 显式传 `retrieval_mode: "auto"` 启用。支持强制 knowledge_base / hybrid / web。详细配置、训练结果、部署与已知质量问题见 [混合检索交付报告](../docs/archive/2026-09/hybrid-search-20260919.md)。
+
+本仓库也提供可选的内置 Tavily 或 SearXNG 检索适配器，不需要另行安装 SearchReader 源码。复制 `.env.example` 后，设置 `RWKVRAG_WEB_SEARCH_PROVIDER=tavily` 与私有的 `RWKVRAG_WEB_TAVILY_API_KEY`，或设置 `RWKVRAG_WEB_SEARCH_PROVIDER=searxng` 与 `RWKVRAG_WEB_SEARXNG_BASE_URL`。这只配置网络材料来源；OpenSearch、MongoDB 和 RWKV 模型端点仍按上文部署。调用 `/v1/ask` 并传 `retrieval_mode: "web"` 可只用网络资料，传 `"hybrid"` 可合并网络和知识库资料。返回的网络原文快照、检索时间和来源仍在 trace 与引用面板中。
+
+`"auto"` 需要额外配置 `RWKVRAG_SEARCHREADER_ROUTER_BASE_URL`、`RWKVRAG_SEARCHREADER_ROUTER_MODEL`，以及模型服务需要时的 `RWKVRAG_WEB_ROUTER_API_KEY`；它让模型判断是否补网。选择器未配置或输出不合协议时会明确失败，不会改用关键词规则。现有 `WEB_SEARCH_PROVIDER=searchreader` 仍使用本地 SearchReader 项目和其已有配置。内置网络检索的单元与模拟传输测试已覆盖快照、引用身份和凭据不进入 trace；真实提供方与多项目端到端质量需要单独实测，不能从配置可用推断通过。
