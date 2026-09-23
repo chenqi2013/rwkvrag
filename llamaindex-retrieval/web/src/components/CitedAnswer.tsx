@@ -3,11 +3,13 @@ import { useState } from "react";
 import { useLanguage } from "../i18n";
 import type { AskResponse, SearchResult } from "../types";
 import { citationParts, citedSource, externalSourceUrl, savedContext, sourceLabels } from "../citations";
+import { formatAnswer } from "../answerFormat";
 import TaskMatrix from "./TaskMatrix";
 
-/** Presentation only: no answer changes, source renumbering or citation repair. */
+/** Keep the raw answer in the response; block unsafe display when format checks fail. */
 export default function CitedAnswer({ text, response }: { text: string; response: AskResponse }) {
   const { tr } = useLanguage();
+  const formatted = formatAnswer(text, response);
   const [selected, setSelected] = useState<{ id?: string; label?: number }>();
   const source = selected?.id ? response.sources.find(s => s.id === selected.id)
     : selected?.label !== undefined ? citedSource(response, selected.label) : undefined;
@@ -17,12 +19,18 @@ export default function CitedAnswer({ text, response }: { text: string; response
     ? tr("网络来源", "Web source") : tr("知识库来源", "Knowledge-base source");
   return <section className="cited-answer" aria-label={tr("答案与引用", "Answer and citations")}>
     <TaskMatrix response={response} onSource={id => setSelected({ id })} />
-    {text ? <Typography.Paragraph className="result-snippet answer-body" copyable={{ text }}>
-      {citationParts(text).map((part, i) => part.label === undefined ? part.text : <button
+    {formatted.blocked && <Alert type="warning" showIcon
+      title={tr("回答因引用或复读异常已从展示中隐藏", "Answer hidden from display due to citation or repetition errors")}
+      description={tr("模型原文仍可在下方展开核对；这里没有自动补引用或修改事实。", "Open the raw model answer below to inspect it. No citation or fact was repaired.")} />}
+    {formatted.text ? <Typography.Paragraph className="result-snippet answer-body" copyable={{ text: formatted.text }}>
+      {citationParts(formatted.text).map((part, i) => part.label === undefined ? part.text : <button
         type="button" key={i} className={`citation-link${citedSource(response, part.label) ? "" : " citation-missing"}`}
         aria-label={tr(`查看引用 ${part.label}`, `View citation ${part.label}`)}
         onClick={() => setSelected({ label: part.label })}>{part.text}</button>)}
-    </Typography.Paragraph> : <Typography.Text type="secondary">{tr("未提供可显示的答案正文。", "No answer body is available.")}</Typography.Text>}
+    </Typography.Paragraph> : !formatted.blocked && <Typography.Text type="secondary">{tr("未提供可显示的答案正文。", "No answer body is available.")}</Typography.Text>}
+    {formatted.blocked && text && <details><summary>{tr("查看未经转换的答案", "View unchanged answer")}</summary>
+      <Typography.Paragraph className="result-snippet raw-output" copyable={{ text }}>{text}</Typography.Paragraph>
+    </details>}
     <div className="citation-heading"><Typography.Title level={5}>{tr("引用原文", "Source evidence")} ({response.sources.length})</Typography.Title>
       <Typography.Text type="secondary">{tr("点击答案中的编号或下方来源，查看原文。编号对应关系不代表事实已核验。", "Click a citation or source to read its evidence. Citation mapping does not verify factual support.")}</Typography.Text></div>
     {!response.sources.length && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={tr("本次没有返回来源，无法展示引用原文。", "No sources were returned for this answer.")} />}

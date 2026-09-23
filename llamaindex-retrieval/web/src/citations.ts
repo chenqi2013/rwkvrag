@@ -13,7 +13,7 @@ export function citationParts(text: string) {
   return parts;
 }
 
-export function citedSource(response: AskResponse, label: number): SearchResult | undefined {
+export function citedSource(response: Pick<AskResponse, "sources" | "generation">, label: number): SearchResult | undefined {
   if (!Number.isSafeInteger(label) || label < 1) return undefined;
   const map = response.generation.citation_map;
   if (map !== undefined && map !== null) {

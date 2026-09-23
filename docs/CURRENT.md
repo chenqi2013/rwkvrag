@@ -10,6 +10,8 @@
 
 评测输入已按[冻结绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)准备为1710个成员、计划6840份零/训练State双轮原始回答：新24题、旧694题及来源分离的开发/留出992题。3项因原运行无Writer提示或输入超限标为不支持，成员仍保留。新24题批次已在GPU3启动；其成功且96份原文齐全后，[顺序执行器](../scripts/state_progression/run_eval_queue_v1.sh)再跑其余三个原样冻结批次。语义评分待全量原文及逐题审读；这些是固定证据评测，不是实时检索。
 
+2026-09-23新增[前端答案格式转换层](../llamaindex-retrieval/web/src/answerFormat.ts)：搜索、历史和Wiki共用展示组件在引用编号不存在、引用格式损坏或同一较长片段至少重复三次时，隐藏主答案并给出原因，原文可展开核对；API返回和历史原文不改。新题首份训练State原文试跑检出46个不存在的来源编号及复读，显示被拦下。这个层仅拦截可确定的格式异常，不能证明编号存在的引用确实支持结论，也不能识别所有语义幻觉；正式服务尚未部署此改动。
+
 另用当前诊断集做了三条完整样本的零更新速度/显存试验：最长7216 token前后向6.84秒、进程峰值reserved 28.63GB；1081 token 0.83秒、619 token 0.50秒，所有样本0次优化器更新。[基准收据](../artifacts/state-progression-20260922/benchmark-v1/COMPLETED.json)。这证明所测长度在限制内，不代表最终完整数据或训练耗时已经验收。
 
 [关联数据方案](../llamaindex-retrieval/statetune/progression-v2-20260922/PLAN.md)和[原子补充方案](../llamaindex-retrieval/statetune/progression-atomic-v3-20260922/PLAN.md)按来源族预先分集；同模型教师生成与复核都不算独立验收。历史失败只用于统计主要缺陷：事实与来源绑定、处理状态读解、回答收束；原始错误输出不改写成训练答案。详细生成/审读结果随新版本归档，旧运行保持不可变。
