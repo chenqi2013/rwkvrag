@@ -1,0 +1,1207 @@
+{
+  "protocol": "live-retrieval-complete-20260923-v1",
+  "sources": {
+    "eval/live-retrieval-20260923-v1/cases.json": "70d8b83fabf619fc3a98491869e960061053d39340f858ac2b2288d013d6e579",
+    "eval/live-retrieval-20260923-v2/cases.json": "e26178cb9413e1300aebef0842ffc396b75ca0495aff31214e7685ed0b1e2046",
+    "eval/github-natural-comparison-20260921/CASES.json": "9f4c14f296547cb23553fbfd4cd493e7afb392d374599911b0c03b86d623020f",
+    "eval/github-project-comparison-20260921/CASES.json": "c7f0af1412e6dbdbadf31551995fd5e2040c00864c8ef8650b72c262c55c162b",
+    "eval/live-comparison-20260921/CASES.json": "c99c9c935f54a82da908078feb3e1734b0476a4037436503801712bbc557b04c",
+    "eval/live-retrieval-complete-20260923-v1/NEW-CASES.json": "7d4fb77ec6f47d90873e0df9f51a8be8229cddb96f14ec1c80a2cf8a40ef8a0c"
+  },
+  "cases": [
+    {
+      "ordinal": 0,
+      "uid": "live-retrieval-20260923-v1:single_repo",
+      "source_suite": "live-retrieval-20260923-v1",
+      "source_id": "single_repo",
+      "question": "FastAPI 的官方 GitHub 仓库在哪里？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "single",
+      "objects": [
+        "fastapi"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 1,
+      "uid": "live-retrieval-20260923-v1:single_docs",
+      "source_suite": "live-retrieval-20260923-v1",
+      "source_id": "single_docs",
+      "question": "Qdrant 官方文档怎样介绍向量量化？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "single",
+      "objects": [
+        "qdrant"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 2,
+      "uid": "live-retrieval-20260923-v1:single_release",
+      "source_suite": "live-retrieval-20260923-v1",
+      "source_id": "single_release",
+      "question": "SGLang 最近一次 GitHub Release 的发布说明在哪里？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "single",
+      "objects": [
+        "sglang"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 3,
+      "uid": "live-retrieval-20260923-v1:compare_inference_3",
+      "source_suite": "live-retrieval-20260923-v1",
+      "source_id": "compare_inference_3",
+      "question": "vLLM、SGLang 和 llama.cpp 在部署方式、硬件需求和推理优化上分别适合什么场景？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "vllm",
+        "sglang",
+        "llama.cpp"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 4,
+      "uid": "live-retrieval-20260923-v1:compare_rag_3",
+      "source_suite": "live-retrieval-20260923-v1",
+      "source_id": "compare_rag_3",
+      "question": "RAGFlow、Dify 和 WeKnora 在文档解析、工作流和知识库维护方面有什么区别？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "ragflow",
+        "dify",
+        "weknora"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 5,
+      "uid": "live-retrieval-20260923-v1:compare_vector_3",
+      "source_suite": "live-retrieval-20260923-v1",
+      "source_id": "compare_vector_3",
+      "question": "Qdrant、Milvus 和 Weaviate 在本机小规模使用与分布式扩展上怎样选？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "qdrant",
+        "milvus",
+        "weaviate"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 6,
+      "uid": "live-retrieval-20260923-v1:compare_framework_3",
+      "source_suite": "live-retrieval-20260923-v1",
+      "source_id": "compare_framework_3",
+      "question": "LangChain、LlamaIndex 和 Haystack 做企业 RAG 时各自的强项和限制是什么？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "langchain",
+        "llamaindex",
+        "haystack"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 7,
+      "uid": "live-retrieval-20260923-v1:compare_storage_3",
+      "source_suite": "live-retrieval-20260923-v1",
+      "source_id": "compare_storage_3",
+      "question": "已有 PostgreSQL 的团队在 pgvector、Qdrant 和 Milvus 之间怎样选，特别是千万级向量？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "pgvector",
+        "qdrant",
+        "milvus"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 8,
+      "uid": "live-retrieval-20260923-v1:compare_apps_4",
+      "source_suite": "live-retrieval-20260923-v1",
+      "source_id": "compare_apps_4",
+      "question": "Open WebUI、AnythingLLM、RAGFlow 和 Dify 用作个人本地知识库时有哪些实际区别？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "open webui",
+        "anythingllm",
+        "ragflow",
+        "dify"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 9,
+      "uid": "live-retrieval-20260923-v1:compare_cache_2",
+      "source_suite": "live-retrieval-20260923-v1",
+      "source_id": "compare_cache_2",
+      "question": "vLLM 与 SGLang 在前缀缓存、结构化输出和多用户并发上的差异，官方材料分别怎么说？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "vllm",
+        "sglang"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 10,
+      "uid": "live-retrieval-20260923-v1:compare_wiki_2",
+      "source_suite": "live-retrieval-20260923-v1",
+      "source_id": "compare_wiki_2",
+      "question": "WeKnora 和 RAGFlow 在自动 Wiki、知识更新和引用展示方面有什么区别？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "weknora",
+        "ragflow"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 11,
+      "uid": "live-retrieval-20260923-v2:vllm",
+      "source_suite": "live-retrieval-20260923-v2",
+      "source_id": "vllm",
+      "question": "vLLM 官方文档怎样介绍在线部署和前缀缓存？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": null
+    },
+    {
+      "ordinal": 12,
+      "uid": "live-retrieval-20260923-v2:sglang",
+      "source_suite": "live-retrieval-20260923-v2",
+      "source_id": "sglang",
+      "question": "SGLang 官方文档怎样介绍在线部署和前缀缓存？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": null
+    },
+    {
+      "ordinal": 13,
+      "uid": "live-retrieval-20260923-v2:llama_cpp",
+      "source_suite": "live-retrieval-20260923-v2",
+      "source_id": "llama_cpp",
+      "question": "llama.cpp 官方仓库怎样介绍 CPU、GPU 和量化推理？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": null
+    },
+    {
+      "ordinal": 14,
+      "uid": "live-retrieval-20260923-v2:ragflow",
+      "source_suite": "live-retrieval-20260923-v2",
+      "source_id": "ragflow",
+      "question": "RAGFlow 官方文档怎样介绍 PDF 解析和引用？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": null
+    },
+    {
+      "ordinal": 15,
+      "uid": "live-retrieval-20260923-v2:dify",
+      "source_suite": "live-retrieval-20260923-v2",
+      "source_id": "dify",
+      "question": "Dify 官方文档怎样介绍工作流和知识库？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": null
+    },
+    {
+      "ordinal": 16,
+      "uid": "live-retrieval-20260923-v2:weknora",
+      "source_suite": "live-retrieval-20260923-v2",
+      "source_id": "weknora",
+      "question": "WeKnora 官方仓库怎样介绍自动 Wiki 和知识更新？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": null
+    },
+    {
+      "ordinal": 17,
+      "uid": "github-natural-comparison-20260921:rag-products",
+      "source_suite": "github-natural-comparison-20260921",
+      "source_id": "rag-products",
+      "question": "RAGFlow 和 Dify 哪个好？WeKnora、AnythingLLM、Open WebUI 也一起看看，我们公司想做个知识库。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 18,
+      "uid": "github-natural-comparison-20260921:agent-frameworks",
+      "source_suite": "github-natural-comparison-20260921",
+      "source_id": "agent-frameworks",
+      "question": "LangGraph、LlamaIndex、Haystack、AutoGen、CrewAI 到底怎么选？我们人不多，想做个能查公司资料、也能上网查资料的助手，碰到说法不一致最好还能继续查。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 19,
+      "uid": "github-natural-comparison-20260921:document-parsers",
+      "source_suite": "github-natural-comparison-20260921",
+      "source_id": "document-parsers",
+      "question": "Docling、Marker、MinerU、PaddleOCR、Unstructured 哪个处理文档更好？我们主要是中文扫描 PDF，也有双栏论文、表格和办公文件，要拿来做知识库。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 20,
+      "uid": "github-natural-comparison-20260921:vector-backends",
+      "source_suite": "github-natural-comparison-20260921",
+      "source_id": "vector-backends",
+      "question": "pgvector、Qdrant、Milvus、Weaviate、OpenSearch，做公司的知识库用哪个好？先小范围试，后面人会多，文档也经常更新，不同人能看的资料还不一样。我们不想维护太复杂。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 21,
+      "uid": "github-natural-comparison-20260921:llm-serving",
+      "source_suite": "github-natural-comparison-20260921",
+      "source_id": "llm-serving",
+      "question": "Ollama、llama.cpp、vLLM、SGLang 有什么区别？我先在自己电脑上用，以后可能放到一台 GPU 服务器上给同事一起用，该怎么选？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 22,
+      "uid": "github-natural-comparison-20260921:knowledge-maintenance",
+      "source_suite": "github-natural-comparison-20260921",
+      "source_id": "knowledge-maintenance",
+      "question": "WeKnora、RAGFlow、Dify、AnythingLLM、FastGPT，哪个更适合长期管公司的知识？我想整理成 Wiki，能查原文，文档改了别还答旧内容，人工改过的也能找到历史版本。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 23,
+      "uid": "github-natural-comparison-20260921:rag-offline-followup",
+      "source_suite": "github-natural-comparison-20260921",
+      "source_id": "rag-offline-followup",
+      "question": "我们只有一台服务器，16GB 显存，资料不能传出去，中文扫描件和表格挺多，维护的人也不多。那刚才这几个，你还会这么选吗？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": "github-natural-comparison-20260921:rag-products",
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 24,
+      "uid": "github-natural-comparison-20260921:rag-six-projects-followup",
+      "source_suite": "github-natural-comparison-20260921",
+      "source_id": "rag-six-projects-followup",
+      "question": "FastGPT 也加进来看看。Wiki 先不做了，最重要是能查到回答的原文，文档更新后别答旧的。前面说的机器和离线要求不变，最后先试哪两个？怎么试？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": "github-natural-comparison-20260921:rag-offline-followup",
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 25,
+      "uid": "github-project-comparison-20260921:rag-products",
+      "source_suite": "github-project-comparison-20260921",
+      "source_id": "rag-products",
+      "question": "RAGFlow 比 Dify 好在哪里？再把 WeKnora、AnythingLLM、Open WebUI 一起比较一下。我们要给公司做内部知识库助手，主要处理文档、回答问题和核查引用。不要只列功能清单，请讲清各自真正的优势、短板、适合谁，以及你会先试哪两个、为什么。请联网看 GitHub 和官方文档，关键比较给可核查来源。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 26,
+      "uid": "github-project-comparison-20260921:agent-frameworks",
+      "source_suite": "github-project-comparison-20260921",
+      "source_id": "agent-frameworks",
+      "question": "LangGraph、LlamaIndex、Haystack、AutoGen、CrewAI 这几个 GitHub 项目到底怎么选？我们想做一个会查知识库、联网找补充资料、遇到矛盾会继续查证的研究助手。请比较它们的定位、检索与多步推理能力、状态和流程控制、调试成本，讲清哪些能替代、哪些反而适合组合。最后给一个适合小团队起步的方案，说明取舍。请查当前官方资料并引用。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 27,
+      "uid": "github-project-comparison-20260921:document-parsers",
+      "source_suite": "github-project-comparison-20260921",
+      "source_id": "document-parsers",
+      "question": "Docling、Marker、MinerU、PaddleOCR、Unstructured 这几个文档处理项目谁更适合给 RAG 做前处理？我们的材料有中文扫描 PDF、双栏论文、复杂表格和普通办公文档。请联网对比 GitHub 和官方资料，区分 OCR、阅读顺序、表格结构、离线部署和额外模型依赖，给出实际选型路线。没有同一测试集的数据就不要编一个准确率排名。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 28,
+      "uid": "github-project-comparison-20260921:vector-backends",
+      "source_suite": "github-project-comparison-20260921",
+      "source_id": "vector-backends",
+      "question": "给一个会持续更新的企业知识库选检索底座，pgvector、Qdrant、Milvus、Weaviate、OpenSearch 各好在哪里？我关心的不只是向量速度，还有全文与向量混合检索、租户和权限过滤、数据更新、备份、故障恢复和运维复杂度。请看各项目当前官方资料，给出从单机试点到多用户服务的选择建议，解释为什么不一定越复杂越好，并引用依据。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 29,
+      "uid": "github-project-comparison-20260921:llm-serving",
+      "source_suite": "github-project-comparison-20260921",
+      "source_id": "llm-serving",
+      "question": "Ollama、llama.cpp、vLLM、SGLang 这几个开源推理项目，我应该选哪个？从个人电脑开发，到一台 GPU 服务器支持多个用户，分别比较使用门槛、模型支持和量化、并发与显存取舍、API 接入和维护成本。请查 GitHub 和官方文档，讲清“运行管理工具”和“推理引擎”之间的关系；没有同模型同硬件测试不要直接断言谁最快。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 30,
+      "uid": "github-project-comparison-20260921:knowledge-maintenance",
+      "source_suite": "github-project-comparison-20260921",
+      "source_id": "knowledge-maintenance",
+      "question": "WeKnora、RAGFlow、Dify、AnythingLLM、FastGPT 里，谁更适合做一个长期维护的团队知识系统？我不只是想上传文件聊天，还想把内容整理成主题 Wiki，能看引用，文档更新后知道哪些结论过期，允许人工修改和追踪版本。请实际查各项目官方资料，比较哪些已明确支持、哪些要自己开发、哪些资料没有说明，给出有理由的优先试用顺序。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 31,
+      "uid": "github-project-comparison-20260921:rag-offline-followup",
+      "source_suite": "github-project-comparison-20260921",
+      "source_id": "rag-offline-followup",
+      "question": "补充一下：只有一台服务器、16GB 显存，文档不能发给外部模型，扫描件和中文表格比较多，而且维护的人不多。根据这些条件重新审视上面的几个项目：哪些建议应该调整？别把某项目支持本地模型就说成所有解析步骤都已经离线，也别在没有证据时保证这台机器一定跑得动。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": "github-project-comparison-20260921:rag-products",
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 32,
+      "uid": "github-project-comparison-20260921:rag-six-projects-followup",
+      "source_suite": "github-project-comparison-20260921",
+      "source_id": "rag-six-projects-followup",
+      "question": "再把 FastGPT 加进来，一共六个项目重新比较。我们现在优先保证回答能回到原文核查，第二是更新文档后别继续答旧知识，自动 Wiki 暂时不做。请沿用刚才的离线和硬件限制，给出最终两个候选和试点验证清单，解释为什么其他几个暂不优先。如果关键资料没查到就明确留空，不要凭印象补齐。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": "github-project-comparison-20260921:rag-offline-followup",
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "全部项目覆盖且不串用功能与来源",
+        "围绕用户目标说明相对优势、代价、适用范围与组合关系",
+        "区分明确支持、需额外集成、未说明和版本限制",
+        "有证据的比较结论与条件化建议，不编性能排名",
+        "多轮保留最新条件并撤回过期建议",
+        "无持续复读，关键引用可回到实际选中原文"
+      ]
+    },
+    {
+      "ordinal": 33,
+      "uid": "live-comparison-20260921:rag-platforms",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "rag-platforms",
+      "question": "请联网比较 Tencent WeKnora 与 RAGFlow 对扫描PDF、表格文档和引用溯源的支持。我们准备自托管内部知识库，不允许上传文档给外部模型，只有一台服务器；请区分项目已声明的能力、需要配置的模型或组件、资料未说明的硬件条件，给出有条件的选型建议。优先查 github.com/Tencent/WeKnora 与 ragflow.io 官方资料，不要凭宣传语推断具体质量。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 34,
+      "uid": "live-comparison-20260921:pgvector-indexes",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "pgvector-indexes",
+      "question": "请查 github.com/pgvector/pgvector 的官方说明，对比 HNSW 和 IVFFlat：索引构建、内存、是否需要训练、查询速度与召回的取舍。我的数据会持续新增，查询通常带租户过滤；为什么建了近似索引仍可能返回不足K条，iterative scans能解决到什么程度？给出选型建议并说明版本条件，不能把默认精确搜索和近似搜索混为一谈。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 35,
+      "uid": "live-comparison-20260921:sqlite-journals",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "sqlite-journals",
+      "question": "根据 sqlite.org 官方文档比较 WAL 与 rollback journal。场景是三台机器通过共享网络文件系统同时访问同一个数据库，要求读写并发。WAL是否适合，切回rollback journal是否就能保证可靠？请解释读者与写者、单写者限制及网络文件系统风险，并提出可行部署方式。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 36,
+      "uid": "live-comparison-20260921:postgres-text-index",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "postgres-text-index",
+      "question": "根据 postgresql.org 官方文档，对比 PostgreSQL全文检索中的GIN与GiST索引。我们有频繁更新的长文档，要降低误匹配复核开销；请解释两种索引保存信息的差异、lossy签名的影响、写入与查询取舍，以及能否只凭文档就断言某方案延迟更低。不要与pg_trgm相似度排序的索引结论混淆。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 37,
+      "uid": "live-comparison-20260921:milvus-deployment",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "milvus-deployment",
+      "question": "请联网查 milvus.io 和 github.com/milvus-io 的官方资料，比较 Milvus Lite、Standalone、Distributed：部署形态、API迁移和功能限制。我们从笔记本上的单进程原型迁移到多客户端服务，后续要求高可用。哪一阶段适合哪种部署？请区分已验证的版本限制和泛泛的规模建议，不要把本地文件模式当成分布式服务。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 38,
+      "uid": "live-comparison-20260921:qdrant-replication",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "qdrant-replication",
+      "question": "请查 qdrant.tech 官方文档，对比单节点与分布式Qdrant部署。我们希望一台机器故障后仍可读写，至少需要关注副本因子、写一致性和分片分布中的哪些设置？为什么把节点数增加到3不自动等于每份数据有3个副本？请说明可用性与一致性的取舍，引用对应原文。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 39,
+      "uid": "live-comparison-20260921:opensearch-fusion",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "opensearch-fusion",
+      "question": "请查 docs.opensearch.org 官方文档，对比混合检索中的分数归一化组合与RRF排名融合。BM25和向量分数尺度不同、某文档只出现在一路结果时，两种方法如何处理？各需要哪些search pipeline配置及版本条件？我没有标注集，能否直接断言RRF效果更好？请给可执行的验证步骤。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 40,
+      "uid": "live-comparison-20260921:container-secrets",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "container-secrets",
+      "question": "请查 docs.docker.com 官方文档，对比Docker Compose的secrets与Docker Swarm的secrets。在单机Compose里把密码改成secrets后，是否自动获得Swarm相同的加密存储和分发保证？请解释来源文件、容器挂载、授权范围、更新或轮换方式的区别，并给出单机部署的实际建议。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 41,
+      "uid": "live-comparison-20260921:ocr-documents",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "ocr-documents",
+      "question": "请查 github.com/tesseract-ocr/tesseract 与 github.com/PaddlePaddle/PaddleOCR 的官方资料，比较Tesseract与PaddleOCR用于中文扫描PDF和复杂表格的能力。我们只能离线部署，初期仅CPU；请区分文字识别、版面分析、表格结构恢复以及额外模型下载，不能只凭识别支持中文就认定能完整还原表格。给出试点选择和仍需实测的质量指标。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 42,
+      "uid": "live-comparison-20260921:weknora-wiki",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "weknora-wiki",
+      "question": "请联网查 github.com/Tencent/WeKnora 当前公开文档，比较普通文档RAG与自动Wiki两种使用方式。来源文档更新后，Wiki更新、来源依赖、人工编辑和版本回滚分别有什么公开证据？如果文档只说明有这些功能，没有说明失败恢复或一致性保证，请明确区分，不能自行补成已商业验收。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 43,
+      "uid": "live-comparison-20260921:project-comparison",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "project-comparison",
+      "question": "请先检索知识库中RWKVRAG项目文档，再联网查 github.com/Tencent/WeKnora 官方资料，对比两者的检索方式、证据引用边界和自动Wiki能力。明确区分知识库所存文档的设计或声明与当前真实部署状态；没有部署证据的项目不能写成已上线。最后指出我们下一步最值得验证的两个差距。",
+      "retrieval_mode": "hybrid",
+      "knowledge_base_id": "3e72c8b78f84423782a09d8ae0e3455b",
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 44,
+      "uid": "live-comparison-20260921:project-training",
+      "source_suite": "live-comparison-20260921",
+      "source_id": "project-training",
+      "question": "请检索知识库中的StateTune数据构建与训练方法，再联网查 github.com/pgvector/pgvector 官方资料，比较“调整模型State”和“改进检索索引”各能解决什么问题。场景是租户过滤后漏检资料，同时模型会重复比较并引用错误。请把证据覆盖、条件判断和最终写作分开，说明为何单独训练或单独更换索引不能保证完整回答可靠。",
+      "retrieval_mode": "hybrid",
+      "knowledge_base_id": "e5725a3b5f0b448589699b4a9141d216",
+      "parent_uid": null,
+      "history": [],
+      "kind": null,
+      "objects": null,
+      "rubric": [
+        "回答全部请求的比较维度与限定，必要时允许有依据的未决结论",
+        "重要断言由实际选中的来源支持，引用可定位；不拿未知当否定",
+        "区分版本、适用范围、设计声明与实测，不编造吞吐/准确率",
+        "有用的取舍结论和下一步，不持续复述、不违反硬条件"
+      ]
+    },
+    {
+      "ordinal": 45,
+      "uid": "live-retrieval-complete-20260923-v1:new_fastapi_docs",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_fastapi_docs",
+      "question": "FastAPI 的官方文档和代码仓库分别在哪？给我能点开的来源。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "single",
+      "objects": [
+        "FastAPI"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 46,
+      "uid": "live-retrieval-complete-20260923-v1:new_weknora_wiki",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_weknora_wiki",
+      "question": "WeKnora 自己的项目资料怎么介绍自动 Wiki？我想先看它的官方说明。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "single",
+      "objects": [
+        "WeKnora"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 47,
+      "uid": "live-retrieval-complete-20260923-v1:new_pgvector_install",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_pgvector_install",
+      "question": "pgvector 的官方安装说明在哪里？PostgreSQL 已装好。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "single",
+      "objects": [
+        "pgvector"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 48,
+      "uid": "live-retrieval-complete-20260923-v1:new_sglang_release",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_sglang_release",
+      "question": "SGLang 最近的发布说明在哪个官方页面？先给我出处，别猜版本号。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "single",
+      "objects": [
+        "SGLang"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 49,
+      "uid": "live-retrieval-complete-20260923-v1:new_inference_cpu",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_inference_cpu",
+      "question": "我只有一台没独显的电脑，想本地跑模型。Ollama、llama.cpp、vLLM 哪个更适合？分别说说限制。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "Ollama",
+        "llama.cpp",
+        "vLLM"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 50,
+      "uid": "live-retrieval-complete-20260923-v1:new_inference_server",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_inference_server",
+      "question": "如果要给团队部署在线模型接口，vLLM、SGLang、llama.cpp 各有什么实际取舍？不要只比较跑分。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "vLLM",
+        "SGLang",
+        "llama.cpp"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 51,
+      "uid": "live-retrieval-complete-20260923-v1:new_rag_three",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_rag_three",
+      "question": "RAGFlow、Dify、WeKnora 哪个更适合处理公司扫描 PDF，再做可追溯的知识库问答？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "RAGFlow",
+        "Dify",
+        "WeKnora"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 52,
+      "uid": "live-retrieval-complete-20260923-v1:new_rag_five",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_rag_five",
+      "question": "我想离线给十个人用知识库，Open WebUI、AnythingLLM、Dify、RAGFlow、WeKnora 怎么选？哪些能力需要另装组件？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "Open WebUI",
+        "AnythingLLM",
+        "Dify",
+        "RAGFlow",
+        "WeKnora"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 53,
+      "uid": "live-retrieval-complete-20260923-v1:new_vector_four",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_vector_four",
+      "question": "已经在用 PostgreSQL，又可能涨到千万条向量。pgvector、Qdrant、Milvus、Weaviate 各适合什么阶段？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "pgvector",
+        "Qdrant",
+        "Milvus",
+        "Weaviate"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 54,
+      "uid": "live-retrieval-complete-20260923-v1:new_framework_three",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_framework_three",
+      "question": "做一个能检索文件、调用工具的助手，LangChain、LlamaIndex 和 Haystack 哪个更容易长期维护？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "LangChain",
+        "LlamaIndex",
+        "Haystack"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 55,
+      "uid": "live-retrieval-complete-20260923-v1:new_search_four",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_search_four",
+      "question": "站内搜索要支持中文、筛选和少量语义检索，OpenSearch、Elasticsearch、Meilisearch、Typesense 应怎么挑？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "OpenSearch",
+        "Elasticsearch",
+        "Meilisearch",
+        "Typesense"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 56,
+      "uid": "live-retrieval-complete-20260923-v1:new_analytics_three",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_analytics_three",
+      "question": "日志和业务数据要做分析，DuckDB、ClickHouse、PostgreSQL 分别适合什么规模和维护方式？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "DuckDB",
+        "ClickHouse",
+        "PostgreSQL"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 57,
+      "uid": "live-retrieval-complete-20260923-v1:new_proxy_three",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_proxy_three",
+      "question": "个人服务器部署几个网站，Caddy、Traefik、Nginx 用哪个省事？证书和动态服务发现也要考虑。",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "Caddy",
+        "Traefik",
+        "Nginx"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 58,
+      "uid": "live-retrieval-complete-20260923-v1:new_local_db_three",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_local_db_three",
+      "question": "自动维护一个小团队 Wiki，用 SQLite、PostgreSQL 还是 MongoDB 存版本和任务状态比较稳妥？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "SQLite",
+        "PostgreSQL",
+        "MongoDB"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 59,
+      "uid": "live-retrieval-complete-20260923-v1:new_wiki_conflict",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_wiki_conflict",
+      "question": "WeKnora 和 RAGFlow 都说能做知识库。自动生成 Wiki、资料更新、答案引用这三件事各自做到哪一步？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "WeKnora",
+        "RAGFlow"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 60,
+      "uid": "live-retrieval-complete-20260923-v1:new_retrieval_hybrid",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_retrieval_hybrid",
+      "question": "我们本地知识库里有项目经验文档。结合它和公开资料，比较 WeKnora、RAGFlow、Dify 的文档处理与引用能力。",
+      "retrieval_mode": "hybrid",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "WeKnora",
+        "RAGFlow",
+        "Dify"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 61,
+      "uid": "live-retrieval-complete-20260923-v1:new_local_vs_web",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_local_vs_web",
+      "question": "本地资料可能过时。请同时看知识库和网络，比较 vLLM 与 SGLang 现在的部署要求，标出来源日期或版本。",
+      "retrieval_mode": "hybrid",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "vLLM",
+        "SGLang"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 62,
+      "uid": "live-retrieval-complete-20260923-v1:new_auto_compare",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_auto_compare",
+      "question": "GitHub 上的 WeKnora、RAGFlow 和 Dify 最近各自有什么主要能力？给我可核查的来源。",
+      "retrieval_mode": "auto",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "WeKnora",
+        "RAGFlow",
+        "Dify"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 63,
+      "uid": "live-retrieval-complete-20260923-v1:new_auto_single",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_auto_single",
+      "question": "llama.cpp 的官方仓库在哪里？",
+      "retrieval_mode": "auto",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "single",
+      "objects": [
+        "llama.cpp"
+      ],
+      "rubric": null
+    },
+    {
+      "ordinal": 64,
+      "uid": "live-retrieval-complete-20260923-v1:new_six_projects",
+      "source_suite": "live-retrieval-complete-20260923-v1",
+      "source_id": "new_six_projects",
+      "question": "团队要做私有 RAG，WeKnora、RAGFlow、Dify、AnythingLLM、Open WebUI、Haystack 各管哪一层？如果只先试两个，你会怎么选？",
+      "retrieval_mode": "web",
+      "knowledge_base_id": null,
+      "parent_uid": null,
+      "history": [],
+      "kind": "compare",
+      "objects": [
+        "WeKnora",
+        "RAGFlow",
+        "Dify",
+        "AnythingLLM",
+        "Open WebUI",
+        "Haystack"
+      ],
+      "rubric": null
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {"id":"new_fastapi_docs","kind":"single","retrieval_mode":"web","question":"FastAPI 的官方文档和代码仓库分别在哪？给我能点开的来源。","objects":["FastAPI"]},
+  {"id":"new_weknora_wiki","kind":"single","retrieval_mode":"web","question":"WeKnora 自己的项目资料怎么介绍自动 Wiki？我想先看它的官方说明。","objects":["WeKnora"]},
+  {"id":"new_pgvector_install","kind":"single","retrieval_mode":"web","question":"pgvector 的官方安装说明在哪里？PostgreSQL 已装好。","objects":["pgvector"]},
+  {"id":"new_sglang_release","kind":"single","retrieval_mode":"web","question":"SGLang 最近的发布说明在哪个官方页面？先给我出处，别猜版本号。","objects":["SGLang"]},
+  {"id":"new_inference_cpu","kind":"compare","retrieval_mode":"web","question":"我只有一台没独显的电脑，想本地跑模型。Ollama、llama.cpp、vLLM 哪个更适合？分别说说限制。","objects":["Ollama","llama.cpp","vLLM"]},
+  {"id":"new_inference_server","kind":"compare","retrieval_mode":"web","question":"如果要给团队部署在线模型接口，vLLM、SGLang、llama.cpp 各有什么实际取舍？不要只比较跑分。","objects":["vLLM","SGLang","llama.cpp"]},
+  {"id":"new_rag_three","kind":"compare","retrieval_mode":"web","question":"RAGFlow、Dify、WeKnora 哪个更适合处理公司扫描 PDF，再做可追溯的知识库问答？","objects":["RAGFlow","Dify","WeKnora"]},
+  {"id":"new_rag_five","kind":"compare","retrieval_mode":"web","question":"我想离线给十个人用知识库，Open WebUI、AnythingLLM、Dify、RAGFlow、WeKnora 怎么选？哪些能力需要另装组件？","objects":["Open WebUI","AnythingLLM","Dify","RAGFlow","WeKnora"]},
+  {"id":"new_vector_four","kind":"compare","retrieval_mode":"web","question":"已经在用 PostgreSQL，又可能涨到千万条向量。pgvector、Qdrant、Milvus、Weaviate 各适合什么阶段？","objects":["pgvector","Qdrant","Milvus","Weaviate"]},
+  {"id":"new_framework_three","kind":"compare","retrieval_mode":"web","question":"做一个能检索文件、调用工具的助手，LangChain、LlamaIndex 和 Haystack 哪个更容易长期维护？","objects":["LangChain","LlamaIndex","Haystack"]},
+  {"id":"new_search_four","kind":"compare","retrieval_mode":"web","question":"站内搜索要支持中文、筛选和少量语义检索，OpenSearch、Elasticsearch、Meilisearch、Typesense 应怎么挑？","objects":["OpenSearch","Elasticsearch","Meilisearch","Typesense"]},
+  {"id":"new_analytics_three","kind":"compare","retrieval_mode":"web","question":"日志和业务数据要做分析，DuckDB、ClickHouse、PostgreSQL 分别适合什么规模和维护方式？","objects":["DuckDB","ClickHouse","PostgreSQL"]},
+  {"id":"new_proxy_three","kind":"compare","retrieval_mode":"web","question":"个人服务器部署几个网站，Caddy、Traefik、Nginx 用哪个省事？证书和动态服务发现也要考虑。","objects":["Caddy","Traefik","Nginx"]},
+  {"id":"new_local_db_three","kind":"compare","retrieval_mode":"web","question":"自动维护一个小团队 Wiki，用 SQLite、PostgreSQL 还是 MongoDB 存版本和任务状态比较稳妥？","objects":["SQLite","PostgreSQL","MongoDB"]},
+  {"id":"new_wiki_conflict","kind":"compare","retrieval_mode":"web","question":"WeKnora 和 RAGFlow 都说能做知识库。自动生成 Wiki、资料更新、答案引用这三件事各自做到哪一步？","objects":["WeKnora","RAGFlow"]},
+  {"id":"new_retrieval_hybrid","kind":"compare","retrieval_mode":"hybrid","question":"我们本地知识库里有项目经验文档。结合它和公开资料，比较 WeKnora、RAGFlow、Dify 的文档处理与引用能力。","objects":["WeKnora","RAGFlow","Dify"]},
+  {"id":"new_local_vs_web","kind":"compare","retrieval_mode":"hybrid","question":"本地资料可能过时。请同时看知识库和网络，比较 vLLM 与 SGLang 现在的部署要求，标出来源日期或版本。","objects":["vLLM","SGLang"]},
+  {"id":"new_auto_compare","kind":"compare","retrieval_mode":"auto","question":"GitHub 上的 WeKnora、RAGFlow 和 Dify 最近各自有什么主要能力？给我可核查的来源。","objects":["WeKnora","RAGFlow","Dify"]},
+  {"id":"new_auto_single","kind":"single","retrieval_mode":"auto","question":"llama.cpp 的官方仓库在哪里？","objects":["llama.cpp"]},
+  {"id":"new_six_projects","kind":"compare","retrieval_mode":"web","question":"团队要做私有 RAG，WeKnora、RAGFlow、Dify、AnythingLLM、Open WebUI、Haystack 各管哪一层？如果只先试两个，你会怎么选？","objects":["WeKnora","RAGFlow","Dify","AnythingLLM","Open WebUI","Haystack"]}
+]
