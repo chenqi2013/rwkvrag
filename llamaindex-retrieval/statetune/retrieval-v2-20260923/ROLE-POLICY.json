@@ -1,0 +1,33 @@
+{
+  "schema": "retrieval_source_role_policy_v1",
+  "reject": {
+    "coroot/coroot": "APM product, not a log collection pipeline",
+    "agronholm/apscheduler": "scheduler without a distributed task queue",
+    "lfnovo/open-notebook": "research assistant, not a general note-taking application",
+    "BrowserMCP/mcp": "browser automation server, not a browser extension"
+  },
+  "cohorts": {
+    "static_site_generators": {"role": "website_generation", "comparison_rule": "Compare publication/build needs; do not assume every framework is static-only."},
+    "code_editors": {"role": "code_editing", "comparison_rule": "Platform and interface differences must be conditions, not assumed shared features."},
+    "package_managers": {"role": "package_management", "comparison_rule": "Ask about language or operating-system fit; cross-ecosystem projects are not drop-in substitutes."},
+    "game_engines": {"role": "game_development", "comparison_rule": "Keep target language, runtime, and deployment platform explicit."},
+    "backup_tools": {"role": "backup_and_recovery", "comparison_rule": "Specify workload (files, database, Kubernetes, game saves); do not invent shared database features."},
+    "build_systems": {"role": "build_automation", "comparison_rule": "Specify language and monorepo or single-project scope."},
+    "message_brokers": {"role": "message_brokering", "comparison_rule": "Specify protocol and deployment conditions; never assume AMQP and MQTT are interchangeable."},
+    "api_gateways": {"role": "api_gateway", "comparison_rule": "Distinguish gateway runtime, framework integration, and protocol support."},
+    "ocr_tools": {"role": "optical_character_recognition", "comparison_rule": "Specify document type, language, runtime, and whether extraction or searchable-PDF output is needed."},
+    "javascript_testing": {"role": "javascript_testing", "comparison_rule": "Distinguish unit testing from browser end-to-end testing."},
+    "search_cli": {"role": "developer_search", "comparison_rule": "Distinguish text, structural, filename, and fuzzy search; do not assume identical search semantics."},
+    "database_clients": {"role": "database_client", "comparison_rule": "Specify database engine, desktop/browser/terminal environment, and query workflow."},
+    "serverless_platforms": {"role": "serverless_deployment", "comparison_rule": "Distinguish hosting platform from its CLI or framework; ask about deployment fit."},
+    "log_collectors": {"role": "telemetry_collection", "comparison_rule": "Specify logs, metrics, traces, processing, and sink requirements separately."},
+    "reverse_proxies": {"role": "reverse_proxy", "comparison_rule": "Specify HTTP/TCP, service discovery, configuration model, and edge deployment."},
+    "task_queues": {"role": "background_job_queue", "comparison_rule": "Specify runtime and broker/storage constraints; scheduling alone is not queueing."},
+    "music_players": {"role": "music_playback", "comparison_rule": "Specify desktop/mobile/self-hosted playback context."},
+    "geospatial_tools": {"role": "geospatial_software", "comparison_rule": "Distinguish visualization, spatial analysis, routing, and geofencing."},
+    "localization_tools": {"role": "software_localization", "comparison_rule": "Specify framework and whether translation, message formatting, or asset generation is needed."},
+    "note_apps": {"role": "note_taking", "comparison_rule": "Specify local, self-hosted, collaboration, and encryption requirements."},
+    "home_automation": {"role": "home_automation", "comparison_rule": "Distinguish controller, camera analysis, energy charging, and device integration."},
+    "browser_extensions": {"role": "browser_extension", "comparison_rule": "Distinguish end-user extension from extension framework and browser automation server."}
+  }
+}

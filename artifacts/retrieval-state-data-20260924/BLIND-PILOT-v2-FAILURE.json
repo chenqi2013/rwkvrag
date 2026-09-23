@@ -1,0 +1,21 @@
+{
+  "schema": "retrieval_blind_prompt_v2_failure",
+  "run_sha256": "ab820eb62627b50d2e3623727d99f0cc43ca66f11cef3db01ec832643a40a9b5",
+  "summary_sha256": "a43d0ecb78cd5829806ec22ae4ce860a7683ddf468d75f3dba5b6d0936626293",
+  "result_files_sha256": "65c0162c31b0ff60b2397df5d6b531202137e3eeeb830d8d02b431e224eacfd4",
+  "attempted_jobs": 16,
+  "possible_rows": 128,
+  "structural_plans": 24,
+  "bound_questions": 15,
+  "failure_counters": {
+    "condition_not_array": 80,
+    "query_not_object": 64,
+    "question_label_omitted": 9
+  },
+  "kinds": {
+    "ordinary": 15
+  },
+  "frozen_blind_set": false,
+  "training_started": false,
+  "status": "failed_format_contract; retained for diagnosis only"
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "retrieval_source_cohorts_v2",
+  "review_status": "author_curated_source_roles; semantic_question_review_pending",
+  "train": {
+    "static_site_generators": ["gohugoio/hugo", "jekyll/jekyll", "hexojs/hexo", "vuejs/vuepress", "mkdocs/mkdocs", "shuding/nextra", "jackyzha0/quartz", "gridsome/gridsome"],
+    "code_editors": ["lapce/lapce", "CodeEditApp/CodeEdit", "crynta/terax-ai", "Acode-Foundation/Acode", "lite-xl/lite-xl", "apache/netbeans", "Sidenai/sidex", "SpartanJ/ecode"],
+    "package_managers": ["Homebrew/brew", "pnpm/pnpm", "composer/composer", "microsoft/vcpkg", "microsoft/winget-cli", "conda/conda", "mamba-org/mamba", "r-lib/pak"],
+    "game_engines": ["godotengine/godot", "bevyengine/bevy", "BabylonJS/Babylon.js", "libgdx/libgdx", "hajimehoshi/ebiten", "flame-engine/flame", "playcanvas/engine", "Defold/defold"],
+    "backup_tools": ["restic/restic", "kopia/kopia", "velero-io/velero", "databasus/databasus", "mtkennerly/ludusavi", "spatie/laravel-backup", "backup/backup", "rclone/rclone"],
+    "build_systems": ["vercel/turborepo", "nrwl/nx", "bazelbuild/bazel", "earthly/earthly", "moonrepo/moon", "pantsbuild/pants", "thought-machine/please", "com-lihaoyi/mill"],
+    "message_brokers": ["cloudamqp/lavinmq", "rmqtt/rmqtt", "kubemq-io/kubemq-community", "valinurovam/garagemq", "absmach/fluxmq", "apache/pulsar", "nats-io/nats-server", "apache/rocketmq"],
+    "api_gateways": ["Kong/kong", "apache/apisix", "higress-group/higress", "apache/shenyu", "ThreeMammals/Ocelot", "kgateway-dev/kgateway", "easegress-io/easegress", "spring-cloud/spring-cloud-gateway"],
+    "ocr_tools": ["PaddlePaddle/PaddleOCR", "tesseract-ocr/tesseract", "hiroi-sora/Umi-OCR", "naptha/tesseract.js", "JaidedAI/EasyOCR", "mindee/doctr", "sml2h3/ddddocr", "datalab-to/chandra"],
+    "javascript_testing": ["mochajs/mocha", "avajs/ava", "DevExpress/testcafe", "vitest-dev/vitest", "jestjs/jest", "microsoft/playwright", "cypress-io/cypress", "webdriverio/webdriverio"],
+    "search_cli": ["ggreer/the_silver_searcher", "ast-grep/ast-grep", "BurntSushi/ripgrep", "junegunn/fzf", "sharkdp/fd", "phiresky/ripgrep-all", "lotabout/skim", "beyondgrep/ack3"],
+    "database_clients": ["dbeaver/dbeaver", "t8y2/dbx", "TabularisDB/tabularis", "Syngnat/GoNavi", "dorylab/dory", "0xErwin1/dbflux", "QoreDB/QoreDB", "GuqierMcl/NexusPilot"],
+    "serverless_platforms": ["serverless/serverless", "aws/aws-sam-cli", "knative/serving", "fission/fission", "nuclio/nuclio", "cloudflare/workers-sdk", "vercel/vercel", "Miserlou/Zappa"],
+    "log_collectors": ["vectordotdev/vector", "fluent/fluent-bit", "fluent/fluentd", "open-telemetry/opentelemetry-collector", "grafana/alloy", "elastic/beats", "openobserve/openobserve", "Graylog2/graylog2-server"],
+    "reverse_proxies": ["caddyserver/caddy", "traefik/traefik", "envoyproxy/envoy", "nginx/nginx", "apache/httpd", "openresty/openresty", "apache/trafficserver", "h2o/h2o"],
+    "task_queues": ["celery/celery", "rq/rq", "taskforcesh/bullmq", "Bogdanp/dramatiq", "coleifer/huey", "python-arq/arq", "sidekiq/sidekiq", "agronholm/apscheduler"]
+  },
+  "dev": {
+    "music_players": ["lyswhut/lx-music-desktop", "qier222/YesPlayMusic", "lyswhut/lx-music-mobile", "koel/koel"],
+    "geospatial_tools": ["CesiumGS/cesium", "keplergl/kepler.gl", "Turfjs/turf", "tidwall/tile38", "opengeos/GeoLibre", "graphhopper/graphhopper"],
+    "localization_tools": ["SwiftGen/SwiftGen", "Laravel-Lang/lang", "lingui/js-lingui", "i18next/i18next", "formatjs/formatjs"]
+  },
+  "heldout": {
+    "note_apps": ["usememos/memos", "lfnovo/open-notebook", "Laverna/laverna", "glushchenko/fsnotes", "taniarascia/takenote"],
+    "home_automation": ["home-assistant/core", "blakeblackshear/frigate", "evcc-io/evcc", "homebridge/homebridge", "esphome/esphome"],
+    "browser_extensions": ["refined-github/refined-github", "PlasmoHQ/plasmo", "ChatGPTBox-dev/chatGPTBox", "BrowserMCP/mcp", "wxt-dev/wxt", "darkreader/darkreader"]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "retrieval_source_supplement_v1",
+  "train": {
+    "static_site_generators": ["vuejs/vitepress"],
+    "code_editors": ["microsoft/vscode", "helix-editor/helix", "neovim/neovim"],
+    "package_managers": ["oven-sh/bun", "yarnpkg/berry", "npm/cli"],
+    "game_engines": ["jMonkeyEngine/jmonkeyengine"],
+    "build_systems": ["mesonbuild/meson"],
+    "api_gateways": ["spring-cloud/spring-cloud-gateway"],
+    "ocr_tools": ["PaddlePaddle/PaddleOCR", "tesseract-ocr/tesseract", "hiroi-sora/Umi-OCR", "naptha/tesseract.js", "getomni-ai/zerox"],
+    "search_cli": ["BurntSushi/ripgrep"],
+    "serverless_platforms": ["aws/chalice", "firebase/firebase-tools"],
+    "log_collectors": ["coroot/coroot"],
+    "task_queues": ["hibiken/asynq", "RiverQueue/river", "RichardKnop/machinery"]
+  },
+  "dev": {
+    "localization_tools": ["next-intl/next-intl", "intlify/vue-i18n"]
+  },
+  "heldout": {
+    "note_apps": ["Zettlr/Zettlr"],
+    "home_automation": ["openhab/openhab-core"]
+  }
+}
