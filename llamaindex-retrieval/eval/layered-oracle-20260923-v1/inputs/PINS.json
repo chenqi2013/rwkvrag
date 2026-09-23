@@ -1,0 +1,18 @@
+{
+  "scenarios_sha256": "5451c4465317a2e39a69706db3464774305d01bd6e371e4f326a83f2dce4af7e",
+  "prepare_sha256": "de0bd4dc6d6a22efa41cae57cd41c1fef4caecf9bd590a03a5d70bc0071f5d66",
+  "vocab_sha256": "8324476023347dec2964625ccb2075c864d250a9c6d9a74f36daba628de8c008",
+  "cases_sha256": "754061259737fcf5cde66ce77382c01856c1e490a5dcdf4515143d9c5791fdc1",
+  "members": 12,
+  "planned_raw_records": 48,
+  "projects_per_scenario": [
+    2,
+    3,
+    4,
+    6
+  ],
+  "live_retrieval": false,
+  "training_data_used": false,
+  "frozen_previous_cases_unchanged": true,
+  "reviewer": "implementer_not_independent"
+}

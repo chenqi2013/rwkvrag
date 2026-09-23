@@ -1,0 +1,51 @@
+[
+  {
+    "id": "two-project-basic",
+    "projects": ["星槐", "银榫"],
+    "requirements": {"hard": ["当前版 Windows 原生支持", "当前版许可证为 MIT 或 Apache-2.0"], "preference": ["GPU 加速正式支持"]},
+    "sources": [
+      {"id": "S1", "project": "星槐", "text": "星槐 2.1 版已经原生支持 Windows。项目采用 MIT 许可证。GPU 加速尚未检查。", "facts": [["windows", "native", "current"], ["license", "MIT", "current"], ["gpu", "not_checked", "current"]]},
+      {"id": "S2", "project": "银榫", "text": "银榫 2.1 版的 Windows 运行仍属于实验功能；许可证为 Apache-2.0。GPU 加速已经正式支持。", "facts": [["windows", "experimental", "current"], ["license", "Apache-2.0", "current"], ["gpu", "supported", "current"]]}
+    ],
+    "decision": {"eligible": ["星槐"], "rejected": ["银榫"], "unresolved": [], "recommended": ["星槐"]}
+  },
+  {
+    "id": "three-project-open-world",
+    "projects": ["蓝铆", "赤桁", "白榫"],
+    "requirements": {"hard": ["当前版 Windows 原生支持", "当前版许可证为 MIT 或 Apache-2.0"], "preference": ["GPU 加速正式支持"]},
+    "sources": [
+      {"id": "S1", "project": "蓝铆", "text": "蓝铆 4.0 的 Windows 安装属于正式原生支持；授权协议是 Apache-2.0。不过，该版不提供 GPU 加速。", "facts": [["windows", "native", "current"], ["license", "Apache-2.0", "current"], ["gpu", "unsupported", "current"]]},
+      {"id": "S2", "project": "赤桁", "text": "赤桁 4.0 使用 MIT 许可证，GPU 加速已经正式提供。Windows 兼容性测试尚未执行，不能视为已支持。", "facts": [["license", "MIT", "current"], ["gpu", "supported", "current"], ["windows", "not_checked", "current"]]},
+      {"id": "S3", "project": "白榫", "text": "白榫 4.0 可以直接在 Windows 上原生运行，也提供 GPU 加速；项目的许可证是 GPL-3.0。", "facts": [["windows", "native", "current"], ["gpu", "supported", "current"], ["license", "GPL-3.0", "current"]]}
+    ],
+    "decision": {"eligible": ["蓝铆"], "rejected": ["白榫"], "unresolved": ["赤桁"], "recommended": ["蓝铆"]}
+  },
+  {
+    "id": "four-project-conflict",
+    "projects": ["岚矩", "岚阙", "霁环", "梭羽"],
+    "requirements": {"hard": ["当前版 Windows 原生支持", "当前版许可证为 MIT 或 Apache-2.0"], "preference": ["GPU 加速正式支持"]},
+    "sources": [
+      {"id": "S1", "project": "岚矩", "text": "岚矩当前 3.2 版已原生支持 Windows，许可证 MIT，GPU 加速正式可用。", "facts": [["windows", "native", "current"], ["license", "MIT", "current"], ["gpu", "supported", "current"]]},
+      {"id": "S2", "project": "岚阙", "text": "岚阙当前 3.2 版的发行说明写明原生支持 Windows，采用 MIT 许可证，GPU 加速不支持。", "facts": [["windows", "native", "current"], ["license", "MIT", "current"], ["gpu", "unsupported", "current"]]},
+      {"id": "S3", "project": "岚阙", "text": "岚阙另一份同为当前 3.2 版的支持说明却明确写着：Windows 不受支持。两份说明属于同一版本，尚未确认哪份正确。", "facts": [["windows", "unsupported", "current"]]},
+      {"id": "S4", "project": "霁环", "text": "霁环 3.2 当前版没有 Windows 支持，许可证 Apache-2.0；GPU 加速已经正式开放。", "facts": [["windows", "unsupported", "current"], ["license", "Apache-2.0", "current"], ["gpu", "supported", "current"]]},
+      {"id": "S5", "project": "梭羽", "text": "梭羽当前 3.2 版支持 Windows 原生运行，并已启用 GPU 加速。本文没有提供其许可证信息。", "facts": [["windows", "native", "current"], ["gpu", "supported", "current"]]}
+    ],
+    "decision": {"eligible": ["岚矩"], "rejected": ["霁环"], "unresolved": ["岚阙", "梭羽"], "recommended": ["岚矩"]}
+  },
+  {
+    "id": "six-project-version-and-names",
+    "projects": ["沐桥 Core", "沐桥 Cloud", "沐桥 Edge", "穆桥 Core", "木桥 Cloud", "沐桥 Lite"],
+    "requirements": {"hard": ["当前版 Windows 原生支持", "当前版许可证为 MIT 或 Apache-2.0"], "preference": ["GPU 加速正式支持"]},
+    "sources": [
+      {"id": "S1", "project": "沐桥 Core", "text": "沐桥 Core 当前 5.0 版在 Windows 上原生可用；授权 MIT；GPU 加速已正式发布。", "facts": [["windows", "native", "current"], ["license", "MIT", "current"], ["gpu", "supported", "current"]]},
+      {"id": "S2", "project": "沐桥 Core", "text": "沐桥 Core 的旧 4.0 版不支持 Windows，采用 GPL-3.0。此页只记录旧版，不代表 5.0。", "facts": [["windows", "unsupported", "legacy"], ["license", "GPL-3.0", "legacy"]]},
+      {"id": "S3", "project": "沐桥 Cloud", "text": "沐桥 Cloud 当前 5.0 版 Windows 环境仅实验支持；许可证 Apache-2.0；GPU 正式可用。", "facts": [["windows", "experimental", "current"], ["license", "Apache-2.0", "current"], ["gpu", "supported", "current"]]},
+      {"id": "S4", "project": "沐桥 Edge", "text": "沐桥 Edge 5.0 当前版原生支持 Windows，使用 GPL-3.0 许可证，未检查 GPU 路径。", "facts": [["windows", "native", "current"], ["license", "GPL-3.0", "current"], ["gpu", "not_checked", "current"]]},
+      {"id": "S5", "project": "穆桥 Core", "text": "穆桥 Core 当前 5.0 版使用 Apache-2.0 许可，GPU 加速正式支持；Windows 状态尚未检查。它不是沐桥 Core。", "facts": [["license", "Apache-2.0", "current"], ["gpu", "supported", "current"], ["windows", "not_checked", "current"]]},
+      {"id": "S6", "project": "木桥 Cloud", "text": "木桥 Cloud 当前 5.0 版正式原生支持 Windows，许可证 MIT，GPU 加速尚未检查。名称中的木字不能与沐桥 Cloud 混同。", "facts": [["windows", "native", "current"], ["license", "MIT", "current"], ["gpu", "not_checked", "current"]]},
+      {"id": "S7", "project": "沐桥 Lite", "text": "沐桥 Lite 当前 5.0 版在 Windows 上原生支持，许可证 Apache-2.0，不支持 GPU 加速。", "facts": [["windows", "native", "current"], ["license", "Apache-2.0", "current"], ["gpu", "unsupported", "current"]]}
+    ],
+    "decision": {"eligible": ["沐桥 Core", "木桥 Cloud", "沐桥 Lite"], "rejected": ["沐桥 Cloud", "沐桥 Edge"], "unresolved": ["穆桥 Core"], "recommended": ["沐桥 Core"]}
+  }
+]
