@@ -15,6 +15,8 @@ def audit_citations(text, sources, *, check_quotes=False):
         "scope": "literal_labels_in_answer_span",
         "unknown_label_ids": [i for i in labels if i > len(sources)],
         "invalid_labels": [tag for tag, match in valid if match is None],
+        "missing_valid_citation": bool(sources and text.strip()
+                                       and not any(1 <= i <= len(sources) for i in labels)),
         "semantic_support_verified": False,
     }
     if check_quotes:

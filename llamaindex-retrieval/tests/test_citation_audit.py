@@ -20,6 +20,17 @@ def test_valid_labels_and_unknown_sources_are_separate():
     assert audit["label_ids"] == [1, 2]
     assert audit["unknown_label_ids"] == [2]
     assert audit["invalid_labels"] == []
+    assert audit["missing_valid_citation"] is False
+
+
+def test_saved_sources_with_no_valid_label_are_flagged_without_rewriting_text():
+    text = "这是模型原文，没有引用。"
+    sources = [{"snippet": "独立来源"}]
+    assert audit_citations(text, sources)["missing_valid_citation"] is True
+    assert audit_citations(text + "[资料 7]", sources)["missing_valid_citation"] is True
+    assert audit_citations(text, [])["missing_valid_citation"] is False
+    assert audit_citations("", sources)["missing_valid_citation"] is False
+    assert text == "这是模型原文，没有引用。"
 
 
 def test_quote_must_match_the_cited_source_not_another_source():

@@ -20,6 +20,8 @@
 
 前端新增“有已保存资料但正文零引用”的明确警示，既不替模型补引用，也不把资料列表当事实支持。46项前端测试和构建通过；本机18440已切到`answer-format-20260923-v4`并核对新资源、API/Mongo/OpenSearch健康。后端新增[单仓库内置网络适配器](../llamaindex-retrieval/src/llamaindex_retrieval/direct_web.py)：可选Tavily或SearXNG，强制`web`/`hybrid`模式无需SearchReader源码；`auto`仍需配置模型选择器，旧SearchReader路径保留。124项相关后端测试与lint通过；一次低频Tavily实网探测返回401，所以真实供应商连通与完整RAG质量**未通过验收**，不能从模拟测试推断商用可用。部署与边界见[本轮报告](archive/2026-09/direct-web-and-citation-v4-20260923.md)。
 
+后端[字面引用审计](../llamaindex-retrieval/src/llamaindex_retrieval/citation_audit.py)新增`missing_valid_citation`字段，用于统计保存了来源但正文没有有效编号的回答；它不改变对外答案，也不声称引用语义支持。新增审计和网络相关检查共141项通过；本机API需在下一次重启后才加载此审计字段。
+
 另用当前诊断集做了三条完整样本的零更新速度/显存试验：最长7216 token前后向6.84秒、进程峰值reserved 28.63GB；1081 token 0.83秒、619 token 0.50秒，所有样本0次优化器更新。[基准收据](../artifacts/state-progression-20260922/benchmark-v1/COMPLETED.json)。这证明所测长度在限制内，不代表最终完整数据或训练耗时已经验收。
 
 [关联数据方案](../llamaindex-retrieval/statetune/progression-v2-20260922/PLAN.md)和[原子补充方案](../llamaindex-retrieval/statetune/progression-atomic-v3-20260922/PLAN.md)按来源族预先分集；同模型教师生成与复核都不算独立验收。历史失败只用于统计主要缺陷：事实与来源绑定、处理状态读解、回答收束；原始错误输出不改写成训练答案。详细生成/审读结果随新版本归档，旧运行保持不可变。
