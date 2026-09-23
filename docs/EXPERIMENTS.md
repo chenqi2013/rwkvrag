@@ -2,15 +2,23 @@
 
 维护日期：2026-09-23。执行状态见 [CURRENT](CURRENT.md)。遵循[架构规则](../llamaindex-retrieval/ARCHITECTURE_RULES.md)。
 
+## 新登记：检索专用 StateTune V1（数据准备中）
+
+[计划、角色目标、数量与单变量验收顺序](../llamaindex-retrieval/statetune/retrieval-v1-20260923/PLAN.md)已经登记；当前没有新准入数据、训练或质量收益。已实现未接运行链路的[规划协议](../llamaindex-retrieval/src/llamaindex_retrieval/retrieval_plan.py)及精确提示/token[编译器](../scripts/retrieval_statetune/prepare_plan.py)；其 3×3 格子与每对象一次初轮搜索式在单测中通过。先固定“待查格子 ≠ 搜索请求 ≠ 执行预算”的实际实验链路和新盲集，再用新来源分别训练规划、单格证据与缺口补查 State。已从65道联网题、434道恢复题、24道新固定材料题及已用官方README建立[精确禁入哈希](../llamaindex-retrieval/statetune/retrieval-v1-20260923/EXCLUSIONS.json)；镜像、别名与语义近似仍须人工复核。[准入审计](../scripts/retrieval_statetune/audit_candidates.py)会阻断跨分区来源、旧题碰撞、未独立复核、哈希错误与单族/重复问法超额，但它不能证明目标语义正确。
+
+原发布V1的6840份冻结输出已全部记录；剩余三批仅做了[机械汇总](archive/2026-09/state-regression-mechanical-20260923.md)，出现总体格式改善和逐题新退步。旧题继续留作已见回归，不能拿来生成本版训练目标；普通题是否无回归仍待来源约束的语义审读。
+
+[新来源与教师试点](archive/2026-09/retrieval-state-data-prep-20260923.md)已完成120份官方README快照及三版同组小样本诊断。训练分区仅84族，严格可用草稿 V3 51/96且 `listed` 为0，均未通过独立语义审读；没有扩大生成或启动训练。下一数据版本改为先固定完整规划标签，再由教师生成自然问法，保持当前原始输出和提示版本不变。
+
 ## 当前登记：来源隔离后训练State
 
-2026-09-23 已另行冻结并完成[逐层 Oracle 诊断 V1](archive/2026-09/layered-oracle-diagnosis-20260923.md)：新虚构材料上的事实抽取、Gold 事实比较、Gold 决策 Writer 分别运行；零/训练 State 双轮 48 份原文齐全。旧 1710 成员回归没有改动且仍在运行。Oracle 子任务是诊断干预，不是端到端检索或生产晋级；事后数组内容分析与预登记严格 JSON 评分分开，不能混用。
+2026-09-23 已另行冻结并完成[逐层 Oracle 诊断 V1](archive/2026-09/layered-oracle-diagnosis-20260923.md)：新虚构材料上的事实抽取、Gold 事实比较、Gold 决策 Writer 分别运行；零/训练 State 双轮 48 份原文齐全。旧 1710 成员回归没有改动；其原始输出现已齐全。Oracle 子任务是诊断干预，不是端到端检索或生产晋级；事后数组内容分析与预登记严格 JSON 评分分开，不能混用。
 
-V2协议诊断输入按[计划](../llamaindex-retrieval/eval/layered-oracle-20260923-v2/PLAN.md)冻结并先推送GitHub，92份原文现已全部完成；[结果](archive/2026-09/layered-oracle-v2-results-20260923.md)显示数组格式通过但事实完整性、资格判断和最终答案未达标。它复用同一批**已见**虚构场景，不改V1原始输入；三个干预分层分别比较，不能把合并结果解释为单变量生产收益。其余冻结回归继续，未满足语义、普通题和真实联网验收前不晋级。
+V2协议诊断输入按[计划](../llamaindex-retrieval/eval/layered-oracle-20260923-v2/PLAN.md)冻结并先推送GitHub，92份原文现已全部完成；[结果](archive/2026-09/layered-oracle-v2-results-20260923.md)显示数组格式通过但事实完整性、资格判断和最终答案未达标。它复用同一批**已见**虚构场景，不改V1原始输入；三个干预分层分别比较，不能把合并结果解释为单变量生产收益。其余冻结回归原始输出已齐，但语义未验收，候选不晋级。
 
 V3按[冻结输入](../llamaindex-retrieval/eval/layered-oracle-20260923-v3/PLAN.md)使用已见场景和Gold事实，将资格判断拆到一个项目的一个硬条件/字段，完全移除GPU偏好。30成员、零/训练State双轮120份已完成；[结果](archive/2026-09/layered-oracle-v3-results-20260923.md)为严格条件20/30→25/30，诊断性项目投影8/15→12/15。这只定位条件粒度，不是完整漏斗、真实检索或盲测。V2原文不修改，生产不晋级。
 
-[发布V1](archive/2026-09/state-progression-release-v1-20260922.md)已冻结并通过原数据门槛：训练3940条（normal 2318、defect 1418、progress 204），开发490、留出502。全部发布进展行通过精确哈希绑定的二审核验，另有人工排除；8222物理GPU3训练已成功完成，1972次更新和四个checkpoint经[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)核验。教师与审读同源，准入和训练完成均不等于能力提升或独立语义评分。[评测绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)锁定1710成员与6840计划原始记录。新24题96份原文及逐份人工审读已完成：[结果](archive/2026-09/state-fresh-github-paired-20260923.md)显示大型比较两组均失败，普通题有收益也有新退步；其余三批继续顺序执行，候选不晋级。
+[发布V1](archive/2026-09/state-progression-release-v1-20260922.md)已冻结并通过原数据门槛：训练3940条（normal 2318、defect 1418、progress 204），开发490、留出502。全部发布进展行通过精确哈希绑定的二审核验，另有人工排除；8222物理GPU3训练已成功完成，1972次更新和四个checkpoint经[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)核验。教师与审读同源，准入和训练完成均不等于能力提升或独立语义评分。[评测绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)锁定1710成员与6840份原始记录，现均已齐。新24题96份原文及逐份人工审读已完成：[结果](archive/2026-09/state-fresh-github-paired-20260923.md)显示大型比较两组均失败，普通题有收益也有新退步；其余三批目前只有机械诊断，候选不晋级。
 
 训练候选从新生成任务取得，绝不添加历史题目、参考答案或原始失败输出。原640组任务按来源族先分512/64/64，另有200组原子补充继承同一来源分区。候选必须通过逐目标高强度审读、历史评测交叉隔离、同提示冲突及跨分区去重、完整token编码；至少2000条准入训练，其中正常、缺陷、推进均有足量覆盖。准入是数据规则通过，不是语义质量或产品效果证明。隔离详情见[报告](archive/2026-09/state-progression-isolation-20260922.md)。
 

@@ -1,6 +1,6 @@
 # 当前状态
 
-更新：2026-09-23（Asia/Shanghai）。**StateTune发布集V1的7.2B双角色训练已完成；新24题成对语义验收未通过，多项目比较没有提升，正式模型不切换。独立逐层 Oracle V1/V2/V3诊断显示：单硬条件判断有改善，但事实抽取、最终Writer和引用仍未修好；其余冻结回归仍在运行。** 训练收据见[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)、[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)、[V1诊断](archive/2026-09/layered-oracle-diagnosis-20260923.md)、[V2复测](archive/2026-09/layered-oracle-v2-results-20260923.md)和[V3逐条件结果](archive/2026-09/layered-oracle-v3-results-20260923.md)。
+更新：2026-09-23（Asia/Shanghai）。**StateTune发布集V1的7.2B双角色训练已完成；6840/6840份冻结原始回归输出已齐，但旧题仅完成机械汇总，语义验收未完成。新24题成对语义验收未通过，多项目比较没有提升，正式模型不切换。** 逐层 Oracle V1/V2/V3显示单硬条件判断有改善，事实抽取、最终Writer和引用仍未修好。训练收据见[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)、[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)、[剩余回归机械汇总](archive/2026-09/state-regression-mechanical-20260923.md)、[V1诊断](archive/2026-09/layered-oracle-diagnosis-20260923.md)、[V2复测](archive/2026-09/layered-oracle-v2-results-20260923.md)和[V3逐条件结果](archive/2026-09/layered-oracle-v3-results-20260923.md)。
 
 ## 当前主线：数据隔离、审读与StateTune训练
 
@@ -8,7 +8,7 @@
 
 7.2B原生State训练入口固定fp32io16、FP32循环State、学习率1e-5、两轮、只训练初始State。8222物理GPU3的`rwkvrag-state-release-v1-train.service`成功退出：3940条训练输入、两轮、Resolver 774次及Writer 1198次优化器更新，共1972次。四个FP32 State checkpoint的实际SHA-256与[完成收据](../artifacts/state-progression-20260922/train-release-v1/COMPLETED.json)一致，全部更新日志数值有限，基座未改；进程预留峰值45.99GB。此前[数值预检](../artifacts/state-progression-20260922/preflight-v2/NUMERICAL-PREFLIGHT.json)通过。**训练完成不等于答案质量提升；候选尚未接入正式服务。**
 
-评测输入已按[冻结绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)准备为1710个成员、计划6840份零/训练State双轮原始回答：新24题、旧694题及来源分离的开发/留出992题。3项因原运行无Writer提示或输入超限标为不支持，成员仍保留。新24题的96份原文和逐份审读已完成：每轮12道比较题两组都是0道完整正确；每轮12道普通题完整正确零State 6、训练State 10，但新退步1道。详见[完整报告](archive/2026-09/state-fresh-github-paired-20260923.md)。[顺序执行器](../scripts/state_progression/run_eval_queue_v1.sh)正在跑其余三个原样冻结批次；这些仍是固定证据评测，不是实时检索。
+评测输入按[冻结绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)共1710个成员、6840份零/训练State双轮原始回答：新24题、旧694题及来源分离的开发/留出992题，现已全部记录完成。3项因原运行无Writer提示或输入超限标为不支持，成员仍保留。新24题的96份原文和逐份审读已完成：每轮12道比较题两组都是0道完整正确；每轮12道普通题完整正确零State 6、训练State 10，但新退步1道。其余三批只完成[机械汇总](archive/2026-09/state-regression-mechanical-20260923.md)：长度退出与重复总体减少，也有新增无效引用、复读和非正常结束；尚未完成来源约束的语义审读。这些仍是固定证据评测，不是实时检索。
 
 另已完成新的[逐层 Oracle 诊断 V1](archive/2026-09/layered-oracle-diagnosis-20260923.md)：4 组新虚构材料、2/3/4/6 个项目、抽取/Gold 事实比较/Gold 决策 Writer 共 12 成员，零/训练 State 双轮 48 份原始输出，GPU3 独立服务成功，旧回归未中断。Gold 事实给定时两组完整决策均 0/4；项目资格零组 6/15、训练组 4/15；Gold 决策下 Writer 全部自然停止但 8 个不同回答都没有来源引用。本轮没有新训练、检索或正式链路切换；格式与内容的事后评分分开保存。
 
@@ -124,7 +124,9 @@ V6严格目标审读发现无据日期/资料称谓/适用范围及引用错位�
 5. 大型比较的回答收束和延迟。512调用仅诊断上限，不是可商用交互目标。
 6. 新漏斗的缺口驱动补检索尚未接通；本轮固定材料不是端到端联网测试。
 
-当前下一步是完成仍在运行的旧题及来源分离回归，并用新版本的真实项目材料分别核验真实检索、人工选片段和完整文档，再决定改检索装箱、关系协议还是训练目标。回放稳定性单独记录，不能把漂移算成训练改善；不把旧失败输出自动扩大成训练数据，也不直接切生产。
+当前下一步是审读已完成回归中的新退步，并按[检索专用 StateTune 数据登记](../llamaindex-retrieval/statetune/retrieval-v1-20260923/PLAN.md)把待查格子与搜索请求/批次预算分离，再用新来源构造规划、单格证据和缺口补查数据。已实现**未接运行链路**的[规划协议](../llamaindex-retrieval/src/llamaindex_retrieval/retrieval_plan.py)（3×3 保留9格、每对象一条首轮搜索式）、逐字提示/token[编译器](../scripts/retrieval_statetune/prepare_plan.py)、[旧题与来源禁入清单](../llamaindex-retrieval/statetune/retrieval-v1-20260923/EXCLUSIONS.json)及[准入审计](../scripts/retrieval_statetune/audit_candidates.py)；**5000条只是目标，当前没有新准入训练集或优化器更新**。接入默认关闭的实验路径并冻结实际提示后才能批量生成标签；同时以新版本真实项目材料分别核验真实检索、人工选片段和完整文档。回放稳定性单独记录，不能把漂移算成训练改善；不把旧失败输出自动扩大成训练数据，也不直接切生产。
+
+新采集的[120份 GitHub README 来源快照](../llamaindex-retrieval/statetune/retrieval-v1-20260923/SOURCES.json)已按主题先分训练84、开发18、留出18，逐份字节哈希及 Git blob 核验通过；训练族数仍低于预定120门槛。[教师试点](archive/2026-09/retrieval-state-data-prep-20260923.md)在同12组任务上暴露标签漏项目和 `listed` 覆盖失败：V2宽松结构88/96，统一严格校验仅57/96；V3严格51/96、合格 `listed` 0。试点全部是未独立审读的草稿，已停止扩量，下一版改为先固定标签结构再生成自然问法；本次没有执行新 StateTune 训练。
 
 ## 6. 知识库、Wiki与联网边界
 

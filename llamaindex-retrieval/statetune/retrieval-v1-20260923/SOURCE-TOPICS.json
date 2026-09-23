@@ -1,0 +1,5 @@
+{
+  "train": ["message-broker", "command-line-tool", "static-site-generator", "monitoring", "code-editor", "package-manager", "test-framework", "game-engine", "backup", "dns", "robotics", "image-processing", "serverless", "build-system"],
+  "dev": ["music-player", "geospatial", "localization"],
+  "heldout": ["note-taking", "home-automation", "browser-extension"]
+}

@@ -1,0 +1,9 @@
+{
+  "train": 5000,
+  "roles": {"plan": 2400, "evidence": 1800, "followup": 800},
+  "kinds": {"ordinary": 500, "comparison": 1000, "selection": 500, "missing": 500, "conflict": 300, "history": 200},
+  "train_families": 120,
+  "max_family_fraction": 0.02,
+  "min_unique_question_fraction": 0.9,
+  "max_question_repetitions": 3
+}

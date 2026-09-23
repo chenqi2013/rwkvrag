@@ -1,0 +1,79 @@
+{
+  "protocol": "retrieval_plan_teacher_pilots_v1",
+  "jobs_sha256": "4ab6933b1a46a8d74315463db764d3f97b3761cca291f263bfc846d725dd47b2",
+  "strict_scorer_sha256": "769baa4d91335f2dbf035785c6856c3585cf2bee79000540312fd54cbcaef5d5",
+  "runs": {
+    "pilot-00-12": {
+      "run_sha256": "4dbd9e43f757750f88120dd0e7cd35aa6932f0c692c265f2dcaf70297dfa0ed1",
+      "summary_sha256": "8a78ae31e85b7e0e4c65dd270bb274df1d4d9297ee58d50e191c20460f55460c",
+      "results_sha256": "5060532b403ffb900d97c58f7730b7c4f3d33ce91cb7f608c8f85b17f93f3667",
+      "calls": 12,
+      "possible_items": 96,
+      "structural_rows": 20,
+      "conservative_cost_usd": 0.026535599999999996,
+      "independent_review": false,
+      "training_exported": false
+    },
+    "pilot-v2-00-12": {
+      "run_sha256": "d6e3be074c0e5000c7d77eda44467e84a9df24b1588a24c27ae68196f50fe7b3",
+      "summary_sha256": "17b133271e18d1402e6843541bd94744a9db9d22adce6ce2a4f890ea21dfbc89",
+      "results_sha256": "1c9d3ed5127bdafb98a2c30fbfe1e498665ba243b1313f942cf18367bb319b3d",
+      "calls": 12,
+      "possible_items": 96,
+      "structural_rows": 88,
+      "conservative_cost_usd": 0.04589760000000001,
+      "independent_review": false,
+      "training_exported": false,
+      "strict_rows": 57,
+      "strict_failures": 39,
+      "full_object_mentions": 42,
+      "kinds": {
+        "ordinary": 16,
+        "comparison": 2,
+        "missing": 16,
+        "conflict": 15,
+        "history": 8
+      },
+      "coverage": {
+        "grid": 57
+      },
+      "object_counts": {
+        "1": 47,
+        "3": 3,
+        "2": 7
+      }
+    },
+    "pilot-v3-00-12": {
+      "run_sha256": "14bccde9ceaef55e78f47c2fc86afce56f41b42f2b651fabba54337c9dd07963",
+      "summary_sha256": "c7735b18dfb1a950a5c49f9eb7f8a669251a046778a66d9839da01cfe856d116",
+      "results_sha256": "539895717ee5facc1a0932f245483e8b5b3a2e498acd49bd81363de41d125b7c",
+      "calls": 12,
+      "possible_items": 96,
+      "structural_rows": 51,
+      "conservative_cost_usd": 0.06820679999999998,
+      "independent_review": false,
+      "training_exported": false,
+      "strict_rows": 51,
+      "strict_failures": 45,
+      "full_object_mentions": 51,
+      "kinds": {
+        "ordinary": 16,
+        "comparison": 8,
+        "selection": 1,
+        "history": 2,
+        "missing": 12,
+        "conflict": 12
+      },
+      "coverage": {
+        "grid": 51
+      },
+      "object_counts": {
+        "1": 33,
+        "3": 11,
+        "4": 1,
+        "2": 6
+      }
+    }
+  },
+  "limits": "Structural checks only; no independent semantic review or training."
+}
