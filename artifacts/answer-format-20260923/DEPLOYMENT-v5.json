@@ -1,0 +1,15 @@
+{
+  "verified_at_utc": "2026-09-23T03:41:41.857773+00:00",
+  "frontend_release": "/home/chase/GitHub/rwkvrag/data/services/local-app/releases/answer-format-20260923-v5/web",
+  "served_asset": "index-BqDwAH3i.js",
+  "served_asset_sha256": "aa690350e24c170770ec7067eacc406255087d288435fe12c128d696ffa9c3f6",
+  "served_index_sha256": "7c601f29fcc4a03e7da237a45da76e5e9b13aac6283e5e7c747895100ade0bc5",
+  "api_health": "ok",
+  "mongodb_ok": true,
+  "opensearch_ok": true,
+  "backend_code_reloaded": true,
+  "remote_model_changed": false,
+  "configured_web_provider": "searchreader (unchanged default)",
+  "validation": "143 related backend tests, 47 frontend tests, TypeScript/Vite build, served asset and storage health",
+  "behavior": "Displays safe upstream HTTP code on partial web retrieval; preserves raw answer and sources."
+}
