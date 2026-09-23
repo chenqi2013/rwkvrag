@@ -1,0 +1,24 @@
+{
+  "id": "three-project-open-world/condition/白榫/license",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 2,
+  "arm": "zero",
+  "prompt_sha256": "49c48dbb4ec88e90b64cc1e274030a43bff74e3cbf59c610a3593809775ef823",
+  "raw_text": "not_satisfied",
+  "generated_ids": [
+    8260,
+    96,
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "6e6f745f736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.17363576870411634,
+  "input_tokens": 213,
+  "state_sha256": null
+}

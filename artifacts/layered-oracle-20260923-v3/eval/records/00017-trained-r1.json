@@ -1,0 +1,20 @@
+{
+  "id": "four-project-conflict/condition/梭羽/license",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "trained",
+  "prompt_sha256": "aafcdee2ccfabe4948606013d9db954ada3a712fbed816f5de95072640fab68f",
+  "raw_text": "unknown",
+  "generated_ids": [
+    49805,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "756e6b6e6f776e",
+  "utf8_valid": true,
+  "elapsed_s": 0.07494985032826662,
+  "input_tokens": 174,
+  "state_sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25"
+}

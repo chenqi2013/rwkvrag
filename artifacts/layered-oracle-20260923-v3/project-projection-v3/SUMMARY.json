@@ -1,0 +1,12 @@
+{
+  "counts": {
+    "trained/correct": 12,
+    "trained/total": 15,
+    "zero/correct": 8,
+    "zero/total": 15
+  },
+  "rows": 30,
+  "run_sha256": "d1b931533cf3c464f3b184105ea21cb5855839b77dae3c28271a2d6793ee7826",
+  "script_sha256": "5b8b95a235ac9af030796f91a4a00fcbcd0f5246f773e679035a46631c01b13a",
+  "limits": "Known scenario hard-condition rule applied to raw labels for diagnosis; not a trained aggregator, production decision, or held-out result."
+}

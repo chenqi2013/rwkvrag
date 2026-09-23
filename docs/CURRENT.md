@@ -1,6 +1,6 @@
 # 当前状态
 
-更新：2026-09-23（Asia/Shanghai）。**StateTune发布集V1的7.2B双角色训练已完成；新24题成对语义验收未通过，多项目比较没有提升，正式模型不切换。独立逐层 Oracle V1/V2诊断确认：数组格式可修，但资格误判与Writer无效引用未修好；其余冻结回归仍在运行。** 训练收据见[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)、[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)、[V1诊断](archive/2026-09/layered-oracle-diagnosis-20260923.md)和[V2复测](archive/2026-09/layered-oracle-v2-results-20260923.md)。
+更新：2026-09-23（Asia/Shanghai）。**StateTune发布集V1的7.2B双角色训练已完成；新24题成对语义验收未通过，多项目比较没有提升，正式模型不切换。独立逐层 Oracle V1/V2/V3诊断显示：单硬条件判断有改善，但事实抽取、最终Writer和引用仍未修好；其余冻结回归仍在运行。** 训练收据见[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)、[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)、[V1诊断](archive/2026-09/layered-oracle-diagnosis-20260923.md)、[V2复测](archive/2026-09/layered-oracle-v2-results-20260923.md)和[V3逐条件结果](archive/2026-09/layered-oracle-v3-results-20260923.md)。
 
 ## 当前主线：数据隔离、审读与StateTune训练
 
@@ -14,13 +14,13 @@
 
 [逐层 Oracle V2](archive/2026-09/layered-oracle-v2-results-20260923.md)已完成：同4组**已见**材料上23个新协议成员、92份零/训练State双轮原始输出齐全且逐token复现。JSON数组结构两组均4/4，但严格事实全对零组1/4、训练组0/4；单项目资格两组仅6/15；标准Writer的4组完整答案两组均0/4，零组2组复读触顶，训练组仍有编造引用和大型比较错位。实现者审读，不是独立盲审、真实检索或生产逐字回放；没有新训练或正式模型切换。旧V1原文和原队列不动。
 
-[逐硬条件 Oracle V3](../llamaindex-retrieval/eval/layered-oracle-20260923-v3/PLAN.md)已准备30个新协议成员：同一批**已见**Gold事实每次只给一个硬条件的对应字段，隔离V2仍把GPU偏好和多硬条件同放在判断输入里的影响。模型运行尚未完成；不能据此推断v10条件节点已修复。
+[逐硬条件 Oracle V3](archive/2026-09/layered-oracle-v3-results-20260923.md)已完成：同一批**已见**Gold事实每次只给一个硬条件的对应字段，30成员、120份原始输出。训练State严格条件判断25/30，零State20/30；两条件项目资格的诊断性投影12/15与8/15。Windows仍是主要错项，训练State也把同版矛盾判错。此结果既不是生产v10逐字回放，也没有经过真实抽取/检索/Writer；不晋级。
 
 2026-09-23新增[前端答案格式转换层](../llamaindex-retrieval/web/src/answerFormat.ts)：搜索、历史和Wiki共用展示组件在引用编号不存在、格式损坏，或长片段重复两次、较短片段重复三次时隐藏主答案；原文可展开核对，API返回和历史原文不改。被隐藏的答案也不会进入新一轮对话历史或历史列表摘要。45项前端测试和构建通过；本机18440页面已切到`answer-format-20260923-v3`，实际返回新JS且API/Mongo/OpenSearch健康。[发布与同批事后核对](archive/2026-09/answer-format-v3-20260923.md)显示32份完整正确回答均保持显示，但64份错误回答仍有10份可见。格式层不能证明编号存在的引用确实支持结论，也不能识别所有语义幻觉；远端正式模型和后端链路未切换。
 
 前端新增“有已保存资料但正文零引用”的明确警示，既不替模型补引用，也不把资料列表当事实支持。46项前端测试和构建通过；本机18440已切到`answer-format-20260923-v4`并核对新资源、API/Mongo/OpenSearch健康。后端新增[单仓库内置网络适配器](../llamaindex-retrieval/src/llamaindex_retrieval/direct_web.py)：可选Tavily或SearXNG，强制`web`/`hybrid`模式无需SearchReader源码；`auto`仍需配置模型选择器，旧SearchReader路径保留。124项相关后端测试与lint通过；一次低频Tavily实网探测返回401，所以真实供应商连通与完整RAG质量**未通过验收**，不能从模拟测试推断商用可用。部署与边界见[本轮报告](archive/2026-09/direct-web-and-citation-v4-20260923.md)。
 
-后端[字面引用审计](../llamaindex-retrieval/src/llamaindex_retrieval/citation_audit.py)新增`missing_valid_citation`字段，用于统计保存了来源但正文没有有效编号的回答；它不改变对外答案，也不声称引用语义支持。新增审计和网络相关检查共141项通过；本机API需在下一次重启后才加载此审计字段。
+后端[字面引用审计](../llamaindex-retrieval/src/llamaindex_retrieval/citation_audit.py)新增`missing_valid_citation`字段，用于统计保存了来源但正文没有有效编号的回答；它不改变对外答案，也不声称引用语义支持。新增审计、网络及模拟混合链路相关检查共142项通过；本机API已重启且API/Mongo/OpenSearch健康，后续新回答会带该字面审计字段，旧历史不会改写。
 
 另用当前诊断集做了三条完整样本的零更新速度/显存试验：最长7216 token前后向6.84秒、进程峰值reserved 28.63GB；1081 token 0.83秒、619 token 0.50秒，所有样本0次优化器更新。[基准收据](../artifacts/state-progression-20260922/benchmark-v1/COMPLETED.json)。这证明所测长度在限制内，不代表最终完整数据或训练耗时已经验收。
 

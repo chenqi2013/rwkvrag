@@ -1,0 +1,22 @@
+{
+  "id": "four-project-conflict/condition/岚矩/license",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "trained",
+  "prompt_sha256": "371c15fc88d26e126533805ddd36437218a688a586e9284dcace164c5466a05c",
+  "raw_text": "satisfied",
+  "generated_ids": [
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.12761759012937546,
+  "input_tokens": 209,
+  "state_sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25"
+}

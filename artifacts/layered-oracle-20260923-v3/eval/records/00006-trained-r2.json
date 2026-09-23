@@ -1,0 +1,22 @@
+{
+  "id": "three-project-open-world/condition/赤桁/windows",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 2,
+  "arm": "trained",
+  "prompt_sha256": "486919dfd1a8bdabff89f1132bb64ff78ce0e6b4b7c24f5afc13949f134a84e0",
+  "raw_text": "not_checked",
+  "generated_ids": [
+    8260,
+    96,
+    48961,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "6e6f745f636865636b6564",
+  "utf8_valid": true,
+  "elapsed_s": 0.12750955391675234,
+  "input_tokens": 213,
+  "state_sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25"
+}

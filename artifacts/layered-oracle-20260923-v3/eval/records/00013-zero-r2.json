@@ -1,0 +1,22 @@
+{
+  "id": "four-project-conflict/condition/岚阙/license",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 2,
+  "arm": "zero",
+  "prompt_sha256": "38fb3c64d10ba7b9b232fe3335c82b27ab355aefbf24e5ac7e89e4028db64a61",
+  "raw_text": "satisfied",
+  "generated_ids": [
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.1268144166097045,
+  "input_tokens": 209,
+  "state_sha256": null
+}

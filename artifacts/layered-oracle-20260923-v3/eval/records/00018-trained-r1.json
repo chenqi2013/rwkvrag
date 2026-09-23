@@ -1,0 +1,24 @@
+{
+  "id": "six-project-version-and-names/condition/沐桥 Core/windows",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "trained",
+  "prompt_sha256": "42ca5dadd1254c6b03714875bc64f986eeec838affa85ad33bb03108ac41110e",
+  "raw_text": "not_satisfied",
+  "generated_ids": [
+    8260,
+    96,
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "6e6f745f736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.17600661143660545,
+  "input_tokens": 250,
+  "state_sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25"
+}

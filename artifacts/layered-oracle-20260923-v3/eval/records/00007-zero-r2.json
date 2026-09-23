@@ -1,0 +1,22 @@
+{
+  "id": "three-project-open-world/condition/赤桁/license",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 2,
+  "arm": "zero",
+  "prompt_sha256": "27d70796a55eee0c028de885a2113f688ff84eef482c2f10a22490d7731a1dbf",
+  "raw_text": "satisfied",
+  "generated_ids": [
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.1271232459694147,
+  "input_tokens": 209,
+  "state_sha256": null
+}

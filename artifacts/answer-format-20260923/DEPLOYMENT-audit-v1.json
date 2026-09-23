@@ -1,0 +1,12 @@
+{
+  "verified_at_utc": "2026-09-23T03:30:45.092100+00:00",
+  "unit": "rwkvrag-api.service",
+  "health_status": "ok",
+  "mongodb_ok": true,
+  "opensearch_ok": true,
+  "audit_source_sha256": "8abfe94a7777573b81509b73da9a4486186cea5b1f5fd717dc42b1477baceb44",
+  "new_field": "missing_valid_citation",
+  "old_history_rewritten": false,
+  "semantic_support_verified": false,
+  "boundary": "Health confirms service and databases only; no claim that every new answer now has correct citations."
+}

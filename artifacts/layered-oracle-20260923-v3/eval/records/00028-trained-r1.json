@@ -1,0 +1,22 @@
+{
+  "id": "six-project-version-and-names/condition/沐桥 Lite/windows",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "trained",
+  "prompt_sha256": "7532385e683505cc27a12c1c839fde3382ebaccc786ab6a212e385c041b5932c",
+  "raw_text": "satisfied",
+  "generated_ids": [
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.12752952985465527,
+  "input_tokens": 215,
+  "state_sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25"
+}

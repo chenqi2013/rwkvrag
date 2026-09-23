@@ -8,7 +8,7 @@
 
 V2协议诊断输入按[计划](../llamaindex-retrieval/eval/layered-oracle-20260923-v2/PLAN.md)冻结并先推送GitHub，92份原文现已全部完成；[结果](archive/2026-09/layered-oracle-v2-results-20260923.md)显示数组格式通过但事实完整性、资格判断和最终答案未达标。它复用同一批**已见**虚构场景，不改V1原始输入；三个干预分层分别比较，不能把合并结果解释为单变量生产收益。其余冻结回归继续，未满足语义、普通题和真实联网验收前不晋级。
 
-V3计划已按[冻结输入](../llamaindex-retrieval/eval/layered-oracle-20260923-v3/PLAN.md)准备：仍用已见场景和Gold事实，但把资格判断拆到一个项目的一个硬条件/字段，完全移除GPU偏好。30成员、计划零/训练State双轮120份；这只诊断条件节点是否适合小模型。V2原文不修改，结果出齐前不声称修复。
+V3按[冻结输入](../llamaindex-retrieval/eval/layered-oracle-20260923-v3/PLAN.md)使用已见场景和Gold事实，将资格判断拆到一个项目的一个硬条件/字段，完全移除GPU偏好。30成员、零/训练State双轮120份已完成；[结果](archive/2026-09/layered-oracle-v3-results-20260923.md)为严格条件20/30→25/30，诊断性项目投影8/15→12/15。这只定位条件粒度，不是完整漏斗、真实检索或盲测。V2原文不修改，生产不晋级。
 
 [发布V1](archive/2026-09/state-progression-release-v1-20260922.md)已冻结并通过原数据门槛：训练3940条（normal 2318、defect 1418、progress 204），开发490、留出502。全部发布进展行通过精确哈希绑定的二审核验，另有人工排除；8222物理GPU3训练已成功完成，1972次更新和四个checkpoint经[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)核验。教师与审读同源，准入和训练完成均不等于能力提升或独立语义评分。[评测绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)锁定1710成员与6840计划原始记录。新24题96份原文及逐份人工审读已完成：[结果](archive/2026-09/state-fresh-github-paired-20260923.md)显示大型比较两组均失败，普通题有收益也有新退步；其余三批继续顺序执行，候选不晋级。
 

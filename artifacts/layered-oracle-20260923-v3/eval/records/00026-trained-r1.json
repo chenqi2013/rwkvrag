@@ -1,0 +1,22 @@
+{
+  "id": "six-project-version-and-names/condition/木桥 Cloud/windows",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "trained",
+  "prompt_sha256": "0f03cb9bdeedb0b68db28885c40aff247ad386e7789639b3a14c855b58da779f",
+  "raw_text": "satisfied",
+  "generated_ids": [
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.12740941997617483,
+  "input_tokens": 213,
+  "state_sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "three-project-open-world/condition/蓝铆/windows",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 2,
+  "arm": "trained",
+  "prompt_sha256": "046998f8a7cce5c5856d63930510a927ebe46799c5052e8077ef622d7d0cee0a",
+  "raw_text": "satisfied",
+  "generated_ids": [
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.12862384784966707,
+  "input_tokens": 211,
+  "state_sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25"
+}

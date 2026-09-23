@@ -1,0 +1,24 @@
+{
+  "id": "four-project-conflict/condition/霁环/windows",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "trained",
+  "prompt_sha256": "9efb9c1ebd0ce87ac34dd94109035d2f1bfa1f7d705f07b3746b0276b950adfb",
+  "raw_text": "not_satisfied",
+  "generated_ids": [
+    8260,
+    96,
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "6e6f745f736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.17273259349167347,
+  "input_tokens": 213,
+  "state_sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25"
+}

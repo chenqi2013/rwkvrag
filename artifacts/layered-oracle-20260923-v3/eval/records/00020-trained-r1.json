@@ -1,0 +1,24 @@
+{
+  "id": "six-project-version-and-names/condition/沐桥 Cloud/windows",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "trained",
+  "prompt_sha256": "b92ad7ec12df2a4420d8210271c9cd158c8886755e95e57f1bed1aa76f6e16b1",
+  "raw_text": "not_satisfied",
+  "generated_ids": [
+    8260,
+    96,
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "6e6f745f736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.1740561192855239,
+  "input_tokens": 213,
+  "state_sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25"
+}

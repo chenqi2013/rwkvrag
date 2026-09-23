@@ -1,0 +1,24 @@
+{
+  "id": "two-project-basic/condition/银榫/windows",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "zero",
+  "prompt_sha256": "09b61c796f35194a9e7bb077eb508780e091c3f85e751c97ff824a3205f51099",
+  "raw_text": "not_satisfied",
+  "generated_ids": [
+    8260,
+    96,
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "6e6f745f736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.17329238168895245,
+  "input_tokens": 211,
+  "state_sha256": null
+}

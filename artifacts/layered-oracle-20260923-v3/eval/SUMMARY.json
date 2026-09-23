@@ -1,0 +1,10 @@
+{
+  "zero/stop": 60,
+  "records": 120,
+  "trained/stop": 60,
+  "planned_records": 120,
+  "elapsed_s": 17.803890998475254,
+  "semantic_review": "pending",
+  "live_retrieval": false,
+  "production_promoted": false
+}

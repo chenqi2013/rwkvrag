@@ -4,6 +4,7 @@ import hashlib
 import json
 import math
 from pathlib import Path
+from time import monotonic
 from urllib.parse import urlsplit
 from uuid import uuid4
 
@@ -97,6 +98,7 @@ async def _route(request, settings):
                 "stream": False, "max_tokens": 8, "temperature": 0.0}
         endpoint = "/chat/completions"
     headers = {"Authorization": "Bearer " + settings.web_router_api_key.get_secret_value()}
+    started = monotonic()
     async with _client() as client:
         payload = await _json_response(client, "POST", base.rstrip("/") + endpoint,
                                        headers=headers, body=body,
@@ -104,13 +106,14 @@ async def _route(request, settings):
     choice = payload["choices"][0]
     raw = choice.get("text") if endpoint == "/completions" else choice["message"]["content"]
     answer = raw.strip() if isinstance(raw, str) else ""
-    return {"stage": "routing", "call_id": str(uuid4()),
+    return {"stage": "routing", "call_id": str(uuid4()), "evidence_ids": [],
             "status": "completed" if answer in {"true", "false"} else "invalid_decision",
             "needs_search": answer == "true" if answer in {"true", "false"} else None,
             "raw_text": raw, "model": model, "request": body, "response": payload,
             "prompt_sha256": _sha(body.get("prompt", prompt)),
             "request_payload_sha256": _sha(json.dumps(body, ensure_ascii=False)),
             "raw_text_sha256": _sha(raw if isinstance(raw, str) else json.dumps(raw)),
+            "elapsed_ms": round((monotonic() - started) * 1000),
             "source_hashes": {"direct_web.py": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}}
 
 

@@ -200,6 +200,8 @@ async def test_single_repository_router_uses_model_output_without_keyword_fallba
         {"role": "user", "content": "比一下最新版本"}])
     assert decision["needs_search"] is True
     assert decision["configured_state_sha256"] == "frozen"
+    assert decision["evidence_ids"] == []
+    assert decision["elapsed_ms"] >= 0
     assert "router-secret" not in str(decision)
 
 
@@ -214,6 +216,30 @@ async def test_single_repository_upstream_error_does_not_expose_credential(monke
     with pytest.raises(RuntimeError, match="^web_upstream_http_401$") as caught:
         await SearchReaderAdapter(config).search("q")
     assert "test-secret" not in str(caught.value)
+
+
+@pytest.mark.asyncio
+async def test_single_repository_provider_reaches_hybrid_pipeline_without_second_checkout(monkeypatch):
+    def handler(request):
+        return httpx.Response(200, json={"results": [{
+            "url": "https://example.org/release", "title": "Official release",
+            "content": "Web release note", "raw_content": "Web release note with full context",
+            "score": 0.9}]})
+
+    monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
+        transport=httpx.MockTransport(handler), trust_env=False))
+    model = FakeModel(plan={"queries": ["release"], "fields": ["release"]})
+    pipeline = RWKVPipeline(settings(web_search_provider="tavily",
+        web_tavily_api_key="test-secret", web_search_results=1, web_search_max_queries=1),
+        FakeIndex({"release": [hit("private:1", "Private release note")]}), model)
+    response = await pipeline.ask(SearchRequest(question="release",
+                                                retrieval_mode="hybrid", knowledge_base_id="team-a"))
+    assert response.generation["status"] == "completed"
+    assert {source.metadata["retrieval_origin"] for source in response.sources} == {
+        "web", "knowledge_base"}
+    assert response.retrieval["web_search"][0]["snapshots"][0]["text"] == \
+        "Web release note with full context"
+    assert response.answer == model.last_writer_raw
 
 
 def test_invalid_scope_rejected():

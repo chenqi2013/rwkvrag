@@ -1,0 +1,20 @@
+{
+  "id": "four-project-conflict/condition/岚阙/windows",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "zero",
+  "prompt_sha256": "d798ff3343b71f78a51e008ea538794076574798c42b0596a2cbd65cc14e26cc",
+  "raw_text": "conflict",
+  "generated_ids": [
+    53866,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "636f6e666c696374",
+  "utf8_valid": true,
+  "elapsed_s": 0.08223991189152002,
+  "input_tokens": 247,
+  "state_sha256": null
+}

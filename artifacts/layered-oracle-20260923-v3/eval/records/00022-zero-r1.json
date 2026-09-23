@@ -1,0 +1,22 @@
+{
+  "id": "six-project-version-and-names/condition/沐桥 Edge/windows",
+  "suite": "layered_oracle_v3_seen_condition",
+  "category": "condition",
+  "state_role": "resolver",
+  "round": 1,
+  "arm": "zero",
+  "prompt_sha256": "f12f6b9fe62256d6248a6501e538d1faeede152ab7cd3a6a5f08f2ca4cb402e6",
+  "raw_text": "satisfied",
+  "generated_ids": [
+    8683,
+    7910,
+    7779,
+    0
+  ],
+  "status": "stop",
+  "raw_hex": "736174697366696564",
+  "utf8_valid": true,
+  "elapsed_s": 0.126873048953712,
+  "input_tokens": 213,
+  "state_sha256": null
+}
