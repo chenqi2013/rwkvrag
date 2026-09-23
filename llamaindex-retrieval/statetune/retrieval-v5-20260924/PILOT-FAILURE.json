@@ -1,0 +1,20 @@
+{
+  "schema": "retrieval_question_first_pilot_v5_failure",
+  "run_sha256": "1b438052c07cafbab3bece95ed8e6fcecc19fb752c68c288f348eb7f5e06312b",
+  "summary_sha256": "5386cf4e4f1d3f13ede3925b3b627d53b97799a6d73ada553412eec42e66339a",
+  "result_files_sha256": "f22973d857fac261a3bc49ff1633ffc56ba30263562a2caa72c3a733a68975dc",
+  "jobs": 12,
+  "possible_rows": 96,
+  "joined_rows": 24,
+  "question_failure_counts": {
+    "question omitted registered project": 30,
+    "history focus mismatch": 14,
+    "latest question has no explicit revision": 1,
+    "question item fields invalid": 16
+  },
+  "plan_failures": 49,
+  "independent_semantic_review": false,
+  "admitted_training_rows": 0,
+  "training_started": false,
+  "status": "structural and semantic pilot failure; retained for comparison with V6"
+}

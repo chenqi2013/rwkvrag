@@ -1,0 +1,10 @@
+{
+  "schema": "retrieval_plan_mechanical_shortlist_v1",
+  "target_rows": 2300,
+  "max_family_occurrences": 46,
+  "seed": 1,
+  "preferred_kind_counts": {"ordinary": 470, "comparison": 480, "selection": 480, "history": 390, "missing": 230, "conflict": 20},
+  "missing_question_must_contain_one": ["不足", "缺", "未说明", "找不到", "无法确认"],
+  "conflict_question_must_contain_one": ["同一版本", "同一项目", "同一条件", "各项目内部", "每个项目"],
+  "limits": "Lexical flags and incidence balancing only; semantic correctness and independent review remain unverified."
+}

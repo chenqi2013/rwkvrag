@@ -1,0 +1,25 @@
+{
+  "schema": "retrieval_evidence_block_bank_v1",
+  "source_manifest_sha256": "f5b1553477d2bbcf747d85ae0c0585d0a827ce7e2f22b8c68999e282dfd949d5",
+  "block_file_sha256": "b0d669a05590037415e65a1a71c4b9207f27bd28f5d46883d09efe628073790e",
+  "sources": 161,
+  "blocks": 7308,
+  "counts": {
+    "dev:code": 105,
+    "dev:list": 116,
+    "dev:paragraph": 548,
+    "dev:table": 7,
+    "heldout:code": 49,
+    "heldout:list": 121,
+    "heldout:paragraph": 687,
+    "heldout:table": 16,
+    "train:code": 723,
+    "train:list": 909,
+    "train:paragraph": 3894,
+    "train:table": 133
+  },
+  "max_block_bytes": 33904,
+  "judgments_labeled": 0,
+  "training_exported": false,
+  "limits": "Exact README spans and heading context only; no answerability, relevance or citation semantics."
+}

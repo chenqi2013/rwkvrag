@@ -1,0 +1,14 @@
+{
+  "schema": "retrieval_blind_prompt_v3_pilot",
+  "run_sha256": "e35357c092c3df2ab97b0596e6677d4e0cc88e9b89eba4174932199fccf45c9b",
+  "summary_sha256": "b11f794a157665ff6a584d7b15044d7fcb3fc4e24e2e22f9bde016975f04700a",
+  "result_files_sha256": "405123273a5f593351ce5d03917b8885385d3e239d2697b3527b7a6d99b0f07a",
+  "jobs": 16,
+  "possible_rows": 128,
+  "structural_plans": 128,
+  "bound_questions": 124,
+  "frozen_blind_set": false,
+  "independent_semantic_review": false,
+  "training_started": false,
+  "limits": "Old mixed-role heldout cohorts produced unnatural comparisons despite structural success."
+}

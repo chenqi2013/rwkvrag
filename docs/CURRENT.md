@@ -1,6 +1,6 @@
 # 当前状态
 
-更新：2026-09-23（Asia/Shanghai）。**StateTune发布集V1的7.2B双角色训练已完成；6840/6840份冻结原始回归输出已齐，但旧题仅完成机械汇总，语义验收未完成。新24题成对语义验收未通过，多项目比较没有提升，正式模型不切换。** 逐层 Oracle V1/V2/V3显示单硬条件判断有改善，事实抽取、最终Writer和引用仍未修好。训练收据见[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)、[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)、[剩余回归机械汇总](archive/2026-09/state-regression-mechanical-20260923.md)、[V1诊断](archive/2026-09/layered-oracle-diagnosis-20260923.md)、[V2复测](archive/2026-09/layered-oracle-v2-results-20260923.md)和[V3逐条件结果](archive/2026-09/layered-oracle-v3-results-20260923.md)。
+更新：2026-09-24（Asia/Shanghai）。**本轮只准备检索 StateTune 数据，不训练、不切换正式模型。** 新来源共训练152、开发15、盲留出24个仓库族；规划候选3,270条，但独立语义复核和证据/补查标签仍缺，准入训练数为0。旧 StateTune 发布集V1的7.2B双角色训练已完成；6840/6840份冻结原始回归输出已齐，旧题仅完成机械汇总，新24题成对语义验收未通过，多项目比较没有提升。[本轮数据报告](archive/2026-09/retrieval-statetune-data-curation-20260924.md)、[旧训练完成](archive/2026-09/state-progression-training-completion-20260923.md)、[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)、[旧题机械汇总](archive/2026-09/state-regression-mechanical-20260923.md)。
 
 ## 当前主线：数据隔离、审读与StateTune训练
 
@@ -124,11 +124,11 @@ V6严格目标审读发现无据日期/资料称谓/适用范围及引用错位�
 5. 大型比较的回答收束和延迟。512调用仅诊断上限，不是可商用交互目标。
 6. 新漏斗的缺口驱动补检索尚未接通；本轮固定材料不是端到端联网测试。
 
-当前下一步是审读已完成回归中的新退步，并按[检索专用 StateTune 数据登记](../llamaindex-retrieval/statetune/retrieval-v1-20260923/PLAN.md)把待查格子与搜索请求/批次预算分离，再用新来源构造规划、单格证据和缺口补查数据。已实现**未接运行链路**的[规划协议](../llamaindex-retrieval/src/llamaindex_retrieval/retrieval_plan.py)（3×3 保留9格、每对象一条首轮搜索式）、逐字提示/token[编译器](../scripts/retrieval_statetune/prepare_plan.py)、[旧题与来源禁入清单](../llamaindex-retrieval/statetune/retrieval-v1-20260923/EXCLUSIONS.json)及[准入审计](../scripts/retrieval_statetune/audit_candidates.py)；**5000条只是目标，当前没有新准入训练集或优化器更新**。接入默认关闭的实验路径并冻结实际提示后才能批量生成标签；同时以新版本真实项目材料分别核验真实检索、人工选片段和完整文档。回放稳定性单独记录，不能把漂移算成训练改善；不把旧失败输出自动扩大成训练数据，也不直接切生产。
+已实现**未接运行链路**的[规划协议](../llamaindex-retrieval/src/llamaindex_retrieval/retrieval_plan.py)（3×3 保留9格、每对象一条首轮搜索式）、逐字提示/token[编译器](../scripts/retrieval_statetune/prepare_plan.py)、[旧题与来源禁入清单](../llamaindex-retrieval/statetune/retrieval-v1-20260923/EXCLUSIONS.json)及[准入审计](../scripts/retrieval_statetune/audit_candidates.py)。旧[120份来源快照](../llamaindex-retrieval/statetune/retrieval-v1-20260923/SOURCES.json)的 topic 可比性不足；新[来源与数据清单](../llamaindex-retrieval/statetune/retrieval-v4-20260924/README.md)已按角色重新审读并扩至训练152、开发15、盲留出24族，191份 README 形成8,394个精确证据块。证据块没有判断标签，不能算训练样本。
 
-新采集的[120份 GitHub README 来源快照](../llamaindex-retrieval/statetune/retrieval-v1-20260923/SOURCES.json)已按主题先分训练84、开发18、留出18，逐份字节哈希及 Git blob 核验通过；训练族数仍低于预定120门槛。[教师试点](archive/2026-09/retrieval-state-data-prep-20260923.md)在同12组任务上暴露标签漏项目和 `listed` 覆盖失败：V2宽松结构88/96，统一严格校验仅57/96；V3严格51/96、合格 `listed` 0。试点全部是未独立审读的草稿，已停止扩量，下一版改为先固定标签结构再生成自然问法；本次没有执行新 StateTune 训练。
+标签先行两批规划草稿合计3,270条、归一化问题唯一率100%，但原始最大来源族占比2.87%，全部未独立语义审读。[2,300条机械待审队列](../llamaindex-retrieval/statetune/retrieval-v4-20260924/PLAN-REVIEW-SHORTLIST.json)达到2%来源占比，却只有6条明确同范围冲突问法，仍不是训练集。新盲题127条只是结构草稿，缺口/冲突题型审读未过，120题盲集尚未冻结。问法先行同12组试点V5绑定24/96、V6绑定65/96，自然性抽样较好但类别和条件仍错，未扩量。**当前准入训练数0、证据判断标签0、补查标签0、优化器更新0；用户要求本轮不训练。**
 
-[标签先行试点](archive/2026-09/retrieval-state-label-first-pilot-20260923.md)已在同12组任务上验证该改法：96/96结构完整计划、95/96问题字面覆盖，含16条 `listed`，95条均通过精确 token/mask 编译；准入审计仍正确拒绝。人工抽看发现“备份”来源组混入通用 Bash 脚本库，产生不自然的 PostgreSQL 备份比较；GitHub topic 本身不足以证明项目可比。当前先审读/扩充来源组、冻结新盲集并接实验运行协议，不能把结构正确当成语义正确或启动训练的依据。
+下一步是逐条复核用户场景与规划维度、历史撤回及对象范围，补齐真实同范围冲突和缺材料执行状态，冻结新盲集，再准备证据判断与缺口补查标签。运行提示和检索批次协议尚未接入，不能用草稿数量推断检索或回答体验改善。[完整限制与原始收据](archive/2026-09/retrieval-statetune-data-curation-20260924.md)。
 
 ## 6. 知识库、Wiki与联网边界
 

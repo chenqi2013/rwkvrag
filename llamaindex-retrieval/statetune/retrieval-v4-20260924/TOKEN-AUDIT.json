@@ -1,0 +1,24 @@
+{
+  "schema": "retrieval_plan_candidate_token_audit_v4",
+  "compiled_rows": 3270,
+  "input_token_files_sha256": {
+    "data/quality-runs/retrieval-state-v2-20260924/PLAN-TOKENS-v3.jsonl": "cf1414fd157c4f5ec9520819e232f755a3ca59c043b06b2ed025fece8eb79956",
+    "data/quality-runs/retrieval-state-v2-20260924/PLAN-TOKENS-v4-ADDED.jsonl": "158df5ea3ee89ca2cbc1a0cce072760f569d33eb97f2a695fe41019ca257ccfb"
+  },
+  "max_sequence_tokens": 1130,
+  "mask_eos_verified": true,
+  "audit_admitted": false,
+  "train_families": 152,
+  "max_family_fraction": 0.02874617737003058,
+  "unique_question_fraction": 1.0,
+  "audit_issue_counts": {
+    "independent_review_missing": 3270,
+    "train rows 3270 below minimum 5000": 1,
+    "evidence rows 0 below minimum 1800": 1,
+    "followup rows 0 below minimum 800": 1,
+    "comparison rows 515 below minimum 1000": 1,
+    "largest source family exceeds train share limit": 1
+  },
+  "independent_review": false,
+  "training_started": false
+}

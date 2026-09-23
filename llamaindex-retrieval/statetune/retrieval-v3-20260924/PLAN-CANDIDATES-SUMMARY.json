@@ -1,0 +1,82 @@
+{
+  "schema": "retrieval_plan_candidate_package_v1",
+  "split": "train",
+  "registered_jobs": 288,
+  "run_receipts": [
+    {
+      "path": "data/quality-runs/retrieval-state-v2-20260924/train-pilot-v4-00-12",
+      "run_sha256": "e1a2adeb27896b7a03f8897b4c3be58fc2e952f65240acf614d230b183b3bdff",
+      "summary_sha256": "0036cc3ad892cdb46d9217400ba6d6c4310eabbaab13eb483ad4480cbce3ae8c",
+      "jobs": 12,
+      "questions": 96,
+      "plan_prompt_sha256": "89bdfc86c435e46f410a3a1a6da927c820c8c525943d8c77c925f92e9c0ef287",
+      "question_prompt_sha256": "59a9f77911da5531f2c6b892423fdb418c354c4cf948d32991310af41341a46c",
+      "script_sha256": "87966194573fbb76515d85a7dcbe49e6d8e523f74b4a493e131efe0e00406927"
+    },
+    {
+      "path": "data/quality-runs/retrieval-state-v2-20260924/train-main-v4-012-288",
+      "run_sha256": "e15afb5f2f8898c5eed30a2f1b15e609b35399753de2597115944a6ffd64113c",
+      "summary_sha256": "3349784dbfb70560f24fe6880e1952ba3fa07e5a26a4a8725a50bd1b0a0f92a9",
+      "jobs": 276,
+      "questions": 2078,
+      "plan_prompt_sha256": "89bdfc86c435e46f410a3a1a6da927c820c8c525943d8c77c925f92e9c0ef287",
+      "question_prompt_sha256": "59a9f77911da5531f2c6b892423fdb418c354c4cf948d32991310af41341a46c",
+      "script_sha256": "87966194573fbb76515d85a7dcbe49e6d8e523f74b4a493e131efe0e00406927"
+    }
+  ],
+  "structural_candidates": 2174,
+  "kinds": {
+    "ordinary": 372,
+    "comparison": 338,
+    "selection": 377,
+    "history": 352,
+    "missing": 356,
+    "conflict": 379
+  },
+  "source_families": 122,
+  "failed_jobs": [
+    {
+      "job_id": "train-api_gateways-015",
+      "error": "ValueError"
+    },
+    {
+      "job_id": "train-javascript_testing-015",
+      "error": "ValueError"
+    },
+    {
+      "job_id": "train-log_collectors-003",
+      "error": "ValueError"
+    },
+    {
+      "job_id": "train-message_brokers-007",
+      "error": "ValueError"
+    },
+    {
+      "job_id": "train-reverse_proxies-016",
+      "error": "ValueError"
+    },
+    {
+      "job_id": "train-search_cli-001",
+      "error": "ValueError"
+    },
+    {
+      "job_id": "train-search_cli-007",
+      "error": "ValueError"
+    },
+    {
+      "job_id": "train-task_queues-010",
+      "error": "ValueError"
+    }
+  ],
+  "normalized_question_unique_fraction": 1.0,
+  "largest_family_occurrence_fraction": 0.03311867525298988,
+  "semantic_suspect_flags": {
+    "missing_without_explicit_gap_request": 196,
+    "conflict_scope_not_explicit": 350
+  },
+  "exclusions_sha256": "008e2d8a4f8594b272e2623e8d68f16c258e86e739db3364e8eca5e49cb5ccb6",
+  "semantic_review": "not performed independently",
+  "admitted_training_rows": 0,
+  "training_started": false,
+  "candidates_sha256": "3d75b8cd78a1629586d165082e7580727dd8b2ebfbd0e5b8612fdd034eba7eb0"
+}

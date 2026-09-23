@@ -21,8 +21,9 @@ def build(sources, split, count, seed):
     for source in sources:
         if source["split"] == split:
             groups[source["cohort"]].append(source)
-    if not groups or any(len(rows) < 4 for rows in groups.values()):
-        raise ValueError("each selected cohort needs at least four sources")
+    minimum = 3 if split == "heldout" else 4
+    if not groups or any(len(rows) < minimum for rows in groups.values()):
+        raise ValueError(f"each selected cohort needs at least {minimum} sources")
     rng = random.Random(seed)
     usage = Counter()
     jobs = []

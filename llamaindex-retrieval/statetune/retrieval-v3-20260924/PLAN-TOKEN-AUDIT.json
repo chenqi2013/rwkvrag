@@ -1,0 +1,26 @@
+{
+  "schema": "retrieval_plan_token_audit_v3",
+  "candidate_rows": 2174,
+  "token_sha256": "cf1414fd157c4f5ec9520819e232f755a3ca59c043b06b2ed025fece8eb79956",
+  "admission_sha256": "15ddf7f34a8c6ae5778b86d93d30273147f98197d89f9bfa873b3aa35d1c9834",
+  "admitted": false,
+  "train_roles": {
+    "plan": 2174
+  },
+  "train_families": 122,
+  "largest_family_fraction": 0.03311867525298988,
+  "unique_question_fraction": 1.0,
+  "issue_counts": {
+    "independent_review_missing": 2174,
+    "train rows 2174 below minimum 5000": 1,
+    "plan rows 2174 below minimum 2400": 1,
+    "evidence rows 0 below minimum 1800": 1,
+    "followup rows 0 below minimum 800": 1,
+    "ordinary rows 372 below minimum 500": 1,
+    "comparison rows 338 below minimum 1000": 1,
+    "selection rows 377 below minimum 500": 1,
+    "missing rows 356 below minimum 500": 1,
+    "largest source family exceeds train share limit": 1
+  },
+  "training_started": false
+}

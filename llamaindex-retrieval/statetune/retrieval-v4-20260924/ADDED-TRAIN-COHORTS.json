@@ -1,0 +1,17 @@
+{
+  "schema": "retrieval_train_source_additions_v4",
+  "train": {
+    "static_site_generators": ["11ty/buildawesome", "react-static/react-static"],
+    "code_editors": ["ekzhang/rustpad", "chinchang/web-maker", "massivemadness/Squircle-CE"],
+    "package_managers": ["prefix-dev/pixi", "spack/spack"],
+    "game_engines": ["phaserjs/phaser", "HaxeFlixel/flixel"],
+    "build_systems": ["gradle/gradle", "ninja-build/ninja", "apache/maven", "sbt/sbt"],
+    "message_brokers": ["mochi-mqtt/server", "vernemq/vernemq", "apache/kafka", "apache/activemq"],
+    "api_gateways": ["agentgateway/agentgateway", "krakend/krakend-ce"],
+    "ocr_tools": ["lukas-blecher/LaTeX-OCR", "ocrmypdf/OCRmyPDF"],
+    "javascript_testing": ["jasmine/jasmine", "nightwatchjs/nightwatch", "karma-runner/karma"],
+    "database_clients": ["antares-sql/antares"],
+    "serverless_platforms": ["Azure/azure-functions-core-tools", "netlify/cli", "anomalyco/sst"],
+    "task_queues": ["gocraft/work", "graphile/worker"]
+  }
+}

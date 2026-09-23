@@ -1,0 +1,35 @@
+{
+  "schema": "retrieval_question_first_pilot_jobs_v5",
+  "source_jobs_sha256": "6528050dc3ea0ae93fd036e8b41fc7e06590760037ad749d10d3144de54ee620",
+  "indices": [
+    0,
+    19,
+    38,
+    57,
+    76,
+    95,
+    108,
+    127,
+    146,
+    165,
+    184,
+    203
+  ],
+  "selected_job_ids": [
+    "train-api_gateways-000",
+    "train-backup_tools-001",
+    "train-build_systems-002",
+    "train-code_editors-003",
+    "train-database_clients-004",
+    "train-game_engines-005",
+    "train-javascript_testing-000",
+    "train-log_collectors-001",
+    "train-message_brokers-002",
+    "train-ocr_tools-003",
+    "train-package_managers-004",
+    "train-reverse_proxies-005"
+  ],
+  "jobs_sha256": "4a4d7e76350df2bfbac8ea72a022583c37ba2551fcdc20a2415c91d4d91ab330",
+  "labels_generated": false,
+  "training_started": false
+}

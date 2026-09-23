@@ -1,0 +1,39 @@
+{
+  "schema": "retrieval_plan_candidate_package_v1",
+  "split": "heldout",
+  "registered_jobs": 16,
+  "run_receipts": [
+    {
+      "path": "data/quality-runs/retrieval-state-v2-20260924/blind-comparable-v4",
+      "run_sha256": "a9521aac80832f4b151667b224805225c4f00d287f065bf62d7438e5a065d814",
+      "summary_sha256": "2a4a6153e8e3968adce536dadce59f4d87613bc65f2ec35004a42811b76207cd",
+      "jobs": 16,
+      "questions": 127,
+      "plan_prompt_sha256": "89bdfc86c435e46f410a3a1a6da927c820c8c525943d8c77c925f92e9c0ef287",
+      "question_prompt_sha256": "59a9f77911da5531f2c6b892423fdb418c354c4cf948d32991310af41341a46c",
+      "script_sha256": "87966194573fbb76515d85a7dcbe49e6d8e523f74b4a493e131efe0e00406927"
+    }
+  ],
+  "structural_candidates": 127,
+  "kinds": {
+    "ordinary": 32,
+    "comparison": 32,
+    "selection": 32,
+    "missing": 15,
+    "conflict": 16
+  },
+  "source_families": 15,
+  "failed_jobs": [],
+  "normalized_question_unique_fraction": 1.0,
+  "largest_family_occurrence_fraction": 0.1889763779527559,
+  "semantic_suspect_flags": {
+    "missing_without_explicit_gap_request": 15,
+    "conflict_scope_not_explicit": 16,
+    "internal_cohort_label_in_question": 1
+  },
+  "exclusions_sha256": "008e2d8a4f8594b272e2623e8d68f16c258e86e739db3364e8eca5e49cb5ccb6",
+  "semantic_review": "not performed independently",
+  "admitted_training_rows": 0,
+  "training_started": false,
+  "candidates_sha256": "579aabd6cfaf9efc4559d84e43d65b4cef4c00672dc6ce3b775c7751d0864751"
+}

@@ -1,8 +1,14 @@
 # 实验变量控制
 
-维护日期：2026-09-23。执行状态见 [CURRENT](CURRENT.md)。遵循[架构规则](../llamaindex-retrieval/ARCHITECTURE_RULES.md)。
+维护日期：2026-09-24。执行状态见 [CURRENT](CURRENT.md)。遵循[架构规则](../llamaindex-retrieval/ARCHITECTURE_RULES.md)。
 
-## 新登记：检索专用 StateTune V1（数据准备中）
+## 当前数据实验：检索 StateTune 来源与问法（只备数据）
+
+[2026-09-24 完整记录](archive/2026-09/retrieval-statetune-data-curation-20260924.md)保留来源批次、教师提示、失败与数据哈希。V4 来源清单分训练152、开发15、盲留出24族；3,270条标签先行规划草稿逐字唯一，但所有行仍未经独立语义审读。2,300条机械待审队列只解决来源集中度，冲突题仅6条；现有准入训练数0。问法先行同12组试点V5为24/96、V6为65/96结构绑定，两版同时改变提示与对象绑定，不能单变量推断；V6自然性作者抽查仍有类别和条件错误。盲题127条为草稿，120题新盲集未冻结，单格证据和缺口补查标签均为0。用户明确要求本轮不训练，因此没有优化器更新、服务接入或质量晋级。
+
+下一次模型或数据实验须另开版本：先审读自然问题/规划标签与真实来源角色，构造同范围冲突与明确缺材料的固定证据，冻结盲题、运行提示、来源和评分准则；再按规划、证据、补查分别验证，旧65/434/24题仍只作回归。当前 GitHub README 快照的代码许可证字段不等于文本商业训练许可。该数据准备与正式搜索供应商、SearXNG/Tavily 质量是不同变量，不合并算收益。
+
+## 上一阶段登记：检索专用 StateTune V1
 
 [计划、角色目标、数量与单变量验收顺序](../llamaindex-retrieval/statetune/retrieval-v1-20260923/PLAN.md)已经登记；当前没有新准入数据、训练或质量收益。已实现未接运行链路的[规划协议](../llamaindex-retrieval/src/llamaindex_retrieval/retrieval_plan.py)及精确提示/token[编译器](../scripts/retrieval_statetune/prepare_plan.py)；其 3×3 格子与每对象一次初轮搜索式在单测中通过。先固定“待查格子 ≠ 搜索请求 ≠ 执行预算”的实际实验链路和新盲集，再用新来源分别训练规划、单格证据与缺口补查 State。已从65道联网题、434道恢复题、24道新固定材料题及已用官方README建立[精确禁入哈希](../llamaindex-retrieval/statetune/retrieval-v1-20260923/EXCLUSIONS.json)；镜像、别名与语义近似仍须人工复核。[准入审计](../scripts/retrieval_statetune/audit_candidates.py)会阻断跨分区来源、旧题碰撞、未独立复核、哈希错误与单族/重复问法超额，但它不能证明目标语义正确。
 
