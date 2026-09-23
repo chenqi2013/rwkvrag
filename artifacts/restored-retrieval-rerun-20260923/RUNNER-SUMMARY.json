@@ -1,0 +1,303 @@
+{
+  "planned": 434,
+  "recorded": 434,
+  "http_completed": 434,
+  "groups": {
+    "suite": {
+      "wiki_verified": {
+        "n": 200,
+        "http_completed": 200,
+        "empty_answers": 2,
+        "with_citations": 150,
+        "refusal_indicators": 1,
+        "generation_statuses": {
+          "completed": 151,
+          "length": 41,
+          "budget_exceeded": 2,
+          "planner_partial_failure": 6
+        }
+      },
+      "diverse": {
+        "n": 20,
+        "http_completed": 20,
+        "empty_answers": 1,
+        "with_citations": 14,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "length": 5,
+          "completed": 13,
+          "budget_exceeded": 1,
+          "planner_partial_failure": 1
+        }
+      },
+      "wiki_batch2": {
+        "n": 200,
+        "http_completed": 200,
+        "empty_answers": 1,
+        "with_citations": 160,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "length": 53,
+          "completed": 144,
+          "planner_partial_failure": 2,
+          "http_error": 1
+        }
+      },
+      "basic": {
+        "n": 6,
+        "http_completed": 6,
+        "empty_answers": 0,
+        "with_citations": 6,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "length": 1,
+          "completed": 5
+        }
+      },
+      "native_wiki": {
+        "n": 8,
+        "http_completed": 8,
+        "empty_answers": 0,
+        "with_citations": 6,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "length": 3,
+          "completed": 4,
+          "planner_partial_failure": 1
+        }
+      }
+    },
+    "category": {
+      "cause": {
+        "n": 32,
+        "http_completed": 32,
+        "empty_answers": 0,
+        "with_citations": 26,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "completed": 22,
+          "length": 10
+        }
+      },
+      "procedure": {
+        "n": 2,
+        "http_completed": 2,
+        "empty_answers": 0,
+        "with_citations": 2,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "length": 1,
+          "completed": 1
+        }
+      },
+      "time": {
+        "n": 64,
+        "http_completed": 64,
+        "empty_answers": 1,
+        "with_citations": 55,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "completed": 58,
+          "length": 5,
+          "budget_exceeded": 1
+        }
+      },
+      "agent": {
+        "n": 50,
+        "http_completed": 50,
+        "empty_answers": 0,
+        "with_citations": 45,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "completed": 39,
+          "planner_partial_failure": 2,
+          "length": 9
+        }
+      },
+      "definition": {
+        "n": 122,
+        "http_completed": 122,
+        "empty_answers": 3,
+        "with_citations": 87,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "length": 25,
+          "completed": 93,
+          "budget_exceeded": 2,
+          "planner_partial_failure": 1,
+          "http_error": 1
+        }
+      },
+      "location": {
+        "n": 60,
+        "http_completed": 60,
+        "empty_answers": 0,
+        "with_citations": 46,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "length": 18,
+          "completed": 39,
+          "planner_partial_failure": 3
+        }
+      },
+      "numeric": {
+        "n": 20,
+        "http_completed": 20,
+        "empty_answers": 0,
+        "with_citations": 20,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "completed": 20
+        }
+      },
+      "basic": {
+        "n": 6,
+        "http_completed": 6,
+        "empty_answers": 0,
+        "with_citations": 6,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "length": 1,
+          "completed": 5
+        }
+      },
+      "native_wiki": {
+        "n": 8,
+        "http_completed": 8,
+        "empty_answers": 0,
+        "with_citations": 6,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "length": 3,
+          "completed": 4,
+          "planner_partial_failure": 1
+        }
+      },
+      "list": {
+        "n": 62,
+        "http_completed": 62,
+        "empty_answers": 0,
+        "with_citations": 36,
+        "refusal_indicators": 1,
+        "generation_statuses": {
+          "length": 29,
+          "completed": 31,
+          "planner_partial_failure": 2
+        }
+      },
+      "person": {
+        "n": 2,
+        "http_completed": 2,
+        "empty_answers": 0,
+        "with_citations": 2,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "length": 1,
+          "completed": 1
+        }
+      },
+      "ambiguity": {
+        "n": 2,
+        "http_completed": 2,
+        "empty_answers": 0,
+        "with_citations": 2,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "completed": 1,
+          "length": 1
+        }
+      },
+      "comparison": {
+        "n": 2,
+        "http_completed": 2,
+        "empty_answers": 0,
+        "with_citations": 1,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "completed": 2
+        }
+      },
+      "place": {
+        "n": 2,
+        "http_completed": 2,
+        "empty_answers": 0,
+        "with_citations": 2,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "planner_partial_failure": 1,
+          "completed": 1
+        }
+      }
+    },
+    "style": {
+      "instructional": {
+        "n": 106,
+        "http_completed": 106,
+        "empty_answers": 1,
+        "with_citations": 80,
+        "refusal_indicators": 1,
+        "generation_statuses": {
+          "completed": 74,
+          "planner_partial_failure": 4,
+          "length": 27,
+          "budget_exceeded": 1
+        }
+      },
+      "unspecified": {
+        "n": 34,
+        "http_completed": 34,
+        "empty_answers": 1,
+        "with_citations": 26,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "length": 9,
+          "completed": 22,
+          "planner_partial_failure": 2,
+          "budget_exceeded": 1
+        }
+      },
+      "conversational": {
+        "n": 108,
+        "http_completed": 108,
+        "empty_answers": 2,
+        "with_citations": 85,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "completed": 76,
+          "length": 29,
+          "budget_exceeded": 1,
+          "planner_partial_failure": 1,
+          "http_error": 1
+        }
+      },
+      "colloquial": {
+        "n": 43,
+        "http_completed": 43,
+        "empty_answers": 0,
+        "with_citations": 33,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "completed": 35,
+          "length": 8
+        }
+      },
+      "direct": {
+        "n": 143,
+        "http_completed": 143,
+        "empty_answers": 0,
+        "with_citations": 112,
+        "refusal_indicators": 0,
+        "generation_statuses": {
+          "completed": 110,
+          "length": 30,
+          "planner_partial_failure": 3
+        }
+      }
+    }
+  },
+  "settings_and_index_alias_unchanged": true,
+  "historical_files_unchanged": true,
+  "automated_diagnostics_only": true,
+  "semantic_accuracy_verified": false,
+  "production_promotion": false
+}

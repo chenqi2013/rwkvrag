@@ -5,10 +5,17 @@ from hashlib import sha256
 from html import escape
 import json
 from pathlib import Path
+import re
 
 
 HERE = Path(__file__).resolve().parent
 CASES = json.loads((HERE.parent / "restored-retrieval-v2-20260920" / "cases.json").read_text(encoding="utf-8"))
+
+
+def display(text):
+    """Keep trailing spaces visible in HTML without creating whitespace errors in Markdown."""
+    return re.sub(r"(?m)[ \t]+$", lambda match: "".join(
+        "&#32;" if char == " " else "&#9;" for char in match.group()), escape(text))
 
 
 def main():
@@ -35,8 +42,8 @@ def main():
             f"## {index:04d} · {escape(case['id'])}", "",
             f"- Suite：`{case['suite']}`；HTTP：`{record.get('http_status')}`；生成状态：`{(record.get('diagnostics') or {}).get('generation_status', 'none')}`；最终来源：{len(sources)}",
             f"- 原始记录 SHA-256：`{sha256(raw).hexdigest()}`", "",
-            "**问题**", "", f"<pre>{escape(case['payload'].get('question') or '')}</pre>", "",
-            "**原始答案**", "", f"<pre>{escape(answer)}</pre>", "",
+            "**问题**", "", f"<pre>{display(case['payload'].get('question') or '')}</pre>", "",
+            "**原始答案**", "", f"<pre>{display(answer)}</pre>", "",
             "**最终来源**", "",
         ])
         if not sources:
@@ -44,7 +51,7 @@ def main():
         for number, source in enumerate(sources, 1):
             lines.extend([
                 f"{number}. {escape(source.get('title') or '')} · `{escape(source.get('document_id') or '')}`",
-                "", f"<pre>{escape((source.get('snippet') or '')[:500])}</pre>", "",
+                "", f"<pre>{display((source.get('snippet') or '')[:500])}</pre>", "",
             ])
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text("\n".join(lines), encoding="utf-8")

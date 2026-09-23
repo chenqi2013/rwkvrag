@@ -1,0 +1,105 @@
+{
+  "scope": "read_only_bm25_article_recall",
+  "planned": 434,
+  "recorded": 434,
+  "binding_sha256": "9a90fb4d9354ae1456480e9c56e51f5d8bb4eb6fead7039f8af8132b94af3fd4",
+  "all": {
+    "at_1": 399,
+    "at_3": 419,
+    "at_5": 421,
+    "at_10": 422,
+    "at_20": 423
+  },
+  "per_suite": {
+    "basic": {
+      "n": 6,
+      "at_1": 4,
+      "at_3": 4,
+      "at_5": 4,
+      "at_10": 4,
+      "at_20": 4
+    },
+    "diverse": {
+      "n": 20,
+      "at_1": 16,
+      "at_3": 20,
+      "at_5": 20,
+      "at_10": 20,
+      "at_20": 20
+    },
+    "native_wiki": {
+      "n": 8,
+      "at_1": 5,
+      "at_3": 5,
+      "at_5": 5,
+      "at_10": 5,
+      "at_20": 5
+    },
+    "wiki_batch2": {
+      "n": 200,
+      "at_1": 188,
+      "at_3": 198,
+      "at_5": 198,
+      "at_10": 198,
+      "at_20": 198
+    },
+    "wiki_verified": {
+      "n": 200,
+      "at_1": 186,
+      "at_3": 192,
+      "at_5": 194,
+      "at_10": 195,
+      "at_20": 196
+    }
+  },
+  "missed_top20": [
+    {
+      "case_id": "basic-0003",
+      "suite": "basic"
+    },
+    {
+      "case_id": "wiki_verified-0174",
+      "suite": "wiki_verified"
+    },
+    {
+      "case_id": "wiki_batch2-0005",
+      "suite": "wiki_batch2"
+    },
+    {
+      "case_id": "native_wiki-0005",
+      "suite": "native_wiki"
+    },
+    {
+      "case_id": "native_wiki-0006",
+      "suite": "native_wiki"
+    },
+    {
+      "case_id": "wiki_verified-0015",
+      "suite": "wiki_verified"
+    },
+    {
+      "case_id": "native_wiki-0007",
+      "suite": "native_wiki"
+    },
+    {
+      "case_id": "basic-0002",
+      "suite": "basic"
+    },
+    {
+      "case_id": "wiki_batch2-0029",
+      "suite": "wiki_batch2"
+    },
+    {
+      "case_id": "wiki_verified-0126",
+      "suite": "wiki_verified"
+    },
+    {
+      "case_id": "wiki_verified-0182",
+      "suite": "wiki_verified"
+    }
+  ],
+  "limits": [
+    "Direct BM25 query does not use conversation history; follow-up questions can miss their referenced article.",
+    "Expected article rank does not establish answer correctness."
+  ]
+}
