@@ -1,0 +1,38 @@
+{
+  "version": "searxng-alternative-v1",
+  "checked_at_utc": "2026-09-23T05:44:34.791839+00:00",
+  "image_digest": "sha256:e084201aa606fafce2151c8dc2844c9c3309025e90fbe7163b4f5e5183e474f0",
+  "compose_sha256": "83ef5e2f7c1b4d1700e2e0c0741703cfa224e033533e384278d3911c8d371cc0",
+  "settings_template_sha256": "74bfcb75e5d0186431e18de8cfaf2274fd374df78f3715e934edb927e6d6c546",
+  "local_searxng_url": "http://127.0.0.1:18448",
+  "local_api_port": 18440,
+  "configured_web_provider": "searxng",
+  "health": {
+    "api": "ok",
+    "admin_dependencies": "ok"
+  },
+  "after_restart": {
+    "searxng_json_result_count_observed": 32,
+    "web_source_count": 2,
+    "hybrid_kb_source_count": 8,
+    "hybrid_web_source_count": 2,
+    "auto_selected_mode": "hybrid"
+  },
+  "simple_ask_smoke": {
+    "question": "FastAPI 的官方 GitHub 仓库是什么？",
+    "answer_excerpt": "FastAPI 的官方 GitHub 仓库是：https://github.com/fastapi/fastapi[资料 1]。",
+    "status": "completed",
+    "source_count": 2,
+    "elapsed_seconds_approx": 16.2
+  },
+  "tests": {
+    "backend_relevant_passed": 144,
+    "frontend_passed": 48,
+    "frontend_build": "passed"
+  },
+  "limitations": [
+    "SearXNG sources are snippet_only",
+    "Natural multi-project comparison not semantically accepted",
+    "Upstream search engines may return CAPTCHA or secondary sources"
+  ]
+}

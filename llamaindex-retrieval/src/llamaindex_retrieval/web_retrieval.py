@@ -45,12 +45,18 @@ class SearchReaderAdapter:
     def __init__(self, settings):
         self.settings = settings
         self.slots = asyncio.Semaphore(settings.web_search_concurrency)
+        from .web_guard import WebProviderGuard
+        self.guard = WebProviderGuard(getattr(settings, "web_guard_path", None),
+            min_interval=getattr(settings, "web_min_interval_seconds", 1.0),
+            auth_cooldown=getattr(settings, "web_auth_cooldown_seconds", 900.0),
+            rate_cooldown=getattr(settings, "web_rate_cooldown_seconds", 60.0),
+            lease_seconds=getattr(settings, "web_search_timeout", 45) + 5)
 
     async def _execute(self, request, timeout):
         if getattr(self.settings, "web_search_provider", "searchreader") != "searchreader":
             from .direct_web import execute
             async with self.slots:
-                return await asyncio.wait_for(execute(request, self.settings), timeout)
+                return await asyncio.wait_for(execute(request, self.settings, self.guard), timeout)
         root = self.settings.searchreader_project_dir
         if root is None:
             raise RuntimeError("web_search_not_configured")

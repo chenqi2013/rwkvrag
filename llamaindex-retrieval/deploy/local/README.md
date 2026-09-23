@@ -22,7 +22,7 @@ journalctl --user -u rwkvrag-api.service -n 100 --no-pager
 systemctl --user stop rwkvrag-api.service rwkvrag-mongodb.service rwkvrag-opensearch.service rwkvrag-tunnel.service
 ```
 
-- API：`127.0.0.1:18440`，配置 `data/services/local-app/settings.json`。
+- API：`127.0.0.1:18440`，配置 `data/services/local-app/settings.json`。内置联网需在该 JSON 指定 `web_search_provider`、`web_tavily_api_key_file` 或 `web_searxng_base_url`，并指定 `web_guard_path`；文件 Key 权限为 `0600`，与 SearchReader 的 Key 池互不依赖。账号停用仍需由提供方恢复。
 - MongoDB：`127.0.0.1:18439`，数据 `data/services/mongodb/data`。
 - OpenSearch：`127.0.0.1:18438`，数据 `data/services/opensearch/data`。
 - GPU3 推理转发：`127.0.0.1:18423`。

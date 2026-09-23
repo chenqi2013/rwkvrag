@@ -9,6 +9,7 @@ import pytest
 from pydantic import SecretStr
 
 from llamaindex_retrieval import direct_web
+from llamaindex_retrieval.config import Settings
 from llamaindex_retrieval.repository import search_answer_status, search_failure_category
 from llamaindex_retrieval.rwkv_pipeline import RWKVPipeline
 from llamaindex_retrieval.schemas import SearchRequest
@@ -20,6 +21,15 @@ def web_hit():
     source = hit("web:1", "Public release date is 2024-10-07", "web:document")
     source.metadata.update(source="web", retrieved_at="2026-09-19T00:00:00Z")
     return source
+
+
+@pytest.mark.asyncio
+async def test_default_web_provider_uses_this_repository_and_requires_credential():
+    config = Settings(_env_file=None)
+    assert config.web_search_provider == "tavily"
+    with pytest.raises(direct_web.WebProviderError,
+                       match="web_tavily_key_not_configured"):
+        await SearchReaderAdapter(config).search("query")
 
 
 @pytest.mark.asyncio
@@ -122,7 +132,7 @@ class Provider:
  def search(self, query, max_results): return [Hit()]
 def create_search_provider(settings): return Provider()
 ''')
-    adapter = SearchReaderAdapter(settings(searchreader_project_dir=root))
+    adapter = SearchReaderAdapter(settings(web_search_provider="searchreader", searchreader_project_dir=root))
     hits, trace = await adapter.search("query")
     assert hits[0].text == "exact text"
     assert hits[0].metadata["material_limited"]
@@ -134,7 +144,7 @@ def create_search_provider(settings): return Provider()
 @pytest.mark.asyncio
 async def test_timeout_kills_bridge_and_releases_slot(tmp_path):
     root = project(tmp_path, "import time\ntime.sleep(20)\n")
-    adapter = SearchReaderAdapter(settings(searchreader_project_dir=root, web_search_timeout=1, web_search_concurrency=1))
+    adapter = SearchReaderAdapter(settings(web_search_provider="searchreader", searchreader_project_dir=root, web_search_timeout=1, web_search_concurrency=1))
     with pytest.raises(TimeoutError):
         await adapter.search("q")
     # Semaphore is released even when process termination is needed.
@@ -146,7 +156,7 @@ async def test_timeout_kills_bridge_and_releases_slot(tmp_path):
 @pytest.mark.asyncio
 async def test_provider_error_body_is_not_exposed(tmp_path):
     root = project(tmp_path, 'raise RuntimeError("private API credential")\n')
-    adapter = SearchReaderAdapter(settings(searchreader_project_dir=root))
+    adapter = SearchReaderAdapter(settings(web_search_provider="searchreader", searchreader_project_dir=root))
     with pytest.raises(RuntimeError, match="^searchreader_provider_failed$"):
         await adapter.search("q")
 
@@ -220,6 +230,90 @@ async def test_single_repository_upstream_error_does_not_expose_credential(monke
 
 
 @pytest.mark.asyncio
+async def test_shared_guard_stops_auth_retry_across_adapter_instances(monkeypatch, tmp_path):
+    upstream_calls = []
+    def handler(request):
+        upstream_calls.append(request.headers["Authorization"])
+        if request.headers["Authorization"] == "Bearer expired-key":
+            return httpx.Response(401, text="private provider account response")
+        return httpx.Response(200, json={"results": [{
+            "url": "https://example.org/a", "content": "new key works"}]})
+    monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
+        transport=httpx.MockTransport(handler), trust_env=False))
+    guard_path = tmp_path / "guard.sqlite3"
+    options = dict(web_search_provider="tavily", web_search_concurrency=2,
+        web_search_timeout=3, web_search_results=1, web_guard_path=guard_path,
+        web_min_interval_seconds=0, web_search_material_characters=256)
+    expired = settings(**options, web_tavily_api_key="expired-key")
+    with pytest.raises(direct_web.WebProviderError, match="web_upstream_http_401"):
+        await SearchReaderAdapter(expired).search("first")
+    with pytest.raises(direct_web.WebProviderError, match="web_upstream_circuit_open_401"):
+        await SearchReaderAdapter(expired).search("second")
+    assert upstream_calls == ["Bearer expired-key"]
+    hits, _ = await SearchReaderAdapter(settings(**options,
+        web_tavily_api_key="restored-key")).search("third")
+    assert hits[0].text == "new key works"
+    assert upstream_calls == ["Bearer expired-key", "Bearer restored-key"]
+    assert guard_path.stat().st_mode & 0o077 == 0
+
+
+@pytest.mark.asyncio
+async def test_concurrent_workers_wait_for_first_auth_result(monkeypatch, tmp_path):
+    calls = []
+    async def handler(request):
+        calls.append(request.url.path)
+        await asyncio.sleep(0.05)
+        return httpx.Response(401, text="private provider account response")
+    monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
+        transport=httpx.MockTransport(handler), trust_env=False))
+    config = settings(web_search_provider="tavily", web_tavily_api_key="expired-key",
+        web_guard_path=tmp_path / "guard.sqlite3", web_min_interval_seconds=0)
+    outcomes = await asyncio.gather(
+        SearchReaderAdapter(config).search("one"),
+        SearchReaderAdapter(config).search("two"), return_exceptions=True)
+    assert sorted(str(item) for item in outcomes) == [
+        "web_upstream_circuit_open_401", "web_upstream_http_401"]
+    assert calls == ["/search"]
+
+
+@pytest.mark.asyncio
+async def test_rate_limit_retry_after_blocks_next_request_without_retry(monkeypatch, tmp_path):
+    calls = []
+    def handler(request):
+        calls.append(request.url.path)
+        return httpx.Response(429, headers={"Retry-After": "120"},
+                              text="secret provider response")
+    monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
+        transport=httpx.MockTransport(handler), trust_env=False))
+    config = settings(web_search_provider="tavily", web_tavily_api_key="some-key",
+        web_guard_path=tmp_path / "guard.sqlite3", web_min_interval_seconds=0)
+    with pytest.raises(direct_web.WebProviderError, match="web_upstream_http_429"):
+        await SearchReaderAdapter(config).search("one")
+    with pytest.raises(direct_web.WebProviderError, match="web_upstream_circuit_open_429"):
+        await SearchReaderAdapter(config).search("two")
+    assert calls == ["/search"]
+
+
+@pytest.mark.asyncio
+async def test_private_key_file_is_read_without_exposing_it(monkeypatch, tmp_path):
+    key_file = tmp_path / "tavily.key"
+    key_file.write_text("file-secret\n")
+    key_file.chmod(0o600)
+    def handler(request):
+        assert request.headers["Authorization"] == "Bearer file-secret"
+        return httpx.Response(200, json={"results": []})
+    monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
+        transport=httpx.MockTransport(handler), trust_env=False))
+    config = settings(web_search_provider="tavily", web_tavily_api_key_file=key_file,
+                      web_guard_path=tmp_path / "guard.sqlite3")
+    assert (await SearchReaderAdapter(config).search("q"))[0] == []
+    key_file.chmod(0o644)
+    with pytest.raises(direct_web.WebProviderError,
+                       match="web_tavily_key_file_permissions"):
+        await SearchReaderAdapter(config).search("q")
+
+
+@pytest.mark.asyncio
 async def test_single_repository_provider_reaches_hybrid_pipeline_without_second_checkout(monkeypatch):
     def handler(request):
         return httpx.Response(200, json={"results": [{
@@ -256,6 +350,19 @@ async def test_single_repository_provider_failure_exposes_safe_code_in_trace(mon
     assert response.generation["status"] == "retrieval_partial_failure"
     assert response.retrieval["provider_failures"][0]["error_code"] == "web_upstream_http_401"
     assert "secret-in-provider-body" not in response.model_dump_json()
+
+
+@pytest.mark.asyncio
+async def test_searxng_empty_results_with_engine_failures_are_not_no_matches(monkeypatch):
+    monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
+        transport=httpx.MockTransport(lambda request: httpx.Response(200, json={
+            "results": [], "unresponsive_engines": [["brave", "timeout"]]})),
+        trust_env=False))
+    config = settings(web_search_provider="searxng",
+        web_searxng_base_url="http://127.0.0.1:8888")
+    with pytest.raises(direct_web.WebProviderError,
+                       match="web_searxng_empty_with_engine_failures"):
+        await SearchReaderAdapter(config).search("q")
 
 
 def test_invalid_scope_rejected():

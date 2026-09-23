@@ -37,6 +37,16 @@ test("safe upstream status is visible without exposing provider error bodies", (
   assert.doesNotMatch(warning[1], /secret-in-body/);
 });
 
+test("provider cooldown is visible without exposing its private response", () => {
+  const response = { sources: [{}], generation: { retrieval_failures: [
+    { provider: "web", error_code: "web_upstream_circuit_open_401", error: "WebProviderError" },
+  ] } };
+  const warning = evidenceWarnings(response)[0];
+  assert.match(warning[0], /HTTP 401/);
+  assert.match(warning[0], /暂缓/);
+  assert.match(warning[1], /provider requests are paused/);
+});
+
 test("routing failure offers an explicit scope choice without inventing an answer", () => {
   const response = { answer: "", generation: { pipeline: "rwkv", status: "routing_failed", model_calls: [] } };
   const display = answerPresentation(response);

@@ -122,7 +122,9 @@ Writer 提示词实验与 canonical 模板校正见 [第二轮报告](../docs/ar
 
 管理页默认由 SearchReader 的 1.5B StateTune 选择器判断是否补充网络材料；API 显式传 `retrieval_mode: "auto"` 启用。支持强制 knowledge_base / hybrid / web。详细配置、训练结果、部署与已知质量问题见 [混合检索交付报告](../docs/archive/2026-09/hybrid-search-20260919.md)。
 
-本仓库也提供可选的内置 Tavily 或 SearXNG 检索适配器，不需要另行安装 SearchReader 源码。复制 `.env.example` 后，设置 `RWKVRAG_WEB_SEARCH_PROVIDER=tavily` 与私有的 `RWKVRAG_WEB_TAVILY_API_KEY`，或设置 `RWKVRAG_WEB_SEARCH_PROVIDER=searxng` 与 `RWKVRAG_WEB_SEARXNG_BASE_URL`。这只配置网络材料来源；OpenSearch、MongoDB 和 RWKV 模型端点仍按上文部署。调用 `/v1/ask` 并传 `retrieval_mode: "web"` 可只用网络资料，传 `"hybrid"` 可合并网络和知识库资料。返回的网络原文快照、检索时间和来源仍在 trace 与引用面板中。
+本仓库内置 Tavily 或 SearXNG 检索适配器，不需要另行安装 SearchReader 源码。软件默认选择 Tavily，未配置 Key 时明确返回配置错误，不向上游发送请求。复制 `.env.example` 后，设置私有的 `RWKVRAG_WEB_TAVILY_API_KEY`，或使用权限为 `0600` 的单 Key 文件并设置 `RWKVRAG_WEB_TAVILY_API_KEY_FILE`；两种 Key 来源不能同时启用。SearXNG 设置 `RWKVRAG_WEB_SEARCH_PROVIDER=searxng` 与 `RWKVRAG_WEB_SEARXNG_BASE_URL`。旧 SearchReader 子进程路径须显式设置 `RWKVRAG_WEB_SEARCH_PROVIDER=searchreader`。这只配置网络材料来源；OpenSearch、MongoDB 和 RWKV 模型端点仍按上文部署。调用 `/v1/ask` 并传 `retrieval_mode: "web"` 可只用网络资料，传 `"hybrid"` 可合并网络和知识库资料。返回的网络原文快照、检索时间和来源仍在 trace 与引用面板中。
+
+内置适配器一次查询只使用配置的单个 Key，不轮换 Key。设置 `RWKVRAG_WEB_GUARD_PATH` 为所有 API worker 共用的可写 SQLite 文件路径后，网络请求会跨进程串行、至少间隔一秒；401/402/403/432/433 进入默认 15 分钟冷却，429 遵守有界的 `Retry-After`（缺失时默认 60 秒），不会立即重试。路径未设置时只有单个 API 进程内的保护；多实例部署必须共用该路径或在统一出口实现等效限流。更换为新的有效 Key 后使用新的哈希身份，不受旧 Key 的冷却记录影响。密钥不写入 guard 文件。
 
 ```bash
 curl -sS http://127.0.0.1:8080/v1/search \
@@ -132,6 +134,8 @@ curl -sS http://127.0.0.1:8080/v1/search \
 
 这一步只检查网络检索与来源快照；完整回答用相同问题调用 `/v1/ask`。混合模式改传 `"retrieval_mode":"hybrid"` 并指定自己的 `knowledge_base_id`。不要把上面的命令成功当作答案正确。
 
-内置提供方若返回401等错误，`retrieval.provider_failures[].error_code`会记录安全的`web_upstream_http_401`等代码，便于检查凭据或配额；不会保存提供方错误正文、请求密钥或轮换其他密钥。混合模式在知识库成功而网络失败时保留已有资料并标记部分检索失败。
+内置提供方若返回401等错误，`retrieval.provider_failures[].error_code`会记录安全的`web_upstream_http_401`等代码；冷却期内记录`web_upstream_circuit_open_401`等代码，不再请求上游。不会保存提供方错误正文、请求密钥或轮换其他密钥。混合模式在知识库成功而网络失败时保留已有资料并标记部分检索失败。
 
 `"auto"` 需要额外配置 `RWKVRAG_SEARCHREADER_ROUTER_BASE_URL`、`RWKVRAG_SEARCHREADER_ROUTER_MODEL`，以及模型服务需要时的 `RWKVRAG_WEB_ROUTER_API_KEY`；它让模型判断是否补网。选择器未配置或输出不合协议时会明确失败，不会改用关键词规则。现有 `WEB_SEARCH_PROVIDER=searchreader` 仍使用本地 SearchReader 项目和其已有配置。内置网络检索的单元与模拟传输测试已覆盖快照、引用身份和凭据不进入 trace；真实提供方与多项目端到端质量需要单独实测，不能从配置可用推断通过。
+
+不购买搜索 API 的本机备选部署见 [SearXNG Compose](deploy/searxng/README.md)。它已完成真实 `web`/`hybrid` 检索与一条简单问答冒烟检查；SearXNG 材料当前只含网页摘要，不能据此认定复杂比较题质量通过。[本机验证记录](../docs/archive/2026-09/searxng-alternative-20260923.md)。

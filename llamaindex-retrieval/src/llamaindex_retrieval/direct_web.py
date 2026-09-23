@@ -10,6 +10,8 @@ from uuid import uuid4
 
 import httpx
 
+from .web_guard import WebGuardBlocked, WebGuardUnavailable, WebProviderGuard
+
 
 MAX_RESPONSE_BYTES = 8 * 1024 * 1024
 
@@ -30,11 +32,14 @@ def _client():
     return httpx.AsyncClient(trust_env=False, follow_redirects=False)
 
 
-async def _json_response(client, method, url, *, timeout, headers=None, params=None, body=None):
+async def _json_response(client, method, url, *, timeout, headers=None, params=None, body=None,
+                         on_http_error=None):
     try:
         async with client.stream(method, url, headers=headers, params=params, json=body,
                                  timeout=timeout) as response:
             if response.status_code >= 400:
+                if on_http_error is not None:
+                    await on_http_error(response.status_code, response.headers.get("retry-after"))
                 raise WebProviderError(f"web_upstream_http_{response.status_code}")
             chunks, size = [], 0
             async for chunk in response.aiter_bytes():
@@ -125,11 +130,32 @@ async def _route(request, settings):
             "source_hashes": {"direct_web.py": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}}
 
 
-async def _search(request, settings):
+def _tavily_key(settings):
+    configured = settings.web_tavily_api_key.get_secret_value()
+    key_file = getattr(settings, "web_tavily_api_key_file", None)
+    if configured and key_file:
+        raise WebProviderError("web_tavily_multiple_key_sources")
+    if configured:
+        return configured
+    if key_file:
+        try:
+            path = Path(key_file)
+            if path.stat().st_mode & 0o077:
+                raise WebProviderError("web_tavily_key_file_permissions")
+            key = path.read_text(encoding="utf-8").strip()
+        except OSError:
+            raise WebProviderError("web_tavily_key_file_unavailable") from None
+        if "\n" in key or "\r" in key:
+            raise WebProviderError("web_tavily_key_file_invalid")
+        return key
+    return ""
+
+
+async def _search(request, settings, guard=None):
     provider = settings.web_search_provider
     query, count = request["query"], request["max_results"]
     if provider == "tavily":
-        key = settings.web_tavily_api_key.get_secret_value()
+        key = _tavily_key(settings)
         if not key:
             raise WebProviderError("web_tavily_key_not_configured")
         endpoint = "https://api.tavily.com/search"
@@ -150,12 +176,38 @@ async def _search(request, settings):
         body = None
     else:
         raise ValueError("invalid_web_provider")
-    async with _client() as client:
-        payload = await _json_response(client, method, endpoint, headers=headers,
-                                       params=params, body=body, timeout=settings.web_search_timeout)
+    guard = guard or WebProviderGuard(
+        getattr(settings, "web_guard_path", None),
+        min_interval=getattr(settings, "web_min_interval_seconds", 1.0),
+        auth_cooldown=getattr(settings, "web_auth_cooldown_seconds", 900.0),
+        rate_cooldown=getattr(settings, "web_rate_cooldown_seconds", 60.0),
+        lease_seconds=settings.web_search_timeout + 5)
+    identity = guard.identity(provider, key if provider == "tavily" else endpoint)
+    try:
+        await guard.reserve(identity)
+    except (WebGuardBlocked, WebGuardUnavailable) as exc:
+        raise WebProviderError(str(exc)) from None
+    async def on_http_error(status, retry_after):
+        try:
+            await guard.block(identity, status, retry_after)
+        except WebGuardUnavailable as exc:
+            raise WebProviderError(str(exc)) from None
+    try:
+        async with _client() as client:
+            payload = await _json_response(client, method, endpoint, headers=headers,
+                                           params=params, body=body, timeout=settings.web_search_timeout,
+                                           on_http_error=on_http_error)
+    finally:
+        try:
+            await guard.complete(identity)
+        except WebGuardUnavailable as exc:
+            raise WebProviderError(str(exc)) from None
     results = payload.get("results")
     if not isinstance(results, list):
         raise WebProviderError("web_upstream_results_not_array")
+    if provider == "searxng" and not results and payload.get("unresponsive_engines"):
+        # HTTP 200 with no results after engine failures is not evidence of no matches.
+        raise WebProviderError("web_searxng_empty_with_engine_failures")
     hits = []
     for item in results:
         if not isinstance(item, dict):
@@ -189,9 +241,9 @@ async def _search(request, settings):
             "source_hashes": {"direct_web.py": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}}
 
 
-async def execute(request, settings):
+async def execute(request, settings, guard=None):
     if request.get("action") == "route":
         return await _route(request, settings)
     if request.get("action") == "search":
-        return await _search(request, settings)
+        return await _search(request, settings, guard)
     raise ValueError("invalid_web_action")

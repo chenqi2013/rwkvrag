@@ -1,0 +1,21 @@
+name: rwkvrag-searxng
+
+services:
+  searxng:
+    image: ghcr.io/searxng/searxng@sha256:e084201aa606fafce2151c8dc2844c9c3309025e90fbe7163b4f5e5183e474f0
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      GRANIAN_HOST: 127.0.0.1
+      GRANIAN_PORT: "18448"
+      SEARXNG_BASE_URL: http://127.0.0.1:18448/
+      SEARXNG_SECRET: ${SEARXNG_SECRET:?set SEARXNG_SECRET in a private .env file}
+      HTTP_PROXY: ${SEARXNG_HTTP_PROXY:-}
+      HTTPS_PROXY: ${SEARXNG_HTTP_PROXY:-}
+      NO_PROXY: 127.0.0.1,localhost
+    volumes:
+      - ../../../data/services/searxng/config:/etc/searxng
+      - cache:/var/cache/searxng
+
+volumes:
+  cache:

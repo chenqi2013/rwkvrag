@@ -18,7 +18,11 @@
 
 2026-09-23新增[前端答案格式转换层](../llamaindex-retrieval/web/src/answerFormat.ts)：搜索、历史和Wiki共用展示组件在引用编号不存在、格式损坏，或长片段重复两次、较短片段重复三次时隐藏主答案；原文可展开核对，API返回和历史原文不改。被隐藏的答案也不会进入新一轮对话历史或历史列表摘要。45项前端测试和构建通过；本机18440页面已切到`answer-format-20260923-v3`，实际返回新JS且API/Mongo/OpenSearch健康。[发布与同批事后核对](archive/2026-09/answer-format-v3-20260923.md)显示32份完整正确回答均保持显示，但64份错误回答仍有10份可见。格式层不能证明编号存在的引用确实支持结论，也不能识别所有语义幻觉；远端正式模型和后端链路未切换。
 
-前端新增“有已保存资料但正文零引用”的明确警示，既不替模型补引用，也不把资料列表当事实支持。当前本机18440已切到`answer-format-20260923-v5`，额外显示内置网络提供方的安全HTTP错误码；47项前端测试和构建通过，实际新JS、API/Mongo/OpenSearch健康。后端新增[单仓库内置网络适配器](../llamaindex-retrieval/src/llamaindex_retrieval/direct_web.py)：可选Tavily或SearXNG，强制`web`/`hybrid`模式无需SearchReader源码；`auto`仍需配置模型选择器，旧SearchReader路径保留。一次低频Tavily实网探测返回401，所以真实供应商连通与完整RAG质量**未通过验收**，不能从模拟测试推断商用可用。[V4交付边界](archive/2026-09/direct-web-and-citation-v4-20260923.md)、[V5发布收据](../artifacts/answer-format-20260923/DEPLOYMENT-v5.json)。
+前端新增“有已保存资料但正文零引用”的明确警示，既不替模型补引用，也不把资料列表当事实支持。此前本机18440部署的`answer-format-20260923-v5`额外显示内置网络提供方的安全HTTP错误码；47项前端测试和构建通过，实际新JS、API/Mongo/OpenSearch健康。后端新增[单仓库内置网络适配器](../llamaindex-retrieval/src/llamaindex_retrieval/direct_web.py)：可选Tavily或SearXNG，强制`web`/`hybrid`模式无需SearchReader源码；`auto`仍需配置模型选择器，旧SearchReader路径保留。一次低频Tavily实网探测返回401，所以真实供应商连通与完整RAG质量**未通过验收**，不能从模拟测试推断商用可用。[V4交付边界](archive/2026-09/direct-web-and-citation-v4-20260923.md)、[V5发布收据](../artifacts/answer-format-20260923/DEPLOYMENT-v5.json)。
+
+2026-09-23续修：本机18440已改用**仓库内置 Tavily 单 Key 路径**，不再从 SearchReader 目录运行搜索子进程；自动联网的原 RWKV 选择器仍配置。新增跨进程共享的 SQLite 请求间隔、失败冷却和权限 `0600` 私有 Key 文件。真实 `/v1/search` 首次返回安全错误码`web_upstream_http_401`，下次及 API 重启后为`web_upstream_circuit_open_401`；本机 UI 已切到 v6 并显示暂缓提示。相关后端130项、前端48项及构建通过，API与数据库健康。[本次修复与边界](archive/2026-09/web-provider-guard-20260923.md)、[v6脱敏部署收据](../artifacts/answer-format-20260923/DEPLOYMENT-v6.json)。**账号停用尚未恢复，真实成功联网、多项目比较质量和训练 State 晋级均未通过验收。**
+
+随后本机改用[自托管 SearXNG 替代](archive/2026-09/searxng-alternative-20260923.md)：官方容器固定 digest，本机 `18448` JSON 搜索经现有代理取得真实结果，18440 已切到 `web_search_provider=searxng`。强制 `web` 返回两条 GitHub 网络来源，`hybrid` 返回 8 条知识库加 2 条网络来源，一道简单完整网络问答 16.2 秒给出正确仓库链接与引用；电脑重启后容器、API 与 JSON 搜索均仍可用。相关后端 144 项及前端 48 项通过。**当前网络材料仍主要是摘要；三项目自然比较搜索前列有大量二手文章，复杂比较、引用语义和商用质量未验收。** Tavily 账号仍停用；目前不需要购买新 API。
 
 后端[字面引用审计](../llamaindex-retrieval/src/llamaindex_retrieval/citation_audit.py)新增`missing_valid_citation`字段，用于统计保存了来源但正文没有有效编号的回答；它不改变对外答案，也不声称引用语义支持。内置网络提供方失败在trace中保留安全错误码（如HTTP 401），不写响应正文或密钥。新增审计、网络及模拟混合链路相关检查共143项通过；本机API已重启且API/Mongo/OpenSearch健康，后续新回答会带该字面审计字段，旧历史不会改写。
 
@@ -116,7 +120,7 @@ V6严格目标审读发现无据日期/资料称谓/适用范围及引用错位�
 
 - 正式界面支持多选Markdown、文本PDF、DOCX，100MB/文件；FineWiki/Parquet可通过导入任务添加。本轮未批量上传。逐文件发布会复制旧索引，海量导入优化未完成。[添加方式与限制](archive/2026-09/knowledge-addition-check-20260921.md)。
 - 先前已实现索引版本、修订、Wiki草稿和混合检索；此前配置`wiki_auto_generate=true`只代表流程启用，不代表草稿正确或商业化验收。[混合检索](archive/2026-09/hybrid-search-20260919.md)、[自动Wiki](archive/2026-09/automatic-wiki-20260919.md)。
-- 新凭据此前低频搜索恢复，仍有提供方异常；本轮未再请求Tavily，不能据历史成功保证当前账号状态。[凭据/代码诊断](archive/2026-09/tavily-diagnosis-20260921.md)。
+- 当前 8 把 Tavily Key 与此前逐把返回账号停用的那批相同；本日 3 把低频直连仍为 401。正式联网现已由自托管 SearXNG 提供，单仓库适配器与跨进程冷却保留；账号未恢复。[凭据/代码诊断](archive/2026-09/tavily-diagnosis-20260921.md)、[SearXNG替代验证](archive/2026-09/searxng-alternative-20260923.md)。
 - 合并引用、交互停止/恢复等独立候选此前已验证，但没有把这些历史候选都算作已部署18440。
 
 ## 7. 必须保留的历史证据

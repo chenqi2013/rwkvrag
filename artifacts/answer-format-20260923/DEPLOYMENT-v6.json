@@ -1,0 +1,31 @@
+{
+  "version": "web-provider-guard-v1-and-ui-v6",
+  "checked_at_utc": "2026-09-23T05:00:29.607698+00:00",
+  "local_api_port": 18440,
+  "web_provider": "tavily",
+  "key_source": "private_file",
+  "searchreader_project_dir_configured": false,
+  "shared_guard_configured": true,
+  "provider_online_verified": false,
+  "live_request_safe_codes": [
+    "web_upstream_http_401",
+    "web_upstream_circuit_open_401"
+  ],
+  "cooldown_survived_api_restart": true,
+  "health": {
+    "api": "ok",
+    "admin_dependencies": "ok"
+  },
+  "frontend_asset": "index-CNOpApMf.js",
+  "frontend_sha256": "5e0eff35194a2e78a279f4e58c6318de1ffd06ddc48237ff7e073a91358e206b",
+  "web_guard_source_sha256": "b36d59ffe00dd225fae579e867ab0a90bdd0d7d6904ed7e155ecc1b7bd37389c",
+  "tests": {
+    "backend_relevant_passed": 130,
+    "frontend_passed": 48,
+    "frontend_build": "passed"
+  },
+  "limitations": [
+    "Tavily account remains deactivated",
+    "No live successful web search or semantic RAG acceptance"
+  ]
+}
