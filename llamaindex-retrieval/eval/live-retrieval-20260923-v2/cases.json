@@ -1,0 +1,8 @@
+[
+  {"id":"vllm","question":"vLLM 官方文档怎样介绍在线部署和前缀缓存？"},
+  {"id":"sglang","question":"SGLang 官方文档怎样介绍在线部署和前缀缓存？"},
+  {"id":"llama_cpp","question":"llama.cpp 官方仓库怎样介绍 CPU、GPU 和量化推理？"},
+  {"id":"ragflow","question":"RAGFlow 官方文档怎样介绍 PDF 解析和引用？"},
+  {"id":"dify","question":"Dify 官方文档怎样介绍工作流和知识库？"},
+  {"id":"weknora","question":"WeKnora 官方仓库怎样介绍自动 Wiki 和知识更新？"}
+]

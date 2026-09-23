@@ -1,0 +1,13 @@
+[
+  {"id":"single_repo","kind":"single","question":"FastAPI 的官方 GitHub 仓库在哪里？","projects":["fastapi"]},
+  {"id":"single_docs","kind":"single","question":"Qdrant 官方文档怎样介绍向量量化？","projects":["qdrant"]},
+  {"id":"single_release","kind":"single","question":"SGLang 最近一次 GitHub Release 的发布说明在哪里？","projects":["sglang"]},
+  {"id":"compare_inference_3","kind":"compare","question":"vLLM、SGLang 和 llama.cpp 在部署方式、硬件需求和推理优化上分别适合什么场景？","projects":["vllm","sglang","llama.cpp"]},
+  {"id":"compare_rag_3","kind":"compare","question":"RAGFlow、Dify 和 WeKnora 在文档解析、工作流和知识库维护方面有什么区别？","projects":["ragflow","dify","weknora"]},
+  {"id":"compare_vector_3","kind":"compare","question":"Qdrant、Milvus 和 Weaviate 在本机小规模使用与分布式扩展上怎样选？","projects":["qdrant","milvus","weaviate"]},
+  {"id":"compare_framework_3","kind":"compare","question":"LangChain、LlamaIndex 和 Haystack 做企业 RAG 时各自的强项和限制是什么？","projects":["langchain","llamaindex","haystack"]},
+  {"id":"compare_storage_3","kind":"compare","question":"已有 PostgreSQL 的团队在 pgvector、Qdrant 和 Milvus 之间怎样选，特别是千万级向量？","projects":["pgvector","qdrant","milvus"]},
+  {"id":"compare_apps_4","kind":"compare","question":"Open WebUI、AnythingLLM、RAGFlow 和 Dify 用作个人本地知识库时有哪些实际区别？","projects":["open webui","anythingllm","ragflow","dify"]},
+  {"id":"compare_cache_2","kind":"compare","question":"vLLM 与 SGLang 在前缀缓存、结构化输出和多用户并发上的差异，官方材料分别怎么说？","projects":["vllm","sglang"]},
+  {"id":"compare_wiki_2","kind":"compare","question":"WeKnora 和 RAGFlow 在自动 Wiki、知识更新和引用展示方面有什么区别？","projects":["weknora","ragflow"]}
+]
