@@ -67,7 +67,7 @@ def health():
 def main():
     inputs = json.loads(INPUTS.read_text(encoding="utf-8"))
     for name, expected in inputs["sources"].items():
-        if sha((ROOT / name).read_bytes()) != expected:
+        if sha((ROOT / "llamaindex-retrieval" / name).read_bytes()) != expected:
             raise RuntimeError(f"source_changed: {name}")
     settings = json.loads(SETTINGS.read_text(encoding="utf-8"))
     observed_health = health()
