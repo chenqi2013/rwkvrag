@@ -2,7 +2,7 @@
 
 ## 范围与绑定
 
-现有 5 套实时联网题共 45 道，另预先冻结 20 道自然问法，共 65 道；其中单项目 14、比较与选择 51。新增题覆盖官方出处、两至六项目比较、混合检索及自动路由。[冻结输入和协议](../../../llamaindex-retrieval/eval/live-retrieval-complete-20260923-v1/PLAN.md)原样保留，旧题没有删改。每题依次执行 `/v1/search` 与 `/v1/ask`，串行、单次、无客户端重试；包括失败项均留在分母。输出绑定正式本机 18440、2.9B 模型、SearXNG、`rwkvrag-local-use-v1` 索引和运行时配置哈希；结束后服务、索引与设置哈希仍匹配。[逐题精简指标与原始文件哈希](../../../artifacts/live-retrieval-complete-20260923-v1/SUMMARY.json)、[运行后健康核对](../../../artifacts/live-retrieval-complete-20260923-v1/POST-CHECK.json)。完整请求、响应与模型 trace 保留在本机忽略目录 `data/quality-runs/live-retrieval-complete-20260923-v1/run1/`，没有修改历史运行。
+现有 5 套实时联网题共 45 道，另预先冻结 20 道自然问法，共 65 道；其中单项目 14、比较与选择 51。新增题覆盖官方出处、两至六项目比较、混合检索及自动路由。[冻结输入和协议](../../../llamaindex-retrieval/eval/live-retrieval-complete-20260923-v1/PLAN.md)原样保留，旧题没有删改。每题依次执行 `/v1/search` 与 `/v1/ask`，串行、单次、无客户端重试；包括失败项均留在分母。输出绑定正式本机 18440、2.9B 模型、SearXNG、`rwkvrag-local-use-v1` 索引和运行时配置哈希；结束后服务、索引与设置哈希仍匹配。[逐题精简指标与原始文件哈希](../../../artifacts/live-retrieval-complete-20260923-v1/SUMMARY.json)、[65 题完整原始答案与最终来源](../../../artifacts/live-retrieval-complete-20260923-v1/ANSWERS.md)、[运行后健康核对](../../../artifacts/live-retrieval-complete-20260923-v1/POST-CHECK.json)。完整请求、响应与模型 trace 保留在本机忽略目录 `data/quality-runs/live-retrieval-complete-20260923-v1/run1/`，没有修改历史运行。
 
 ## 全量自动诊断
 
