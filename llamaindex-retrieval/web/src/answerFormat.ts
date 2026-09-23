@@ -42,3 +42,8 @@ export function formatAnswer(text: string, response: Pick<AskResponse, "sources"
   const blocked = invalid.size > 0 || repeated;
   return { text: blocked ? "" : text, blocked, invalidLabels: [...invalid], repeated };
 }
+
+export function safeHistoryAnswer(text: string, response: Pick<AskResponse, "sources" | "generation">): string | undefined {
+  const formatted = formatAnswer(text, response);
+  return formatted.blocked || !formatted.text.trim() ? undefined : formatted.text;
+}

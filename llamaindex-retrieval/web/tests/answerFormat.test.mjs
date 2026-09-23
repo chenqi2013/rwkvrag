@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { formatAnswer } from "../src/answerFormat.ts";
+import { formatAnswer, safeHistoryAnswer } from "../src/answerFormat.ts";
 
 const response = {
   sources: [{ id: "requests" }, { id: "httpx" }],
@@ -22,6 +22,7 @@ test("fabricated source labels hide the whole answer without altering its raw so
   });
   assert.equal(JSON.stringify(response), snapshot);
   assert.match(raw, /编造来源/);
+  assert.equal(safeHistoryAnswer(raw, response), undefined);
 });
 
 test("malformed citation and missing mapped source cannot become valid links", () => {
@@ -38,4 +39,10 @@ test("repeated claim with rotating source numbers is hidden", () => {
   assert.equal(result.blocked, true);
   assert.equal(result.repeated, true);
   assert.equal(result.text, "");
+  assert.equal(safeHistoryAnswer(raw, response), undefined);
+});
+
+test("valid answer is carried into conversation history unchanged", () => {
+  const raw = "HTTPX 有同步与异步接口[资料 2]。";
+  assert.equal(safeHistoryAnswer(raw, response), raw);
 });

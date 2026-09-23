@@ -9,11 +9,13 @@ import type { FailureCategory, SearchAnswerStatus, SearchTestDetail, SearchTestI
 import { errorMessage, formatDate } from "../utils";
 import { useLanguage } from "../i18n";
 import { answerPresentation, evidenceWarnings } from "../answerPresentation";
+import { formatAnswer } from "../answerFormat";
 
 function VersionResult({ run }: { run: SearchTestRun }) {
   const { tr } = useLanguage();
   const { response } = run;
   const presentation = answerPresentation(response);
+  const formatted = formatAnswer(presentation.answerText, response);
   const warnings = evidenceWarnings(response);
   const model = response.generation.model;
   const failureCategory = response.generation.failure_category as FailureCategory | undefined;
@@ -30,8 +32,8 @@ function VersionResult({ run }: { run: SearchTestRun }) {
       <Space direction="vertical" size={5} style={{ width: "100%" }}>
         <Space wrap className="answer-status">
           <Tag color="blue">{tr(`第 ${run.run_number} 次`, `Run ${run.run_number}`)}</Tag>
-          <Tag color={presentation.color}>
-            {tr(...presentation.label)}
+          <Tag color={formatted.blocked ? "red" : presentation.color}>
+            {formatted.blocked ? tr("格式异常，答案已隐藏", "Format errors; answer hidden") : tr(...presentation.label)}
           </Tag>
           <Typography.Text type="secondary">{formatDate(run.created_at)}</Typography.Text>
           {model ? <Tag>{tr("模型", "Model")} · {String(model)}</Tag> : null}
@@ -173,7 +175,9 @@ export default function SearchHistoryPage() {
         const run = item.latest_run;
         if (!run) return "—";
         const presentation = answerPresentation(run.response);
-        const preview = presentation.answerText || tr("未提供答案正文", "No answer body");
+        const formatted = formatAnswer(presentation.answerText, run.response);
+        const preview = formatted.blocked ? tr("引用或复读异常，答案已隐藏", "Citation or repetition error; answer hidden")
+          : formatted.text || tr("未提供答案正文", "No answer body");
         return (
           <Typography.Paragraph className="history-answer" ellipsis={{ rows: 2, tooltip: preview }}>
             {preview}
@@ -188,7 +192,10 @@ export default function SearchHistoryPage() {
       render: (_, item) => {
         if (item.latest_run?.response.generation.pipeline === "rwkv") {
           const presentation = answerPresentation(item.latest_run.response);
-          return <Tag color={presentation.color}>{tr(...presentation.label)}</Tag>;
+          const formatted = formatAnswer(presentation.answerText, item.latest_run.response);
+          return <Tag color={formatted.blocked ? "red" : presentation.color}>
+            {formatted.blocked ? tr("格式异常，答案已隐藏", "Format errors; answer hidden") : tr(...presentation.label)}
+          </Tag>;
         }
         if (!item.latest_failure_category) return <Tag color="green">{tr("无", "None")}</Tag>;
         const labels: Record<FailureCategory, [string, string]> = {

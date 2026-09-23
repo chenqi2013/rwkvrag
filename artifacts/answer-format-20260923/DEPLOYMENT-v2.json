@@ -1,0 +1,13 @@
+{
+  "verified_at_utc": "2026-09-23T01:29:59.408146+00:00",
+  "frontend_release": "/home/chase/GitHub/rwkvrag/data/services/local-app/releases/answer-format-20260923-v2/web",
+  "served_asset": "index-CkontDky.js",
+  "served_asset_sha256": "5c5107d58e99c10a6d8b107f7bbc5b776a6adfe88d73040d5446834dda00e23d",
+  "api_health": "ok",
+  "mongodb_ok": true,
+  "opensearch_ok": true,
+  "backend_changed": false,
+  "remote_model_changed": false,
+  "validation": "44 web unit tests passed; TypeScript/Vite production build passed; served asset and health verified",
+  "behavior": "invalid citation and repeated text hidden from main answer, raw retained; blocked answer excluded from conversation history and history preview"
+}

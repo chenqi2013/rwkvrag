@@ -23,6 +23,7 @@ import type { AskResponse, FailureCategory, KnowledgeBase } from "../types";
 import { errorMessage } from "../utils";
 import { useLanguage } from "../i18n";
 import { answerPresentation, evidenceWarnings } from "../answerPresentation";
+import { formatAnswer, safeHistoryAnswer } from "../answerFormat";
 
 interface ConversationTurn {
   role: "user" | "assistant";
@@ -59,10 +60,11 @@ export default function SearchPage() {
       const completed = display.isNative
         ? next.generation.status === "completed" && next.generation.writer_status === "completed"
         : next.generation.answer_strategy === "single_writer_call";
-      if (completed && display.spanValid && display.answerText.trim()) {
+      const safeAnswer = safeHistoryAnswer(display.answerText, next);
+      if (completed && display.spanValid && safeAnswer) {
         setHistory((previous) => [...previous,
           { role: "user", content: values.question },
-          { role: "assistant", content: display.answerText },
+          { role: "assistant", content: safeAnswer },
         ]);
         if (form.getFieldValue("question") === values.question) {
           form.setFieldValue("question", "");
@@ -76,6 +78,7 @@ export default function SearchPage() {
   };
 
   const presentation = answerPresentation(response);
+  const formattedAnswer = response ? formatAnswer(presentation.answerText, response) : undefined;
   const warnings = evidenceWarnings(response);
   const queryNormalized = response?.retrieval.query_normalized === true;
   const normalizedQuestion = String(response?.retrieval.normalized_question || "");
@@ -169,8 +172,8 @@ export default function SearchPage() {
             ) : (
               <Space direction="vertical" size={12} style={{ width: "100%" }}>
                 <Space size={4} wrap className="answer-status">
-                  <Tag color={presentation.color}>
-                    {tr(...presentation.label)}
+                  <Tag color={formattedAnswer?.blocked ? "red" : presentation.color}>
+                    {formattedAnswer?.blocked ? tr("格式异常，答案已隐藏", "Format errors; answer hidden") : tr(...presentation.label)}
                   </Tag>
                   {routing?.requested_mode === "auto" && routing.selected_mode && <Tag color="purple">
                     {routing.selected_mode === "hybrid" ? tr("自动判断：知识库 + 网络", "Auto: knowledge base + web") : tr("自动判断：仅知识库", "Auto: knowledge base only")}
