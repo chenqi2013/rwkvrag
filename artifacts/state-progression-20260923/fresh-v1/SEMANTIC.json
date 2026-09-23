@@ -1,0 +1,70 @@
+{
+  "cases": 24,
+  "reviews": 96,
+  "counts": {
+    "comparison/r1/trained/wrong": 12,
+    "comparison/r1/zero/wrong": 12,
+    "comparison/r2/trained/wrong": 12,
+    "comparison/r2/zero/wrong": 12,
+    "ordinary/r1/trained/full": 10,
+    "ordinary/r1/trained/wrong": 2,
+    "ordinary/r1/zero/full": 6,
+    "ordinary/r1/zero/wrong": 6,
+    "ordinary/r2/trained/full": 10,
+    "ordinary/r2/trained/wrong": 2,
+    "ordinary/r2/zero/full": 6,
+    "ordinary/r2/zero/wrong": 6
+  },
+  "new_regression_cases": [
+    {
+      "id": "analytics_stack-ordinary-02",
+      "deltas": [
+        -2,
+        -2
+      ]
+    }
+  ],
+  "stable_gain_cases": [
+    {
+      "id": "http_clients-ordinary-03",
+      "deltas": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "http_clients-ordinary-04",
+      "deltas": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "analytics_stack-ordinary-03",
+      "deltas": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "analytics_stack-ordinary-04",
+      "deltas": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "python_quality-ordinary-01",
+      "deltas": [
+        2,
+        2
+      ]
+    }
+  ],
+  "all_rounds_and_arms_reviewed": true,
+  "reviewer": "implementer_not_independent",
+  "evaluation_kind": "fixed_evidence_not_live_retrieval",
+  "raw_run_sha256": "febf4f8113c4aab993f49b21ba62ce35638759c99b43ed8ff1a2662d96ee8247",
+  "review_sha256": "06f243d52650a4c0b257ce6ea4bcf872f1224796ce9301a83784de3f8c344965",
+  "limits": "Manual judgment may still be wrong; pairwise grades do not prove production quality."
+}

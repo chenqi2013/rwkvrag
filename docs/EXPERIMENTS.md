@@ -4,7 +4,7 @@
 
 ## 当前登记：来源隔离后训练State
 
-[发布V1](archive/2026-09/state-progression-release-v1-20260922.md)已冻结并通过原数据门槛：训练3940条（normal 2318、defect 1418、progress 204），开发490、留出502。全部发布进展行通过精确哈希绑定的二审核验，另有人工排除；8222物理GPU3训练已成功完成，1972次更新和四个checkpoint经[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)核验。教师与审读同源，准入和训练完成均不等于能力提升或独立语义评分。[评测绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)锁定1710成员与6840计划原始记录，新24题批次已启动，其余三批已排队依次执行，语义审读待原始回答完成。
+[发布V1](archive/2026-09/state-progression-release-v1-20260922.md)已冻结并通过原数据门槛：训练3940条（normal 2318、defect 1418、progress 204），开发490、留出502。全部发布进展行通过精确哈希绑定的二审核验，另有人工排除；8222物理GPU3训练已成功完成，1972次更新和四个checkpoint经[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)核验。教师与审读同源，准入和训练完成均不等于能力提升或独立语义评分。[评测绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)锁定1710成员与6840计划原始记录。新24题96份原文及逐份人工审读已完成：[结果](archive/2026-09/state-fresh-github-paired-20260923.md)显示大型比较两组均失败，普通题有收益也有新退步；其余三批继续顺序执行，候选不晋级。
 
 训练候选从新生成任务取得，绝不添加历史题目、参考答案或原始失败输出。原640组任务按来源族先分512/64/64，另有200组原子补充继承同一来源分区。候选必须通过逐目标高强度审读、历史评测交叉隔离、同提示冲突及跨分区去重、完整token编码；至少2000条准入训练，其中正常、缺陷、推进均有足量覆盖。准入是数据规则通过，不是语义质量或产品效果证明。隔离详情见[报告](archive/2026-09/state-progression-isolation-20260922.md)。
 

@@ -1,6 +1,6 @@
 # 当前状态
 
-更新：2026-09-23（Asia/Shanghai）。**StateTune发布集V1的7.2B双角色训练已完成；冻结的零State/训练State双轮评测正在执行，尚无语义质量结论，正式服务未切换。** 训练收据见[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)，数据准入见[发布报告](archive/2026-09/state-progression-release-v1-20260922.md)。
+更新：2026-09-23（Asia/Shanghai）。**StateTune发布集V1的7.2B双角色训练已完成；新24题成对语义验收未通过，多项目比较没有提升，正式模型不切换。其余冻结回归仍在运行。** 训练收据见[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)，[新题结果](archive/2026-09/state-fresh-github-paired-20260923.md)保留全部原文及逐份审读。
 
 ## 当前主线：数据隔离、审读与StateTune训练
 
@@ -8,7 +8,7 @@
 
 7.2B原生State训练入口固定fp32io16、FP32循环State、学习率1e-5、两轮、只训练初始State。8222物理GPU3的`rwkvrag-state-release-v1-train.service`成功退出：3940条训练输入、两轮、Resolver 774次及Writer 1198次优化器更新，共1972次。四个FP32 State checkpoint的实际SHA-256与[完成收据](../artifacts/state-progression-20260922/train-release-v1/COMPLETED.json)一致，全部更新日志数值有限，基座未改；进程预留峰值45.99GB。此前[数值预检](../artifacts/state-progression-20260922/preflight-v2/NUMERICAL-PREFLIGHT.json)通过。**训练完成不等于答案质量提升；候选尚未接入正式服务。**
 
-评测输入已按[冻结绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)准备为1710个成员、计划6840份零/训练State双轮原始回答：新24题、旧694题及来源分离的开发/留出992题。3项因原运行无Writer提示或输入超限标为不支持，成员仍保留。新24题批次已在GPU3启动；其成功且96份原文齐全后，[顺序执行器](../scripts/state_progression/run_eval_queue_v1.sh)再跑其余三个原样冻结批次。语义评分待全量原文及逐题审读；这些是固定证据评测，不是实时检索。
+评测输入已按[冻结绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)准备为1710个成员、计划6840份零/训练State双轮原始回答：新24题、旧694题及来源分离的开发/留出992题。3项因原运行无Writer提示或输入超限标为不支持，成员仍保留。新24题的96份原文和逐份审读已完成：每轮12道比较题两组都是0道完整正确；每轮12道普通题完整正确零State 6、训练State 10，但新退步1道。详见[完整报告](archive/2026-09/state-fresh-github-paired-20260923.md)。[顺序执行器](../scripts/state_progression/run_eval_queue_v1.sh)正在跑其余三个原样冻结批次；这些仍是固定证据评测，不是实时检索。
 
 2026-09-23新增[前端答案格式转换层](../llamaindex-retrieval/web/src/answerFormat.ts)：搜索、历史和Wiki共用展示组件在引用编号不存在、引用格式损坏或同一较长片段至少重复三次时，隐藏主答案并给出原因，原文可展开核对；API返回和历史原文不改。被隐藏的答案也不会进入新一轮对话历史或历史列表摘要。新题首份训练State原文试跑检出46个不存在的来源编号及复读，显示被拦下。44项前端测试和构建通过；本机18440页面已切到`answer-format-20260923-v2`静态发布，实际返回新JS且API/Mongo/OpenSearch健康，[部署收据](../artifacts/answer-format-20260923/DEPLOYMENT-v2.json)已保存。这个层仅拦截可确定的格式异常，不能证明编号存在的引用确实支持结论，也不能识别所有语义幻觉；远端正式模型和后端链路未切换。
 

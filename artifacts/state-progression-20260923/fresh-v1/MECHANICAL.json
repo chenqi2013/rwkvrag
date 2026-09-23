@@ -1,0 +1,27 @@
+{
+  "cases": 24,
+  "rounds": 2,
+  "records": 96,
+  "mechanical_counts": {
+    "zero/comparison/length": 14,
+    "zero/invalid_citation_records": 8,
+    "zero/repeated_span_records": 30,
+    "trained/comparison/length": 18,
+    "trained/invalid_citation_records": 10,
+    "trained/repeated_span_records": 24,
+    "zero/ordinary/stop": 16,
+    "trained/ordinary/stop": 20,
+    "zero/ordinary/length": 8,
+    "zero/comparison/stop": 10,
+    "trained/comparison/stop": 6,
+    "trained/ordinary/length": 4
+  },
+  "new_mechanical_issues": {
+    "new_invalid_citation": 4,
+    "new_repetition": 4,
+    "new_nonstop": 6
+  },
+  "semantic_correctness_reviewed": false,
+  "source_support_reviewed": false,
+  "limits": "Citation syntax and repeated spans are diagnostics, not answer correctness."
+}
