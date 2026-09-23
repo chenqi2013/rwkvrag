@@ -20,7 +20,7 @@ from .schemas import AskResponse, ConversationMessage, SearchRequest, SourceItem
 from .writer_prompt import writer_prompt_checked, writer_prompt_v2
 from .writer_decision_prompt import writer_prompt_decision
 from .reader_prompt import binary_query_prompt, parse_binary_decision
-from .web_retrieval import SearchReaderAdapter, deduplicate_web_groups, interleave
+from .web_retrieval import WebSearchAdapter, deduplicate_web_groups, interleave
 
 PROMPT_VERSION = "bm250820-native-v4"
 SELECTION_PROTOCOL_VERSION = "field-evidence-v2"
@@ -326,7 +326,7 @@ class RWKVPipeline:
     def __init__(self, settings: Settings, index: LexicalIndex, model=None, *, recorder=None):
         self.settings = settings
         self.index = index
-        self.web = SearchReaderAdapter(settings)
+        self.web = WebSearchAdapter(settings)
         options = model_client_options(settings)
         if settings.native_transport == "rwkvos_batch":
             options["recorder"] = recorder

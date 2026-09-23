@@ -92,8 +92,8 @@ def _wire_prompt(value):
 
 
 async def _route(request, settings):
-    base = request.get("router_base_url") or settings.searchreader_router_base_url
-    model = request.get("router_model") or settings.searchreader_router_model
+    base = request.get("router_base_url") or settings.web_router_base_url
+    model = request.get("router_model") or settings.web_router_model
     if not base or not model:
         raise WebProviderError("web_router_not_configured")
     parsed_base = urlsplit(base)
@@ -115,7 +115,7 @@ async def _route(request, settings):
     async with _client() as client:
         payload = await _json_response(client, "POST", base.rstrip("/") + endpoint,
                                        headers=headers, body=body,
-                                       timeout=settings.searchreader_router_timeout)
+                                       timeout=settings.web_router_timeout)
     choice = payload["choices"][0]
     raw = choice.get("text") if endpoint == "/completions" else choice["message"]["content"]
     answer = raw.strip() if isinstance(raw, str) else ""
@@ -136,8 +136,8 @@ def _tavily_key(settings):
     if configured and key_file:
         raise WebProviderError("web_tavily_multiple_key_sources")
     if configured:
-        return configured
-    if key_file:
+        key = configured
+    elif key_file:
         try:
             path = Path(key_file)
             if path.stat().st_mode & 0o077:
@@ -145,10 +145,11 @@ def _tavily_key(settings):
             key = path.read_text(encoding="utf-8").strip()
         except OSError:
             raise WebProviderError("web_tavily_key_file_unavailable") from None
-        if "\n" in key or "\r" in key:
-            raise WebProviderError("web_tavily_key_file_invalid")
-        return key
-    return ""
+    else:
+        return ""
+    if not key or any(char.isspace() for char in key) or any(char in key for char in ",[]"):
+        raise WebProviderError("web_tavily_key_invalid")
+    return key
 
 
 async def _search(request, settings, guard=None):
@@ -179,7 +180,7 @@ async def _search(request, settings, guard=None):
     guard = guard or WebProviderGuard(
         getattr(settings, "web_guard_path", None),
         min_interval=getattr(settings, "web_min_interval_seconds", 1.0),
-        auth_cooldown=getattr(settings, "web_auth_cooldown_seconds", 900.0),
+        auth_cooldown=getattr(settings, "web_auth_cooldown_seconds", 86400.0),
         rate_cooldown=getattr(settings, "web_rate_cooldown_seconds", 60.0),
         lease_seconds=settings.web_search_timeout + 5)
     identity = guard.identity(provider, key if provider == "tavily" else endpoint)

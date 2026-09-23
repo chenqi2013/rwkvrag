@@ -1,11 +1,12 @@
-"""Bounded local SearchReader process adapter and query-local rank fusion."""
+"""In-repository web transport and query-local rank fusion."""
 import asyncio
 import hashlib
 import json
-from pathlib import Path
 from urllib.parse import urlsplit
 
+from .direct_web import execute
 from .lexical_index import LexicalResult
+from .web_guard import WebProviderGuard
 
 
 def sha(text):
@@ -41,66 +42,25 @@ def deduplicate_web_groups(groups):
     return output
 
 
-class SearchReaderAdapter:
+class WebSearchAdapter:
     def __init__(self, settings):
         self.settings = settings
         self.slots = asyncio.Semaphore(settings.web_search_concurrency)
-        from .web_guard import WebProviderGuard
         self.guard = WebProviderGuard(getattr(settings, "web_guard_path", None),
             min_interval=getattr(settings, "web_min_interval_seconds", 1.0),
-            auth_cooldown=getattr(settings, "web_auth_cooldown_seconds", 900.0),
+            auth_cooldown=getattr(settings, "web_auth_cooldown_seconds", 86400.0),
             rate_cooldown=getattr(settings, "web_rate_cooldown_seconds", 60.0),
             lease_seconds=getattr(settings, "web_search_timeout", 45) + 5)
 
     async def _execute(self, request, timeout):
-        if getattr(self.settings, "web_search_provider", "searchreader") != "searchreader":
-            from .direct_web import execute
-            async with self.slots:
-                return await asyncio.wait_for(execute(request, self.settings, self.guard), timeout)
-        root = self.settings.searchreader_project_dir
-        if root is None:
-            raise RuntimeError("web_search_not_configured")
-        root = root.resolve()
-        python = root / ".venv/bin/python"
-        bridge = Path(__file__).with_name("searchreader_bridge.py")
-        request = json.dumps(request, ensure_ascii=False).encode()
         async with self.slots:
-            process = await asyncio.create_subprocess_exec(str(python), str(bridge), str(root),
-                cwd=root, stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.DEVNULL)
-            try:
-                async def communicate():
-                    process.stdin.write(request)
-                    await process.stdin.drain()
-                    process.stdin.close()
-                    output = await process.stdout.read(8 * 1024 * 1024 + 1)
-                    if len(output) > 8 * 1024 * 1024:
-                        raise RuntimeError("web_response_too_large")
-                    # read(n) may return before EOF; read remaining bounded bytes.
-                    while part := await process.stdout.read(8 * 1024 * 1024 + 1 - len(output)):
-                        output += part
-                        if len(output) > 8 * 1024 * 1024:
-                            raise RuntimeError("web_response_too_large")
-                    await process.wait()
-                    return output
-                output = await asyncio.wait_for(communicate(), timeout)
-                if process.returncode:
-                    raise RuntimeError("searchreader_provider_failed")
-                payload = json.loads(output)
-            finally:
-                if process.returncode is None:
-                    try:
-                        process.kill()
-                    except ProcessLookupError:
-                        pass
-                    await process.wait()
-        return payload
+            return await asyncio.wait_for(execute(request, self.settings, self.guard), timeout)
 
     async def decide(self, messages):
         trace = await self._execute({"action": "route", "messages": messages,
-            "router_base_url": self.settings.searchreader_router_base_url,
-            "router_model": self.settings.searchreader_router_model}, self.settings.searchreader_router_timeout)
-        trace["configured_state_sha256"] = self.settings.searchreader_router_state_sha256
+            "router_base_url": self.settings.web_router_base_url,
+            "router_model": self.settings.web_router_model}, self.settings.web_router_timeout)
+        trace["configured_state_sha256"] = self.settings.web_router_state_sha256
         return trace
 
     async def search(self, query):
@@ -131,3 +91,7 @@ class SearchReaderAdapter:
         return hits, {"status": "completed", "query": query, "provider": payload["provider"],
             "source_hashes": payload["source_hashes"], "snapshots": snapshots,
             "returned": len(hits)}
+
+
+# Historical frozen launchers import this name; current requests use only WebSearchAdapter.
+SearchReaderAdapter = WebSearchAdapter

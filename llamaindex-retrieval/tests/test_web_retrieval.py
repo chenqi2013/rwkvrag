@@ -1,19 +1,18 @@
 import asyncio
 from dataclasses import replace
-import sys
 from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 import httpx
 import pytest
-from pydantic import SecretStr
+from pydantic import SecretStr, ValidationError
 
 from llamaindex_retrieval import direct_web
 from llamaindex_retrieval.config import Settings
 from llamaindex_retrieval.repository import search_answer_status, search_failure_category
 from llamaindex_retrieval.rwkv_pipeline import RWKVPipeline
 from llamaindex_retrieval.schemas import SearchRequest
-from llamaindex_retrieval.web_retrieval import SearchReaderAdapter, deduplicate_web_groups
+from llamaindex_retrieval.web_retrieval import WebSearchAdapter, deduplicate_web_groups
 from test_rwkv_pipeline import FakeIndex, FakeModel, hit, settings
 
 
@@ -29,7 +28,22 @@ async def test_default_web_provider_uses_this_repository_and_requires_credential
     assert config.web_search_provider == "tavily"
     with pytest.raises(direct_web.WebProviderError,
                        match="web_tavily_key_not_configured"):
-        await SearchReaderAdapter(config).search("query")
+        await WebSearchAdapter(config).search("query")
+
+
+def test_legacy_subprocess_provider_is_not_a_runtime_option():
+    with pytest.raises(ValidationError):
+        Settings(_env_file=None, web_search_provider="searchreader")
+
+
+def test_tavily_rejects_key_lists_in_both_credential_sources(tmp_path):
+    with pytest.raises(direct_web.WebProviderError, match="web_tavily_key_invalid"):
+        direct_web._tavily_key(settings(web_tavily_api_key="first,second"))
+    key_file = tmp_path / "tavily.key"
+    key_file.write_text("first\nsecond\n")
+    key_file.chmod(0o600)
+    with pytest.raises(direct_web.WebProviderError, match="web_tavily_key_invalid"):
+        direct_web._tavily_key(settings(web_tavily_api_key_file=key_file))
 
 
 @pytest.mark.asyncio
@@ -101,66 +115,6 @@ async def test_per_query_reader_budget_keeps_both_providers():
     assert response.retrieval["resolver_source_tasks"]["web:1"] == [["q"]]
 
 
-def project(tmp_path, search_code):
-    package = tmp_path / "src/rwkv_search_reader"
-    package.mkdir(parents=True)
-    (package / "__init__.py").write_text("")
-    (package / "config.py").write_text("from dataclasses import dataclass\n@dataclass\nclass Settings:\n max_evidence_chars:int=100\ndef get_settings(): return Settings()\n")
-    (package / "retrieval.py").write_text("def normalize_url(url): return url\ndef fetch_page(hit, settings): return hit\n")
-    (package / "models.py").write_text("")
-    (package / "search.py").write_text(search_code)
-    bindir = tmp_path / ".venv/bin"
-    bindir.mkdir(parents=True)
-    (bindir / "python").symlink_to(sys.executable)
-    return tmp_path
-
-
-@pytest.mark.asyncio
-async def test_real_subprocess_protocol_preserves_snapshots(tmp_path):
-    root = project(tmp_path, '''
-from dataclasses import dataclass
-@dataclass
-class Hit:
- title:str="A"; url:str="https://example.org/a"; content:str="exact text"
- snippet:str="short"; content_markdown:str="exact text plus full snapshot"
- error:str=""; retrieved_at:str="2026-09-19T00:00:00Z"; published_date:str="2024-10-07"
- content_status:str="fetched"; score:float=0.5
-class Provider:
- name="fixture"; results_are_material=True
- def __init__(self): self.session=self
- def close(self): pass
- def search(self, query, max_results): return [Hit()]
-def create_search_provider(settings): return Provider()
-''')
-    adapter = SearchReaderAdapter(settings(web_search_provider="searchreader", searchreader_project_dir=root))
-    hits, trace = await adapter.search("query")
-    assert hits[0].text == "exact text"
-    assert hits[0].metadata["material_limited"]
-    assert trace["snapshots"][0]["text"] == "exact text plus full snapshot"
-    assert len(trace["source_hashes"]) == 4
-    assert hits[0].metadata["snapshot_sha256"] == trace["snapshots"][0]["sha256"]
-
-
-@pytest.mark.asyncio
-async def test_timeout_kills_bridge_and_releases_slot(tmp_path):
-    root = project(tmp_path, "import time\ntime.sleep(20)\n")
-    adapter = SearchReaderAdapter(settings(web_search_provider="searchreader", searchreader_project_dir=root, web_search_timeout=1, web_search_concurrency=1))
-    with pytest.raises(TimeoutError):
-        await adapter.search("q")
-    # Semaphore is released even when process termination is needed.
-    async with asyncio.timeout(1):
-        async with adapter.slots:
-            pass
-
-
-@pytest.mark.asyncio
-async def test_provider_error_body_is_not_exposed(tmp_path):
-    root = project(tmp_path, 'raise RuntimeError("private API credential")\n')
-    adapter = SearchReaderAdapter(settings(web_search_provider="searchreader", searchreader_project_dir=root))
-    with pytest.raises(RuntimeError, match="^searchreader_provider_failed$"):
-        await adapter.search("q")
-
-
 @pytest.mark.asyncio
 @pytest.mark.parametrize("provider", ["tavily", "searxng"])
 async def test_single_repository_web_provider_preserves_source_snapshot(monkeypatch, provider):
@@ -182,9 +136,9 @@ async def test_single_repository_web_provider_preserves_source_snapshot(monkeypa
         web_search_timeout=3, web_search_results=2, web_search_material_characters=8,
         web_tavily_api_key=SecretStr("test-secret"),
         web_searxng_base_url="http://127.0.0.1:8888",
-        searchreader_router_base_url=None, searchreader_router_model=None,
-        searchreader_router_state_sha256=None)
-    hits, trace = await SearchReaderAdapter(config).search("natural words")
+        web_router_base_url=None, web_router_model=None,
+        web_router_state_sha256=None)
+    hits, trace = await WebSearchAdapter(config).search("natural words")
     assert len(hits) == 1
     expected = "verbatim original page" if provider == "tavily" else "verbatim snippet"
     assert hits[0].text == expected[:8]
@@ -202,11 +156,11 @@ async def test_single_repository_router_uses_model_output_without_keyword_fallba
     monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
         transport=httpx.MockTransport(handler), trust_env=False))
     config = SimpleNamespace(web_search_provider="tavily", web_search_concurrency=1,
-        searchreader_router_base_url="http://127.0.0.1:1234/v1",
-        searchreader_router_model="state-router", searchreader_router_state_sha256="frozen",
-        searchreader_router_timeout=2, web_router_protocol="completions",
+        web_router_base_url="http://127.0.0.1:1234/v1",
+        web_router_model="state-router", web_router_state_sha256="frozen",
+        web_router_timeout=2, web_router_protocol="completions",
         web_router_api_key=SecretStr("router-secret"))
-    decision = await SearchReaderAdapter(config).decide([
+    decision = await WebSearchAdapter(config).decide([
         {"role": "user", "content": "比一下最新版本"}])
     assert decision["needs_search"] is True
     assert decision["configured_state_sha256"] == "frozen"
@@ -224,7 +178,7 @@ async def test_single_repository_upstream_error_does_not_expose_credential(monke
         web_search_timeout=3, web_search_results=2, web_search_material_characters=100,
         web_tavily_api_key=SecretStr("test-secret"))
     with pytest.raises(RuntimeError, match="^web_upstream_http_401$") as caught:
-        await SearchReaderAdapter(config).search("q")
+        await WebSearchAdapter(config).search("q")
     assert "test-secret" not in str(caught.value)
     assert caught.value.safe_code == "web_upstream_http_401"
 
@@ -246,11 +200,11 @@ async def test_shared_guard_stops_auth_retry_across_adapter_instances(monkeypatc
         web_min_interval_seconds=0, web_search_material_characters=256)
     expired = settings(**options, web_tavily_api_key="expired-key")
     with pytest.raises(direct_web.WebProviderError, match="web_upstream_http_401"):
-        await SearchReaderAdapter(expired).search("first")
+        await WebSearchAdapter(expired).search("first")
     with pytest.raises(direct_web.WebProviderError, match="web_upstream_circuit_open_401"):
-        await SearchReaderAdapter(expired).search("second")
+        await WebSearchAdapter(expired).search("second")
     assert upstream_calls == ["Bearer expired-key"]
-    hits, _ = await SearchReaderAdapter(settings(**options,
+    hits, _ = await WebSearchAdapter(settings(**options,
         web_tavily_api_key="restored-key")).search("third")
     assert hits[0].text == "new key works"
     assert upstream_calls == ["Bearer expired-key", "Bearer restored-key"]
@@ -269,8 +223,8 @@ async def test_concurrent_workers_wait_for_first_auth_result(monkeypatch, tmp_pa
     config = settings(web_search_provider="tavily", web_tavily_api_key="expired-key",
         web_guard_path=tmp_path / "guard.sqlite3", web_min_interval_seconds=0)
     outcomes = await asyncio.gather(
-        SearchReaderAdapter(config).search("one"),
-        SearchReaderAdapter(config).search("two"), return_exceptions=True)
+        WebSearchAdapter(config).search("one"),
+        WebSearchAdapter(config).search("two"), return_exceptions=True)
     assert sorted(str(item) for item in outcomes) == [
         "web_upstream_circuit_open_401", "web_upstream_http_401"]
     assert calls == ["/search"]
@@ -288,9 +242,9 @@ async def test_rate_limit_retry_after_blocks_next_request_without_retry(monkeypa
     config = settings(web_search_provider="tavily", web_tavily_api_key="some-key",
         web_guard_path=tmp_path / "guard.sqlite3", web_min_interval_seconds=0)
     with pytest.raises(direct_web.WebProviderError, match="web_upstream_http_429"):
-        await SearchReaderAdapter(config).search("one")
+        await WebSearchAdapter(config).search("one")
     with pytest.raises(direct_web.WebProviderError, match="web_upstream_circuit_open_429"):
-        await SearchReaderAdapter(config).search("two")
+        await WebSearchAdapter(config).search("two")
     assert calls == ["/search"]
 
 
@@ -306,11 +260,11 @@ async def test_private_key_file_is_read_without_exposing_it(monkeypatch, tmp_pat
         transport=httpx.MockTransport(handler), trust_env=False))
     config = settings(web_search_provider="tavily", web_tavily_api_key_file=key_file,
                       web_guard_path=tmp_path / "guard.sqlite3")
-    assert (await SearchReaderAdapter(config).search("q"))[0] == []
+    assert (await WebSearchAdapter(config).search("q"))[0] == []
     key_file.chmod(0o644)
     with pytest.raises(direct_web.WebProviderError,
                        match="web_tavily_key_file_permissions"):
-        await SearchReaderAdapter(config).search("q")
+        await WebSearchAdapter(config).search("q")
 
 
 @pytest.mark.asyncio
@@ -362,7 +316,7 @@ async def test_searxng_empty_results_with_engine_failures_are_not_no_matches(mon
         web_searxng_base_url="http://127.0.0.1:8888")
     with pytest.raises(direct_web.WebProviderError,
                        match="web_searxng_empty_with_engine_failures"):
-        await SearchReaderAdapter(config).search("q")
+        await WebSearchAdapter(config).search("q")
 
 
 def test_invalid_scope_rejected():

@@ -39,7 +39,7 @@ def retry_after_seconds(value: str | None, *, now: float) -> float | None:
 
 class WebProviderGuard:
     def __init__(self, path: Path | None, *, min_interval: float = 1.0,
-                 auth_cooldown: float = 900.0, rate_cooldown: float = 60.0,
+                 auth_cooldown: float = 86400.0, rate_cooldown: float = 60.0,
                  lease_seconds: float = 50.0):
         self.path = Path(path) if path else None
         self.min_interval = min_interval
