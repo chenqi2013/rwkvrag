@@ -1,0 +1,22 @@
+{
+  "counts": {
+    "trained/all_claims_supported_by_selected_text": 2,
+    "trained/all_projects_covered": 3,
+    "trained/citation_present": 0,
+    "trained/decision_preserved": 3,
+    "trained/distinct_cases": 4,
+    "trained/full_answer": 0,
+    "zero/all_claims_supported_by_selected_text": 1,
+    "zero/all_projects_covered": 3,
+    "zero/citation_present": 0,
+    "zero/decision_preserved": 1,
+    "zero/distinct_cases": 4,
+    "zero/full_answer": 0
+  },
+  "distinct_answers": 8,
+  "raw_records_bound": 16,
+  "reviewer": "implementer_not_independent",
+  "run_sha256": "3d177543c4a93378e83ca25ad176c68f0e40b1a5f5afb4dd7a13d3cf07d01879",
+  "review_script_sha256": "facb08f173b6004a73ae4b60f2bd098b409837fea613f211cab1238a6457e064",
+  "limits": "Subjective full-answer judgments on fictional short evidence; second rounds are duplicates, not new coverage."
+}

@@ -1,0 +1,10 @@
+{
+  "unit": "rwkvrag-layered-oracle-v1.service",
+  "host": "rwkv-8222",
+  "physical_gpu": "GPU3",
+  "result": "success",
+  "exec_main_status": 0,
+  "queue_continued_running": true,
+  "state_precision": "fp32io16",
+  "raw_records": 48
+}

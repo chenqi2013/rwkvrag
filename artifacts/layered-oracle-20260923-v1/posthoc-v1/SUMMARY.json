@@ -1,0 +1,24 @@
+{
+  "counts": {
+    "extract/trained/array_shape": 2,
+    "extract/trained/content_exact": 2,
+    "extract/trained/duplicate_tuples": 0,
+    "extract/trained/fn": 20,
+    "extract/trained/fp": 26,
+    "extract/trained/tp": 74,
+    "extract/zero/array_shape": 8,
+    "extract/zero/content_exact": 2,
+    "extract/zero/duplicate_tuples": 8,
+    "extract/zero/fn": 16,
+    "extract/zero/fp": 24,
+    "extract/zero/tp": 78,
+    "writer/trained/no_citation": 8,
+    "writer/zero/no_citation": 8
+  },
+  "records_examined": 32,
+  "input_sha256": "754061259737fcf5cde66ce77382c01856c1e490a5dcdf4515143d9c5791fdc1",
+  "run_sha256": "3d177543c4a93378e83ca25ad176c68f0e40b1a5f5afb4dd7a13d3cf07d01879",
+  "analysis_sha256": "f1ee9310c57031931f818f6738a7b5d0b3ba2a56abac8bd0d3165b0c49afb4f5",
+  "status": "post_hoc_exploratory_not_pre_registered",
+  "interpretation": "Array wrapping and duplicate removal are scoring views only; strict schema failures remain failures."
+}

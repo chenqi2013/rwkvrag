@@ -4,6 +4,8 @@
 
 ## 2026 年 9 月
 
+- [多项目比较逐层 Oracle 诊断：Gold 事实下仍误选，Gold 决策下无引用](2026-09/layered-oracle-diagnosis-20260923.md)
+
 - [按真实缺陷准备StateTune：36题2391节点统计、113组标注任务与8份诊断范例](2026-09/statetune-defect-audit-20260922.md)
 
 | 报告 | 原路径 |
