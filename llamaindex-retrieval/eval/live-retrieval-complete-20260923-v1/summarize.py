@@ -21,10 +21,12 @@ def digest(path):
 
 def summarize_case(case, directory):
     ordinal = case["ordinal"]
+    kind = case.get("kind") or ("single" if case["source_suite"] == "live-retrieval-20260923-v2" else "compare")
     search_path = directory / f"{ordinal:02d}.search.json"
     ask_path = directory / f"{ordinal:02d}.ask.json"
     if not search_path.exists() or not ask_path.exists():
-        return {"uid": case["uid"], "ordinal": ordinal, "missing_record": True}
+        return {"uid": case["uid"], "ordinal": ordinal, "suite": case["source_suite"],
+                "kind": kind, "mode": case["retrieval_mode"], "missing_record": True}
     search, ask = read(search_path), read(ask_path)
     search_data, ask_data = search.get("response") or {}, ask.get("response") or {}
     retrieval, generation = ask_data.get("retrieval") or {}, ask_data.get("generation") or {}
@@ -38,7 +40,7 @@ def summarize_case(case, directory):
                         "readthedocs.io" in (r.get("uri") or "") for r in search_data.get("results") or [])
     return {
         "uid": case["uid"], "ordinal": ordinal, "suite": case["source_suite"],
-        "kind": case["kind"], "mode": case["retrieval_mode"],
+        "kind": kind, "mode": case["retrieval_mode"],
         "objects": case.get("objects") or [], "search_http": search.get("http_status"),
         "ask_http": ask.get("http_status"), "search_ms": search.get("elapsed_ms"),
         "ask_ms": ask.get("elapsed_ms"), "search_candidates": len(search_data.get("results") or []),
