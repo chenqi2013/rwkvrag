@@ -128,6 +128,8 @@ V6严格目标审读发现无据日期/资料称谓/适用范围及引用错位�
 
 新采集的[120份 GitHub README 来源快照](../llamaindex-retrieval/statetune/retrieval-v1-20260923/SOURCES.json)已按主题先分训练84、开发18、留出18，逐份字节哈希及 Git blob 核验通过；训练族数仍低于预定120门槛。[教师试点](archive/2026-09/retrieval-state-data-prep-20260923.md)在同12组任务上暴露标签漏项目和 `listed` 覆盖失败：V2宽松结构88/96，统一严格校验仅57/96；V3严格51/96、合格 `listed` 0。试点全部是未独立审读的草稿，已停止扩量，下一版改为先固定标签结构再生成自然问法；本次没有执行新 StateTune 训练。
 
+[标签先行试点](archive/2026-09/retrieval-state-label-first-pilot-20260923.md)已在同12组任务上验证该改法：96/96结构完整计划、95/96问题字面覆盖，含16条 `listed`，95条均通过精确 token/mask 编译；准入审计仍正确拒绝。人工抽看发现“备份”来源组混入通用 Bash 脚本库，产生不自然的 PostgreSQL 备份比较；GitHub topic 本身不足以证明项目可比。当前先审读/扩充来源组、冻结新盲集并接实验运行协议，不能把结构正确当成语义正确或启动训练的依据。
+
 ## 6. 知识库、Wiki与联网边界
 
 - 正式界面支持多选Markdown、文本PDF、DOCX，100MB/文件；FineWiki/Parquet可通过导入任务添加。本轮未批量上传。逐文件发布会复制旧索引，海量导入优化未完成。[添加方式与限制](archive/2026-09/knowledge-addition-check-20260921.md)。

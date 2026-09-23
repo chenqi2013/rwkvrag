@@ -1,0 +1,37 @@
+{
+  "protocol": "retrieval_label_first_pilot_v1",
+  "run_sha256": "4d1d594ad34768a2a534a53c7b939f7e6de321ba339c16a6e2a2a7fba73addf6",
+  "summary_sha256": "097e0e9d4e2adb8d2da562b3238ddc47650a4c1175087ee3e0648ab9c30580c6",
+  "result_files_sha256": "ad193b2e7d9101e3912a2358ec9f6adf8c69acd8c259030158f312fe8be12b60",
+  "cases_sha256": "398189059dd46d088ac38659a31d5a1bfd9a3f0b9642902a6acb3aad6a4a0eea",
+  "tokens_sha256": "5061b77ad3ab066fb54c71f5120c8ceb4e4f991e14b29c5d754660e7882cc8e3",
+  "admission_sha256": "e75fb902e2ab41cd597f1ea03a4b29421e3972477ce0bfe0f8333e8269f9a39a",
+  "jobs": 12,
+  "possible_items": 96,
+  "structural_plans": 96,
+  "bound_questions": 95,
+  "max_token_length": 967,
+  "coverage": {
+    "grid": 79,
+    "listed": 16
+  },
+  "object_counts": {
+    "1": 16,
+    "3": 32,
+    "4": 16,
+    "2": 31
+  },
+  "kinds": {
+    "ordinary": 16,
+    "comparison": 16,
+    "selection": 16,
+    "history": 16,
+    "missing": 15,
+    "conflict": 16
+  },
+  "admitted": false,
+  "train_families": 6,
+  "independent_semantic_review": false,
+  "training_started": false,
+  "limits": "Literal label checks and token integrity only; source cohort relevance and semantics failed pilot review."
+}
