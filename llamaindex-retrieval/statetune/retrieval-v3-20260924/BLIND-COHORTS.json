@@ -1,0 +1,8 @@
+{
+  "schema": "retrieval_blind_cohorts_v3",
+  "heldout": {
+    "uptime_monitors": ["louislam/uptime-kuma", "TwiN/gatus", "0xfurai/peekaping", "upptime/upptime"],
+    "api_clients": ["Hoppscotch/hoppscotch", "usebruno/bruno", "Kong/insomnia", "httpie/cli"],
+    "terminal_emulators": ["alacritty/alacritty", "ghostty-org/ghostty", "raphamorim/rio", "tw93/Kaku"]
+  }
+}

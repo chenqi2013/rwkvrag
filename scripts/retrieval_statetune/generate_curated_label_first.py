@@ -51,7 +51,8 @@ async def run(args):
     jobs = all_jobs[args.start:args.stop]
     if any(job["split"] != args.split for job in jobs):
         raise ValueError("split mismatch in registered jobs")
-    plan_file, question_file = V2 / "LABEL-FIRST-PLAN-v2.txt", V2 / "LABEL-FIRST-QUESTION-v2.txt"
+    plan_file = V2 / f"LABEL-FIRST-PLAN-{args.prompt_version}.txt"
+    question_file = V2 / f"LABEL-FIRST-QUESTION-{args.prompt_version}.txt"
     args.out.parent.mkdir(parents=True, exist_ok=True)
     guard = (args.out.parent / "teacher.lock").open("a")
     fcntl.flock(guard, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -64,6 +65,7 @@ async def run(args):
     (args.out / "calls").mkdir()
     (args.out / "results").mkdir()
     write(args.out / "RUN.json", {"started_at": now(), "split": args.split,
+          "prompt_version": args.prompt_version,
           "job_ids": [job["id"] for job in jobs], "prior_cost_upper_usd": prior,
           "script_sha256": sha256(Path(__file__).read_bytes()).hexdigest(),
           "config_sha256": sha256(config_path.read_bytes()).hexdigest(),
@@ -130,6 +132,7 @@ async def run(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--split", choices=("train", "dev", "heldout"), required=True)
+    parser.add_argument("--prompt-version", choices=("v2", "v3"), default="v3")
     parser.add_argument("--start", type=int, required=True)
     parser.add_argument("--stop", type=int, required=True)
     parser.add_argument("--out", type=Path, required=True)
