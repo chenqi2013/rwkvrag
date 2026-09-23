@@ -1,0 +1,44 @@
+{
+  "optimizer_updates": 1972,
+  "checkpoints": [
+    {
+      "role": "resolver",
+      "epoch": 1,
+      "path": "/home/chase/rwkvrag/data/experiments/state-progression-20260922/train-release-v1/resolver/epoch-1.pth",
+      "sha256": "19161783917ca424f30aca69eb4b3e91fcbcd3f9e32d2efce58312df787917ae",
+      "dtype": "float32",
+      "layout": "H,V,K"
+    },
+    {
+      "role": "resolver",
+      "epoch": 2,
+      "path": "/home/chase/rwkvrag/data/experiments/state-progression-20260922/train-release-v1/resolver/epoch-2.pth",
+      "sha256": "713fb83a9efe4721c2ea829186166f94e4c6bdcb75579f30234aab71bef25d25",
+      "dtype": "float32",
+      "layout": "H,V,K"
+    },
+    {
+      "role": "writer",
+      "epoch": 1,
+      "path": "/home/chase/rwkvrag/data/experiments/state-progression-20260922/train-release-v1/writer/epoch-1.pth",
+      "sha256": "5d20fe74f2136370ad18516390c29328f984e39236339ea6ea6dae55a6a840e1",
+      "dtype": "float32",
+      "layout": "H,V,K"
+    },
+    {
+      "role": "writer",
+      "epoch": 2,
+      "path": "/home/chase/rwkvrag/data/experiments/state-progression-20260922/train-release-v1/writer/epoch-2.pth",
+      "sha256": "e820b7f0d908d2bb313e3f5b37e53cd191b442149f85bda9d60efb6d0d5461a1",
+      "dtype": "float32",
+      "layout": "H,V,K"
+    }
+  ],
+  "examples": 3940,
+  "epochs": 2,
+  "elapsed_s": 6652.009794071317,
+  "base_unchanged": true,
+  "quality_verified": false,
+  "production_promoted": false,
+  "peak_reserved_bytes": 45992640512
+}

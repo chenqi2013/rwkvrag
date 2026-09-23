@@ -1,10 +1,10 @@
 # 实验变量控制
 
-维护日期：2026-09-22。执行状态见 [CURRENT](CURRENT.md)。遵循[架构规则](../llamaindex-retrieval/ARCHITECTURE_RULES.md)。
+维护日期：2026-09-23。执行状态见 [CURRENT](CURRENT.md)。遵循[架构规则](../llamaindex-retrieval/ARCHITECTURE_RULES.md)。
 
 ## 当前登记：来源隔离后训练State
 
-[发布V1](archive/2026-09/state-progression-release-v1-20260922.md)已冻结并通过原数据门槛：训练3940条（normal 2318、defect 1418、progress 204），开发490、留出502。全部发布进展行通过精确哈希绑定的二审核验，另有人工排除；训练任务已在8222物理GPU3启动，完成结果待收据确认。教师与审读同源，准入不等于能力提升或独立语义评分。[评测绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)锁定1710成员与6840计划原始记录，尚未执行模型对照。
+[发布V1](archive/2026-09/state-progression-release-v1-20260922.md)已冻结并通过原数据门槛：训练3940条（normal 2318、defect 1418、progress 204），开发490、留出502。全部发布进展行通过精确哈希绑定的二审核验，另有人工排除；8222物理GPU3训练已成功完成，1972次更新和四个checkpoint经[完成报告](archive/2026-09/state-progression-training-completion-20260923.md)核验。教师与审读同源，准入和训练完成均不等于能力提升或独立语义评分。[评测绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)锁定1710成员与6840计划原始记录，新24题批次已启动，其余及语义审读待完成。
 
 训练候选从新生成任务取得，绝不添加历史题目、参考答案或原始失败输出。原640组任务按来源族先分512/64/64，另有200组原子补充继承同一来源分区。候选必须通过逐目标高强度审读、历史评测交叉隔离、同提示冲突及跨分区去重、完整token编码；至少2000条准入训练，其中正常、缺陷、推进均有足量覆盖。准入是数据规则通过，不是语义质量或产品效果证明。隔离详情见[报告](archive/2026-09/state-progression-isolation-20260922.md)。
 
@@ -29,7 +29,7 @@ V6严格目标审读显示，许多推进目标因额外日期/资料称谓/范�
 
 并行审读期间的诊断快照V8证明存在时间窗口：前一时刻覆盖274条进展，随后主审读又新增6条未经差量复核的进展；仅凭旧排除表再导出会把这6条放进诊断集。[最终发布核验器](../scripts/state_progression/verify_progress_release_v1.py)逐条校验完整行哈希、通过判决及审读全集；V8按预期被阻断，发布V1的260条推进均通过核验。并行诊断快照没有用于训练。
 
-训练固定用户指定的7.2B、fp32io16与FP32循环State，只更新初始State，Resolver和Writer分角色从零State开始；学习率1e-5，2轮，累积4，最终轮作为评测候选。8222物理GPU3的新训练入口带50GiB进程显存限制，已通过零优化更新数值预检：零/非零State、16/64 token全词表logits与原生forward最大差0、argmax全一致、反向梯度有限；收据在`artifacts/state-progression-20260922/preflight-v2/`。最终发布集最长7508-token样本前后向已在实际训练入口通过，0次更新时进程预留峰值29.70GB；当前训练进行中。训练不自动升级生产。对照实验锁定同模型、提示、证据和解码，只改变初始State，逐题公布新增退步和原始输出。
+训练固定用户指定的7.2B、fp32io16与FP32循环State，只更新初始State，Resolver和Writer分角色从零State开始；学习率1e-5，2轮，累积4，最终轮作为评测候选。8222物理GPU3的新训练入口带50GiB进程显存限制，已通过零优化更新数值预检：零/非零State、16/64 token全词表logits与原生forward最大差0、argmax全一致、反向梯度有限；收据在`artifacts/state-progression-20260922/preflight-v2/`。最终发布集最长7508-token样本前后向已在实际训练入口通过，0次更新时进程预留峰值29.70GB；完整训练成功退出，共1972次优化器更新，进程峰值45.99GB，[完成收据](../artifacts/state-progression-20260922/train-release-v1/COMPLETED.json)。训练不自动升级生产。对照实验锁定同模型、提示、证据和解码，只改变初始State，逐题公布新增退步和原始输出。
 
 最终评测输入按不改动JSONL行字节的规则分成四个互斥批次：新24题、旧188题、旧434题加36题双变体、来源分离的dev/holdout。每批均做零State和训练State双轮配对，运行失败或过长输出原样保留；四批总成员与原评测输入必须完全相等。分批只用于控制长任务与定位失败，不能只展示有利批次。[分批器](../scripts/state_progression/shard_eval_v1.py)。
 
