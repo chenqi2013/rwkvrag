@@ -8,7 +8,7 @@
 
 7.2B原生State训练入口固定fp32io16、FP32循环State、学习率1e-5、两轮、只训练初始State。8222物理GPU3的`rwkvrag-state-release-v1-train.service`成功退出：3940条训练输入、两轮、Resolver 774次及Writer 1198次优化器更新，共1972次。四个FP32 State checkpoint的实际SHA-256与[完成收据](../artifacts/state-progression-20260922/train-release-v1/COMPLETED.json)一致，全部更新日志数值有限，基座未改；进程预留峰值45.99GB。此前[数值预检](../artifacts/state-progression-20260922/preflight-v2/NUMERICAL-PREFLIGHT.json)通过。**训练完成不等于答案质量提升；候选尚未接入正式服务。**
 
-评测输入已按[冻结绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)准备为1710个成员、计划6840份零/训练State双轮原始回答：新24题、旧694题及来源分离的开发/留出992题。3项因原运行无Writer提示或输入超限标为不支持，成员仍保留。新24题批次已在GPU3启动，语义评分待全量原文及逐题审读；这些是固定证据评测，不是实时检索。
+评测输入已按[冻结绑定](../artifacts/state-progression-20260922/EVAL-PINS-v1.json)准备为1710个成员、计划6840份零/训练State双轮原始回答：新24题、旧694题及来源分离的开发/留出992题。3项因原运行无Writer提示或输入超限标为不支持，成员仍保留。新24题批次已在GPU3启动；其成功且96份原文齐全后，[顺序执行器](../scripts/state_progression/run_eval_queue_v1.sh)再跑其余三个原样冻结批次。语义评分待全量原文及逐题审读；这些是固定证据评测，不是实时检索。
 
 另用当前诊断集做了三条完整样本的零更新速度/显存试验：最长7216 token前后向6.84秒、进程峰值reserved 28.63GB；1081 token 0.83秒、619 token 0.50秒，所有样本0次优化器更新。[基准收据](../artifacts/state-progression-20260922/benchmark-v1/COMPLETED.json)。这证明所测长度在限制内，不代表最终完整数据或训练耗时已经验收。
 
