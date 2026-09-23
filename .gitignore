@@ -1,3 +1,4 @@
 data/
+llamaindex-retrieval/src/llamaindex_retrieval/static/admin/experiments/
 *.tmp
 .DS_Store
