@@ -50,18 +50,21 @@ def evidence_units(source_index: int, text: str, window: int, overlap: int):
     Offsets always address Python Unicode characters in the indexed chunk.
     """
     start = 0
+    previous_end = 0
     while start < len(text):
         end = min(start + window, len(text))
         if end < len(text):
             boundary = text.rfind("\n", start + 1, end)
-            if boundary >= start:
+            if boundary >= start and boundary + 1 > previous_end:
                 end = boundary + 1
             else:
                 line_end = text.find("\n", end)
                 line = text[start:line_end if line_end >= 0 else len(text)].lstrip()
                 if line.startswith(("|", "- ", "* ", "+ ")) or re.match(r"\d+[.)] ", line):
                     end = line_end + 1 if line_end >= 0 else len(text)
-        yield EvidenceUnit(source_index, start, end, text[start:end])
+        if text[start:end].strip():
+            yield EvidenceUnit(source_index, start, end, text[start:end])
+        previous_end = end
         if end == len(text):
             break
         # Overlap complete lines when possible. Long prose overlaps characters.
@@ -152,8 +155,13 @@ def parse_plan(text: str, settings: Settings) -> dict:
 
     value = json.loads(text, object_pairs_hook=unique_keys)
     shared = settings.native_plan_protocol == "shared_tasks"
+    factual = settings.native_plan_protocol == "fact_queries_v1"
     if shared:
         queries = value
+    elif factual:
+        if not isinstance(value, dict) or set(value) != {"queries"}:
+            raise ValueError("factual planner must return only queries")
+        queries = value["queries"]
     else:
         if not isinstance(value, dict) or set(value) != {"queries", "fields"}:
             raise ValueError("planner must return queries and fields")
@@ -165,7 +173,7 @@ def parse_plan(text: str, settings: Settings) -> dict:
     queries = list(dict.fromkeys(queries))
     # The same model-authored task is searched and read. No second model list
     # can silently change its entity, scope or requested attribute.
-    if shared:
+    if shared or factual:
         return {"queries": queries, "fields": queries.copy()}
     fields = value["fields"]
     if not isinstance(fields, list) or not 1 <= len(fields) <= settings.native_max_fields:
@@ -176,6 +184,18 @@ def parse_plan(text: str, settings: Settings) -> dict:
 
 
 def planner_prompt(task: str, settings: Settings) -> str:
+    if settings.native_plan_protocol == "fact_queries_v1":
+        return (
+            "将用户当前问题整理为需要从资料查到的事实问题。"
+            '只输出一个JSON对象，恰有queries一个键，值为字符串数组。'
+            f"写1到{settings.native_max_queries}个必要查询，不为凑数量列近义改写。"
+            "普通事实问题可以直接保留原问句。比较或选择问题分别查各对象的实际属性，"
+            "数量门槛改问实际数量，是否符合门槛留给后续判断；不把不达标的事实当成无关材料。"
+            "保留对象、版本、事件、日期、单位和明确的数据范围，不添加属性或猜答案。"
+            "历史以最新更正为准，保留未撤回目标；不恢复撤回条件，也不把取消要求变成禁止。"
+            "原始要求仍由最终回答处理，此处只规划查证，不做推荐。\n"
+            f"任务：{task}"
+        )
     if settings.native_plan_protocol == "shared_tasks":
         return (
             "将最新问题整理为需要查证的完整子问题。历史只用于补全指代；"
@@ -328,7 +348,7 @@ class RWKVPipeline:
         self.index = index
         self.web = WebSearchAdapter(settings)
         options = model_client_options(settings)
-        if settings.native_transport == "rwkvos_batch":
+        if settings.native_transport == "rwkvos_batch" or recorder is not None:
             options["recorder"] = recorder
         self.model = model or model_client_class(settings)(**options)
 
@@ -348,7 +368,9 @@ class RWKVPipeline:
                if self.settings.native_completion_protocol == "g1j_plain" else {}),
             **({"trace": trace} if trace is not None else {}),
             **({"structured_schema": structured_schema} if structured_schema is not None else {}),
-            **({"state_role": state_role} if state_role is not None and self.settings.native_transport == "rwkvos_batch" else {}),
+            **({"state_role": state_role} if state_role is not None and (
+                self.settings.native_transport == "rwkvos_batch"
+                or self.settings.native_state_routing is not None) else {}),
         )
 
     async def search(self, request: SearchRequest):
@@ -563,7 +585,10 @@ class RWKVPipeline:
             f"任务：{task}\n字段：{json.dumps(fields, ensure_ascii=False)}\n"
             f"逐字证据：{json.dumps(evidence, ensure_ascii=False)}"
         )
-        if self.settings.native_writer_prompt_protocol == "evidence_first":
+        if self.settings.native_writer_prompt_protocol == "compact_v3":
+            from .writer_prompt import writer_prompt_compact
+            prompt = writer_prompt_compact(task, evidence)
+        elif self.settings.native_writer_prompt_protocol == "evidence_first":
             prompt = writer_prompt_v2(task, evidence, fields)
         elif self.settings.native_writer_prompt_protocol == "evidence_checked":
             prompt = writer_prompt_checked(task, evidence, fields)
@@ -665,10 +690,15 @@ class RWKVPipeline:
                     {"mode": "materials", "error": f"conflicting source identity: {source.id}"},
                     [], "invalid_materials", started)
             identities[source.id] = identity
-        result = await self._write(conversation(question, history or []), materials, [question])
+        from .current_question import resolve_current_question
+        current, task, events = await resolve_current_question(self, question, history or [])
+        if current is None:
+            return self._response(None, materials, {"mode": "materials", "returned": len(materials)},
+                events, "current_question_failed", started)
+        result = await self._write(task, materials, [current])
         return self._response(result.raw_text, materials,
             {"mode": "materials", "returned": len(materials)},
-            [result.trace], result.status, started)
+            [*events, result.trace], result.status, started)
 
     async def ask(self, request: SearchRequest):
         if self.settings.native_task_matrix_enabled:
@@ -680,24 +710,29 @@ class RWKVPipeline:
         if request is None:
             return self._response(None, [], {"mode": "auto", "returned": 0, "routing": routing},
                 routing_events, "routing_failed", started)
-        task = conversation(request.question, request.history)
+        from .current_question import resolve_current_question
+        current, task, task_events = await resolve_current_question(self, request.question, request.history)
+        if current is None:
+            return self._response(None, [], {"mode": request.retrieval_mode, "returned": 0},
+                [*routing_events, *task_events], "current_question_failed", started)
         prompt = planner_prompt(task, self.settings)
         planned = await self._call(prompt, stage="planner",
             max_tokens=self.settings.native_planner_max_tokens)
-        events = [*routing_events, planned.trace]
+        events = [*routing_events, *task_events, planned.trace]
         try:
             plan = parse_plan(structured_body(planned), self.settings)
         except (ValueError, TypeError) as error:
             events[-1] = {**planned.trace, "parse_error": str(error)}
             # Keep the complete conversation for Reader/Writer. A failed plan
             # supplies no trusted rewritten query or inferred answer fields.
-            plan = {"queries": [request.question], "fields": [request.question],
+            plan = {"queries": [current], "fields": [current],
                     "fallback": "original_question", "planner_error": str(error)}
             if self.settings.native_planner_format_repair and planned.status == "completed":
                 # The model, never a list-flattening/truncation heuristic, repairs
                 # its plan. Keep both raw calls and associate the new attempt.
                 original_event = events[-1]
                 shape = ('["完整子问题"]' if self.settings.native_plan_protocol == "shared_tasks"
+                         else '{"queries":["具体事实问题"]}' if self.settings.native_plan_protocol == "fact_queries_v1"
                          else '{"queries":["完整检索问题"],"fields":["所求属性"]}')
                 repair_prompt = (prompt + "\n上一次规划未通过格式校验。重新阅读完整任务并输出合法JSON。"
                     f"唯一合法结构示例：{shape}。示例文字必须替换成实际任务，"
@@ -724,7 +759,7 @@ class RWKVPipeline:
         if preserve_question:
             # Preserve the complete user task even when the planner drops a clause.
             # This is an exact input, not a semantic rewrite or replacement of the plan.
-            queries = list(dict.fromkeys([request.question, *queries]))
+            queries = list(dict.fromkeys([current, *queries]))
         try:
             groups, provider_trace = await self.retrieve_groups(request, queries, candidate_k)
             provider_trace["routing"] = routing
@@ -743,7 +778,7 @@ class RWKVPipeline:
         # question. The model plan stays immutable; code does not rewrite tasks.
         active_tasks = plan[self.settings.native_task_source]
         if preserve_question:
-            active_tasks = list(dict.fromkeys([request.question, *active_tasks]))
+            active_tasks = list(dict.fromkeys([current, *active_tasks]))
         source_tasks = None
         if self.settings.native_resolver_budget_scope == "per_query":
             # Each model-authored query gets its own ranked candidates. Reading
@@ -762,7 +797,11 @@ class RWKVPipeline:
         retrieval = {"mode": "native-plan+bm25+chunk-candidates", "index": self.settings.opensearch_index,
             "candidate_order": self.settings.native_candidate_order, "score_method": "chunk_rrf",
             "provider_order": "knowledge_base_web_round_robin" if request.retrieval_mode == "hybrid" else None,
-            "plan": plan, "retrieval_queries": queries, "original_question_preserved": preserve_question,
+            "plan": plan, "retrieval_queries": queries,
+            "original_question_preserved": preserve_question and not task_events,
+            "current_question_preserved": preserve_question,
+            "history_protocol": self.settings.native_history_protocol,
+            "current_question": current,
             "candidate_k_per_query": candidate_k,
             "active_task_source": self.settings.native_task_source,
             "active_tasks": active_tasks,

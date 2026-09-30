@@ -4,3 +4,36 @@ llamaindex-retrieval/src/llamaindex_retrieval/static/admin/experiments/
 .DS_Store
 __pycache__/
 *.pyc
+
+# Product-only publishing: local research tools, data and reports never ship.
+/llamaindex-retrieval/web/public/experiments/
+/scripts/
+/artifacts/
+/artifact/
+/llamaindex-retrieval/eval/
+/llamaindex-retrieval/statetune/
+/docs/*
+!/docs/EVIDENCE.md
+!/docs/long-context.md
+!/docs/rwkvos-api.md
+
+# Dataset-bound regressions remain local; application unit tests are published.
+/llamaindex-retrieval/tests/test_vllm_decoding_eval.py
+/llamaindex-retrieval/tests/test_state_release.py
+/llamaindex-retrieval/tests/test_broad_qa_v2.py
+/llamaindex-retrieval/tests/test_state_training.py
+/llamaindex-retrieval/tests/test_reader_label_eval.py
+/llamaindex-retrieval/tests/test_label_replication.py
+/llamaindex-retrieval/tests/test_batch_receipts_local.py
+/llamaindex-retrieval/tests/test_writer_data.py
+/llamaindex-retrieval/tests/test_statetune_canonical.py
+/llamaindex-retrieval/tests/test_support_eval.py
+/llamaindex-retrieval/tests/test_quality_gate.py
+/llamaindex-retrieval/tests/test_rwkvos_batch_local.py
+/llamaindex-retrieval/tests/test_released_training.py
+/llamaindex-retrieval/tests/test_reader_presentation_eval.py
+/llamaindex-retrieval/tests/test_state_pilot.py
+/llamaindex-retrieval/tests/test_broad_regression_eval.py
+/llamaindex-retrieval/tests/test_state_final_protocol.py
+/llamaindex-retrieval/tests/test_released_evaluation.py
+/llamaindex-retrieval/tests/test_state_exploration.py

@@ -1,8 +1,8 @@
 # RWKV 原生检索问答服务
 
-> 维护参考。当前开发重点、实际部署与实验状态统一见[当前状态](../docs/CURRENT.md)，实验前读[变量控制](../docs/EXPERIMENTS.md)。
+> 应用安装与接口参考。模型、State和实际启用功能以部署配置为准；本地研究记录不随应用仓库发布。
 
-基于 OpenSearch BM25、MongoDB 和 RWKV API。模型端点与兼容 State 由配置指定；2.9B 正式试用与 7.2B 独立实验不能混为同一部署。约束见 [ARCHITECTURE_RULES.md](ARCHITECTURE_RULES.md)。
+基于 OpenSearch BM25、MongoDB 和 RWKV API。模型端点与兼容 State 由配置指定；不同模型与State需要分别验证。约束见 [ARCHITECTURE_RULES.md](ARCHITECTURE_RULES.md)。
 
 POST /v1/ask 执行检索与作答；文件、知识库、历史和 trace 由管理接口维护。新代码中的单项证据接口见[证据契约](../docs/EVIDENCE.md)，默认需要显式配置才能启用。通用安装配置不等同于本机正在运行的配置。
 
@@ -12,10 +12,10 @@ POST /v1/ask 执行检索与作答；文件、知识库、历史和 trace 由管
 | --- | --- | --- |
 | OpenSearch | BM25 原文块检索 | CPU、内存、磁盘 |
 | MongoDB | 知识库、文件、任务、问答及 trace | CPU、内存、磁盘 |
-| RWKV API | 规划、逐来源阅读、作答 | 当前本地部署使用 rwkv-8222 GPU3 的2.9B |
+| RWKV API | 规划、逐来源阅读、作答 | 可独立部署的兼容模型端点 |
 | FastAPI | 编排、导入、管理接口 | CPU |
 
-不需要Qdrant或embedding服务。当前WSL环境已经安装MongoDB、OpenSearch、API及独立SSH隧道，使用[本地部署说明](deploy/local/README.md)。以下为其他环境的通用配置和启动步骤。
+不需要Qdrant或embedding服务。本机服务管理参考[本地部署说明](deploy/local/README.md)。以下为其他环境的通用配置和启动步骤。
 
 ```bash
 uv sync --frozen --extra dev
@@ -36,6 +36,7 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 | `NATIVE_TRANSPORT` | `native` | 外部选 `rwkvos_batch` |
 | `NATIVE_BASE_URL` | 本机 18421/v1 | 外部示例 `https://api-3b.rwkvos.com/v1` |
 | `NATIVE_MODEL` | `rwkv7-g1j-2.9b-20260831-ctx16384` | 服务身份校验 |
+| `NATIVE_STATE_ROUTING` | 未启用 | native/g1j_plain 的显式模型＋角色→初始State引用映射，见[接口与边界](NATIVE_STATE_ROUTING.md) |
 | `RWKVOS_CF_ACCESS_CLIENT_ID` / `RWKVOS_CF_ACCESS_CLIENT_SECRET` | 空 | 只在本机配置，不进入 trace |
 | `RWKVOS_STATE_ID` | 省略 | 仅使用有效且模型兼容的 state |
 | `RWKVOS_WRITER_STATE_ID` | 省略 | 只覆盖Writer；需要canonical evidence-first协议 |
@@ -96,17 +97,15 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 
 原始输出不增删、不补引用、不静默重试。citation_audit 只检查标签，semantic_support_verified 保持 false。模型自己生成的“证据”列表不能替代真实输入来源。
 
+`POST /v1/admin/source-catalog/audit` 可只读核对保存来源的文件目录、原件/解析快照、文档身份及逐字范围；缺失或冲突不猜补、不改接最新文件。使用方法与验证边界见[来源目录契约](SOURCE_CATALOG.md)。该检查不代表索引成员、语义引用或已部署服务通过验收。
+
 超过 8 MiB 的问答/请求完整内容保存到 `rag_payloads` GridFS bucket，Mongo 集合保存摘要和引用，历史读取自动还原。原始回答不会为了入库被删节。数据库备份必须包含这两个 bucket 的 `files` 和 `chunks` 集合；它们没有公开读取 API，访问由数据库权限控制。
 
-## StateTune数据与训练
+## 验证与可选训练能力
 
-2026-09-11 实验从真实trace的17个纠错种子生成2000条数据，已完成六组训练与对照。[数据管线](statetune/README.md)提供入口、格式和正式训练包；旧草稿及阶段运行记录按[附件说明](../docs/artifacts.md)恢复。
+应用提供 `rwkvrag-state-data` 和 `rwkvrag-state-release` 接口；实验脚本、训练包与历史评测不随应用仓库发布，需要在本地研究工作区另行准备。数据导出、格式通过和loss下降均不能代替真实问答验收。
 
-`rwkvrag-state-data`提供 `prepare / build / audit / export`，`rwkvrag-state-release`管理独立复核后的训练发布。数据导出、格式通过和loss下降均不能代替实际问答测试。
-
-## 验证
-
-固定材料的质量验收入口见 [P0 验收说明](eval/native-smoke/QUALITY_GATE.md)。它复用已有 8 道开发题和原始收据，分别检查执行、正文协议、引用标签以及显式语义复核；尚未复核不能算质量通过。该题组不代表完整 RAG 或盲测成绩。
+应用单元测试使用本地合成材料，不依赖未发布的历史实验数据；历史数据回归保留在研究工作区单独运行。
 
 规划失败后继续用原问题检索时，若 Writer 完成且证据读取未失败，状态为 `planner_partial_failure`，历史归类为 `partial`。`generation.stage_status` 分别记录各模型阶段是否成功，`planner_fallback` 记录回退方式。Writer 截断/超时等状态仍优先保留，原始答案不修改。此前已经存储的历史记录不会被本次代码更新自动重写。
 
@@ -114,13 +113,11 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 uv run pytest -q tests/test_native_rwkv.py tests/test_rwkvos_batch.py tests/test_model_transport.py tests/test_rwkv_pipeline.py tests/test_native_integration.py tests/test_verbatim_chunking.py tests/test_ingest.py
 ```
 
-发布验证见 [VALIDATION.json](../artifacts/statetune-20260911/VALIDATION.json)。完整回归仍有114项历史失败；没有删除这些测试或将其改成跳过。软件测试不证明模型答案正确。历史日志与失败集对照保存在实验附件中。
-
-Writer 提示词实验与 canonical 模板校正见 [第二轮报告](../docs/archive/2026-09/p0-writer-experiment-20260916.md)。实验候选未启用；新评测应显式指定传输模板和 Writer state。
+软件测试不证明模型答案正确，部署前仍需核验真实检索、答案与引用。
 
 ## 自动联网与混合检索
 
-管理页可调用配置好的 1.5B StateTune 模型服务判断是否补充网络材料；API 显式传 `retrieval_mode: "auto"` 启用。支持强制 knowledge_base / hybrid / web。模型选择器只需一个兼容的 HTTP 端点，不需要另一个项目的源码或虚拟环境。早期训练与历史评测见 [混合检索交付报告](../docs/archive/2026-09/hybrid-search-20260919.md)。
+管理页可调用配置好的 1.5B StateTune 模型服务判断是否补充网络材料；API 显式传 `retrieval_mode: "auto"` 启用。支持强制 knowledge_base / hybrid / web。模型选择器只需一个兼容的 HTTP 端点，不需要另一个项目的源码或虚拟环境。早期训练与历史评测见 混合检索交付报告（本地研究资料，不随应用发布）。
 
 本仓库内置 Tavily 或 SearXNG 检索适配器。软件默认选择 Tavily，未配置 Key 时明确返回配置错误，不向上游发送请求。复制 `.env.example` 后，设置私有的 `RWKVRAG_WEB_TAVILY_API_KEY`，或使用权限为 `0600` 的单 Key 文件并设置 `RWKVRAG_WEB_TAVILY_API_KEY_FILE`；两种 Key 来源不能同时启用，文件或变量也不能包含 Key 列表。SearXNG 设置 `RWKVRAG_WEB_SEARCH_PROVIDER=searxng` 与 `RWKVRAG_WEB_SEARXNG_BASE_URL`。这只配置网络材料来源；OpenSearch、MongoDB 和 RWKV 模型端点仍按上文部署。调用 `/v1/ask` 并传 `retrieval_mode: "web"` 可只用网络资料，传 `"hybrid"` 可合并网络和知识库资料。返回的网络原文快照、检索时间和来源仍在 trace 与引用面板中。
 
@@ -138,4 +135,4 @@ curl -sS http://127.0.0.1:8080/v1/search \
 
 `"auto"` 需要额外配置 `RWKVRAG_WEB_ROUTER_BASE_URL`、`RWKVRAG_WEB_ROUTER_MODEL`，以及模型服务需要时的 `RWKVRAG_WEB_ROUTER_API_KEY`；它让模型判断是否补网。选择器未配置或输出不合协议时会明确失败，不会改用关键词规则。内置网络检索的单元与模拟传输测试已覆盖快照、引用身份和凭据不进入 trace；真实提供方与多项目端到端质量需要单独实测，不能从配置可用推断通过。
 
-不购买搜索 API 的本机备选部署见 [SearXNG Compose](deploy/searxng/README.md)。它已完成真实 `web`/`hybrid` 检索与一条简单问答冒烟检查；SearXNG 材料当前只含网页摘要，不能据此认定复杂比较题质量通过。[本机验证记录](../docs/archive/2026-09/searxng-alternative-20260923.md)。
+不购买搜索 API 的本机备选部署见 [SearXNG Compose](deploy/searxng/README.md)。它已完成真实 `web`/`hybrid` 检索与一条简单问答冒烟检查；SearXNG 材料当前只含网页摘要，不能据此认定复杂比较题质量通过。本机验证记录（本地研究资料，不随应用发布）。

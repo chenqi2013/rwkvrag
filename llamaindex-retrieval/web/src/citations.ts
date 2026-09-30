@@ -41,7 +41,7 @@ export function externalSourceUrl(uri?: string): string | undefined {
 }
 
 export function savedContext(response: AskResponse, source: SearchResult): string | undefined {
-  const parent = source.metadata?.parent_source_id || source.id;
+  const parent = source.metadata?.web_snapshot_parent_id || source.metadata?.parent_source_id || source.id;
   const searches = response.retrieval.web_search;
   if (Array.isArray(searches)) {
     for (const search of searches) {
@@ -57,4 +57,13 @@ export function savedContext(response: AskResponse, source: SearchResult): strin
     if (candidate) return candidate.snippet;
   }
   return undefined;
+}
+
+export function originalSourceUrl(source: SearchResult): string | undefined {
+  const file = source.metadata?.file_id;
+  const sha = source.metadata?.source_sha256;
+  const page = source.metadata?.page;
+  if (typeof file !== "string" || !file || typeof sha !== "string" || !/^[0-9a-f]{64}$/.test(sha)) return undefined;
+  return `/v1/admin/files/${encodeURIComponent(file)}/source/${sha}`
+    + (typeof page === "number" && Number.isSafeInteger(page) && page > 0 ? `#page=${page}` : "");
 }

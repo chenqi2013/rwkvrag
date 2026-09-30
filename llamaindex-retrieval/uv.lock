@@ -1715,7 +1715,7 @@ requires-dist = [
     { name = "pyarrow", specifier = ">=18,<26" },
     { name = "pydantic-settings", specifier = ">=2.7,<3" },
     { name = "pymongo", specifier = ">=4.12,<5" },
-    { name = "pymupdf", specifier = ">=1.25,<2" },
+    { name = "pymupdf", specifier = ">=1.28,<2" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8,<10" },
     { name = "pytest-asyncio", marker = "extra == 'dev'", specifier = ">=0.25,<2" },
     { name = "python-docx", specifier = ">=1.1,<2" },

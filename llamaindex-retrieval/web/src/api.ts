@@ -1,4 +1,4 @@
-import type { WikiVersion } from "./types";
+import type { WikiVersion, WikiStatus } from "./types";
 import type { AtomicRequest, AtomicRun, AtomicRunSummary } from "./atomicEvidence";
 import type {
   AdminHealth,
@@ -14,6 +14,9 @@ import type {
   SearchResponse,
   FailureCategory,
   SearchAnswerStatus,
+  WebSnapshot,
+  SavedWebSnapshot,
+  SaveWebSnapshotRequest,
 } from "./types";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
@@ -45,6 +48,11 @@ export const api = {
   atomicDetail: (kb: string, id: string) => request<AtomicRun>(`/v1/admin/knowledge-bases/${encodeURIComponent(kb)}/atomic-evidence/${encodeURIComponent(id)}`),
   health: () => request<AdminHealth>("/v1/admin/health"),
   knowledgeBases: () => request<KnowledgeBase[]>("/v1/admin/knowledge-bases"),
+  webSnapshot: (id: string) => request<WebSnapshot>(`/v1/admin/web-snapshots/${encodeURIComponent(id)}`),
+  saveWebSnapshot: (id: string, values: SaveWebSnapshotRequest) =>
+    request<SavedWebSnapshot>(`/v1/admin/web-snapshots/${encodeURIComponent(id)}/save`, {
+      method: "POST", headers: jsonHeaders, body: JSON.stringify(values),
+    }),
   createKnowledgeBase: (values: { name: string; description: string }) =>
     request<KnowledgeBase>("/v1/admin/knowledge-bases", {
       method: "POST",
@@ -74,6 +82,7 @@ export const api = {
   },
   deleteFile: (id: string) => request<void>(`/v1/admin/files/${id}`, { method: "DELETE" }),
   wikiPages: () => request<WikiVersion[]>("/v1/admin/wiki"),
+  wikiStatus: () => request<WikiStatus>("/v1/admin/wiki/status"),
   wikiVersion: (id: string) => request<WikiVersion>(`/v1/admin/wiki/versions/${id}`),
   wikiHistory: (fileId: string) => request<WikiVersion[]>(`/v1/admin/wiki/files/${fileId}/versions`),
   generateWiki: (fileId: string) => request<{job_id: string}>(`/v1/admin/wiki/files/${fileId}/generate`, {method: "POST"}),

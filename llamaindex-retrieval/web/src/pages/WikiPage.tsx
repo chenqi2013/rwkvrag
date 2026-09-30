@@ -2,19 +2,23 @@ import { Alert, Button, Card, Collapse, Drawer, Empty, message, Select, Space, T
 import { useCallback, useEffect, useState } from "react";
 import CitedAnswer from "../components/CitedAnswer";
 import { api } from "../api";
-import type { WikiVersion } from "../types";
+import type { WikiStatus, WikiVersion } from "../types";
 import { errorMessage, formatDate } from "../utils";
 import { useLanguage } from "../i18n";
 
 export default function WikiPage() {
   const { tr } = useLanguage();
   const [pages, setPages] = useState<WikiVersion[]>([]);
+  const [status, setStatus] = useState<WikiStatus>();
   const [selected, setSelected] = useState<WikiVersion>();
   const [history, setHistory] = useState<WikiVersion[]>([]);
   const [loading, setLoading] = useState(false);
   const load = useCallback(async () => {
     setLoading(true);
-    try { setPages(await api.wikiPages()); }
+    try {
+      const [items, running] = await Promise.all([api.wikiPages(), api.wikiStatus()]);
+      setPages(items); setStatus(running);
+    }
     catch (error) { void message.error(errorMessage(error)); }
     finally { setLoading(false); }
   }, []);
@@ -36,6 +40,16 @@ export default function WikiPage() {
     <div className="page-heading"><Typography.Title level={2}>Wiki</Typography.Title><Button onClick={() => void load()}>{tr("刷新", "Refresh")}</Button></div>
     <Alert type="info" showIcon message={tr("自动生成的文档 Wiki 草稿", "Automatically generated document Wiki drafts")}
       description={tr("文档入库或更新后自动生成。草稿尚未人工审核；来源变化后需重新生成。Wiki 不会替代原文成为问答证据。", "Generated after documents are indexed or revised. Drafts are unreviewed and require regeneration when sources change. Original sources remain the evidence for answers.")} />
+    {status && <Card size="small"><Space wrap>
+      <Tag color={status.auto_generate && status.generator_configured ? "green" : "orange"}>
+        {status.auto_generate && status.generator_configured ? tr("自动生成已启用", "Automatic generation enabled") : tr("自动生成未就绪", "Automatic generation unavailable")}
+      </Tag>
+      <Typography.Text>{tr(`已就绪文件 ${status.ready_files} · 有版本绑定 ${status.version_bound_files}`, `Ready files ${status.ready_files} · Version-bound ${status.version_bound_files}`)}</Typography.Text>
+      <Typography.Text type="secondary">{tr(`单份生成材料上限 ${status.max_source_characters} 字符`, `Generation source limit: ${status.max_source_characters} characters`)}</Typography.Text>
+    </Space></Card>}
+    {status && status.unversioned_files > 0 && <Alert type="warning" showIcon
+      message={tr(`${status.unversioned_files} 个文件缺少 Wiki 所需版本记录`, `${status.unversioned_files} files lack Wiki revision records`)}
+      description={<>{tr("旧上传文档需要先重建索引，才能绑定原文并生成 Wiki。FineWiki 批量语料不会自动转换成 Wiki。这里只统计版本记录，不代表来源或草稿已经审核。", "Reindex older uploaded documents before generating Wiki drafts. Bulk FineWiki imports do not automatically become Wiki pages. Version records do not imply reviewed sources or drafts.")} <a href="#/files">{tr("前往文档管理", "Open documents")}</a></>} />}
     <Card><Table rowKey="id" dataSource={pages} loading={loading} pagination={{pageSize: 10}}
       locale={{emptyText: <Empty description={tr("尚无 Wiki 页面，请先上传文档；生成失败可在任务列表查看原因。", "No Wiki pages yet. Upload a document; generation errors appear in Imports.")} />}}
       columns={[

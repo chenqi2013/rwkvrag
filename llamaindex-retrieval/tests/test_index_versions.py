@@ -161,7 +161,8 @@ async def test_file_job_uses_staging_without_deleting_live_chunks(index, tmp_pat
     path.write_text("# New document\n\nReplacement body.")
     payload = {"file_id": "file-a", "path": str(path)}
     repository = AsyncMock()
-    repository.get_job.return_value = {"kind": "file_reindex", "payload": payload}
+    repository.get_job.return_value = {"status": "pending", "kind": "file_reindex", "payload": payload}
+    repository.claim_index_job.return_value = True
     repository.get_file.return_value = {"knowledge_base_id": "default"}
     if fail:
         original = tasks.replace_uploaded_documents
@@ -173,6 +174,7 @@ async def test_file_job_uses_staging_without_deleting_live_chunks(index, tmp_pat
         monkeypatch.setattr(tasks, "replace_uploaded_documents", broken)
     manager = tasks.TaskManager(index.settings, repository, index)
     await manager._run_job("job-1")
+    repository.claim_index_job.assert_awaited_once_with("job-1")
     updates = [call.args[1] for call in repository.update_job.call_args_list]
     assert updates[-1]["status"] == ("failed" if fail else "completed")
     assert any(row.get("stage") == "staging" for row in updates)
@@ -304,9 +306,11 @@ async def test_uploaded_revision_is_bound_to_nodes_index_and_successful_file_rec
     path = tmp_path / "revision.md"
     path.write_text("# Source revision\nVersioned content.")
     repo = AsyncMock()
-    repo.get_job.return_value = {"kind": "file_reindex", "payload": {"file_id": "file-a", "path": str(path)}}
+    repo.get_job.return_value = {"status": "pending", "kind": "file_reindex", "payload": {"file_id": "file-a", "path": str(path)}}
+    repo.claim_index_job.return_value = True
     repo.get_file.return_value = {"knowledge_base_id": "default", "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
     await TaskManager(index.settings, repo, index)._run_job("revision-job")
+    repo.claim_index_job.assert_awaited_once_with("revision-job")
     ready = next(call.args[1] for call in repo.update_file.call_args_list if call.args[1].get("status") == "ready")
     version = index.versions.current()
     assert ready["last_indexed_index_version"] == version

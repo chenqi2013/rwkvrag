@@ -57,10 +57,8 @@ def test_opensearch_document_filter_and_collapse_do_not_change_query_fields():
             self.requests.append(kwargs["body"])
             return {"hits": {"hits": []}}
     client = Client()
-    class ExistingIndex(LexicalIndex):
-        def ensure_index(self):
-            pass
-    index = ExistingIndex(Settings(), client=client)
+    # Query-only mock: index adoption/publication is tested separately.
+    index = LexicalIndex(Settings(_env_file=None), client=client, initialize=False)
     index.search_chunks("查询对象", candidate_k=20, knowledge_base_id="kb")
     index.search_chunks("查询对象", candidate_k=20, knowledge_base_id="kb", collapse_documents=True)
     index.search_chunks("查询对象", candidate_k=20, knowledge_base_id="kb", document_ids=["a", "b"])
@@ -81,9 +79,8 @@ def test_long_queries_keep_tail_tokens_filters_and_unique_rank_votes(collapse):
             def result(node, doc):
                 return {"_source": {"node_id": node, "document_id": doc, "text": "完整证据", "metadata": {}}, "_score": 99}
             return {"hits": {"hits": [result("shared", "shared-doc"), result(f"tail-{n}", f"tail-doc-{n}")]}}
-    class ExistingIndex(LexicalIndex):
-        def ensure_index(self): pass
-    client = Client(); index = ExistingIndex(Settings(), client=client)
+    client = Client()
+    index = LexicalIndex(Settings(_env_file=None), client=client, initialize=False)
     tokens = [f"term{i}" for i in range(300)]
     results = index.search_chunks(" ".join(tokens), candidate_k=10, knowledge_base_id="kb",
         document_ids=["shared-doc", "tail-doc-1", "tail-doc-2", "tail-doc-3"], collapse_documents=collapse)
@@ -104,9 +101,7 @@ def test_long_query_rejects_conflicting_node_identity(collapse):
             self.calls += 1
             return {'hits': {'hits': [{'_source': {'node_id': 'same', 'document_id': 'doc',
                 'text': f'version-{self.calls}', 'metadata': {}}, '_score': 1}]}}
-    class ExistingIndex(LexicalIndex):
-        def ensure_index(self): pass
-    index = ExistingIndex(Settings(), client=Client())
+    index = LexicalIndex(Settings(_env_file=None), client=Client(), initialize=False)
     with pytest.raises(ValueError, match='conflicting source identity'):
         index.search_chunks(' '.join(f't{i}' for i in range(129)), candidate_k=5,
                             collapse_documents=collapse)

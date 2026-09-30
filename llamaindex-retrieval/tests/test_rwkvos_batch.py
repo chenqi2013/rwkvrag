@@ -2,7 +2,6 @@ import asyncio
 import base64
 from hashlib import sha256
 import json
-from pathlib import Path
 
 import httpx
 import pytest
@@ -495,10 +494,25 @@ async def test_canonical_reader_rejects_incompatible_prefill_before_http():
     assert result.status == "invalid_request"
 
 
-async def test_task_last_api_matches_frozen_input_and_only_reorders_reader():
-    root = Path(__file__).resolve().parents[1]
-    original = json.loads((root / "statetune/datasets/reader-v4-canonical/dataset/dev.inputs.jsonl").read_text().splitlines()[0])
-    expected = json.loads((root / "eval/reader-v5-stability-20260910/question-last/dev.inputs.jsonl").read_text().splitlines()[0])
+async def test_task_last_api_preserves_content_and_only_reorders_reader():
+    original_prompt = (
+        'User: Select evidence.\n'
+        '任务：{"history": [], "latest_question": "What is the limit?"}\n'
+        '子问题：["What is the limit?"]\n'
+        '来源：{"id": "synthetic-source"}\n'
+        '原文父级上下文：[]\n'
+        '原文：{"E3": "The limit is 8."}\n\nAssistant: <think></think>\n'
+    )
+    expected_prompt = (
+        'User: Select evidence.\n'
+        '来源：{"id": "synthetic-source"}\n'
+        '原文父级上下文：[]\n'
+        '原文：{"E3": "The limit is 8."}\n'
+        '任务：{"history": [], "latest_question": "What is the limit?"}\n'
+        '子问题：["What is the limit?"]\n\nAssistant: <think></think>\n'
+    )
+    original = {"prompt": original_prompt}
+    expected = {"prompt": expected_prompt, "prompt_sha256": sha256(expected_prompt.encode()).hexdigest()}
     content = original["prompt"].removeprefix("User: ").removesuffix("\n\nAssistant: <think></think>\n")
     messages = [{"role": "user", "content": content}]
     payloads = []

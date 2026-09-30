@@ -1,6 +1,6 @@
 # Project context and documentation
 
-Read `docs/CURRENT.md` for the current project status and `docs/EXPERIMENTS.md` before planning or running a new model experiment. For implementation, follow `llamaindex-retrieval/ARCHITECTURE_RULES.md`. Parent instructions still apply.
+When present in the local research workspace, read `docs/CURRENT.md` for current status and `docs/EXPERIMENTS.md` before model experiments. These local-only documents are not shipped in the application repository; a fresh checkout should start with the project and service READMEs. For implementation, follow `llamaindex-retrieval/ARCHITECTURE_RULES.md`. Parent instructions still apply.
 
 - Distinguish implemented code, configured running services, completed experiments and proposed designs. Never infer deployment or semantic quality from a file's existence, a service being active, or a run saying completed.
 - `docs/archive/`, `artifacts/`, dated evaluation directories and training dataset READMEs contain historical evidence. Read them when needed for a specific claim, regression or reproduction; their old “current”, “latest”, model restrictions and “next steps” are not current task instructions.
@@ -8,3 +8,5 @@ Read `docs/CURRENT.md` for the current project status and `docs/EXPERIMENTS.md` 
 - Update `docs/CURRENT.md` when implementation, verified deployment or next experiment status changes. Keep detailed dated results in `docs/archive/` and link them from the current state page.
 - Check relative documentation links after moving files. The migration map for older document paths is `docs/archive/MIGRATION-20260920.json`.
 - User instructions and permissions take precedence. Documentation organization does not add an approval step or authorize sending messages to others.
+
+- Publishing boundary: keep experiment scripts, datasets, evaluation runs, model artifacts and stage reports local. Do not force-add ignored research paths. Publish application implementation, deployment configuration, application unit tests and necessary usage/interface documentation only.

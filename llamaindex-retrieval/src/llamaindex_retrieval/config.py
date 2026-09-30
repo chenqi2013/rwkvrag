@@ -7,6 +7,8 @@ from typing import Literal
 from pydantic import Field, SecretStr, StrictInt, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from .native_state import NativeStateRouting
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -49,6 +51,8 @@ class Settings(BaseSettings):
     web_search_timeout: float = Field(default=45, ge=1, le=120)
     web_search_concurrency: int = Field(default=2, ge=1, le=4)
     web_search_material_characters: int = Field(default=3000, ge=256, le=24000)
+    web_material_policy: Literal["prefix", "ranked_windows"] = "prefix"
+    web_windows_per_document: int = Field(default=4, ge=1, le=12)
     default_top_k: int = Field(default=5, ge=1, le=50)
     max_top_k: int = Field(default=20, ge=1, le=100)
     max_chunks_per_document: int = Field(default=1, ge=1, le=10)
@@ -63,16 +67,20 @@ class Settings(BaseSettings):
     atomic_max_calls: int = Field(default=32, ge=1, le=64)
     atomic_timeout_seconds: float = Field(default=180, ge=1, le=600)
     native_base_url: str = "http://127.0.0.1:18421/v1"
+    native_require_model_identity: bool = False
+    native_require_fp32_runtime: bool = False
     native_model: str = "rwkv7-g1j-2.9b-20260831-ctx16384"
     native_api_key: str = ""
     native_transport: Literal["native", "rwkvos_batch"] = "native"
     native_completion_protocol: Literal["native", "g1j_plain"] = "native"
+    native_state_routing: NativeStateRouting | None = None
     native_funnel_max_calls: int = Field(default=128, ge=4, le=512)
+    native_quantity_binding: Literal["decimal", "verbatim"] = "decimal"
     native_writer_pipeline: Literal["single", "funnel_v1", "typed_funnel_v5", "typed_funnel_v8", "typed_funnel_v10"] = "single"
     native_writer_budget_policy: Literal["disabled", "whole_sources"] = "disabled"
     native_writer_prefill: Literal["<think", "<think></think"] = "<think"
     native_writer_prompt_protocol: Literal[
-        "task_first", "evidence_first", "evidence_checked", "decision"
+        "task_first", "evidence_first", "evidence_checked", "decision", "compact_v3"
     ] = "task_first"
     rwkvos_cf_access_client_id: SecretStr = SecretStr("")
     rwkvos_cf_access_client_secret: SecretStr = SecretStr("")
@@ -95,7 +103,10 @@ class Settings(BaseSettings):
     native_context_window_tokens: int = Field(default=16384, ge=1024)
     native_max_concurrency: int = Field(default=32, ge=1, le=256)
     native_planner_prefill: Literal["<think", "<think></think"] = "<think"
-    native_plan_protocol: Literal["queries_fields", "shared_tasks"] = "queries_fields"
+    native_plan_protocol: Literal["queries_fields", "shared_tasks", "fact_queries_v1"] = "queries_fields"
+    # Experimental: validate history correction separately; no-history requests
+    # stay byte-identical. Keep raw until Reader/Writer regressions pass.
+    native_history_protocol: Literal["raw", "current-question-v1"] = "raw"
     native_resolver_prefill: Literal["<think", "<think></think"] = "<think"
     native_resolver_protocol: Literal["fields", "task_units", "binary_query"] = "fields"
     native_resolver_task_grouping: Literal["joint", "individual"] = "joint"
@@ -139,7 +150,29 @@ class Settings(BaseSettings):
     answer_point_fanout_concurrency: int = Field(default=3, ge=1, le=8)
 
     @model_validator(mode="after")
+    def validate_native_state_routing(self) -> "Settings":
+        routing = self.native_state_routing
+        if routing is not None:
+            if (self.rag_pipeline != "rwkv" or self.native_transport != "native"
+                    or self.native_completion_protocol != "g1j_plain"
+                    or routing.model != self.native_model):
+                raise ValueError("Native State routing requires rwkv/native/g1j_plain and matching model")
+            if any(value is not None for value in (self.rwkvos_state_id,
+                    self.rwkvos_planner_state_id, self.rwkvos_reader_state_id,
+                    self.rwkvos_binary_reader_state_id, self.rwkvos_writer_state_id)) or self.rwkvos_matrix_state_ids:
+                raise ValueError("Native State routing cannot be mixed with rwkvos State bindings")
+            if self.native_task_matrix_enabled and not {
+                    "plan", "reader", "assessment", "followup", "review", "writer"} <= routing.roles.keys():
+                raise ValueError("Native task matrix requires explicit bindings for all six State roles")
+        return self
+
+    @model_validator(mode="after")
     def validate_reader_state_protocol(self) -> "Settings":
+        if self.native_require_model_identity or self.native_require_fp32_runtime:
+            if self.rag_pipeline != "rwkv" or self.native_transport != "native":
+                raise ValueError("Runtime identity checks require the native RWKV transport")
+        if self.native_require_fp32_runtime and not self.native_require_model_identity:
+            raise ValueError("FP32 runtime checks require completion model identity checks")
         if self.native_writer_pipeline in {"typed_funnel_v5", "typed_funnel_v8", "typed_funnel_v10"} and (
                 self.native_transport != "native" or self.native_completion_protocol != "g1j_plain"):
             raise ValueError("typed funnel requires native g1j_plain structured-output transport")
@@ -155,6 +188,12 @@ class Settings(BaseSettings):
                 not self.rwkvos_planner_state_id.strip() or self.native_transport != "rwkvos_batch"
                 or self.rwkvos_prefill_mode != "complete" or self.native_planner_prefill != "<think></think"):
             raise ValueError("Planner state requires batch complete no-think protocol")
+        if self.native_history_protocol != "raw" and (
+                self.native_task_matrix_enabled or self.native_transport != "native"):
+            raise ValueError("Current-question protocol requires the native non-matrix pipeline")
+        if self.native_plan_protocol == "fact_queries_v1" and (
+                self.native_task_matrix_enabled or self.native_transport != "native"):
+            raise ValueError("Fact-query protocol requires the native non-matrix pipeline")
         if self.native_task_matrix_enabled and (
                 self.native_resolver_protocol != "binary_query"
                 or self.native_resolver_task_grouping != "individual"):
@@ -250,6 +289,13 @@ class Settings(BaseSettings):
     sqlite_migration_path: Path = Path("/Volumes/mark/rwkvrag/data/lexical/bm25.sqlite3")
     admin_static_dir: Path | None = None
     wiki_auto_generate: bool = True
+    ocr_enabled: bool = True
+    ocr_tessdata_dir: Path | None = None
+    ocr_languages: str = Field(default="chi_sim+eng", pattern=r"^[a-z_]+(?:\+[a-z_]+)*$")
+    ocr_dpi: int = Field(default=200, ge=100, le=400)
+    ocr_timeout_seconds: int = Field(default=180, ge=5, le=1800)
+    ocr_max_pages: int = Field(default=200, ge=1, le=2000)
+    ocr_max_pixels: int = Field(default=20_000_000, ge=1_000_000, le=100_000_000)
     wiki_max_source_characters: int = Field(default=24000, ge=100, le=200000)
     upload_dir: Path = Path("/Volumes/mark/rwkvrag/data/admin-uploads")
     finewiki_import_roots: str = "/Volumes/mark/rwkvrag/data/deploy-demo/finewiki-sample"

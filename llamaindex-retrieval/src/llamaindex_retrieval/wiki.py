@@ -46,6 +46,21 @@ class WikiService:
             self.tasks.submit(job["id"])
         return job
 
+    async def status(self):
+        """Report the running configuration and missing bindings, not quality."""
+        ready = {"status": "ready"}
+        bound = {**ready, "last_indexed_revision": {"$type": "object"},
+                 "last_indexed_index_version": {"$type": "string", "$ne": ""}}
+        ready_count, bound_count = await asyncio.gather(
+            self.repo.files.count_documents(ready),
+            self.repo.files.count_documents(bound),
+        )
+        return {"auto_generate": self.settings.wiki_auto_generate,
+                "generator_configured": self.pipeline is not None,
+                "max_source_characters": self.settings.wiki_max_source_characters,
+                "ready_files": ready_count, "version_bound_files": bound_count,
+                "unversioned_files": max(0, ready_count - bound_count)}
+
     async def backfill(self):
         if not self.settings.wiki_auto_generate or self.pipeline is None:
             return

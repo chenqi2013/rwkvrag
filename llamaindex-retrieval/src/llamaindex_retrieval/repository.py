@@ -94,17 +94,43 @@ class MongoRepository:
         self.files = self.database["files"]
         self.jobs = self.database["jobs"]
         self.wiki_versions = self.database["wiki_versions"]
+        self.web_snapshots = self.database["web_snapshots"]
         self.atomic_runs = self.database["atomic_evidence_runs"]
         self.search_tests = self.database["search_tests"]
         self.search_test_runs = self.database["search_test_runs"]
         self.payloads = AsyncGridFSBucket(self.database, bucket_name="rag_payloads")
         self.model_receipts = AsyncGridFSBucket(self.database, bucket_name="model_receipts")
 
+    async def claim_index_job(self, job_id):
+        result = await self.jobs.update_one(
+            {"id": job_id, "status": "pending", "kind": {"$in": ["file_ingest", "file_reindex", "finewiki_import"]}},
+            {"$set": {"status": "running", "started_at": utc_now()}})
+        return result.modified_count == 1
+
     async def claim_wiki_job(self, job_id):
         result = await self.jobs.update_one({"id": job_id, "status": "pending", "kind": "wiki_generate"},
             {"$set": {"status": "running", "stage": "generating", "progress": 20,
                       "started_at": utc_now(), "message": "正在根据原文生成 Wiki 草稿"}})
         return result.modified_count == 1
+
+    async def record_web_snapshot(self, snapshot):
+        """Server-only receipt; no HTTP endpoint accepts snapshot contents."""
+        record = {**snapshot, "id": uuid4().hex, "recorded_at": utc_now()}
+        payload_ref = await self._store_large_payload(record)
+        stored = ({"id": record["id"], "payload_ref": payload_ref} if payload_ref else record)
+        try:
+            await self.web_snapshots.insert_one({**stored, "_id": record["id"]})
+        except BaseException:
+            if payload_ref:
+                await self.payloads.delete(payload_ref)
+            raise
+        return record["id"]
+
+    async def get_web_snapshot(self, identity):
+        record = await self.web_snapshots.find_one({"_id": identity}, {"_id": 0})
+        if record and record.get("payload_ref"):
+            return await self._load_payload(record["payload_ref"])
+        return record
 
     async def create_atomic_run(self, run):
         await self.atomic_runs.insert_one(dict(run))
@@ -148,7 +174,7 @@ class MongoRepository:
 
     async def record_model_http(self, event: str, record: dict) -> None:
         """Private, exact wire receipts. Never exposed through question history."""
-        identity = record.get("batch_id") or record["count_id"]
+        identity = record.get("batch_id") or record.get("count_id") or record["http_id"]
         await self.model_receipts.upload_from_stream_with_id(
             f"{identity}:{event}", event + ".bson", BSON.encode(record),
         )

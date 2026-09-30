@@ -33,6 +33,15 @@ import { useLanguage } from "../i18n";
 
 export default function FilesPage() {
   const { tr } = useLanguage();
+  const extractionLabel = (item: FileItem) => {
+    const summary = item.last_indexed_revision?.extraction_summary;
+    if (!summary || typeof summary !== "object") return "";
+    const value = summary as Record<string, unknown>;
+    if (typeof value.pages !== "number") return "";
+    const ocr = Array.isArray(value.ocr_pages) ? value.ocr_pages.length : 0;
+    const blank = Array.isArray(value.blank_pages) ? value.blank_pages.length : 0;
+    return tr(`共 ${value.pages} 页 · OCR ${ocr} 页 · 空白 ${blank} 页`, `${value.pages} pages · ${ocr} OCR · ${blank} blank`);
+  };
   const statusMap: Record<FileItem["status"], { color: string; text: string }> = {
     pending: { color: "default", text: tr("等待处理", "Pending") },
     processing: { color: "processing", text: tr("处理中", "Processing") },
@@ -160,6 +169,7 @@ export default function FilesPage() {
         <Space direction="vertical" size={3}>
           <Tag color={statusMap[status].color}>{statusMap[status].text}</Tag>
           {status === "processing" && !item.error && <Progress percent={60} size="small" showInfo={false} status="active" />}
+          {extractionLabel(item) && <Typography.Text type="secondary">{extractionLabel(item)}</Typography.Text>}
           {item.error && <Typography.Text type="danger">{item.error}</Typography.Text>}
         </Space>
       ),
@@ -188,7 +198,7 @@ export default function FilesPage() {
           <Button type="text" icon={<DownloadOutlined />} href={`/v1/admin/files/${item.id}/download`}>
             {tr("下载", "Download")}
           </Button>
-          <Upload accept=".md,.markdown,.mdx,.pdf,.docx" showUploadList={false}
+          <Upload accept=".md,.markdown,.mdx,.pdf,.docx,.png,.jpg,.jpeg" showUploadList={false}
             disabled={uploading || item.status !== "ready"}
             beforeUpload={(file) => { void revise(item, file as File); return Upload.LIST_IGNORE; }}>
             <Button type="text" disabled={uploading || item.status !== "ready"}>
@@ -198,10 +208,11 @@ export default function FilesPage() {
           {item.revision_pending && item.error && <Button type="text" onClick={() => void retryRevision(item.id)}>
             {tr("恢复修订任务", "Retry revision")}
           </Button>}
-          <Button type="text" disabled={item.status !== "ready"} onClick={() => {
+          <Button type="text" disabled={item.status !== "ready" || !item.last_indexed_revision || !item.last_indexed_index_version}
+            title={!item.last_indexed_revision || !item.last_indexed_index_version ? tr("缺少原文版本记录，请先重建", "Missing source revision; reindex first") : undefined} onClick={() => {
             void api.generateWiki(item.id).then(() => message.success(tr("Wiki 任务已提交", "Wiki queued")))
               .catch(error => message.error(errorMessage(error)));
-          }}>Wiki</Button>
+          }}>{!item.last_indexed_revision || !item.last_indexed_index_version ? tr("Wiki 需先重建", "Wiki needs reindex") : "Wiki"}</Button>
           <Button type="text" icon={<ReloadOutlined />} disabled={item.status !== "ready" && item.status !== "failed"} onClick={() => void reindex(item.id)}>
             {tr("重建", "Reindex")}
           </Button>
@@ -236,11 +247,11 @@ export default function FilesPage() {
         showIcon
         type="info"
         message={tr("PDF 说明", "PDF support")}
-        description={tr("当前支持包含文字层的 PDF；扫描版 PDF 需要先完成 OCR。单文件最大 100MB。", "Text-based PDFs are supported. Scanned PDFs require OCR first. Maximum file size is 100 MB.")}
+        description={tr("支持文字或扫描 PDF、PNG/JPG 图片、Markdown 和 DOCX。扫描内容自动识别；页面失败会显示原因。单文件最大 100MB。", "Text/scanned PDFs, PNG/JPG, Markdown and DOCX are supported. Scanned content uses OCR; page failures are reported. Maximum file size is 100 MB.")}
       />
       <Card>
         <Upload.Dragger
-          accept=".md,.markdown,.mdx,.pdf,.docx"
+          accept=".md,.markdown,.mdx,.pdf,.docx,.png,.jpg,.jpeg"
           multiple
           showUploadList={false}
           disabled={uploading}

@@ -43,6 +43,9 @@ class AdminService:
         self,
         upload: UploadFile,
         knowledge_base_id: str,
+        *,
+        web_provenance: dict | None = None,
+        file_identity: str | None = None,
     ) -> tuple[dict, dict]:
         if await self.repository.get_knowledge_base(knowledge_base_id) is None:
             raise AdminNotFoundError(f"知识库不存在：{knowledge_base_id}")
@@ -53,7 +56,9 @@ class AdminService:
         if extension not in SUPPORTED_EXTENSIONS:
             supported = ", ".join(sorted(SUPPORTED_EXTENSIONS))
             raise AdminValidationError(f"不支持 {extension or '无扩展名'}，支持：{supported}")
-        file_id = uuid4().hex
+        file_id = file_identity or uuid4().hex
+        if file_identity and (len(file_identity) != 64 or any(c not in "0123456789abcdef" for c in file_identity)):
+            raise AdminValidationError("无效的内部文件身份")
         directory = self.settings.upload_dir / knowledge_base_id / file_id
         directory.mkdir(parents=True, exist_ok=False)
         path = directory / filename
@@ -83,6 +88,7 @@ class AdminService:
                         "size": size,
                         "sha256": digest.hexdigest(),
                         "source": "uploaded-document",
+                        **({"web_provenance": web_provenance} if web_provenance else {}),
                     }
                 )
             except RepositoryConflictError as error:
@@ -94,6 +100,7 @@ class AdminService:
                     "knowledge_base_id": knowledge_base_id,
                     "path": str(path),
                 },
+                **({"job_id": "web-ingest-" + file_id} if file_identity else {}),
             )
             file_item = await self.repository.update_file(
                 file_id,
@@ -141,7 +148,7 @@ class AdminService:
                 raise AdminConflictError("内容未改变，无需提交新版本")
             draft = {"path": str(path), "filename": filename, "extension": extension,
                      "content_type": upload.content_type or "application/octet-stream",
-                     "size": size, "sha256": new_sha}
+                     "size": size, "sha256": new_sha, "web_provenance": None}
             payload = {"file_id": file_id, "knowledge_base_id": item["knowledge_base_id"],
                        "path": str(path), "operation_token": token,
                        "revision_upload": draft, "expected_sha256": expected_sha256}

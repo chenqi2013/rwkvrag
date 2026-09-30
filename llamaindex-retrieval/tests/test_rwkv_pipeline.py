@@ -294,6 +294,19 @@ def test_long_prose_units_have_overlap_without_gaps_or_changed_characters():
         assert left.end - right.start == 80
 
 
+def test_line_overlap_must_not_emit_contained_tails_before_a_long_next_line():
+    text = "short navigation line\n" * 20 + "a long continuous line " * 100 + "\nanswer at the end\n"
+    units = list(evidence_units(0, text, window=600, overlap=180))
+    assert all(right.end > left.end for left, right in zip(units, units[1:]))
+    assert all(unit.text == text[unit.start:unit.end] for unit in units)
+    assert units[-1].end == len(text)
+    assert all(right.start <= left.end for left, right in zip(units, units[1:]))
+
+
+def test_whitespace_only_material_does_not_trigger_reader_units():
+    assert list(evidence_units(0, " \n\t\n", window=256, overlap=40)) == []
+
+
 @pytest.mark.parametrize("prefix", ["| ", "- ", "* ", "+ ", "12) "])
 def test_long_structured_row_is_atomic_even_when_larger_than_window(prefix):
     row = prefix + "必须保留的长行" * 160 + " |\n"

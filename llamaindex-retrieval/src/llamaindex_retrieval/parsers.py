@@ -2,11 +2,10 @@ import hashlib
 import re
 from pathlib import Path
 
-import fitz
 from docx import Document as DocxDocument
 from llama_index.core import Document
 
-SUPPORTED_EXTENSIONS = {".md", ".markdown", ".mdx", ".pdf", ".docx"}
+SUPPORTED_EXTENSIONS = {".md", ".markdown", ".mdx", ".pdf", ".docx", ".png", ".jpg", ".jpeg"}
 QA_BLOCK_PATTERN = re.compile(
     r"^####[ \t]+(?P<title>.+?)\s*$\n(?P<body>.*?)(?=^---[ \t]*$)",
     re.MULTILINE | re.DOTALL,
@@ -194,32 +193,32 @@ def parse_markdown(
     return [llama_document(text=content, metadata=metadata)]
 
 
-def parse_pdf(
-    path: Path,
-    file_id: str,
-    knowledge_base_id: str,
-) -> list[Document]:
-    documents: list[Document] = []
-    with fitz.open(path) as pdf:
-        for page_index, page in enumerate(pdf):
-            content = page.get_text("text", sort=True).strip()
-            if not content:
-                continue
-            page_number = page_index + 1
-            document_id = parsed_document_id(file_id, f"page:{page_number}")
-            metadata = document_metadata(
-                file_id=file_id,
-                knowledge_base_id=knowledge_base_id,
-                filename=path.name,
-                title=path.stem,
-                uri=f"{path.resolve().as_uri()}#page={page_number}",
-                kind="pdf",
-                document_id=document_id,
-                page=page_number,
-            )
-            documents.append(llama_document(text=content, metadata=metadata))
+def parse_pdf(path: Path, file_id: str, knowledge_base_id: str, settings=None) -> list[Document]:
+    from .config import Settings
+    from .ocr import extract_pages
+    settings = settings or Settings(_env_file=None)
+    result = extract_pages(path, settings)
+    coverage = [{"page": p["page"], "status": p["status"], "method": p["method"]}
+                for p in result["pages"]]
+    documents = []
+    for page in result["pages"]:
+        if page["status"] == "blank":
+            continue
+        number = page["page"]
+        identity = parsed_document_id(file_id, f"page:{number}")
+        metadata = document_metadata(file_id=file_id, knowledge_base_id=knowledge_base_id,
+            filename=path.name, title=path.stem, uri=f"{path.resolve().as_uri()}#page={number}",
+            kind="pdf" if path.suffix.lower() == ".pdf" else "image", document_id=identity, page=number)
+        metadata.update(extraction_method=page["method"], page_coverage=coverage,
+                        page_rect=page["page_rect"], recognized_words=page["words"],
+                        extraction_engine={k: result[k] for k in
+                            ("schema", "engine", "pymupdf_version", "languages", "language_sha256")})
+        document = llama_document(text=page["text"], metadata=metadata)
+        for keys in (document.excluded_llm_metadata_keys, document.excluded_embed_metadata_keys):
+            keys.extend(["page_coverage", "recognized_words", "page_rect", "extraction_engine"])
+        documents.append(document)
     if not documents:
-        raise EmptyDocumentError("PDF 没有可提取文字；扫描版 PDF 需要先执行 OCR")
+        raise EmptyDocumentError("文档没有可提取文字（所有页面均为空白）")
     return documents
 
 
@@ -267,12 +266,13 @@ def parse_uploaded_file(
     path: Path,
     file_id: str,
     knowledge_base_id: str,
+    settings=None,
 ) -> list[Document]:
     extension = path.suffix.lower()
     if extension not in SUPPORTED_EXTENSIONS:
         raise UnsupportedDocumentError(f"不支持的文件类型：{extension or '无扩展名'}")
     if extension in {".md", ".markdown", ".mdx"}:
         return parse_markdown(path, file_id, knowledge_base_id)
-    if extension == ".pdf":
-        return parse_pdf(path, file_id, knowledge_base_id)
+    if extension in {".pdf", ".png", ".jpg", ".jpeg"}:
+        return parse_pdf(path, file_id, knowledge_base_id, settings)
     return parse_docx(path, file_id, knowledge_base_id)

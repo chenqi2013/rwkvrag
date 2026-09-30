@@ -216,8 +216,10 @@ async def _search(request, settings, guard=None):
         url = _public_url(item.get("url"))
         if not url:
             continue
-        snippet = str(item.get("content") or item.get("snippet") or "").strip()
-        full = str(item.get("raw_content") or "").strip() if provider == "tavily" else ""
+        snippet = str(item.get("content") or item.get("snippet") or "")
+        full = str(item.get("raw_content") or "") if provider == "tavily" else ""
+        if not full.strip():
+            full = ""
         snapshot = full or snippet
         text = snapshot[:request["material_characters"]]
         if not text.strip():

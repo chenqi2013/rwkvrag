@@ -1,6 +1,6 @@
 # Linux deployment
 
-> Deployment template, not the current machine state. See [CURRENT](../../../docs/CURRENT.md).
+> Deployment template, not the current machine state. See CURRENT（本地研究资料，不随应用发布）.
 
 The Linux deployment keeps application code and runtime data separate:
 

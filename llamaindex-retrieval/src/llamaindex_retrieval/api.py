@@ -21,6 +21,8 @@ from .lexical_index import LexicalIndex
 from .repository import MongoRepository, RepositoryConflictError
 from .routers.admin import router as admin_router
 from .routers.public import router as public_router
+from .routers.web_sources import router as web_sources_router
+from .web_sources import WebSnapshotService
 from .service import SearchService
 from .semantic_query_planning import LanguageModelQueryPlanner
 from .tasks import TaskManager
@@ -47,9 +49,15 @@ async def lifespan(app: FastAPI):
         native_recorder=repository.record_model_http,
     )
     wiki = WikiService(settings, repository, lexical_index, search.native_pipeline, task_manager)
+    if settings.native_require_fp32_runtime:
+        await search.native_pipeline.model.verify_fp32_runtime()
     task_manager.wiki = wiki
     app.state.wiki_service = wiki
     admin = AdminService(settings, repository, task_manager, lexical_index)
+    snapshots = WebSnapshotService(repository, admin)
+    app.state.web_snapshot_service = snapshots
+    if search.native_pipeline is not None:
+        search.native_pipeline.web.snapshot_recorder = snapshots.record
     app.state.repository = repository
     app.state.lexical_index = lexical_index
     app.state.task_manager = task_manager
@@ -82,6 +90,7 @@ app.add_middleware(
 )
 app.include_router(public_router)
 app.include_router(admin_router)
+app.include_router(web_sources_router)
 
 
 @app.middleware("http")

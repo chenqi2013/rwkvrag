@@ -396,3 +396,31 @@ async def test_hybrid_retains_whole_question_when_plan_drops_one_part():
     assert pipeline._resolve.call_args.args[1] == [question, "date"]
     pipeline.web.search.assert_awaited_once_with(question)
     assert response.retrieval["web_search"][1]["status"] == "skipped_query_budget"
+
+
+@pytest.mark.asyncio
+async def test_full_snapshot_windows_keep_receipt_and_source_identity(monkeypatch):
+    from hashlib import sha256
+    page = ('Navigation unrelated links.\n' * 160
+            + '\n# Storage\nUse /var/lib/sample for persistence.\n')
+    monkeypatch.setattr(direct_web, "_client", lambda: httpx.AsyncClient(
+        transport=httpx.MockTransport(lambda request: httpx.Response(200, json={"results": [
+            {"url": "https://example.org/storage", "title": "Storage", "content": "summary",
+             "raw_content": page, "score": 0.8}]})), trust_env=False))
+    config = settings(web_material_policy="ranked_windows", web_windows_per_document=2,
+                      web_search_material_characters=600, web_tavily_api_key="test-secret")
+    adapter = WebSearchAdapter(config)
+    adapter.snapshot_recorder = AsyncMock(return_value="saved-receipt")
+    hits, trace = await adapter.search("Storage persistence /var/lib/sample")
+    assert any("/var/lib/sample" in h.text for h in hits)
+    assert len(hits) <= 2
+    adapter.snapshot_recorder.assert_awaited_once()
+    assert adapter.snapshot_recorder.call_args.args[0]["text"] == page
+    assert trace["snapshots"][0]["text"] == page
+    for h in hits:
+        assert h.metadata["web_snapshot_id"] == "saved-receipt"
+        assert h.metadata["web_snapshot_parent_id"] == trace["snapshots"][0]["id"]
+        assert h.metadata["snapshot_sha256"] == sha256(page.encode()).hexdigest()
+        assert h.text in page
+        assert h.metadata["content_sha256"] == sha256(h.text.encode()).hexdigest()
+    assert trace["material_selections"][0]["unselected_windows"] > 0

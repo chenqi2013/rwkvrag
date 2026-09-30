@@ -45,6 +45,8 @@ def deduplicate_web_groups(groups):
 class WebSearchAdapter:
     def __init__(self, settings):
         self.settings = settings
+        # Installed only by the server lifespan, never from request/material metadata.
+        self.snapshot_recorder = None
         self.slots = asyncio.Semaphore(settings.web_search_concurrency)
         self.guard = WebProviderGuard(getattr(settings, "web_guard_path", None),
             min_interval=getattr(settings, "web_min_interval_seconds", 1.0),
@@ -69,6 +71,7 @@ class WebSearchAdapter:
             "material_characters": self.settings.web_search_material_characters}, self.settings.web_search_timeout)
         hits = []
         snapshots = []
+        material_selections = []
         for item in payload["hits"]:
             url = item["url"]
             parsed = urlsplit(url)
@@ -84,12 +87,35 @@ class WebSearchAdapter:
                 "content_status": item["content_status"], "material_limited": item["material_limited"],
                 "content_sha256": sha(text), "snapshot_sha256": sha(snapshot),
                 "fetch_error": item["error"]}
-            hits.append(LexicalResult(node_id=identity, document_id="web:" + sha(url),
-                text=text, metadata=metadata, score=float(item["score"])))
+            if self.snapshot_recorder is not None:
+                metadata["web_snapshot_id"] = await self.snapshot_recorder({
+                    "title": item["title"], "url": url, "text": snapshot,
+                    "sha256": sha(snapshot), "retrieved_at": item["retrieved_at"],
+                    "content_status": item["content_status"], "provider": payload["provider"],
+                    "retrieval_query": query,
+                })
+            if getattr(self.settings, "web_material_policy", "prefix") == "ranked_windows":
+                from .web_materials import ranked_windows
+                identity = "web:" + sha(json.dumps([url, snapshot]))
+                windows, selection = ranked_windows(snapshot, query, "web:" + sha(url),
+                    window=self.settings.web_search_material_characters,
+                    limit=self.settings.web_windows_per_document)
+                material_selections.append({"snapshot_id": identity, **selection})
+                for node, rank_score in windows:
+                    hits.append(LexicalResult(node_id=node.id_, document_id="web:" + sha(url),
+                        text=node.text, score=float(item["score"]), metadata={
+                            **node.metadata, **metadata, "web_snapshot_parent_id": identity,
+                            "content_sha256": sha(node.text), "material_policy": "ranked_windows",
+                            "material_limited": selection["unselected_windows"] > 0,
+                            "lexical_window_score": rank_score}))
+            else:
+                hits.append(LexicalResult(node_id=identity, document_id="web:" + sha(url),
+                    text=text, metadata=metadata, score=float(item["score"])))
             snapshots.append({"id": identity, "url": url, "text": snapshot,
                               "sha256": sha(snapshot), "retrieved_at": item["retrieved_at"]})
         return hits, {"status": "completed", "query": query, "provider": payload["provider"],
             "source_hashes": payload["source_hashes"], "snapshots": snapshots,
+            "material_selections": material_selections,
             "returned": len(hits)}
 
 

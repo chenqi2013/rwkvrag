@@ -39,6 +39,7 @@ class TaskManager:
         self.repository = repository
         self.lexical_index = lexical_index
         self.semaphore = asyncio.Semaphore(settings.task_workers)
+        self.index_jobs_lock = asyncio.Lock()
         self.tasks: set[asyncio.Task[None]] = set()
         self.wiki = None
 
@@ -63,6 +64,8 @@ class TaskManager:
             await asyncio.gather(*self.tasks, return_exceptions=True)
 
     def submit(self, job_id: str) -> None:
+        if any(not task.done() and task.get_name() == f"admin-job-{job_id}" for task in self.tasks):
+            return
         task = asyncio.create_task(self._run_job(job_id), name=f"admin-job-{job_id}")
         self.tasks.add(task)
         task.add_done_callback(self.tasks.discard)
@@ -70,7 +73,7 @@ class TaskManager:
     async def _run_job(self, job_id: str) -> None:
         async with self.semaphore:
             job = await self.repository.get_job(job_id)
-            if job is None:
+            if job is None or job.get("status") not in {"pending", "running"}:
                 return
             if job["kind"] == "wiki_generate":
                 if self.wiki is None:
@@ -78,26 +81,33 @@ class TaskManager:
                     return
                 await self.wiki.generate(job)
                 return
-            await self.repository.update_job(
-                job_id,
-                {
-                    "status": "running",
-                    "progress": 5,
-                    "stage": "starting",
-                    "message": "任务开始执行",
-                    "started_at": utc_now(),
-                    "completed_at": None,
-                    "error": None,
-                },
-            )
+            claimed = False
             try:
-                if job["kind"] in {"file_ingest", "file_reindex"}:
-                    await self._run_file_job(job_id, job["payload"])
-                elif job["kind"] == "finewiki_import":
-                    await self._run_finewiki_job(job_id, job["payload"])
-                else:
-                    raise ValueError(f"不支持的任务类型：{job['kind']}")
+                async with self.index_jobs_lock:
+                    if not await self.repository.claim_index_job(job_id):
+                        return
+                    claimed = True
+                    await self.repository.update_job(
+                        job_id,
+                        {
+                            "status": "running",
+                            "progress": 5,
+                            "stage": "starting",
+                            "message": "任务开始执行",
+                            "started_at": utc_now(),
+                            "completed_at": None,
+                            "error": None,
+                        },
+                    )
+                    if job["kind"] in {"file_ingest", "file_reindex"}:
+                        await self._run_file_job(job_id, job["payload"])
+                    elif job["kind"] == "finewiki_import":
+                        await self._run_finewiki_job(job_id, job["payload"])
+                    else:
+                        raise ValueError(f"不支持的任务类型：{job['kind']}")
             except asyncio.CancelledError:
+                if not claimed:
+                    raise
                 await self.repository.update_job(
                     job_id,
                     {
@@ -109,6 +119,8 @@ class TaskManager:
                 raise
             except Exception as error:
                 logger.exception("admin job failed: %s", job_id)
+                if not claimed:
+                    return
                 await self.repository.update_job(
                     job_id,
                     {
@@ -158,6 +170,7 @@ class TaskManager:
             file_id,
             str(file_item["knowledge_base_id"]),
             draft["sha256"] if draft else file_item.get("sha256"),
+            (draft if draft is not None else file_item).get("web_provenance"),
         )
         revision = {**revision, "ingest_job_id": job_id}
         await self.repository.update_job(

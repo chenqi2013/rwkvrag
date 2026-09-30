@@ -37,3 +37,26 @@ def test_duplicate_quote_requires_unambiguous_hint_and_never_chooses_first_silen
         bind_atomic(atom('18 W',[]), {'value_type':'quantity'},source,units)
     result = bind_atomic(atom('18 W',['E2']), {'value_type':'quantity'},source,units)
     assert result['source_start'] == 5
+
+
+@pytest.mark.parametrize('quantity', ['三人', '八人', '1,024 MB', '1e3 次', '0 人', '3–5 秒'])
+def test_verbatim_quantity_keeps_source_spelling_without_decimal_conversion(quantity):
+    text = '原文记录：' + quantity + '。'
+    source = SimpleNamespace(snippet=text)
+    units = {'E1': SimpleNamespace(start=0, end=len(text), text=text)}
+    parsed = Atomic(evidence_ids=['E1'], quote=text, value=quantity, source_scope=None)
+    before = parsed.model_dump()
+    result = bind_atomic(parsed, {'value_type': 'quantity'}, source, units,
+                         quantity_policy='verbatim')
+    assert result['observed'] is True
+    assert result['value'] == quantity and result['unit'] is None
+    assert result['quote_binding']['quantity_policy'] == 'verbatim'
+    assert parsed.model_dump() == before
+
+
+def test_verbatim_quantity_still_rejects_model_invented_value():
+    source = SimpleNamespace(snippet='最多三人协作。')
+    units = {'E1': SimpleNamespace(start=0, end=len(source.snippet), text=source.snippet)}
+    parsed = Atomic(evidence_ids=['E1'], quote=source.snippet, value='八人', source_scope=None)
+    with pytest.raises(ValueError, match='source spelling'):
+        bind_atomic(parsed, {'value_type': 'quantity'}, source, units, quantity_policy='verbatim')

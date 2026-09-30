@@ -345,3 +345,96 @@ def test_budget_preflight_never_requests_completion_and_retains_wire():
     assert result.trace['budget_only'] and not result.trace['completion_attempted']
     assert calls == ['/tokenize']
     assert_wire(result.trace['http'][0])
+
+
+@pytest.mark.parametrize("identity,strict,valid", [
+    ({"model": "rwkv-test"}, True, True),
+    ({"model": "another-model"}, False, False),
+    ({}, True, False),
+    ({}, False, True),
+])
+def test_served_model_identity_preserves_raw_on_mismatch(identity, strict, valid):
+    def handler(request):
+        return httpx.Response(200, json=(token_response() if request.url.path == "/tokenize"
+                                        else completion_response(**identity)))
+
+    async def run():
+        async with client(handler, require_model_identity=strict) as native:
+            return await native.complete(MESSAGES)
+
+    result = asyncio.run(run())
+    assert (result.status == "completed") is valid
+    assert result.trace["raw_text"] == RAW
+    assert result.trace["raw_text_sha256"] == sha256(RAW.encode()).hexdigest()
+    assert result.trace["model_identity_verified"] is (identity.get("model") == "rwkv-test")
+    assert_wire(result.trace["http"][-1])
+
+
+def test_native_wire_receipts_are_awaited_and_preserve_invalid_response():
+    receipts = []
+
+    async def recorder(event, record):
+        await asyncio.sleep(0)
+        receipts.append((event, record))
+
+    def handler(request):
+        if request.url.path == '/tokenize':
+            return httpx.Response(200, json=token_response())
+        return httpx.Response(200, content=b'not JSON')
+
+    async def run():
+        async with client(handler, recorder=recorder) as native:
+            return await native.complete(MESSAGES, evidence_ids=['source-1'])
+
+    result = asyncio.run(run())
+    assert result.status == 'invalid_response'
+    assert [event for event, _ in receipts] == ['native_http_started', 'native_http_finished'] * 2
+    entry = receipts[-1][1]
+    assert entry['call_id'] == result.trace['call_id']
+    assert entry['evidence_ids'] == ['source-1']
+    assert base64.b64decode(entry['response_body_base64']) == b'not JSON'
+    assert_wire(entry)
+    assert 'response_body_base64' not in receipts[-2][1]
+
+
+def test_failed_native_receipt_prevents_unrecorded_http():
+    requests = []
+
+    async def recorder(event, record):
+        raise RuntimeError('database unavailable')
+
+    def handler(request):
+        requests.append(request)
+        return httpx.Response(200, json=token_response())
+
+    async def run():
+        async with client(handler, recorder=recorder) as native:
+            return await native.complete(MESSAGES)
+
+    assert asyncio.run(run()).status == 'transport_error'
+    assert not requests
+
+
+@pytest.mark.parametrize('model,workers,valid', [
+    ('rwkv-test', [{'import_supported': True}], True),
+    ('wrong-model', [{'import_supported': True}], False),
+    ('rwkv-test', [], False),
+    ('rwkv-test', [{'import_supported': False}], False),
+])
+def test_live_runtime_preflight_rejects_model_or_state_capability_mismatch(model, workers, valid):
+    def handler(request):
+        data = ({'data': [{'id': model, 'max_model_len': 16384}]}
+                if request.url.path == '/v1/models' else {'workers': workers})
+        return httpx.Response(200, json=data)
+
+    async def run():
+        async with client(handler) as native:
+            if valid:
+                observation = await native.verify_fp32_runtime()
+                assert observation['models']['response']['data'][0]['id'] == model
+                assert len(observation['state']['sha256']) == 64
+            else:
+                with pytest.raises(ValueError):
+                    await native.verify_fp32_runtime()
+                assert native.runtime_observation is None
+    asyncio.run(run())

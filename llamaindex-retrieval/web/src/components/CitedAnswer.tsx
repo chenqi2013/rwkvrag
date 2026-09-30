@@ -2,9 +2,10 @@ import { Alert, Button, Card, Drawer, Empty, Space, Tag, Typography } from "antd
 import { useState } from "react";
 import { useLanguage } from "../i18n";
 import type { AskResponse, SearchResult } from "../types";
-import { citationParts, citedSource, externalSourceUrl, savedContext, sourceLabels } from "../citations";
+import { citationParts, citedSource, externalSourceUrl, savedContext, sourceLabels, originalSourceUrl } from "../citations";
 import { formatAnswer } from "../answerFormat";
 import TaskMatrix from "./TaskMatrix";
+import SaveWebSource from "./SaveWebSource";
 
 /** Keep the raw answer in the response; block unsafe display when format checks fail. */
 export default function CitedAnswer({ text, response }: { text: string; response: AskResponse }) {
@@ -15,6 +16,7 @@ export default function CitedAnswer({ text, response }: { text: string; response
     : selected?.label !== undefined ? citedSource(response, selected.label) : undefined;
   const context = source ? savedContext(response, source) : undefined;
   const link = externalSourceUrl(source?.uri);
+  const original = source ? originalSourceUrl(source) : undefined;
   const origin = (s: SearchResult) => s.metadata?.retrieval_origin === "web" || s.source === "web"
     ? tr("网络来源", "Web source") : tr("知识库来源", "Knowledge-base source");
   return <section className="cited-answer" aria-label={tr("答案与引用", "Answer and citations")}>
@@ -45,7 +47,10 @@ export default function CitedAnswer({ text, response }: { text: string; response
         </Button>
         <Space wrap><Tag>{origin(item)}</Tag>{item.metadata?.content_status === "snippet_only" && <Tag color="orange">{tr("仅搜索摘要", "Search snippet only")}</Tag>}</Space>
         <Typography.Paragraph className="citation-preview" ellipsis={{ rows: 3, expandable: "collapsible", symbol: expanded => expanded ? tr("收起", "Less") : tr("展开原文", "Expand evidence") }}>{item.snippet}</Typography.Paragraph>
-        <Button size="small" onClick={() => setSelected({ id: item.id, label: labels[0] })}>{tr("查看完整引用", "View full evidence")}</Button>
+        <Space wrap>
+          <Button size="small" onClick={() => setSelected({ id: item.id, label: labels[0] })}>{tr("查看完整引用", "View full evidence")}</Button>
+          <SaveWebSource source={item} />
+        </Space>
       </Card>;
     })}</div>
     <Drawer open={selected !== undefined} onClose={() => setSelected(undefined)} width="min(760px, 100vw)"
@@ -57,6 +62,10 @@ export default function CitedAnswer({ text, response }: { text: string; response
           {typeof source.metadata?.published_date === "string" && source.metadata.published_date && <Tag>{tr("网页标注日期", "Page date")} · {source.metadata.published_date}</Tag>}</Space>
         {link ? <Typography.Link href={link} target="_blank" rel="noopener noreferrer">{tr("打开来源网页", "Open source page")} · {link}</Typography.Link>
           : <Typography.Text type="secondary">{tr("本地文档：以下显示本次回答保存的原文，不依赖当前文件是否已更新。", "Local document: the saved evidence below belongs to this answer, even if the current file has changed.")}</Typography.Text>}
+        <SaveWebSource key={source.id} source={source} />
+        {original && <Typography.Link href={original} target="_blank" rel="noopener noreferrer">{tr("查看本次引用的原始文件", "Open this citation's original file")}{typeof source.metadata?.page === "number" ? ` · ${tr("第", "Page")} ${source.metadata.page} ${tr("页", "")}` : ""}</Typography.Link>}
+        {typeof source.metadata?.extraction_method === "string" && source.metadata.extraction_method.includes("ocr") && <Alert type="info" title={tr("此页包含 OCR 识别文字，可打开原件核对。", "This page includes OCR text. Open the original to verify it.")} />}
+
         {source.metadata?.content_status === "snippet_only" && <Alert type="info" title={tr("此次只获取了搜索摘要，未获取网页全文。", "Only the search snippet was retrieved, not the full page.")} />}
         {source.metadata?.material_limited === true && <Alert type="info" title={tr("用于回答的材料受长度预算限制。", "Material used for the answer was limited by its length budget.")} />}
         <Typography.Title level={5}>{tr("回答使用的逐字证据", "Verbatim evidence used for this answer")}</Typography.Title>

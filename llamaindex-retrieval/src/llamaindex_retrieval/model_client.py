@@ -45,8 +45,12 @@ def model_client_options(settings, **overrides):
                        batch_wait_ms=settings.rwkvos_batch_wait_ms)
     else:
         options["api_key"] = settings.native_api_key
+        if settings.native_require_model_identity:
+            options["require_model_identity"] = True
         if settings.native_completion_protocol != "native":
             options["prompt_protocol"] = settings.native_completion_protocol
+        if settings.native_state_routing is not None:
+            options["state_routing"] = settings.native_state_routing.model_dump()
     options.update(overrides)
     return options
 

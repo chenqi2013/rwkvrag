@@ -9,6 +9,8 @@ export interface KnowledgeBase {
 
 export interface FileItem {
   revision_pending?: boolean;
+  last_indexed_revision?: Record<string, unknown> | null;
+  last_indexed_index_version?: string | null;
   id: string;
   knowledge_base_id: string;
   filename: string;
@@ -75,6 +77,32 @@ export interface SearchResult {
 export interface SearchResponse {
   results: SearchResult[];
   retrieval: Record<string, unknown>;
+}
+
+export interface WebSnapshot {
+  id: string;
+  title: string;
+  url: string;
+  text: string;
+  sha256: string;
+  retrieved_at: string;
+  content_status: string;
+  provider: string;
+  save_allowed: boolean;
+  reason?: string;
+}
+
+export interface SaveWebSnapshotRequest {
+  knowledge_base_id: string;
+  expected_sha256: string;
+  confirmed: true;
+}
+
+export interface SavedWebSnapshot {
+  file_id: string;
+  job_id: string;
+  status: string;
+  existing?: boolean;
 }
 
 export interface AskResponse {
@@ -146,4 +174,13 @@ export interface WikiVersion {
   body?: string;
   binding: { index_version: string; revision: { source_sha256: string; parsed_snapshot_sha256: string } };
   response?: AskResponse;
+}
+
+export interface WikiStatus {
+  auto_generate: boolean;
+  generator_configured: boolean;
+  max_source_characters: number;
+  ready_files: number;
+  version_bound_files: number;
+  unversioned_files: number;
 }

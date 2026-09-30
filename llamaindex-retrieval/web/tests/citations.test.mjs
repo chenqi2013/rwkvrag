@@ -42,3 +42,21 @@ test("snapshot lookup uses saved identity and hash rather than a newer page", ()
   assert.equal(savedContext(value, source), "old saved page");
   assert.equal(JSON.stringify(value), before);
 });
+
+test("Reader window keeps its full saved webpage binding", () => {
+  const windowSource = { ...source, metadata: { ...source.metadata,
+    parent_source_id: "window-2", web_snapshot_parent_id: "full-page" } };
+  const value = { ...response, retrieval: { web_search: [{ snapshots: [
+    { id: "window-2", sha256: "old-sha", text: "wrong parent" },
+    { id: "full-page", sha256: "old-sha", text: "complete saved webpage" },
+  ] }] } };
+  assert.equal(savedContext(value, windowSource), "complete saved webpage");
+});
+
+test("original file URL binds the retained revision and page", async () => {
+  const { originalSourceUrl } = await import("../src/citations.ts");
+  const item = { ...source, metadata: { file_id: "file-1", source_sha256: "a".repeat(64), page: 2 } };
+  assert.equal(originalSourceUrl(item), `/v1/admin/files/file-1/source/${"a".repeat(64)}#page=2`);
+  assert.equal(originalSourceUrl({ ...item, metadata: { ...item.metadata, source_sha256: "../../etc/passwd" } }), undefined);
+  assert.equal(originalSourceUrl(source), undefined);
+});

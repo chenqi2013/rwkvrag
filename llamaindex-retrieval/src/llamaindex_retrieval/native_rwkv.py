@@ -14,12 +14,18 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from hashlib import sha256
 import json
+import inspect
 import math
 from time import perf_counter
 from typing import Literal, Sequence
 from uuid import uuid4
+from urllib.parse import quote
 
 import httpx
+
+from .native_state import (
+    NativeStateRouter, check_capabilities, check_initial_ref, check_model, decode_metadata,
+)
 
 
 NativeStatus = Literal[
@@ -133,7 +139,8 @@ class NativeRWKVClient:
         self, *, base_url: str, model: str, api_key: str = "",
         timeout_seconds: float = 120, context_window_tokens: int = 16384,
         max_concurrency: int = 32, transport: httpx.AsyncBaseTransport | None = None,
-        prompt_protocol: str = "native",
+        prompt_protocol: str = "native", require_model_identity: bool = False,
+        recorder=None, state_routing=None,
     ) -> None:
         url = httpx.URL(base_url)
         if (url.scheme not in {"http", "https"} or not url.host or url.userinfo
@@ -157,6 +164,13 @@ class NativeRWKVClient:
         if prompt_protocol not in {"native", "g1j_plain"}:
             raise ValueError("unsupported prompt protocol")
         self.prompt_protocol = prompt_protocol
+        self._state_router = (NativeStateRouter(state_routing, model=model,
+                              prompt_protocol=prompt_protocol) if state_routing is not None else None)
+        self.require_model_identity = require_model_identity or self._state_router is not None
+        if recorder is not None and not callable(recorder):
+            raise ValueError("recorder must be callable")
+        self._recorder = recorder
+        self.runtime_observation = None
         self._headers = {"Content-Type": "application/json"}
         if api_key:
             self._headers["Authorization"] = f"Bearer {api_key}"
@@ -171,22 +185,73 @@ class NativeRWKVClient:
     async def aclose(self) -> None:
         await self._client.aclose()
 
+    async def verify_fp32_runtime(self) -> dict:
+        """Check this pinned engine's live capabilities, not an engine attestation."""
+        observations = {}
+        for name, path in (("models", "/v1/models"),
+                           ("state", "/v1/rwkv/state/capabilities")):
+            response = await self._client.get(self.base_url.removesuffix("/v1") + path,
+                                              headers=self._headers)
+            response.raise_for_status()
+            observations[name] = {"response": response.json(),
+                                  "sha256": sha256(response.content).hexdigest()}
+        models = observations["models"]["response"].get("data", [])
+        matching = [m for m in models if m.get("id") == self.model]
+        if len(matching) != 1 or matching[0].get("max_model_len", 0) < self.context_window_tokens:
+            raise ValueError("live model identity/context limit does not match configuration")
+        workers = observations["state"]["response"].get("workers", [])
+        if not workers or not all(w.get("import_supported") is True for w in workers):
+            raise ValueError("live engine does not report FP32 State import capability")
+        observations["checked_at"] = datetime.now(timezone.utc).isoformat()
+        observations["scope"] = "startup live model and pinned-engine FP32 State capability; not source attestation"
+        self.runtime_observation = observations
+        return deepcopy(observations)
+
     async def __aenter__(self) -> NativeRWKVClient:
         return self
 
     async def __aexit__(self, *_: object) -> None:
         await self.aclose()
 
+    async def _verify_state_selection(self, selection, trace):
+        """No cached readiness: process-local refs may disappear between requests.
+
+        This check is not atomic with completion. The engine must acquire the ref
+        atomically and reject a missing ref, never silently ignore/fallback.
+        """
+        root = self.base_url.removesuffix('/v1')
+        try:
+            models = await self._request('GET', root + '/v1/models', None, 'state_models', trace)
+            check_model(models, self.model, self.context_window_tokens)
+            caps = await self._request('GET', root + '/v1/rwkv/state/capabilities', None, 'state_capabilities', trace)
+            size = check_capabilities(caps)
+            ref = selection['state_ref']
+            if ref is not None:
+                inspected = await self._request('GET', root + '/v1/rwkv/state/' + quote(ref, safe=''),
+                                                None, 'state_inspect', trace)
+                check_initial_ref(inspected, ref, size)
+            selection['metadata_checked'] = True
+        except ValueError as error:
+            raise _ProtocolError(str(error)) from error
+
     async def _post(self, url: str, payload: dict, stage: str, trace: dict) -> dict:
-        entry = {"stage": stage, "url": url, "payload": deepcopy(payload)}
+        return await self._request('POST', url, payload, stage, trace)
+
+    async def _request(self, method: str, url: str, payload: dict | None, stage: str, trace: dict) -> dict:
+        entry = {"http_id": str(uuid4()), "call_id": trace["call_id"], "method": method,
+                 "stage": stage, "model_stage": trace["stage"],
+                 "evidence_ids": list(trace["evidence_ids"]),
+                 "url": url, "payload": deepcopy(payload)}
         trace["http"].append(entry)
         started = perf_counter()
         try:
-            request = self._client.build_request("POST", url, headers=self._headers, json=payload)
+            request = self._client.build_request(method, url, headers=self._headers,
+                                                 **({'json': payload} if payload is not None else {}))
             entry.update(
                 request_body_base64=base64.b64encode(request.content).decode("ascii"),
                 request_body_sha256=sha256(request.content).hexdigest(),
             )
+            await self._record("native_http_started", entry)
             response = await self._client.send(request, stream=True)
             entry.update(http_status=response.status_code, response_body_complete=False)
             chunks: list[bytes] = []
@@ -203,7 +268,7 @@ class NativeRWKVClient:
                 await response.aclose()
             response.raise_for_status()
             try:
-                data = json.loads(body.decode("utf-8"))
+                data = decode_metadata(body) if method == 'GET' else json.loads(body.decode("utf-8"))
             except (ValueError, UnicodeDecodeError) as error:
                 raise _ProtocolError("response must contain UTF-8 JSON") from error
             if not isinstance(data, dict):
@@ -214,6 +279,13 @@ class NativeRWKVClient:
             raise
         finally:
             entry["elapsed_ms"] = (perf_counter() - started) * 1000
+            await self._record("native_http_finished", entry)
+
+    async def _record(self, event, record):
+        if self._recorder is not None:
+            result = self._recorder(event, deepcopy(record))
+            if inspect.isawaitable(result):
+                await result
 
     def _check_budget(self, data: dict, output_tokens: int, trace: dict) -> int:
         count, tokens, server_limit = data.get("count"), data.get("tokens"), data.get("max_model_len")
@@ -241,15 +313,18 @@ class NativeRWKVClient:
         top_p: float = 1.0, top_k: int = 0, presence_penalty: float = 0.0,
         frequency_penalty: float = 0.0, seed: int | None = None,
         stage: str = "reader", evidence_ids: Sequence[str] = (), trace: dict | None = None,
-        check_only: bool = False,
+        check_only: bool = False, state_role: str | None = None,
     ) -> NativeRWKVResult:
         record = trace if trace is not None else {}
+        record.pop('state_selection', None)
         record.update(
             call_id=str(uuid4()), stage=stage, model=self.model, http=[],
             messages=deepcopy(messages), evidence_ids=list(evidence_ids),
             started_at=datetime.now(timezone.utc).isoformat(), status="pending",
             raw_text=None, finish_reason=None, completion_attempted=False,
         )
+        if self.runtime_observation is not None:
+            record["runtime_observation"] = deepcopy(self.runtime_observation)
         started = perf_counter()
         acquired = None
         status: NativeStatus = "invalid_request"
@@ -288,6 +363,14 @@ class NativeRWKVClient:
                 "stream": False, "stop": ["✿"], "stop_token_ids": [0],
                 "ignore_eos": False, "add_special_tokens": True,
             }
+            selection = None
+            if self._state_router is not None:
+                selection = self._state_router.select(stage, state_role, check_only=check_only)
+                record['state_selection'] = selection
+                if selection['state_ref'] is not None:
+                    payload['vllm_xargs'] = {'rwkv_state_read_ref': selection['state_ref']}
+            elif state_role is not None:
+                raise ValueError('Native State role requires explicit State routing configuration')
             if seed is not None:
                 payload["seed"] = seed
             if self.prompt_protocol == "g1j_plain":
@@ -312,6 +395,8 @@ class NativeRWKVClient:
                         status = "completed"
                         record["budget_only"] = True
                         return NativeRWKVResult(status, None, None, record)
+                    if selection is not None:
+                        await self._verify_state_selection(selection, record)
                     record["completion_attempted"] = True
                     data = await self._post(self.base_url + "/completions", payload, "completion", record)
                     record["usage"] = data.get("usage")
@@ -325,6 +410,10 @@ class NativeRWKVClient:
                     if isinstance(choice.get("text"), str):
                         raw_text = choice["text"]
                         record["raw_text_sha256"] = sha256(raw_text.encode("utf-8")).hexdigest()
+                    record["served_model"] = data.get("model")
+                    record["model_identity_verified"] = data.get("model") == self.model
+                    if ("model" in data or self.require_model_identity) and data.get("model") != self.model:
+                        raise _ProtocolError("completion model does not match requested model")
                     if isinstance(choice.get("finish_reason"), str):
                         finish_reason = choice["finish_reason"]
                     if raw_text is None:

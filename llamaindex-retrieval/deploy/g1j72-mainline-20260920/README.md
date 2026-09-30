@@ -35,7 +35,7 @@ insertion. Explicit top-1 configuration is in `profile.json`.
   upper limit and selected it for longer battery life. Its complete original
   response is preserved. Endpoint readiness is not comparison/choice correctness.
 
-See [raw checks and deployment evidence](../../../artifacts/g1j72-mainline-20260920/).
+See raw checks and deployment evidence（本地研究资料，不随应用发布）.
 These tiny fixed-material fixtures are transport checks, not RAG evaluation or a
 claim of general quality improvement.
 

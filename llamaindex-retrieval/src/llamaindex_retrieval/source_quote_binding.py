@@ -8,7 +8,9 @@ import re
 from .typed_funnel_contract import unique_subset
 
 
-def bind_atomic(parsed, field, source, units):
+def bind_atomic(parsed, field, source, units, *, quantity_policy="decimal"):
+    if quantity_policy not in {"decimal", "verbatim"}:
+        raise ValueError('unsupported quantity binding policy')
     unique_subset(parsed.evidence_ids, units)
     quote = parsed.quote
     location = None
@@ -51,12 +53,16 @@ def bind_atomic(parsed, field, source, units):
         elif field['value_type'] == 'quantity':
             if value not in quote:
                 raise ValueError('quantity must preserve its source spelling')
-            match = re.fullmatch(r'([+-]?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+))\s*([^0-9\s].*)?', value)
-            if not match:
-                raise ValueError('invalid decimal scalar representation')
-            value, unit = match.group(1), match.group(2)
+            if quantity_policy == "decimal":
+                match = re.fullmatch(r'([+-]?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+))\s*([^0-9\s].*)?', value)
+                if not match:
+                    raise ValueError('invalid decimal scalar representation')
+                value, unit = match.group(1), match.group(2)
+            # Verbatim mode preserves the whole model-selected quantity phrase.
+            # It does not perform arithmetic or certify semantic relevance.
     return {'observed': parsed.value is not None, 'unit_ids': parsed.evidence_ids,
             'quote': quote, 'value': value, 'unit': unit, 'scope': parsed.source_scope,
             'source_start': location, 'source_end': None if location is None else location + len(quote),
             'quote_binding': {'policy': 'literal_quote_primary_v1', 'unit_hints_match': hints_match,
-                              'hint_ids': parsed.evidence_ids}}
+                              'hint_ids': parsed.evidence_ids,
+                              'quantity_policy': quantity_policy}}

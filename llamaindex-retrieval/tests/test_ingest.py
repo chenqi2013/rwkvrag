@@ -213,3 +213,24 @@ def test_finewiki_blank_text_falls_back_without_changing_shared_first_value(tmp_
     assert document.text == content
     # Other callers retain the old trim semantics; only FineWiki is verbatim.
     assert first_value(row, TEXT_COLUMNS) == "备用正文"
+
+
+def test_rwkv_ingestion_skips_blank_nodes_and_preserves_nonblank_bytes():
+    from llama_index.core import Document
+    from llamaindex_retrieval.config import Settings
+    from llamaindex_retrieval.ingest import _ingest_batches
+
+    class Index:
+        def __init__(self):
+            self.nodes = []
+
+        def upsert_nodes(self, nodes):
+            self.nodes.extend(nodes)
+
+    index = Index()
+    original = '  Exact evidence with leading spaces.\n'
+    stats = _ingest_batches(Settings(_env_file=None),
+                            [Document(text=' \n\t '), Document(text=original)],
+                            2, None, index)
+    assert stats == {"documents": 2, "nodes": 1}
+    assert index.nodes[0].text == original

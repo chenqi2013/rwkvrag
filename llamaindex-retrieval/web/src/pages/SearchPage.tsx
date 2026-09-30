@@ -18,8 +18,10 @@ import {
 import { useEffect, useState } from "react";
 
 import CitedAnswer from "../components/CitedAnswer";
+import SaveWebSource from "../components/SaveWebSource";
+import { externalSourceUrl } from "../citations";
 import { api } from "../api";
-import type { AskResponse, FailureCategory, KnowledgeBase } from "../types";
+import type { AskResponse, FailureCategory, KnowledgeBase, SearchResponse } from "../types";
 import { errorMessage } from "../utils";
 import { useLanguage } from "../i18n";
 import { answerPresentation, evidenceWarnings } from "../answerPresentation";
@@ -41,6 +43,7 @@ export default function SearchPage() {
   const { tr } = useLanguage();
   const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [response, setResponse] = useState<AskResponse>();
+  const [retrieved, setRetrieved] = useState<SearchResponse>();
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState<ConversationTurn[]>([]);
   const [form] = Form.useForm<SearchForm>();
@@ -55,6 +58,7 @@ export default function SearchPage() {
     try {
       const next = await api.ask({ ...values, history });
       setResponse(next);
+      setRetrieved(undefined);
       const display = answerPresentation(next);
       // Keep the raw response visible; carry only a completed answer body forward.
       const completed = display.isNative
@@ -77,9 +81,27 @@ export default function SearchPage() {
     }
   };
 
+  const searchOnly = async () => {
+    const values = await form.validateFields();
+    setLoading(true);
+    try {
+      // This explicit action retrieves sources only; it does not generate an answer or add a conversation turn.
+      const next = await api.search({ ...values, history });
+      setRetrieved(next);
+      setResponse(undefined);
+    } catch (error) {
+      void message.error(errorMessage(error));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const presentation = answerPresentation(response);
   const formattedAnswer = response ? formatAnswer(presentation.answerText, response) : undefined;
   const warnings = evidenceWarnings(response);
+  const providersFailed = retrieved?.retrieval.all_providers_failed === true;
+  const providerFailures = retrieved?.retrieval.provider_failures;
+  const someProvidersFailed = Array.isArray(providerFailures) && providerFailures.length > 0;
   const queryNormalized = response?.retrieval.query_normalized === true;
   const normalizedQuestion = String(response?.retrieval.normalized_question || "");
   const routing = response?.generation.routing as { selected_mode?: string; requested_mode?: string } | undefined;
@@ -106,6 +128,7 @@ export default function SearchPage() {
         <Button disabled={loading || history.length === 0} onClick={() => {
           setHistory([]);
           setResponse(undefined);
+          setRetrieved(undefined);
           form.setFieldValue("question", "");
         }}>{tr("开始新对话", "New conversation")}</Button>
         <Typography.Text type="secondary">
@@ -162,12 +185,30 @@ export default function SearchPage() {
               <Button type="primary" block icon={<SearchOutlined />} loading={loading} disabled={history.length >= 64} onClick={() => void search()}>
               {tr("检索并生成答案", "Search and generate answer")}
               </Button>
+              <Button block disabled={loading} onClick={() => void searchOnly()} style={{ marginTop: 8 }}>
+                {tr("只检索资料", "Retrieve sources only")}
+              </Button>
             </Form>
           </Card>
         </Col>
         <Col xs={24} xl={16}>
-          <Card className="answer-card" title={tr("生成答案", "Generated Answer")}>
-            {!response ? (
+          <Card className="answer-card" title={retrieved ? tr("检索资料", "Retrieved sources") : tr("生成答案", "Generated Answer")}>
+            {retrieved ? <Space orientation="vertical" size="middle" style={{ width: "100%" }}>
+              <Typography.Text type="secondary">{tr("本次只检索资料，未生成答案。可先检查来源快照，再选择保存到知识库。", "This action retrieved sources without generating an answer. Review a source snapshot before choosing to save it.")}</Typography.Text>
+              {(providersFailed || someProvidersFailed) && <Alert showIcon type={providersFailed ? "error" : "warning"}
+                title={providersFailed ? tr("网络检索失败", "Web retrieval failed") : tr("部分网络检索失败", "Some web retrieval requests failed")}
+                description={tr("本次网络材料可能不完整，请稍后重试。下方保留已成功取得的资料。", "Web material may be incomplete. Try again later; successfully retrieved sources remain below.")} />}
+              {!retrieved.results.length && !providersFailed && !someProvidersFailed && <Empty description={tr("没有检索到资料", "No sources found")} />}
+              {retrieved.results.map((item, index) => {
+                const url = externalSourceUrl(item.uri);
+                return <Card key={`${item.id}-${index}`} size="small" title={item.title || tr("未命名资料", "Untitled source")}>
+                  {url && <Typography.Link href={url} target="_blank" rel="noopener noreferrer">{url}</Typography.Link>}
+                  {item.metadata?.content_status === "snippet_only" && <Tag color="orange">{tr("仅搜索摘要", "Search snippet only")}</Tag>}
+                  <Typography.Paragraph className="result-snippet">{item.snippet}</Typography.Paragraph>
+                  <SaveWebSource source={item} />
+                </Card>;
+              })}
+            </Space> : !response ? (
               <Empty description={tr("提交问题后查看生成答案和证据", "Submit a question to view the answer and evidence")} />
             ) : (
               <Space direction="vertical" size={12} style={{ width: "100%" }}>

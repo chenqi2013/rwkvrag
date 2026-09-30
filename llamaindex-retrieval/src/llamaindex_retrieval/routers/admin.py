@@ -32,6 +32,7 @@ from ..schemas import (
 )
 from ..service import SearchService
 from ..atomic_evidence import AtomicRequest
+from ..source_catalog import SourceCatalogRequest, audit_catalog
 
 router = APIRouter(prefix="/v1/admin", tags=["admin"])
 
@@ -150,6 +151,12 @@ async def retry_revision(file_id: str, service: AdminService = Depends(admin_ser
     return {"job_id": job["id"], "status": job["status"]}
 
 
+@router.post("/source-catalog/audit")
+async def audit_source_catalog(payload: SourceCatalogRequest,
+                              repo: MongoRepository = Depends(repository)):
+    return await audit_catalog(get_settings(), repo, payload)
+
+
 @router.get("/files/{file_id}", response_model=FileItem)
 async def get_file(
     file_id: str,
@@ -174,6 +181,25 @@ async def download_file(
         filename=item["filename"],
         media_type=item["content_type"],
     )
+
+
+@router.get("/files/{file_id}/source/{source_sha256}")
+async def source_revision_file(file_id: str, source_sha256: str,
+                               repo: MongoRepository = Depends(repository)):
+    import mimetypes
+    from ..source_revisions import original_snapshot
+    item = await repo.get_file(file_id)
+    if item is None:
+        raise AdminNotFoundError("文件不存在")
+    try:
+        path = await asyncio.to_thread(original_snapshot, get_settings(), item, source_sha256)
+    except FileNotFoundError as error:
+        raise AdminNotFoundError(str(error)) from error
+    except ValueError as error:
+        raise AdminValidationError(str(error)) from error
+    return FileResponse(path, filename=path.name, content_disposition_type="inline",
+                        media_type=mimetypes.guess_type(path.name)[0] or "application/octet-stream",
+                        headers={"X-Content-Type-Options": "nosniff"})
 
 
 @router.delete("/files/{file_id}", status_code=204)
@@ -335,6 +361,11 @@ async def list_finewiki_paths(path: str | None = None) -> dict:
 @router.get("/wiki")
 async def list_wiki(request: Request, knowledge_base_id: str | None = None):
     return await request.app.state.wiki_service.list_pages(knowledge_base_id)
+
+
+@router.get("/wiki/status")
+async def wiki_status(request: Request):
+    return await request.app.state.wiki_service.status()
 
 
 @router.get("/wiki/versions/{identity}")

@@ -11,7 +11,6 @@ from typing import Literal
 
 from . import typed_funnel_contract_v7 as c
 from .citation_audit import audit_citations
-from .native_rwkv import NativeRWKVResult
 from .offline_replay import strict_json
 from .writer_prompt import writer_prompt_v2
 
@@ -105,9 +104,11 @@ class QuantityBinding(c.Contract):
 async def extract_atomic(runner, source, object_name, field, *, purpose="funnel_fact"):
     from .source_quote_binding import bind_atomic
     from .rwkv_pipeline import evidence_units
+    quantity_policy = runner.pipeline.settings.native_quantity_binding
     units = {f"E{i}": unit for i, unit in enumerate(evidence_units(0, source.snippet, 320, 64), 1)}
     value = await runner.node(atomic_prompt(object_name, field, source, units), purpose,
-        c.Atomic, [source], lambda parsed: bind_atomic(parsed, field, source, units),
+        c.Atomic, [source], lambda parsed: bind_atomic(parsed, field, source, units,
+                                                   quantity_policy=quantity_policy),
         document=c.atomic_schema(field, units), max_tokens=512)
     if value is None or not value["observed"] or field["value_type"] != "quantity":
         return value
@@ -115,7 +116,7 @@ async def extract_atomic(runner, source, object_name, field, *, purpose="funnel_
     def validate(parsed):
         observation = c.Atomic(evidence_ids=value["unit_ids"], quote=value["quote"],
             value=parsed.value, source_scope=value["scope"])
-        return bind_atomic(observation, field, source, units)
+        return bind_atomic(observation, field, source, units, quantity_policy=quantity_policy)
     return await runner.node(
         "从给出的原文中逐字摘录指定属性的完整数值短语。数字及其计量单位、计数单位必须一起保留，"
         "不能将计数单位省略为裸数字。原文确实没有单位时才只摘数字。"
@@ -192,7 +193,6 @@ async def write_funnel(pipeline, task, sources):
                     "proposal": {key: value[key] for key in ('value', 'unit', 'scope', 'quote')},
                     "source_title": source.title, "text": source.snippet}),
             f"funnel_fact_verify:{source.id}:{oid}:{fid}", c.Verification, [source], max_tokens=320)
-        quote = value["quote"]
         return {"object_id": oid, "field_id": fid, **value, "source_id": source.id,
             "source_sha256": sha256(source.snippet.encode()).hexdigest(),
             "start": value["source_start"], "end": value["source_end"],

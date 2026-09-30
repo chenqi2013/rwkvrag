@@ -253,7 +253,7 @@ def _ingest_batches(settings, documents, batch_size, progress_callback, index):
             nodes = [node for document in document_batch for node in verbatim_nodes(
                 document, chunk_characters=settings.native_ingest_chunk_characters,
                 overlap_characters=settings.native_ingest_overlap_characters,
-            )]
+            ) if node.text.strip()]
         else:
             nodes = [
                 node
