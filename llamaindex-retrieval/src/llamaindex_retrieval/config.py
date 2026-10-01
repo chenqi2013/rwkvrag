@@ -106,7 +106,7 @@ class Settings(BaseSettings):
     native_plan_protocol: Literal["queries_fields", "shared_tasks", "fact_queries_v1"] = "queries_fields"
     # Experimental: validate history correction separately; no-history requests
     # stay byte-identical. Keep raw until Reader/Writer regressions pass.
-    native_history_protocol: Literal["raw", "current-question-v1"] = "raw"
+    native_history_protocol: Literal["raw", "current-question-v1", "current-question-g1k-v1"] = "raw"
     native_resolver_prefill: Literal["<think", "<think></think"] = "<think"
     native_resolver_protocol: Literal["fields", "task_units", "binary_query"] = "fields"
     native_resolver_task_grouping: Literal["joint", "individual"] = "joint"
