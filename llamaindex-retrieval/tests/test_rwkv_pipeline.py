@@ -437,6 +437,21 @@ async def test_valid_empty_selection_still_uses_writer_without_a_fabricated_refu
 
 
 @pytest.mark.asyncio
+async def test_empty_evidence_can_fail_without_calling_writer_when_policy_enabled():
+    candidate = hit("candidate", "与所问字段无关的资料。")
+    model = FakeModel(resolver_outputs={"candidate": "f1: NONE"})
+    response = await RWKVPipeline(
+        settings(native_empty_evidence_policy="fail"),
+        FakeIndex({"alpha query": [candidate], "beta query": []}), model,
+    ).ask(SearchRequest(question="未确定的对象"))
+    assert response.answer == "" and response.sources == []
+    assert response.generation["status"] == "no_evidence"
+    assert response.generation["stage_status"]["writer"] == "not_called"
+    assert response.retrieval["empty_evidence_policy"] == "fail"
+    assert [call["stage"] for call in model.calls] == ["planner", "resolver"]
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize("raw", [
     ">思考</think>\n没有正式引用的答案。  \n",
     ">思考</think>\n原样保留未知引用。[资料 999]\n",

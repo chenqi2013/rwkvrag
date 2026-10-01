@@ -827,7 +827,10 @@ class RWKVPipeline:
             # A unit-level relevance decision does not prove any field complete.
             retrieval["uncovered_fields"] = None
             retrieval["field_coverage_assessed"] = False
-        # Even empty evidence is an explicit writer input. No fabricated refusal.
+        if not evidence and self.settings.native_empty_evidence_policy == "fail":
+            retrieval["empty_evidence_policy"] = "fail"
+            return self._response(None, evidence, retrieval, events, "no_evidence", started)
+        # Default legacy path: even empty evidence is an explicit writer input.
         result = await self._write(task, evidence, active_tasks)
         events.append(result.trace)
         status = result.status

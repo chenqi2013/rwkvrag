@@ -82,6 +82,7 @@ class Settings(BaseSettings):
     native_writer_prompt_protocol: Literal[
         "task_first", "evidence_first", "evidence_checked", "decision", "compact_v3"
     ] = "task_first"
+    native_empty_evidence_policy: Literal["write", "fail"] = "write"
     rwkvos_cf_access_client_id: SecretStr = SecretStr("")
     rwkvos_cf_access_client_secret: SecretStr = SecretStr("")
     rwkvos_prefill_mode: Literal["complete", "continuation"] = "complete"
