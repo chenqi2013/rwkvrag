@@ -68,6 +68,30 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 
 新链路不用旧 `MAX_CHUNKS_PER_DOCUMENT`、`RELATIVE_SCORE_THRESHOLD` 或语义规则门禁。多 worker 各有独立并发限制，部署时需分配总容量。
 
+## G1K 7.2B native 连接配置
+
+连接已提供该模型的 native 端点时，可显式设置以下配置；不会改变软件默认模型或自动切换已有服务：
+
+```bash
+RWKVRAG_RAG_PIPELINE=rwkv
+RWKVRAG_NATIVE_TRANSPORT=native
+RWKVRAG_NATIVE_BASE_URL=http://127.0.0.1:18426/v1
+RWKVRAG_NATIVE_MODEL=rwkv7-g1k-7.2b-20260930-ctx25600
+RWKVRAG_NATIVE_REQUIRE_MODEL_IDENTITY=true
+RWKVRAG_NATIVE_COMPLETION_PROTOCOL=g1j_plain
+RWKVRAG_NATIVE_PLANNER_PREFILL='<think></think'
+RWKVRAG_NATIVE_RESOLVER_PREFILL='<think></think'
+RWKVRAG_NATIVE_WRITER_PREFILL='<think></think'
+RWKVRAG_NATIVE_CONTEXT_WINDOW_TOKENS=25600
+RWKVRAG_GENERATION_MAX_TOKENS=2048
+```
+
+`g1j_plain` 是现有传输模板名称，不限制模型必须为G1J。实际端点地址需按部署设置；上述变量放入所用的环境文件或导出后再启动应用。25600是**完整输入加输出预算**，不是可另加2048输出的输入容量；服务上限更小时仍取较小值，不裁切输入或提高服务限制。模型身份不匹配会失败，不自动改接其他模型。
+
+默认不启用State路由；不要复用G1J或2.9B的训练State。需要引用时另按[State接口](NATIVE_STATE_ROUTING.md)显式绑定兼容模型。引擎的FP16权重/FP32 recurrent State需在服务端配置，客户端设置不能证明实际数值精度。
+
+结构化传输保留调用者的JSON Schema属性顺序，不按字母排序，也不替调用者重排。属性生成顺序可能影响回答；Schema合法不代表事实、缺失判断、部分支持或引用正确，不能据此增加代码兜底或修补原始回答。
+
 ## API 与 trace
 
 `POST /v1/ask` 从完整知识库检索后作答：
