@@ -19,13 +19,12 @@ def correction_prompt(question, history):
 def g1k_correction_prompt(question, history):
     """G1K-oriented rewrite prompt; model resolves history, code only passes data."""
     previous = [m.content for m in history if m.role == "user"]
+    latest_previous = previous[-1] if previous else ""
     return (
         '只输出JSON：{"question":"..."}。将最新问题改写为完整问题。\n'
-        '如果最新问题含“第一个/第二个/它/刚才”，在上一用户问题中寻找对应的具体对象，'
-        '例如“第一是X，第二是Y”时用X或Y替换指代词。\n'
-        '如果最新问题含“更正/只/不再/不要”，不要保留被排除的旧对象或旧字段。\n'
-        '不要加入最新问题没有要求的旧目标；不要回答问题。\n'
-        + json.dumps({"previous_user_questions": previous, "latest_question": question}, ensure_ascii=False)
+        '如果最新问题含“第二个”，在上一用户问题中寻找“第二是X/第二个是X/第二为X”，用X替换第二个。\n'
+        '如果最新问题含“更正/只/不再/不要”，不要保留被排除的旧对象。\n'
+        f'上一用户问题：{latest_previous}\n最新问题：{question}\n输出：'
     )
 
 

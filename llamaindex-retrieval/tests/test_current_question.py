@@ -91,7 +91,7 @@ def test_g1k_history_protocol_uses_ordinal_and_withdrawal_prompt_without_code_re
         ConversationMessage(role="user", content="第一是OpenSearch，第二是MongoDB。"),
         ConversationMessage(role="assistant", content="旧回答不参与程序解析"),
     ])
-    assert "第一是X，第二是Y" in prompt and "previous_user_questions" in prompt
+    assert "第二是X" in prompt and "上一用户问题" in prompt and "最新问题" in prompt
     assert "OpenSearch" in prompt and "MongoDB" in prompt and "旧回答" not in prompt
 
     corrected = "请说明MongoDB的用途，并说明它是否保存原始推理记录。"
