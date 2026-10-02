@@ -642,6 +642,11 @@ class RWKVPipeline:
             final_span, [source.model_dump() for source in sources],
             check_quotes=self.settings.native_writer_prompt_protocol == "evidence_checked",
         )
+        if (status == "completed" and self.settings.native_answer_quality_policy == "fail_citation"
+                and (citation_audit["missing_valid_citation"]
+                     or citation_audit["unknown_label_ids"]
+                     or citation_audit["invalid_labels"])):
+            status = "answer_quality_failed"
         stage_status = {}
         for stage in ("planner", "resolver", "writer"):
             calls = [event for event in events if event.get("stage") == stage]

@@ -469,6 +469,19 @@ async def test_writer_text_is_not_repaired_or_given_an_automatic_citation(raw):
 
 
 @pytest.mark.asyncio
+async def test_answer_quality_policy_can_fail_missing_or_unknown_citations_without_repair():
+    material = source_from_hit(hit("material", "完整材料。"))
+    raw = ">思考</think>\n没有正式引用的答案。\n"
+    model = FakeModel(writer_raw=raw)
+    response = await RWKVPipeline(
+        settings(native_answer_quality_policy="fail_citation"), FakeIndex({}), model,
+    ).ask_materials("问题", [material])
+    assert response.answer == raw and response.generation["answer_modified"] is False
+    assert response.generation["status"] == "answer_quality_failed"
+    assert response.generation["citation_audit"]["missing_valid_citation"] is True
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize("status, raw", [
     ("budget_exceeded", None), ("timeout", None),
     ("length", ">尚未结束的思考和部分文本"),
