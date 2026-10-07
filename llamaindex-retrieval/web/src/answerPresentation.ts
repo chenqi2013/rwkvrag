@@ -48,6 +48,10 @@ export function evidenceWarnings(response?: Pick<AskResponse, "generation" | "so
     ]);
   }
   if (audit && typeof audit === "object") {
+    if ("missing_valid_citation" in audit && audit.missing_valid_citation === true) {
+      warnings.push(["回答没有有效的来源引用，请核对原文。",
+        "The answer has no valid source citation. Check the original evidence."]);
+    }
     const invalid = "invalid_labels" in audit ? audit.invalid_labels : undefined;
     if (Array.isArray(invalid) && invalid.length) warnings.push([
       `引用格式无效：${invalid.filter((item) => typeof item === "string").join("、")}。`,
@@ -106,7 +110,10 @@ export function answerPresentation(response?: Pick<AskResponse, "answer" | "gene
   if (status === "funnel_partial_failure") {
     label = ["已生成，部分分层核验失败；请核对来源", "Generated; some reasoning stages failed. Check sources."];
   } else if (status === "answer_quality_failed") {
-    label = ["答案未通过模型内容检查，请核对原文", "Answer failed model review; check source evidence"];
+    label = generation.quality_failure_reason === "missing_valid_citation"
+      || generation.quality_failure_reason === "citation_syntax_or_identity"
+      ? ["引用检查未通过，请核对来源", "Citation check failed; check source evidence"]
+      : ["答案检查未通过，请核对原文", "Answer check failed; check source evidence"];
   } else if (status === "answer_review_failed") {
     label = ["已生成，内容检查未完成", "Generated; content review did not complete"];
   } else if (status === "matrix_partial_failure") {
@@ -131,6 +138,18 @@ export function answerPresentation(response?: Pick<AskResponse, "answer" | "gene
           : generation.termination_verified === false
             ? ["已返回回答，终止原因与语义支持未核验", "Answer returned; termination and semantic support unverified"]
             : ["生成完成，尚未做语义核验", "Generation completed; semantic support not verified"];
+  } else if (status === "no_evidence") {
+    label = ["未选中有效证据，已停止生成", "No evidence selected; generation stopped"];
+  } else if (status === "current_question_failed") {
+    color = "red";
+    label = ["历史问题改写失败，未进入检索或生成", "History rewrite failed; retrieval and generation not reached"];
+  } else if (status === "resolver_failed") {
+    color = "red";
+    label = ["证据读取失败，未进入生成", "Evidence reading failed; generation not reached"];
+  } else if (status === "call_budget_exceeded") {
+    label = ["达到本次请求的模型调用上限，流程未完成", "Request model-call limit reached; pipeline incomplete"];
+  } else if (status === "request_timeout") {
+    label = ["达到本次请求的总时限，流程未完成", "Request deadline reached; pipeline incomplete"];
   } else if (status === "length" || writerStatus === "length") {
     label = ["达到输出上限，生成未完成", "Output limit reached; generation incomplete"];
   } else if (status === "budget_exceeded" || writerStatus === "budget_exceeded") {

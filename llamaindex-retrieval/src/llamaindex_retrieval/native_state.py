@@ -10,7 +10,7 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
 
-StateRole = Literal['plan', 'reader', 'assessment', 'followup', 'review', 'writer']
+StateRole = Literal['plan', 'reader', 'assessment', 'followup', 'review', 'writer', 'current_question']
 StateRef = Annotated[str, StringConstraints(strict=True, pattern=r'^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$')]
 PROTOCOL = 'vllm-rwkv.state-cache.v1'
 
@@ -43,7 +43,7 @@ class NativeStateRouter:
         if stage == 'writer_budget' and check_only:
             stage = 'writer'
         defaults = {'planner': 'plan', 'reader': 'reader', 'resolver': 'reader', 'writer': 'writer'}
-        allowed = {'planner': {'plan', 'assessment', 'followup', 'review'},
+        allowed = {'planner': {'plan', 'assessment', 'followup', 'review', 'current_question'},
                    'reader': {'reader', 'review'}, 'resolver': {'reader', 'review'}, 'writer': {'writer'}}
         if not isinstance(stage, str) or stage not in defaults:
             raise ValueError('No State role mapping for this stage')

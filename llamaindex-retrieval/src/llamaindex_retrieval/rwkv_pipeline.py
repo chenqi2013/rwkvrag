@@ -16,10 +16,13 @@ from .citation_audit import audit_citations
 from .direct_web import WebProviderError
 from .lexical_index import LexicalIndex, LexicalResult
 from .model_client import model_answer_bounds, model_client_class, model_client_options
+from .native_rwkv import NativeRWKVResult
+from .request_budget import bounded_request
 from .schemas import AskResponse, ConversationMessage, SearchRequest, SourceItem
 from .writer_prompt import writer_prompt_checked, writer_prompt_v2
 from .writer_decision_prompt import writer_prompt_decision
-from .reader_prompt import binary_query_prompt, parse_binary_decision
+from .reader_prompt import binary_query_prompt, binary_task_prompt, parse_binary_decision
+from .task_contract import TaskAnchor, READER_PROTOCOL as ANCHORED_READER_PROTOCOL
 from .web_retrieval import WebSearchAdapter, deduplicate_web_groups, interleave
 
 PROMPT_VERSION = "bm250820-native-v4"
@@ -117,6 +120,19 @@ def fuse_chunks(groups: list[list[LexicalResult]], *, order: str = "rrf") -> lis
                     scheduled.add(group[rank].node_id)
                     ordered.append(group[rank].node_id)
     return [source_from_hit(hits[key]).model_copy(update={"score": scores[key]}) for key in ordered]
+
+
+def empty_evidence_status(events, retrieval):
+    """No selected evidence does not erase an upstream execution failure."""
+    failed = [event for event in events if event.get("status") != "completed"
+              or (event.get("parse_error") and not event.get("format_repair_succeeded"))]
+    if any(event.get("stage") == "resolver" for event in failed):
+        return "resolver_failed"
+    if retrieval.get("provider_failures"):
+        return "retrieval_failed"
+    if any(event.get("stage") == "planner" for event in failed):
+        return "planner_failed"
+    return "no_evidence"
 
 
 def conversation(question: str, history: list[ConversationMessage]) -> str:
@@ -345,6 +361,11 @@ def selection_repair_prompt(prompt: str, invalid_text: str) -> str:
 class RWKVPipeline:
     def __init__(self, settings: Settings, index: LexicalIndex, model=None, *, recorder=None):
         self.settings = settings
+        # Presence is the opt-in (including explicit null). Keep selection fixed
+        # with the client's constructor-time map; missing means legacy plan routing.
+        self.current_question_state_role = (
+            "current_question" if settings.native_state_routing is not None
+            and "current_question" in settings.native_state_routing.roles else None)
         self.index = index
         self.web = WebSearchAdapter(settings)
         options = model_client_options(settings)
@@ -355,8 +376,30 @@ class RWKVPipeline:
     async def aclose(self):
         await self.model.aclose()
 
+    def _anchor(self, current, task, question, history, events):
+        if self.settings.native_task_contract == "legacy":
+            return None
+        return TaskAnchor.from_resolution(current, task, conversation(question, history), events)
+
+    def _check_anchor(self, task, anchor):
+        if (self.settings.native_task_contract == "anchored_v1") != (anchor is not None):
+            raise ValueError("Task contract and request-local anchor must agree")
+        if anchor is not None and anchor.task != task:
+            raise ValueError("Task envelope differs from its request-local anchor")
+
     async def _call(self, prompt: str, *, stage: str, max_tokens: int, sources=(), trace=None, state_role=None,
                     structured_schema=None):
+        if (stage == "writer" and not sources
+                and self.settings.native_empty_evidence_policy == "fail"):
+            event = trace if trace is not None else {}
+            event.update(stage=stage, status="no_evidence", raw_text=None,
+                         completion_attempted=False, evidence_ids=[],
+                         messages=[{"role": "user", "content": prompt}],
+                         empty_evidence_policy="fail")
+            return NativeRWKVResult("no_evidence", None, None, event)
+        budget = getattr(self, "_request_budget", None)
+        if budget is not None and stage == "writer":
+            budget.writer_sources = list(sources)
         prefill = {"planner": self.settings.native_planner_prefill,
                    "resolver": self.settings.native_resolver_prefill,
                    "writer": self.settings.native_writer_prefill}.get(stage, "<think")
@@ -391,7 +434,9 @@ class RWKVPipeline:
         messages = [item.model_dump() for item in request.history]
         messages.append({"role": "user", "content": request.question})
         try:
-            trace = await self.web.decide(messages)
+            budget = getattr(self, "_request_budget", None)
+            trace = (await budget.route(self.web, messages) if budget is not None
+                     else await self.web.decide(messages))
         except Exception as error:
             trace = {"stage": "routing", "status": "failed", "error": type(error).__name__}
         trace["requested_mode"] = "auto"
@@ -457,7 +502,9 @@ class RWKVPipeline:
             "retrieval_mode": request.retrieval_mode, "web_search": sorted(web_trace, key=lambda x: x["query_index"]),
             "provider_failures": failures, "all_providers_failed": succeeded == 0}
 
-    async def _resolve(self, task: str, fields: list[str], sources: list[SourceItem], *, source_tasks=None, event_sink=None, state_role=None):
+    async def _resolve(self, task: str, fields: list[str], sources: list[SourceItem], *, source_tasks=None,
+                       event_sink=None, state_role=None, task_anchor=None):
+        self._check_anchor(task, task_anchor)
         jobs = []
         for index, source in enumerate(sources):
             units = list(evidence_units(index, source.snippet,
@@ -493,9 +540,11 @@ class RWKVPipeline:
             if task_selection:
                 prompt = task_resolver_prompt(task, task_group, source, units)
             if binary_selection:
-                prompt = binary_query_prompt(task_group,
+                reader_input = (task_group,
                     {"id": source.id, "title": source.title, "uri": source.uri},
                     source.metadata.get("context_spans", []), units[0].text)
+                prompt = (binary_task_prompt(task_anchor.task, *reader_input) if task_anchor is not None
+                          else binary_query_prompt(*reader_input))
             if repair is not None:
                 prompt = selection_repair_prompt(prompt, repair["raw_text"])
             call_trace = None
@@ -503,12 +552,17 @@ class RWKVPipeline:
                 call_trace = {"stage": "resolver", "status": "pending", "source_id": source.id,
                               "prompt": prompt, "prompt_sha256": digest(prompt)}
                 event_sink(call_trace)
+            if task_anchor is not None:
+                if call_trace is None:
+                    call_trace = {}
+                call_trace["task_contract"] = task_anchor.trace()
             result = await self._call(prompt, stage="resolver",
                 max_tokens=self.settings.native_resolver_max_tokens, sources=[source], trace=call_trace, state_role=state_role)
             event = call_trace if call_trace is not None else {}
             event.update({**result.trace, "source_id": source.id,
                 "task_group": task_group,
-                "selection_protocol": (BINARY_SELECTION_PROTOCOL_VERSION if binary_selection
+                "selection_protocol": (ANCHORED_READER_PROTOCOL if task_anchor is not None
+                    else BINARY_SELECTION_PROTOCOL_VERSION if binary_selection
                     else TASK_SELECTION_PROTOCOL_VERSION if task_selection else SELECTION_PROTOCOL_VERSION),
                 "source_sha256": digest(source.snippet),
                 "units": [{"id": f"E{i}", "start": u.start, "end": u.end,
@@ -520,7 +574,8 @@ class RWKVPipeline:
                     accepted = parse_binary_decision(structured_body(result))
                     event["decision"] = "YES" if accepted else "NO"
                     event["selected_units"] = ["E1"] if accepted else []
-                    event["selection_scope"] = "model_planned_query_any_requested_information"
+                    event["selection_scope"] = ("anchored_task_with_lookup_hint" if task_anchor is not None
+                                                else "model_planned_query_any_requested_information")
                     return ([(None, units[0])] if accepted else []), [event]
                 if task_selection:
                     selected = parse_task_selections(structured_body(result), len(units))
@@ -565,7 +620,8 @@ class RWKVPipeline:
                     "parent_text_sha256": digest(source.snippet),
                     "span_start": start, "span_end": end, "span_sha256": digest(span),
                     "offset_unit": "unicode_characters_in_indexed_chunk",
-                    "selection_scope": self.settings.native_resolver_protocol,
+                    "selection_scope": (ANCHORED_READER_PROTOCOL if task_anchor is not None
+                                        else self.settings.native_resolver_protocol),
                     "field_ids": [f"f{f}" for f in sorted(field_ids)]},
             }))
         return evidence, [event for _, group_events in resolved for event in group_events]
@@ -596,7 +652,10 @@ class RWKVPipeline:
             prompt = writer_prompt_decision(task, evidence, fields)
         return prompt
 
-    async def _write(self, task: str, sources: list[SourceItem], fields: list[str]):
+    async def _write(self, task: str, sources: list[SourceItem], fields: list[str], *, task_anchor=None):
+        self._check_anchor(task, task_anchor)
+        if task_anchor is not None and fields != [task_anchor.question]:
+            raise ValueError("Anchored Writer fields must be the exact current question, not lookup queries")
         if self.settings.native_writer_pipeline == "typed_funnel_v10":
             from .typed_funnel_v10 import write_funnel
             return await write_funnel(self, task, sources)
@@ -613,12 +672,14 @@ class RWKVPipeline:
             from .writer_budget import write_with_budget
             return await write_with_budget(self, task, sources, fields)
         return await self._call(self._writer_prompt(task, sources, fields), stage="writer",
-            max_tokens=self.settings.generation_max_tokens, sources=sources)
+            max_tokens=self.settings.generation_max_tokens, sources=sources,
+            **({"trace": {"task_contract": task_anchor.trace()}} if task_anchor is not None else {}))
 
-    def _response(self, answer, sources, retrieval, events, status, started):
+    def _response(self, answer, sources, retrieval, events, status, started, *, answer_trace=None):
         # Citation labels can be audited syntactically. This is NOT entailment.
-        writer_trace = next((event for event in reversed(events)
-                             if event.get("stage") in {"writer", "writer_budget"}), {})
+        writer_trace = (answer_trace if answer_trace is not None else
+                        next((event for event in reversed(events)
+                              if event.get("stage") in {"writer", "writer_budget"}), {}))
         funnel = writer_trace.get("funnel")
         if funnel is not None:
             by_id = {source.id: source for source in sources}
@@ -642,11 +703,15 @@ class RWKVPipeline:
             final_span, [source.model_dump() for source in sources],
             check_quotes=self.settings.native_writer_prompt_protocol == "evidence_checked",
         )
+        quality_failure_reason = None
         if (status == "completed" and self.settings.native_answer_quality_policy == "fail_citation"
                 and (citation_audit["missing_valid_citation"]
                      or citation_audit["unknown_label_ids"]
                      or citation_audit["invalid_labels"])):
             status = "answer_quality_failed"
+            quality_failure_reason = ("citation_syntax_or_identity" if
+                citation_audit["unknown_label_ids"] or citation_audit["invalid_labels"]
+                else "missing_valid_citation")
         stage_status = {}
         for stage in ("planner", "resolver", "writer"):
             calls = [event for event in events if event.get("stage") == stage]
@@ -662,11 +727,15 @@ class RWKVPipeline:
             "writer_prompt_protocol": funnel["protocol"] if funnel else self.settings.native_writer_prompt_protocol,
             "writer_pipeline": self.settings.native_writer_pipeline,
             "plan_protocol": self.settings.native_plan_protocol,
-            "task_source": self.settings.native_task_source,
-            "selection_protocol": ({"task_units": TASK_SELECTION_PROTOCOL_VERSION,
+            "task_source": ("current_question" if self.settings.native_task_contract == "anchored_v1"
+                            else self.settings.native_task_source),
+            **({"task_contract": retrieval["task_contract"]} if "task_contract" in retrieval else {}),
+            "selection_protocol": (ANCHORED_READER_PROTOCOL if self.settings.native_task_contract == "anchored_v1"
+                else {"task_units": TASK_SELECTION_PROTOCOL_VERSION,
                 "binary_query": BINARY_SELECTION_PROTOCOL_VERSION}.get(
                     self.settings.native_resolver_protocol, SELECTION_PROTOCOL_VERSION)),
             "output_mode": "immutable", "status": status,
+            **({"quality_failure_reason": quality_failure_reason} if quality_failure_reason else {}),
             "stage_status": stage_status,
             "planner_fallback": retrieval.get("plan", {}).get("fallback"),
             "retrieval_failures": retrieval.get("provider_failures", []),
@@ -684,8 +753,16 @@ class RWKVPipeline:
             "citation_audit": citation_audit,
         })
 
+    @bounded_request
     async def ask_materials(self, question, materials, history=None):
         started = monotonic()
+        retrieval = {"mode": "materials", "returned": len(materials)}
+        budget = getattr(self, "_request_budget", None)
+        if budget is not None:
+            budget.retrieval = retrieval
+        if not materials and self.settings.native_empty_evidence_policy == "fail":
+            retrieval["empty_evidence_policy"] = "fail"
+            return self._response(None, [], retrieval, [], "no_evidence", started)
         identities = {}
         for source in materials:
             identity = (source.document_id, source.source, source.title, source.uri,
@@ -700,16 +777,23 @@ class RWKVPipeline:
         if current is None:
             return self._response(None, materials, {"mode": "materials", "returned": len(materials)},
                 events, "current_question_failed", started)
-        result = await self._write(task, materials, [current])
-        return self._response(result.raw_text, materials,
-            {"mode": "materials", "returned": len(materials)},
+        anchor = self._anchor(current, task, question, history or [], events)
+        if anchor is not None:
+            retrieval["task_contract"] = anchor.trace()
+        result = await self._write(task, materials, [current],
+                                  **({"task_anchor": anchor} if anchor is not None else {}))
+        return self._response(result.raw_text, materials, retrieval,
             [*events, result.trace], result.status, started)
 
+    @bounded_request
     async def ask(self, request: SearchRequest):
         if self.settings.native_task_matrix_enabled:
             from .task_matrix import ask_matrix
             return await ask_matrix(self, request)
         started = monotonic()
+        budget = getattr(self, "_request_budget", None)
+        if budget is not None:
+            budget.retrieval = {"mode": request.retrieval_mode, "returned": 0}
         request, routing = await self.route_request(request)
         routing_events = [routing] if routing.get("stage") == "routing" else []
         if request is None:
@@ -720,9 +804,13 @@ class RWKVPipeline:
         if current is None:
             return self._response(None, [], {"mode": request.retrieval_mode, "returned": 0},
                 [*routing_events, *task_events], "current_question_failed", started)
+        anchor = self._anchor(current, task, request.question, request.history, task_events)
+        if anchor is not None and budget is not None:
+            budget.retrieval["task_contract"] = anchor.trace()
         prompt = planner_prompt(task, self.settings)
         planned = await self._call(prompt, stage="planner",
-            max_tokens=self.settings.native_planner_max_tokens)
+            max_tokens=self.settings.native_planner_max_tokens,
+            **({"trace": {"task_contract": anchor.trace()}} if anchor is not None else {}))
         events = [*routing_events, *task_events, planned.trace]
         try:
             plan = parse_plan(structured_body(planned), self.settings)
@@ -745,7 +833,8 @@ class RWKVPipeline:
                     f"检索问题最多{self.settings.native_max_queries}条，"
                     f"所求属性最多{self.settings.native_max_fields}条。不要重复变体凑数。")
                 repaired = await self._call(repair_prompt, stage="planner",
-                    max_tokens=self.settings.native_planner_max_tokens)
+                    max_tokens=self.settings.native_planner_max_tokens,
+                    **({"trace": {"task_contract": anchor.trace()}} if anchor is not None else {}))
                 repair_event = {**repaired.trace, "purpose": "planner_format_repair",
                     "repair_of_call_id": original_event.get("call_id")}
                 events.append(repair_event)
@@ -770,14 +859,17 @@ class RWKVPipeline:
             provider_trace["routing"] = routing
             if provider_trace["all_providers_failed"]:
                 return self._response(None, [], {"mode": request.retrieval_mode, "returned": 0,
-                    "plan": plan, **provider_trace}, events, "retrieval_failed", started)
+                    "plan": plan, **provider_trace,
+                    **({"task_contract": anchor.trace()} if anchor is not None else {})},
+                    events, "retrieval_failed", started)
             candidates = fuse_chunks(groups, order=self.settings.native_candidate_order)
             if request.retrieval_mode == "hybrid":
                 candidates = interleave([s for s in candidates if s.metadata["retrieval_origin"] == "knowledge_base"],
                                         [s for s in candidates if s.metadata["retrieval_origin"] == "web"])
         except Exception as error:
             return self._response(None, [], {"mode": "bm25", "returned": 0,
-                "plan": plan, "error": f"{type(error).__name__}: {error}"},
+                "plan": plan, "error": f"{type(error).__name__}: {error}",
+                **({"task_contract": anchor.trace()} if anchor is not None else {})},
                 events, "retrieval_failed", started)
         # Keep the model-authored list and, for web modes, the exact original
         # question. The model plan stays immutable; code does not rewrite tasks.
@@ -821,9 +913,16 @@ class RWKVPipeline:
                 if s.id not in selected_ids],
             "query_results": [[h.node_id for h in group] for group in groups]}
         retrieval.update(provider_trace)
+        if anchor is not None:
+            retrieval["task_contract"] = anchor.trace()
+            retrieval["writer_tasks"] = [anchor.question]
+            retrieval["active_tasks_usage"] = "lookup_hints_only"
+        if budget is not None:
+            budget.retrieval = retrieval
         if request.retrieval_mode != "knowledge_base":
             retrieval["mode"] = "native-plan+" + request.retrieval_mode + "+chunk-candidates"
-        evidence, resolver_events = await self._resolve(task, active_tasks, selected, source_tasks=source_tasks)
+        evidence, resolver_events = await self._resolve(task, active_tasks, selected, source_tasks=source_tasks,
+            **({"task_anchor": anchor} if anchor is not None else {}))
         events.extend(resolver_events)
         retrieval["returned"] = len(evidence)
         retrieval["uncovered_fields"] = [f"f{i}" for i in range(1, len(active_tasks) + 1)
@@ -834,9 +933,11 @@ class RWKVPipeline:
             retrieval["field_coverage_assessed"] = False
         if not evidence and self.settings.native_empty_evidence_policy == "fail":
             retrieval["empty_evidence_policy"] = "fail"
-            return self._response(None, evidence, retrieval, events, "no_evidence", started)
+            return self._response(None, evidence, retrieval, events,
+                                  empty_evidence_status(events, retrieval), started)
         # Default legacy path: even empty evidence is an explicit writer input.
-        result = await self._write(task, evidence, active_tasks)
+        result = await self._write(task, evidence, [anchor.question] if anchor is not None else active_tasks,
+                                  **({"task_anchor": anchor} if anchor is not None else {}))
         events.append(result.trace)
         status = result.status
         if status == "completed" and any("parse_error" in event

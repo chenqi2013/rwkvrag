@@ -23,11 +23,23 @@ RWKVRAG_NATIVE_STATE_ROUTING='{"model":"rwkv7-g1j-7.2b-20260831-ctx16384","roles
 - `null` 明确选择 **base/no-ref 请求**，不继承另一角色。它不证明服务端零 State：若需严格零 State 对照，应由操作者注册经过验证的零 State 并显式填引用，同时完成引擎验证。
 - 非空字符串引用只接受 1–128 个安全标识字符（首字符字母或数字，其余字母、数字、`_ . : -`）。不接受空串、文件路径或 URL，不做字符串修复。
 - 启用 task matrix 时还须声明 `assessment`、`followup`、`review`，可显式为 null。已有 matrix 调用会传递逻辑角色：assessment/followup 使用 planner 阶段，review 使用 resolver 阶段。未声明角色不会退回主角色。
-- 历史任务纠错目前仍走 planner，typed-funnel 的结构化节点多走 resolver；不是新增独立的 history/condition State。
+- 历史任务纠错仍用 planner 传输阶段；可显式选独立 `current_question` 角色，见下节。typed-funnel 的结构化节点仍多走 resolver，不是新增独立 condition State。
 - 不与 `RWKVOS_*STATE_ID`/`RWKVOS_MATRIX_STATE_IDS` 混用。旧 batch 路由行为不变。
 - 未配置 `NATIVE_STATE_ROUTING` 时保留原请求路径，不新增 State 探测或读取参数。
 
 客户端构造时复制并固定映射。问答请求不能上传 State、指定任意引用、改变全局默认或续接上一请求的演化 State。当前没有热改映射管理接口；更新映射须受控重建应用客户端，不要求重新加载基础模型。
+
+## 独立历史任务解析角色（可选）
+
+在已有、非 `raw` 的 `NATIVE_HISTORY_PROTOCOL` 配置下，向 `NATIVE_STATE_ROUTING.roles` 显式添加 `"current_question":"registered-task-reference"`，或 `"current_question":null`。仍须保留 plan/reader/writer 三个键。应用只在真正执行历史改写时选此角色；检索 Planner 继续用 plan，Reader/Writer 不变。仅 native、非 task-matrix 可用；raw 历史配置下声明此键会被拒绝，避免配置被静默忽略。
+
+- **键缺省**：保留旧 planner→plan 行为，不自动隔离或迁移；需要隔离时必须显式添加此键。
+- **显式 null**：该角色发 no-ref 请求，不能继承 plan；不证明服务端零 State。
+- **非空 ref**：只用该引用；不存在、元数据不合格或生成失败时不回退 plan/no-ref。任务解析失败仍阻断下游。
+- 无历史不新增任务解析调用。角色选择与引用映射在构造客户端/流水线时固定，修改配置字典不热更新它们。
+- 本接口不换提示词/协议、解码参数或模型输出；`current-question-v2` 仍未经语义验收，不能因增加路由而启用。当前没有由本接口自动获取或训练的 State。
+
+`state_selection.role=current_question` 只证明应用选择/发送了这个逻辑角色，不证明实际张量隔离。操作者若给两个角色配置相同 ref，仍会共享初始模板；即使 ref 不同，也需独立验证其内容、训练来源、实际消费及数值行为。
 
 ## 每次生成的接口流程
 
@@ -62,5 +74,5 @@ RWKVRAG_NATIVE_STATE_ROUTING='{"model":"rwkv7-g1j-7.2b-20260831-ctx16384","roles
 应用测试使用 MockTransport，无真实引擎/GPU。启用实际 State 前仍须在确定版本上验证：导入与数值一致性、零/非零及无引用控制、并发模板隔离、过期/容量/重启行为、真实 Writer 有据/缺据/引用回归。工程测试不能替代这些验收。
 
 ```bash
-PYTHONPATH=src .venv/bin/python -m pytest tests/test_native_state_routing.py
+PYTHONPATH=src .venv/bin/python -m pytest tests/test_native_state_routing.py tests/test_current_question_state_routing.py
 ```

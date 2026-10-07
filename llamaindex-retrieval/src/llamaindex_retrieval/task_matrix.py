@@ -187,7 +187,9 @@ def cell_review_prompt(task, cell, answer, sources):
 
 
 async def ask_matrix(pipeline, request):
-    from .rwkv_pipeline import conversation, digest, evidence_units, source_from_hit, structured_body
+    from .rwkv_pipeline import (
+        conversation, digest, empty_evidence_status, evidence_units, source_from_hit, structured_body,
+    )
     started = monotonic()
     settings = pipeline.settings
     task = conversation(request.question, request.history)
@@ -195,6 +197,9 @@ async def ask_matrix(pipeline, request):
     retrieval = {"mode": "task-matrix", "protocol": PROTOCOL, "rounds": rounds,
                  "task_matrix": [], "candidates": [], "index": settings.opensearch_index}
     last_answer = None
+    budget = getattr(pipeline, "_request_budget", None)
+    if budget is not None:
+        budget.retrieval = retrieval
 
     async def call(prompt, purpose, *, evidence=(), writer=False, reviewer=False):
         stage = "writer" if writer else "resolver" if reviewer else "planner"
@@ -396,6 +401,9 @@ async def ask_matrix(pipeline, request):
                 sources.update(selected)
             retrieval["reader_calls"] = reader_calls
             retrieval["provider_failures"] = provider_failures
+            if not sources and settings.native_empty_evidence_policy == "fail":
+                retrieval["empty_evidence_policy"] = "fail"
+                return response(empty_evidence_status(events, retrieval))
             writer_prompt = matrix_writer_prompt(task, list(matrix.values()), list(sources.values()))
             answer, _ = await call(writer_prompt, "matrix_writer", evidence=list(sources.values()), writer=True)
             last_answer = answer.raw_text

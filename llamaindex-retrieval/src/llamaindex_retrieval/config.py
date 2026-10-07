@@ -102,18 +102,26 @@ class Settings(BaseSettings):
     rwkvos_batch_size: int = Field(default=8, ge=1, le=399)
     rwkvos_batch_wait_ms: float = Field(default=5, ge=0, le=1000)
     native_timeout_seconds: int = Field(default=180, ge=5, le=1800)
+    # Opt-in request-wide limits, including queue time and all logical model operations.
+    native_request_max_calls: int | None = Field(default=None, ge=1, le=4096)
+    native_request_timeout_seconds: float | None = Field(
+        default=None, gt=0, le=3600, allow_inf_nan=False)
     native_context_window_tokens: int = Field(default=16384, ge=1024)
     native_max_concurrency: int = Field(default=32, ge=1, le=256)
     native_planner_prefill: Literal["<think", "<think></think"] = "<think"
     native_plan_protocol: Literal["queries_fields", "shared_tasks", "fact_queries_v1"] = "queries_fields"
     # Experimental: validate history correction separately; no-history requests
     # stay byte-identical. Keep raw until Reader/Writer regressions pass.
-    native_history_protocol: Literal["raw", "current-question-v1", "current-question-g1k-v1"] = "raw"
+    native_history_protocol: Literal[
+        "raw", "current-question-v1", "current-question-g1k-v1", "current-question-v2"
+    ] = "raw"
     native_resolver_prefill: Literal["<think", "<think></think"] = "<think"
     native_resolver_protocol: Literal["fields", "task_units", "binary_query"] = "fields"
     native_resolver_task_grouping: Literal["joint", "individual"] = "joint"
     native_resolver_format_repair: bool = False
     native_task_source: Literal["fields", "queries"] = "fields"
+    # Opt-in task authority boundary; not model-name inference or quality acceptance.
+    native_task_contract: Literal["legacy", "anchored_v1"] = "legacy"
     native_candidate_order: Literal["rrf", "query_round_robin"] = "rrf"
     native_planner_max_tokens: int = Field(default=1024, ge=64, le=4096)
     native_resolver_max_tokens: int = Field(default=1024, ge=32, le=4096)
@@ -163,9 +171,33 @@ class Settings(BaseSettings):
                     self.rwkvos_planner_state_id, self.rwkvos_reader_state_id,
                     self.rwkvos_binary_reader_state_id, self.rwkvos_writer_state_id)) or self.rwkvos_matrix_state_ids:
                 raise ValueError("Native State routing cannot be mixed with rwkvos State bindings")
+            if "current_question" in routing.roles and self.native_history_protocol == "raw":
+                raise ValueError("current_question State binding requires an enabled history protocol")
             if self.native_task_matrix_enabled and not {
                     "plan", "reader", "assessment", "followup", "review", "writer"} <= routing.roles.keys():
                 raise ValueError("Native task matrix requires explicit bindings for all six State roles")
+        return self
+
+    @model_validator(mode="after")
+    def validate_task_contract(self) -> "Settings":
+        if self.native_task_contract == "anchored_v1":
+            if (self.rag_pipeline != "rwkv" or self.native_transport != "native"
+                    or self.native_completion_protocol != "g1j_plain"
+                    or not self.native_require_model_identity or self.native_task_matrix_enabled
+                    or self.native_history_protocol == "raw"
+                    or self.native_plan_protocol != "fact_queries_v1"
+                    or self.native_resolver_protocol != "binary_query"
+                    or self.native_writer_pipeline != "single"
+                    or self.native_writer_prompt_protocol != "evidence_first"
+                    or self.native_writer_budget_policy != "disabled"
+                    or self.native_empty_evidence_policy != "fail"
+                    or self.native_answer_quality_policy != "fail_citation"):
+                raise ValueError("anchored_v1 requires native/g1j_plain identity checks, non-raw history, "
+                                 "fact_queries_v1, binary_query and single evidence_first Writer; "
+                                 "empty-evidence/citation fail policies, no matrix or whole-source packing")
+            if (self.native_state_routing is not None
+                    and "current_question" not in self.native_state_routing.roles):
+                raise ValueError("anchored_v1 State routing requires explicit current_question binding")
         return self
 
     @model_validator(mode="after")

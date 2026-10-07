@@ -60,7 +60,13 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 | `NATIVE_PLANNER_MAX_TOKENS` / `NATIVE_RESOLVER_MAX_TOKENS` | 1024 / 1024 | 阶段输出预算 |
 | `GENERATION_MAX_TOKENS` | 2048 | Writer 输出预算 |
 | `NATIVE_INGEST_CHUNK_CHARACTERS` / `NATIVE_INGEST_OVERLAP_CHARACTERS` | 2400 / 180 | 逐字软窗口与重叠 |
-| `NATIVE_TIMEOUT_SECONDS` | 180 | 示例 600；计数开启时涵盖排队、计数和生成 |
+| `NATIVE_TIMEOUT_SECONDS` | 180 | 单次模型操作时限；native 从获取并发槽位后开始，外部计数模式包含排队 |
+| `NATIVE_REQUEST_MAX_CALLS` | 未启用 | 单次问答的逻辑模型操作总上限，包括路由、格式修复、Reader、Writer、审查及 token 预检 |
+| `NATIVE_REQUEST_TIMEOUT_SECONDS` | 未启用 | 单次问答总时限，包含检索、模型排队及全部阶段 |
+| `NATIVE_HISTORY_PROTOCOL` | `raw` | v1 保留兼容；完整角色历史的 `current-question-v2` 为未通过语义验收的实验协议 |
+| `NATIVE_TASK_CONTRACT` | `legacy` | `anchored_v1` 是任务与检索提示分离的未验收架构候选，见[G1K架构](G1K_ARCHITECTURE.md)；不自动迁移配置 |
+| `NATIVE_EMPTY_EVIDENCE_POLICY` | `write` | `fail` 在无已选证据时停止 Writer，不编造拒答 |
+| `NATIVE_ANSWER_QUALITY_POLICY` | `disabled` | `fail_citation` 将缺失、非法或越界引用标为失败，不作事实判断 |
 
 `candidate_k` 是每条检索式的候选量，总来源上限不是调用次数上限。超长原文可分多次读取。每次 Reader 的约 6,000 原文字符没有包括历史、任务、父级上下文和模板，不能当总 token 上限。外部计数默认关闭；启用后计数失败或超过显式应用上限均显式返回，不裁切输入。没有动态 state 续读，预算和动态 State 边界见 [超长上下文](../docs/long-context.md)。
 
@@ -92,6 +98,31 @@ RWKVRAG_GENERATION_MAX_TOKENS=2048
 
 结构化传输保留调用者的JSON Schema属性顺序，不按字母排序，也不替调用者重排。属性生成顺序可能影响回答；Schema合法不代表事实、缺失判断、部分支持或引用正确，不能据此增加代码兜底或修补原始回答。
 
+## G1K架构候选
+
+[G1K任务边界](G1K_ARCHITECTURE.md)明确区分当前任务、Planner检索提示、Reader逐字选择与Writer回答。显式`anchored_v1`时，Reader增加当前任务输入，Writer不再把Planner派生字段作为任务提示；原文和输出不改。默认legacy不变，未通过真实语义验收，不自动启用、训练或部署。RWKV初始State不是文档/历史数据库，也没有自动动态State续读或跨文档合并。
+
+## 历史改写与请求级预算
+
+`current-question-v2` 将完整 `history`（含角色、顺序、所有用户和助手消息）与最新问题作为JSON数据交给模型，不按关键词合并、删除或解析指代。只接受严格的 `{"question":"..."}`，下游使用该模型改写结果；原始对话和输出保留在trace。无历史时不调用改写模型。输入超出模型容量时显式失败，不截掉早期轮次。它修复输入丢失，但当前真实多轮诊断未通过，仍有条件丢失、指代未解析和撤回要求恢复。不能作为已验证的历史功能修复启用。
+
+旧 `current-question-v1` 只传用户消息，`current-question-g1k-v1` 只传上一条用户消息，两者都有信息缺失限制。为保留旧实验绑定，不原地替换其提示，也不自动迁移现有配置。
+
+历史协议与预算相互独立。RWKV 的 `/v1/ask` 和 `/v1/material-ask` 可显式配置安全策略与预算，以下示例不切换历史协议：
+
+```bash
+RWKVRAG_NATIVE_EMPTY_EVIDENCE_POLICY=fail
+RWKVRAG_NATIVE_ANSWER_QUALITY_POLICY=fail_citation
+RWKVRAG_NATIVE_REQUEST_MAX_CALLS=128
+RWKVRAG_NATIVE_REQUEST_TIMEOUT_SECONDS=180
+```
+
+128/180仅为配置示例，不是质量或吞吐验收结论。历史改写仍限 native 非matrix路径；请求预算和空证据保护覆盖普通、matrix与分层Writer路径。固定材料接口仍要求1–20份材料。
+
+调用预算按逻辑客户端操作计数，不是HTTP次数：一次生成的tokenize和completion属于同一操作；独立的token预检也占一个名额。并发请求各自计数，底层模型客户端和并发槽共享。达到上限后，后续模型操作在客户端入口被拒绝；已准入操作可收尾，但同样受请求总时限约束。被拒绝的trace含 `request_call_admitted=false`，并不代表模型执行。`generation.request_budget` 保存准入/拒绝计数、时限和停止原因。
+
+总时限从问答管线入口开始，不包含之前的HTTP解析或之后的数据库落盘。超时取消本请求的异步等待，保留已观察到的原始Writer输出、对应证据和调用trace；`answer_call_id` 标记超时响应实际保留的输出来源。不保证远端模型、共享batch或已经进入线程的索引查询立即停止，`provider_execution_cancelled` 保持未知。它也不替代跨请求总容量、内存或全局并发限制。
+
 ## API 与 trace
 
 `POST /v1/ask` 从完整知识库检索后作答：
@@ -114,8 +145,11 @@ RWKVRAG_GENERATION_MAX_TOKENS=2048
 
 - `completed` 表示传输返回完成；外部 `termination_verified=false`，其 stop 不能证明自然结束。
 - `length`、`budget_exceeded`、`token_count_failed`、`timeout` 等保留错误与实际已有输出。
-- `planner_failed`、`retrieval_failed` 明确指出停止阶段。
+- `current_question_failed`、`planner_failed`、`retrieval_failed` 明确指出停止阶段。
+- `no_evidence` 表示未选中证据并停止Writer，不推断知识库不存在答案；若上游读取或解析失败，使用 `resolver_failed` 等实际失败状态，不掩盖成无证据。
 - `resolver_partial_failure` 表示部分读取或解析失败，即便 Writer 返回也不标整链路成功。
+- `call_budget_exceeded`、`request_timeout` 表示请求调用上限或总时限已达到，不能当作自然生成完成。
+- `answer_quality_failed` 的 `quality_failure_reason` 为 `missing_valid_citation` 或 `citation_syntax_or_identity` 时，只代表引用标签检查失败，不是模型内容审查；原始答案保持不变。
 
 `generation.model_calls` 保存本项 prompt、原始输出、SHA、输入来源及阶段耗时。多项共享 batch 的完整 HTTP 字节只进入私有 `model_receipts` GridFS bucket，每批每事件一次；公开 trace 使用 `payload_scope=single_item_projection` 和 `private_receipt_id`，不会带出其他调用的内容。单项请求仍可保留自身原始字节。共享 batch 按唯一 ID 统计，计数 HTTP 单列。`retrieval.candidates`、读取来源和预算排除项均可查；sources 与 citation_map 覆盖 Writer 全部资料。片段、原文块及父级上下文携带 Unicode 坐标和 SHA。
 

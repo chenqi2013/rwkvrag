@@ -31,6 +31,7 @@ from .native_state import (
 NativeStatus = Literal[
     "completed", "length", "invalid_response", "budget_exceeded", "timeout",
     "http_error", "transport_error", "invalid_request",
+    "no_evidence", "call_budget_exceeded",  # Application-side pre-dispatch rejection.
 ]
 
 

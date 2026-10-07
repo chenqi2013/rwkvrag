@@ -14,6 +14,50 @@ test("matrix review failures remain visible without editing model output", () =>
   }
 });
 
+for (const [status, expected] of [
+  ["no_evidence", "No evidence selected"],
+  ["current_question_failed", "History rewrite failed"],
+  ["resolver_failed", "Evidence reading failed"],
+  ["call_budget_exceeded", "Request model-call limit reached"],
+  ["request_timeout", "Request deadline reached"],
+]) {
+  test(`${status} has an explicit explanation without inventing a Writer call`, () => {
+    const response = { answer: "", generation: { pipeline: "rwkv", status, model_calls: [] } };
+    const display = answerPresentation(response);
+    assert.ok(display.label[1].startsWith(expected));
+    assert.equal(display.writerCalled, false);
+    assert.equal(display.answerText, "");
+  });
+}
+
+test("literal citation failures never claim a model content review", () => {
+  for (const reason of [undefined, "missing_valid_citation", "citation_syntax_or_identity"]) {
+    const response = { answer: "原样答案", sources: [{}], generation: {
+      pipeline: "rwkv", status: "answer_quality_failed", answer_span: [0, 4],
+      quality_failure_reason: reason,
+      citation_audit: { missing_valid_citation: true, semantic_support_verified: false },
+      model_calls: [{ stage: "writer", status: "completed" }],
+    } };
+    const before = JSON.stringify(response);
+    const display = answerPresentation(response);
+    assert.doesNotMatch(display.label[1], /model review/);
+    if (reason) assert.match(display.label[1], /Citation check failed/);
+    assert.match(evidenceWarnings(response)[0][1], /no valid source citation/);
+    assert.equal(display.answerText, response.answer);
+    assert.equal(JSON.stringify(response), before);
+  }
+});
+
+test("request deadline preserves already observed partial Writer output", () => {
+  const response = { answer: "原样答案", generation: { pipeline: "rwkv",
+    status: "request_timeout", answer_span: [0, 4],
+    model_calls: [{ stage: "writer", status: "cancelled", completion_attempted: true }] } };
+  const display = answerPresentation(response);
+  assert.equal(display.answerText, response.answer);
+  assert.equal(display.writerCalled, true);
+  assert.match(display.label[1], /Request deadline/);
+});
+
 test("partial retrieval is visible and preserves the original answer", () => {
   const response = { answer: "local evidence only", sources: [{}], generation: {
     pipeline: "rwkv", status: "retrieval_partial_failure", writer_status: "completed",

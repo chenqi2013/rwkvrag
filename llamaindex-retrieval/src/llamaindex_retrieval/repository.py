@@ -49,10 +49,25 @@ def search_failure_category(response: dict[str, Any]) -> FailureCategory | None:
         status = native.get("status")
         if status == "completed":
             return None
-        if status in ("routing_failed", "planner_failed", "planner_partial_failure", "retrieval_failed", "retrieval_partial_failure"):
+        if status in ("routing_failed", "current_question_failed", "planner_failed",
+                      "planner_partial_failure", "retrieval_failed", "retrieval_partial_failure"):
             return "retrieval_failed"
-        if status in ("resolver_partial_failure", "invalid_materials", "matrix_partial_failure", "invalid_matrix"):
+        if status in ("resolver_failed", "resolver_partial_failure", "no_evidence",
+                      "invalid_materials", "matrix_partial_failure", "invalid_matrix"):
             return "evidence_extraction_failed"
+        if status in ("request_timeout", "call_budget_exceeded"):
+            calls = native.get("model_calls")
+            if isinstance(calls, list):
+                records = [call for call in calls if isinstance(call, dict)]
+                stage = next((call.get("stage") for call in reversed(records)
+                              if call.get("status") != "completed"),
+                             records[-1].get("stage") if records else None)
+                if stage in ("planner", "routing"):
+                    return "retrieval_failed"
+                if stage == "resolver":
+                    return "evidence_extraction_failed"
+            if not calls:
+                return "retrieval_failed"
         return "generation_failed"
     generation = response.get("generation")
     if not isinstance(generation, dict):
@@ -75,7 +90,9 @@ def search_failure_reason(response: dict[str, Any]) -> str | None:
         known = ("routing_failed", "planner_failed", "planner_partial_failure", "retrieval_failed", "retrieval_partial_failure", "resolver_partial_failure",
                  "invalid_materials", "length", "timeout", "budget_exceeded", "http_error",
                  "transport_error", "invalid_request", "invalid_response", "cancelled",
-                 "matrix_partial_failure", "invalid_matrix", "answer_review_failed", "answer_quality_failed")
+                 "matrix_partial_failure", "invalid_matrix", "answer_review_failed", "answer_quality_failed",
+                 "current_question_failed", "resolver_failed", "no_evidence",
+                 "request_timeout", "call_budget_exceeded")
         if status in known:
             return f"native_{status}"
         return "native_status_missing" if status is None else "native_status_unknown"
