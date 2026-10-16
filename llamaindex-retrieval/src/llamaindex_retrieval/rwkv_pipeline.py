@@ -755,6 +755,9 @@ class RWKVPipeline:
 
     @bounded_request
     async def ask_materials(self, question, materials, history=None):
+        if self.settings.native_material_reading == "question_documents_v1":
+            from .question_document_reader import ask_documents
+            return await ask_documents(self, question, materials, history=history)
         started = monotonic()
         retrieval = {"mode": "materials", "returned": len(materials)}
         budget = getattr(self, "_request_budget", None)
