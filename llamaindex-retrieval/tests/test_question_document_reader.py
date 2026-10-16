@@ -192,6 +192,18 @@ def test_default_client_and_protocol_are_unchanged():
     assert model_client_class(settings()) is StructuredNativeRWKVClient
 
 
+def test_documented_environment_profile_loads_with_integer_concurrency(monkeypatch):
+    from pathlib import Path
+    doc = Path(__file__).parents[1] / "QUESTION_DOCUMENT_READING.md"
+    block = doc.read_text().split("```dotenv\n", 1)[1].split("```", 1)[0]
+    for line in block.strip().splitlines():
+        name, value = line.split("=", 1)
+        monkeypatch.setenv(name, value)
+    profile = Settings(_env_file=None)
+    assert profile.native_material_reading == "question_documents_v1"
+    assert profile.native_document_read_concurrency == 32
+
+
 @pytest.mark.parametrize("changes", [
     {"native_transport": "rwkvos_batch"}, {"native_completion_protocol": "native"},
     {"native_require_model_identity": False}, {"native_writer_pipeline": "funnel_v1"},

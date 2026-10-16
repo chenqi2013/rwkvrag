@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, SecretStr, StrictInt, model_validator
+from pydantic import Field, SecretStr, StrictInt, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from .native_state import NativeStateRouting
@@ -178,6 +178,15 @@ class Settings(BaseSettings):
                              "identity checks, immutable single Writer, no alternate task, "
                              "citation or packing policy, and no unified pipeline")
         return self
+
+
+    @field_validator("native_document_read_concurrency", mode="before")
+    @classmethod
+    def parse_document_read_concurrency(cls, value):
+        # Environment settings are strings; keep bool/float inputs invalid.
+        if isinstance(value, str) and value.isascii() and value.isdecimal():
+            return int(value)
+        return value
 
 
     @model_validator(mode="after")
