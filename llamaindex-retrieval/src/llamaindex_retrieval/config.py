@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, SecretStr, StrictInt, model_validator
+from pydantic import Field, SecretStr, StrictInt, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from .native_state import NativeStateRouting
@@ -108,6 +108,9 @@ class Settings(BaseSettings):
         default=None, gt=0, le=3600, allow_inf_nan=False)
     native_context_window_tokens: int = Field(default=16384, ge=1024)
     native_max_concurrency: int = Field(default=32, ge=1, le=256)
+    # Explicit material-only candidate; supplied originals are read in full.
+    native_material_reading: Literal["direct", "question_documents_v1"] = "direct"
+    native_document_read_concurrency: StrictInt = Field(default=32, ge=1, le=32)
     native_planner_prefill: Literal["<think", "<think></think"] = "<think"
     native_plan_protocol: Literal["queries_fields", "shared_tasks", "fact_queries_v1"] = "queries_fields"
     # Experimental: validate history correction separately; no-history requests
@@ -158,6 +161,33 @@ class Settings(BaseSettings):
     generation_output_mode: str = Field(default="legacy", pattern="^(immutable|legacy)$")
     answer_point_fanout_enabled: bool = False
     answer_point_fanout_concurrency: int = Field(default=3, ge=1, le=8)
+
+    @model_validator(mode="after")
+    def validate_document_reading(self) -> "Settings":
+        if self.native_material_reading == "question_documents_v1" and (
+                self.rag_pipeline != "rwkv" or self.generation_output_mode != "immutable"
+                or self.native_transport != "native"
+                or self.native_completion_protocol != "g1j_plain"
+                or not self.native_require_model_identity
+                or self.native_writer_pipeline != "single"
+                or self.native_task_contract != "legacy"
+                or self.native_answer_quality_policy != "disabled"
+                or self.native_writer_budget_policy != "disabled"
+                or getattr(self, "native_unified", None) is not None):
+            raise ValueError("question document reading requires rwkv/native/g1j_plain, "
+                             "identity checks, immutable single Writer, no alternate task, "
+                             "citation or packing policy, and no unified pipeline")
+        return self
+
+
+    @field_validator("native_document_read_concurrency", mode="before")
+    @classmethod
+    def parse_document_read_concurrency(cls, value):
+        # Environment settings are strings; keep bool/float inputs invalid.
+        if isinstance(value, str) and value.isascii() and value.isdecimal():
+            return int(value)
+        return value
+
 
     @model_validator(mode="after")
     def validate_native_state_routing(self) -> "Settings":

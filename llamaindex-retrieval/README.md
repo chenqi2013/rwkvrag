@@ -28,6 +28,8 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 
 ## 主要参数
 
+材料问答可显式选择[按问题并发阅读原文](QUESTION_DOCUMENT_READING.md)：模型逐文档选择，独立Writer只读所选原文；默认关闭，应用接入尚待完整模型质量验证。
+
 表中参数均加 `RWKVRAG_` 前缀。软件默认启用 RWKV 管线；示例传输配置选择已测外部基线。
 
 | 参数 | 软件默认 | 意义 |
