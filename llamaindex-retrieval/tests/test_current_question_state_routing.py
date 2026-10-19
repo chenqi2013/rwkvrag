@@ -7,7 +7,7 @@ import httpx
 import pytest
 
 from llamaindex_retrieval.current_question import (
-    correction_prompt, full_history_prompt, g1k_correction_prompt, resolve_current_question,
+    correction_prompt, full_history_prompt, resolve_current_question,
 )
 from llamaindex_retrieval.model_client import model_client_options
 from llamaindex_retrieval.native_rwkv import NativeRWKVClient
@@ -72,7 +72,6 @@ def refs(engine):
 
 @pytest.mark.parametrize('protocol,prompt', [
     ('current-question-v1', correction_prompt),
-    ('current-question-g1k-v1', g1k_correction_prompt),
     ('current-question-v2', full_history_prompt),
 ])
 @pytest.mark.parametrize('ref', ['task-ref', None])

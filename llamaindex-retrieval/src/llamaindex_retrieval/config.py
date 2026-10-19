@@ -4,10 +4,12 @@ import os
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, SecretStr, StrictInt, model_validator
+from pydantic import Field, SecretStr, StrictInt, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from .native_state import NativeStateRouting
+from .retrieval_gate import RetrievalGateConfig
+from .unified_contracts import UnifiedPolicy
 
 
 class Settings(BaseSettings):
@@ -46,6 +48,8 @@ class Settings(BaseSettings):
     web_router_api_key: SecretStr = SecretStr("local")
     web_router_protocol: Literal["completions", "chat"] = "completions"
     web_router_timeout: float = Field(default=25, ge=1, le=120)
+    # A dedicated binary gate, separate from the historical Web-only router.
+    retrieval_gate: RetrievalGateConfig | None = None
     web_search_results: int = Field(default=2, ge=1, le=10)
     web_search_max_queries: int = Field(default=2, ge=1, le=8)
     web_search_timeout: float = Field(default=45, ge=1, le=120)
@@ -55,13 +59,8 @@ class Settings(BaseSettings):
     web_windows_per_document: int = Field(default=4, ge=1, le=12)
     default_top_k: int = Field(default=5, ge=1, le=50)
     max_top_k: int = Field(default=20, ge=1, le=100)
-    max_chunks_per_document: int = Field(default=1, ge=1, le=10)
-    list_query_max_chunks_per_document: int = Field(default=10, ge=1, le=20)
-    relative_score_threshold: float = Field(default=0.55, ge=0, le=1)
-    min_relevance_score: float = 0
-
-    # The existing pipeline remains available for regression comparisons.
-    rag_pipeline: str = Field(default="rwkv", pattern="^(existing|rwkv)$")
+    # No optional rule-based pipeline or answer-rewriting output mode.
+    rag_pipeline: Literal["rwkv"] = "rwkv"
     atomic_model_base_url: str = ""
     atomic_model_name: str = "rwkv7-g1j-7.2b-20260831-ctx16384"
     atomic_max_calls: int = Field(default=32, ge=1, le=64)
@@ -73,6 +72,10 @@ class Settings(BaseSettings):
     native_api_key: str = ""
     native_transport: Literal["native", "rwkvos_batch"] = "native"
     native_completion_protocol: Literal["native", "g1j_plain"] = "native"
+    # Explicit decoding-only candidate; do not migrate a running service implicitly.
+    native_json_constraints: Literal["disabled", "schema_v1"] = "disabled"
+    # Whole retrieval-core candidate, not a Writer switch or implicit fallback.
+    native_unified: UnifiedPolicy | None = None
     native_state_routing: NativeStateRouting | None = None
     native_funnel_max_calls: int = Field(default=128, ge=4, le=512)
     native_quantity_binding: Literal["decimal", "verbatim"] = "decimal"
@@ -108,12 +111,15 @@ class Settings(BaseSettings):
         default=None, gt=0, le=3600, allow_inf_nan=False)
     native_context_window_tokens: int = Field(default=16384, ge=1024)
     native_max_concurrency: int = Field(default=32, ge=1, le=256)
+    # Explicit material-only candidate; supplied originals are read in full.
+    native_material_reading: Literal["direct", "question_documents_v1"] = "direct"
+    native_document_read_concurrency: StrictInt = Field(default=32, ge=1, le=32)
     native_planner_prefill: Literal["<think", "<think></think"] = "<think"
     native_plan_protocol: Literal["queries_fields", "shared_tasks", "fact_queries_v1"] = "queries_fields"
     # Experimental: validate history correction separately; no-history requests
     # stay byte-identical. Keep raw until Reader/Writer regressions pass.
     native_history_protocol: Literal[
-        "raw", "current-question-v1", "current-question-g1k-v1", "current-question-v2"
+        "raw", "current-question-v1", "current-question-v2"
     ] = "raw"
     native_resolver_prefill: Literal["<think", "<think></think"] = "<think"
     native_resolver_protocol: Literal["fields", "task_units", "binary_query"] = "fields"
@@ -148,16 +154,30 @@ class Settings(BaseSettings):
     native_ingest_chunk_characters: int = Field(default=2400, ge=256, le=24000)
     native_ingest_overlap_characters: int = Field(default=180, ge=1, le=2000)
 
-    generation_base_url: str = "http://192.168.0.125:8002/v1"
-    generation_models_url: str = "http://192.168.0.125:8002/v1/models"
-    generation_password: str = ""
-    generation_timeout: int = Field(default=90, ge=5, le=300)
-    generation_total_timeout: int = Field(default=20, ge=5, le=120)
     generation_max_tokens: int = Field(default=2_048, ge=32, le=4096)
-    generation_max_evidence_characters: int = Field(default=12_000, ge=1_000, le=48_000)
-    generation_output_mode: str = Field(default="legacy", pattern="^(immutable|legacy)$")
-    answer_point_fanout_enabled: bool = False
-    answer_point_fanout_concurrency: int = Field(default=3, ge=1, le=8)
+    generation_output_mode: Literal["immutable"] = "immutable"
+
+    @model_validator(mode="after")
+    def validate_unified_retrieval(self) -> "Settings":
+        if self.retrieval_gate is not None and (
+                self.native_unified is None or self.native_unified.reading_protocol != "span_ids_v1"):
+            raise ValueError("retrieval gate requires unified span reading")
+        if self.native_unified is not None and (
+                self.rag_pipeline != "rwkv" or self.generation_output_mode != "immutable"
+                or self.native_transport != "native"
+                or self.native_completion_protocol != "g1j_plain"
+                or not self.native_require_model_identity
+                or self.native_state_routing is not None
+                or self.native_json_constraints != "disabled"
+                or self.native_writer_pipeline != "single"
+                or self.native_task_contract != "legacy"
+                or self.native_task_matrix_enabled
+                or self.native_planner_format_repair or self.native_resolver_format_repair
+                or self.native_preserve_original_question
+                or self.native_writer_budget_policy != "disabled"):
+            raise ValueError("unified retrieval requires native/g1j_plain identity checks, immutable output, "
+                             "no State/schema-v1/matrix/funnel/anchored or automatic repair/insertion/packing")
+        return self
 
     @model_validator(mode="after")
     def validate_native_state_routing(self) -> "Settings":
@@ -176,6 +196,47 @@ class Settings(BaseSettings):
             if self.native_task_matrix_enabled and not {
                     "plan", "reader", "assessment", "followup", "review", "writer"} <= routing.roles.keys():
                 raise ValueError("Native task matrix requires explicit bindings for all six State roles")
+        return self
+
+    @model_validator(mode="after")
+    def validate_document_reading(self) -> "Settings":
+        if self.native_material_reading == "question_documents_v1" and (
+                self.rag_pipeline != "rwkv" or self.generation_output_mode != "immutable"
+                or self.native_transport != "native"
+                or self.native_completion_protocol != "g1j_plain"
+                or not self.native_require_model_identity
+                or self.native_writer_pipeline != "single"
+                or self.native_task_contract != "legacy"
+                or self.native_answer_quality_policy != "disabled"
+                or self.native_writer_budget_policy != "disabled"
+                or getattr(self, "native_unified", None) is not None):
+            raise ValueError("question document reading requires rwkv/native/g1j_plain, "
+                             "identity checks, immutable single Writer, no alternate task, "
+                             "citation or packing policy, and no unified pipeline")
+        return self
+
+    @field_validator("native_document_read_concurrency", mode="before")
+    @classmethod
+    def parse_document_read_concurrency(cls, value):
+        # Environment settings are strings; keep bool/float inputs invalid.
+        if isinstance(value, str) and value.isascii() and value.isdecimal():
+            return int(value)
+        return value
+
+    @model_validator(mode="after")
+    def validate_json_constraints(self) -> "Settings":
+        if self.native_json_constraints == "schema_v1" and (
+                self.native_transport != "native"
+                or self.native_completion_protocol != "g1j_plain"
+                or not self.native_require_model_identity
+                or self.native_plan_protocol != "fact_queries_v1"
+                or self.native_resolver_protocol != "binary_query"
+                or self.native_writer_pipeline != "single"
+                or self.native_task_matrix_enabled
+                or self.native_planner_format_repair
+                or self.native_resolver_format_repair):
+            raise ValueError("schema_v1 requires native/g1j_plain identity checks, fact_queries_v1, "
+                             "binary_query, single Writer, no matrix or automatic format retries")
         return self
 
     @model_validator(mode="after")
@@ -289,34 +350,6 @@ class Settings(BaseSettings):
         if self.rwkvos_input_token_limit is not None and not self.rwkvos_count_input_tokens:
             raise ValueError("rwkvos_input_token_limit requires rwkvos_count_input_tokens")
         return self
-    ask_total_timeout: int = Field(default=45, ge=10, le=180)
-    ask_generation_reserve: int = Field(default=12, ge=3, le=60)
-    answer_verification_min_budget: int = Field(default=15, ge=3, le=60)
-    semantic_pipeline_enabled: bool = False
-    model_query_planning_enabled: bool = True
-    model_query_planning_timeout: int = Field(default=10, ge=3, le=120)
-    model_query_planning_max_tokens: int = Field(default=256, ge=64, le=1024)
-    model_query_planning_max_queries: int = Field(default=6, ge=3, le=10)
-    model_query_planning_cache_ttl: int = Field(default=600, ge=0, le=86_400)
-    document_reranking_enabled: bool = True
-    document_reranking_timeout: int = Field(default=10, ge=3, le=120)
-    document_reranking_max_tokens: int = Field(default=96, ge=32, le=512)
-    document_reranking_max_documents: int = Field(default=5, ge=2, le=20)
-    document_reranking_max_characters: int = Field(default=1_600, ge=500, le=8_000)
-    document_reranking_concurrency: int = Field(default=2, ge=1, le=10)
-    evidence_extraction_enabled: bool = True
-    evidence_extraction_timeout: int = Field(default=15, ge=3, le=120)
-    evidence_extraction_max_tokens: int = Field(default=384, ge=64, le=2048)
-    evidence_extraction_max_sources: int = Field(default=6, ge=1, le=20)
-    evidence_extraction_max_source_characters: int = Field(default=2_500, ge=500, le=24_000)
-    evidence_extraction_concurrency: int = Field(default=2, ge=1, le=10)
-    active_retrieval_enabled: bool = True
-    active_retrieval_max_rounds: int = Field(default=1, ge=1, le=4)
-    active_retrieval_max_queries: int = Field(default=3, ge=1, le=5)
-    active_retrieval_timeout: int = Field(default=10, ge=3, le=120)
-    active_retrieval_max_tokens: int = Field(default=192, ge=64, le=1024)
-    active_retrieval_max_evidence_characters: int = Field(default=1_500, ge=1_000, le=24_000)
-    active_retrieval_max_results: int = Field(default=20, ge=5, le=50)
 
     mongo_url: str = "mongodb://127.0.0.1:27017"
     mongo_database: str = "rwkvrag_admin"

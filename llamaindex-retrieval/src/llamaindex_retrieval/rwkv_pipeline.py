@@ -17,6 +17,7 @@ from .direct_web import WebProviderError
 from .lexical_index import LexicalIndex, LexicalResult
 from .model_client import model_answer_bounds, model_client_class, model_client_options
 from .native_rwkv import NativeRWKVResult
+from .native_json_contract import json_output_options
 from .request_budget import bounded_request
 from .schemas import AskResponse, ConversationMessage, SearchRequest, SourceItem
 from .writer_prompt import writer_prompt_checked, writer_prompt_v2
@@ -557,7 +558,8 @@ class RWKVPipeline:
                     call_trace = {}
                 call_trace["task_contract"] = task_anchor.trace()
             result = await self._call(prompt, stage="resolver",
-                max_tokens=self.settings.native_resolver_max_tokens, sources=[source], trace=call_trace, state_role=state_role)
+                max_tokens=self.settings.native_resolver_max_tokens, sources=[source], trace=call_trace,
+                state_role=state_role, **json_output_options(self.settings, "reader"))
             event = call_trace if call_trace is not None else {}
             event.update({**result.trace, "source_id": source.id,
                 "task_group": task_group,
@@ -755,6 +757,9 @@ class RWKVPipeline:
 
     @bounded_request
     async def ask_materials(self, question, materials, history=None):
+        if self.settings.native_material_reading == "question_documents_v1":
+            from .question_document_reader import ask_documents
+            return await ask_documents(self, question, materials, history=history)
         started = monotonic()
         retrieval = {"mode": "materials", "returned": len(materials)}
         budget = getattr(self, "_request_budget", None)
@@ -810,12 +815,20 @@ class RWKVPipeline:
         prompt = planner_prompt(task, self.settings)
         planned = await self._call(prompt, stage="planner",
             max_tokens=self.settings.native_planner_max_tokens,
+            **json_output_options(self.settings, "plan"),
             **({"trace": {"task_contract": anchor.trace()}} if anchor is not None else {}))
         events = [*routing_events, *task_events, planned.trace]
         try:
             plan = parse_plan(structured_body(planned), self.settings)
         except (ValueError, TypeError) as error:
             events[-1] = {**planned.trace, "parse_error": str(error)}
+            if self.settings.native_json_constraints == "schema_v1":
+                # A rejected/unfinished constrained call must not silently turn
+                # into an unconstrained plan or a successful fallback answer.
+                return self._response(None, [], {
+                    "mode": request.retrieval_mode, "returned": 0, "routing": routing,
+                    "current_question": current, "planner_error": str(error),
+                }, events, "planner_failed", started)
             # Keep the complete conversation for Reader/Writer. A failed plan
             # supplies no trusted rewritten query or inferred answer fields.
             plan = {"queries": [current], "fields": [current],

@@ -26,6 +26,7 @@ import { errorMessage } from "../utils";
 import { useLanguage } from "../i18n";
 import { answerPresentation, evidenceWarnings } from "../answerPresentation";
 import { formatAnswer, safeHistoryAnswer } from "../answerFormat";
+import { historyAnswer } from "../unifiedAnswer";
 
 interface ConversationTurn {
   role: "user" | "assistant";
@@ -61,14 +62,12 @@ export default function SearchPage() {
       setRetrieved(undefined);
       const display = answerPresentation(next);
       // Keep the raw response visible; carry only a completed answer body forward.
-      const completed = display.isNative
-        ? next.generation.status === "completed" && next.generation.writer_status === "completed"
-        : next.generation.answer_strategy === "single_writer_call";
       const safeAnswer = safeHistoryAnswer(display.answerText, next);
-      if (completed && display.spanValid && safeAnswer) {
+      const carry = safeAnswer ? historyAnswer(next, safeAnswer) : undefined;
+      if (display.spanValid && carry) {
         setHistory((previous) => [...previous,
           { role: "user", content: values.question },
-          { role: "assistant", content: safeAnswer },
+          { role: "assistant", content: carry },
         ]);
         if (form.getFieldValue("question") === values.question) {
           form.setFieldValue("question", "");
@@ -157,7 +156,7 @@ export default function SearchPage() {
                 <Input.TextArea rows={6} placeholder={tr("输入需要检索的问题", "Enter a question to search")} />
               </Form.Item>
               <Form.Item label={tr("检索范围", "Search scope")} name="retrieval_mode"
-                extra={tr("自动模式由小模型判断是否补充网络检索；联网时发送检索问题，不上传知识库原文。", "Auto uses a small model to decide whether to add web search. Search queries are sent to the provider; knowledge-base documents are not uploaded.")}>
+                extra={tr("自动模式由当前配置的模型流程选择资料渠道；联网时发送模型生成的查询，请勿在可外发任务中放入敏感内容。", "Auto uses the configured model pipeline to choose sources. Model-generated queries may be sent to web providers; avoid sensitive content in web-enabled tasks.")}>
                 <Select options={[
                   { value: "auto", label: tr("自动判断是否联网", "Automatically decide whether to search the web") },
                   { value: "knowledge_base", label: tr("仅知识库", "Knowledge base only") },

@@ -1,0 +1,297 @@
+"""Local, separately configured trial server. Existing services remain unchanged."""
+import asyncio
+from contextlib import asynccontextmanager
+from copy import deepcopy
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+from time import monotonic
+from typing import Literal
+from uuid import uuid4
+
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
+import httpx
+from pydantic import BaseModel, ConfigDict, Field
+
+from .config import Settings
+from .interactive_sources import choose_catalog, gather, add_sources
+from . import interactive_funnel, interactive_spans
+from .model_client import model_client_options
+from .schemas import SourceItem
+from .structured_native import StructuredNativeRWKVClient
+from .web_retrieval import WebSearchAdapter
+
+
+class Question(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    question: str = Field(min_length=1, max_length=10000)
+    supplementary: bool = True
+    parent_job_id: str | None = Field(default=None, pattern=r'^[0-9a-f]{32}$')
+    retrieval_mode: Literal['knowledge_base', 'web', 'hybrid'] = 'hybrid'
+    knowledge_base_ids: list[str] = Field(default_factory=list)
+
+
+def digest(value):
+    return hashlib.sha256(value.encode()).hexdigest()
+
+
+class ObservedModel:
+    def __init__(self, native, job):
+        self.native, self.job = native, job
+        self.events = []
+
+    async def complete(self, messages, **kwargs):
+        started = monotonic()
+        trace = kwargs.setdefault('trace', {})
+        event = {'messages': deepcopy(messages), 'stage': kwargs['stage'], 'raw_text': None,
+                 'evidence_ids': list(kwargs.get('evidence_ids', [])), 'trace': trace,
+                 'status': 'pending'}
+        self.events.append(event)
+        try:
+            result = await self.native.complete(messages, **kwargs)
+            event.update(status=result.status, raw_text=result.raw_text, trace=result.trace)
+            return result
+        except asyncio.CancelledError:
+            event.update(status='cancelled', provider_execution_cancelled=None)
+            raise
+        except Exception as error:
+            event.update(status='failed', error_type=type(error).__name__)
+            raise
+        finally:
+            event.update(elapsed_ms=round((monotonic() - started) * 1000),
+                         raw_sha256=digest(event['raw_text'] or ''))
+            self.job['model_calls_finished'] = sum(e['status'] != 'pending' for e in self.events)
+
+
+class Trial:
+    def __init__(self, config):
+        self.config = config
+        self.settings = Settings(_env_file=None, **config['settings'])
+        transport = httpx.AsyncHTTPTransport(retries=0, limits=httpx.Limits(
+            max_connections=self.settings.native_max_concurrency, max_keepalive_connections=0))
+        self.native = StructuredNativeRWKVClient(**model_client_options(self.settings, transport=transport))
+        self.web = WebSearchAdapter(self.settings)
+        self.admin = httpx.AsyncClient(base_url=config['admin_base_url'], trust_env=False, timeout=60)
+        self.lock = asyncio.Lock()
+        self.jobs, self.tasks = {}, {}
+        self.folder = Path(config['records_dir'])
+        self.folder.mkdir(parents=True, exist_ok=True)
+
+    async def knowledge_bases(self):
+        response = await self.admin.get('/v1/admin/knowledge-bases')
+        response.raise_for_status()
+        return response.json()
+
+    async def catalog(self, ids):
+        catalog, files = [], {}
+        for kb in dict.fromkeys(ids):
+            offset = 0
+            while True:
+                response = await self.admin.get('/v1/admin/files', params={
+                    'knowledge_base_id': kb, 'limit': 200, 'offset': offset})
+                response.raise_for_status()
+                batch = response.json()
+                for item in batch:
+                    if item['status'] == 'ready':
+                        files[item['id']] = item
+                        catalog.append({'id': item['id'], 'title': item['filename']})
+                if len(batch) < 200:
+                    break
+                offset += len(batch)
+        return catalog, files
+
+    async def run(self, job, payload):
+        model = ObservedModel(self.native, job)
+        receipts = []
+        def progress(text):
+            job['phase'] = text
+        try:
+            async with asyncio.timeout(900):
+                async with self.lock:
+                    job['status'] = 'running'
+                    bases = {b['id']: b for b in await self.knowledge_bases()}
+                    if any(kb not in bases for kb in payload.knowledge_base_ids):
+                        raise ValueError('unknown_knowledge_base')
+                    question = payload.question
+                    progress('整理问题与上下文')
+                    parent = None
+                    if payload.parent_job_id:
+                        previous = self.jobs.get(payload.parent_job_id)
+                        if previous is None:
+                            previous = json.loads((self.folder / (payload.parent_job_id + '.json')).read_text())
+                        if previous['status'] != 'completed':
+                            raise ValueError('parent_question_not_completed')
+                        result = previous.get('result', {})
+                        previous_answer = result.get('answer') or {}
+                        parsed = previous_answer.get('generation', {}).get('parsed_answer')
+                        parent = {'context': previous.get('context', {}).get('resolved_question') or previous['question'],
+                                  'answer': parsed['answer'] if parsed else None}
+                    question, event = await interactive_funnel.contextualize(model, question, parent)
+                    job['context'] = {'resolved_question': question, 'event': event,
+                                      'parent_job_id': payload.parent_job_id}
+                    if question is None:
+                        job.update(status='failed', phase='上下文整理未完成')
+                        return
+                    catalog, files = (await self.catalog(payload.knowledge_base_ids)
+                        if payload.retrieval_mode != 'web' else ([], {}))
+                    cache = {}
+                    source_slots = asyncio.Semaphore(8)
+                    async def document(file_id):
+                        async with source_slots:
+                            if file_id not in cache:
+                                response = await self.admin.get('/v1/admin/files/' + file_id + '/download')
+                                response.raise_for_status()
+                                text = response.content.decode('utf-8')
+                                item = files[file_id]
+                                cache[file_id] = SourceItem(id='K' + digest(file_id + '\0' + text)[:16],
+                                    document_id=file_id, title=item['filename'], source='knowledge_base',
+                                    score=0, snippet=text, metadata={'knowledge_base_id': item['knowledge_base_id'],
+                                        'sha256': digest(text), 'source_kind': 'stored_original'})
+                            return cache[file_id].model_copy(deep=True)
+
+                    async def acquire(query, channels=None):
+                        # channels=None keeps the funnel behaviour: every permitted channel.
+                        acquired = []
+                        async def kb():
+                            progress(f'从知识库目录选择资料 · {len(catalog)} 份文档')
+                            ids, decisions = await choose_catalog(model, query, catalog)
+                            receipts.append({'channel': 'knowledge_base', 'query': query,
+                                'catalog_size': len(catalog), 'selected_file_ids': ids, 'decisions': decisions})
+                            return await gather([document(i) for i in ids])
+                        async def web():
+                            progress('查找联网资料')
+                            try:
+                                hits, trace = await self.web.search(query, full_snapshot=True)
+                                receipts.append({'channel': 'web', 'query': query, 'trace': trace})
+                                return [SourceItem(id='W' + digest(h.metadata['uri'] + '\0' + h.text)[:16],
+                                    document_id=h.document_id, title=h.metadata['title'], source='web',
+                                    uri=h.metadata['uri'], score=0, snippet=h.text, metadata=h.metadata) for h in hits]
+                            except Exception as error:
+                                receipts.append({'channel': 'web', 'query': query, 'status': 'failed',
+                                    'error_type': type(error).__name__, 'error': getattr(error, 'safe_code', 'web_unavailable')})
+                                return []
+                        jobs = []
+                        if catalog and (channels is None or 'knowledge_base' in channels):
+                            jobs.append(kb())
+                        if payload.retrieval_mode != 'knowledge_base' and (channels is None or 'web' in channels):
+                            jobs.append(web())
+                        for group in await gather(jobs):
+                            add_sources(acquired, group)
+                        return acquired
+
+                    scope = {'knowledge_bases': [bases[i]['name'] for i in dict.fromkeys(payload.knowledge_base_ids)],
+                             'web': payload.retrieval_mode != 'knowledge_base'}
+                    if self.config.get('pipeline') == 'spans':
+                        result = await interactive_spans.answer(model, question, acquire=acquire,
+                            scope=scope, progress=progress, supplementary=payload.supplementary,
+                            **self.config.get('spans_options', {}))
+                    else:
+                        initial = await acquire(question)
+                        result = await interactive_funnel.answer(model, question, initial,
+                            acquire=acquire, scope=scope, progress=progress, supplementary=payload.supplementary)
+                    result['acquisition'] = receipts
+                    result['acquisition_incomplete'] = any(r.get('status') == 'failed' or
+                        any(d['parsed'] is None for d in r.get('decisions', [])) for r in receipts)
+                    job.update(result=result, status='completed', phase='回答完成')
+        except asyncio.CancelledError:
+            job.update(status='cancelled', phase='已取消', provider_execution_cancelled=None)
+        except TimeoutError:
+            job.update(status='timeout', phase='请求达到运行时限')
+        except Exception as error:
+            job.update(status='failed', phase='本次请求未完成', error_type=type(error).__name__)
+        finally:
+            job['finished_at'] = datetime.now(timezone.utc).isoformat()
+            record = {**job, 'model_calls': model.events, 'acquisition': receipts}
+            with (self.folder / (job['id'] + '.json')).open('x') as f:
+                json.dump(record, f, ensure_ascii=False)
+
+
+@asynccontextmanager
+async def lifespan(app):
+    config = json.loads(Path(os.environ['RWKVRAG_TRIAL_CONFIG']).read_text())
+    trial = Trial(config)
+    await trial.native.verify_fp32_runtime()
+    app.state.trial = trial
+    yield
+    for task in trial.tasks.values():
+        if not task.done():
+            task.cancel()
+    await asyncio.gather(*trial.tasks.values(), return_exceptions=True)
+    await trial.native.aclose()
+    await trial.admin.aclose()
+
+
+app = FastAPI(title='RWKV 资料问答试用', lifespan=lifespan)
+
+
+@app.get('/v1/try/meta')
+async def meta():
+    trial = app.state.trial
+    return {'model': trial.settings.native_model, 'knowledge_bases': await trial.knowledge_bases(),
+        'concurrency': trial.settings.native_max_concurrency, 'gpu': trial.config['gpu'],
+        'expires_at': trial.config.get('expires_at'), 'history_supported': True,
+        'default_pipeline': trial.config.get('pipeline', 'funnel'), 'funnel_fan_in': 3,
+        'web_configured': (trial.settings.web_search_provider == 'searxng' or
+            bool(trial.settings.web_tavily_api_key.get_secret_value()) or
+            bool(trial.settings.web_tavily_api_key_file and trial.settings.web_tavily_api_key_file.is_file())),
+        'quality_verified': False}
+
+
+@app.post('/v1/try/ask')
+async def ask(payload: Question):
+    if not payload.question.strip():
+        raise HTTPException(422, '请输入问题')
+    if payload.retrieval_mode == 'knowledge_base' and not payload.knowledge_base_ids:
+        raise HTTPException(422, '请选择知识库')
+    trial = app.state.trial
+    job = {'id': uuid4().hex, 'question': payload.question, 'request': payload.model_dump(),
+           'status': 'queued', 'phase': '等待处理', 'model_calls_finished': 0,
+           'created_at': datetime.now(timezone.utc).isoformat()}
+    trial.jobs[job['id']] = job
+    trial.tasks[job['id']] = asyncio.create_task(trial.run(job, payload))
+    return job
+
+
+@app.get('/v1/try/jobs/{job_id}')
+async def job(job_id: str):
+    trial = app.state.trial
+    if job_id in trial.jobs:
+        return trial.jobs[job_id]
+    if len(job_id) == 32 and all(c in '0123456789abcdef' for c in job_id):
+        path = trial.folder / (job_id + '.json')
+        if path.is_file():
+            value = json.loads(path.read_text())
+            value.pop('model_calls', None)
+            return value
+    raise HTTPException(404, '未找到这次提问')
+
+
+@app.post('/v1/try/jobs/{job_id}/cancel')
+async def cancel(job_id: str):
+    trial = app.state.trial
+    task = trial.tasks.get(job_id)
+    if task is None:
+        raise HTTPException(404, '未找到这次提问')
+    task.cancel()
+    await asyncio.gather(task, return_exceptions=True)
+    result = trial.jobs[job_id]
+    # Cancellation can arrive before the coroutine enters its try/finally.
+    if result['status'] == 'queued':
+        result.update(status='cancelled', phase='已取消',
+                      finished_at=datetime.now(timezone.utc).isoformat())
+        with (trial.folder / (job_id + '.json')).open('x') as f:
+            json.dump({**result, 'model_calls': [], 'acquisition': []}, f, ensure_ascii=False)
+    return result
+
+
+@app.get('/')
+async def root():
+    return RedirectResponse('/admin/#/try')
+
+
+app.mount('/admin', StaticFiles(directory=os.environ.get('RWKVRAG_TRIAL_STATIC', '/tmp/rwkvrag-trial-unbuilt'),
+                                html=True, check_dir=False), name='admin')

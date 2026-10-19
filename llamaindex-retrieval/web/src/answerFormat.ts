@@ -1,5 +1,6 @@
 import type { AskResponse } from "./types.ts";
 import { citationParts, citedSource } from "./citations.ts";
+import { isUnifiedSpan } from "./unifiedAnswer.ts";
 
 export type FormattedAnswer = {
   text: string;
@@ -33,6 +34,11 @@ function repeatedLongSpan(text: string): boolean {
 
 /** A display gate. The response and saved raw answer are never rewritten. */
 export function formatAnswer(text: string, response: Pick<AskResponse, "sources" | "generation">): FormattedAnswer {
+  // Span references are explicit JSON fields. Body spelling/repetition is not
+  // a second contract, and must not hide an otherwise valid root projection.
+  if (isUnifiedSpan(response.generation.protocol)) {
+    return { text, blocked: false, invalidLabels: [], repeated: repeatedLongSpan(text), missingCitations: false };
+  }
   const invalid = new Set<string>();
   let cited = false;
   for (const tag of text.matchAll(candidateTag)) {

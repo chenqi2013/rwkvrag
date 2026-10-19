@@ -4,7 +4,7 @@ import json
 import pytest
 
 from llamaindex_retrieval.config import Settings
-from llamaindex_retrieval.current_question import g1k_correction_prompt, parse_question, resolve_current_question
+from llamaindex_retrieval.current_question import full_history_prompt, parse_question, resolve_current_question
 from llamaindex_retrieval.rwkv_pipeline import RWKVPipeline, conversation
 from llamaindex_retrieval.schemas import ConversationMessage, SearchRequest
 from test_rwkv_pipeline import FakeIndex, FakeModel, hit, native_result
@@ -86,23 +86,24 @@ def test_raw_default_retains_history_and_does_not_call_correction():
     assert not events and not pipe.model.corrections
 
 
-def test_g1k_history_protocol_uses_ordinal_and_withdrawal_prompt_without_code_resolution():
-    prompt = g1k_correction_prompt("只展开第二个的用途", [
-        ConversationMessage(role="user", content="第一是OpenSearch，第二是MongoDB。"),
-        ConversationMessage(role="assistant", content="旧回答不参与程序解析"),
-    ])
-    assert "第二是X" in prompt and "上一用户问题" in prompt and "最新问题" in prompt
-    assert "OpenSearch" in prompt and "MongoDB" in prompt and "旧回答" not in prompt
+def test_generic_history_prompt_preserves_all_roles_without_case_specific_rules():
+    history = [ConversationMessage(role="user", content="先比较甲与乙。"),
+               ConversationMessage(role="assistant", content="之前的回答仅作历史数据。")]
+    question = "只展开后者的用途"
+    prompt = full_history_prompt(question, history)
+    instruction, payload = prompt.split("\n", 1)
+    assert json.loads(payload) == {"history": [m.model_dump() for m in history],
+                                  "latest_question": question}
+    assert all(word not in instruction for word in ("第二是X", "OpenSearch", "MongoDB"))
 
-    corrected = "请说明MongoDB的用途，并说明它是否保存原始推理记录。"
-    pipe = RWKVPipeline(Settings(_env_file=None, native_history_protocol="current-question-g1k-v1"),
+    corrected = "请说明乙的用途。"
+    pipe = RWKVPipeline(Settings(_env_file=None, native_history_protocol="current-question-v2"),
                         None, model=CorrectionModel(json.dumps({"question": corrected}, ensure_ascii=False)))
-    history = [ConversationMessage(role="user", content="第一是OpenSearch，第二是MongoDB。")]
-    current, task, events = asyncio.run(resolve_current_question(pipe, "只展开第二个的用途", history))
+    current, task, events = asyncio.run(resolve_current_question(pipe, question, history))
     assert current == corrected and task == conversation(corrected, [])
-    assert events[0]["history_protocol"] == "current-question-g1k-v1"
+    assert events[0]["history_protocol"] == "current-question-v2"
     assert events[0]["parsed_question"] == corrected
-    assert "只展开第二个" in events[0]["original_task"]
+    assert question in events[0]["original_task"]
 
 
 @pytest.mark.parametrize("override", [{"native_task_matrix_enabled": True},

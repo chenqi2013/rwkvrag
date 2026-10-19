@@ -65,10 +65,13 @@ class WebSearchAdapter:
         trace["configured_state_sha256"] = self.settings.web_router_state_sha256
         return trace
 
-    async def search(self, query):
+    async def search(self, query, *, full_snapshot=False):
+        # Explicit unified-core acquisition: split/rank the full returned snapshot
+        # before reading. Default path remains byte-compatible with the baseline.
         payload = await self._execute({"action": "search", "query": query,
             "max_results": self.settings.web_search_results,
-            "material_characters": self.settings.web_search_material_characters}, self.settings.web_search_timeout)
+            "material_characters": None if full_snapshot else self.settings.web_search_material_characters},
+            self.settings.web_search_timeout)
         hits = []
         snapshots = []
         material_selections = []
@@ -85,6 +88,7 @@ class WebSearchAdapter:
                 "provider": payload["provider"], "retrieval_query": query,
                 "retrieved_at": item["retrieved_at"], "published_date": item["published_date"],
                 "content_status": item["content_status"], "material_limited": item["material_limited"],
+                "search_snippet": item.get("search_snippet", ""),
                 "content_sha256": sha(text), "snapshot_sha256": sha(snapshot),
                 "fetch_error": item["error"]}
             if self.snapshot_recorder is not None:
@@ -94,7 +98,7 @@ class WebSearchAdapter:
                     "content_status": item["content_status"], "provider": payload["provider"],
                     "retrieval_query": query,
                 })
-            if getattr(self.settings, "web_material_policy", "prefix") == "ranked_windows":
+            if not full_snapshot and getattr(self.settings, "web_material_policy", "prefix") == "ranked_windows":
                 from .web_materials import ranked_windows
                 identity = "web:" + sha(json.dumps([url, snapshot]))
                 windows, selection = ranked_windows(snapshot, query, "web:" + sha(url),

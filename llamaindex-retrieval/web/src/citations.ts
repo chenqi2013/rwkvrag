@@ -1,6 +1,9 @@
 import type { AskResponse, SearchResult } from "./types.ts";
+import { isUnifiedSpan } from "./unifiedAnswer.ts";
 
-export function citationParts(text: string) {
+export function citationParts(text: string, protocol?: unknown) {
+  // In span mode only the separately validated span IDs are source links.
+  if (isUnifiedSpan(protocol)) return [{ text }];
   const pattern = /\[(?:(?:资料|Source)\s*)?(\d+)\](?!\()/g;
   const parts: Array<{ text: string; label?: number }> = [];
   let cursor = 0;

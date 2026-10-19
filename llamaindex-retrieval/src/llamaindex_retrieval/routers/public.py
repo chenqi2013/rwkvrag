@@ -1,12 +1,11 @@
 import asyncio
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from ..config import get_settings
 from ..dependencies import repository, search_service
 from ..ingest import ingest_markdown
-from ..generation import AnswerGenerationError
 from ..schemas import (
     AskResponse,
     ImportResponse,
@@ -40,10 +39,7 @@ async def ask(
     service: SearchService = Depends(search_service),
     repo: MongoRepository = Depends(repository),
 ) -> AskResponse:
-    try:
-        response = await service.ask(payload)
-    except AnswerGenerationError as error:
-        raise HTTPException(status_code=502, detail=str(error)) from error
+    response = await service.ask(payload)
     await repo.record_search_test_run(
         payload.model_dump(mode="json"),
         response.model_dump(mode="json"),
@@ -57,15 +53,12 @@ async def material_ask(
     service: SearchService = Depends(search_service),
     repo: MongoRepository = Depends(repository),
 ) -> AskResponse:
-    try:
-        if payload.history:
-            response = await service.ask_materials(
-                payload.question, payload.materials, history=payload.history,
-            )
-        else:
-            response = await service.ask_materials(payload.question, payload.materials)
-    except AnswerGenerationError as error:
-        raise HTTPException(status_code=502, detail=str(error)) from error
+    if payload.history:
+        response = await service.ask_materials(
+            payload.question, payload.materials, history=payload.history,
+        )
+    else:
+        response = await service.ask_materials(payload.question, payload.materials)
     await repo.record_search_test_run(
         payload.model_dump(mode="json"),
         response.model_dump(mode="json"),

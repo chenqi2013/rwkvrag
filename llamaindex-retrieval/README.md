@@ -24,16 +24,27 @@ cp .env.example .env
 uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 ```
 
-示例明确启用 `RAG_PIPELINE=rwkv` 和 `NATIVE_TRANSPORT=rwkvos_batch`，采用已测零 state、complete 闭合前缀、EOS 停止、queries/tasks 原文选择、80 总来源配置。它是可复核的开发基线，没有通过质量验收。没有 .env 时也默认走 `rwkv`，传输仍默认 `native`；`existing` 只可显式选择用于旧回归。实际服务地址仍须配置。
+示例明确启用 `RAG_PIPELINE=rwkv` 和 `NATIVE_TRANSPORT=rwkvos_batch`，采用已测零 state、complete 闭合前缀、EOS 停止、queries/tasks 原文选择、80 总来源配置。它是可复核的开发基线，没有通过质量验收。没有 .env 时也默认走 `rwkv`，传输仍默认 `native`。旧 `existing` 链路及其规则代答模块已删除，配置不再接受该值。实际服务地址仍须配置。
+
+## 对话与管理页面
+
+独立的[上下文与并发漏斗试用页](INTERACTIVE_TRIAL.md)提供 `/admin/#/try`：整理上下文、获取知识库与联网资料、并发总结、分层归并，再根据缺口补查。该入口单独配置运行；新话题从空上下文开始，原始输出和失败如实保留，不能由页面可用推断答案质量通过。
+
+前端源码提供 `/admin/#/chat` 独立多轮对话页：会话列表、浏览器本地保存、来源抽屉及原始输出检查。管理后台保留在 `/admin/#/dashboard`，原检索测试仍在 `/admin/#/search`。需要构建并由所用服务提供新版静态资源；源码存在不代表运行中的页面已更新。历史准入、存储隐私和停止等待的边界见[前端说明](web/README.md)。
 
 ## 主要参数
+
+材料问答可显式选择[按问题并发阅读原文](QUESTION_DOCUMENT_READING.md)：模型逐文档选择，独立Writer只读所选原文；默认关闭，应用接入尚待完整模型质量验证。
 
 表中参数均加 `RWKVRAG_` 前缀。软件默认启用 RWKV 管线；示例传输配置选择已测外部基线。
 
 | 参数 | 软件默认 | 意义 |
 | --- | --- | --- |
-| `RAG_PIPELINE` | `rwkv` | `existing` 仅用于旧回归 |
+| `RAG_PIPELINE` | `rwkv` | 唯一支持的链路；旧 `existing` 值启动时失败 |
+| `GENERATION_OUTPUT_MODE` | `immutable` | 唯一支持的输出模式；不补引用、不删句、不替换拒答 |
 | `NATIVE_TRANSPORT` | `native` | 外部选 `rwkvos_batch` |
+| `NATIVE_UNIFIED` | 未启用 | 显式统一检索候选：`{}`保留v2，`{"reading_protocol":"span_ids_v1"}`选择片段阅读/继承/三叉终答与根JSON展示，再显式设`control_protocol=review_cycle_v1`启用v4有界控制闭环；需要兼容Schema后端；见[协议与边界](UNIFIED_RETRIEVAL.md)，不是质量或部署验收 |
+| `NATIVE_JSON_CONSTRAINTS` | `disabled` | `schema_v1`为普通历史/Planner/二值Reader发送原生Schema；见[调用与失败边界](NATIVE_JSON_CONTRACTS.md)，不是语义验收 |
 | `NATIVE_BASE_URL` | 本机 18421/v1 | 外部示例 `https://api-3b.rwkvos.com/v1` |
 | `NATIVE_MODEL` | `rwkv7-g1j-2.9b-20260831-ctx16384` | 服务身份校验 |
 | `NATIVE_STATE_ROUTING` | 未启用 | native/g1j_plain 的显式模型＋角色→初始State引用映射，见[接口与边界](NATIVE_STATE_ROUTING.md) |
@@ -72,7 +83,7 @@ uv run uvicorn llamaindex_retrieval.api:app --host 127.0.0.1 --port 8080
 
 计数开启时，总期限从调用入口开始，包含等槽和批次排队；失败收据的有界落盘收尾单独计时。计数关闭时保留原外部批次 HTTP 时限。
 
-新链路不用旧 `MAX_CHUNKS_PER_DOCUMENT`、`RELATIVE_SCORE_THRESHOLD` 或语义规则门禁。多 worker 各有独立并发限制，部署时需分配总容量。
+旧证据提取、题型查询规划、语义词表门禁、程序代答、引用修复及其配置字段已删除，不保留兼容调用入口。BM25 分词、排序、去重及逐字证据绑定继续保留。多 worker 各有独立并发限制，部署时需分配总容量。
 
 ## G1K 7.2B native 连接配置
 
@@ -98,6 +109,10 @@ RWKVRAG_GENERATION_MAX_TOKENS=2048
 
 结构化传输保留调用者的JSON Schema属性顺序，不按字母排序，也不替调用者重排。属性生成顺序可能影响回答；Schema合法不代表事实、缺失判断、部分支持或引用正确，不能据此增加代码兜底或修补原始回答。
 
+## 原生JSON约束解码
+
+[普通链路Schema接入](NATIVE_JSON_CONTRACTS.md)可显式独立启用，不依赖typed funnel。它约束历史改写、Planner、二值Reader的JSON字段/类型/枚举/数量，保留prompt及原始输出；失败不改JSON或降级重发。默认关闭；结构通过不能据此承诺历史理解、证据判断或引用支持正确。
+
 ## G1K架构候选
 
 [G1K任务边界](G1K_ARCHITECTURE.md)明确区分当前任务、Planner检索提示、Reader逐字选择与Writer回答。显式`anchored_v1`时，Reader增加当前任务输入，Writer不再把Planner派生字段作为任务提示；原文和输出不改。默认legacy不变，未通过真实语义验收，不自动启用、训练或部署。RWKV初始State不是文档/历史数据库，也没有自动动态State续读或跨文档合并。
@@ -106,7 +121,7 @@ RWKVRAG_GENERATION_MAX_TOKENS=2048
 
 `current-question-v2` 将完整 `history`（含角色、顺序、所有用户和助手消息）与最新问题作为JSON数据交给模型，不按关键词合并、删除或解析指代。只接受严格的 `{"question":"..."}`，下游使用该模型改写结果；原始对话和输出保留在trace。无历史时不调用改写模型。输入超出模型容量时显式失败，不截掉早期轮次。它修复输入丢失，但当前真实多轮诊断未通过，仍有条件丢失、指代未解析和撤回要求恢复。不能作为已验证的历史功能修复启用。
 
-旧 `current-question-v1` 只传用户消息，`current-question-g1k-v1` 只传上一条用户消息，两者都有信息缺失限制。为保留旧实验绑定，不原地替换其提示，也不自动迁移现有配置。
+`current-question-v1` 只传用户消息，仍有信息缺失限制。定向的 `current-question-g1k-v1` 协议及提示词函数已删除；使用该值时启动失败，不静默别名到新提示。需要完整角色历史时，须显式改用通用的 `current-question-v2`，这不代表其语义验收通过。旧实验提示和原始结果仅留在冻结历史记录，不是当前应用的可调用协议。
 
 历史协议与预算相互独立。RWKV 的 `/v1/ask` 和 `/v1/material-ask` 可显式配置安全策略与预算，以下示例不切换历史协议：
 

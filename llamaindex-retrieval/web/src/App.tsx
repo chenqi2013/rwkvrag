@@ -4,9 +4,10 @@ import {
   FileTextOutlined,
   ImportOutlined,
   HistoryOutlined,
+  MessageOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, Segmented, Space, Tag, Typography } from "antd";
+import { ConfigProvider, Layout, Menu, Segmented, Space, Tag, Typography } from "antd";
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 import DashboardPage from "./pages/DashboardPage";
@@ -15,10 +16,10 @@ import FilesPage from "./pages/FilesPage";
 import ImportsPage from "./pages/ImportsPage";
 import KnowledgeBasesPage from "./pages/KnowledgeBasesPage";
 import SearchPage from "./pages/SearchPage";
+import ChatPage from "./pages/ChatPage";
+import TrialPage from "./pages/TrialPage";
 import SearchHistoryPage from "./pages/SearchHistoryPage";
 import AtomicEvidencePage from "./pages/AtomicEvidencePage";
-import TestResultsPage from "./pages/TestResultsPage";
-import ModelComparisonPage from "./pages/ModelComparisonPage";
 import { useLanguage } from "./i18n";
 
 const { Header, Sider, Content } = Layout;
@@ -27,7 +28,18 @@ export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const { language, setLanguage, tr } = useLanguage();
+  if (location.pathname === "/try") return <ConfigProvider theme={{ inherit: false,
+    token: { fontSize: 14, borderRadius: 8, colorPrimary: "#315b45",
+      fontFamily: 'Inter, "PingFang SC", "Microsoft YaHei", sans-serif' },
+  }}><TrialPage /></ConfigProvider>;
+  if (location.pathname === "/chat") return <ConfigProvider theme={{
+    inherit: false,
+    token: { fontSize: 14, borderRadius: 10, colorPrimary: "#4d6bfe",
+      fontFamily: 'Inter, "PingFang SC", "Microsoft YaHei", sans-serif' },
+  }}><ChatPage /></ConfigProvider>;
+  if (location.pathname === "/") return <Navigate to="/chat" replace />;
   const menuItems = [
+    { key: "/chat", icon: <MessageOutlined />, label: tr("对话", "Chat") },
     { key: "/dashboard", icon: <ApiOutlined />, label: tr("运行概览", "Overview") },
     { key: "/knowledge-bases", icon: <DatabaseOutlined />, label: tr("知识库", "Knowledge Bases") },
     { key: "/files", icon: <FileTextOutlined />, label: tr("文档管理", "Documents") },
@@ -36,8 +48,6 @@ export default function App() {
     { key: "/search", icon: <SearchOutlined />, label: tr("检索测试", "Search Lab") },
     { key: "/atomic-evidence", icon: <FileTextOutlined />, label: tr("单项证据核对", "Evidence check") },
     { key: "/search-history", icon: <HistoryOutlined />, label: tr("历史测试", "History") },
-    { key: "/test-results", icon: <FileTextOutlined />, label: tr("真实检索测试", "Retrieval Tests") },
-    { key: "/model-comparison", icon: <FileTextOutlined />, label: tr("模型对照", "Model Comparison") },
   ];
 
   return (
@@ -86,8 +96,6 @@ export default function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/atomic-evidence" element={<AtomicEvidencePage />} />
             <Route path="/search-history" element={<SearchHistoryPage />} />
-            <Route path="/test-results" element={<TestResultsPage />} />
-            <Route path="/model-comparison" element={<ModelComparisonPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Content>

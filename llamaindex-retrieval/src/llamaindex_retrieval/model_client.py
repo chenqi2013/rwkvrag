@@ -4,7 +4,11 @@ from .native_rwkv import NativeRWKVClient, inspect_envelope
 
 
 def model_client_class(settings):
-    if settings.native_writer_pipeline in {"typed_funnel_v5", "typed_funnel_v8", "typed_funnel_v10"}:
+    if settings.native_material_reading == "question_documents_v1":
+        from .structured_native import StructuredNativeRWKVClient
+        return StructuredNativeRWKVClient
+    if (settings.native_json_constraints == "schema_v1"
+            or settings.native_writer_pipeline in {"typed_funnel_v5", "typed_funnel_v8", "typed_funnel_v10"}):
         from .structured_native import StructuredNativeRWKVClient
         return StructuredNativeRWKVClient
     if settings.native_transport == "rwkvos_batch":
@@ -51,6 +55,10 @@ def model_client_options(settings, **overrides):
             options["prompt_protocol"] = settings.native_completion_protocol
         if settings.native_state_routing is not None:
             options["state_routing"] = settings.native_state_routing.model_dump()
+    if settings.native_material_reading == "question_documents_v1":
+        import httpx
+        options["transport"] = httpx.AsyncHTTPTransport(retries=0, limits=httpx.Limits(
+            max_connections=settings.native_max_concurrency, max_keepalive_connections=0))
     options.update(overrides)
     return options
 

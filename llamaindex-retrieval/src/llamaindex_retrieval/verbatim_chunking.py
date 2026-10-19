@@ -260,3 +260,73 @@ def verbatim_nodes(
                 break
             start = end - overlap_characters
     return nodes
+
+
+def packed_verbatim_nodes(
+    document: Document,
+    chunk_characters: int = 2400,
+    overlap_characters: int = 180,
+    *,
+    absorb_whitespace: bool = False,
+) -> list[TextNode]:
+    """Pack adjacent original slices, never summaries or different documents.
+
+    Reuse the atomic boundaries/overlapping prose windows above. A group is a
+    single contiguous source slice within the soft limit; oversized atoms stay
+    whole. Keep constituent coordinates in receipts so packing is auditable.
+    Opt-in whitespace attachment avoids standalone blank selectors. It may
+    exceed the soft window; callers still enforce the actual hard token budget.
+    No whitespace is stripped, including after an oversized structural atom.
+    """
+    nodes = verbatim_nodes(document, chunk_characters, overlap_characters)
+    groups: list[list[TextNode]] = []
+    has_body: list[bool] = []
+    for node in nodes:
+        start, end = node.start_char_idx, node.end_char_idx
+        body = bool(node.text.strip())
+        if (groups and start <= groups[-1][-1].end_char_idx
+                and (end - groups[-1][0].start_char_idx <= chunk_characters
+                     or (absorb_whitespace and (not body or not has_body[-1])))):
+            groups[-1].append(node)
+            has_body[-1] |= body
+        else:
+            groups.append([node])
+            has_body.append(body)
+    packed = []
+    for group in groups:
+        node = group[0].model_copy(deep=True)
+        node.metadata["chunk_order"] = len(packed)
+        node.metadata["packing_policy"] = (
+            "adjacent_verbatim_whitespace_v1" if absorb_whitespace else "adjacent_verbatim_v1"
+        )
+        if len(group) > 1:
+            start, end = group[0].start_char_idx, group[-1].end_char_idx
+            text = document.text[start:end]
+            contexts = {}
+            for part in group:
+                for context in part.metadata["context_spans"]:
+                    # Internal headings are already in the body; table headers
+                    # remain available as structural context for row selection.
+                    if context["kind"] == "heading" and start <= context["start"] < context["end"] <= end:
+                        continue
+                    contexts[(context["kind"], context["start"], context["end"])] = copy.deepcopy(context)
+            version = "verbatim-packed-whitespace-v1" if absorb_whitespace else "verbatim-packed-v1"
+            identity = json.dumps([version, document.id_, node.metadata["source_text_sha256"], start, end],
+                                  ensure_ascii=False, separators=(",", ":"))
+            node.id_ = f"{version}:{_sha(identity)}"
+            node.text = text
+            node.start_char_idx, node.end_char_idx = start, end
+            node.metadata.update(
+                source_span={"start": start, "end": end, "unit": "unicode_code_points", "sha256": _sha(text)},
+                chunk_text_sha256=_sha(text), chunker_version=version,
+                content_type="packed", atomic=False, context_spans=list(contexts.values()),
+                packed_components=[{"node_id": part.id_, "span": copy.deepcopy(part.metadata["source_span"]),
+                                    "kind": part.metadata["content_type"], "atomic": part.metadata["atomic"]}
+                                   for part in group],
+            )
+        for key in ("packing_policy", "packed_components"):
+            if key in node.metadata:
+                node.excluded_embed_metadata_keys = list(dict.fromkeys([*node.excluded_embed_metadata_keys, key]))
+                node.excluded_llm_metadata_keys = list(dict.fromkeys([*node.excluded_llm_metadata_keys, key]))
+        packed.append(node)
+    return packed

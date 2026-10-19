@@ -9,7 +9,7 @@ import re
 
 from llama_index.core import Document
 
-from .verbatim_chunking import verbatim_nodes
+from .verbatim_chunking import packed_verbatim_nodes, verbatim_nodes
 
 
 def terms(text):
@@ -23,8 +23,10 @@ def terms(text):
     return tokens
 
 
-def ranked_windows(text, query, document_id, *, window=2400, limit=4):
-    nodes = [node for node in verbatim_nodes(Document(text=text, id_=document_id),
+def ranked_windows(text, query, document_id, *, window=2400, limit=4, kind=None, pack_adjacent=False):
+    chunker = packed_verbatim_nodes if pack_adjacent else verbatim_nodes
+    nodes = [node for node in chunker(Document(text=text, id_=document_id,
+             metadata={"kind": kind} if kind is not None else {}),
              chunk_characters=window, overlap_characters=min(180, window // 4))
              if node.text.strip()]
     if not nodes:
@@ -44,7 +46,9 @@ def ranked_windows(text, query, document_id, *, window=2400, limit=4):
 
     order = sorted(range(len(nodes)), key=lambda i: (-score(i), i))[:limit]
     selected = [(nodes[i], score(i)) for i in order]
-    return selected, {"policy": "ranked_windows", "total_windows": len(nodes),
+    return selected, {"policy": "ranked_windows",
+                      **({"packing_policy": "adjacent_verbatim_v1"} if pack_adjacent else {}),
+                      "total_windows": len(nodes),
                       "selected_windows": len(selected), "unselected_windows": len(nodes) - len(selected),
                       "full_snapshot_characters": len(text),
                       "selected_characters": sum(len(n.text) for n, _ in selected)}

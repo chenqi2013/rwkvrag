@@ -12,11 +12,7 @@ from .admin_service import (
     AdminService,
     AdminValidationError,
 )
-from .active_retrieval import ActiveRetrievalAgent
 from .config import get_settings
-from .generation import EvidenceAnswerGenerator
-from .evidence_extraction import LanguageModelEvidenceExtractor
-from .document_reranking import LanguageModelDocumentReranker
 from .lexical_index import LexicalIndex
 from .repository import MongoRepository, RepositoryConflictError
 from .routers.admin import router as admin_router
@@ -24,7 +20,6 @@ from .routers.public import router as public_router
 from .routers.web_sources import router as web_sources_router
 from .web_sources import WebSnapshotService
 from .service import SearchService
-from .semantic_query_planning import LanguageModelQueryPlanner
 from .tasks import TaskManager
 from .wiki import WikiService
 from .atomic_evidence import AtomicEvidenceService
@@ -41,11 +36,6 @@ async def lifespan(app: FastAPI):
     search = SearchService(
         settings=settings,
         index=lexical_index,
-        generator=EvidenceAnswerGenerator(settings),
-        evidence_extractor=LanguageModelEvidenceExtractor(settings),
-        query_planner=LanguageModelQueryPlanner(settings),
-        retrieval_agent=ActiveRetrievalAgent(settings),
-        document_reranker=LanguageModelDocumentReranker(settings),
         native_recorder=repository.record_model_http,
     )
     wiki = WikiService(settings, repository, lexical_index, search.native_pipeline, task_manager)

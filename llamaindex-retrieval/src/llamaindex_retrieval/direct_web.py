@@ -233,6 +233,7 @@ async def _search(request, settings, guard=None):
         hits.append({"url": url, "title": str(item.get("title") or url)[:300],
                      "reader_text": text, "snapshot": snapshot,
                      "content_status": "fetched" if full else "snippet_only",
+                     "search_snippet": snippet[:1000],
                      "material_limited": len(text) < len(snapshot),
                      "score": score,
                      "published_date": str(item.get("published_date") or item.get("publishedDate") or "")[:80],

@@ -1,13 +1,41 @@
 import { evidenceFlowNotices, type EvidenceFlow } from "./evidenceFlow.ts";
 import type { AskResponse } from "./types";
+import { isUnifiedSpan, unifiedAnswer } from "./unifiedAnswer.ts";
 
 type Label = [string, string];
 
-export function evidenceWarnings(response?: Pick<AskResponse, "generation" | "sources">): Label[] {
+export function evidenceWarnings(response?: Pick<AskResponse, "generation" | "sources"> & Partial<Pick<AskResponse, "retrieval">>): Label[] {
   if (!response) return [];
   const flow = response.generation.evidence_flow as EvidenceFlow | undefined;
   const warnings: Label[] = evidenceFlowNotices(flow);
   const calls = Array.isArray(response.generation.model_calls) ? response.generation.model_calls : [];
+  if (isUnifiedSpan(response.generation.protocol)) {
+    warnings.push(["这是模型根输出；结构与来源ID校验不代表事实支持已核验。",
+      "This is the model root output; structure and source IDs do not verify factual support."]);
+    const attempts: Array<{channel?: unknown} | null> = Array.isArray(response.retrieval?.actions) ? response.retrieval.actions : [];
+    const kb = attempts.filter(a => a?.channel === "knowledge_base").length;
+    const web = attempts.filter(a => a?.channel === "web").length;
+    warnings.push([`来源动作尝试：知识库 ${kb}，Web ${web}；请求模式或模型自述不代表实际检索。`,
+      `Source action attempts: knowledge base ${kb}, Web ${web}; requested mode or model claims do not establish retrieval.`]);
+    const scope = response.generation.execution_scope as Record<string, unknown> | undefined;
+    if (response.generation.protocol === "rwkv-unified-v4") {
+      const events = Array.isArray(response.retrieval?.directions) ? response.retrieval.directions.length : 0;
+      const attempts = (purpose: string) => calls.filter(c => c && typeof c === "object"
+        && "purpose" in c && c.purpose === purpose && "completion_attempted" in c && c.completion_attempted === true).length;
+      warnings.push([`方向记录 ${events} 项；已记录生成请求：方向 ${attempts("direction")} 次，计划修订 ${attempts("plan_revision")} 次。请求不代表成功。`,
+        `Direction events: ${events}; recorded completion attempts: direction ${attempts("direction")}, plan revision ${attempts("plan_revision")}. Requests do not establish success.`]);
+    }
+    if (scope?.stop_reason) warnings.push([`流程停止原因：${String(scope.stop_reason)}`, `Execution stop reason: ${String(scope.stop_reason)}`]);
+    if (scope && typeof scope.unread_units === "number" && scope.unread_units > 0) {
+      warnings.push([`还有 ${scope.unread_units} 个已取得的资料单元未阅读，不能视为覆盖全文。`,
+        `${scope.unread_units} acquired material units were not read; full coverage is not established.`]);
+    }
+    for (const key of ["failed_actions", "failed_nodes", "control_failures"]) {
+      if (Array.isArray(scope?.[key]) && scope[key].length > 0) warnings.push([
+        `本次有 ${scope[key].length} 项执行缺口（${key}），请检查运行记录。`,
+        `${scope[key].length} execution gaps (${key}); inspect the trace.`]);
+    }
+  }
   const last = [...calls].reverse().find((call): call is Record<string, unknown> =>
     !!call && typeof call === "object" && "evidence_budget" in call);
   const budget = last?.evidence_budget as { omitted_source_ids?: unknown[]; status?: string } | undefined;
@@ -37,7 +65,9 @@ export function evidenceWarnings(response?: Pick<AskResponse, "generation" | "so
     warnings.push(["本次未返回有效证据，下面的模型输出没有可核对的来源。",
       "No evidence was returned. The model output below has no sources to check."]);
   }
-  const audit = response.generation.citation_audit;
+  // Legacy body-tag diagnostics are not span-reference failures, including
+  // when viewing a historical response produced by the old mixed gate.
+  const audit = isUnifiedSpan(response.generation.protocol) ? undefined : response.generation.citation_audit;
   const unknown = audit && typeof audit === "object" && "unknown_label_ids" in audit
     ? audit.unknown_label_ids : undefined;
   if (Array.isArray(unknown)) {
@@ -71,6 +101,18 @@ export function answerPresentation(response?: Pick<AskResponse, "answer" | "gene
   const generation = response?.generation ?? {};
   const rawAnswer = response?.answer ?? "";
   const isNative = generation.pipeline === "rwkv";
+  const unified = unifiedAnswer(response);
+  if (isNative && unified) {
+    const status = generation.status;
+    const label: Label = !unified.valid
+      ? ["根答案尚未通过结构/身份检查；请查看原始输出", "Root answer has not passed structure/identity checks; inspect raw output"]
+      : status === "completed"
+        ? ["根答案已生成，事实支持未核验", "Root answer generated; factual support unverified"]
+        : ["根输出已返回，但有未完成项；请核对缺口与原文", "Root output returned with incomplete work; inspect gaps and evidence"];
+    return { isNative, rawAnswer, answerText: unified.answerText, spanValid: unified.valid,
+      writerAttempted: unified.attempted, writerCalled: unified.called, label,
+      color: unified.valid ? status === "completed" ? "blue" : "orange" : "red" };
+  }
   if (!isNative) {
     const writerAttempted = generation.answer_strategy === "single_writer_call"
       || generation.answer_strategy === "generation_failed";

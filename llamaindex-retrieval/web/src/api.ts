@@ -117,8 +117,9 @@ export const api = {
       headers: jsonHeaders,
       body: JSON.stringify(values),
     }),
-  ask: (values: object) =>
+  ask: (values: object, signal?: AbortSignal) =>
     request<AskResponse>("/v1/ask", {
+      signal,
       method: "POST",
       headers: jsonHeaders,
       body: JSON.stringify(values),
