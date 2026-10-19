@@ -5,7 +5,7 @@ It performs no arithmetic, unit conversion or field/entity inference.
 """
 import re
 from pydantic import Field
-from .typed_funnel_contract import *
+from .typed_funnel_contract import *  # noqa: F403 - retain the base contract's public exports.
 from . import typed_funnel_contract as base
 
 

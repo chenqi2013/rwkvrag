@@ -90,7 +90,8 @@ def main():
             if case == "provider-partial":
                 expect(page.get_by_text("Some web retrieval requests failed", exact=True)).to_be_visible()
             expect(page.get_by_text("Snapshot Example", exact=False).first).to_be_visible()
-            save_calls = lambda: [c for c in calls if c["path"].endswith("/save")]
+            def save_calls():
+                return [c for c in calls if c["path"].endswith("/save")]
             search_count = len([c for c in calls if c["path"] in ("/v1/search", "/v1/ask")])
             assert search_count == 1
             if case == "legacy":

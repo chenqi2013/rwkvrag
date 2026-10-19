@@ -293,10 +293,12 @@ def build(annotations, output, vocab, max_tokens):
                     "source_text_sha256": digest(row["source"]["snippet"]),
                     "prompt_sha256": item["prompt_sha256"]}}
         validate_case(item, gold, vocab, max_tokens)
-        items[split].append(item); golds[split].append(gold)
+        items[split].append(item)
+        golds[split].append(gold)
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(dir=output.parent) as tmp:
-        temp = Path(tmp) / "dataset"; temp.mkdir()
+        temp = Path(tmp) / "dataset"
+        temp.mkdir()
         for split in SPLITS:
             write_rows(temp / f"{split}.inputs.jsonl", items[split])
             write_rows(temp / f"{split}.gold.jsonl", golds[split])
@@ -372,9 +374,12 @@ def main():
                     if not (metrics.get("positive_without_E1", 0) and metrics.get("three_or_more_units", 0)
                             and metrics.get("positive", 0) and metrics.get("negative", 0)):
                         raise ValueError(f"{split}: insufficient label/position/length coverage for expansion")
-            if args.command == "audit": result = audit(args.input, vocab, args.max_tokens)
-            elif args.command == "build": result = build(args.input, args.output, vocab, args.max_tokens)
-            else: result = export_training(args.input, args.output, vocab, args.max_tokens)
+            if args.command == "audit":
+                result = audit(args.input, vocab, args.max_tokens)
+            elif args.command == "build":
+                result = build(args.input, args.output, vocab, args.max_tokens)
+            else:
+                result = export_training(args.input, args.output, vocab, args.max_tokens)
         print(json.dumps(result, ensure_ascii=False, indent=2))
     except (ValueError, KeyError, TypeError, OSError) as error:
         parser.exit(2, f"dataset rejected: {error}\n")

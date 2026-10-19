@@ -73,7 +73,8 @@ def test_long_queries_keep_tail_tokens_filters_and_unique_rank_votes(collapse):
     class Client:
         def __init__(self): self.requests = []
         def search(self, **kwargs):
-            body = kwargs["body"]; self.requests.append(body)
+            body = kwargs["body"]
+            self.requests.append(body)
             assert len(body["query"]["bool"]["must"][0]["multi_match"]["query"].split()) <= 128
             n = len(self.requests)
             def result(node, doc):

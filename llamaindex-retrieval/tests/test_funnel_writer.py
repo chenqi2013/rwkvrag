@@ -22,15 +22,18 @@ def test_facts_require_literal_quotes_and_known_dimensions():
 
 
 def test_cells_cannot_borrow_foreign_facts_or_turn_no_evidence_into_supported():
-    with pytest.raises(ValueError):checked_cell(Cell(status='supported',value='9升',fact_ids=['A2']),[{'id':'A1'}])
-    with pytest.raises(ValueError):checked_cell(Cell(status='supported',value='9升',fact_ids=[]),[])
+    with pytest.raises(ValueError):
+        checked_cell(Cell(status='supported',value='9升',fact_ids=['A2']),[{'id':'A1'}])
+    with pytest.raises(ValueError):
+        checked_cell(Cell(status='supported',value='9升',fact_ids=[]),[])
     assert checked_cell(Cell(status='unknown',value='没有依据',fact_ids=[]),[])['status']=='unknown'
 
 
 class Model:
     def __init__(self):self.calls=[]
     async def complete(self,messages,**kwargs):
-        prompt=messages[0]['content'];self.calls.append((prompt,kwargs))
+        prompt=messages[0]['content']
+        self.calls.append((prompt,kwargs))
         if prompt.startswith('整理用户'):
             value={'objects':['甲','乙'],'fields':['容量'],'requirements':[]}
         elif prompt.startswith('从这一份'):
@@ -49,7 +52,8 @@ class Model:
 
 
 def test_full_funnel_dependencies_and_raw_answer_survive_pipeline():
-    model=Model();pipeline=RWKVPipeline(Settings(native_writer_pipeline='funnel_v1'),None,model=model)
+    model=Model()
+    pipeline=RWKVPipeline(Settings(native_writer_pipeline='funnel_v1'),None,model=model)
     response=asyncio.run(pipeline.ask_materials('比较甲乙容量',[source()],history=[ConversationMessage(role='assistant',content='错误旧答案123')]))
     assert response.answer=='甲8升[资料 1]；乙资料不足。'
     assert response.generation['raw_model_answer']==response.answer

@@ -11,7 +11,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-from .schemas import SourceItem
+from .schemas import SourceItem as SourceItem
 
 
 PROTOCOL = "task-matrix-v5"

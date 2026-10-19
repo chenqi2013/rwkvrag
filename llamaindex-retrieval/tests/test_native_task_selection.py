@@ -126,7 +126,8 @@ async def test_format_repair_is_one_independent_call_and_never_coerces_raw(first
         assert events[1]["format_repair_of_call_id"] == "1"
         assert prompts[0].split("\n",1)[1] == prompts[1].split("\n",1)[1]
         assert events[0].get("format_repair_succeeded",False) == (second in {"E1","NONE"})
-        if second == "1": assert "parse_error" in events[1]
+        if second == "1":
+            assert "parse_error" in events[1]
 
 
 @pytest.mark.asyncio

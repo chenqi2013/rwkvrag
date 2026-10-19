@@ -517,7 +517,8 @@ async def test_task_last_api_preserves_content_and_only_reorders_reader():
     messages = [{"role": "user", "content": content}]
     payloads = []
     def handler(request):
-        payload = json.loads(request.content);payloads.append(payload)
+        payload = json.loads(request.content)
+        payloads.append(payload)
         return httpx.Response(200, json=response([" E3 \n"] * len(payload["contents"])))
     async with client(handler, reader_state_id="reader-trained",
                       reader_prompt_protocol="rwkv_g1j_no_think_v1", reader_input_layout="task_last") as model:

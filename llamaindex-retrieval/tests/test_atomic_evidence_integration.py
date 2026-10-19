@@ -1,6 +1,5 @@
 """Real Mongo/OpenSearch integration with isolated fixture-owned database/index."""
 from copy import deepcopy
-from types import SimpleNamespace
 
 from fastapi import FastAPI
 import httpx

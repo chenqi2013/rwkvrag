@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from llamaindex_retrieval.statetune import (
-    audit, build, digest, export_training, prepare, render, units_for, validate_case, write_rows,
+    audit, build, digest, export_training, prepare, units_for, validate_case, write_rows,
 )
 from llamaindex_retrieval.state_tokens import encode_training
 
@@ -111,8 +111,10 @@ def test_current_protocol_or_unit_tampering_is_detected(tmp_path):
     gold = json.loads((directory / "train.gold.jsonl").read_text())
     for change in ("prompt", "offset"):
         changed = deepcopy(item)
-        if change == "prompt": changed["prompt"] += "extra"
-        else: changed["units"][0]["start"] += 1
+        if change == "prompt":
+            changed["prompt"] += "extra"
+        else:
+            changed["units"][0]["start"] += 1
         with pytest.raises(ValueError):
             validate_case(changed, gold, ByteVocab(), 10000)
 

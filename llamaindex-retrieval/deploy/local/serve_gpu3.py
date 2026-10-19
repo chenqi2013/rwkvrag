@@ -15,7 +15,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 ROOT = Path('/home/chase/rwkvrag')
 sys.path.insert(0, str(ROOT/'llamaindex-retrieval/src/llamaindex_retrieval'))
-from state_tokens import Vocabulary
+from state_tokens import Vocabulary  # noqa: E402 - resolve the configured runtime source first.
 GPU = 'GPU-a9570da2-547a-c2b3-0cab-7bbdc1a8a8b0'
 
 def sha(path):
@@ -37,7 +37,8 @@ def host_guard():
     info = subprocess.run(['nvidia-smi', '-i', GPU, '--query-gpu=index,uuid,memory.used',
         '--format=csv,noheader,nounits'], check=True, capture_output=True, text=True, timeout=20).stdout.strip()
     index, uuid, memory = [x.strip() for x in info.split(',')]
-    if (index,uuid) != ('3',GPU): raise ValueError('GPU identity mismatch')
+    if (index,uuid) != ('3',GPU):
+        raise ValueError('GPU identity mismatch')
     apps = subprocess.run(['nvidia-smi', '--query-compute-apps=gpu_uuid,pid', '--format=csv,noheader'],
         check=True, capture_output=True, text=True, timeout=20).stdout
     if any(x.split(',')[0].strip() == GPU for x in apps.splitlines()):

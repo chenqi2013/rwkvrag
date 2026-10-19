@@ -11,7 +11,8 @@ async def test_plain_transport_matches_frozen_envelope_and_preserves_raw(finish)
     requests = []
     raw = "  1. 甲[资料 1]\n2. 甲[资料 1]\n"
     def handler(request):
-        body = json.loads(request.content); requests.append(body)
+        body = json.loads(request.content)
+        requests.append(body)
         assert body["prompt"] == "User: 原文\n不改变\n\nAssistant: <think></think>\n"
         assert body["add_special_tokens"] is False
         if request.url.path == "/tokenize":
