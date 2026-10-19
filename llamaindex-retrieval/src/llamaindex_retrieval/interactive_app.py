@@ -19,7 +19,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .config import Settings
 from .interactive_sources import choose_catalog, gather, add_sources
-from . import interactive_funnel, interactive_spans
+from . import interactive_funnel, interactive_needs, interactive_spans, kb_navigation
 from .model_client import model_client_options
 from .schemas import SourceItem
 from .structured_native import StructuredNativeRWKVClient
@@ -70,7 +70,13 @@ class ObservedModel:
 class Trial:
     def __init__(self, config):
         self.config = config
-        self.settings = Settings(_env_file=None, **config['settings'])
+        options = dict(config['settings'])
+        if config.get('pipeline') == 'needs':
+            # The native client tokenizes the complete wire prompt before every
+            # generation. Reserve output within this ceiling too; reject oversize
+            # calls explicitly, without truncating model inputs or outputs.
+            options['native_context_window_tokens'] = min(options.get('native_context_window_tokens', 6000), 6000)
+        self.settings = Settings(_env_file=None, **options)
         transport = httpx.AsyncHTTPTransport(retries=0, limits=httpx.Limits(
             max_connections=self.settings.native_max_concurrency, max_keepalive_connections=0))
         self.native = StructuredNativeRWKVClient(**model_client_options(self.settings, transport=transport))
@@ -78,6 +84,12 @@ class Trial:
         self.admin = httpx.AsyncClient(base_url=config['admin_base_url'], trust_env=False, timeout=60)
         self.lock = asyncio.Lock()
         self.jobs, self.tasks = {}, {}
+        # Optional {knowledge_base_id: CARDS.jsonl}; files with cards are navigated hierarchically.
+        self.cards = {}
+        for path in config.get('kb_cards', {}).values():
+            for line in Path(path).read_text().splitlines():
+                card = json.loads(line)
+                self.cards[card['id']] = card
         self.folder = Path(config['records_dir'])
         self.folder.mkdir(parents=True, exist_ok=True)
 
@@ -158,9 +170,15 @@ class Trial:
                         acquired = []
                         async def kb():
                             progress(f'从知识库目录选择资料 · {len(catalog)} 份文档')
-                            ids, decisions = await choose_catalog(model, query, catalog)
-                            receipts.append({'channel': 'knowledge_base', 'query': query,
-                                'catalog_size': len(catalog), 'selected_file_ids': ids, 'decisions': decisions})
+                            if all(c['id'] in self.cards for c in catalog):
+                                ids, receipt = await kb_navigation.choose(model, query,
+                                    [self.cards[c['id']] for c in catalog])
+                                receipts.append({'channel': 'knowledge_base', 'mode': 'navigation_cards',
+                                    'catalog_size': len(catalog), 'selected_file_ids': ids, **receipt})
+                            else:
+                                ids, decisions = await choose_catalog(model, query, catalog)
+                                receipts.append({'channel': 'knowledge_base', 'query': query,
+                                    'catalog_size': len(catalog), 'selected_file_ids': ids, 'decisions': decisions})
                             return await gather([document(i) for i in ids])
                         async def web():
                             progress('查找联网资料')
@@ -185,7 +203,11 @@ class Trial:
 
                     scope = {'knowledge_bases': [bases[i]['name'] for i in dict.fromkeys(payload.knowledge_base_ids)],
                              'web': payload.retrieval_mode != 'knowledge_base'}
-                    if self.config.get('pipeline') == 'spans':
+                    if self.config.get('pipeline') == 'needs':
+                        result = await interactive_needs.answer(model, question, acquire=acquire,
+                            scope=scope, progress=progress, supplementary=payload.supplementary,
+                            **self.config.get('needs_options', {}))
+                    elif self.config.get('pipeline') == 'spans':
                         result = await interactive_spans.answer(model, question, acquire=acquire,
                             scope=scope, progress=progress, supplementary=payload.supplementary,
                             **self.config.get('spans_options', {}))

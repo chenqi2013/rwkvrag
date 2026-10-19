@@ -40,9 +40,13 @@ REQUERY = ('以下信息项在已检索资料中仍未找到。按渠道为它�
            'web_queries查网络），换一种说法或指明更可能包含该信息的来源；不需要的渠道返回空数组，'
            '无法继续核实时全部为空。不要重复已用检索语句。')
 
-LEAF_CHARS, LEAF_OVERLAP = 4000, 240  # Reading window per call (as interactive-funnel-v1).
+# Context budgets. A controlled test (context-length-20261019) kept the answer span 9/9 at
+# ~2.8k input tokens and 3/9 at ~5.2k; every call is kept inside ~6k tokens and every
+# selection call's material near ~2.5k (about 0.6 tokens per character measured).
+LEAF_CHARS, LEAF_OVERLAP = 3000, 240  # Reading window per call.
 SPAN_CHARS, SPAN_OVERLAP = 640, 80     # Selectable verbatim spans inside a window.
-FINAL_SPAN_CHARS = 16000               # Input evidence capacity; output reservation is separate.
+MERGE_CHARS = 4000                     # Span text offered to one merge call.
+FINAL_SPAN_CHARS = 6000                # Input evidence capacity; output reservation is separate.
 SECTION_CHARS = 8000                   # Outline entries larger than this are split into parts.
 OUTLINE_BATCH, PREVIEW_CHARS = 80, 160
 PAGE_HEAD_CHARS = 1500                 # Opening text shown to the page gate.
@@ -77,7 +81,17 @@ async def generate(model, instruction, data, properties, *, limit, stage='reader
         for key, schema in properties.items():
             item = value[key]
             if schema['type'] == 'string':
-                if not isinstance(item, str):
+                if (not isinstance(item, str) or ('enum' in schema and item not in schema['enum'])
+                        or len(item) < schema.get('minLength', 0)
+                        or ('maxLength' in schema and len(item) > schema['maxLength'])):
+                    raise ValueError(f'invalid {key}')
+                continue
+            if (not isinstance(item, list) or len(item) < schema.get('minItems', 0)
+                    or ('maxItems' in schema and len(item) > schema['maxItems'])):
+                raise ValueError(f'invalid {key}')
+            if schema['items'].get('type') == 'object':
+                # Object rows are validated field by field by the caller.
+                if not isinstance(item, list) or any(not isinstance(x, dict) for x in item):
                     raise ValueError(f'invalid {key}')
                 continue
             allowed = schema['items'].get('enum')
@@ -236,8 +250,8 @@ class Reader:
             return node
         return await gather([leaf(*row) for row in work])
 
-    async def combine(self, children):
-        offered = list(dict.fromkeys(i for c in children for i in c['span_ids']))
+    async def combine(self, children, offered=None):
+        offered = offered or list(dict.fromkeys(i for c in children for i in c['span_ids']))
         node = self.new_node('merge', children, offered_span_ids=offered)
         event = await generate(self.model, MERGE, {'question': self.question, 'needs': self.need_input(),
             'spans': [self.span_input(i) for i in offered]},
@@ -250,19 +264,59 @@ class Reader:
             node['status'] = 'invalid_output'
         return node
 
+    def groups(self, current):
+        """Size-bounded merge jobs: at most 3 children and MERGE_CHARS of span text each.
+
+        A node holding more than MERGE_CHARS alone is split into consecutive span batches,
+        each merged by its own call, so no merge input exceeds the budget.
+        """
+        jobs, group, size = [], [], 0
+        for node in current:
+            own = self.chars([node])
+            if own > MERGE_CHARS:
+                batch, used = [], 0
+                for span_id in node['span_ids']:
+                    length = len(self.spans[span_id]['text'])
+                    if batch and used + length > MERGE_CHARS:
+                        jobs.append(([node], batch))
+                        batch, used = [], 0
+                    batch.append(span_id)
+                    used += length
+                jobs.append(([node], batch))
+                continue
+            if group and (len(group) == 3 or size + own > MERGE_CHARS):
+                jobs.append((group, None))
+                group, size = [], 0
+            group.append(node)
+            size += own
+        if group:
+            jobs.append((group, None))
+        return jobs
+
     async def reduce(self, nodes):
         """Only nodes holding selected spans are merged; failed/empty ones stay in the audit graph."""
         current = [n for n in nodes if n['span_ids']]
-        while len(current) > 3 or (len(current) > 1 and self.chars(current) > self.final_chars):
+        while len(current) > 3 or (len(current) > 1 and self.chars(current) > self.final_chars) or (
+                len(current) == 1 and self.chars(current) > self.final_chars):
             self.progress(f'并发归并片段 · {len(current)} 个节点')
-            groups = [current[i:i+3] for i in range(0, len(current), 3)]
+            before = self.chars(current)
 
-            async def group(children):
-                return children[0] if len(children) == 1 else await self.combine(children)
-            merged = await gather([group(g) for g in groups])
-            if len(merged) == len(current):
+            async def job(children, offered):
+                if len(children) == 1 and offered is None:
+                    return children
+                node = await self.combine(children, offered)
+                # A failed merge contributes only its status; the children's validated
+                # selections move up unchanged instead of being lost with it.
+                if node['parsed'] is not None:
+                    return [node]
+                return children if offered is None else [{**children[0], 'span_ids': offered}]
+            merged = [n for g in await gather([job(*j) for j in self.groups(current)]) for n in g]
+            merged = [n for n in merged if n['span_ids']]
+            # Stop when a level removes nothing; the final call records whatever exceeds its budget.
+            if self.chars(merged) >= before and len(merged) >= len(current):
+                current = merged
                 break
-            current = [n for n in merged if n['span_ids']]
+            current = merged
         return current
 
     def chars(self, nodes):

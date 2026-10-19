@@ -260,3 +260,37 @@ async def test_final_citation_array_is_bounded_by_offered_spans():
     kwargs = next(k for i, _, k in model.calls if i == flow.FINAL)
     ids = kwargs['structured_schema']['properties']['source_ids']
     assert ids['maxItems'] == len(ids['items']['enum']) == 2
+
+
+async def test_failed_merge_keeps_children_selections():
+    class FailFirstMerge(Model):
+        merges = 0
+
+        async def complete(self, messages, **kwargs):
+            if messages[0]['content'].startswith(flow.MERGE):
+                FailFirstMerge.merges += 1
+                if FailFirstMerge.merges == 1:
+                    self.calls.append((flow.MERGE, None, kwargs))
+                    return NativeRWKVResult('length', '{"span_ids":["', 'length', {})
+            return await super().complete(messages, **kwargs)
+    model = FailFirstMerge()
+    docs = [source(i, f'第{i}份答案。') for i in range(6)]
+    result, _ = await run(model, {'查询一': docs}, supplementary=False)
+    final = next(d for i, d, _ in model.calls if i == flow.FINAL)
+    assert sorted(s['text'] for s in final['spans']) == sorted(d.snippet for d in docs)
+    failed = [n for n in result['graph']['nodes'] if n['kind'] == 'merge' and n['status'] == 'length']
+    assert failed and failed[0]['raw_text'] == '{"span_ids":["'
+
+
+@pytest.mark.parametrize('count', [5, 40])
+async def test_every_merge_input_and_final_fit_budgets_even_when_model_keeps_all(count):
+    docs = [source(i, f'第{i}份答案' + '内容' * 300) for i in range(count)]
+    model = Model()  # Leaves select every span; merges keep everything.
+    result, _ = await run(model, {'查询一': docs}, supplementary=False)
+    for _, data, _ in (c for c in model.calls if c[0] == flow.MERGE):
+        assert sum(len(s['text']) for s in data['spans']) <= flow.MERGE_CHARS
+    final = next(d for i, d, _ in model.calls if i == flow.FINAL)
+    assert sum(len(s['text']) for s in final['spans']) <= flow.FINAL_SPAN_CHARS
+    total = sum(len(d.snippet) for d in docs)
+    # Overflow beyond the final budget is recorded, never silently dropped.
+    assert bool(result['answer']['generation']['omitted_span_ids']) == (total > flow.FINAL_SPAN_CHARS)
