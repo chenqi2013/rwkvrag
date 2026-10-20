@@ -118,3 +118,45 @@ def test_every_key_field_is_exact_and_capture_is_immutable(tmp_path):
 def test_invalid_replay_configuration_fails_before_acquisition(config):
     with pytest.raises(ValueError, match='invalid web_replay'):
         WebReplay(**config)
+
+
+@pytest.mark.parametrize('code', ['web_upstream_http_502', 'web_upstream_failed', 'web_acquisition_timeout'])
+async def test_recorded_transient_failure_is_replayed_as_failure_without_network(tmp_path, code):
+    store = WebReplay(mode='record', store=tmp_path)
+    key = store.key('anysearch', 'exact query', None, 5, True)
+    live = AsyncMock(side_effect=direct_web.WebProviderError(code, operation='search'))
+    with pytest.raises(direct_web.WebProviderError, match=code) as first:
+        await store.execute(key, live)
+    assert first.value.web_replay['replayed'] is False
+    assert first.value.operation == 'search'
+    before = next(tmp_path.glob('*.json')).read_bytes()
+    live.reset_mock()
+    for mode in ('record', 'replay'):
+        with pytest.raises(direct_web.WebProviderError, match=code) as again:
+            await WebReplay(mode=mode, store=tmp_path).execute(key, live)
+        assert again.value.web_replay['replayed'] is True
+    live.assert_not_awaited()
+    assert next(tmp_path.glob('*.json')).read_bytes() == before
+
+
+@pytest.mark.parametrize('code', ['web_upstream_http_401', 'web_upstream_http_402',
+                                 'web_upstream_http_429', 'web_guard_unavailable'])
+async def test_credential_rate_and_local_failures_do_not_poison_capture(tmp_path, code):
+    store = WebReplay(mode='record', store=tmp_path)
+    key = store.key('anysearch', 'q', None, 5, True)
+    with pytest.raises(direct_web.WebProviderError, match=code):
+        await store.execute(key, AsyncMock(side_effect=direct_web.WebProviderError(code)))
+    assert not list(tmp_path.glob('*.json'))
+
+
+def test_failure_capture_is_immutable_and_idempotent(tmp_path):
+    store = WebReplay(mode='record', store=tmp_path)
+    key = store.key('anysearch', 'q', None, 5, True)
+    payload = {'provider': 'anysearch', 'error': {'code': 'web_upstream_http_502', 'operation': None}}
+    store.save(key, payload)
+    raw = next(tmp_path.glob('*.json')).read_bytes()
+    assert json.loads(raw)['format'] == 'web-replay-v2'
+    store.save(key, payload)
+    with pytest.raises(direct_web.WebProviderError, match='web_replay_conflict'):
+        store.save(key, {'provider': 'anysearch', 'error': {'code': 'web_upstream_http_503', 'operation': None}})
+    assert next(tmp_path.glob('*.json')).read_bytes() == raw

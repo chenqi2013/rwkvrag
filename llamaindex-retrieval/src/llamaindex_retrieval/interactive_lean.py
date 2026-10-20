@@ -189,6 +189,10 @@ class Lean:
             except Exception as error:
                 receipt.update(status='failed', error=getattr(error, 'safe_code', 'web_unavailable'),
                                error_type=type(error).__name__)
+                if getattr(error, 'operation', None):
+                    receipt['provider_operation'] = error.operation
+                if getattr(error, 'web_replay', None):
+                    receipt['web_replay'] = error.web_replay
                 self.errors.append({'stage': 'web', 'error': receipt['error']})
                 return []
 

@@ -202,7 +202,9 @@ class Trial:
                                     uri=h.metadata['uri'], score=0, snippet=h.text, metadata=h.metadata) for h in hits]
                             except Exception as error:
                                 receipts.append({'channel': 'web', 'query': query, 'status': 'failed',
-                                    'error_type': type(error).__name__, 'error': getattr(error, 'safe_code', 'web_unavailable')})
+                                    'error_type': type(error).__name__, 'error': getattr(error, 'safe_code', 'web_unavailable'),
+                                    **({'provider_operation': error.operation} if getattr(error, 'operation', None) else {}),
+                                    **({'web_replay': error.web_replay} if getattr(error, 'web_replay', None) else {})})
                                 return []
                         jobs = []
                         if catalog and (channels is None or 'knowledge_base' in channels):

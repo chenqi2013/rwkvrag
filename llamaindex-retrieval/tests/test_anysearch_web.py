@@ -132,6 +132,27 @@ async def test_extract_failure_keeps_snippet_and_safe_failure_status(tmp_path, m
     assert "single-test-key" not in str(trace)
 
 
+async def test_extract_502_retains_prior_page_and_honors_circuit_for_remaining_pages(tmp_path, monkeypatch):
+    calls = []
+
+    def handler(request):
+        calls.append(request.url.path)
+        if request.url.path == '/v1/search':
+            return response({'results': [{'url': f'https://example.org/{i}', 'snippet': f'snippet{i}'}
+                                          for i in range(3)]})
+        url = json.loads(request.content)['url']
+        if url.endswith('/1'):
+            return httpx.Response(502, text='private upstream details')
+        return response({'url': url, 'content': 'Exact first page'})
+
+    install(monkeypatch, handler)
+    hits, _ = await WebSearchAdapter(settings(tmp_path, web_search_results=3)).search('q', full_snapshot=True)
+    assert [h.text for h in hits] == ['Exact first page', 'snippet1', 'snippet2']
+    assert [h.metadata['fetch_error'] for h in hits] == ['', 'web_upstream_http_502',
+                                                      'web_upstream_circuit_open_502']
+    assert calls == ['/v1/search', '/v1/extract', '/v1/extract']
+
+
 @pytest.mark.parametrize("status", [401, 402, 403, 429])
 async def test_extract_auth_quota_and_rate_failures_block_shared_key_without_rotation(tmp_path, monkeypatch, status):
     calls = []

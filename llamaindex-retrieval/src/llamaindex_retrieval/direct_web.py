@@ -20,8 +20,10 @@ MAX_RESPONSE_BYTES = 8 * 1024 * 1024
 class WebProviderError(RuntimeError):
     """Stable, credential-free failure code for saved retrieval traces."""
 
-    def __init__(self, code):
+    def __init__(self, code, *, operation=None):
         self.safe_code = code
+        self.operation = operation
+        self.web_replay = None
         super().__init__(code)
 
 

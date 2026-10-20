@@ -17,7 +17,7 @@ async def _post(client, operation, body, settings, guard, key, captures):
     try:
         await guard.reserve(identity)
     except (WebGuardBlocked, WebGuardUnavailable) as exc:
-        raise WebProviderError(str(exc)) from None
+        raise WebProviderError(str(exc), operation=operation) from None
 
     async def on_http_error(status, retry_after):
         try:
@@ -32,6 +32,9 @@ async def _post(client, operation, body, settings, guard, key, captures):
             headers={"Authorization": "Bearer " + key}, body=body,
             timeout=settings.web_search_timeout, on_http_error=on_http_error,
             raw_response=raw)
+    except WebProviderError as exc:
+        exc.operation = operation
+        raise
     finally:
         try:
             await guard.complete(identity)
@@ -105,7 +108,9 @@ async def search(request, settings, guard=None):
             except WebProviderError as exc:
                 if exc.safe_code not in {"web_upstream_http_400", "web_upstream_http_422",
                                          "web_upstream_failed", "web_anysearch_extract_url_mismatch",
-                                         "web_anysearch_extract_budget"}:
+                                         "web_anysearch_extract_budget"} and not (
+                        exc.safe_code.startswith('web_upstream_http_5') or
+                        exc.safe_code.startswith('web_upstream_circuit_open_5')):
                     raise
                 error = exc.safe_code
             snapshot = full or snippet
