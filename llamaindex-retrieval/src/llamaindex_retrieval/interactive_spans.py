@@ -63,16 +63,17 @@ def strings(items=None):
     return schema
 
 
-async def generate(model, instruction, data, properties, *, limit, stage='reader', evidence=()):
+async def generate(model, instruction, data, properties, *, limit, stage='reader', evidence=(), budget_only=False):
     """One model call; parsed only when every field matches the bound schema."""
-    result = await model.complete([{'role': 'user', 'content': instruction + '\n' +
+    complete = model.check_budget if budget_only else model.complete
+    result = await complete([{'role': 'user', 'content': instruction + '\n' +
         json.dumps(data, ensure_ascii=False, separators=(',', ':'))}],
         structured_schema=structure.obj(properties), max_tokens=limit,
         assistant_prefill='<think></think', temperature=0, seed=11, stage=stage,
         evidence_ids=list(evidence))
     event = {'status': result.status, 'raw_text': result.raw_text,
              'raw_sha256': structure.digest(result.raw_text or ''), 'parsed': None, 'trace': result.trace}
-    if result.status != 'completed':
+    if budget_only or result.status != 'completed':
         return event
     try:
         value = json.loads(result.raw_text, object_pairs_hook=structure.unique_object)

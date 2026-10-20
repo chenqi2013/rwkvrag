@@ -45,6 +45,12 @@ class ObservedModel:
         self.native, self.job = native, job
         self.events = []
 
+    async def check_budget(self, messages, **kwargs):
+        result = await self.native.complete(messages, check_only=True, **kwargs)
+        if result.trace.get('completion_attempted') is not False:
+            raise RuntimeError('budget check must not attempt generation')
+        return result
+
     async def complete(self, messages, **kwargs):
         started = monotonic()
         trace = kwargs.setdefault('trace', {})

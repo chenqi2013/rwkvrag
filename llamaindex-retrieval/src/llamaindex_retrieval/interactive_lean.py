@@ -40,10 +40,10 @@ def plan_schema(scope):
 class Lean:
     def __init__(self, model, question, *, catalog, document, search, scope, progress, parent=None,
                  deadline_seconds=45, deadline_at=None, answer_reserve_seconds=8, concurrency=16,
-                 title_batch=250, reading_mode='first_two', final_chars=6000):
+                 title_batch=250, reading_mode='first_two', final_chars=6000, answer_tokens=1024):
         if (deadline_seconds <= 0 or answer_reserve_seconds < 0 or concurrency < 1
                 or title_batch not in {100, 150, 250} or reading_mode not in {'first_two', 'outline'}
-                or final_chars < 640):
+                or final_chars < 640 or type(answer_tokens) is not int or not 32 <= answer_tokens <= 2048):
             raise ValueError('invalid lean limits')
         self.model, self.question = model, question
         self.catalog, self.document, self.search = catalog, document, search
@@ -53,6 +53,9 @@ class Lean:
         self.reserve = answer_reserve_seconds
         self.concurrency, self.title_batch = concurrency, title_batch
         self.reading_mode, self.final_chars = reading_mode, final_chars
+        self.answer_tokens = answer_tokens
+        self.budget_checks, self.budget_omissions = [], []
+        self.final_ids = None
         self.events, self.acquisition, self.sources, self.errors = [], [], [], []
         self.stages, self.paths, self.rounds = {}, [], []
         self.needs = [{'id': 'I1', 'text': question}]
@@ -65,6 +68,28 @@ class Lean:
 
     def remaining(self, final=False):
         return max(0., self.deadline - monotonic() - (0 if final else self.reserve))
+
+    async def fits(self, instruction, data, properties, *, limit=384, stage='reader', evidence=()):
+        if not hasattr(self.model, 'check_budget'):
+            return True
+        record = {'stage': stage, 'evidence_ids': list(evidence), 'status': 'pending'}
+        self.budget_checks.append(record)
+        start = monotonic()
+        try:
+            async with asyncio.timeout(self.remaining(final=stage == 'writer')):
+                record.update(await generate(self.model, instruction, data, properties, limit=limit,
+                                             stage=stage, evidence=evidence, budget_only=True))
+            if record['trace'].get('completion_attempted') is not False:
+                raise RuntimeError('budget check attempted generation')
+            if record['status'] not in {'completed', 'budget_exceeded'}:
+                raise RuntimeError('budget service unavailable')
+            return record['status'] == 'completed'
+        except BaseException:
+            if record['status'] == 'pending':
+                record['status'] = 'cancelled'
+            raise
+        finally:
+            record['elapsed_ms'] = (monotonic()-start)*1000
 
     async def call(self, instruction, data, properties, *, limit=384, stage='reader', evidence=(), depth=1):
         kind = ('navigation_titles' if instruction.startswith(kb_navigation.TITLE_PICK[:20]) else
@@ -174,9 +199,19 @@ class Lean:
         if not pool:
             return []
         local = {f'W{i+1}': s for i, s in enumerate(pool)}
-        event = await self.call(PAGES, {'question': self.question, 'needs': self.needs, 'pages': [
-            {'id': k, 'title': s.title, 'url': s.uri, 'snippet': s.metadata.get('search_snippet', '')}
-            for k, s in local.items()]}, kb_navigation.pick_schema(local, 3), limit=48, depth=2)
+        properties = kb_navigation.pick_schema(local, 3)
+        for snippet_chars in (512, 256, 128, 64, 0):
+            data = {'question': self.question, 'needs': self.needs, 'pages': [
+                {'id': k, 'title': s.title, 'url': s.uri,
+                 'snippet': s.metadata.get('search_snippet', '')[:snippet_chars]}
+                for k, s in local.items()]}
+            if await self.fits(PAGES, data, properties, limit=48):
+                break
+        else:
+            self.budget_omissions.append({'stage': 'pages', 'ids': list(local), 'reason': 'metadata_does_not_fit'})
+            return []
+        self.budget_omissions.append({'stage': 'pages', 'snippet_chars': snippet_chars, 'offered_ids': list(local)})
+        event = await self.call(PAGES, data, properties, limit=48, depth=2)
         self.paths.append(2)
         return [local[k] for k in kb_navigation.picks(event, list(local), 3)]
 
@@ -230,18 +265,28 @@ class Lean:
             windows.append([(source, w, ids) for w, ids in head])
         # Round robin gives each selected source its first window before any second.
         work = [rows[i] for i in range(2) for rows in windows if i < len(rows)][:9]
-        self.read_count += len(work)
         slots = asyncio.Semaphore(self.concurrency)
 
         async def one(source, window, ids, index):
             async with slots:
-                event = await self.call(SCORE, score_input(self.question, self.needs, source,
-                    window.metadata['context_spans'], [{'id': i, 'text': self.reader.spans[i]['text']} for i in ids]),
-                    score_schema(ids, [n['id'] for n in self.needs]), evidence=ids,
-                    depth=depth+index//self.concurrency)
+                offered = list(ids)
+                while offered:
+                    data = score_input(self.question, self.needs, source, window.metadata['context_spans'],
+                                       [{'id': i, 'text': self.reader.spans[i]['text']} for i in offered])
+                    properties = score_schema(offered, [n['id'] for n in self.needs])
+                    if await self.fits(SCORE, data, properties, evidence=offered):
+                        break
+                    offered.pop()
+                if len(offered) != len(ids):
+                    self.budget_omissions.append({'stage': 'read', 'span_ids': ids[len(offered):]})
+                if not offered:
+                    return
+                self.read_count += 1
+                event = await self.call(SCORE, data, properties, evidence=offered,
+                                        depth=depth+index//self.concurrency)
                 rows = (event['parsed'] or {}).get('scores', [])
                 need_ids = {n['id'] for n in self.needs}
-                if any(set(r) != {'span_id', 'need_id', 'score'} or r['span_id'] not in ids
+                if any(set(r) != {'span_id', 'need_id', 'score'} or r['span_id'] not in offered
                        or r['need_id'] not in need_ids or r['score'] not in {'2', '3'} for r in rows):
                     event.update(parsed=None, status='invalid_output', validation_error='invalid scores')
                     return
@@ -273,11 +318,23 @@ class Lean:
     async def answering(self, ids):
         self.progress('根据入选证据回答')
         depth = max((e['depth'] for e in self.events), default=0)+1
-        event = await self.call(ANSWER, {'question': self.question, 'needs': self.needs,
-            'spans': [self.reader.span_input(i) for i in ids]},
-            {'answer': {'type': 'string', 'minLength': 1}, 'citations': {**strings(ids), 'minItems': 1},
-             'not_found_needs': strings([n['id'] for n in self.needs])},
-            stage='writer', limit=1024, evidence=ids, depth=depth)
+        offered = list(ids)
+        while offered:
+            data = {'question': self.question, 'needs': self.needs,
+                    'spans': [self.reader.span_input(i) for i in offered]}
+            properties = {'answer': {'type': 'string', 'minLength': 1},
+                          'citations': {**strings(offered), 'minItems': 1},
+                          'not_found_needs': strings([n['id'] for n in self.needs])}
+            if await self.fits(ANSWER, data, properties, stage='writer', limit=self.answer_tokens, evidence=offered):
+                break
+            offered.pop()
+        self.final_ids = offered
+        if len(offered) != len(ids):
+            self.budget_omissions.append({'stage': 'answer', 'span_ids': ids[len(offered):]})
+        if not offered:
+            return
+        event = await self.call(ANSWER, data, properties, stage='writer', limit=self.answer_tokens,
+                                evidence=offered, depth=depth)
         if event['parsed']:
             value = event['parsed']
             if (not value['answer'].strip() or not value['citations']
@@ -302,6 +359,8 @@ class Lean:
         return self.result(ids)
 
     def result(self, ids=()):
+        if self.final_ids is not None:
+            ids = self.final_ids
         event = self.answer_event
         value = event['parsed'] if event else None
         if value:
@@ -327,6 +386,7 @@ class Lean:
                                'protocol': PROTOCOL, 'raw_text': event['raw_text'] if event else None}},
                 'display_text': text, 'acquisition': self.acquisition, 'errors': self.errors,
                 'graph': {'nodes': self.events,
+                          'budget_checks': self.budget_checks, 'budget_omissions': self.budget_omissions,
                           'source_snapshots': [s.model_dump(mode='json') for s in self.sources],
                           'spans': [{'id': i, 'text': self.reader.spans[i]['text'],
                                      'source_id': self.reader.spans[i]['source'].id,
@@ -336,6 +396,7 @@ class Lean:
                     'calls_by_stage': {kind: sum(e['kind'] == kind for e in self.events)
                                        for kind in dict.fromkeys(e['kind'] for e in self.events)},
                     'generation_calls': sum(bool((e.get('trace') or {}).get('completion_attempted')) for e in self.events),
+                    'budget_checks': len(self.budget_checks),
                     'input_tokens': sum(((e.get('trace') or {}).get('usage') or {}).get('prompt_tokens', 0) for e in self.events),
                     'output_tokens': sum(((e.get('trace') or {}).get('usage') or {}).get('completion_tokens', 0) for e in self.events),
                     'sequential_stages': list(self.stages), 'reading_calls': self.read_count,

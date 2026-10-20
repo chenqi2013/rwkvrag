@@ -20,6 +20,8 @@ class Model:
         self.raw = '  原始模型文字\n保留所有内容  '
 
     async def complete(self, messages, **kwargs):
+        if kwargs.get('check_only'):
+            return NativeRWKVResult('completed', None, None, {'completion_attempted': False})
         instruction, data = messages[0]['content'].split('\n', 1)
         data = json.loads(data)
         self.calls.append((instruction, data, kwargs))
@@ -178,6 +180,82 @@ async def test_final_evidence_character_budget_and_score_order_are_enforced():
     writer = next(data for i, data, _ in model.calls if i == flow.ANSWER)
     assert sum(len(s['text']) for s in writer['spans']) <= 640
     assert result['response_type'] == 'answered'
+
+
+class BudgetModel(Model):
+    async def check_budget(self, messages, **kwargs):
+        instruction, text = messages[0]['content'].split('\n', 1)
+        data = json.loads(text)
+        fits = (len(data.get('spans', [])) <= 1 if instruction in {flow.SCORE, flow.ANSWER}
+                else all(len(p['snippet']) <= 128 for p in data['pages']))
+        return NativeRWKVResult('completed' if fits else 'budget_exceeded', None, None,
+                                {'completion_attempted': False, 'budget': {'fits': fits}})
+
+
+async def test_exact_budget_packing_preserves_whole_original_spans_and_all_pages():
+    model = BudgetModel()
+    docs = [source(i, text='Original evidence sentence. '*200) for i in range(5)]
+    for doc in docs:
+        doc.metadata['search_snippet'] = 'navigation '*200
+    result, _ = await run(model, docs=docs, answer_tokens=384)
+    assert result['response_type'] == 'answered'
+    pages = [d for i, d, _ in model.calls if i == flow.PAGES]
+    assert len(pages) == 1 and len(pages[0]['pages']) == 5
+    assert all(len(p['snippet']) <= 128 for p in pages[0]['pages'])
+    reads = [d for i, d, _ in model.calls if i == flow.SCORE]
+    assert reads and all(len(d['spans']) == 1 for d in reads)
+    writer = next((d, k) for i, d, k in model.calls if i == flow.ANSWER)
+    assert len(writer[0]['spans']) == 1 and writer[1]['max_tokens'] == 384
+    cited = result['graph']['spans'][0]
+    assert cited['text'] in docs[0].snippet
+    assert writer[0]['spans'][0]['text'] == cited['text']
+    assert result['telemetry']['total_calls'] == len(model.calls)
+    assert result['telemetry']['budget_checks'] > len(reads)
+    assert all(not b['trace']['completion_attempted'] for b in result['graph']['budget_checks'])
+
+
+async def test_no_fitting_answer_evidence_skips_generation_without_inventing_an_answer():
+    model = BudgetModel()
+    original = model.check_budget
+
+    async def check(messages, **kwargs):
+        if messages[0]['content'].startswith(flow.ANSWER):
+            return NativeRWKVResult('budget_exceeded', None, None, {'completion_attempted': False})
+        return await original(messages, **kwargs)
+
+    model.check_budget = check
+    result, _ = await run(model)
+    assert result['response_type'] == 'not_found'
+    assert not any(i == flow.ANSWER for i, _, _ in model.calls)
+    assert result['graph']['spans'] == []
+    assert result['answer']['generation']['raw_text'] is None
+
+
+async def test_observed_budget_check_never_creates_a_generation_event():
+    from llamaindex_retrieval.interactive_app import ObservedModel
+    native = AsyncMock()
+    native.complete.return_value = NativeRWKVResult('completed', None, None, {'completion_attempted': False})
+    observed = ObservedModel(native, {})
+    await observed.check_budget([{'role': 'user', 'content': 'exact input'}], stage='reader')
+    assert native.complete.await_args.kwargs['check_only'] is True
+    assert observed.events == []
+    native.complete.return_value = NativeRWKVResult('completed', 'unsafe', 'stop', {'completion_attempted': True})
+    with pytest.raises(RuntimeError):
+        await observed.check_budget([], stage='reader')
+
+
+async def test_deadline_also_cancels_budget_tokenization():
+    model = BudgetModel()
+
+    async def blocked(*args, **kwargs):
+        await asyncio.sleep(1)
+
+    model.check_budget = blocked
+    start = monotonic()
+    result, _ = await run(model, deadline_seconds=.05, answer_reserve_seconds=.01)
+    assert monotonic()-start < .15
+    assert result['telemetry']['deadline_expired']
+    assert not any(i in {flow.SCORE, flow.ANSWER} for i, _, _ in model.calls)
 
 
 def test_model_profiles_resolve_all_four_fields_without_changing_input():

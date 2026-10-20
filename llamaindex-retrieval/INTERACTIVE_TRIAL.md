@@ -139,7 +139,8 @@ A trial configuration can select its model in one place:
     "answer_reserve_seconds": 8,
     "title_batch": 250,
     "reading_mode": "first_two",
-    "final_chars": 6000
+    "final_chars": 6000,
+    "answer_tokens": 1024
   }
 }
 ```
@@ -150,6 +151,15 @@ to values measured for that model. `needs` keeps its existing 6,000-token ceilin
 Use `reading_mode: "outline"` to compare model-picked sections with the first-two
 window control; outline selection adds a model stage. Navigation batch sizes
 100, 150 and 250 are supported. Raw model inputs and outputs are retained.
+
+Before reading and answering, the native tokenizer checks the complete prompt
+with the configured output reservation. When needed, lean removes whole trailing
+spans in stable order until the call fits; original span text is unchanged. Web
+selection retains every candidate ID, title and URL, using uniformly bounded
+navigation snippets. Budget preflights use no completion, share the request
+deadline, and appear separately in `graph.budget_checks`; omitted span IDs and
+snippet limits appear in `graph.budget_omissions`. `answer_tokens` controls the
+answer output reservation (32–2048, default1024), independently of `final_chars`.
 
 Lean results expose `response_type`: `answered`, `partial`, `not_found`,
 `unverified` or `error`. A missing-evidence response says “资料中未找到可靠依据”
