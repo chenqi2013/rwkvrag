@@ -134,30 +134,37 @@ async def _route(request, settings):
             "source_hashes": {"direct_web.py": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}}
 
 
-def _tavily_key(settings):
-    configured = settings.web_tavily_api_key.get_secret_value()
-    key_file = getattr(settings, "web_tavily_api_key_file", None)
+def _api_key(settings, provider):
+    configured = getattr(settings, f"web_{provider}_api_key").get_secret_value()
+    key_file = getattr(settings, f"web_{provider}_api_key_file", None)
     if configured and key_file:
-        raise WebProviderError("web_tavily_multiple_key_sources")
+        raise WebProviderError(f"web_{provider}_multiple_key_sources")
     if configured:
         key = configured
     elif key_file:
         try:
             path = Path(key_file)
             if path.stat().st_mode & 0o077:
-                raise WebProviderError("web_tavily_key_file_permissions")
+                raise WebProviderError(f"web_{provider}_key_file_permissions")
             key = path.read_text(encoding="utf-8").strip()
         except OSError:
-            raise WebProviderError("web_tavily_key_file_unavailable") from None
+            raise WebProviderError(f"web_{provider}_key_file_unavailable") from None
     else:
         return ""
     if not key or any(char.isspace() for char in key) or any(char in key for char in ",[]"):
-        raise WebProviderError("web_tavily_key_invalid")
+        raise WebProviderError(f"web_{provider}_key_invalid")
     return key
+
+
+def _tavily_key(settings):
+    return _api_key(settings, "tavily")
 
 
 async def _search(request, settings, guard=None):
     provider = settings.web_search_provider
+    if provider == "anysearch":
+        from .anysearch_web import search
+        return await search(request, settings, guard)
     query, count = request["query"], request["max_results"]
     if provider == "tavily":
         key = _tavily_key(settings)

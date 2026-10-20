@@ -44,6 +44,17 @@
 
 ## Web记录与离线重放
 
+`settings.web_search_provider` 可设为 `"anysearch"`，同时设置
+`web_anysearch_api_key_file: "/absolute/path/active.key"`（仅当前用户可读，
+只包含一把Key），或用 `web_anysearch_api_key` 配置单Key；两者不能同时设置。
+默认仍为Tavily。AnySearch先调用 `/v1/search`，再按返回顺序用同一Key
+调用 `/v1/extract` 获取正文。只把extract成功的正文标为`fetched`；
+无法提取的页面保留原始摘要，标为`snippet_only`并记录获取错误。
+搜索和正文请求共享限流与认证/额度冷却，不自动重试、轮换或匿名回退。
+AnySearch没有文档化的`include_domains`参数，域名限制只过滤已返回URL的
+主机及其子域名，原始查询不改写；不能保证限定域名内的完整召回。
+录制包含搜索与成功正文获取的原始响应字节和哈希，重放不调用二者的接口。
+
 顶层 `web_replay: {"mode": "off"|"record"|"replay", "store": "/absolute/path/captures"}` 控制Web获取，默认 `"off"`。`record` 按提供方、精确查询、按原顺序的 `include_domains`、结果数和 `full_snapshot` 保存完整提供方响应及哈希；同一请求重用首次记录。`replay` 只读对应记录，缺失、损坏或不可读均记为获取失败，绝不转为联网请求。原始HTTP响应字节和解析后的提供方载荷均保留在记录中，供审计复核。记录目录包含来源正文，应按本地研究数据管理，不提交版本库。
 
 ## 知识库导航卡片（`kb_cards`）

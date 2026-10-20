@@ -34,9 +34,11 @@ class Settings(BaseSettings):
     chunk_size: int = Field(default=512, ge=128, le=8192)
     chunk_overlap: int = Field(default=64, ge=1, le=1024)
     candidate_k: int = Field(default=40, ge=5, le=200)
-    web_search_provider: Literal["tavily", "searxng"] = "tavily"
+    web_search_provider: Literal["tavily", "searxng", "anysearch"] = "tavily"
     web_tavily_api_key: SecretStr = SecretStr("")
     web_tavily_api_key_file: Path | None = None
+    web_anysearch_api_key: SecretStr = SecretStr("")
+    web_anysearch_api_key_file: Path | None = None
     web_searxng_base_url: str = ""
     web_guard_path: Path | None = None
     web_min_interval_seconds: float = Field(default=1.0, ge=0, le=60)

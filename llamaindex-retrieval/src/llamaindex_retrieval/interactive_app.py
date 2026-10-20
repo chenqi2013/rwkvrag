@@ -326,6 +326,9 @@ app = FastAPI(title='RWKV 资料问答试用', lifespan=lifespan)
 @app.get('/v1/try/meta')
 async def meta():
     trial = app.state.trial
+    provider = trial.settings.web_search_provider
+    key = getattr(trial.settings, f'web_{provider}_api_key', None)
+    key_file = getattr(trial.settings, f'web_{provider}_api_key_file', None)
     return {'model': trial.settings.native_model, 'knowledge_bases': await trial.knowledge_bases(),
         'concurrency': trial.settings.native_max_concurrency, 'gpu': trial.config['gpu'],
         'expires_at': trial.config.get('expires_at'), 'history_supported': True,
@@ -333,9 +336,8 @@ async def meta():
         'pipeline': trial.config.get('pipeline', 'funnel'), 'pipelines': ['lean', 'needs', 'spans'],
         'model_profile': trial.config.get('active_model'),
         'context_window_tokens': trial.settings.native_context_window_tokens,
-        'web_configured': (trial.settings.web_search_provider == 'searxng' or
-            bool(trial.settings.web_tavily_api_key.get_secret_value()) or
-            bool(trial.settings.web_tavily_api_key_file and trial.settings.web_tavily_api_key_file.is_file())),
+        'web_configured': (provider == 'searxng' or bool(key and key.get_secret_value()) or
+            bool(key_file and key_file.is_file())),
         'quality_verified': False}
 
 
