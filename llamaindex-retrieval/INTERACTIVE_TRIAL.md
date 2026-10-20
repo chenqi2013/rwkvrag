@@ -202,10 +202,20 @@ deadline, and appear separately in `graph.budget_checks`; omitted span IDs and
 snippet limits appear in `graph.budget_omissions`. `answer_tokens` controls the
 answer output reservation (32–2048, default1024), independently of `final_chars`.
 
+`lean_options.answer_contract` defaults to `"cited_v1"`. The opt-in
+`"missing_v2"` contract permits the Writer to mark every need missing with empty
+citations after inspecting selected spans. Such a valid result is `not_found`,
+and displays the model's answer unchanged. If any need is answered, at least one
+offered citation is still required; an all-missing result must have no citations.
+The selected contract appears in `answer.generation.answer_contract`. These are
+structural checks; factual support and facts asserted after a missing declaration
+still require semantic review. When no span is selected, both contracts skip the
+Writer call.
+
 Lean results expose `response_type`: `answered`, `partial`, `not_found`,
-`unverified` or `error`. A missing-evidence response says “资料中未找到可靠依据”
-and includes attempted queries and retrieved sources, without calling the answer
-model. Invalid or timed-out answer calls expose any returned raw text verbatim
+`unverified` or `error`. When no original span is selected, a `not_found` response
+says “资料中未找到可靠依据” and includes attempted queries and retrieved sources,
+without calling the answer model. Invalid or timed-out answer calls expose any returned raw text verbatim
 under `unverified`; this label is not factual verification. `not_found_needs`
 contains the model's missing-need IDs/texts. `telemetry` reports wall time by
 stage, total model calls, dependency-path calls (including concurrency waves),
@@ -224,3 +234,99 @@ single key file. Preserve existing provider-guard records. Standby keys are neve
 selected inside a request. For comparisons, record exact provider requests once
 with `web_replay.mode: "record"`, freeze the store, then use `"replay"`; misses
 fail without a live request. Set `web_search_results: 5` for the lean web budget.
+
+## Entity navigation and frozen case evaluation
+
+Optional `entity_indexes: {knowledge_base_id: "/absolute/path/ENTITIES.jsonl"}`
+loads model-authored entity/alias records. Each row has `id`, `title`, `status`,
+`raw_text` and `parsed: {entities: [...], aliases: [...]}`. Failed or invalid rows
+stay in the artifact and contribute no lookup terms. The planner additionally
+extracts at most six entities and six aliases. Code normalizes NFKC, case,
+whitespace, punctuation and traditional characters using OpenCC one codepoint
+at a time, then unions exact-equality hits in corpus order. No term overlap,
+fuzzy matching or semantic dictionary is used. One to forty hits receive one
+model selection over titles/cards, choosing at most three files. Zero or more
+than forty hits use the title tournament with batches of 150. Card text is
+navigation metadata; selected original spans remain the only answer evidence.
+The acquisition receipt records the lookup terms, matched IDs and chosen path.
+
+Build an index from question-independent JSONL rows with `id`, `title`,
+`opening`, optional string-array `headings` and optional `source_sha256`:
+
+```bash
+.venv/bin/python -m llamaindex_retrieval.entity_index_build \
+  --config /absolute/path/private-config.json \
+  --inputs /absolute/path/document-inputs.jsonl \
+  --out /absolute/path/new-index-version
+```
+
+The output directory must be new. The builder preserves raw failures, checks
+complete prompt budgets, never retries generations, and writes `ENTITIES.jsonl`,
+`LOOKUP.json`, source/config bindings and counts. A completed build is not a
+retrieval-quality result. API cost is unknown unless measured separately.
+
+A model profile can also specify `api_key_file` (absolute private path, or null
+to clear inherited authentication), `require_fp32_runtime` and the paired fields
+`tokenizer_file`/`tokenizer_sha256`. Setting both tokenizer fields to null returns
+to service tokenization. This lets local and public profiles select their own
+credentials, tokenizer and precision checks without changing application code.
+Profiles without these options retain the corresponding global settings.
+
+`web_replay.mode: "case_pool"` uses a `CasePool` directory with immutable
+case manifests and content-addressed blobs. Requests must supply `case_id`.
+The lean pipeline loads the case's complete frozen KB catalog/originals and Web
+pool, regardless of planner query or domain variation, without live admin or Web
+acquisition. Missing/corrupt pools fail without a network fallback. The existing
+exact-query `record`/`replay` modes are unchanged. Case-pool mode is limited to
+lean requests and is an evaluation control, not live search behavior.
+
+Run all supplied dev cases with any lean configuration:
+
+```bash
+.venv/bin/python -m llamaindex_retrieval.retrieval_eval run \
+  --config /absolute/path/private-case-pool-config.json \
+  --cases /absolute/path/dev-cases.json \
+  --golds /absolute/path/stage-golds.json \
+  --out /absolute/path/new-evaluation-version
+```
+
+Case files contain `cases` with `id` and a `request` object (`question`, optional
+`knowledge_base_id`, optional alternating `history`). Only request fields reach
+the pipeline. Gold cases bind `case_id`, `pool_sha256`, `gold_file_ids`,
+`gold_pages` and atomic `needs`. Each need has `id`, `answerable` and source-bound
+`span_grades`: `source_admissible`, `reviewed_all_spans`, nullable `default`, and
+`overrides` mapping canonical source-local span IDs to grades 0–3. Grade 2/3 is
+positive; unknown content is not a negative. The harness binds canonical IDs to
+original source coordinates before comparison and includes missed positive
+originals in recall denominators. `graph.reading_spans`, per-read source/offer
+bindings and page-selection bindings are audit metadata and do not enter Writer
+inputs.
+
+`SCORED.json` and `SCORED.md` report file hits, picked/read pages, offered and
+selected gold spans, false positives, unknown selections, calls, response types
+and latency. Reading relevance uses the maximum known grade across atomic needs;
+this is a question-level metric. Per-need answer and citation correctness,
+planning coverage, final S/W/F and facts-after-not-found require semantic review.
+They remain pending until supplied; schema validity or string overlap cannot
+substitute for that review. Performance gates and adoption are declared by the
+experiment, not inferred by this tool.
+
+Score frozen records with an independently saved review in a new output version:
+
+```bash
+.venv/bin/python -m llamaindex_retrieval.retrieval_eval score \
+  --run /absolute/path/evaluation-version \
+  --golds /absolute/path/stage-golds.json \
+  --reviews /absolute/path/semantic-reviews.json \
+  --out /absolute/path/new-score-version
+```
+
+The review file has `cases` containing `case_id`, the exact `record_sha256`,
+`rubric` (`S`/`W`/`F`), boolean `facts_after_not_found`, and `need_results` covering
+every gold need: `gold_need_id`, boolean `correct`/`not_found`, nullable boolean
+`citations_supported`, and `reason`. Failed cases also require `first_failure`
+with `stage`, `category` and raw/source `evidence`. Stages are `plan`,
+`navigation`, `page_selection`, `reading`, `answering`, `acquisition` or `runtime`.
+`DEFECTS.json` ranks the reviewed first failures and explicitly counts pending
+cases. Scoring never changes original outputs. All case pools, golds, reviews,
+index artifacts and evaluation records remain local research data.

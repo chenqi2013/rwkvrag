@@ -25,10 +25,13 @@ def cacheable_failure(code):
 
 class WebReplay:
     def __init__(self, *, mode='off', store=None):
-        if mode not in {'off', 'record', 'replay'} or (mode != 'off' and not store):
+        if mode not in {'off', 'record', 'replay', 'case_pool'} or (mode != 'off' and not store):
             raise ValueError('invalid web_replay configuration')
         self.mode = mode
         self.store = Path(store) if store else None
+        if mode == 'case_pool':
+            from .case_pool import CasePool
+            self.case_pool = CasePool(store)
 
     @staticmethod
     def key(provider, query, include_domains, max_results, full_snapshot, *, provider_options=None):
@@ -99,7 +102,16 @@ class WebReplay:
         except OSError:
             raise WebProviderError('web_replay_unavailable') from None
 
-    async def execute(self, key, live):
+    async def execute(self, key, live, *, case_id=None):
+        if self.mode == 'case_pool':
+            try:
+                case = self.case_pool.load(case_id)
+                payload = case.web()
+                return payload, {'mode': 'case_pool', 'case_id': case_id, 'pool_sha256': case.sha256,
+                                 'replayed': True, 'query_independent': True,
+                                 'observed_request_sha256': sha(encode(key))}
+            except (OSError, ValueError, KeyError, TypeError):
+                raise WebProviderError('web_case_pool_unavailable') from None
         if self.mode == 'off':
             return await live(), None
         try:

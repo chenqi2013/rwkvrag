@@ -19,7 +19,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .config import Settings
 from .interactive_sources import choose_catalog, gather, add_sources
-from . import interactive_funnel, interactive_lean, interactive_needs, interactive_spans, kb_navigation, model_profiles
+from . import entity_index, interactive_funnel, interactive_lean, interactive_needs, interactive_spans, kb_navigation, model_profiles
 from .model_client import model_client_options
 from .schemas import SourceItem
 from .structured_native import StructuredNativeRWKVClient
@@ -34,6 +34,7 @@ class Question(BaseModel):
     retrieval_mode: Literal['knowledge_base', 'web', 'hybrid'] = 'hybrid'
     knowledge_base_ids: list[str] = Field(default_factory=list)
     pipeline: Literal['lean', 'needs', 'spans'] | None = None
+    case_id: str | None = Field(default=None, pattern=r'^[A-Za-z0-9_.-]{1,128}$')
 
 
 def digest(value):
@@ -98,6 +99,8 @@ class Trial:
             for line in Path(path).read_text().splitlines():
                 card = json.loads(line)
                 self.cards[card['id']] = card
+        self.entity_index = (entity_index.EntityIndex.from_paths(config['entity_indexes'].values(), self.cards.values())
+                             if config.get('entity_indexes') else None)
         self.folder = Path(config['records_dir'])
         self.folder.mkdir(parents=True, exist_ok=True)
 
@@ -133,6 +136,8 @@ class Trial:
             if (payload.pipeline or self.config.get('pipeline')) == 'lean':
                 await self.run_lean(job, payload, model, receipts)
                 return
+            if self.web.replay.mode == 'case_pool':
+                raise ValueError('case_pool trial requests require pipeline lean')
             async with asyncio.timeout(900):
                 async with self.lock:
                     job['status'] = 'running'
@@ -255,11 +260,20 @@ class Trial:
             job['phase'] = text
         try:
             async with asyncio.timeout_at(deadline):
-                bases = {b['id']: b for b in await self.knowledge_bases()}
+                pool = (self.web.replay.case_pool.load(payload.case_id)
+                        if self.web.replay.mode == 'case_pool' else None)
+                bases = {b['id']: b for b in (pool.metadata['knowledge_bases'] if pool else await self.knowledge_bases())}
                 if any(i not in bases for i in payload.knowledge_base_ids):
                     raise ValueError('unknown_knowledge_base')
-                catalog, files = (await self.catalog(payload.knowledge_base_ids)
-                    if payload.retrieval_mode != 'web' else ([], {}))
+                if pool:
+                    catalog = ([c for c in pool.catalog if c['knowledge_base_id'] in payload.knowledge_base_ids]
+                               if payload.retrieval_mode != 'web' else [])
+                    files = {}
+                    receipts.append({'channel': 'case_pool', 'case_id': payload.case_id,
+                                     'pool_sha256': pool.sha256})
+                else:
+                    catalog, files = (await self.catalog(payload.knowledge_base_ids)
+                        if payload.retrieval_mode != 'web' else ([], {}))
                 parent = None
                 if payload.parent_job_id:
                     previous = self.jobs.get(payload.parent_job_id)
@@ -271,6 +285,10 @@ class Trial:
                               (previous_result.get('answer', {}).get('generation', {}).get('parsed_answer') or {}).get('answer')}
 
                 async def document(file_id):
+                    if pool:
+                        if file_id not in {c['id'] for c in catalog}:
+                            raise ValueError('document outside permitted frozen catalog')
+                        return pool.document(file_id)
                     response = await self.admin.get('/v1/admin/files/' + file_id + '/download')
                     response.raise_for_status()
                     text = response.content.decode('utf-8')
@@ -281,7 +299,8 @@ class Trial:
                                   'source_kind': 'stored_original'})
 
                 async def search(query, *, include_domains):
-                    hits, trace = await self.web.search(query, full_snapshot=True, include_domains=include_domains)
+                    options = {'case_id': payload.case_id} if pool else {}
+                    hits, trace = await self.web.search(query, full_snapshot=True, include_domains=include_domains, **options)
                     receipts.append({'channel': 'web', 'query': query, 'trace': trace})
                     return [SourceItem(id='W' + digest(h.metadata['uri'] + '\0' + h.text)[:16],
                         document_id=h.document_id, title=h.metadata['title'], source='web', uri=h.metadata['uri'],
@@ -292,6 +311,7 @@ class Trial:
                 search=search, scope={'knowledge_bases': [bases[i]['name'] for i in payload.knowledge_base_ids],
                                      'web': payload.retrieval_mode != 'knowledge_base'},
                 progress=progress, parent=parent, deadline_at=deadline,
+                entity_index=self.entity_index,
                 concurrency=self.settings.native_max_concurrency, **options)
             result['telemetry']['total_ms'] = (monotonic()-started)*1000
             result['telemetry']['stages_ms']['setup'] = setup_ms

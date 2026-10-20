@@ -6,18 +6,20 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from llamaindex_retrieval import interactive_lean as flow, kb_navigation as nav, model_profiles
+from llamaindex_retrieval import entity_index, interactive_lean as flow, kb_navigation as nav, model_profiles
 from llamaindex_retrieval.direct_web import WebProviderError
 from llamaindex_retrieval.native_rwkv import NativeRWKVResult
 from llamaindex_retrieval.schemas import SourceItem
 
 
 class Model:
-    def __init__(self, *, scores=True, invalid=False, missing=False, plan_failure=False, delay=None):
+    def __init__(self, *, scores=True, invalid=False, missing=False, plan_failure=False, delay=None,
+                 entity_terms=()):
         self.scores, self.invalid, self.missing = scores, invalid, missing
         self.plan_failure, self.delay = plan_failure, delay or {}
         self.calls, self.active, self.peak = [], 0, 0
         self.raw = '  原始模型文字\n保留所有内容  '
+        self.entity_terms = list(entity_terms)
 
     async def complete(self, messages, **kwargs):
         if kwargs.get('check_only'):
@@ -29,12 +31,14 @@ class Model:
         self.peak = max(self.peak, self.active)
         try:
             await asyncio.sleep(self.delay.get(instruction, 0))
-            if instruction == flow.PLAN:
+            if instruction in {flow.PLAN, flow.PLAN_ENTITIES}:
                 if self.plan_failure:
                     return NativeRWKVResult('invalid_output', 'original plan failure', 'stop', {})
                 value = {'question': 'resolved', 'needs': ['need1', 'need2'],
                          'kb_queries': ['kb'] if data['channels'].get('knowledge_bases') else [],
                          'web_queries': ['web'] if data['channels'].get('web') else [], 'sites': ['example.org']}
+                if instruction == flow.PLAN_ENTITIES:
+                    value.update(entities=self.entity_terms, aliases=[])
             elif instruction == flow.SCORE:
                 value = {'scores': [{'span_id': data['spans'][0]['id'], 'need_id': data['needs'][0]['id'],
                                      'score': '3'}] if self.scores else []}
@@ -46,6 +50,8 @@ class Model:
             elif instruction == flow.PAGES:
                 value = {'ids': [p['id'] for p in data['pages']][:3]}
             elif instruction.startswith(nav.TITLE_PICK[:20]):
+                value = {'ids': [p['id'] for p in data['documents']][:3]}
+            elif instruction == entity_index.SELECT:
                 value = {'ids': [p['id'] for p in data['documents']][:3]}
             elif instruction == flow.OUTLINE:
                 value = {'ids': [data['entries'][-1]['id']]}
@@ -99,6 +105,89 @@ async def test_invalid_answer_is_unverified_and_preserves_every_raw_character():
     assert result['response_type'] == 'unverified'
     assert result['display_text'] == model.raw == result['answer']['answer']
     assert result['answer']['generation']['parsed_answer'] is None
+
+
+class MissingWriter(Model):
+    def __init__(self, *, all_missing=True, cited=False, citation_id=None):
+        super().__init__()
+        self.all_missing, self.cited, self.citation_id = all_missing, cited, citation_id
+
+    async def complete(self, messages, **kwargs):
+        instruction, text = messages[0]['content'].split('\n', 1)
+        if instruction not in {flow.ANSWER, flow.ANSWER_MISSING}:
+            return await super().complete(messages, **kwargs)
+        data = json.loads(text)
+        self.calls.append((instruction, data, kwargs))
+        value = {'answer': ' 所给原文未提供这些信息。 ',
+                 'citations': [self.citation_id or data['spans'][0]['id']] if self.cited else [],
+                 'not_found_needs': [n['id'] for n in data['needs']][:(None if self.all_missing else 1)]}
+        self.raw = '  ' + json.dumps(value, ensure_ascii=False, indent=2) + '\n'
+        return NativeRWKVResult('completed', self.raw, 'stop', {})
+
+
+@pytest.mark.parametrize('contract,all_missing,cited,expected', [
+    ('cited_v1', True, False, 'unverified'),
+    ('cited_v1', True, True, 'unverified'),
+    ('missing_v2', True, False, 'not_found'),
+    ('missing_v2', True, True, 'unverified'),
+    ('missing_v2', False, False, 'unverified'),
+    ('missing_v2', False, True, 'partial'),
+])
+async def test_missing_writer_contract_preserves_raw_and_requires_consistent_citations(
+        contract, all_missing, cited, expected):
+    model = MissingWriter(all_missing=all_missing, cited=cited)
+    result, _ = await run(model, answer_contract=contract)
+    assert result['response_type'] == expected
+    assert result['answer']['answer'] == result['answer']['generation']['raw_text'] == model.raw
+    assert result['answer']['generation']['answer_contract'] == contract
+    if expected == 'unverified':
+        assert result['display_text'] == model.raw
+        assert result['answer']['generation']['parsed_answer'] is None
+    else:
+        assert result['display_text'] == ' 所给原文未提供这些信息。 '
+        assert len(result['not_found_needs']) == (2 if all_missing else 1)
+        assert result['answer']['generation']['parsed_answer']['source_ids'] == (
+            [] if all_missing else [result['graph']['spans'][0]['id']])
+    instruction, data, kwargs = next(c for c in model.calls if c[0] in {flow.ANSWER, flow.ANSWER_MISSING})
+    assert instruction == flow.answer_instruction(contract)
+    assert data == flow.answer_input('resolved', [{'id': 'I1', 'text': 'need1'},
+                                                {'id': 'I2', 'text': 'need2'}], data['spans'])
+    from llamaindex_retrieval.interactive_sources import obj
+    assert kwargs['structured_schema'] == obj(flow.answer_schema(
+        [s['id'] for s in data['spans']], data['needs'], contract))
+
+
+async def test_missing_contract_still_rejects_unoffered_citations():
+    model = MissingWriter(all_missing=False, cited=True, citation_id='NOT_OFFERED')
+    result, _ = await run(model, answer_contract='missing_v2')
+    assert result['response_type'] == 'unverified'
+    assert result['display_text'] == model.raw
+
+
+async def test_missing_contract_without_reader_evidence_still_skips_writer():
+    model = Model(scores=False)
+    result, _ = await run(model, answer_contract='missing_v2')
+    assert result['response_type'] == 'not_found'
+    assert not any(i == flow.ANSWER_MISSING for i, _, _ in model.calls)
+
+
+@pytest.mark.parametrize('hits', [0, 1, 40, 41])
+async def test_entity_navigation_uses_one_pick_or_title150_fallback(hits):
+    index = entity_index.EntityIndex([{'id': str(i), 'title': f'Title {i}', 'status': 'completed',
+        'parsed': {'entities': ['needle'], 'aliases': []}} for i in range(hits)])
+    model = Model(entity_terms=['needle'])
+    result, _ = await run(model, catalog_size=500, entity_index=index)
+    pick_calls = [c for c in model.calls if c[0] == entity_index.SELECT]
+    titles = [c for c in model.calls if c[0].startswith(nav.TITLE_PICK[:20])]
+    receipt = next(a for a in result['acquisition'] if a.get('mode') == 'entity_index')
+    assert receipt['path'] == ('entity_pick' if 1 <= hits <= 40 else 'title_fallback')
+    if 1 <= hits <= 40:
+        assert len(pick_calls) == 1 and not titles
+        assert len(pick_calls[0][1]['documents']) == hits
+        assert len(receipt['selected_file_ids']) <= 3
+    else:
+        assert not pick_calls and titles
+        assert max(len(c[1]['documents']) for c in titles) <= 150
 
 
 async def test_server_down_is_error_and_attempt_is_recorded():
@@ -296,4 +385,64 @@ async def test_app_honors_lean_deadline_and_preserves_result_without_context_cal
         contextualize.assert_not_awaited()
     finally:
         await original_native.aclose()
+        await trial.admin.aclose()
+
+
+def test_profile_switch_changes_credentials_precision_and_tokenizer_together(tmp_path):
+    token = tmp_path/'remote.key'
+    token.write_text('private-fixture-token\n')
+    config = {'active_model': 'remote', 'settings': {'native_api_key': 'old-local'},
+        'model_profiles': {
+            'remote': {'model': 'alias', 'base_url': 'https://example.org/v1',
+                'context_window_tokens': 3329, 'concurrency': 8,
+                'api_key_file': str(token), 'require_fp32_runtime': False,
+                'tokenizer_file': '/absolute/vocab.txt', 'tokenizer_sha256': 'a'*64},
+            'local': {'model': 'alias', 'base_url': 'http://localhost:1000/v1',
+                'context_window_tokens': 3329, 'concurrency': 16,
+                'api_key_file': None, 'require_fp32_runtime': True,
+                'tokenizer_file': None, 'tokenizer_sha256': None}}}
+    remote = model_profiles.resolve(config)
+    assert remote['settings']['native_api_key'] == 'private-fixture-token'
+    assert remote['settings']['native_require_fp32_runtime'] is False
+    assert remote['settings']['native_tokenizer_file'] == '/absolute/vocab.txt'
+    local = model_profiles.resolve({**remote, 'active_model': 'local'})
+    assert local['settings']['native_api_key'] == ''
+    assert local['settings']['native_require_fp32_runtime'] is True
+    assert local['settings']['native_tokenizer_file'] is None
+    assert local['settings']['native_tokenizer_sha256'] is None
+    assert config['settings'] == {'native_api_key': 'old-local'}
+
+
+async def test_case_pool_app_uses_originals_without_admin_or_live_web(tmp_path):
+    from llamaindex_retrieval import interactive_app as app
+    from llamaindex_retrieval.case_pool import CasePool
+    pool = CasePool(tmp_path/'pool')
+    original = source('bound', channel='knowledge_base')
+    pool.freeze('C1', catalog=[{'id': original.document_id, 'title': original.title,
+                              'knowledge_base_id': 'kb'}], documents={original.document_id: original},
+        web_payload={'provider': 'tavily', 'hits': [], 'source_hashes': []},
+        metadata={'knowledge_bases': [{'id': 'kb', 'name': 'KB'}]})
+    trial = app.Trial({'pipeline': 'lean', 'settings': {}, 'admin_base_url': 'http://localhost:1',
+        'records_dir': str(tmp_path/'records'),
+        'web_replay': {'mode': 'case_pool', 'store': str(pool.store)}})
+    native = trial.native
+    trial.native = Model()
+    trial.admin.get = AsyncMock(side_effect=AssertionError('no live admin in case_pool'))
+    trial.web._execute = AsyncMock(side_effect=AssertionError('no live web in case_pool'))
+    job = {'id': 'c'*32, 'question': 'q', 'status': 'queued'}
+    try:
+        await trial.run(job, app.Question(question='q', case_id='C1', knowledge_base_ids=['kb']))
+        assert job['result']['response_type'] == 'answered'
+        trial.admin.get.assert_not_awaited()
+        trial.web._execute.assert_not_awaited()
+        graph = job['result']['graph']
+        assert graph['reading_spans'][0]['source_id'] == original.id
+        assert graph['reading_spans'][0]['text'] == original.snippet
+        read = next(n for n in graph['nodes'] if n['kind'] == 'score')
+        assert read['source_id'] == original.id
+        assert read['offered_span_ids'] == ['S1']
+        record = json.loads((tmp_path/'records'/('c'*32+'.json')).read_text())
+        assert any(r.get('pool_sha256') for r in record['acquisition'])
+    finally:
+        await native.aclose()
         await trial.admin.aclose()

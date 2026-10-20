@@ -9,7 +9,7 @@ from math import ceil
 import re
 from time import monotonic
 
-from . import kb_navigation
+from . import entity_index as entities, kb_navigation
 from .interactive_needs import SCORE, score_input, score_schema
 from .interactive_sources import add_sources, gather
 from .interactive_spans import Reader, generate, strings
@@ -18,29 +18,66 @@ PROTOCOL = 'interactive-lean-v1'
 PLAN = ('理解当前问题和上一轮上下文，写出独立完整的question。needs列出最多4个必须核实的信息项；'
         'kb_queries和web_queries各最多2条独立检索语句，只使用允许的渠道。sites最多2个官网裸域名，'
         '仅在需要限定官网时填写，不确定则为空。不要回答问题。')
+PLAN_ENTITIES = PLAN + ('entities和aliases各最多6项，提取完整问题中要查找的对象名称和别称，'
+                       '供知识库实体精确查找；不确定的名称不要猜。')
 PAGES = ('以下是全部联网检索结果的标题、网址与搜索摘要。选择最多3份最可能直接回答信息项的网页ID。'
          '优先符合用户要求的原始或官方来源；都不合适时返回空数组。摘要仅用于定位，不是回答依据。')
 ANSWER = ('只依据给出的入选逐字原文回答完整问题，保留条件和限制，不添加常识或猜测。'
           'answer写简短回答，事实后用[片段ID]指向依据，citations列出实际引用的片段ID。'
           'not_found_needs列出没有找到可靠依据的信息项ID；对这些信息项只说明未找到，绝不提供答案或推测。')
+ANSWER_MISSING = ANSWER + ('如果全部信息项都没有可靠依据，not_found_needs列出全部信息项ID，'
+                         'citations为空数组，answer只说明未找到。部分缺证时只回答有据的信息项。')
 OUTLINE = ('以下是长文的结构目录。选择最可能包含信息项答案的一个条目ID；没有则返回空数组。'
            '目录只用于定位，不能作为事实依据。')
 _DOMAIN = re.compile(r'(?=.{1,253}\Z)(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+'
                      r'[A-Za-z](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\Z')
 
 
-def plan_schema(scope):
-    return {'question': {'type': 'string', 'minLength': 1},
+def plan_schema(scope, entity_navigation=False):
+    properties = {'question': {'type': 'string', 'minLength': 1},
             'needs': {**strings(), 'minItems': 1, 'maxItems': 4},
             'kb_queries': {**strings(), 'maxItems': 2 if scope.get('knowledge_bases') else 0},
             'web_queries': {**strings(), 'maxItems': 2 if scope.get('web') else 0},
             'sites': {**strings(), 'maxItems': 2}}
+    return {**properties, **entities.entity_schema(6)} if entity_navigation else properties
+
+
+def answer_instruction(contract='cited_v1'):
+    if contract not in {'cited_v1', 'missing_v2'}:
+        raise ValueError('invalid lean answer contract')
+    return ANSWER_MISSING if contract == 'missing_v2' else ANSWER
+
+
+def answer_input(question, needs, spans):
+    return {'question': question, 'needs': needs, 'spans': spans}
+
+
+def answer_schema(ids, needs, contract='cited_v1'):
+    answer_instruction(contract)
+    return {'answer': {'type': 'string', 'minLength': 1},
+            'citations': {**strings(ids), 'minItems': 0 if contract == 'missing_v2' else 1},
+            'not_found_needs': strings([n['id'] for n in needs])}
+
+
+def validate_answer(value, needs, contract='cited_v1'):
+    """Business checks after schema/ID validation; factual support needs review."""
+    answer_instruction(contract)
+    all_missing = len(value['not_found_needs']) == len(needs)
+    if not value['answer'].strip():
+        return 'answer must not be blank'
+    if contract == 'missing_v2':
+        if bool(value['citations']) == all_missing:
+            return 'citations required exactly when some needs are answered'
+    elif not value['citations'] or all_missing:
+        return 'answer requires supported needs'
+    return None
 
 
 class Lean:
     def __init__(self, model, question, *, catalog, document, search, scope, progress, parent=None,
                  deadline_seconds=45, deadline_at=None, answer_reserve_seconds=8, concurrency=16,
-                 title_batch=250, reading_mode='first_two', final_chars=6000, answer_tokens=1024):
+                 title_batch=250, reading_mode='first_two', final_chars=6000, answer_tokens=1024,
+                 answer_contract='cited_v1', entity_index=None):
         if (deadline_seconds <= 0 or answer_reserve_seconds < 0 or concurrency < 1
                 or title_batch not in {100, 150, 250} or reading_mode not in {'first_two', 'outline'}
                 or final_chars < 640 or type(answer_tokens) is not int or not 32 <= answer_tokens <= 2048):
@@ -54,6 +91,12 @@ class Lean:
         self.concurrency, self.title_batch = concurrency, title_batch
         self.reading_mode, self.final_chars = reading_mode, final_chars
         self.answer_tokens = answer_tokens
+        self.answer_contract = answer_contract
+        self.answer_instruction = answer_instruction(answer_contract)
+        self.entity_index = entity_index
+        self.plan_instruction = PLAN_ENTITIES if entity_index is not None else PLAN
+        if entity_index is not None:
+            self.title_batch = 150
         self.budget_checks, self.budget_omissions = [], []
         self.final_ids = None
         self.events, self.acquisition, self.sources, self.errors = [], [], [], []
@@ -93,7 +136,8 @@ class Lean:
 
     async def call(self, instruction, data, properties, *, limit=384, stage='reader', evidence=(), depth=1):
         kind = ('navigation_titles' if instruction.startswith(kb_navigation.TITLE_PICK[:20]) else
-                {PLAN: 'plan', PAGES: 'page_selection', SCORE: 'score', OUTLINE: 'outline', ANSWER: 'answer'}[instruction])
+                {self.plan_instruction: 'plan', PAGES: 'page_selection', SCORE: 'score', OUTLINE: 'outline',
+                 self.answer_instruction: 'answer', entities.SELECT: 'navigation_entities'}[instruction])
         record = {'kind': kind, 'depth': depth, 'started_ms': (monotonic()-self.started)*1000,
                   'status': 'pending', 'raw_text': None, 'parsed': None}
         self.events.append(record)
@@ -122,16 +166,23 @@ class Lean:
 
     async def planning(self):
         self.progress('理解问题并规划检索')
-        event = await self.call(PLAN, {'message': self.question, 'previous': self.parent,
-                                      'channels': self.scope}, plan_schema(self.scope), stage='plan', depth=1)
+        event = await self.call(self.plan_instruction, {'message': self.question, 'previous': self.parent,
+                                      'channels': self.scope}, plan_schema(self.scope, self.entity_index is not None),
+                                stage='plan', depth=1)
         value = event['parsed']
         if value and any(not _DOMAIN.fullmatch(d) for d in value['sites']):
             event.update(parsed=None, status='invalid_output', validation_error='sites must be bare domains')
+            value = None
+        if (value and self.entity_index is not None
+                and not entities.valid_terms({k: value[k] for k in ('entities', 'aliases')}, 6)):
+            event.update(parsed=None, status='invalid_output', validation_error='invalid entity fields')
             value = None
         if value is None:
             value = {'question': self.question, 'needs': [self.question],
                      'kb_queries': [self.question] if self.scope.get('knowledge_bases') else [],
                      'web_queries': [self.question] if self.scope.get('web') else [], 'sites': []}
+            if self.entity_index is not None:
+                value.update(entities=[], aliases=[])
             event['fallback'] = 'raw_question_permitted_channels'
         self.plan = value
         self.question = value['question']
@@ -141,6 +192,14 @@ class Lean:
     async def titles(self, queries):
         if not queries or not self.catalog:
             return []
+        if self.entity_index is not None:
+            ids, receipt = self.entity_index.lookup(self.plan['entities'], self.plan['aliases'],
+                                                   allowed_ids=[c['id'] for c in self.catalog])
+            receipt.update(channel='knowledge_base', mode='entity_index', question=self.question,
+                           path='entity_pick' if 1 <= len(ids) <= 40 else 'title_fallback')
+            self.acquisition.append(receipt)
+            if 1 <= len(ids) <= 40:
+                return await self.entity_documents(ids, receipt)
         query = '\n'.join(queries)
         # The merged queries describe one question; the catalog is traversed once.
         groups = [self.catalog[i:i+self.title_batch] for i in range(0, len(self.catalog), self.title_batch)]
@@ -167,6 +226,24 @@ class Lean:
         self.acquisition.append({'channel': 'knowledge_base', 'query': query,
                                  'selected_file_ids': [r['id'] for r in winners], 'catalog_size': len(self.catalog)})
         return await gather([self.document(row['id']) for row in winners])
+
+    async def entity_documents(self, ids, receipt):
+        offered = [f'D{i+1}' for i in range(len(ids))]
+        properties = kb_navigation.pick_schema(offered, 3)
+        for summary_chars, count in ((120, 3), (60, 1), (0, 0)):
+            data = self.entity_index.selection_input(self.question, ids,
+                summary_chars=summary_chars, entities=count)
+            if await self.fits(entities.SELECT, data, properties, limit=48, evidence=ids):
+                break
+        else:
+            receipt.update(status='budget_exceeded', selected_file_ids=[])
+            return []
+        event = await self.call(entities.SELECT, data, properties, limit=48, evidence=ids, depth=2)
+        selected = [ids[offered.index(k)] for k in kb_navigation.picks(event, offered, 3)]
+        receipt.update(status=event['status'], selected_file_ids=selected,
+                       summary_chars=summary_chars, entities_per_card=count)
+        self.paths.append(2)
+        return await gather([self.document(fid) for fid in selected])
 
     async def web(self, queries, sites):
         if not queries:
@@ -217,7 +294,10 @@ class Lean:
         self.budget_omissions.append({'stage': 'pages', 'snippet_chars': snippet_chars, 'offered_ids': list(local)})
         event = await self.call(PAGES, data, properties, limit=48, depth=2)
         self.paths.append(2)
-        return [local[k] for k in kb_navigation.picks(event, list(local), 3)]
+        selected = [local[k] for k in kb_navigation.picks(event, list(local), 3)]
+        event.update(offered_sources={key: source.id for key, source in local.items()},
+                     selected_source_ids=[source.id for source in selected])
+        return selected
 
     async def retrieval(self):
         self.progress('并发查找知识库与联网资料')
@@ -288,6 +368,8 @@ class Lean:
                 self.read_count += 1
                 event = await self.call(SCORE, data, properties, evidence=offered,
                                         depth=depth+index//self.concurrency)
+                event.update(source_id=source.id, offered_span_ids=offered,
+                             source_span=window.metadata['source_span'])
                 rows = (event['parsed'] or {}).get('scores', [])
                 need_ids = {n['id'] for n in self.needs}
                 if any(set(r) != {'span_id', 'need_id', 'score'} or r['span_id'] not in offered
@@ -324,12 +406,10 @@ class Lean:
         depth = max((e['depth'] for e in self.events), default=0)+1
         offered = list(ids)
         while offered:
-            data = {'question': self.question, 'needs': self.needs,
-                    'spans': [self.reader.span_input(i) for i in offered]}
-            properties = {'answer': {'type': 'string', 'minLength': 1},
-                          'citations': {**strings(offered), 'minItems': 1},
-                          'not_found_needs': strings([n['id'] for n in self.needs])}
-            if await self.fits(ANSWER, data, properties, stage='writer', limit=self.answer_tokens, evidence=offered):
+            data = answer_input(self.question, self.needs, [self.reader.span_input(i) for i in offered])
+            properties = answer_schema(offered, self.needs, self.answer_contract)
+            if await self.fits(self.answer_instruction, data, properties, stage='writer',
+                               limit=self.answer_tokens, evidence=offered):
                 break
             offered.pop()
         self.final_ids = offered
@@ -337,13 +417,12 @@ class Lean:
             self.budget_omissions.append({'stage': 'answer', 'span_ids': ids[len(offered):]})
         if not offered:
             return
-        event = await self.call(ANSWER, data, properties, stage='writer', limit=self.answer_tokens,
+        event = await self.call(self.answer_instruction, data, properties, stage='writer', limit=self.answer_tokens,
                                 evidence=offered, depth=depth)
         if event['parsed']:
-            value = event['parsed']
-            if (not value['answer'].strip() or not value['citations']
-                    or len(value['not_found_needs']) == len(self.needs)):
-                event.update(parsed=None, status='invalid_output', validation_error='answer requires supported needs')
+            error = validate_answer(event['parsed'], self.needs, self.answer_contract)
+            if error:
+                event.update(parsed=None, status='invalid_output', validation_error=error)
 
     async def stage(self, name, work):
         start = monotonic()
@@ -368,7 +447,8 @@ class Lean:
         event = self.answer_event
         value = event['parsed'] if event else None
         if value:
-            response_type = 'partial' if value['not_found_needs'] else 'answered'
+            response_type = ('not_found' if len(value['not_found_needs']) == len(self.needs) else
+                             'partial' if value['not_found_needs'] else 'answered')
             text = value['answer']
         elif event and event['status'] in {'failed', 'http_error', 'transport_error'}:
             response_type, text = 'error', '模型服务暂时不可用，本次未能核实答案。'
@@ -387,11 +467,14 @@ class Lean:
                            'sources': [s.model_dump(mode='json') for s in self.sources],
                            'generation': {'status': event['status'] if event else 'no_evidence',
                                'parsed_answer': parsed, 'citation_bindings': bound,
+                               'answer_contract': self.answer_contract,
                                'protocol': PROTOCOL, 'raw_text': event['raw_text'] if event else None}},
                 'display_text': text, 'acquisition': self.acquisition, 'errors': self.errors,
                 'graph': {'nodes': self.events,
                           'budget_checks': self.budget_checks, 'budget_omissions': self.budget_omissions,
                           'source_snapshots': [s.model_dump(mode='json') for s in self.sources],
+                          'reading_spans': [{'id': i, 'text': s['text'], 'source_id': s['source'].id,
+                                             'span': s['span']} for i, s in self.reader.spans.items()],
                           'spans': [{'id': i, 'text': self.reader.spans[i]['text'],
                                      'source_id': self.reader.spans[i]['source'].id,
                                      'span': self.reader.spans[i]['span']} for i in ids]},

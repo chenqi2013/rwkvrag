@@ -67,7 +67,7 @@ class WebSearchAdapter:
         trace["configured_state_sha256"] = self.settings.web_router_state_sha256
         return trace
 
-    async def search(self, query, *, full_snapshot=False, include_domains=None):
+    async def search(self, query, *, full_snapshot=False, include_domains=None, case_id=None):
         # Explicit unified-core acquisition: split/rank the full returned snapshot
         # before reading. Default path remains byte-compatible with the baseline.
         request = {"action": "search", "query": query,
@@ -82,7 +82,8 @@ class WebSearchAdapter:
                             if self.settings.web_search_provider == 'anysearch' else None)
         key = self.replay.key(self.settings.web_search_provider, query, include_domains,
                               request['max_results'], full_snapshot, provider_options=provider_options)
-        payload, replay = await self.replay.execute(key, lambda: self._execute(request, self.settings.web_search_timeout))
+        payload, replay = await self.replay.execute(key, lambda: self._execute(request, self.settings.web_search_timeout),
+                                                  case_id=case_id)
         hits = []
         snapshots = []
         material_selections = []
