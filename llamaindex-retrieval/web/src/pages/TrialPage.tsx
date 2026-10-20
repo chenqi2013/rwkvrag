@@ -5,13 +5,17 @@ import "../trial.css";
 
 type Source = { id: string; title: string; source: string; uri?: string; snippet: string };
 type Answer = { answer: string; sources: Source[]; generation: { status: string; citation_bindings?: Record<string, string[]>; parsed_answer?: { answer: string; source_ids: string[] } } };
-type Result = { answer: Answer; acquisition_incomplete?: boolean; stop_reason?: string; rounds?: { number: number; questions?: string[]; decision: { status: string; parsed?: { questions?: string[]; queries?: string[]; kb_queries?: string[]; web_queries?: string[] } } }[];
+type Result = { answer: Answer; response_type?: string; display_text?: string; not_found_needs?: { id: string; text: string }[];
+  telemetry?: { total_ms: number; total_calls: number; critical_path_calls: number };
+  graph?: { spans?: { id: string; text: string; source_id: string }[] };
+  acquisition_incomplete?: boolean; stop_reason?: string; rounds?: { number: number; questions?: string[]; decision: { status: string; parsed?: { questions?: string[]; queries?: string[]; kb_queries?: string[]; web_queries?: string[] } } }[];
   acquisition?: { channel: string; query: string; status?: string; error?: string; trace?: { returned: number } }[] };
 type Job = { id: string; question: string; status: string; phase: string; model_calls_finished: number; result?: Result; error_type?: string; context?: { resolved_question?: string; parent_job_id?: string } };
-type Meta = { model: string; gpu: number; concurrency: number; expires_at?: string;
+type Meta = { model: string; gpu: number; concurrency: number; expires_at?: string; default_pipeline?: string; pipelines?: string[];
   knowledge_bases: { id: string; name: string; description: string; file_count: number }[] };
 const terminal = (job: Job) => ["completed", "failed", "timeout", "cancelled"].includes(job.status);
 const STORAGE = "rwkvrag-funnel-trial-jobs-v2";
+const responseLabels: Record<string, string> = { answered: "已回答", partial: "部分回答", not_found: "未找到依据", unverified: "未校验", error: "服务异常" };
 const executionStatus = (status: string) => ({
   budget_exceeded: "所选资料超过模型可读长度，未生成回答",
   partial: "部分处理未完成", invalid_output: "模型输出格式未通过检查",
@@ -33,6 +37,7 @@ export default function TrialPage() {
   const [error, setError] = useState("");
   const [question, setQuestion] = useState("");
   const [scope, setScope] = useState("hybrid");
+  const [pipeline, setPipeline] = useState<string>();
   const [kbIds, setKbIds] = useState<string[]>([]);
   const [supplementary, setSupplementary] = useState(true);
   const [job, setJob] = useState<Job>();
@@ -49,6 +54,7 @@ export default function TrialPage() {
     request<Meta>("/v1/try/meta").then(value => {
       if (!live) return;
       setMeta(value);
+      setPipeline(value.default_pipeline);
       // The existing encyclopedia is the general-purpose initial selection.
       // Other collections remain selectable, including explicitly named fixtures.
       const general = value.knowledge_bases.find(k => k.id === "wiki-5000-20260908");
@@ -80,6 +86,7 @@ export default function TrialPage() {
     setError("");
     try {
       const next = await request<Job>("/v1/try/ask", { question, supplementary,
+        ...(["lean", "needs", "spans"].includes(pipeline || "") ? { pipeline } : {}),
         parent_job_id: job?.status === "completed" ? job.id : null,
         retrieval_mode: scope, knowledge_base_ids: scope === "web" ? [] : kbIds });
       active.current = next.id;
@@ -108,17 +115,29 @@ export default function TrialPage() {
     const link = document.createElement("a"); link.href = url; link.download = `rwkv-${job.id}.json`; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  function card(value: Answer) {
+  function card(value: Answer, result: Result) {
     const parsed = value.generation.parsed_answer;
     const used = new Set((parsed?.source_ids || []).flatMap(id => value.generation.citation_bindings?.[id] || [id]));
     return <article className="trial-answer">
-      <div className="trial-answer-heading"><strong>回答</strong><Tag color="green">并发总结 · 漏斗归并</Tag></div>
-      {value.generation.status !== "completed" && <Alert type="warning" showIcon message={`${executionStatus(value.generation.status)}。可展开下方记录查看。`} />}
-      <div className="trial-answer-body">{parsed ? parsed.answer : (value.answer || "本次没有生成可用回答。")}</div>
+      <div className="trial-answer-heading"><strong>回答</strong><Tag color={result.response_type === "unverified" || result.response_type === "error" ? "orange" : "green"}>
+        {responseLabels[result.response_type || ""] || "资料回答"}</Tag></div>
+      {result.response_type === "unverified" && <Alert type="warning" showIcon message="以下为模型原始输出，尚未通过校验。" />}
+      {!result.response_type && value.generation.status !== "completed" && <Alert type="warning" showIcon message={`${executionStatus(value.generation.status)}。可展开下方记录查看。`} />}
+      <div className="trial-answer-body">{result.display_text !== undefined ? (result.display_text || "模型未返回正文。") : parsed ? parsed.answer : (value.answer || "本次没有生成可用回答。")}</div>
+      {!!result.not_found_needs?.length && <div>未找到依据：{result.not_found_needs.map(n => <div key={n.id}>{n.text}</div>)}</div>}
+      {(result.response_type === "not_found" || result.response_type === "error") && <div>
+        <p>本次检索：{result.acquisition?.map(a => a.query).join("；") || "检索尚未完成"}</p>
+        <div className="trial-source-list">{value.sources.slice(0, 5).map(s => <button key={s.id} onClick={() => setSource(s)}>{s.title || s.uri || s.id}</button>)}</div>
+      </div>}
+      {result.telemetry && <p className="trial-muted">耗时 {(result.telemetry.total_ms / 1000).toFixed(1)} 秒 · {result.telemetry.total_calls} 次模型调用</p>}
       <div className="trial-source-label">回答的来源链 · 可打开原文核对</div>
       <div className="trial-source-list">{value.sources.filter(s => used.has(s.id)).map(s =>
         <button key={s.id} onClick={() => setSource(s)}><FileTextOutlined /><span>{s.title || s.id}</span><small>{s.source === "web" ? "网络" : "知识库"}</small></button>)}
         {!used.size && <span className="trial-muted">模型未声明引用来源</span>}</div>
+      <div className="trial-source-list">{result.graph?.spans?.filter(s => parsed?.source_ids.includes(s.id)).map(span => {
+        const original = value.sources.find(s => s.id === span.source_id);
+        return original && <button key={span.id} onClick={() => setSource({ ...original, snippet: span.text })}>[{span.id}] {original.title}</button>;
+      })}</div>
       <details><summary>查看所选资料与原始回答</summary>
         <div className="trial-all-sources">{value.sources.map(s => <Button key={s.id} size="small" onClick={() => setSource(s)}>{s.title || s.id}</Button>)}</div>
         <pre className="trial-raw">{value.answer}</pre>
@@ -133,20 +152,22 @@ export default function TrialPage() {
       <div className="trial-label">查询范围</div>
       <Select aria-label="查询范围" value={scope} onChange={setScope} disabled={busy} options={[
         { value: "hybrid", label: "知识库 + 联网资料" }, { value: "knowledge_base", label: "仅知识库" }, { value: "web", label: "仅联网资料" }]} />
+      {!!meta?.pipelines?.length && <><div className="trial-label">回答方式</div><Select aria-label="回答方式" value={pipeline} onChange={setPipeline} disabled={busy}
+        options={meta.pipelines.map(value => ({ value, label: ({ lean: "快速检索", needs: "逐项核实", spans: "分段取证" } as Record<string, string>)[value] || value }))} /></>}
       {scope !== "web" && <><div className="trial-label">知识库</div><Select mode="multiple" aria-label="选择知识库" value={kbIds} onChange={setKbIds} disabled={busy}
         placeholder="选择资料库" options={meta?.knowledge_bases.map(k => ({ value: k.id, label: `${k.name} · ${k.file_count} 篇` }))} /></>}
-      <div className="trial-comparison"><Checkbox checked={supplementary} disabled={busy} onChange={e => setSupplementary(e.target.checked)}>根据缺口继续补查</Checkbox>
-        <p>并发总结、逐层归并，再判断还缺哪些资料。</p></div>
+      {pipeline !== "lean" && <div className="trial-comparison"><Checkbox checked={supplementary} disabled={busy} onChange={e => setSupplementary(e.target.checked)}>根据缺口继续补查</Checkbox>
+        <p>在可用时间内继续寻找缺少的依据。</p></div>}
       <div className="trial-label">最近提问</div>
       <nav className="trial-history">{history.map(h => <button className={h.id === job?.id ? "active" : ""} key={h.id} disabled={busy} onClick={() => void open(h.id)} title={h.question}>{h.question}</button>)}</nav>
       <div className="trial-sidebar-foot">可以在回答后继续追问。点击“新的提问”会清空本次上下文。模型总结仍可能遗漏或出错，请结合原文核对。</div>
     </aside>
     <main className="trial-main">
-      <header className="trial-top"><div><span className={`trial-dot${meta ? " ready" : ""}`} />{meta ? `RWKV 7.2B · GPU${meta.gpu}` : "连接服务中"}</div>
+      <header className="trial-top"><div><span className={`trial-dot${meta ? " ready" : ""}`} />{meta ? `${meta.model} · GPU${meta.gpu}` : "连接服务中"}</div>
         <span>{meta?.expires_at ? `试用至 ${new Date(meta.expires_at).toLocaleString("zh-CN", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}` : "依据真实资料回答"}</span></header>
       <section className="trial-content">
         {!job && <div className="trial-welcome"><div className="trial-symbol">R</div><h1>把问题交给资料。</h1>
-          <p>理解上下文，并发总结资料，逐层归并后回答。</p><p className="trial-muted">事实查询、方案比较、行程规划、文档综合，都可以直接提问。</p></div>}
+          <p>理解问题，检索资料，核对原文后回答。</p><p className="trial-muted">事实查询、方案比较、行程规划、文档综合，都可以直接提问。</p></div>}
         {error && <Alert className="trial-alert" type="error" message={error} showIcon closable onClose={() => setError("")} />}
         {job && <><div className="trial-question"><span>你的问题</span><h2>{job.question}</h2></div>
           {!terminal(job) && <div className="trial-progress" role="status"><Spin size="small" /><div>{job.phase}<small>已完成 {job.model_calls_finished} 次模型调用</small></div>
@@ -154,7 +175,7 @@ export default function TrialPage() {
           {terminal(job) && job.status !== "completed" && <Alert type="warning" showIcon message={`${job.phase}${job.error_type ? `（${job.error_type}）` : ""}`} />}
           {job.context && <details className="trial-process"><summary>本次理解的问题{job.context.parent_job_id ? " · 承接上一问" : ""}</summary><div>{job.context.resolved_question || "上下文整理未完成"}</div></details>}
           {job.result && <>{job.result.acquisition_incomplete && <Alert type="warning" showIcon message="部分资料获取或目录选择未完成，本次回答依据可能不完整。可展开下方记录查看。" />}<div className="trial-answers">
-            {card(job.result.answer)}</div>
+            {card(job.result.answer, job.result)}</div>
             <details className="trial-process"><summary>查了什么资料 · {job.result.acquisition?.length || 0} 次获取</summary>
               {job.result.acquisition?.map((item, i) => <div key={i}><Tag>{item.channel === "web" ? "联网" : "知识库"}</Tag>{item.query}{item.status === "failed" && <strong> · 获取失败：{item.error}</strong>}</div>)}
               {job.result.rounds?.map(r => <div key={`r${r.number}`}>第 {r.number} 轮补查判断：{r.decision.parsed ?

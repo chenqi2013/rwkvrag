@@ -104,3 +104,72 @@ API key不进入前端或版本库。本机试用入口无用户认证，应绑�
 - `POST /v1/try/jobs/{id}/cancel`：取消应用任务及其等待中的调用，不能保证已提交的远端生成立即停止。
 
 请求在`records_dir`保留原始问题、模型prompt/raw/hash/耗时、原文快照、分块坐标、归并图与失败状态。服务重启后可重新打开已完成记录。目录按本地数据管理要求保存，不提交到应用仓库。新部署使用独立记录目录与浏览器存储，不自动载入旧直拼试问。
+
+## Lean pipeline and model profiles
+
+`pipeline: "lean"` enables one combined context/planning call, parallel title
+navigation and web acquisition, one selection over all search snippets, at most
+nine parallel span-scoring reads, and one evidence-only answer. This candidate
+has no automatic adoption or key rotation. The configured pipeline remains the
+trial default until its measured adoption gate passes. Requests can explicitly
+select `lean`, `needs` or `spans` using the `pipeline` field.
+
+A trial configuration can select its model in one place:
+
+```json
+{
+  "active_model": "larger",
+  "model_profiles": {
+    "smaller": {
+      "model": "your-7.2b-model-id",
+      "base_url": "http://127.0.0.1:18672/v1",
+      "context_window_tokens": 6000,
+      "concurrency": 16
+    },
+    "larger": {
+      "model": "your-13.3b-model-id",
+      "base_url": "http://127.0.0.1:18674/v1",
+      "context_window_tokens": 6000,
+      "concurrency": 16
+    }
+  },
+  "pipeline": "lean",
+  "lean_options": {
+    "deadline_seconds": 45,
+    "answer_reserve_seconds": 8,
+    "title_batch": 250,
+    "reading_mode": "first_two",
+    "final_chars": 6000
+  }
+}
+```
+
+Profiles override the corresponding native settings, preserving authentication
+and identity/FP32 verification settings. Set the context budget and concurrency
+to values measured for that model. `needs` keeps its existing 6,000-token ceiling.
+Use `reading_mode: "outline"` to compare model-picked sections with the first-two
+window control; outline selection adds a model stage. Navigation batch sizes
+100, 150 and 250 are supported. Raw model inputs and outputs are retained.
+
+Lean results expose `response_type`: `answered`, `partial`, `not_found`,
+`unverified` or `error`. A missing-evidence response says “资料中未找到可靠依据”
+and includes attempted queries and retrieved sources, without calling the answer
+model. Invalid or timed-out answer calls expose any returned raw text verbatim
+under `unverified`; this label is not factual verification. `not_found_needs`
+contains the model's missing-need IDs/texts. `telemetry` reports wall time by
+stage, total model calls, dependency-path calls (including concurrency waves),
+per-call budget/usage, reading count and response type. Retrieval source titles
+and snippets are navigation metadata; only model-selected original spans reach
+the answer. Fabrication for model-declared missing needs requires offline review.
+
+`GET /v1/try/meta` exposes `model`, `model_profile`, `pipeline`, selectable
+`pipelines`, concurrency and context budget. The trial page displays response
+type, missing needs, total elapsed time, call count and clickable cited spans.
+
+Tavily uses exactly one configured `settings.web_tavily_api_key_file`. Keep it
+outside version control with mode 600. On HTTP432, stop the affected experiment,
+record the failure, and manually point a new configuration/run version to a new
+single key file. Preserve existing provider-guard records. Standby keys are never
+selected inside a request. For comparisons, record exact provider requests once
+with `web_replay.mode: "record"`, freeze the store, then use `"replay"`; misses
+fail without a live request. Set `web_search_results: 5` for the lean web budget.

@@ -19,7 +19,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .config import Settings
 from .interactive_sources import choose_catalog, gather, add_sources
-from . import interactive_funnel, interactive_needs, interactive_spans, kb_navigation
+from . import interactive_funnel, interactive_lean, interactive_needs, interactive_spans, kb_navigation, model_profiles
 from .model_client import model_client_options
 from .schemas import SourceItem
 from .structured_native import StructuredNativeRWKVClient
@@ -33,6 +33,7 @@ class Question(BaseModel):
     parent_job_id: str | None = Field(default=None, pattern=r'^[0-9a-f]{32}$')
     retrieval_mode: Literal['knowledge_base', 'web', 'hybrid'] = 'hybrid'
     knowledge_base_ids: list[str] = Field(default_factory=list)
+    pipeline: Literal['lean', 'needs', 'spans'] | None = None
 
 
 def digest(value):
@@ -69,6 +70,7 @@ class ObservedModel:
 
 class Trial:
     def __init__(self, config):
+        config = model_profiles.resolve(config)
         self.config = config
         options = dict(config['settings'])
         if config.get('pipeline') == 'needs':
@@ -122,6 +124,9 @@ class Trial:
         def progress(text):
             job['phase'] = text
         try:
+            if (payload.pipeline or self.config.get('pipeline')) == 'lean':
+                await self.run_lean(job, payload, model, receipts)
+                return
             async with asyncio.timeout(900):
                 async with self.lock:
                     job['status'] = 'running'
@@ -204,11 +209,11 @@ class Trial:
 
                     scope = {'knowledge_bases': [bases[i]['name'] for i in dict.fromkeys(payload.knowledge_base_ids)],
                              'web': payload.retrieval_mode != 'knowledge_base'}
-                    if self.config.get('pipeline') == 'needs':
+                    if (payload.pipeline or self.config.get('pipeline')) == 'needs':
                         result = await interactive_needs.answer(model, question, acquire=acquire,
                             scope=scope, progress=progress, supplementary=payload.supplementary,
                             **self.config.get('needs_options', {}))
-                    elif self.config.get('pipeline') == 'spans':
+                    elif (payload.pipeline or self.config.get('pipeline')) == 'spans':
                         result = await interactive_spans.answer(model, question, acquire=acquire,
                             scope=scope, progress=progress, supplementary=payload.supplementary,
                             **self.config.get('spans_options', {}))
@@ -231,6 +236,67 @@ class Trial:
             record = {**job, 'model_calls': model.events, 'acquisition': receipts}
             with (self.folder / (job['id'] + '.json')).open('x') as f:
                 json.dump(record, f, ensure_ascii=False)
+
+    async def run_lean(self, job, payload, model, receipts):
+        """Include metadata acquisition in the deadline; no serial request queue."""
+        options = dict(self.config.get('lean_options', {}))
+        started = monotonic()
+        deadline = started + options.get('deadline_seconds', 45)
+        job['status'] = 'running'
+        def progress(text):
+            job['phase'] = text
+        try:
+            async with asyncio.timeout_at(deadline):
+                bases = {b['id']: b for b in await self.knowledge_bases()}
+                if any(i not in bases for i in payload.knowledge_base_ids):
+                    raise ValueError('unknown_knowledge_base')
+                catalog, files = (await self.catalog(payload.knowledge_base_ids)
+                    if payload.retrieval_mode != 'web' else ([], {}))
+                parent = None
+                if payload.parent_job_id:
+                    previous = self.jobs.get(payload.parent_job_id)
+                    if previous is None:
+                        previous = json.loads((self.folder / (payload.parent_job_id + '.json')).read_text())
+                    previous_result = previous.get('result', {})
+                    parent = {'question': previous['question'],
+                              'answer': previous_result.get('display_text') or
+                              (previous_result.get('answer', {}).get('generation', {}).get('parsed_answer') or {}).get('answer')}
+
+                async def document(file_id):
+                    response = await self.admin.get('/v1/admin/files/' + file_id + '/download')
+                    response.raise_for_status()
+                    text = response.content.decode('utf-8')
+                    item = files[file_id]
+                    return SourceItem(id='K' + digest(file_id + '\0' + text)[:16], document_id=file_id,
+                        title=item['filename'], source='knowledge_base', score=0, snippet=text,
+                        metadata={'knowledge_base_id': item['knowledge_base_id'], 'sha256': digest(text),
+                                  'source_kind': 'stored_original'})
+
+                async def search(query, *, include_domains):
+                    hits, trace = await self.web.search(query, full_snapshot=True, include_domains=include_domains)
+                    receipts.append({'channel': 'web', 'query': query, 'trace': trace})
+                    return [SourceItem(id='W' + digest(h.metadata['uri'] + '\0' + h.text)[:16],
+                        document_id=h.document_id, title=h.metadata['title'], source='web', uri=h.metadata['uri'],
+                        score=0, snippet=h.text, metadata=h.metadata) for h in hits]
+
+            setup_ms = (monotonic()-started)*1000
+            result = await interactive_lean.answer(model, payload.question, catalog=catalog, document=document,
+                search=search, scope={'knowledge_bases': [bases[i]['name'] for i in payload.knowledge_base_ids],
+                                     'web': payload.retrieval_mode != 'knowledge_base'},
+                progress=progress, parent=parent, deadline_at=deadline,
+                concurrency=self.settings.native_max_concurrency, **options)
+            result['telemetry']['total_ms'] = (monotonic()-started)*1000
+            result['telemetry']['stages_ms']['setup'] = setup_ms
+            job['context'] = {'resolved_question': result['resolved_question'], 'parent_job_id': payload.parent_job_id}
+        except Exception as error:
+            # Metadata/transport failures also have a typed response and a persisted attempt.
+            pipeline = interactive_lean.Lean(model, payload.question, catalog=[], document=None, search=None,
+                scope={}, progress=progress, deadline_at=deadline)
+            pipeline.errors.append({'stage': 'setup', 'error_type': type(error).__name__})
+            result = pipeline.result()
+            result['telemetry']['total_ms'] = (monotonic()-started)*1000
+        result['acquisition_incomplete'] = bool(result['errors'])
+        job.update(result=result, status='completed', phase='回答完成')
 
 
 @asynccontextmanager
@@ -258,6 +324,9 @@ async def meta():
         'concurrency': trial.settings.native_max_concurrency, 'gpu': trial.config['gpu'],
         'expires_at': trial.config.get('expires_at'), 'history_supported': True,
         'default_pipeline': trial.config.get('pipeline', 'funnel'), 'funnel_fan_in': 3,
+        'pipeline': trial.config.get('pipeline', 'funnel'), 'pipelines': ['lean', 'needs', 'spans'],
+        'model_profile': trial.config.get('active_model'),
+        'context_window_tokens': trial.settings.native_context_window_tokens,
         'web_configured': (trial.settings.web_search_provider == 'searxng' or
             bool(trial.settings.web_tavily_api_key.get_secret_value()) or
             bool(trial.settings.web_tavily_api_key_file and trial.settings.web_tavily_api_key_file.is_file())),
