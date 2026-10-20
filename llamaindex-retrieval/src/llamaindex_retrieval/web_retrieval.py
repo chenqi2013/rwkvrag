@@ -77,8 +77,11 @@ class WebSearchAdapter:
             request['include_domains'] = include_domains
         if self.replay.mode == 'record':
             request['capture_provider_payload'] = True
+        provider_options = ({'extract_timeout': float(self.settings.web_anysearch_extract_timeout),
+                             'search_timeout': float(self.settings.web_search_timeout)}
+                            if self.settings.web_search_provider == 'anysearch' else None)
         key = self.replay.key(self.settings.web_search_provider, query, include_domains,
-                              request['max_results'], full_snapshot)
+                              request['max_results'], full_snapshot, provider_options=provider_options)
         payload, replay = await self.replay.execute(key, lambda: self._execute(request, self.settings.web_search_timeout))
         hits = []
         snapshots = []
@@ -128,7 +131,9 @@ class WebSearchAdapter:
         return hits, {"status": "completed", "query": query, "provider": payload["provider"],
             "source_hashes": payload["source_hashes"], "snapshots": snapshots,
             "material_selections": material_selections,
-            "returned": len(hits), **({'web_replay': replay} if replay else {})}
+            "returned": len(hits), **({'web_replay': replay} if replay else {}),
+            **({'provider_options': provider_options, 'domain_filter': payload['domain_filter']}
+               if provider_options is not None else {})}
 
 
 # Historical frozen launchers import this name; current requests use only WebSearchAdapter.

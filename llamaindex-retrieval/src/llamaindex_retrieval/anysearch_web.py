@@ -1,8 +1,10 @@
 """AnySearch transport: search snippets and separately fetched page snapshots."""
+import asyncio
 import base64
 from datetime import datetime, timezone
 import hashlib
 from pathlib import Path
+from time import monotonic
 from urllib.parse import urlsplit
 
 from . import direct_web
@@ -56,6 +58,7 @@ def _allowed(url, domains):
 
 
 async def search(request, settings, guard=None):
+    deadline = monotonic() + settings.web_search_timeout - 0.1
     key = direct_web._api_key(settings, "anysearch")
     if not key:
         raise WebProviderError("web_anysearch_key_not_configured")
@@ -87,14 +90,22 @@ async def search(request, settings, guard=None):
             title = item.get("title") or url
             full, error = "", ""
             try:
-                page = await _post(client, "extract", {"url": url}, settings, guard, key, captures)
+                remaining = deadline - monotonic()
+                if remaining <= 0:
+                    raise WebProviderError("web_anysearch_extract_budget")
+                page = await asyncio.wait_for(
+                    _post(client, "extract", {"url": url}, settings, guard, key, captures),
+                    min(settings.web_anysearch_extract_timeout, remaining))
                 if page.get("url") != url:
                     raise WebProviderError("web_anysearch_extract_url_mismatch")
                 if isinstance(page.get("content"), str):
                     full = page["content"] if page["content"].strip() else ""
+            except TimeoutError:
+                error = "web_anysearch_extract_timeout"
             except WebProviderError as exc:
                 if exc.safe_code not in {"web_upstream_http_400", "web_upstream_http_422",
-                                         "web_upstream_failed", "web_anysearch_extract_url_mismatch"}:
+                                         "web_upstream_failed", "web_anysearch_extract_url_mismatch",
+                                         "web_anysearch_extract_budget"}:
                     raise
                 error = exc.safe_code
             snapshot = full or snippet

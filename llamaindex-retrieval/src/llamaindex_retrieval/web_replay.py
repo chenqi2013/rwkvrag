@@ -25,10 +25,13 @@ class WebReplay:
         self.store = Path(store) if store else None
 
     @staticmethod
-    def key(provider, query, include_domains, max_results, full_snapshot):
+    def key(provider, query, include_domains, max_results, full_snapshot, *, provider_options=None):
         # No query normalization or domain reordering: these are exact requests.
-        return {'provider': provider, 'query': query, 'include_domains': include_domains,
-                'max_results': max_results, 'full_snapshot': full_snapshot}
+        value = {'provider': provider, 'query': query, 'include_domains': include_domains,
+                 'max_results': max_results, 'full_snapshot': full_snapshot}
+        if provider_options is not None:
+            value['provider_options'] = provider_options
+        return value
 
     def load(self, key):
         path = self.store / (sha(encode(key)) + '.json')

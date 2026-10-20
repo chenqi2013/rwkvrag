@@ -1,3 +1,4 @@
+import asyncio
 import base64
 import hashlib
 import json
@@ -50,7 +51,8 @@ async def test_search_extract_record_and_replay_preserve_original_bytes(tmp_path
     assert hits[0].text == "Exact page.\nMore text."
     assert hits[0].metadata["content_status"] == "fetched"
     assert hits[0].metadata["search_snippet"] == "short summary"
-    key = adapter.replay.key("anysearch", " exact query ", None, 2, True)
+    key = adapter.replay.key("anysearch", " exact query ", None, 2, True,
+                             provider_options={"extract_timeout": 8.0, "search_timeout": 45.0})
     payload = adapter.replay.load(key)[0]
     captures = payload["provider_responses"]
     assert [r["operation"] for r in captures] == ["search", "extract"]
@@ -69,6 +71,50 @@ async def test_search_extract_record_and_replay_preserve_original_bytes(tmp_path
     assert replay_trace["web_replay"]["replayed"]
     assert (await adapter.search(" exact query ", full_snapshot=True))[0] == hits
     assert calls == ["/v1/search", "/v1/extract"]
+    changed = config.model_copy(update={"web_anysearch_extract_timeout": 4})
+    with pytest.raises(direct_web.WebProviderError, match="web_replay_miss"):
+        await WebSearchAdapter(changed, replay={"mode": "replay", "store": store}).search(
+            " exact query ", full_snapshot=True)
+
+
+async def test_one_slow_page_preserves_previously_fetched_pages(tmp_path, monkeypatch):
+    async def handler(request):
+        if request.url.path == "/v1/search":
+            return response({"results": [{"url": "https://example.org/fast", "snippet": "fast snippet"},
+                                          {"url": "https://example.org/slow", "snippet": "slow snippet"}]})
+        url = json.loads(request.content)["url"]
+        if url.endswith("slow"):
+            await asyncio.sleep(5)
+        return response({"url": url, "content": "Exact page"})
+
+    install(monkeypatch, handler)
+    config = settings(tmp_path, web_anysearch_extract_timeout=0.25)
+    hits, trace = await WebSearchAdapter(config).search("q", full_snapshot=True)
+    assert [h.text for h in hits] == ["Exact page", "slow snippet"]
+    assert hits[0].metadata["content_status"] == "fetched"
+    assert hits[1].metadata["fetch_error"] == "web_anysearch_extract_timeout"
+    assert trace["provider_options"] == {"extract_timeout": 0.25, "search_timeout": 45}
+
+
+async def test_total_extraction_budget_returns_all_snippets_without_losing_results(tmp_path, monkeypatch):
+    attempts = []
+
+    async def handler(request):
+        if request.url.path == "/v1/search":
+            return response({"results": [{"url": f"https://example.org/{i}", "snippet": f"snippet{i}"}
+                                          for i in range(5)]})
+        attempts.append(request.url.path)
+        await asyncio.sleep(5)
+        return response({})
+
+    install(monkeypatch, handler)
+    config = settings(tmp_path, web_search_timeout=1, web_anysearch_extract_timeout=0.4,
+                      web_search_results=5)
+    hits, _ = await WebSearchAdapter(config).search("q", full_snapshot=True)
+    assert [h.text for h in hits] == [f"snippet{i}" for i in range(5)]
+    assert 1 <= len(attempts) < 5
+    assert all(h.metadata["content_status"] == "snippet_only" for h in hits)
+    assert hits[-1].metadata["fetch_error"] == "web_anysearch_extract_budget"
 
 
 async def test_extract_failure_keeps_snippet_and_safe_failure_status(tmp_path, monkeypatch):
