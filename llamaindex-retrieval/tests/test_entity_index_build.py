@@ -59,3 +59,29 @@ def test_input_ids_are_unique_and_headings_are_strings(tmp_path):
     path.write_text(json.dumps(row))
     with pytest.raises(ValueError, match='headings'):
         read_inputs(path)
+
+
+@pytest.mark.parametrize('require_fp32', [False, True])
+async def test_builder_respects_public_vs_private_profile_capabilities(tmp_path, monkeypatch, require_fp32):
+    from unittest.mock import AsyncMock
+    from llamaindex_retrieval import interactive_app
+    from llamaindex_retrieval.entity_index_build import execute
+    native = Model([('{"entities":["Original"],"aliases":[]}', 'completed', [])])
+    native.verify_model_identity = AsyncMock()
+    native.verify_fp32_runtime = AsyncMock()
+    if not require_fp32:
+        native.verify_fp32_runtime.side_effect = AssertionError('public gateway has no private State endpoint')
+    native.aclose = AsyncMock()
+    trial = SimpleNamespace(native=native, settings=SimpleNamespace(native_max_concurrency=1,
+        native_require_fp32_runtime=require_fp32, native_model='alias', native_base_url='https://example.org/v1'),
+        admin=SimpleNamespace(aclose=AsyncMock()))
+    monkeypatch.setattr(interactive_app, 'Trial', lambda _: trial)
+    config = tmp_path/'config.json'
+    config.write_text('{}')
+    inputs = tmp_path/'inputs.jsonl'
+    inputs.write_text(json.dumps({'id': 'file', 'title': 'Original', 'opening': 'Exact source.'})+'\n')
+    result = await execute(config, inputs, tmp_path/'index')
+    assert result['complete'] and result['valid_files'] == 1
+    native.verify_model_identity.assert_awaited_once()
+    assert native.verify_fp32_runtime.await_count == int(require_fp32)
+    native.aclose.assert_awaited_once()

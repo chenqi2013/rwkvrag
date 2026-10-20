@@ -112,7 +112,8 @@ async def execute(config_path, inputs_path, out):
     trial = Trial(config)
     try:
         await trial.native.verify_model_identity()
-        await trial.native.verify_fp32_runtime()
+        if trial.settings.native_require_fp32_runtime:
+            await trial.native.verify_fp32_runtime()
         summary = await build(ObservedModel(trial.native, {}), inputs, out,
             concurrency=trial.settings.native_max_concurrency,
             profile_bindings={'config_sha256': sha(config_path),

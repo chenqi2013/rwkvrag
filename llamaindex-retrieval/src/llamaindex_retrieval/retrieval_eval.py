@@ -130,14 +130,8 @@ def score_record(record, gold, *, record_sha256, review=None):
     def span_grade(key):
         if key in grades:
             return grades[key]
-        if key is None:
-            return None
-        # Unknown source content stays unknown. Explicit required-file provenance
-        # can reject a different KB document without claiming its contents were read.
-        source = sources.get(key[0], {})
-        if (source.get('source') == 'knowledge_base' and gold['gold_file_ids']
-                and source.get('document_id') not in gold['gold_file_ids']):
-            return 0
+        # A navigation gold ID is a known positive, not an exhaustive semantic
+        # judgment about every other document in the corpus.
         return None
 
     offered, selected = set(), set()
@@ -326,6 +320,8 @@ async def run(config_path, case_paths, gold_path, out):
     records, complete = [], False
     try:
         await trial.native.verify_model_identity()
+        if trial.settings.native_require_fp32_runtime:
+            await trial.native.verify_fp32_runtime()
         for case in cases:
             request = case['request']
             parent = None

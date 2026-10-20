@@ -126,3 +126,14 @@ def test_score_run_counts_missed_original_in_recall_denominator(tmp_path):
     path.write_text('{}')
     with pytest.raises(ValueError, match='raw record changed'):
         score_run(run, gold_path, tmp_path/'other-scores')
+
+
+def test_unreviewed_other_file_is_unknown_even_when_navigation_gold_is_known():
+    gold, record = fixture()
+    other = source('unreviewed', 'file-c')
+    record['result']['graph']['source_snapshots'].append(other)
+    record['result']['graph']['reading_spans'][1]['source_id'] = 'unreviewed'
+    scored = score_record(record, gold, record_sha256='raw')
+    assert scored['navigation']['gold_in_top3'] is False
+    assert scored['reading']['false_positives'] == 0
+    assert scored['reading']['unknown_selected'] == 1
