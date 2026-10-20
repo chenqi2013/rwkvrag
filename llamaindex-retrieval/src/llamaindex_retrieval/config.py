@@ -73,6 +73,8 @@ class Settings(BaseSettings):
     native_require_fp32_runtime: bool = False
     native_model: str = "rwkv7-g1j-2.9b-20260831-ctx16384"
     native_api_key: str = ""
+    native_tokenizer_file: Path | None = None
+    native_tokenizer_sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
     native_transport: Literal["native", "rwkvos_batch"] = "native"
     native_completion_protocol: Literal["native", "g1j_plain"] = "native"
     # Explicit decoding-only candidate; do not migrate a running service implicitly.
@@ -266,6 +268,12 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_reader_state_protocol(self) -> "Settings":
+        if (self.native_tokenizer_file is None) != (self.native_tokenizer_sha256 is None):
+            raise ValueError("local tokenizer requires both vocabulary file and SHA256")
+        if self.native_tokenizer_file is not None and (
+                self.native_transport != "native" or self.native_completion_protocol != "g1j_plain"
+                or self.native_state_routing is not None):
+            raise ValueError("local tokenizer requires plain native transport without State routing")
         if self.native_require_model_identity or self.native_require_fp32_runtime:
             if self.rag_pipeline != "rwkv" or self.native_transport != "native":
                 raise ValueError("Runtime identity checks require the native RWKV transport")

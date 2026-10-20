@@ -49,6 +49,9 @@ def model_client_options(settings, **overrides):
                        batch_wait_ms=settings.rwkvos_batch_wait_ms)
     else:
         options["api_key"] = settings.native_api_key
+        if settings.native_tokenizer_file is not None:
+            options.update(tokenizer_file=settings.native_tokenizer_file,
+                           tokenizer_sha256=settings.native_tokenizer_sha256)
         if settings.native_require_model_identity:
             options["require_model_identity"] = True
         if settings.native_completion_protocol != "native":

@@ -122,6 +122,23 @@ API key不进入前端或版本库。本机试用入口无用户认证，应绑�
 
 ## Lean pipeline and model profiles
 
+Remote native-completion gateways can use a pinned CPU tokenizer when they do
+not expose `/tokenize`. Configure `settings.native_tokenizer_file` with a local
+RWKV World vocabulary text file and `native_tokenizer_sha256` with its SHA256.
+This requires `native_completion_protocol: "g1j_plain"` and no State routing.
+The client checks the vocabulary before use, verifies the public model alias and
+declared context limit, and budgets the complete rendered prompt plus output
+reserve locally. Every generated response must return exactly the same
+`prompt_token_ids` and prompt-token count; a mismatch is a protocol failure with
+the original model text retained. Budget-only checks never generate text.
+
+For gateways without the private FP32 capability API, explicitly configure
+`native_require_fp32_runtime: false` and `native_require_model_identity: true`.
+Startup then verifies the public alias/context only. This does not attest to
+checkpoint hashes, trained context length, weight precision or recurrent-state
+precision. Existing deployments requiring FP32 checks retain those checks.
+Keep the remote bearer token in private local configuration and never publish it.
+
 `pipeline: "lean"` enables one combined context/planning call, parallel title
 navigation and web acquisition, one selection over all search snippets, at most
 nine parallel span-scoring reads, and one evidence-only answer. This candidate

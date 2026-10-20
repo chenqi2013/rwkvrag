@@ -309,7 +309,10 @@ class Trial:
 async def lifespan(app):
     config = json.loads(Path(os.environ['RWKVRAG_TRIAL_CONFIG']).read_text())
     trial = Trial(config)
-    await trial.native.verify_fp32_runtime()
+    if trial.settings.native_require_fp32_runtime:
+        await trial.native.verify_fp32_runtime()
+    else:
+        await trial.native.verify_model_identity()
     app.state.trial = trial
     yield
     for task in trial.tasks.values():

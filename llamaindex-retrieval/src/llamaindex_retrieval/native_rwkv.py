@@ -141,7 +141,7 @@ class NativeRWKVClient:
         timeout_seconds: float = 120, context_window_tokens: int = 16384,
         max_concurrency: int = 32, transport: httpx.AsyncBaseTransport | None = None,
         prompt_protocol: str = "native", require_model_identity: bool = False,
-        recorder=None, state_routing=None,
+        recorder=None, state_routing=None, tokenizer_file=None, tokenizer_sha256=None,
     ) -> None:
         url = httpx.URL(base_url)
         if (url.scheme not in {"http", "https"} or not url.host or url.userinfo
@@ -165,9 +165,17 @@ class NativeRWKVClient:
         if prompt_protocol not in {"native", "g1j_plain"}:
             raise ValueError("unsupported prompt protocol")
         self.prompt_protocol = prompt_protocol
+        if tokenizer_file is not None and (prompt_protocol != 'g1j_plain' or state_routing is not None):
+            raise ValueError('local tokenizer requires plain protocol without State routing')
+        if (tokenizer_file is None) != (tokenizer_sha256 is None):
+            raise ValueError('local tokenizer requires both vocabulary and expected hash')
+        self._local_tokenizer = None
+        if tokenizer_file is not None:
+            from .rwkv_world_tokenizer import WorldTokenizer
+            self._local_tokenizer = WorldTokenizer(tokenizer_file, tokenizer_sha256)
         self._state_router = (NativeStateRouter(state_routing, model=model,
                               prompt_protocol=prompt_protocol) if state_routing is not None else None)
-        self.require_model_identity = require_model_identity or self._state_router is not None
+        self.require_model_identity = require_model_identity or self._state_router is not None or self._local_tokenizer is not None
         if recorder is not None and not callable(recorder):
             raise ValueError("recorder must be callable")
         self._recorder = recorder
@@ -185,6 +193,22 @@ class NativeRWKVClient:
 
     async def aclose(self) -> None:
         await self._client.aclose()
+
+    async def verify_model_identity(self) -> dict:
+        """Observe a public model alias/context; no weight or precision attestation."""
+        response = await self._client.get(self.base_url.removesuffix('/v1') + '/v1/models',
+                                          headers=self._headers)
+        response.raise_for_status()
+        observations = {'models': {'response': response.json(),
+                                  'sha256': sha256(response.content).hexdigest()}}
+        matching = [m for m in observations['models']['response'].get('data', [])
+                    if m.get('id') == self.model]
+        if len(matching) != 1 or matching[0].get('max_model_len', 0) < self.context_window_tokens:
+            raise ValueError('live model identity/context limit does not match configuration')
+        observations.update(checked_at=datetime.now(timezone.utc).isoformat(),
+                            scope='public model alias and declared context only; no weight or FP32 attestation')
+        self.runtime_observation = observations
+        return deepcopy(observations)
 
     async def verify_fp32_runtime(self) -> dict:
         """Check this pinned engine's live capabilities, not an engine attestation."""
@@ -386,11 +410,24 @@ class NativeRWKVClient:
                 acquired = perf_counter()
                 record["queue_ms"] = (acquired - started) * 1000
                 async with asyncio.timeout(self.timeout_seconds):
-                    token_data = await self._post(
-                        self.base_url.removesuffix("/v1") + "/tokenize",
-                        {"model": self.model, "prompt": native.prompt, "add_special_tokens": payload["add_special_tokens"]},
-                        "tokenize", record,
-                    )
+                    if self._local_tokenizer is not None:
+                        if self.runtime_observation is None:
+                            await self.verify_model_identity()
+                        record['runtime_observation'] = deepcopy(self.runtime_observation)
+                        matching = [m for m in self.runtime_observation['models']['response']['data']
+                                    if m.get('id') == self.model]
+                        tokens = self._local_tokenizer.encode(native.prompt)
+                        token_data = {'tokens': tokens, 'count': len(tokens),
+                                      'max_model_len': matching[0]['max_model_len']}
+                        record['local_tokenization'] = {'vocabulary_sha256': self._local_tokenizer.sha256,
+                            'input_ids': tokens, 'server_ids_verified': False,
+                            'scope': 'pinned CPU tokenizer; server IDs checked on completion'}
+                    else:
+                        token_data = await self._post(
+                            self.base_url.removesuffix("/v1") + "/tokenize",
+                            {"model": self.model, "prompt": native.prompt, "add_special_tokens": payload["add_special_tokens"]},
+                            "tokenize", record,
+                        )
                     input_tokens = self._check_budget(token_data, max_tokens, record)
                     if check_only:
                         status = "completed"
@@ -425,6 +462,8 @@ class NativeRWKVClient:
                         raise _ProtocolError("completion prompt_tokens must equal server tokenizer count")
                     bounds = inspect_envelope(raw_text, native.prefill)
                     if self.prompt_protocol == "g1j_plain":
+                        if self._local_tokenizer is not None:
+                            record['local_tokenization']['server_ids_verified'] = choice.get("prompt_token_ids") == token_data["tokens"]
                         if choice.get("prompt_token_ids") != token_data["tokens"]:
                             raise _ProtocolError("completion input tokens must match tokenization")
                         record["input_token_ids"] = choice["prompt_token_ids"]
