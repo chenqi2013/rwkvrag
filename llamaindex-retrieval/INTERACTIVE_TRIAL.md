@@ -127,6 +127,10 @@ API key不进入前端或版本库。本机试用入口无用户认证，应绑�
 
 ## Lean pipeline and model profiles
 
+For a remote gateway without an assigned application GPU, set the top-level
+`gpu` metadata to `null`. The trial header then shows the model name
+without a GPU label; this field does not allocate or select GPU resources.
+
 Remote native-completion gateways can use a pinned CPU tokenizer when they do
 not expose `/tokenize`. Configure `settings.native_tokenizer_file` with a local
 RWKV World vocabulary text file and `native_tokenizer_sha256` with its SHA256.

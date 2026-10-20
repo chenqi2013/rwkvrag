@@ -11,7 +11,7 @@ type Result = { answer: Answer; response_type?: string; display_text?: string; n
   acquisition_incomplete?: boolean; stop_reason?: string; rounds?: { number: number; questions?: string[]; decision: { status: string; parsed?: { questions?: string[]; queries?: string[]; kb_queries?: string[]; web_queries?: string[] } } }[];
   acquisition?: { channel: string; query: string; status?: string; error?: string; trace?: { returned: number } }[] };
 type Job = { id: string; question: string; status: string; phase: string; model_calls_finished: number; result?: Result; error_type?: string; context?: { resolved_question?: string; parent_job_id?: string } };
-type Meta = { model: string; gpu: number; concurrency: number; expires_at?: string; default_pipeline?: string; pipelines?: string[];
+type Meta = { model: string; gpu?: number | null; concurrency: number; expires_at?: string; default_pipeline?: string; pipelines?: string[];
   knowledge_bases: { id: string; name: string; description: string; file_count: number }[] };
 const terminal = (job: Job) => ["completed", "failed", "timeout", "cancelled"].includes(job.status);
 const STORAGE = "rwkvrag-funnel-trial-jobs-v2";
@@ -163,7 +163,7 @@ export default function TrialPage() {
       <div className="trial-sidebar-foot">可以在回答后继续追问。点击“新的提问”会清空本次上下文。模型总结仍可能遗漏或出错，请结合原文核对。</div>
     </aside>
     <main className="trial-main">
-      <header className="trial-top"><div><span className={`trial-dot${meta ? " ready" : ""}`} />{meta ? `${meta.model} · GPU${meta.gpu}` : "连接服务中"}</div>
+      <header className="trial-top"><div><span className={`trial-dot${meta ? " ready" : ""}`} />{meta ? `${meta.model}${meta.gpu != null ? ` · GPU${meta.gpu}` : ""}` : "连接服务中"}</div>
         <span>{meta?.expires_at ? `试用至 ${new Date(meta.expires_at).toLocaleString("zh-CN", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}` : "依据真实资料回答"}</span></header>
       <section className="trial-content">
         {!job && <div className="trial-welcome"><div className="trial-symbol">R</div><h1>把问题交给资料。</h1>
