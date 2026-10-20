@@ -25,9 +25,16 @@ PICK = ('以下片段都被判断为可能回答这个信息项。选出最直�
         '优先用户指定的来源和官方资料，对象或版本不符的不选。')
 ANSWER = ('只依据给出的逐字原文片段回答这一个信息项。片段明确给出答案时status为found，answer写简短答案并保留条件，'
           'span_ids列出依据的片段；片段不能回答时status为not_found，answer说明缺什么，span_ids为空。不凭常识作答。')
+QUOTE_ANSWER = ('只回答这一个信息项。先从给出的逐字原文中复制能说明答案的最短句子到quote（10至300字符），'
+                '再只依据这句话写简短answer，保留条件，不补充常识。能回答时status为found，span_ids引用包含quote的片段；'
+                'quote必须原样出现在恰好一个被引用片段中。不能回答时status为not_found，quote为空字符串，'
+                'answer只说明缺什么，span_ids为空数组。')
 COMPOSE = ('根据已核对的回答，回答用户的完整问题。只使用answers中的事实，逐项覆盖，不添加其他事实；'
            'not_found中的信息项没有找到依据，只说明未找到，不要给出任何答案或猜测。'
            '正文在每个事实后用[片段ID]标注依据（ID来自对应回答）。source_ids列出实际采用的片段ID。')
+CHECKED_COMPOSE = ('只使用answers中的事实回答当前完整问题，保留条件，不补充其他事实。未找到的信息项只说明未找到。'
+                   '输出sentences数组，每项text为一句话，span_ids为这句话依据的片段ID。'
+                   '每句话至少引用一个ID，且只能引用found回答中的ID。')
 NEED_SPANS = 3                # Evidence spans per need answer.
 PICK_SPANS = 8                # Candidates offered to one comparison call.
 PICK_CHARS = 4000             # Span text per comparison call (~2.5k tokens).
@@ -53,18 +60,73 @@ def score_schema(span_ids, need_ids):
                        'score': {'type': 'string', 'enum': SCORES}}}}}
 
 
-def answer_schema(span_ids):
-    return {'status': {'type': 'string', 'enum': ['found', 'not_found']}, 'answer': {'type': 'string'},
+def answer_instruction(protocol='current'):
+    if protocol not in {'current', 'quote_v1'}:
+        raise ValueError('invalid answer_protocol')
+    return QUOTE_ANSWER if protocol == 'quote_v1' else ANSWER
+
+
+def answer_schema(span_ids, protocol='current'):
+    answer_instruction(protocol)
+    fields = {'status': {'type': 'string', 'enum': ['found', 'not_found']}}
+    if protocol == 'quote_v1':
+        fields['quote'] = {'type': 'string', 'maxLength': 300}
+    return {**fields, 'answer': {'type': 'string'},
             'span_ids': {**strings(span_ids), 'maxItems': len(span_ids)}}
+
+
+def validate_answer(value, spans, protocol='current'):
+    """Structural grounding only; an exact quote does not prove an answer correct."""
+    answer_instruction(protocol)
+    ids = value['span_ids']
+    offered = {s['id']: s['text'] for s in spans}
+    if (value['status'] not in {'found', 'not_found'} or not isinstance(ids, list)
+            or any(not isinstance(i, str) or i not in offered for i in ids)
+            or len(ids) != len(set(ids)) or (value['status'] == 'found') != bool(ids)):
+        return 'found answers must cite offered spans; not_found must not'
+    if protocol == 'quote_v1':
+        quote = value['quote']
+        if not isinstance(quote, str):
+            return 'invalid quote type'
+        if value['status'] == 'not_found':
+            if quote != '':
+                return 'not_found quote must be empty'
+        elif not 10 <= len(quote) <= 300 or sum(quote in offered[i] for i in ids) != 1:
+            return 'found quote must be 10-300 characters in exactly one cited span'
+    return None
+
+
+def checked_compose_schema(span_ids):
+    return {'sentences': {'type': 'array', 'minItems': 1, 'items': {
+        'type': 'object', 'additionalProperties': False, 'required': ['text', 'span_ids'],
+        'properties': {'text': {'type': 'string', 'minLength': 1},
+                       'span_ids': {**strings(span_ids), 'minItems': 1}}}}}
+
+
+def validate_checked_compose(value, offered):
+    for row in value['sentences']:
+        if (set(row) != {'text', 'span_ids'} or not isinstance(row['text'], str) or not row['text'].strip()
+                or not isinstance(row['span_ids'], list) or not row['span_ids']
+                or any(not isinstance(i, str) or i not in offered for i in row['span_ids'])
+                or len(row['span_ids']) != len(set(row['span_ids']))):
+            return 'every sentence must cite found-answer spans'
+    return None
+
+
+def render_rows(rows):
+    """Render model strings verbatim, with their IDs; no factual text is rewritten."""
+    return '\n'.join(row['text'] + ' [' + ' '.join(row['span_ids']) + ']' for row in rows)
 
 
 def stage_of(event):
     content = event['messages'][0]['content']
     for name, prefix in (('context', CONTEXT), ('plan', PLAN), ('requery', REQUERY), ('score', SCORE), ('pick', PICK),
-                         ('answer', ANSWER), ('compose', COMPOSE),
+                         ('answer', ANSWER), ('answer', QUOTE_ANSWER),
+                         ('compose', COMPOSE), ('compose', CHECKED_COMPOSE),
                          ('page_gate', PAGE), ('outline_navigation', OUTLINE),
                          ('catalog_navigation', CATALOG),
                          ('navigation_category', kb_navigation.CATEGORY_PICK),
+                         ('navigation_titles', kb_navigation.TITLE_PICK[:20]),
                          ('navigation', kb_navigation.CARD_PICK[:20]),
                          ('navigation', kb_navigation.FINAL_PICK[:20])):
         if content.startswith(prefix):
@@ -93,8 +155,12 @@ def telemetry(events):
 
 
 class NeedReader(Reader):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, answer_protocol='current', final_mode='compose', **kwargs):
+        answer_instruction(answer_protocol)
+        if final_mode not in {'compose', 'assemble', 'checked_compose'}:
+            raise ValueError('invalid final_mode')
         super().__init__(*args, **kwargs)
+        self.answer_protocol, self.final_mode = answer_protocol, final_mode
         self.candidates = {i: {} for i in self.needs}  # need -> span -> best score
         self.order = []                                 # Span reading order, for stable ties.
 
@@ -175,14 +241,15 @@ class NeedReader(Reader):
         if not spans:
             node.update(status='no_evidence', answer_status='not_found')
             return node
-        event = await generate(self.model, ANSWER, answer_input(self.question,
-            {'id': need, 'text': self.needs[need]}, [self.span_input(i) for i in spans]),
-            answer_schema(spans), limit=384, stage='writer', evidence=spans)
+        offered = [self.span_input(i) for i in spans]
+        event = await generate(self.model, answer_instruction(self.answer_protocol), answer_input(self.question,
+            {'id': need, 'text': self.needs[need]}, offered),
+            answer_schema(spans, self.answer_protocol), limit=384, stage='writer', evidence=spans)
         node.update(event)
         parsed = event['parsed']
-        if parsed is not None and (parsed['status'] not in {'found', 'not_found'}
-                                   or (parsed['status'] == 'found') != bool(parsed['span_ids'])):
-            node.update(parsed=None, validation_error='found answers must cite spans; not_found must not')
+        error = validate_answer(parsed, offered, self.answer_protocol) if parsed is not None else None
+        if error:
+            node.update(parsed=None, validation_error=error)
         if node['parsed'] is not None:
             node.update(answer_status=parsed['status'], span_ids=parsed['span_ids'])
         else:
@@ -204,25 +271,48 @@ class NeedReader(Reader):
                  'sources': [{'id': s, 'source': self.spans[s]['source'].title,
                               'uri': self.spans[s]['source'].uri} for s in a['span_ids']]}
                 for a in answers if a['answer_status'] == 'found']
+        missing = [self.needs[a['need_id']] for a in answers if a['answer_status'] != 'found']
+        if self.final_mode == 'assemble':
+            rendered = render_rows([{'text': r['answer'], 'span_ids': r['span_ids']} for r in rows])
+            rendered = '\n'.join(([rendered] if rows else []) + ['未找到：' + text for text in missing])
+            node.update(status='completed' if rows else 'no_evidence', model_call=False,
+                        rendered_answer=rendered, parsed={'answer': rendered, 'source_ids': cited}, span_ids=cited)
+            return node
         if not rows:
             # Empty-evidence policy: no composition call, so no answer can be written without evidence.
             node.update(status='no_evidence', raw_text=None, parsed=None)
             return node
-        missing = [self.needs[a['need_id']] for a in answers if a['answer_status'] != 'found']
-        event = await generate(self.model, COMPOSE, {'question': self.question, 'answers': rows,
+        checked = self.final_mode == 'checked_compose'
+        instruction = CHECKED_COMPOSE if checked else COMPOSE
+        schema = checked_compose_schema(cited) if checked else {
+            'answer': {'type': 'string'}, 'source_ids': {**strings(cited), 'maxItems': len(cited)}}
+        node['model_call'] = True
+        event = await generate(self.model, instruction, {'question': self.question, 'answers': rows,
                                                      'not_found': missing},
-            {'answer': {'type': 'string'}, 'source_ids': {**strings(cited), 'maxItems': len(cited)}},
+            schema,
             limit=1024, stage='writer', evidence=cited)
         node.update(event)
+        if checked and event['parsed'] is not None:
+            error = validate_checked_compose(event['parsed'], cited)
+            if error:
+                node.update(parsed=None, validation_error=error)
         if event['parsed'] is not None:
-            node['span_ids'] = event['parsed']['source_ids']
-        elif node['status'] == 'completed':
+            if checked and node['parsed'] is not None:
+                node['span_ids'] = list(dict.fromkeys(i for r in node['parsed']['sentences'] for i in r['span_ids']))
+                node['rendered_answer'] = render_rows(node['parsed']['sentences'])
+            elif not checked:
+                node['span_ids'] = event['parsed']['source_ids']
+        if node['parsed'] is None and node['status'] == 'completed':
             node['status'] = 'invalid_output'
         return node
 
 
 async def answer(model, question, *, acquire, scope, progress, supplementary=True, max_rounds=2,
-                 supplement_timeout=300, page_gate=True, outline_chars=None, final_chars=FINAL_SPAN_CHARS):
+                 supplement_timeout=300, page_gate=True, outline_chars=None, final_chars=FINAL_SPAN_CHARS,
+                 answer_protocol='current', final_mode='compose'):
+    answer_instruction(answer_protocol)
+    if final_mode not in {'compose', 'assemble', 'checked_compose'}:
+        raise ValueError('invalid final_mode')
     started = monotonic()
     allowed = channels(scope)
     fields = {CHANNEL_FIELDS[c]: strings() for c in allowed}
@@ -234,7 +324,8 @@ async def answer(model, question, *, acquire, scope, progress, supplementary=Tru
     needs = needs or [question]
     queries = (planned(plan['parsed'], allowed) if plan['parsed'] else []) or [(c, question) for c in allowed]
     output['executed_queries'] = [queries]
-    reader = NeedReader(model, question, needs, progress, final_chars, outline_chars, page_gate)
+    reader = NeedReader(model, question, needs, progress, final_chars, outline_chars, page_gate,
+                        answer_protocol=answer_protocol, final_mode=final_mode)
     pool = []
     for group in await fetch(acquire, queries):
         add_sources(pool, group)
@@ -290,12 +381,18 @@ async def answer(model, question, *, acquire, scope, progress, supplementary=Tru
     selected = list(dict.fromkeys(reader.spans[i]['source'].id for i in cited))
     failed = [n['id'] for n in reader.nodes if n['parsed'] is None and n['status'] != 'no_evidence'
               and n['kind'] != 'final']
-    output['answer'] = {'answer': final['raw_text'] or '',
+    projection = final['parsed']
+    if final_mode == 'checked_compose' and projection is not None:
+        projection = {'answer': final['rendered_answer'], 'source_ids': cited}
+    output['answer'] = {'answer': final['raw_text'] or final.get('rendered_answer', ''),
         'sources': [by_id[i].model_dump(mode='json') for i in selected],
         'retrieval': {'mode': 'model_planned_queries', 'selected_ids': selected},
         'generation': {'protocol': PROTOCOL,
             'status': 'partial' if final['parsed'] is not None and failed else final['status'],
-            'parsed_answer': final['parsed'], 'raw_model_answer': final['raw_text'],
+            'parsed_answer': projection, 'raw_model_answer': final['raw_text'],
+            'model_parsed_output': final['parsed'] if final_mode != 'assemble' else None,
+            'rendered_answer': final.get('rendered_answer'), 'final_mode': final_mode,
+            'answer_protocol': answer_protocol, 'model_final_call': final.get('model_call', False),
             'answer_modified': False, 'semantic_support_verified': False,
             'citation_kind': 'verbatim_span_selected_by_model_not_verified_support',
             'citation_bindings': {i: [reader.spans[i]['source'].id] for i in cited},

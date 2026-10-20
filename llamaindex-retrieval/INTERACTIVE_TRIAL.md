@@ -38,6 +38,14 @@
 
 逐信息项汇总只接收结构通过的 `found` 回答；未解决项仅传名称，不传缺证回答正文。全部缺证时不调用汇总，状态 `no_evidence`。这不代表混合回答的语义已验证，原始错误仍须记录和评分。`needs` 客户端通过服务 `/tokenize` 约束完整输入加输出预留不超过6000 token，超预算明确失败、不截断。
 
+可选 `needs_options.answer_protocol: "quote_v1"` 要求逐项回答先复制10–300字符的原文句子，且在恰好一个被引用片段中逐字出现；`not_found` 的 `quote` 和引用必须为空。违反合同记为失败，该信息项仍未解决，raw不改写。默认仍为 `"current"`。逐字匹配只是结构绑定，不能证明句子回答了问题。
+
+`needs_options.final_mode` 默认 `"compose"`；`"assemble"` 不再调用汇总模型，逐字显示各项模型 `answer` 加引用，再逐行显示 `未找到：<信息项>`；`"checked_compose"` 要求汇总模型输出 `sentences: [{text, span_ids}]`，每句至少引用一个已找到项的片段，否则整份终答无效。`generation` 分别保存 `final_mode`、`model_final_call`、不可变 `raw_model_answer`、`model_parsed_output` 和显示投影 `rendered_answer`。三个模式均须独立验证最终质量。
+
+## Web记录与离线重放
+
+顶层 `web_replay: {"mode": "off"|"record"|"replay", "store": "/absolute/path/captures"}` 控制Web获取，默认 `"off"`。`record` 按提供方、精确查询、按原顺序的 `include_domains`、结果数和 `full_snapshot` 保存完整提供方响应及哈希；同一请求重用首次记录。`replay` 只读对应记录，缺失、损坏或不可读均记为获取失败，绝不转为联网请求。原始HTTP响应字节和解析后的提供方载荷均保留在记录中，供审计复核。记录目录包含来源正文，应按本地研究数据管理，不提交版本库。
+
 ## 知识库导航卡片（`kb_cards`）
 
 配置 `kb_cards: {知识库ID: "/absolute/path/CARDS.jsonl"}` 后，完整覆盖目录的卡片通过短ID锦标赛选择文件：每25张一批、每批至多2份，继续对胜出者选择，最终至多4个文件。类别门控默认关闭；卡片只作导航线索，生成失败的卡片保留文件可达性及 raw。

@@ -7,6 +7,7 @@ from urllib.parse import urlsplit
 from .direct_web import execute
 from .lexical_index import LexicalResult
 from .web_guard import WebProviderGuard
+from .web_replay import WebReplay
 
 
 def sha(text):
@@ -43,8 +44,9 @@ def deduplicate_web_groups(groups):
 
 
 class WebSearchAdapter:
-    def __init__(self, settings):
+    def __init__(self, settings, *, replay=None):
         self.settings = settings
+        self.replay = WebReplay(**(replay or {}))
         # Installed only by the server lifespan, never from request/material metadata.
         self.snapshot_recorder = None
         self.slots = asyncio.Semaphore(settings.web_search_concurrency)
@@ -65,13 +67,19 @@ class WebSearchAdapter:
         trace["configured_state_sha256"] = self.settings.web_router_state_sha256
         return trace
 
-    async def search(self, query, *, full_snapshot=False):
+    async def search(self, query, *, full_snapshot=False, include_domains=None):
         # Explicit unified-core acquisition: split/rank the full returned snapshot
         # before reading. Default path remains byte-compatible with the baseline.
-        payload = await self._execute({"action": "search", "query": query,
+        request = {"action": "search", "query": query,
             "max_results": self.settings.web_search_results,
-            "material_characters": None if full_snapshot else self.settings.web_search_material_characters},
-            self.settings.web_search_timeout)
+            "material_characters": None if full_snapshot else self.settings.web_search_material_characters}
+        if include_domains is not None:
+            request['include_domains'] = include_domains
+        if self.replay.mode == 'record':
+            request['capture_provider_payload'] = True
+        key = self.replay.key(self.settings.web_search_provider, query, include_domains,
+                              request['max_results'], full_snapshot)
+        payload, replay = await self.replay.execute(key, lambda: self._execute(request, self.settings.web_search_timeout))
         hits = []
         snapshots = []
         material_selections = []
@@ -120,7 +128,7 @@ class WebSearchAdapter:
         return hits, {"status": "completed", "query": query, "provider": payload["provider"],
             "source_hashes": payload["source_hashes"], "snapshots": snapshots,
             "material_selections": material_selections,
-            "returned": len(hits)}
+            "returned": len(hits), **({'web_replay': replay} if replay else {})}
 
 
 # Historical frozen launchers import this name; current requests use only WebSearchAdapter.

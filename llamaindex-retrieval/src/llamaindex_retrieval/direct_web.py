@@ -1,5 +1,6 @@
 """Optional in-repository web transport; model routing and source reading stay separate."""
 from datetime import datetime, timezone
+import base64
 import hashlib
 import json
 import math
@@ -33,7 +34,7 @@ def _client():
 
 
 async def _json_response(client, method, url, *, timeout, headers=None, params=None, body=None,
-                         on_http_error=None):
+                         on_http_error=None, raw_response=None):
     try:
         async with client.stream(method, url, headers=headers, params=params, json=body,
                                  timeout=timeout) as response:
@@ -47,9 +48,12 @@ async def _json_response(client, method, url, *, timeout, headers=None, params=N
                 if size > MAX_RESPONSE_BYTES:
                     raise WebProviderError("web_upstream_response_too_large")
                 chunks.append(chunk)
-        value = json.loads(b"".join(chunks))
+        raw = b"".join(chunks)
+        value = json.loads(raw)
         if not isinstance(value, dict):
             raise WebProviderError("web_upstream_not_object")
+        if raw_response is not None:
+            raw_response.append(raw)
         return value
     except (httpx.HTTPError, UnicodeError, json.JSONDecodeError):
         # Upstream errors may contain credentials or request URLs. Keep them out of traces.
@@ -165,6 +169,8 @@ async def _search(request, settings, guard=None):
         params = None
         body = {"query": query, "search_depth": "advanced", "max_results": count,
                 "include_answer": False, "include_raw_content": "markdown", "include_images": False}
+        if request.get("include_domains") is not None:
+            body["include_domains"] = request["include_domains"]
     elif provider == "searxng":
         base = settings.web_searxng_base_url
         parsed = urlsplit(base)
@@ -193,11 +199,12 @@ async def _search(request, settings, guard=None):
             await guard.block(identity, status, retry_after)
         except WebGuardUnavailable as exc:
             raise WebProviderError(str(exc)) from None
+    raw_response = [] if request.get("capture_provider_payload") else None
     try:
         async with _client() as client:
             payload = await _json_response(client, method, endpoint, headers=headers,
                                            params=params, body=body, timeout=settings.web_search_timeout,
-                                           on_http_error=on_http_error)
+                                           on_http_error=on_http_error, raw_response=raw_response)
     finally:
         try:
             await guard.complete(identity)
@@ -241,8 +248,13 @@ async def _search(request, settings, guard=None):
                      "error": ""})
         if len(hits) >= count:
             break
-    return {"provider": provider, "hits": hits,
-            "source_hashes": {"direct_web.py": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}}
+    result = {"provider": provider, "hits": hits,
+              "source_hashes": {"direct_web.py": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}}
+    if raw_response is not None:
+        raw = raw_response[0]
+        result.update(provider_response_base64=base64.b64encode(raw).decode('ascii'),
+                      provider_response_sha256=hashlib.sha256(raw).hexdigest())
+    return result
 
 
 async def execute(request, settings, guard=None):

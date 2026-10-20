@@ -80,7 +80,7 @@ class Trial:
         transport = httpx.AsyncHTTPTransport(retries=0, limits=httpx.Limits(
             max_connections=self.settings.native_max_concurrency, max_keepalive_connections=0))
         self.native = StructuredNativeRWKVClient(**model_client_options(self.settings, transport=transport))
-        self.web = WebSearchAdapter(self.settings)
+        self.web = WebSearchAdapter(self.settings, replay=config.get('web_replay'))
         self.admin = httpx.AsyncClient(base_url=config['admin_base_url'], trust_env=False, timeout=60)
         self.lock = asyncio.Lock()
         self.jobs, self.tasks = {}, {}
@@ -172,7 +172,8 @@ class Trial:
                             progress(f'从知识库目录选择资料 · {len(catalog)} 份文档')
                             if all(c['id'] in self.cards for c in catalog):
                                 ids, receipt = await kb_navigation.choose(model, query,
-                                    [self.cards[c['id']] for c in catalog])
+                                    [self.cards[c['id']] for c in catalog],
+                                    **self.config.get('kb_navigation_options', {}))
                                 receipts.append({'channel': 'knowledge_base', 'mode': 'navigation_cards',
                                     'catalog_size': len(catalog), 'selected_file_ids': ids, **receipt})
                             else:

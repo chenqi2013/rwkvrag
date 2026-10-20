@@ -21,10 +21,14 @@ CARD_PICK = ('以下是知识库文档的导航卡片（模型写的摘要，不
              '最多选2份，按可能性从高到低排列；都不相关时返回空数组。')
 FINAL_PICK = ('以下导航卡片已从各批中初选出来。选出最可能包含问题答案的文档，按可能性从高到低排列，'
               '最多选{n}份；都不相关时返回空数组。')
+TITLE_PICK = ('以下是知识库的文档标题，只用于选择文件，不能作为回答的事实依据。'
+              '选出最可能包含问题答案的文档ID，最多{n}份，按可能性从高到低排列；都不相关时返回空数组。')
 OPENING_CHARS = 1200
 CARD_BATCH = 25        # ~2k input tokens per selection call.
 MAX_CATEGORIES = 3
 MAX_FILES = 4          # Files read per knowledge-base query.
+TITLE_BATCH = 250      # 5000 titles: 20 calls + at most 4 card calls + 1 final.
+TITLE_CONTROL_BATCH = 100
 
 
 async def call(model, instruction, data, properties, *, limit, evidence=()):
@@ -88,9 +92,46 @@ async def select(model, instruction, query, group, limit):
     return event, [local[k]['id'] for k in picks(event, list(local), limit)]
 
 
-async def choose(model, query, cards, *, max_files=MAX_FILES, use_categories=False):
+async def title_round(model, query, cards, batch_size, batch_picks, max_files, *, initial=False):
+    groups = [cards[i:i+batch_size] for i in range(0, len(cards), batch_size)]
+    final = len(groups) == 1 and not initial
+    limit = max_files if final else batch_picks
+
+    async def one(group):
+        local = {f'D{i+1}': c for i, c in enumerate(group)}
+        event = await call(model, TITLE_PICK.format(n=limit), {'question': query, 'documents': [
+            {'id': k, 'title': c['title']} for k, c in local.items()]},
+            pick_schema(local, limit), limit=max(48, 12*limit), evidence=[c['id'] for c in group])
+        return event, [local[k] for k in picks(event, list(local), limit)]
+
+    winners, decisions = [], []
+    for event, chosen in await gather([one(g) for g in groups]):
+        decisions.append({'stage': 'final' if final else 'titles', **event})
+        winners.extend(chosen)
+    return winners, decisions, final
+
+
+async def choose(model, query, cards, *, max_files=MAX_FILES, use_categories=False, mode='cards'):
     """Categories, then a two-round tournament over card batches; returns (file IDs, receipt)."""
+    if mode not in {'cards', 'titles_only', 'titles_then_cards'}:
+        raise ValueError('invalid navigation mode')
+    if mode != 'cards' and (use_categories or not 1 <= max_files <= MAX_FILES):
+        raise ValueError('title navigation requires categories off and at most four final files')
     receipt = {'query': query, 'catalog_size': len(cards), 'decisions': []}
+    if mode == 'titles_only':
+        current = cards
+        while current:
+            current, decisions, final = await title_round(model, query, current, TITLE_CONTROL_BATCH, 3, max_files)
+            receipt['decisions'].extend(decisions)
+            if final:
+                break
+        ids = [c['id'] for c in current]
+        receipt.update(mode=mode, title_batch=TITLE_CONTROL_BATCH, title_picks=3, selected_file_ids=ids)
+        return ids, receipt
+    if mode == 'titles_then_cards':
+        cards, decisions, _ = await title_round(model, query, cards, TITLE_BATCH, 5, max_files, initial=True)
+        receipt['decisions'].extend(decisions)
+        receipt.update(mode=mode, title_batch=TITLE_BATCH, title_picks=5, title_survivors=len(cards))
     present = [c for c in CATEGORIES if any(card['category'] == c for card in cards)]
     candidates = cards
     # Category narrowing is optional: on the FineWiki dev set it dropped 6/16 gold files whose
