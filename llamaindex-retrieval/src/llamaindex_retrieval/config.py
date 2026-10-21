@@ -360,6 +360,8 @@ class Settings(BaseSettings):
             raise ValueError("native ingest overlap must be smaller than chunk")
         if self.rwkvos_input_token_limit is not None and not self.rwkvos_count_input_tokens:
             raise ValueError("rwkvos_input_token_limit requires rwkvos_count_input_tokens")
+        if self.entity_index_auto_generate and self.native_transport != 'native':
+            raise ValueError('automatic entity indexing requires the native structured transport')
         return self
 
     mongo_url: str = "mongodb://127.0.0.1:27017"
@@ -367,6 +369,10 @@ class Settings(BaseSettings):
     sqlite_migration_path: Path = Path("/Volumes/mark/rwkvrag/data/lexical/bm25.sqlite3")
     admin_static_dir: Path | None = None
     wiki_auto_generate: bool = True
+    entity_index_auto_generate: bool = False
+    entity_index_workers: int = Field(default=2, ge=1, le=32)
+    entity_index_reconcile_seconds: int = Field(default=30, ge=5, le=3600)
+    entity_index_job_timeout_seconds: int = Field(default=360, ge=30, le=3600)
     ocr_enabled: bool = True
     ocr_tessdata_dir: Path | None = None
     ocr_languages: str = Field(default="chi_sim+eng", pattern=r"^[a-z_]+(?:\+[a-z_]+)*$")

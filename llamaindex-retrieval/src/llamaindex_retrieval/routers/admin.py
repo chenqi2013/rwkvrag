@@ -183,6 +183,23 @@ async def download_file(
     )
 
 
+@router.get('/knowledge-bases/{knowledge_base_id}/entity-index')
+async def current_entity_index(knowledge_base_id: str, request: Request):
+    return await request.app.state.entity_index_service.current(knowledge_base_id)
+
+
+@router.post('/files/{file_id}/entity-index/retry', response_model=JobAccepted, status_code=202)
+async def retry_entity_index(file_id: str, request: Request):
+    job = await request.app.state.entity_index_service.enqueue(file_id, retry=True)
+    return {'job_id': job['id'], 'status': job['status']}
+
+
+@router.get('/files/{file_id}/parsed-source')
+async def parsed_source(file_id: str, request: Request):
+    source = await request.app.state.entity_index_service.source(file_id)
+    return source.model_dump(mode='json')
+
+
 @router.get("/files/{file_id}/source/{source_sha256}")
 async def source_revision_file(file_id: str, source_sha256: str,
                                repo: MongoRepository = Depends(repository)):

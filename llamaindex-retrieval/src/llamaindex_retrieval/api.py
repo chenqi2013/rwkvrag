@@ -23,6 +23,9 @@ from .service import SearchService
 from .tasks import TaskManager
 from .wiki import WikiService
 from .atomic_evidence import AtomicEvidenceService
+from .entity_index_service import EntityIndexService
+from .model_client import model_client_options
+from .structured_native import StructuredNativeRWKVClient
 
 
 @asynccontextmanager
@@ -42,6 +45,13 @@ async def lifespan(app: FastAPI):
     if settings.native_require_fp32_runtime:
         await search.native_pipeline.model.verify_fp32_runtime()
     task_manager.wiki = wiki
+    entity_model = None
+    if settings.entity_index_auto_generate:
+        entity_model = StructuredNativeRWKVClient(**model_client_options(
+            settings, state_routing=None, recorder=repository.record_model_http))
+    entities = EntityIndexService(settings, repository, task_manager, entity_model)
+    task_manager.entities = entities
+    app.state.entity_index_service = entities
     app.state.wiki_service = wiki
     admin = AdminService(settings, repository, task_manager, lexical_index)
     snapshots = WebSnapshotService(repository, admin)
@@ -55,14 +65,19 @@ async def lifespan(app: FastAPI):
     app.state.admin_service = admin
     atomic = AtomicEvidenceService(settings, repository, lexical_index)
     app.state.atomic_service = atomic
-    await task_manager.start()
-    await wiki.backfill()
-    yield
-    await task_manager.shutdown()
-    await search.aclose()
-    await atomic.aclose()
-    lexical_index.close()
-    await repository.close()
+    try:
+        await task_manager.start()
+        await wiki.backfill()
+        await entities.start()
+        yield
+    finally:
+        await entities.stop()
+        await task_manager.shutdown()
+        await entities.aclose()
+        await search.aclose()
+        await atomic.aclose()
+        lexical_index.close()
+        await repository.close()
 
 
 app = FastAPI(

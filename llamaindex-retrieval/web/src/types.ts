@@ -11,6 +11,8 @@ export interface FileItem {
   revision_pending?: boolean;
   last_indexed_revision?: Record<string, unknown> | null;
   last_indexed_index_version?: string | null;
+  entity_index?: { status: 'pending' | 'processing' | 'ready' | 'failed';
+    source_sha256: string; parsed_snapshot_sha256: string; job_id: string; error?: string | null } | null;
   id: string;
   knowledge_base_id: string;
   filename: string;
@@ -29,7 +31,7 @@ export interface FileItem {
 
 export interface JobItem {
   id: string;
-  kind: "file_ingest" | "file_reindex" | "finewiki_import" | "wiki_generate";
+  kind: "file_ingest" | "file_reindex" | "finewiki_import" | "wiki_generate" | "entity_index";
   status: "pending" | "running" | "completed" | "failed";
   progress: number;
   stage: string;

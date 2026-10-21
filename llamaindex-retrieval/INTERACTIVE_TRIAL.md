@@ -330,3 +330,27 @@ with `stage`, `category` and raw/source `evidence`. Stages are `plan`,
 `DEFECTS.json` ranks the reviewed first failures and explicitly counts pending
 cases. Scoring never changes original outputs. All case pools, golds, reviews,
 index artifacts and evaluation records remain local research data.
+
+### 自动维护的数据库索引
+
+对上传后自动更新的知识库，先在管理服务启用上述
+[自动实体索引](README.md#上传后的自动实体索引)，再在 lean 试用配置中设置：
+
+```json
+{
+  "pipeline": "lean",
+  "entity_index_source": "admin"
+}
+```
+
+该模式直接读取 `admin_base_url` 的当前索引，免去维护 `entity_indexes` 导出路径。
+两种来源不能同时配置。每次请求核对目录中的原文/解析快照版本。已有有效条目的文件走实体查找；
+待生成、失败或版本过期的文件另走标题导航，两路并行。两路都有候选时，再由模型统一选择最多3份，
+程序不按分支优先级截掉新文件。完全没有有效条目或索引接口不可用时，对完整目录走标题导航。
+这样新增文档在索引准备期间仍然可达，已有索引也能继续使用。标题候选本身不进入答案证据。
+文档通过 `parsed-source` 读取逐字解析结果，绑定文件版本；PDF 的页段保留原始解析文档 ID、
+Unicode 坐标和文本哈希，读取期间源版本改变时不使用该材料。
+`navigation_index` 获取记录保存索引版本、覆盖和降级原因。
+
+该模式仅用于实时目录；`case_pool` 与静态冻结索引继续隔离，不访问实时索引接口。
+数据库索引生成和动态读取需要显式配置，不会自动改变当前默认链路或部署。

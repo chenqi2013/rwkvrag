@@ -83,7 +83,11 @@ export default function FilesPage() {
   useEffect(() => void load(), [load]);
 
   useEffect(() => {
-    if (!files.some((item) => ["pending", "processing"].includes(item.status))) return;
+    if (!files.some((item) => ["pending", "processing"].includes(item.status)
+      || (item.status === 'ready' && item.entity_index
+        && (['pending', 'processing'].includes(item.entity_index.status)
+          || item.entity_index.source_sha256 !== item.sha256
+          || item.entity_index.parsed_snapshot_sha256 !== item.last_indexed_revision?.parsed_snapshot_sha256)))) return;
     const timer = window.setInterval(() => void load(), 2000);
     return () => window.clearInterval(timer);
   }, [files, load]);
@@ -171,6 +175,15 @@ export default function FilesPage() {
           {status === "processing" && !item.error && <Progress percent={60} size="small" showInfo={false} status="active" />}
           {extractionLabel(item) && <Typography.Text type="secondary">{extractionLabel(item)}</Typography.Text>}
           {item.error && <Typography.Text type="danger">{item.error}</Typography.Text>}
+          {status === 'ready' && item.entity_index && <Tag color={
+            item.entity_index.status === 'ready' && item.entity_index.source_sha256 === item.sha256
+              && item.entity_index.parsed_snapshot_sha256 === item.last_indexed_revision?.parsed_snapshot_sha256 ? 'green'
+              : item.entity_index.status === 'failed' ? 'red' : 'processing'}>
+            {item.entity_index.status === 'ready' && item.entity_index.source_sha256 === item.sha256
+              && item.entity_index.parsed_snapshot_sha256 === item.last_indexed_revision?.parsed_snapshot_sha256
+              ? tr('检索索引已就绪', 'Search index ready') : item.entity_index.status === 'failed'
+              ? tr('检索索引生成失败', 'Search indexing failed') : tr('检索索引准备中', 'Preparing search index')}
+          </Tag>}
         </Space>
       ),
     },
@@ -208,6 +221,10 @@ export default function FilesPage() {
           {item.revision_pending && item.error && <Button type="text" onClick={() => void retryRevision(item.id)}>
             {tr("恢复修订任务", "Retry revision")}
           </Button>}
+          {item.status === 'ready' && item.entity_index?.status === 'failed' && <Button type="text" onClick={() => {
+            void api.retryEntityIndex(item.id).then(() => { message.success(tr('索引任务已重新排队', 'Indexing queued')); void load(); })
+              .catch(error => message.error(errorMessage(error)));
+          }}>{tr('重试检索索引', 'Retry search indexing')}</Button>}
           <Button type="text" disabled={item.status !== "ready" || !item.last_indexed_revision || !item.last_indexed_index_version}
             title={!item.last_indexed_revision || !item.last_indexed_index_version ? tr("缺少原文版本记录，请先重建", "Missing source revision; reindex first") : undefined} onClick={() => {
             void api.generateWiki(item.id).then(() => message.success(tr("Wiki 任务已提交", "Wiki queued")))

@@ -1,6 +1,6 @@
 import hashlib
 import json
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from typing import Any
 from uuid import uuid4
 
@@ -111,6 +111,7 @@ class MongoRepository:
         self.files = self.database["files"]
         self.jobs = self.database["jobs"]
         self.wiki_versions = self.database["wiki_versions"]
+        self.entity_attempts = self.database["entity_index_attempts"]
         self.web_snapshots = self.database["web_snapshots"]
         self.atomic_runs = self.database["atomic_evidence_runs"]
         self.search_tests = self.database["search_tests"]
@@ -129,6 +130,76 @@ class MongoRepository:
             {"$set": {"status": "running", "stage": "generating", "progress": 20,
                       "started_at": utc_now(), "message": "正在根据原文生成 Wiki 草稿"}})
         return result.modified_count == 1
+
+    async def claim_entity_job(self, job_id, owner, lease_seconds):
+        now = utc_now()
+        return await self.jobs.find_one_and_update(
+            {"id": job_id, "kind": "entity_index", "$or": [{"status": "pending"},
+                {"status": "running", "$or": [{"entity_lease_until": {"$lt": now}},
+                                                {"entity_lease_until": {"$exists": False}}]}]},
+            {"$set": {"status": "running", "started_at": now, "stage": "indexing",
+                      "entity_owner": owner, "entity_lease_until": now+timedelta(seconds=lease_seconds)},
+             "$inc": {"entity_fence": 1}}, projection={"_id": 0}, return_document=ReturnDocument.AFTER)
+
+    async def update_entity_job(self, job_id, owner, values):
+        result = await self.jobs.update_one({"id": job_id, "entity_owner": owner},
+                                            {"$set": {**values, "updated_at": utc_now()}})
+        return result.matched_count == 1
+
+    @staticmethod
+    def entity_source_query(binding):
+        return {"id": binding["file_id"], "knowledge_base_id": binding["knowledge_base_id"],
+                "status": "ready", "sha256": binding["revision"]["source_sha256"],
+                "last_indexed_revision.parsed_snapshot_sha256": binding["revision"]["parsed_snapshot_sha256"],
+                "filename": binding["title"]}
+
+    async def reserve_entity_index(self, binding, state):
+        result = await self.files.update_one(
+            {**self.entity_source_query(binding), "entity_index.job_id": {"$ne": state["job_id"]}},
+            {"$set": {"entity_index": state, "updated_at": utc_now()}})
+        return result.modified_count == 1
+
+    async def publish_entity_index(self, binding, job_id, values, *, owner, fence, lease_until=None):
+        query = {**self.entity_source_query(binding), "entity_index.job_id": job_id}
+        if lease_until is not None:
+            query['$or'] = [{"entity_index.lease_fence": {"$exists": False}},
+                            {"entity_index.lease_fence": {"$lte": fence}}]
+            values = {**values, "owner_token": owner, "lease_fence": fence, "lease_until": lease_until}
+        else:
+            query.update({"entity_index.owner_token": owner, "entity_index.lease_fence": fence,
+                          "entity_index.lease_until": {"$gt": utc_now()}})
+        result = await self.files.update_one(
+            query,
+            {"$set": {**{"entity_index."+k: v for k, v in values.items()}, "updated_at": utc_now()}})
+        return result.matched_count == 1
+
+    async def fail_unfinished_entity_index(self, binding, job_id):
+        await self.files.update_one(
+            {**self.entity_source_query(binding), 'entity_index.job_id': job_id,
+             'entity_index.status': {'$in': ['pending', 'processing']}},
+            {'$set': {'entity_index.status': 'failed', 'entity_index.error': 'index_publication_incomplete',
+                      'entity_index.updated_at': utc_now(), 'updated_at': utc_now()}})
+
+    async def save_entity_attempt(self, attempt):
+        record = dict(attempt)
+        payload_id = await self._store_large_payload(record["record"])
+        if payload_id:
+            record.pop("record")
+            record["record_payload_id"] = payload_id
+        await self.entity_attempts.update_one({"id": record["id"]}, {"$setOnInsert": record}, upsert=True)
+
+    async def get_entity_attempt(self, identity):
+        record = await self.entity_attempts.find_one({"id": identity}, {"_id": 0})
+        if record and record.get("record_payload_id"):
+            record["record"] = await self._load_payload(record["record_payload_id"])
+        return record
+
+    async def completed_entity_attempt(self, job_id):
+        record = await self.entity_attempts.find_one(
+            {"job_id": job_id, "execution_complete": True}, {"_id": 0})
+        if record and record.get("record_payload_id"):
+            record["record"] = await self._load_payload(record["record_payload_id"])
+        return record
 
     async def record_web_snapshot(self, snapshot):
         """Server-only receipt; no HTTP endpoint accepts snapshot contents."""
@@ -232,6 +303,9 @@ class MongoRepository:
         await self.files.create_index(
             [("knowledge_base_id", ASCENDING), ("content_hashes", ASCENDING)], unique=True)
         await self.wiki_versions.create_index("id", unique=True)
+        await self.entity_attempts.create_index("id", unique=True)
+        await self.entity_attempts.create_index("job_id")
+        await self.entity_attempts.create_index([("file_id", ASCENDING), ("created_at", DESCENDING)])
         await self.wiki_versions.create_index([("page_id", ASCENDING), ("created_at", DESCENDING)])
         await self.jobs.create_index("id", unique=True)
         await self.jobs.create_index([("status", ASCENDING), ("created_at", ASCENDING)])

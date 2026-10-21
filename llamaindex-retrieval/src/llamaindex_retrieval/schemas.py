@@ -141,7 +141,7 @@ class KnowledgeBaseItem(BaseModel):
 
 FileStatus = Literal["pending", "processing", "ready", "failed", "deleting"]
 JobStatus = Literal["pending", "running", "completed", "failed"]
-JobKind = Literal["file_ingest", "file_reindex", "finewiki_import", "wiki_generate"]
+JobKind = Literal["file_ingest", "file_reindex", "finewiki_import", "wiki_generate", "entity_index"]
 
 
 class FileItem(BaseModel):
@@ -160,6 +160,7 @@ class FileItem(BaseModel):
     revision_pending: bool = False
     last_indexed_revision: dict[str, Any] | None = None
     last_indexed_index_version: str | None = None
+    entity_index: dict[str, Any] | None = None
     created_at: datetime
     updated_at: datetime
 

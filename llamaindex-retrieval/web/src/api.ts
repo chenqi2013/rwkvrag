@@ -94,6 +94,8 @@ export const api = {
   },
   retryRevision: (id: string) => request<{ job_id: string; status: string }>(
     `/v1/admin/files/${id}/revisions/retry`, { method: "POST" }),
+  retryEntityIndex: (id: string) => request<{ job_id: string; status: string }>(
+    `/v1/admin/files/${id}/entity-index/retry`, { method: "POST" }),
   reindexFile: (id: string) =>
     request<{ job_id: string; status: string }>(`/v1/admin/files/${id}/reindex`, {
       method: "POST",

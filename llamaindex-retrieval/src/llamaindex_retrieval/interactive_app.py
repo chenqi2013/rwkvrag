@@ -10,6 +10,7 @@ from pathlib import Path
 from time import monotonic
 from typing import Literal
 from uuid import uuid4
+from urllib.parse import quote
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
@@ -79,6 +80,12 @@ class Trial:
     def __init__(self, config):
         config = model_profiles.resolve(config)
         self.config = config
+        source = config.get('entity_index_source')
+        if source not in {None, 'admin'}:
+            raise ValueError('entity_index_source must be admin or absent')
+        self.dynamic_entities = source == 'admin'
+        if self.dynamic_entities and (config.get('entity_indexes') or config.get('web_replay', {}).get('mode') == 'case_pool'):
+            raise ValueError('live entity indexes cannot mix with static indexes or frozen case pools')
         options = dict(config['settings'])
         if config.get('pipeline') == 'needs':
             # The native client tokenizes the complete wire prompt before every
@@ -126,6 +133,38 @@ class Trial:
                     break
                 offset += len(batch)
         return catalog, files
+
+    async def live_entity_index(self, catalog, files, knowledge_base_ids):
+        receipt = {'channel': 'navigation_index', 'mode': 'admin', 'versions': [], 'fallback': 'titles'}
+        if not catalog:
+            return None, receipt
+        try:
+            responses = await asyncio.gather(*(self.admin.get(
+                '/v1/admin/knowledge-bases/'+quote(kb, safe='')+'/entity-index') for kb in dict.fromkeys(knowledge_base_ids)))
+            records = {}
+            for response in responses:
+                response.raise_for_status()
+                data = response.json()
+                receipt['versions'].append(data['version'])
+                for row in data['records']:
+                    if row['id'] in records:
+                        raise ValueError('duplicate live entity file')
+                    records[row['id']] = row
+            valid = []
+            for row in catalog:
+                record = records.get(row['id'])
+                item = files[row['id']]
+                revision = item.get('last_indexed_revision') or {}
+                if (record and record['source_sha256'] == item['sha256'] and record['title'] == row['title']
+                        and record['parsed_snapshot_sha256'] == revision.get('parsed_snapshot_sha256')
+                        and record.get('status') == 'completed' and entity_index.valid_terms(record.get('parsed'), 12)):
+                    valid.append(record)
+            receipt.update(indexed_files=len(valid), unindexed_files=len(catalog)-len(valid),
+                           fallback='supplement_titles' if valid and len(valid) < len(catalog) else None if valid else 'titles')
+            return (entity_index.EntityIndex(valid, self.cards.values()) if valid else None), receipt
+        except (httpx.HTTPError, KeyError, TypeError, ValueError) as error:
+            receipt.update(reason='index_unavailable', error_type=type(error).__name__)
+            return None, receipt
 
     async def run(self, job, payload):
         model = ObservedModel(self.native, job)
@@ -274,6 +313,12 @@ class Trial:
                 else:
                     catalog, files = (await self.catalog(payload.knowledge_base_ids)
                         if payload.retrieval_mode != 'web' else ([], {}))
+                navigation_index = self.entity_index
+                if self.dynamic_entities:
+                    navigation_index, receipt = await self.live_entity_index(catalog, files, payload.knowledge_base_ids)
+                    receipts.append(receipt)
+                    options.setdefault('title_batch', 150)
+                    options['cover_unindexed'] = True
                 parent = None
                 if payload.parent_job_id:
                     previous = self.jobs.get(payload.parent_job_id)
@@ -289,6 +334,19 @@ class Trial:
                         if file_id not in {c['id'] for c in catalog}:
                             raise ValueError('document outside permitted frozen catalog')
                         return pool.document(file_id)
+                    if self.dynamic_entities:
+                        response = await self.admin.get('/v1/admin/files/'+quote(file_id, safe='')+'/parsed-source')
+                        response.raise_for_status()
+                        source = SourceItem.model_validate(response.json())
+                        expected = files[file_id]
+                        if (source.document_id != file_id or source.source != 'knowledge_base'
+                                or source.title != expected['filename']
+                                or source.metadata.get('knowledge_base_id') != expected['knowledge_base_id']
+                                or source.metadata.get('source_sha256') != expected['sha256']
+                                or source.metadata.get('parsed_snapshot_sha256') != (expected.get('last_indexed_revision') or {}).get('parsed_snapshot_sha256')):
+                            raise ValueError('parsed source changed after catalog read')
+                        source.uri = self.config['admin_base_url'].rstrip('/')+'/v1/admin/files/'+quote(file_id, safe='')+'/source/'+expected['sha256']
+                        return source
                     response = await self.admin.get('/v1/admin/files/' + file_id + '/download')
                     response.raise_for_status()
                     text = response.content.decode('utf-8')
@@ -311,7 +369,7 @@ class Trial:
                 search=search, scope={'knowledge_bases': [bases[i]['name'] for i in payload.knowledge_base_ids],
                                      'web': payload.retrieval_mode != 'knowledge_base'},
                 progress=progress, parent=parent, deadline_at=deadline,
-                entity_index=self.entity_index,
+                entity_index=navigation_index,
                 concurrency=self.settings.native_max_concurrency, **options)
             result['telemetry']['total_ms'] = (monotonic()-started)*1000
             result['telemetry']['stages_ms']['setup'] = setup_ms

@@ -77,10 +77,11 @@ class Lean:
     def __init__(self, model, question, *, catalog, document, search, scope, progress, parent=None,
                  deadline_seconds=45, deadline_at=None, answer_reserve_seconds=8, concurrency=16,
                  title_batch=250, reading_mode='first_two', final_chars=6000, answer_tokens=1024,
-                 answer_contract='cited_v1', entity_index=None):
+                 answer_contract='cited_v1', entity_index=None, cover_unindexed=False):
         if (deadline_seconds <= 0 or answer_reserve_seconds < 0 or concurrency < 1
                 or title_batch not in {100, 150, 250} or reading_mode not in {'first_two', 'outline'}
-                or final_chars < 640 or type(answer_tokens) is not int or not 32 <= answer_tokens <= 2048):
+                or final_chars < 640 or type(answer_tokens) is not int or not 32 <= answer_tokens <= 2048
+                or type(cover_unindexed) is not bool):
             raise ValueError('invalid lean limits')
         self.model, self.question = model, question
         self.catalog, self.document, self.search = catalog, document, search
@@ -94,6 +95,7 @@ class Lean:
         self.answer_contract = answer_contract
         self.answer_instruction = answer_instruction(answer_contract)
         self.entity_index = entity_index
+        self.cover_unindexed = cover_unindexed
         self.plan_instruction = PLAN_ENTITIES if entity_index is not None else PLAN
         if entity_index is not None:
             self.title_batch = 150
@@ -192,17 +194,46 @@ class Lean:
     async def titles(self, queries):
         if not queries or not self.catalog:
             return []
+        if self.entity_index is not None and self.cover_unindexed:
+            missing = [r for r in self.catalog if r['id'] not in self.entity_index.records]
+            known = [r for r in self.catalog if r['id'] in self.entity_index.records]
+            if missing and known:
+                groups = await gather([self.indexed_titles(queries, known, candidate_only=True),
+                                       self.title_documents(queries, missing, candidate_only=True)])
+                selected = []
+                for group in groups:
+                    add_sources(selected, group)
+                if all(groups):
+                    local = {f'D{i+1}': s for i, s in enumerate(selected)}
+                    depth = max(self.paths, default=1)+1
+                    event = await self.call(kb_navigation.TITLE_PICK.format(n=3),
+                        {'question': '\n'.join(queries), 'documents': [
+                            {'id': key, 'title': s.title} for key, s in local.items()]},
+                        kb_navigation.pick_schema(local, 3), limit=48, depth=depth)
+                    selected = [local[k] for k in kb_navigation.picks(event, list(local), 3)]
+                    self.paths.append(depth)
+                self.acquisition.append({'channel': 'knowledge_base', 'mode': 'coverage_merge',
+                    'unindexed_file_ids': [r['id'] for r in missing],
+                    'selected_file_ids': [s.document_id for s in selected], 'catalog_size': len(self.catalog)})
+                return selected
+        return await self.indexed_titles(queries, self.catalog)
+
+    async def indexed_titles(self, queries, catalog, *, candidate_only=False):
         if self.entity_index is not None:
             ids, receipt = self.entity_index.lookup(self.plan['entities'], self.plan['aliases'],
-                                                   allowed_ids=[c['id'] for c in self.catalog])
+                                                   allowed_ids=[c['id'] for c in catalog])
             receipt.update(channel='knowledge_base', mode='entity_index', question=self.question,
+                           candidate_only=candidate_only,
                            path='entity_pick' if 1 <= len(ids) <= 40 else 'title_fallback')
             self.acquisition.append(receipt)
             if 1 <= len(ids) <= 40:
                 return await self.entity_documents(ids, receipt)
+        return await self.title_documents(queries, catalog, candidate_only=candidate_only)
+
+    async def title_documents(self, queries, catalog, *, candidate_only=False):
         query = '\n'.join(queries)
         # The merged queries describe one question; the catalog is traversed once.
-        groups = [self.catalog[i:i+self.title_batch] for i in range(0, len(self.catalog), self.title_batch)]
+        groups = [catalog[i:i+self.title_batch] for i in range(0, len(catalog), self.title_batch)]
         slots = asyncio.Semaphore(self.concurrency)
 
         async def choose(group, n, depth):
@@ -224,7 +255,8 @@ class Lean:
             depth += 1
         self.paths.append(depth)
         self.acquisition.append({'channel': 'knowledge_base', 'query': query,
-                                 'selected_file_ids': [r['id'] for r in winners], 'catalog_size': len(self.catalog)})
+                                 'selected_file_ids': [r['id'] for r in winners], 'catalog_size': len(catalog),
+                                 'candidate_only': candidate_only})
         return await gather([self.document(row['id']) for row in winners])
 
     async def entity_documents(self, ids, receipt):

@@ -353,6 +353,7 @@ async def test_existing_uses_latest_reindex_status(setup):
 async def test_scheduler_deduplicates_pending():
     manager = TaskManager.__new__(TaskManager)
     manager.tasks = set()
+    manager.job_tasks = {}
     manager._run_job = AsyncMock()
     manager.submit("same")
     manager.submit("same")

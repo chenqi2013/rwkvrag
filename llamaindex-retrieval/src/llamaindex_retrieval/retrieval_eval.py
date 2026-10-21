@@ -149,6 +149,7 @@ def score_record(record, gold, *, record_sha256, review=None):
     final = {coordinate(s['id']) for s in graph.get('spans', [])} - {None}
     picked = list(dict.fromkeys(fid for r in result.get('acquisition', [])
                                if r.get('channel') == 'knowledge_base'
+                               and not r.get('candidate_only')
                                for fid in r.get('selected_file_ids', [])))
     # Web source snapshots include the whole candidate pool. Read/outline nodes
     # bind actual selected pages; candidate acquisition alone is not a page hit.

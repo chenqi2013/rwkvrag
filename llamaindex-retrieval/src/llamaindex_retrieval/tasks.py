@@ -41,11 +41,18 @@ class TaskManager:
         self.semaphore = asyncio.Semaphore(settings.task_workers)
         self.index_jobs_lock = asyncio.Lock()
         self.tasks: set[asyncio.Task[None]] = set()
+        self.job_tasks: dict[str, asyncio.Task[None]] = {}
         self.wiki = None
+        self.entities = None
 
     async def start(self) -> None:
         await self.repository.ensure_revision_jobs()
         for job in await self.repository.recoverable_jobs():
+            if job.get('kind') == 'entity_index':
+                # Another API worker may still own the lease. The entity service
+                # atomically claims only pending or expired jobs.
+                self.submit(job['id'])
+                continue
             await self.repository.update_job(
                 job["id"],
                 {
@@ -64,13 +71,26 @@ class TaskManager:
             await asyncio.gather(*self.tasks, return_exceptions=True)
 
     def submit(self, job_id: str) -> None:
-        if any(not task.done() and task.get_name() == f"admin-job-{job_id}" for task in self.tasks):
+        previous = self.job_tasks.get(job_id)
+        if previous is not None and not previous.done():
             return
         task = asyncio.create_task(self._run_job(job_id), name=f"admin-job-{job_id}")
         self.tasks.add(task)
-        task.add_done_callback(self.tasks.discard)
+        self.job_tasks[job_id] = task
+        def finished(done):
+            self.tasks.discard(done)
+            if self.job_tasks.get(job_id) is done:
+                self.job_tasks.pop(job_id, None)
+        task.add_done_callback(finished)
 
     async def _run_job(self, job_id: str) -> None:
+        initial = await self.repository.get_job(job_id)
+        if initial and initial.get('kind') == 'entity_index':
+            # Model indexing has its own concurrency limit; a large backfill must
+            # not occupy every upload/parser worker while waiting for the model.
+            if self.entities is not None:
+                await self.entities.generate(initial)
+            return
         async with self.semaphore:
             job = await self.repository.get_job(job_id)
             if job is None or job.get("status") not in {"pending", "running"}:
@@ -223,11 +243,20 @@ class TaskManager:
             "last_job_id": job_id, "last_indexed_revision": revision,
             "last_indexed_index_version": stats["index_version"],
         }
+        if self.entities is not None and self.entities.enabled:
+            values['entity_index'] = self.entities.pending_state({**file_item, **values})
         if token:
             await self.repository.update_claimed_file(file_id, token, values)
         else:
             await self.repository.update_file(file_id, values)
         await self._complete_job(job_id, stats)
+        if self.entities is not None and self.entities.enabled:
+            try:
+                await self.entities.enqueue(file_id)
+            except Exception:
+                # The periodic reconciler repairs a lost enqueue after a crash.
+                # Source ingestion has already succeeded and stays successful.
+                logger.exception('file ready but entity index enqueue failed: %s', file_id)
         if self.wiki is not None and self.settings.wiki_auto_generate:
             try:
                 await self.wiki.enqueue(file_id, automatic=True)
