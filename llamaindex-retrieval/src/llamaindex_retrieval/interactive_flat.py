@@ -31,7 +31,8 @@ ISSUES = ['相反或不一致的原文没有提到', '数值单位或计量基�
 PLAN = ('判断用户这一轮是新问题、追问还是更正，relation写“新问题”“追问”或“更正”：原话中有“它”“这个”“那”“呢”等指代、'
         '或省略了所问对象时是追问；原话自己写明了一个与前几轮无关的对象时是新问题。'
         'question写完整的问题：追问和更正要把指代换成前几轮中的具体对象（例如具体型号或版本号），question中不能再出现“它”“这个”等指代；'
-        '新问题不受前几轮影响。needs列出用户实际问到的内容，通常1到3项；每项写text和user_words，'
+        '新问题不受前几轮影响。needs列出用户实际问到的内容，通常1到3项；用户要求分别说明几个对象或比较几个方面时，'
+        '每个对象或方面各列一项，最多4项。每项写text和user_words，'
         'user_words必须从“用户本轮原话”中原样照抄一段文字，表示这一项来自原话的哪里。'
         'aspects写回答时值得补充的相关方面，例如时间、条件、背景、对比，最多4项，可以为空。'
         'queries写1到2条互补的检索句，每条都写出要查的对象；问到今天、最新等时写明具体日期或年份。'
@@ -70,6 +71,7 @@ IMAGE = re.compile(r'!\[[^\]]*\]\([^)]*\)')
 LINK = re.compile(r'\[([^\]]*)\]\((?:[^()]|\([^)]*\))*\)')
 JUNK_LINE = re.compile(r'^\s*(?:javascript:\S*|https?://\S+|\[\s*\]|[-*•|]\s*)\s*$')
 EMPHASIS = re.compile(r'\*\*|__|(?<!\w)\*(?=\S)|(?<=\S)\*(?!\w)')
+POINT_PATTERN = r'^[^\[\]\n]{4,300}(\[[0-9]{1,2}\])+[。]?$'
 POWERS = {'100', '1000', '10000', '100000000'}
 BENIGN = {'duplicate_source_title_changed', 'windows_limited', 'quotes_limited'}
 CITATION = re.compile(r'\[(\d{1,3})\]')
@@ -247,7 +249,7 @@ class Flat:
                  window_overlap=200, max_windows_per_source=4, snippet_batch=4, snippet_batch_wait=1.5,
                  deadline_seconds=180, acquisition_timeout=70, final_reserve_seconds=50,
                  final_quote_limit=40, per_need_limit=12, final_frequency_penalty=0.3,
-                 supplement=True, review=True):
+                 supplement=True, review=True, kb_window_chars=6000, kb_max_windows=40):
         if (not set(channels) <= {'knowledge_base', 'web'} or not 400 <= window_chars <= 24000
                 or not 0 <= window_overlap < window_chars // 2 or max_windows_per_source < 1
                 or not 1 <= snippet_batch <= 8 or not 0 < final_reserve_seconds < deadline_seconds):
@@ -262,6 +264,8 @@ class Flat:
         if self.today is None:
             raise ValueError('as_of requires an explicit timezone')
         self.window_chars, self.window_overlap = window_chars, window_overlap
+        # Uploaded documents are long and chosen by the user, so they are read in larger, more windows.
+        self.kb_window_chars, self.kb_max_windows = kb_window_chars, kb_max_windows
         self.max_windows, self.snippet_batch, self.snippet_batch_wait = max_windows_per_source, snippet_batch, snippet_batch_wait
         self.final_quote_limit, self.per_need_limit = final_quote_limit, per_need_limit
         self.final_frequency_penalty, self.supplement, self.review_enabled = final_frequency_penalty, supplement, review
@@ -459,14 +463,16 @@ class Flat:
         self.views[source.id] = {'body': view, 'snippet': snippet, 'cleaning': CLEANING if source.source == 'web' else 'none',
                                  'body_sha256': digest(view), 'snippet_sha256': digest(snippet)}
         windows = []
+        upload = source.source == 'knowledge_base'
+        size, limit = (self.kb_window_chars, self.kb_max_windows) if upload else (self.window_chars, self.max_windows)
         if view.strip():
-            nodes = list(packed_verbatim_nodes(Document(text=view, id_=source.id), self.window_chars,
+            nodes = list(packed_verbatim_nodes(Document(text=view, id_=source.id), size,
                                                self.window_overlap, absorb_whitespace=True))
             windows = [(n.metadata['source_span']['start'], n.metadata['source_span']['end']) for n in nodes]
-        if len(windows) > self.max_windows:
+        if len(windows) > limit:
             self.errors.append({'stage': 'read', 'status': 'windows_limited', 'source_id': source.id,
-                                'windows': len(windows), 'read': self.max_windows})
-            windows = windows[:self.max_windows]
+                                'windows': len(windows), 'read': limit})
+            windows = windows[:limit]
         if not windows:
             if snippet:
                 # Short snippet-only sources share one reading call.
@@ -619,8 +625,18 @@ class Flat:
     def final_materials(self):
         """Group bound quotes by source; answers before details; cap by count, never truncate a quote."""
         chosen, per_need, seen = [], {}, set()
-        order = sorted(self.quotes.values(), key=lambda q: ('answer' not in q['kinds'], min(q['needs']),
-                                                            q['source_id'], q['span']['start']))
+        ranked = sorted(self.quotes.values(), key=lambda q: ('answer' not in q['kinds'], min(q['needs']),
+                                                             q['source_id'], q['span']['start']))
+        # Within each (kind, need) group take quotes round-robin across sources, so one long
+        # document cannot fill every slot before another document is represented.
+        order, groups = [], {}
+        for quote in ranked:
+            groups.setdefault(('answer' not in quote['kinds'], min(quote['needs'])), {}).setdefault(
+                quote['source_id'], []).append(quote)
+        for key in sorted(groups):
+            lanes = list(groups[key].values())
+            for i in range(max(map(len, lanes))):
+                order.extend(lane[i] for lane in lanes if i < len(lane))
         for quote in order:
             need = min(quote['needs'])
             key = re.sub(r'\W+', '', quote['text'])
@@ -698,15 +714,17 @@ class Flat:
             self.materials += '\n\n所问对象与写明它的来源（代码按名称统计）：\n' + '\n'.join(rows)
         self.progress('依据摘抄原文生成回答')
         # Enough quoted material requires points; thin material may answer in one sentence.
-        least = 2 if len(ids) >= 4 else 0
         missing = self.missing_needs()
         absent = getattr(self, 'name_absent', [])
         gone = ('\n以下对象在本次获取的所有资料中都没有出现，关于它们只能写未知，不能写出任何数值或特点：' + '、'.join(absent)) if absent else ''
+        # Points are required only when quoted material exists for every need and every asked object.
+        least = 2 if len(ids) >= 4 and not missing and not absent else 0
         gap = ('\n以下信息项没有找到直接写明所问对象的原文，只能写未知：' + '、'.join(self.needs[i - 1] for i in missing)) if missing else ''
         prompt = f'{self.materials}\n\n{self.ask_block()}{gap}{gone}\n\n{FINAL}'
         schema = {'answer': {'type': 'string', 'minLength': 1, 'maxLength': 600},
                   'points': {'type': 'array', 'minItems': least, 'maxItems': 6,
-                             'items': {'type': 'string', 'minLength': 4, 'maxLength': 300}},
+                             # Each point ends with its source numbers; the numbers are checked in code.
+                             'items': {'type': 'string', 'pattern': POINT_PATTERN}},
                   'unknown': {'type': 'string', 'maxLength': 300}}
         self.final_event = await self.call('final', prompt, schema, 1600, evidence=ids,
                                            frequency_penalty=self.final_frequency_penalty)

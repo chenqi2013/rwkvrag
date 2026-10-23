@@ -26,7 +26,10 @@ def extract(path, options):
             native = page.get_text('text', sort=True)
             images = bool(page.get_image_info())
             drawings = bool(page.get_drawings()) if not native.strip() else False
-            needed = images or '\ufffd' in native or (not native.strip() and drawings)
+            # A full text layer is authoritative; figures on the page do not need OCR.
+            sparse = len(native.strip()) < 200
+            needed = '\ufffd' in native or (images and sparse) or (not native.strip() and drawings)
+            fallback = None
             if not native.strip() and not needed:
                 pages.append({'page': number, 'status': 'blank', 'text': '', 'method': 'native'})
                 continue
@@ -35,6 +38,10 @@ def extract(path, options):
                 if needed:
                     if not options['enabled']:
                         raise ValueError("此页需要 OCR，但 OCR 已关闭")
+                    if not model_hashes and not options['tessdata'] and native.strip() and '\ufffd' not in native:
+                        # Short text layer and no OCR configured: keep the native text and say so.
+                        needed, fallback = False, 'native_ocr_unavailable'
+                if needed:
                     if not model_hashes:
                         folder = Path(options['tessdata']) if options['tessdata'] else None
                         if folder is None:
@@ -55,7 +62,7 @@ def extract(path, options):
                     raise ValueError("可见页面未识别到文字；请检查扫描质量或文档是否只有图片")
                 words = page.get_text('words', sort=True, textpage=tp)
                 pages.append({'page': number, 'status': 'complete', 'text': text,
-                              'method': ('native+ocr' if native.strip() else 'ocr') if needed else 'native',
+                              'method': ('native+ocr' if native.strip() else 'ocr') if needed else (fallback or 'native'),
                               'native_text': native, 'page_rect': list(page.rect),
                               'words': [{'bbox': list(w[:4]), 'text': w[4]} for w in words]})
             except Exception as exc:

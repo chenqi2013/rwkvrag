@@ -335,3 +335,14 @@ async def test_partly_absent_comparison_lists_absent_object():
     model.names = ['雾岭', '翊岑E7']
     await run(model, [web()], question='雾岭和翊岑E7哪个新')
     assert '都没有出现，关于它们只能写未知，不能写出任何数值或特点：翊岑E7' in model.final_prompt
+
+
+def test_final_quotes_rotate_across_sources():
+    rows = [{'id': f'{s}{j}', 'source_id': s, 'kinds': ['answer'], 'needs': [1], 'text': f'{s}-内容{j}',
+             'section': 'body', 'span': {'start': j}} for s in ('A', 'B') for j in range(3)]
+    pipeline = flat.Flat(Model(), 'q', channels=['web'], search=None, select_files=None, progress=lambda t: None,
+                         as_of=AS_OF, per_need_limit=2)
+    pipeline.needs, pipeline.quotes = ['x'], {r['id']: r for r in rows}
+    pipeline.sources = [web('A'), web('B')]
+    _, _, ids = pipeline.final_materials()
+    assert ids == ['A0', 'B0']

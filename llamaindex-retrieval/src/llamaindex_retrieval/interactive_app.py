@@ -11,7 +11,7 @@ from pathlib import Path
 from time import monotonic
 from typing import Literal
 from uuid import uuid4
-from urllib.parse import quote
+from urllib.parse import quote, unquote, urlsplit
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
@@ -168,6 +168,31 @@ class Trial:
             record = {**job, 'model_calls': model.events, 'acquisition': receipts}
             job.update(await persist_record(self, record))
 
+    def local_parsed_source(self, file_id, item, revision):
+        """Admin without /parsed-source: read its own parsed snapshot, bound by the catalog's hashes."""
+        uri = revision.get('parsed_snapshot_uri') or ''
+        if not uri.startswith('file://') or not revision.get('parsed_snapshot_sha256'):
+            return None
+        path = Path(unquote(urlsplit(uri).path))
+        uploads = Path(self.config.get('admin_uploads_dir', '/nonexistent')).resolve()
+        if not path.resolve().is_relative_to(uploads) or not path.is_file():
+            return None
+        encoded = path.read_bytes()
+        if hashlib.sha256(encoded).hexdigest() != revision['parsed_snapshot_sha256']:
+            raise ValueError('parsed snapshot hash differs from catalog')
+        parsed = json.loads(encoded)
+        if (parsed.get('schema') != 'rwkvrag-parsed-source-v1' or parsed.get('file_id') != file_id
+                or parsed.get('knowledge_base_id') != item['knowledge_base_id']
+                or parsed.get('source_sha256') != item['sha256']):
+            raise ValueError('parsed snapshot identity mismatch')
+        pages = [d for d in parsed['documents'] if isinstance(d.get('text'), str) and d['text'].strip()]
+        text = '\n\n'.join(d['text'].strip() for d in pages)
+        return SourceItem(id='K' + digest(file_id + '\0' + text)[:16], document_id=file_id,
+            title=item['filename'], source='knowledge_base', score=0, snippet=text,
+            metadata={'knowledge_base_id': item['knowledge_base_id'], 'source_sha256': item['sha256'],
+                      'parsed_snapshot_sha256': revision['parsed_snapshot_sha256'], 'pages': len(pages),
+                      'source_kind': 'parsed_snapshot', 'content_status': 'stored_original'})
+
     async def uploaded_source(self, file_id, item):
         """Read the current parsed upload, independent of its subject or KB name."""
         path = '/v1/admin/files/' + quote(file_id, safe='')
@@ -183,6 +208,10 @@ class Trial:
                     (item.get('last_indexed_revision') or {}).get('parsed_snapshot_sha256')):
                 raise ValueError('parsed upload changed after catalog read')
             return source
+        revision = item.get('last_indexed_revision') or {}
+        local = self.local_parsed_source(file_id, item, revision)
+        if local is not None:
+            return local
         # Older admin deployments expose raw downloads only. Never decode a PDF
         # or office file as text; their canonical parsed snapshot is required.
         if Path(item['filename']).suffix.lower() not in {'.md', '.markdown', '.mdx', '.txt', '.csv', '.json'}:
