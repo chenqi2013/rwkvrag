@@ -15,7 +15,7 @@ from .web_guard import WebGuardBlocked, WebGuardUnavailable, WebProviderGuard
 async def _post(client, operation, body, settings, guard, key, captures):
     identity = guard.identity("anysearch", key)
     try:
-        await guard.reserve(identity)
+        slot = await guard.reserve(identity)
     except (WebGuardBlocked, WebGuardUnavailable) as exc:
         raise WebProviderError(str(exc), operation=operation) from None
 
@@ -37,7 +37,7 @@ async def _post(client, operation, body, settings, guard, key, captures):
         raise
     finally:
         try:
-            await guard.complete(identity)
+            await guard.complete(slot)
         except WebGuardUnavailable as exc:
             raise WebProviderError(str(exc)) from None
     if type(payload.get("code")) is not int or payload["code"] != 0:
@@ -60,17 +60,50 @@ def _allowed(url, domains):
                              for domain in domains)
 
 
+ROTATE = ('web_upstream_http_401', 'web_upstream_http_402', 'web_upstream_http_403', 'web_upstream_http_429',
+          'web_upstream_circuit_open_401', 'web_upstream_circuit_open_402', 'web_upstream_circuit_open_403',
+          'web_upstream_circuit_open_429', 'web_upstream_circuit_open_432', 'web_upstream_circuit_open_433',
+          'web_upstream_http_432', 'web_upstream_http_433', 'web_anysearch_business_error')
+
+
+def _keys(settings):
+    pool = getattr(settings, 'web_anysearch_api_key_pool_file', None)
+    if not pool:
+        key = direct_web._api_key(settings, "anysearch")
+        return [key] if key else []
+    path = Path(pool)
+    if path.stat().st_mode & 0o077:
+        raise WebProviderError("web_anysearch_key_file_permissions")
+    return [line.strip() for line in path.read_text(encoding='utf-8').splitlines() if line.strip()]
+
+
 async def search(request, settings, guard=None):
-    deadline = monotonic() + settings.web_search_timeout - 0.1
-    key = direct_web._api_key(settings, "anysearch")
-    if not key:
+    """Search with the first usable key; on auth/quota/rate failure move to the next pooled key."""
+    keys = _keys(settings)
+    if not keys:
         raise WebProviderError("web_anysearch_key_not_configured")
+    tried = []
+    for index, key in enumerate(keys):
+        try:
+            result = await _search(request, settings, guard, key)
+            result['key_rotation'] = {'key_index': index, 'skipped': tried}
+            return result
+        except WebProviderError as exc:
+            if exc.safe_code not in ROTATE or index == len(keys) - 1:
+                raise
+            # Only safe codes are recorded; keys themselves never enter traces.
+            tried.append({'key_index': index, 'error': exc.safe_code})
+
+
+async def _search(request, settings, guard, key):
+    deadline = monotonic() + settings.web_search_timeout - 0.1
     guard = guard or WebProviderGuard(
         getattr(settings, "web_guard_path", None),
         min_interval=getattr(settings, "web_min_interval_seconds", 1.0),
         auth_cooldown=getattr(settings, "web_auth_cooldown_seconds", 86400.0),
         rate_cooldown=getattr(settings, "web_rate_cooldown_seconds", 60.0),
-        lease_seconds=settings.web_search_timeout + 5)
+        lease_seconds=settings.web_search_timeout + 5,
+        parallel=getattr(settings, "web_provider_parallel", 1))
     count = request["max_results"]
     captures = [] if request.get("capture_provider_payload") else None
     hits = []
@@ -80,6 +113,7 @@ async def search(request, settings, guard=None):
         results = data.get("results")
         if not isinstance(results, list):
             raise WebProviderError("web_upstream_results_not_array")
+        candidates = []
         for item in results:
             if not isinstance(item, dict):
                 continue
@@ -89,9 +123,10 @@ async def search(request, settings, guard=None):
             # Search content can be a decorated snippet, so only /extract can
             # establish fetched status. Preserve every supplied character.
             snippet = item.get("snippet") or item.get("content") or ""
-            snippet = snippet if isinstance(snippet, str) else ""
-            title = item.get("title") or url
-            full, error = "", ""
+            candidates.append((url, item.get("title") or url, snippet if isinstance(snippet, str) else ""))
+
+        async def extract(url):
+            # Pages are fetched concurrently within the guard's per-key slots.
             try:
                 remaining = deadline - monotonic()
                 if remaining <= 0:
@@ -101,10 +136,10 @@ async def search(request, settings, guard=None):
                     min(settings.web_anysearch_extract_timeout, remaining))
                 if page.get("url") != url:
                     raise WebProviderError("web_anysearch_extract_url_mismatch")
-                if isinstance(page.get("content"), str):
-                    full = page["content"] if page["content"].strip() else ""
+                content = page.get("content")
+                return (content if isinstance(content, str) and content.strip() else ""), ""
             except TimeoutError:
-                error = "web_anysearch_extract_timeout"
+                return "", "web_anysearch_extract_timeout"
             except WebProviderError as exc:
                 if exc.safe_code not in {"web_upstream_http_400", "web_upstream_http_422",
                                          "web_upstream_failed", "web_anysearch_extract_url_mismatch",
@@ -112,7 +147,14 @@ async def search(request, settings, guard=None):
                         exc.safe_code.startswith('web_upstream_http_5') or
                         exc.safe_code.startswith('web_upstream_circuit_open_5')):
                     raise
-                error = exc.safe_code
+                return "", exc.safe_code
+
+        if guard.parallel == 1:
+            # One slot keeps the historical page order of extract requests.
+            pages = [await extract(url) for url, _, _ in candidates]
+        else:
+            pages = await asyncio.gather(*(extract(url) for url, _, _ in candidates))
+        for (url, title, snippet), (full, error) in zip(candidates, pages):
             snapshot = full or snippet
             text = snapshot[:request["material_characters"]]
             if not text.strip():
@@ -120,7 +162,7 @@ async def search(request, settings, guard=None):
             hits.append({"url": url, "title": str(title)[:300],
                          "reader_text": text, "snapshot": snapshot,
                          "content_status": "fetched" if full else "snippet_only",
-                         "search_snippet": snippet[:1000],
+                         "search_snippet": snippet,
                          "material_limited": len(text) < len(snapshot), "score": 0.0,
                          "published_date": "", "error": error or ("" if full else "web_anysearch_extract_empty"),
                          "retrieved_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")})

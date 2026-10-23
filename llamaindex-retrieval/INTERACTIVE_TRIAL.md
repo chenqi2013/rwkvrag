@@ -2,7 +2,15 @@
 
 独立 FastAPI 入口 `llamaindex_retrieval.interactive_app:app` 提供 `/admin/#/try`，连接已有知识库、RWKV 原生推理服务及 Web 提供方。
 
-处理流程：**上下文整理 → 获取原文 → 分块并发总结 → 分层并发归并 → 按缺口补查 → 最终回答**。不同领域的问题使用同一流程，不按题型写规则；旧直拼与两版对照入口已删除。
+## 原文摘抄扁平流程（`pipeline: "flat"`，唯一试用流程）
+
+一次规划（判断新问题/追问/更正）、每份资料每个窗口一次逐字摘抄阅读、一次终答（结论+要点+未知项）、一次独立核对。
+旧parallel/lean/needs/spans/funnel试用流程已删除；源码备份在本地研究目录，不随应用发布。
+可选 `flat_options`：`window_chars`（2400）、`max_windows_per_source`（4）、`snippet_batch`（4）、`deadline_seconds`（180）、
+`acquisition_timeout`（70）、`final_quote_limit`（40）、`per_need_limit`（12）、`supplement`（true）、`review`（true）。
+`flat_title_options`：`read_all_below`（12）、`limit`（6）。Web提取并发由`web_provider_parallel`（默认1）和`web_search_concurrency`控制。
+多轮：请求带`parent_job_id`即接续；服务按父链取最近3轮的用户原话、整理后问题、所问对象和上一轮回答首句，并在追问时重读上一轮摘抄过的页面。
+公共`/v1/models`返回5xx时不阻止生成：上下文上限退回配置值，每次生成仍校验响应中的model。
 
 ## 上下文与资料
 
@@ -17,30 +25,6 @@
 可选候选：终答（`interactive-funnel-v2`，默认关闭，传`original_chars`启用；2026-10-19 TEST24配对6/24→4/24未过门槛）另外接收叶层被模型选中的逐字原文块：沿归并链收集模型实际采用的叶，按选择顺序装入，输入证据预算单独配置（默认16000字符）；超出预算的叶不截断，记入`omitted_original_leaf_ids`。未被叶选中的原文块、失败叶和全量来源图不进入终答。提示要求事实以原文为准，总结只帮助定位。
 
 上下文、叶总结、归并和终答分别保留输出预算1024/768/1024/2048 token；每次真实模型调用前通过服务tokenizer校验完整输入加输出预留。并发数只限制同时执行的数量。补查循环最多300秒，请求含队列最多900秒，均为资源时限，超时明确记录。
-
-## 片段候选链路（`pipeline: "spans"`，默认关闭）
-
-配置顶层设置`"pipeline": "spans"`后改用`interactive_spans`：**制定检索 → 按检索语句获取 → 并发片段选择 → 三叉片段归并 → 按缺失信息项补查 → 终答**。
-
-- 制定检索：模型输出回答必须找到的信息项`needs`和检索语句`queries`（数量不设上限）；完全相同的条目去重，原始计划保留。计划失败或为空时用整理后的问题检索并记录。
-- 阅读：原文按3000/240窗口、窗口内640/80切成带ID的逐字片段。模型只输出所选片段ID及覆盖的信息项；未选片段不进入上层。
-- 归并：只合并选中了片段的节点，每组最多3个；模型保留片段子集并报告`missing`信息项。
-- 补查：根节点仍有缺失信息项时，模型为其写新检索语句（不重复已用语句），只阅读新获取的原文；最多2轮，300秒资源时限。
-- 终答：只接收入选逐字片段（默认6000字符，超出记入`omitted_span_ids`），引用片段ID；`cited_spans`给出引用片段原文。
-
-上下文预算：阅读窗口3000字符，单次归并的片段文本不超过4000字符（超出按片段分批，每批独立调用），终答片段不超过6000字符，超出部分记入`omitted_span_ids`。字符上限只控制分批，不能保证完整提示的token数量；需要在服务配置中设置`settings.native_context_window_tokens: 6000`，由服务tokenizer约束完整输入加输出预留，超预算明确记录失败。
-
-2026-10-19 K01–K08诊断7/8（联网渠道因Tavily 432不可用，未与漏斗配对，不作晋级依据）。
-
-## 逐信息项链路（`pipeline: "needs"`，默认关闭）
-
-`interactive_needs`：制定检索（信息项＋按渠道查询）→ 获取 → 网页0–3打分门 → 每个阅读窗口一次**逐信息项片段打分**（只输出2/3分）→ 代码按模型分数为每个信息项取前3个片段；3分片段超过3个时发起一次比较调用（≤8片段、≤4000字符）→ **逐项回答**（只看该项≤3片段；`found`必须引用片段，`not_found`不得引用）→ 未找到的信息项按渠道补查，只读新材料、只重答未找到项（≤2轮）→ **汇总**（只看各项短回答及片段ID）。每次调用输入保持在约6k token以内；各阶段输入token与失败数记入`telemetry`。
-
-逐信息项汇总只接收结构通过的 `found` 回答；未解决项仅传名称，不传缺证回答正文。全部缺证时不调用汇总，状态 `no_evidence`。这不代表混合回答的语义已验证，原始错误仍须记录和评分。`needs` 客户端通过服务 `/tokenize` 约束完整输入加输出预留不超过6000 token，超预算明确失败、不截断。
-
-可选 `needs_options.answer_protocol: "quote_v1"` 要求逐项回答先复制10–300字符的原文句子，且在恰好一个被引用片段中逐字出现；`not_found` 的 `quote` 和引用必须为空。违反合同记为失败，该信息项仍未解决，raw不改写。默认仍为 `"current"`。逐字匹配只是结构绑定，不能证明句子回答了问题。
-
-`needs_options.final_mode` 默认 `"compose"`；`"assemble"` 不再调用汇总模型，逐字显示各项模型 `answer` 加引用，再逐行显示 `未找到：<信息项>`；`"checked_compose"` 要求汇总模型输出 `sentences: [{text, span_ids}]`，每句至少引用一个已找到项的片段，否则整份终答无效。`generation` 分别保存 `final_mode`、`model_final_call`、不可变 `raw_model_answer`、`model_parsed_output` 和显示投影 `rendered_answer`。三个模式均须独立验证最终质量。
 
 ## Web记录与离线重放
 
@@ -65,12 +49,6 @@ AnySearch没有文档化的`include_domains`参数，域名限制只过滤已返
 录制也保存首次上游5xx、网络故障和获取超时的安全错误码；重放同样抛出该故障，
 不会把它当成零结果或重新联网。失败记录不含可能泄露凭证的上游错误体。
 认证、额度、频率限制、凭证配置与存储故障不作为可重放来源记录，调用方应停止该轮。
-
-## 知识库导航卡片（`kb_cards`）
-
-配置 `kb_cards: {知识库ID: "/absolute/path/CARDS.jsonl"}` 后，完整覆盖目录的卡片通过短ID锦标赛选择文件：每25张一批、每批至多2份，继续对胜出者选择，最终至多4个文件。类别门控默认关闭；卡片只作导航线索，生成失败的卡片保留文件可达性及 raw。
-
-完整结构、预算和失败合同见[模型导航说明](MODEL_NAVIGATION.md)。
 
 ## 原始输出和来源
 
@@ -119,238 +97,8 @@ API key不进入前端或版本库。本机试用入口无用户认证，应绑�
 ## 接口与记录
 
 - `GET /v1/try/meta`：知识库选项、配置模型、并发数和试用截止时间。
-- `POST /v1/try/ask`：`question`、`retrieval_mode`（`hybrid`/`knowledge_base`/`web`）、`knowledge_base_ids`、`supplementary`（默认true）、可选`parent_job_id`。返回任务ID。旧`mode`/`pipeline`参数拒绝，不恢复直拼或对照分支。
+- `POST /v1/try/ask`：`question`、`retrieval_mode`（`hybrid`/`knowledge_base`/`web`）、`knowledge_base_ids`、`supplementary`（默认true）、可选`parent_job_id`及`pipeline`（仅`flat`）。返回任务ID。
 - `GET /v1/try/jobs/{id}`：真实阶段、上下文整理结果、最终回答及来源图。
 - `POST /v1/try/jobs/{id}/cancel`：取消应用任务及其等待中的调用，不能保证已提交的远端生成立即停止。
 
 请求在`records_dir`保留原始问题、模型prompt/raw/hash/耗时、原文快照、分块坐标、归并图与失败状态。服务重启后可重新打开已完成记录。目录按本地数据管理要求保存，不提交到应用仓库。新部署使用独立记录目录与浏览器存储，不自动载入旧直拼试问。
-
-## Lean pipeline and model profiles
-
-For a remote gateway without an assigned application GPU, set the top-level
-`gpu` metadata to `null`. The trial header then shows the model name
-without a GPU label; this field does not allocate or select GPU resources.
-
-Remote native-completion gateways can use a pinned CPU tokenizer when they do
-not expose `/tokenize`. Configure `settings.native_tokenizer_file` with a local
-RWKV World vocabulary text file and `native_tokenizer_sha256` with its SHA256.
-This requires `native_completion_protocol: "g1j_plain"` and no State routing.
-The client checks the vocabulary before use, verifies the public model alias and
-declared context limit, and budgets the complete rendered prompt plus output
-reserve locally. Every generated response must return exactly the same
-`prompt_token_ids` and prompt-token count; a mismatch is a protocol failure with
-the original model text retained. Budget-only checks never generate text.
-
-For gateways without the private FP32 capability API, explicitly configure
-`native_require_fp32_runtime: false` and `native_require_model_identity: true`.
-Startup then verifies the public alias/context only. This does not attest to
-checkpoint hashes, trained context length, weight precision or recurrent-state
-precision. Existing deployments requiring FP32 checks retain those checks.
-Keep the remote bearer token in private local configuration and never publish it.
-
-`pipeline: "lean"` enables one combined context/planning call, parallel title
-navigation and web acquisition, one selection over all search snippets, at most
-nine parallel span-scoring reads, and one evidence-only answer. This candidate
-has no automatic adoption or key rotation. The configured pipeline remains the
-trial default until its measured adoption gate passes. Requests can explicitly
-select `lean`, `needs` or `spans` using the `pipeline` field.
-
-A trial configuration can select its model in one place:
-
-```json
-{
-  "active_model": "larger",
-  "model_profiles": {
-    "smaller": {
-      "model": "your-7.2b-model-id",
-      "base_url": "http://127.0.0.1:18672/v1",
-      "context_window_tokens": 6000,
-      "concurrency": 16
-    },
-    "larger": {
-      "model": "your-13.3b-model-id",
-      "base_url": "http://127.0.0.1:18674/v1",
-      "context_window_tokens": 6000,
-      "concurrency": 16
-    }
-  },
-  "pipeline": "lean",
-  "lean_options": {
-    "deadline_seconds": 45,
-    "answer_reserve_seconds": 8,
-    "title_batch": 250,
-    "reading_mode": "first_two",
-    "final_chars": 6000,
-    "answer_tokens": 1024
-  }
-}
-```
-
-Profiles override the corresponding native settings, preserving authentication
-and identity/FP32 verification settings. Set the context budget and concurrency
-to values measured for that model. `needs` keeps its existing 6,000-token ceiling.
-Use `reading_mode: "outline"` to compare model-picked sections with the first-two
-window control; outline selection adds a model stage. Navigation batch sizes
-100, 150 and 250 are supported. Raw model inputs and outputs are retained.
-
-Before reading and answering, the native tokenizer checks the complete prompt
-with the configured output reservation. When needed, lean removes whole trailing
-spans in stable order until the call fits; original span text is unchanged. Web
-selection retains every candidate ID, title and URL, using uniformly bounded
-navigation snippets. Budget preflights use no completion, share the request
-deadline, and appear separately in `graph.budget_checks`; omitted span IDs and
-snippet limits appear in `graph.budget_omissions`. `answer_tokens` controls the
-answer output reservation (32–2048, default1024), independently of `final_chars`.
-
-`lean_options.answer_contract` defaults to `"cited_v1"`. The opt-in
-`"missing_v2"` contract permits the Writer to mark every need missing with empty
-citations after inspecting selected spans. Such a valid result is `not_found`,
-and displays the model's answer unchanged. If any need is answered, at least one
-offered citation is still required; an all-missing result must have no citations.
-The selected contract appears in `answer.generation.answer_contract`. These are
-structural checks; factual support and facts asserted after a missing declaration
-still require semantic review. When no span is selected, both contracts skip the
-Writer call.
-
-Lean results expose `response_type`: `answered`, `partial`, `not_found`,
-`unverified` or `error`. When no original span is selected, a `not_found` response
-says “资料中未找到可靠依据” and includes attempted queries and retrieved sources,
-without calling the answer model. Invalid or timed-out answer calls expose any returned raw text verbatim
-under `unverified`; this label is not factual verification. `not_found_needs`
-contains the model's missing-need IDs/texts. `telemetry` reports wall time by
-stage, total model calls, dependency-path calls (including concurrency waves),
-per-call budget/usage, reading count and response type. Retrieval source titles
-and snippets are navigation metadata; only model-selected original spans reach
-the answer. Fabrication for model-declared missing needs requires offline review.
-
-`GET /v1/try/meta` exposes `model`, `model_profile`, `pipeline`, selectable
-`pipelines`, concurrency and context budget. The trial page displays response
-type, missing needs, total elapsed time, call count and clickable cited spans.
-
-Tavily uses exactly one configured `settings.web_tavily_api_key_file`. Keep it
-outside version control with mode 600. On HTTP432, stop the affected experiment,
-record the failure, and manually point a new configuration/run version to a new
-single key file. Preserve existing provider-guard records. Standby keys are never
-selected inside a request. For comparisons, record exact provider requests once
-with `web_replay.mode: "record"`, freeze the store, then use `"replay"`; misses
-fail without a live request. Set `web_search_results: 5` for the lean web budget.
-
-## Entity navigation and frozen case evaluation
-
-Optional `entity_indexes: {knowledge_base_id: "/absolute/path/ENTITIES.jsonl"}`
-loads model-authored entity/alias records. Each row has `id`, `title`, `status`,
-`raw_text` and `parsed: {entities: [...], aliases: [...]}`. Failed or invalid rows
-stay in the artifact and contribute no lookup terms. The planner additionally
-extracts at most six entities and six aliases. Code normalizes NFKC, case,
-whitespace, punctuation and traditional characters using OpenCC one codepoint
-at a time, then unions exact-equality hits in corpus order. No term overlap,
-fuzzy matching or semantic dictionary is used. One to forty hits receive one
-model selection over titles/cards, choosing at most three files. Zero or more
-than forty hits use the title tournament with batches of 150. Card text is
-navigation metadata; selected original spans remain the only answer evidence.
-The acquisition receipt records the lookup terms, matched IDs and chosen path.
-
-Build an index from question-independent JSONL rows with `id`, `title`,
-`opening`, optional string-array `headings` and optional `source_sha256`:
-
-```bash
-.venv/bin/python -m llamaindex_retrieval.entity_index_build \
-  --config /absolute/path/private-config.json \
-  --inputs /absolute/path/document-inputs.jsonl \
-  --out /absolute/path/new-index-version
-```
-
-The output directory must be new. The builder preserves raw failures, checks
-complete prompt budgets, never retries generations, and writes `ENTITIES.jsonl`,
-`LOOKUP.json`, source/config bindings and counts. A completed build is not a
-retrieval-quality result. API cost is unknown unless measured separately.
-
-A model profile can also specify `api_key_file` (absolute private path, or null
-to clear inherited authentication), `require_fp32_runtime` and the paired fields
-`tokenizer_file`/`tokenizer_sha256`. Setting both tokenizer fields to null returns
-to service tokenization. This lets local and public profiles select their own
-credentials, tokenizer and precision checks without changing application code.
-Profiles without these options retain the corresponding global settings.
-
-`web_replay.mode: "case_pool"` uses a `CasePool` directory with immutable
-case manifests and content-addressed blobs. Requests must supply `case_id`.
-The lean pipeline loads the case's complete frozen KB catalog/originals and Web
-pool, regardless of planner query or domain variation, without live admin or Web
-acquisition. Missing/corrupt pools fail without a network fallback. The existing
-exact-query `record`/`replay` modes are unchanged. Case-pool mode is limited to
-lean requests and is an evaluation control, not live search behavior.
-
-Run all supplied dev cases with any lean configuration:
-
-```bash
-.venv/bin/python -m llamaindex_retrieval.retrieval_eval run \
-  --config /absolute/path/private-case-pool-config.json \
-  --cases /absolute/path/dev-cases.json \
-  --golds /absolute/path/stage-golds.json \
-  --out /absolute/path/new-evaluation-version
-```
-
-Case files contain `cases` with `id` and a `request` object (`question`, optional
-`knowledge_base_id`, optional alternating `history`). Only request fields reach
-the pipeline. Gold cases bind `case_id`, `pool_sha256`, `gold_file_ids`,
-`gold_pages` and atomic `needs`. Each need has `id`, `answerable` and source-bound
-`span_grades`: `source_admissible`, `reviewed_all_spans`, nullable `default`, and
-`overrides` mapping canonical source-local span IDs to grades 0–3. Grade 2/3 is
-positive; unknown content is not a negative. The harness binds canonical IDs to
-original source coordinates before comparison and includes missed positive
-originals in recall denominators. `graph.reading_spans`, per-read source/offer
-bindings and page-selection bindings are audit metadata and do not enter Writer
-inputs.
-
-`SCORED.json` and `SCORED.md` report file hits, picked/read pages, offered and
-selected gold spans, false positives, unknown selections, calls, response types
-and latency. Reading relevance uses the maximum known grade across atomic needs;
-this is a question-level metric. Per-need answer and citation correctness,
-planning coverage, final S/W/F and facts-after-not-found require semantic review.
-They remain pending until supplied; schema validity or string overlap cannot
-substitute for that review. Performance gates and adoption are declared by the
-experiment, not inferred by this tool.
-
-Score frozen records with an independently saved review in a new output version:
-
-```bash
-.venv/bin/python -m llamaindex_retrieval.retrieval_eval score \
-  --run /absolute/path/evaluation-version \
-  --golds /absolute/path/stage-golds.json \
-  --reviews /absolute/path/semantic-reviews.json \
-  --out /absolute/path/new-score-version
-```
-
-The review file has `cases` containing `case_id`, the exact `record_sha256`,
-`rubric` (`S`/`W`/`F`), boolean `facts_after_not_found`, and `need_results` covering
-every gold need: `gold_need_id`, boolean `correct`/`not_found`, nullable boolean
-`citations_supported`, and `reason`. Failed cases also require `first_failure`
-with `stage`, `category` and raw/source `evidence`. Stages are `plan`,
-`navigation`, `page_selection`, `reading`, `answering`, `acquisition` or `runtime`.
-`DEFECTS.json` ranks the reviewed first failures and explicitly counts pending
-cases. Scoring never changes original outputs. All case pools, golds, reviews,
-index artifacts and evaluation records remain local research data.
-
-### 自动维护的数据库索引
-
-对上传后自动更新的知识库，先在管理服务启用上述
-[自动实体索引](README.md#上传后的自动实体索引)，再在 lean 试用配置中设置：
-
-```json
-{
-  "pipeline": "lean",
-  "entity_index_source": "admin"
-}
-```
-
-该模式直接读取 `admin_base_url` 的当前索引，免去维护 `entity_indexes` 导出路径。
-两种来源不能同时配置。每次请求核对目录中的原文/解析快照版本。已有有效条目的文件走实体查找；
-待生成、失败或版本过期的文件另走标题导航，两路并行。两路都有候选时，再由模型统一选择最多3份，
-程序不按分支优先级截掉新文件。完全没有有效条目或索引接口不可用时，对完整目录走标题导航。
-这样新增文档在索引准备期间仍然可达，已有索引也能继续使用。标题候选本身不进入答案证据。
-文档通过 `parsed-source` 读取逐字解析结果，绑定文件版本；PDF 的页段保留原始解析文档 ID、
-Unicode 坐标和文本哈希，读取期间源版本改变时不使用该材料。
-`navigation_index` 获取记录保存索引版本、覆盖和降级原因。
-
-该模式仅用于实时目录；`case_pool` 与静态冻结索引继续隔离，不访问实时索引接口。
-数据库索引生成和动态读取需要显式配置，不会自动改变当前默认链路或部署。

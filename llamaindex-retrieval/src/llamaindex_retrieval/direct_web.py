@@ -200,7 +200,7 @@ async def _search(request, settings, guard=None):
         lease_seconds=settings.web_search_timeout + 5)
     identity = guard.identity(provider, key if provider == "tavily" else endpoint)
     try:
-        await guard.reserve(identity)
+        slot = await guard.reserve(identity)
     except (WebGuardBlocked, WebGuardUnavailable) as exc:
         raise WebProviderError(str(exc)) from None
     async def on_http_error(status, retry_after):
@@ -216,7 +216,7 @@ async def _search(request, settings, guard=None):
                                            on_http_error=on_http_error, raw_response=raw_response)
     finally:
         try:
-            await guard.complete(identity)
+            await guard.complete(slot)
         except WebGuardUnavailable as exc:
             raise WebProviderError(str(exc)) from None
     results = payload.get("results")
