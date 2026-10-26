@@ -117,7 +117,7 @@ class Settings(BaseSettings):
     native_request_timeout_seconds: float | None = Field(
         default=None, gt=0, le=3600, allow_inf_nan=False)
     native_context_window_tokens: int = Field(default=16384, ge=1024)
-    native_max_concurrency: int = Field(default=32, ge=1, le=256)
+    native_max_concurrency: int = Field(default=32, ge=1, le=1024)
     # Explicit material-only candidate; supplied originals are read in full.
     native_material_reading: Literal["direct", "question_documents_v1"] = "direct"
     native_document_read_concurrency: StrictInt = Field(default=32, ge=1, le=32)

@@ -2,6 +2,8 @@
 
 React / TypeScript / Ant Design frontend for the existing retrieval service.
 
+The separately configured trial service also bundles a standalone `/studio/` page for parallel questions, observed execution stages, side-by-side originals and unchanged answers. It uses the same `/v1/try/` job API and needs no React build. See [trial setup and configuration](../INTERACTIVE_TRIAL.md). Its source is in `../src/llamaindex_retrieval/static/studio/`; no experiment questions or expected answers are bundled.
+
 - `/admin/#/chat`: chat-focused page, conversation sidebar, multi-turn messages and responsive mobile layout. The empty hash opens chat.
 - `/admin/#/dashboard`: knowledge console.
 - `/admin/#/search`: existing Search Lab, including retrieve-only operations.
@@ -42,3 +44,5 @@ npx vite build --outDir /absolute/path/to/preview-build
 ```
 
 `tests/chat.browser.py` provides isolated real-Edge checks from WSL using synthetic HTTP fixtures only (multi-turn payloads, persistence, cancellation, late responses, failure/raw/source handling, scope settings, mobile layout and storage conflicts). It needs an existing Edge executable plus `httpx` and `websockets` in the selected Python environment; it installs nothing. See its `--help` and use a fresh output directory and browser profile. Browser fixture success is not a native-model or answer-quality evaluation.
+
+`node tests/studio.browser.mjs` checks the bundled Studio with synthetic HTTP fixtures: parallel jobs, source scopes, unchanged answer text, citation navigation, failed jobs, repeated batches, snapshot display without live events and mobile layout. It requires `playwright-core` and Chromium. Set `PLAYWRIGHT_MODULE_DIR` to an existing Node package directory containing `node_modules/playwright-core` and `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to an installed browser if they are outside the default environment. The test does not install dependencies or call a model.

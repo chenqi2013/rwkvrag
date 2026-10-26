@@ -1,30 +1,37 @@
-# 上下文与并发漏斗问答
+# RWKV 并行检索与原文阅读
 
-独立 FastAPI 入口 `llamaindex_retrieval.interactive_app:app` 提供 `/admin/#/try`，连接已有知识库、RWKV 原生推理服务及 Web 提供方。
+独立 FastAPI 入口 `llamaindex_retrieval.interactive_app:app` 连接已有知识库、RWKV 原生推理服务及网络检索提供方。它提供两个页面：
 
-## 原文摘抄扁平流程（`pipeline: "flat"`，唯一试用流程）
+- `/studio/`：随 Python 包提供的展示页，无需单独构建。支持每行一个问题、最多 16 问同时提交、知识库与网络来源选择、实际执行步骤、原文并排、引用高亮和原始回答。
+- `/admin/#/try`：原有 React 试用页，支持父任务追问与完整记录检查，需要构建前端。
 
-一次规划（判断新问题/追问/更正）、每份资料每个窗口一次逐字摘抄阅读、一次终答（结论+要点+未知项）、一次独立核对。
-旧parallel/lean/needs/spans/funnel试用流程已删除；源码备份在本地研究目录，不随应用发布。
-可选 `flat_options`：`window_chars`（2400）、`max_windows_per_source`（4）、`snippet_batch`（4）、`deadline_seconds`（180）、
-`acquisition_timeout`（70）、`final_quote_limit`（40）、`per_need_limit`（12）、`supplement`（true）、`review`（true）。
-`flat_title_options`：`read_all_below`（12）、`limit`（6）。Web提取并发由`web_provider_parallel`（默认1）和`web_search_concurrency`控制。
-多轮：请求带`parent_job_id`即接续；服务按父链取最近3轮的用户原话、整理后问题、所问对象和上一轮回答首句，并在追问时重读上一轮摘抄过的页面。
-公共`/v1/models`返回5xx时不阻止生成：上下文上限退回配置值，每次生成仍校验响应中的model。
+Studio 的每个问题都是独立任务，共用当前选择的检索范围和知识库；不会自动作为上一题的追问。页面不附带训练题、预期答案或演示原文。离开或刷新页面不表示后台任务已取消；没有浏览器持久化或自动重发。需要追问或取消指定任务时使用原有试用页/API。
 
-## 上下文与资料
+## 唯一试用流程：flat v3
 
-当前问题先交给 RWKV 整理。显式传入 `parent_job_id` 时，模型结合上一轮整理后的完整问题及上一轮回答理解指代和更正；上一轮回答仅帮助理解，不作为事实依据。没有父任务时从空上下文开始。历史原始记录独立保存，不把整段历史无限追加给模型；整理失败如实返回，不用程序猜出替代问题。页面“新的提问”清空当前父任务。
+`pipeline: "flat"` 使用 `interactive-flat-quotes-v3`：一次规划、取材与并行逐字摘抄、一次终答、可选独立核对。旧 parallel/lean/needs/funnel 试用流程已删除；并行提问是多个独立 flat 任务，不是恢复旧流程。
 
-知识库分页读取全部目录，每批128个标题交给模型选择，再下载所选文件的 UTF-8 原文。128仅为提示分批大小，不限制选中文档数量。Web获取保留提供方返回的正文或摘要快照、URL、时间及抓取状态。不调用本地词项/向量相关度评分，不把标题当事实证据。
+模型决定本轮关系（新问题/追问/更正）、检索词、所问对象、信息项与是否计算。信息项必须能绑定用户原话。直接查找数值不自动触发算术。规划和阅读要求紧凑 JSON；阅读省略无引文的空条目，但仍须检查所有信息项。
 
-原文使用已有逐字结构分块器：连续正文4000字符软窗口、240字符重叠，保留坐标与哈希；表格、列表、代码和QA保持结构原子及父级上下文。所有块排队并发总结，不按前N块截断。超长原子无法满足单次输入预算时明确记录失败，不静默截断。
+少量上传文件全部读取；超过 `flat_title_options.read_all_below` 时按文件标题与对象名字面匹配选择。使用已有解析快照的原文和哈希，连续正文按重叠窗口阅读。`max_windows_per_source` / `kb_max_windows` 是显式资源上限，超出会留下 `windows_limited` 诊断，不表示已经读完全部资料。
 
-每个归并节点最多接收3个直接子输出；同层分组并发，再进入下一层。总文档数、总子任务数和总层数不设固定上限。归并仅接收本组模型raw及节点标识。
+相邻同源窗口最多两窗合并。只有模型客户端提供无生成的实际 token 预算检查且完整输入/输出预算通过才合并；失败拆回完整窗口，不截掉文字。跨窗引文优先绑定完整引用，再绑定实际展示过的分句，不查未展示的间隙。
 
-可选候选：终答（`interactive-funnel-v2`，默认关闭，传`original_chars`启用；2026-10-19 TEST24配对6/24→4/24未过门槛）另外接收叶层被模型选中的逐字原文块：沿归并链收集模型实际采用的叶，按选择顺序装入，输入证据预算单独配置（默认16000字符）；超出预算的叶不截断，记入`omitted_original_leaf_ids`。未被叶选中的原文块、失败叶和全量来源图不进入终答。提示要求事实以原文为准，总结只帮助定位。
+Writer 只接收选中的逐字引文。回答按 `answer`、`points`、`unknown` 原样顺序展示，不补引用、不删句或改写。要点重复默认最多触发一次新的、单独留痕的生成；设置 `retry_repeated_points: false` 时保留第一次原回答及重复诊断。独立核对只做标记，不修改原输出。模型拒答、非法引用和获取失败同样留存，不能由完成状态推断事实正确。
 
-上下文、叶总结、归并和终答分别保留输出预算1024/768/1024/2048 token；每次真实模型调用前通过服务tokenizer校验完整输入加输出预留。并发数只限制同时执行的数量。补查循环最多300秒，请求含队列最多900秒，均为资源时限，超时明确记录。
+常用 `flat_options`（括号为默认值）：
+
+- 阅读：`window_chars`（2400）、`window_overlap`（200）、`max_windows_per_source`（4）、`kb_window_chars`（6000）、`kb_max_windows`（40）、`read_window_batch`（2）、`snippet_batch`（4）。
+- 资源：`deadline_seconds`（180）、`acquisition_timeout`（70）、`final_reserve_seconds`（50）、`final_quote_limit`（40）、`per_need_limit`（12）。
+- 行为：`supplement`（true）、`review`（true）、`retry_repeated_points`（true）。
+
+`flat_title_options` 支持 `read_all_below`（12）与 `limit`（6）。Web 提取并发由 `web_provider_parallel` 和 `web_search_concurrency` 控制。`native_max_concurrency` 默认 32，可配置 1–1024；这只是调度上限，部署前须测量实际模型容量，并确认后端能隔离并发请求的 State。
+
+## 执行进度与来源范围
+
+顶层 `live_progress: true` 启用 `execution_events`：规划、取材开始/结束、资料进入、模型调用、逐字绑定、阅读结束及终答证据。调用事件使用 `operation` 配对；观测回调收到隔离副本，异常只记录，不改变模型输入或答案。Studio 以实际事件显示状态，未执行的阶段保持未执行；没有 token 流或计时模拟的步骤完成。关闭事件时仍可查看完成回答和来源快照，但不提供中间进度。
+
+每次请求可指定 `web_include_domains`（最多 8 个纯域名，支持其子域名）；省略时沿用顶层 `flat_web_include_domains`，显式空列表解除默认范围。URL、路径和搜索指令会被拒绝。顶层 `flat_web_scope_query: true` 可把域名附加为 `site:` 查询范围，同时继续校验返回 URL。记录同时保留原模型 `query`、实际 `provider_query` 和 `include_domains`。域名范围不提供正文或期望答案。
 
 ## Web记录与离线重放
 
@@ -41,7 +48,8 @@
 每页提取时限参与AnySearch重放键；更改它不会误用旧时限的记录。
 单页上游5xx故障保留其他页面和该页摘要，共享冷却仍生效，不在请求内重试。
 AnySearch没有文档化的`include_domains`参数，域名限制只过滤已返回URL的
-主机及其子域名，原始查询不改写；不能保证限定域名内的完整召回。
+主机及其子域名。默认不改写查询；显式启用 `flat_web_scope_query` 时，试用入口
+会附加用户选择的 `site:` 范围，同时保留结果 URL 过滤。两种方式都不保证完整召回。
 录制包含搜索与成功正文获取的原始响应字节和哈希，重放不调用二者的接口。
 
 顶层 `web_replay: {"mode": "off"|"record"|"replay", "store": "/absolute/path/captures"}` 控制Web获取，默认 `"off"`。`record` 按提供方、精确查询、按原顺序的 `include_domains`、结果数和 `full_snapshot` 保存完整提供方响应及哈希；同一请求重用首次记录。`replay` 只读对应记录，缺失、损坏或不可读均记为获取失败，绝不转为联网请求。原始HTTP响应字节和解析后的提供方载荷均保留在记录中，供审计复核。记录目录包含来源正文，应按本地研究数据管理，不提交版本库。
@@ -50,15 +58,15 @@ AnySearch没有文档化的`include_domains`参数，域名限制只过滤已返
 不会把它当成零结果或重新联网。失败记录不含可能泄露凭证的上游错误体。
 认证、额度、频率限制、凭证配置与存储故障不作为可重放来源记录，调用方应停止该轮。
 
-## 原始输出和来源
+## 多轮与原始记录
 
-模型决定选择、总结和补查问题，代码只调度并校验结构/ID。每次raw保持不变，失败raw保留在审计记录中，只将其失败状态传给父节点。不能由Schema通过、合法引用或页面非空推断答案正确。
+带 `parent_job_id` 时按父链读取最近三轮用户原话、整理后问题、对象名称和上一轮回答首句；这些内容仅用于指代消解，不作为事实证据。追问重新读取上一轮摘抄过的原文，不生成对话总结。新话题不复用上一轮来源。
 
-最终模型输出中的`source_ids`可以指向本次直接子节点或终答收到的原文块，`generation.citation_bindings`将它们映射到原文来源。页面显示的是**来源链**，不是已完成事实核验的承诺；可打开原文核对。模型总结会有遗漏或误读，仍须单独评估最终回答。
+每次模型调用保存精确 prompt、raw、哈希、输入证据 ID 和耗时；来源保存快照、清洗阅读视图、引文坐标和绑定信息。`generation.citation_bindings` 表示来源绑定，不能代替独立事实核验。记录位于 `records_dir`；服务重启后可经任务 ID 读取已保存记录。目录可能包含完整用户资料，不进入版本库。
 
 ## 启动
 
-前端在`web`目录运行`npx tsc -b`和`npx vite build --outDir /absolute/path/trial/web`。准备仅当前用户可读的JSON配置：
+准备仅当前用户可读的 JSON 配置：
 
 ```json
 {
@@ -78,27 +86,30 @@ AnySearch没有文档化的`include_domains`参数，域名限制只过滤已返
   },
   "admin_base_url": "http://127.0.0.1:18440",
   "records_dir": "/absolute/path/trial/records",
-  "gpu": 2,
+  "live_progress": true,
+  "flat_web_scope_query": false,
+  "flat_options": {"read_window_batch": 2, "retry_repeated_points": true},
+  "gpu": null,
   "expires_at": null
 }
 ```
 
-还需补充实际`native_model`、`native_api_key`、兼容的`native_state_routing`角色映射和Web配置；示例不是可直接连接任意模型的完整凭证配置。试用客户端明确使用每次请求独立的HTTP连接，不加载材料直答编排或旧对照配置。
+补充实际 `native_model`、`native_api_key`、兼容的 `native_state_routing` 角色映射和 Web 配置；示例不是完整凭证配置。API key 不进入前端或版本库。
 
 ```bash
 export RWKVRAG_TRIAL_CONFIG=/absolute/path/trial/config.json
-export RWKVRAG_TRIAL_STATIC=/absolute/path/trial/web
 PYTHONPATH=src .venv/bin/python -m uvicorn llamaindex_retrieval.interactive_app:app \
   --host 127.0.0.1 --port 18671
+# 打开 http://127.0.0.1:18671/studio/
 ```
 
-API key不进入前端或版本库。本机试用入口无用户认证，应绑定回环地址。请求之间串行调度，避免不同请求混合Reader/Writer State；一个请求内部的资料总结及同层归并并发执行。
+原有 React 试用页需另在 `web` 中构建，并设置 `RWKVRAG_TRIAL_STATIC` 为构建目录。Studio 直接请求同源 `/v1/try/`，可与应用、模型部署在同一服务器，网页访问无需模型 SSH 转发。默认使用回环监听；需要通过 Tailscale 访问时可显式绑定该主机的 Tailscale IP，并用 tailnet ACL 限定访问。此入口没有用户认证，不应直接暴露到公网。
 
-## 接口与记录
+## 接口
 
-- `GET /v1/try/meta`：知识库选项、配置模型、并发数和试用截止时间。
-- `POST /v1/try/ask`：`question`、`retrieval_mode`（`hybrid`/`knowledge_base`/`web`）、`knowledge_base_ids`、`supplementary`（默认true）、可选`parent_job_id`及`pipeline`（仅`flat`）。返回任务ID。
-- `GET /v1/try/jobs/{id}`：真实阶段、上下文整理结果、最终回答及来源图。
-- `POST /v1/try/jobs/{id}/cancel`：取消应用任务及其等待中的调用，不能保证已提交的远端生成立即停止。
+- `GET /v1/try/meta`：知识库选项、模型、配置并发、`model_readiness`、`live_progress` 与试用截止时间。就绪状态与质量核验分开。
+- `POST /v1/try/ask`：`question`、`retrieval_mode`（`hybrid`/`knowledge_base`/`web`）、`knowledge_base_ids`、可选 `web_include_domains`、`supplementary`、`parent_job_id` 和 `pipeline`（仅 `flat`）。返回任务 ID。
+- `GET /v1/try/jobs/{id}`：实际阶段、可选执行事件、最终原回答与来源图。
+- `POST /v1/try/jobs/{id}/cancel`：取消应用任务和等待中的调用；不保证已提交的远端生成立即停止。
 
-请求在`records_dir`保留原始问题、模型prompt/raw/hash/耗时、原文快照、分块坐标、归并图与失败状态。服务重启后可重新打开已完成记录。目录按本地数据管理要求保存，不提交到应用仓库。新部署使用独立记录目录与浏览器存储，不自动载入旧直拼试问。
+应用为每个请求创建独立任务；实际模型并发由配置和后端控制。CPU 与浏览器测试验证接口和展示行为，不构成模型速度或答案质量成绩。

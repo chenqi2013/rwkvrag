@@ -19,6 +19,7 @@ class Model:
         self.final, self.relation, self.issues = final, relation, list(issues)
         self.points = []
         self.names = ['雾岭']
+        self.metrics = []
         self.assumptions, self.calculation, self.calcs = [], False, []
         self.needs = needs or [{'text': '最新版本主题', 'user_words': '最新版本主题'}]
 
@@ -27,7 +28,7 @@ class Model:
         self.prompts.append((prompt, kwargs))
         if prompt.rstrip().endswith(flat.PLAN):
             value = {'relation': self.relation, 'question': '雾岭最新版本主题', 'needs': self.needs,
-                     'aspects': ['上线时间'], 'queries': ['雾岭 最新版本'], 'entities': ['雾岭'], 'metrics': [], 'names': self.names,
+                     'aspects': ['上线时间'], 'queries': ['雾岭 最新版本'], 'entities': ['雾岭'], 'metrics': self.metrics, 'names': self.names,
                      'assumptions': self.assumptions, 'calculation': self.calculation}
         elif prompt.rstrip().endswith(flat.READ):
             value = {'items': [{'source': 1, 'need': 1, 'answer_quotes': self.answer_quotes,
@@ -94,6 +95,114 @@ async def test_answer_and_detail_quotes_bind_and_review_runs_without_changing_an
     assert read_prompt.index('正文开始') < read_prompt.index('问题：') < read_prompt.index(flat.READ)
     assert '值得补充的方面：上线时间' in read_prompt and 'sha256' not in read_prompt
     assert '今天是2026年10月22日（星期四，北京时间09:00），昨天是10月21日（星期三），明天是10月23日（星期五），后天是10月24日（星期六）。' in final_prompt and '抓取于提问当天' in final_prompt
+
+
+async def test_numeric_lookup_does_not_add_arithmetic_against_the_model_plan():
+    model = Model()
+    model.metrics = ['版本号']
+    result = await run(model, [web()], review=False)
+    assert result['metrics'] == ['版本号']
+    assert result['display_text'] == model.final
+    assert result['calculations'] == []
+    assert not any(prompt.rstrip().endswith(flat.CALC) for prompt, _ in model.prompts)
+    assert result['telemetry']['total_calls'] == 3
+
+
+async def test_model_requested_arithmetic_still_runs_with_numeric_metrics():
+    model = Model()
+    model.metrics = ['版本号']
+    model.calculation = True
+    model.calcs = [{'label': '相加', 'expression': '1+2'}]
+    result = await run(model, [web()], review=False)
+    assert sum(prompt.rstrip().endswith(flat.CALC) for prompt, _ in model.prompts) == 1
+    assert result['calculations'][0]['result'] == 3
+    assert result['display_text'] == model.final
+
+
+async def test_empty_read_items_are_a_completed_read_without_selected_evidence():
+    class EmptyReader(Model):
+        async def complete(self, messages, **kwargs):
+            if messages[0]['content'].rstrip().endswith(flat.READ):
+                self.prompts.append((messages[0]['content'], kwargs))
+                return NativeRWKVResult('completed', '{"items":[]}', 'stop', {})
+            return await super().complete(messages, **kwargs)
+
+    result = await run(EmptyReader(), [web()], review=False, supplement=False)
+    reads = [node for node in result['graph']['nodes'] if node['stage'] == 'read']
+    assert len(reads) == 1 and reads[0]['status'] == 'completed'
+    assert reads[0]['raw_text'] == '{"items":[]}' and reads[0]['parsed'] == {'items': []}
+    assert result['graph']['spans'] == []
+    assert result['not_found_needs'] == ['最新版本主题']
+    assert result['telemetry']['total_calls'] == 2
+
+
+async def test_whole_windows_share_reads_only_after_a_generation_free_budget_check():
+    class BudgetedModel(Model):
+        async def check_budget(self, messages, **kwargs):
+            return NativeRWKVResult('completed', None, None,
+                                    {'budget_only': True, 'completion_attempted': False})
+
+    text = '\n'.join(f'雾岭的第{i}段资料保留完整句子与限制条件。' for i in range(50))
+    result = await run(BudgetedModel(), [web(text=text)], window_chars=400,
+                       window_overlap=50, max_windows_per_source=8, review=False, supplement=False)
+    reads = [n for n in result['graph']['nodes'] if n['stage'] == 'read']
+    windows = sorted(w for n in reads for w in n['windows'])
+    assert len(windows) > len(reads) and max(len(n['windows']) for n in reads) == 2
+    assert windows[0][0] == 0 and windows[-1][1] == len(text)
+    assert all(a[1] >= b[0] for a, b in zip(windows, windows[1:]))
+    assert all(check['trace']['completion_attempted'] is False
+               for check in result['graph']['read_batch_checks'])
+
+
+async def test_oversized_read_batch_splits_without_losing_any_window():
+    class TooSmallModel(Model):
+        async def check_budget(self, messages, **kwargs):
+            return NativeRWKVResult('budget_exceeded', None, None, {'completion_attempted': False})
+
+    text = '\n'.join(f'雾岭的第{i}段资料保留完整句子与限制条件。' for i in range(50))
+    result = await run(TooSmallModel(), [web(text=text)], window_chars=400,
+                       window_overlap=50, max_windows_per_source=8, review=False, supplement=False)
+    reads = [n for n in result['graph']['nodes'] if n['stage'] == 'read']
+    windows = sorted(w for n in reads for w in n['windows'])
+    assert len(reads) == len(windows) and all(len(n['windows']) == 1 for n in reads)
+    assert windows[0][0] == 0 and windows[-1][1] == len(text)
+    assert all(a[1] >= b[0] for a, b in zip(windows, windows[1:]))
+    assert any(check['status'] == 'budget_exceeded' for check in result['graph']['read_batch_checks'])
+
+
+async def read_overlapping_windows(text, quote):
+    class BudgetedModel(Model):
+        async def check_budget(self, messages, **kwargs):
+            return NativeRWKVResult('completed', None, None,
+                                    {'budget_only': True, 'completion_attempted': False})
+
+    model = BudgetedModel(answer_quotes=[quote], detail_quotes=[])
+    pipeline = flat.Flat(model, '设备使用限制是什么', channels=['web'], search=None,
+                         select_files=None, progress=lambda text: None, as_of=AS_OF)
+    pipeline.needs = ['设备使用限制']
+    source = web(text=text)
+    pipeline.views[source.id] = {'body': text, 'snippet': '',
+                                 'body_sha256': flat.digest(text), 'snippet_sha256': flat.digest('')}
+    await pipeline.read([(source, (0, 400), False), (source, (350, 750), False)])
+    return pipeline
+
+
+async def test_whole_quote_in_second_window_precedes_partial_match_in_hinted_window():
+    quote = '本设备可以连续运行很长时间，但必须始终连接原厂适配器且不得在密闭空间中使用。'
+    pipeline = await read_overlapping_windows('甲' * 370 + quote + '乙' * 400, quote)
+    assert [row['text'] for row in pipeline.quotes.values()] == [quote]
+    assert all(row['match'] == 'exact' for row in pipeline.quotes.values())
+    assert pipeline.unbound == []
+
+
+async def test_stitched_quote_keeps_conditions_from_every_offered_window_once():
+    first, second = '设备持续运行时必须使用原厂适配器', '不得放在密闭空间中使用'
+    text = '甲' * 360 + first + '。' + '乙' * 150 + second + '。' + '丙' * 250
+    pipeline = await read_overlapping_windows(text, first + '。' + second + '。')
+    assert {row['text'] for row in pipeline.quotes.values()} == {first, second}
+    assert all(row['match'] == 'fragment' for row in pipeline.quotes.values())
+    assert len(pipeline.reads[0]['quote_ids']) == 2
+    assert pipeline.unbound == []
 
 
 async def test_review_findings_are_recorded_and_mark_answer_unverified():
@@ -205,6 +314,19 @@ async def test_repeated_answer_gets_one_new_call_and_original_is_kept():
     assert len(finals) == 2 and finals[1]['retry_of'] == finals[0]['raw_sha256']
     penalties = [k for p, k in model.prompts if p.rstrip().endswith(flat.FINAL)]
     assert penalties[1]['frequency_penalty'] == 1.0 and penalties[1]['presence_penalty'] == 0.6
+
+
+async def test_optional_repetition_diagnostic_keeps_first_answer_without_regeneration():
+    model = Model()
+    model.points = ['最新版本主题是「归港」。[1]']
+    result = await run(model, [web()], retry_repeated_points=False)
+    finals = [n for n in result['graph']['nodes'] if n['stage'] == 'final']
+    assert len(finals) == 1
+    assert result['display_text'] == '最新版本主题是「归港」。[1]\n· 最新版本主题是「归港」。[1]'
+    assert result['answer']['generation']['raw_model_answer'] == finals[0]['raw_text']
+    assert result['repetition_checks'] == [{'raw_sha256': finals[0]['raw_sha256'],
+        'repeated_points': True, 'regeneration_requested': False, 'raw_text_modified': False}]
+    assert result['answer']['generation']['answer_modified'] is False
 
 
 async def test_no_direct_quote_for_any_need_skips_answer():
@@ -346,3 +468,60 @@ def test_final_quotes_rotate_across_sources():
     pipeline.sources = [web('A'), web('B')]
     _, _, ids = pipeline.final_materials()
     assert ids == ['A0', 'B0']
+
+
+async def test_live_observations_preserve_model_inputs_and_answers_with_mutating_or_broken_observer():
+    from copy import deepcopy
+    plain_model, observed_model = Model(), Model()
+    baseline = await run(plain_model, [web()], review=False, supplement=False)
+    events = []
+
+    def observe(event):
+        events.append(deepcopy(event))
+        if event['kind'] == 'source_ready':
+            event['reading_view']['body'] = 'must not enter the model'
+            event['source']['snippet'] = 'must not replace the original'
+        if event['kind'] == 'binding_finished':
+            for span in event['spans']:
+                span['text'] = 'must not replace quotes'
+        if event['kind'] == 'plan_ready':
+            event['needs'].clear()
+            raise RuntimeError('observer unavailable')
+
+    actual = await run(observed_model, [web()], review=False, supplement=False, observe=observe)
+    assert observed_model.prompts == plain_model.prompts
+    assert actual['display_text'] == baseline['display_text']
+    assert actual['graph']['spans'] == baseline['graph']['spans']
+    assert actual['graph']['reading_views'] == baseline['graph']['reading_views']
+    assert len(actual['observation_errors']) == 1
+    assert [e['sequence'] for e in events] == list(range(1, len(events) + 1))
+    starts = {e['operation']: e for e in events if e['kind'] == 'call_started'}
+    ends = {e['operation']: e for e in events if e['kind'] == 'call_finished'}
+    assert starts.keys() == ends.keys()
+    assert {e['stage'] for e in starts.values()} == {'plan', 'read', 'final'}
+    assert all(ends[k]['elapsed_ms'] >= v['elapsed_ms'] for k, v in starts.items())
+    source_event = next(e for e in events if e['kind'] == 'source_ready')
+    assert source_event['reading_view']['body'] == baseline['graph']['reading_views']['W1']['body']
+    assert any(e['kind'] == 'binding_finished' and e['bound_quotes'] == 2 for e in events)
+
+
+async def test_live_observations_report_cancelled_acquisition_as_cancelled():
+    import asyncio
+    events = []
+    started = asyncio.Event()
+
+    async def search(query):
+        started.set()
+        await asyncio.Event().wait()
+
+    pipeline = flat.Flat(Model(), QUESTION, channels=['web'], search=search,
+                         select_files=None, progress=lambda _: None, observe=events.append)
+    task = asyncio.create_task(pipeline.acquire(['query'], 'initial'))
+    await started.wait()
+    task.cancel()
+    try:
+        await task
+    except asyncio.CancelledError:
+        pass
+    finish = [e for e in events if e['kind'] == 'acquisition_finished']
+    assert len(finish) == 1 and finish[0]['status'] == 'cancelled'

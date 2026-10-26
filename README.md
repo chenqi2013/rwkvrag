@@ -9,6 +9,7 @@
 - [Linux 部署模板](llamaindex-retrieval/deploy/linux/README.md)
 - [架构规则](llamaindex-retrieval/ARCHITECTURE_RULES.md)
 - [证据接口](docs/EVIDENCE.md)
+- [并行问答、原文对比与网络检索展示页](llamaindex-retrieval/INTERACTIVE_TRIAL.md)（`/studio/`）
 
 ```bash
 cd llamaindex-retrieval

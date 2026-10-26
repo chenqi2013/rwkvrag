@@ -8,6 +8,7 @@ is passed between calls or between conversation turns.
 """
 import ast
 import asyncio
+from copy import deepcopy
 from datetime import datetime, timedelta
 from difflib import SequenceMatcher
 import html
@@ -23,7 +24,7 @@ from llama_index.core import Document
 from .interactive_sources import add_sources, digest, gather, obj, unique_object
 from .verbatim_chunking import packed_verbatim_nodes
 
-PROTOCOL = 'interactive-flat-quotes-v2'
+PROTOCOL = 'interactive-flat-quotes-v3'
 CLEANING = 'markdown-links-images-v1'
 WEEKDAYS = '一二三四五六日'
 RELATIONS = ['新问题', '追问', '更正']
@@ -40,11 +41,14 @@ PLAN = ('判断用户这一轮是新问题、追问还是更正，relation写“
         'metrics写所问的数值指标，例如中间价、收盘价、续航里程、门票价格，没有就为空。'
         'names只写entities中的专有名称（具体产品型号、公司机构、地名、人名），不写“新赛季”“总冠军”“大模型”这类泛称，没有就为空。'
         'assumptions写你为理解问题所做的假设：名称可能指多种事物时写明按哪一种理解，问题依赖地区或版本而原话没说时写明按哪个理解，没有就为空。'
-        'calculation填true表示回答需要用找到的数字做计算（换算、求差、求和、相除等），否则填false。不要回答问题。')
+        'calculation填true表示回答需要用找到的数字做计算（换算、求差、求和、相除等），直接查找已有数值时填false。'
+        '只输出紧凑的单行JSON，不换行、不缩进；字段内容简短准确，无需补充的列表写[]。不要回答问题。')
 READ = ('只从上面各份资料“正文开始”到“正文结束”之间的文字里摘抄。逐字照抄原文中连续的一段文字，不改写、不拼接、不总结，'
-        '不摘抄标题、日期说明或信息项本身。对每份资料的每个信息项：answer_quotes摘抄直接回答该项的句子，最多3句；'
+        '不摘抄正文标记外由程序附加的资料标题、发布/抓取时间提示或信息项本身。正文内原有的标题、日期、版本记录和表格，只要直接对应问题就可以逐字摘抄。对每份资料的每个信息项：answer_quotes摘抄直接回答该项的句子，最多3句；'
         'detail_quotes摘抄同一对象的相关细节，例如时间、数值和单位、条件、原因、背景、对比或不同说法，最多5段，每段可以是连续的两三句。'
-        '只摘抄确实在说所问对象的内容，名称不同的其他对象不要摘抄；没有相关内容就让列表为空。')
+        '只摘抄确实在说所问对象的内容，名称不同的其他对象不要摘抄。仍须检查每份资料的每个信息项；'
+        'answer_quotes和detail_quotes都为空的条目不要输出，全部没有相关引文时只输出{"items":[]}。'
+        '只输出紧凑的单行JSON，不换行、不缩进。')
 FINAL = ('依据上面摘抄的原文回答问题。answer用一两句话直接回答用户所问；points逐条写出原文中与问题相关的其他要点，'
          '例如时间、数值、条件、原因、对比、适用范围和各来源说法的差异，原文充分时写3到6条。每条要点用中文自己的话概括一个与问题直接相关的事实，'
          '与answer和其他要点的内容都不相同，句末标注来源编号；不要照抄整段外文原文，不写与所问对象无关的内容；'
@@ -249,10 +253,13 @@ class Flat:
                  window_overlap=200, max_windows_per_source=4, snippet_batch=4, snippet_batch_wait=1.5,
                  deadline_seconds=180, acquisition_timeout=70, final_reserve_seconds=50,
                  final_quote_limit=40, per_need_limit=12, final_frequency_penalty=0.3,
-                 supplement=True, review=True, kb_window_chars=6000, kb_max_windows=40):
+                 supplement=True, review=True, kb_window_chars=6000, kb_max_windows=40,
+                 read_window_batch=2, retry_repeated_points=True, observe=None):
         if (not set(channels) <= {'knowledge_base', 'web'} or not 400 <= window_chars <= 24000
                 or not 0 <= window_overlap < window_chars // 2 or max_windows_per_source < 1
-                or not 1 <= snippet_batch <= 8 or not 0 < final_reserve_seconds < deadline_seconds):
+                or not 1 <= snippet_batch <= 8 or not 0 < final_reserve_seconds < deadline_seconds
+                or type(read_window_batch) is not int or not 1 <= read_window_batch <= 2
+                or type(retry_repeated_points) is not bool):
             raise ValueError('invalid flat pipeline options')
         self.model, self.original_question, self.question = model, question, question
         self.channels, self.search, self.select_files = list(dict.fromkeys(channels)), search, select_files
@@ -267,6 +274,10 @@ class Flat:
         # Uploaded documents are long and chosen by the user, so they are read in larger, more windows.
         self.kb_window_chars, self.kb_max_windows = kb_window_chars, kb_max_windows
         self.max_windows, self.snippet_batch, self.snippet_batch_wait = max_windows_per_source, snippet_batch, snippet_batch_wait
+        self.read_window_batch = read_window_batch
+        self.retry_repeated_points = retry_repeated_points
+        self.repetition_checks = []
+        self.read_batch_checks = []
         self.final_quote_limit, self.per_need_limit = final_quote_limit, per_need_limit
         self.final_frequency_penalty, self.supplement, self.review_enabled = final_frequency_penalty, supplement, review
         self.started = monotonic()
@@ -285,6 +296,22 @@ class Flat:
         self.final_attempts = []
         self.reused_source_ids = []
         self.timeline = {}
+        self.observe = observe
+        self.observation_sequence = 0
+        self.call_sequence = 0
+        self.observation_errors = []
+
+    def emit(self, kind, **fields):
+        """Expose execution facts without changing prompts, selection or answers."""
+        if self.observe is None:
+            return
+        self.observation_sequence += 1
+        try:
+            self.observe(deepcopy({'sequence': self.observation_sequence, 'kind': kind,
+                                  'elapsed_ms': (monotonic() - self.started) * 1000, **fields}))
+        except Exception as error:
+            self.observation_errors.append({'sequence': self.observation_sequence,
+                                            'error_type': type(error).__name__})
 
     # ---------- prompt fragments (plain text, material first, question last) ----------
     def today_line(self):
@@ -340,11 +367,20 @@ class Flat:
         return f"{source.title[:80]}（网页 {urlsplit(source.uri or '').hostname or ''}{when}）"
 
     async def call(self, stage, prompt, properties, limit, evidence=(), frequency_penalty=0.0, presence_penalty=0.0):
-        result = await self.model.complete([{'role': 'user', 'content': prompt}],
-            structured_schema=obj(properties), max_tokens=limit,
-            assistant_prefill='<think></think', temperature=0, seed=11, frequency_penalty=frequency_penalty,
-            presence_penalty=presence_penalty,
-            stage='writer' if stage in {'final', 'review'} else 'reader', evidence_ids=list(evidence))
+        self.call_sequence += 1
+        operation = f'call-{self.call_sequence}'
+        self.emit('call_started', operation=operation, stage=stage, evidence_ids=list(evidence))
+        try:
+            result = await self.model.complete([{'role': 'user', 'content': prompt}],
+                structured_schema=obj(properties), max_tokens=limit,
+                assistant_prefill='<think></think', temperature=0, seed=11, frequency_penalty=frequency_penalty,
+                presence_penalty=presence_penalty,
+                stage='writer' if stage in {'final', 'review'} else 'reader', evidence_ids=list(evidence))
+        except BaseException as error:
+            self.emit('call_finished', operation=operation, stage=stage, evidence_ids=list(evidence),
+                      status='cancelled' if isinstance(error, asyncio.CancelledError) else 'failed',
+                      error_type=type(error).__name__)
+            raise
         event = {'stage': stage, 'status': result.status, 'raw_text': result.raw_text,
                  'raw_sha256': digest(result.raw_text or ''), 'parsed': None, 'trace': result.trace,
                  'finished_ms': (monotonic() - self.started) * 1000}
@@ -356,6 +392,8 @@ class Flat:
                 event['parsed'] = value
             except (ValueError, TypeError) as error:
                 event['validation_error'] = str(error)
+        self.emit('call_finished', operation=operation, stage=stage, evidence_ids=list(evidence),
+                  status=event['status'], valid_output=event['parsed'] is not None)
         return event
 
     # ---------- planning ----------
@@ -428,8 +466,8 @@ class Flat:
         if not self.names and self.relation != '新问题' and self.history:
             self.names = list(self.history[-1].get('names') or [])
         self.assumptions = [a.strip() for a in value['assumptions'] if a.strip()]
-        # Any asked numeric indicator may need arithmetic; the calc call may return nothing.
-        self.calculation = value['calculation'] is True or bool(self.metrics)
+        # The model distinguishes looking up a quantity from doing arithmetic.
+        self.calculation = value['calculation'] is True
         if self.relation != '新问题' and self.history:
             # Follow-up queries must carry the referenced object; add it when the plan dropped it.
             previous = [e for e in self.history[-1].get('entities') or [] if e.strip()]
@@ -439,6 +477,8 @@ class Flat:
             self.errors.append({'stage': 'plan', 'status': 'empty_plan'})
             return False
         self.timeline['plan_ms'] = (monotonic() - self.started) * 1000
+        self.emit('plan_ready', question=self.question, needs=list(self.needs), queries=list(self.queries),
+                  entities=list(self.entities), channels=list(self.channels))
         return True
 
     # ---------- acquisition and reading ----------
@@ -473,6 +513,8 @@ class Flat:
             self.errors.append({'stage': 'read', 'status': 'windows_limited', 'source_id': source.id,
                                 'windows': len(windows), 'read': limit})
             windows = windows[:limit]
+        self.emit('source_ready', source=source.model_dump(mode='json'),
+                  reading_view=dict(self.views[source.id]), windows=[list(w) for w in windows])
         if not windows:
             if snippet:
                 # Short snippet-only sources share one reading call.
@@ -482,8 +524,12 @@ class Flat:
                 elif self.flush_task is None:
                     self.flush_task = self.spawn(self.delayed_flush())
             return
-        for index, window in enumerate(windows):
-            self.spawn(self.read([(source, window, index == 0 and bool(snippet))]))
+        # Pack complete neighbouring windows only when the real model can
+        # preflight the combined prompt and output budget without generation.
+        batch_size = self.read_window_batch if callable(getattr(self.model, 'check_budget', None)) else 1
+        segments = [(source, window, index == 0 and bool(snippet)) for index, window in enumerate(windows)]
+        for index in range(0, len(segments), batch_size):
+            self.spawn(self.read(segments[index:index + batch_size]))
         self.progress(f'取材与阅读 · {len(self.sources)} 份资料 · 已读 {len(self.reads)}')
 
     def spawn(self, job):
@@ -521,10 +567,34 @@ class Flat:
                     'need': {'type': 'integer', 'enum': list(range(1, len(self.needs) + 1))},
                     'answer_quotes': quotes(3, 240), 'detail_quotes': quotes(5, 360)})
         ids = [s.id for s, _, _ in segments]
+        properties = {'items': {'type': 'array', 'items': item, 'maxItems': len(self.needs) * len(segments)}}
+        if len(segments) > 1 and any(window is not None for _, window, _ in segments):
+            check = {'source_ids': ids, 'windows': [window for _, window, _ in segments],
+                     'prompt_sha256': digest(prompt), 'completion_attempted': False}
+            self.read_batch_checks.append(check)
+            try:
+                async with asyncio.timeout_at(self.reading_deadline):
+                    budget = await self.model.check_budget([{'role': 'user', 'content': prompt}],
+                        structured_schema=obj(properties), max_tokens=1400,
+                        assistant_prefill='<think></think', temperature=0, seed=11,
+                        stage='reader', evidence_ids=ids)
+                check.update(status=budget.status, trace=budget.trace)
+                fits = (budget.status == 'completed' and budget.trace.get('budget_only') is True
+                        and budget.trace.get('completion_attempted') is False)
+            except asyncio.CancelledError:
+                raise
+            except Exception as error:
+                check.update(status='failed', error_type=type(error).__name__)
+                fits = False
+            if not fits:
+                # Keep every whole window; an oversized batch is split rather
+                # than truncated or sent as a generation that cannot fit.
+                for segment in segments:
+                    self.spawn(self.read([segment]))
+                return
         try:
             async with asyncio.timeout_at(self.reading_deadline):
-                event = await self.call('read', prompt, {'items': {'type': 'array', 'items': item,
-                    'maxItems': len(self.needs) * len(segments)}}, 1400, evidence=ids)
+                event = await self.call('read', prompt, properties, 1400, evidence=ids)
         except TimeoutError:
             self.errors.append({'stage': 'read', 'status': 'deadline', 'source_ids': ids})
             return
@@ -533,6 +603,7 @@ class Flat:
         if event['parsed'] is None:
             self.errors.append({'stage': 'read', 'status': event['status'], 'source_ids': ids})
             return
+        self.emit('binding_started', source_ids=ids)
         for row in event['parsed']['items'] if isinstance(event['parsed']['items'], list) else []:
             if (not isinstance(row, dict) or row.get('need') not in range(1, len(self.needs) + 1)
                     or row.get('source') not in range(1, len(segments) + 1)):
@@ -542,12 +613,23 @@ class Flat:
                     if isinstance(quote, str) and quote.strip():
                         # The quote may come from another source shown in the same call.
                         order = [row['source'] - 1] + [i for i in range(len(segments)) if i != row['source'] - 1]
-                        if not any(self.bind(event, segments[i], row['need'], kind, quote, record=False) for i in order):
+                        bound = any(self.bind(event, segments[i], row['need'], kind, quote,
+                                              record=False, match_mode='whole') for i in order)
+                        if not bound:
+                            # A stitched quote can contain clauses from several
+                            # offered windows. Collect every matched clause.
+                            for i in order:
+                                bound = self.bind(event, segments[i], row['need'], kind, quote,
+                                                  record=False, match_mode='fragments') or bound
+                        if not bound:
                             self.unbound.append({'source_id': segments[row['source'] - 1][0].id, 'need': row['need'],
                                                  'kind': kind, 'quote': quote, 'read_sha256': event['raw_sha256']})
         self.progress(f'取材与阅读 · {len(self.sources)} 份资料 · 已读 {len(self.reads)}')
+        self.emit('binding_finished', source_ids=ids, quote_ids=list(event['quote_ids']),
+                  bound_quotes=len(self.quotes), unbound_quotes=len(self.unbound),
+                  spans=[self.quotes[q] for q in event['quote_ids']])
 
-    def bind(self, event, segment, need, kind, quote, record=True):
+    def bind(self, event, segment, need, kind, quote, record=True, match_mode='all'):
         source, window, include_snippet = segment
         view = self.views[source.id]
         candidates = []
@@ -558,7 +640,9 @@ class Flat:
         def whole(text, quote):
             hit = bind_quote(text, quote)
             return [hit] if hit else []
-        for matcher in (whole, bind_fragments):
+        matchers = {'all': (whole, bind_fragments), 'whole': (whole,), 'fragments': (bind_fragments,)}
+        found = False
+        for matcher in matchers[match_mode]:
             for section, full, offset, text in candidates:
                 hits = matcher(text, quote)
                 for start, end, mode in hits:
@@ -572,9 +656,14 @@ class Flat:
                         row['needs'].append(need)
                     if kind not in row['kinds']:
                         row['kinds'].append(kind)
-                    event['quote_ids'].append(identity)
+                    if identity not in event['quote_ids']:
+                        event['quote_ids'].append(identity)
                 if hits:
-                    return True
+                    found = True
+                    if matcher is whole:
+                        return True
+        if found:
+            return True
         if record:
             self.unbound.append({'source_id': source.id, 'need': need, 'kind': kind, 'quote': quote,
                                  'read_sha256': event['raw_sha256']})
@@ -584,26 +673,38 @@ class Flat:
         async def one(query):
             receipt = {'round': round_name, 'channel': 'web', 'query': query, 'status': 'pending'}
             self.acquisition.append(receipt)
+            self.emit('acquisition_started', **receipt)
             try:
                 async with asyncio.timeout(self.acquisition_timeout):
                     for source in await self.search(query):
                         await self.publish(source)
                 receipt['status'] = 'completed'
+            except asyncio.CancelledError:
+                receipt['status'] = 'cancelled'
+                raise
             except Exception as error:
                 receipt.update(status='timeout' if isinstance(error, TimeoutError) else 'failed',
                                error=getattr(error, 'safe_code', type(error).__name__))
                 self.errors.append({'stage': 'acquire', **receipt})
+            finally:
+                self.emit('acquisition_finished', **receipt)
 
         async def files():
             receipt = {'round': round_name, 'channel': 'knowledge_base', 'status': 'pending'}
             self.acquisition.append(receipt)
+            self.emit('acquisition_started', **receipt)
             try:
                 async with asyncio.timeout(self.acquisition_timeout):
                     chosen = await self.select_files(self.entities, self.queries, self.publish)
                 receipt.update(status='completed', **chosen)
+            except asyncio.CancelledError:
+                receipt['status'] = 'cancelled'
+                raise
             except Exception as error:
                 receipt.update(status='failed', error=type(error).__name__)
                 self.errors.append({'stage': 'acquire', **receipt})
+            finally:
+                self.emit('acquisition_finished', **receipt)
         jobs = [one(q) for q in queries] if 'web' in self.channels else []
         if 'knowledge_base' in self.channels and round_name == 'initial':
             jobs.append(files())
@@ -616,6 +717,9 @@ class Flat:
                 self.flush_task = None
             self.flush_snippets()
             await asyncio.gather(*list(self.tasks), return_exceptions=True)
+            # Completed tasks can spawn smaller reads before their discard
+            # callbacks run. Yield even when gather completes synchronously.
+            await asyncio.sleep(0)
 
     def missing_needs(self):
         covered = {n for q in self.quotes.values() if 'answer' in q['kinds'] for n in q['needs']}
@@ -699,6 +803,8 @@ class Flat:
 
     async def answer(self):
         blocks, numbers, ids = self.final_materials()
+        self.emit('evidence_ready', source_ids=list(numbers.values()), quote_ids=ids,
+                  citation_bindings={number: [sid] for number, sid in numbers.items()})
         self.materials = '以下是从各资料中原样摘抄的原文：\n\n' + '\n\n'.join(blocks)
         if self.calculation:
             await self.calculate()
@@ -729,7 +835,12 @@ class Flat:
         self.final_event = await self.call('final', prompt, schema, 1600, evidence=ids,
                                            frequency_penalty=self.final_frequency_penalty)
         self.final_attempts = [self.final_event]
-        if self.final_event['parsed'] and repeated_points(self.final_event['parsed']):
+        repeated = bool(self.final_event['parsed'] and repeated_points(self.final_event['parsed']))
+        if repeated:
+            self.repetition_checks.append({'raw_sha256': self.final_event['raw_sha256'],
+                'repeated_points': True, 'regeneration_requested': self.retry_repeated_points,
+                'raw_text_modified': False})
+        if repeated and self.retry_repeated_points:
             # Code never deletes model sentences; a repeated answer gets one new, separately traced call.
             self.progress('回答要点重复，重新生成一次')
             retry = await self.call('final', prompt, schema, 1600, evidence=ids,
@@ -788,6 +899,8 @@ class Flat:
                 task.cancel()
             await asyncio.gather(*list(self.tasks), return_exceptions=True)
         self.timeline['reading_done_ms'] = (monotonic() - self.started) * 1000
+        self.emit('reading_finished', source_count=len(self.sources), read_calls=len(self.reads),
+                  bound_quotes=len(self.quotes), unbound_quotes=len(self.unbound))
         if not self.quotes:
             return
         material = ' '.join(s.title + ' ' + v['body'] + ' ' + v['snippet']
@@ -890,12 +1003,14 @@ class Flat:
             'needs': self.needs, 'need_bindings': self.need_bindings, 'dropped_needs': self.dropped_needs,
             'aspects': self.aspects, 'entities': self.entities, 'plan': self.plan_event, 'errors': self.errors,
             'review': review, 'points_without_direct_quote': off_object, 'unsupported_numbers': unsupported,
+            'repetition_checks': self.repetition_checks, 'observation_errors': self.observation_errors,
             'name_absent_quotes': self.name_absent, 'metrics': self.metrics, 'names': self.names,
             'assumptions': self.assumptions, 'calculations': self.calculations, 'history_used': self.history, 'reused_source_ids': self.reused_source_ids,
             'acquisition': self.acquisition, 'acquisition_incomplete': any(e['stage'] == 'acquire' and e.get('status') not in BENIGN for e in self.errors),
             'not_found_needs': [self.needs[i - 1] for i in self.missing_needs()],
             'evidence_verification': verification, 'rounds': [],
             'graph': {'nodes': [{k: v for k, v in e.items() if k != 'trace'} for e in calls],
+                      'read_batch_checks': self.read_batch_checks,
                       'reading_views': self.views, 'spans': list(self.quotes.values()),
                       'unbound_quotes': self.unbound,
                       'source_snapshots': [s.model_dump(mode='json') for s in self.sources]},

@@ -17,7 +17,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 import httpx
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from .config import Settings
 from .interactive_sources import gather
@@ -35,7 +35,20 @@ class Question(BaseModel):
     parent_job_id: str | None = Field(default=None, pattern=r'^[0-9a-f]{32}$')
     retrieval_mode: Literal['knowledge_base', 'web', 'hybrid'] = 'hybrid'
     knowledge_base_ids: list[str] = Field(default_factory=list)
+    web_include_domains: list[str] | None = Field(default=None, max_length=8)
     pipeline: Literal['flat'] | None = None
+
+    @field_validator('web_include_domains')
+    @classmethod
+    def validate_web_domains(cls, domains):
+        if domains is None:
+            return None
+        normalized = [domain.lower().rstrip('.') for domain in domains]
+        if any(len(domain) > 253 or not re.fullmatch(
+                r'(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+'
+                r'[a-z]{2,63}', domain) for domain in normalized):
+            raise ValueError('web domains must be hostnames, without URLs or query operators')
+        return list(dict.fromkeys(normalized))
 
 
 def digest(value):
@@ -260,8 +273,16 @@ class Trial:
         history, previous = self.conversation(payload)
 
         async def search(query):
-            hits, trace = await self.web.search(query, full_snapshot=True)
-            receipts.append({'channel': 'web', 'query': query, 'trace': trace})
+            domains = (payload.web_include_domains if payload.web_include_domains is not None
+                       else self.config.get('flat_web_include_domains'))
+            provider_query = query
+            if domains and self.config.get('flat_web_scope_query', False):
+                scope = ' OR '.join('site:' + domain for domain in domains)
+                provider_query = query + ' (' + scope + ')'
+            hits, trace = await self.web.search(provider_query, full_snapshot=True,
+                **({'include_domains': domains} if domains else {}))
+            receipts.append({'channel': 'web', 'query': query, 'provider_query': provider_query,
+                             'include_domains': domains, 'trace': trace})
             return [SourceItem(id='W' + digest(h.metadata['uri'] + '\0' + h.text)[:16],
                     document_id=h.document_id, title=h.metadata['title'], source='web',
                     uri=h.metadata['uri'], score=0, snippet=h.text, metadata=h.metadata) for h in hits]
@@ -282,9 +303,12 @@ class Trial:
         channels = ([] if payload.retrieval_mode == 'web' else ['knowledge_base'])
         if payload.retrieval_mode != 'knowledge_base':
             channels.append('web')
+        observations = job.setdefault('execution_events', []) if self.config.get('live_progress') else None
         result = await interactive_flat.answer(model, payload.question, channels=channels, search=search,
             select_files=select_files, history=history, previous_sources=previous,
-            progress=lambda text: job.update(phase=text), **self.config.get('flat_options', {}))
+            progress=lambda text: job.update(phase=text),
+            observe=observations.append if observations is not None else None,
+            **self.config.get('flat_options', {}))
         result['acquisition_traces'] = receipts
         result['telemetry']['total_calls'] = len(model.events)
         result['telemetry']['submitted_generation_calls'] = sum(
@@ -340,6 +364,7 @@ async def meta():
         'default_pipeline': 'flat', 'pipeline': 'flat', 'pipelines': ['flat'],
         'default_knowledge_base_ids': trial.config.get('default_knowledge_base_ids', []),
         'model_profile': trial.config.get('active_model'),
+        'live_progress': bool(trial.config.get('live_progress', False)),
         'model_readiness': ('available' if getattr(getattr(trial, 'native', None), 'runtime_observation', None)
                             else getattr(trial, 'model_readiness', 'unknown')),
         'context_window_tokens': trial.settings.native_context_window_tokens,
@@ -403,3 +428,7 @@ async def root():
 
 app.mount('/admin', StaticFiles(directory=os.environ.get('RWKVRAG_TRIAL_STATIC', '/tmp/rwkvrag-trial-unbuilt'),
                                 html=True, check_dir=False), name='admin')
+
+# The standalone studio uses the same job API and needs no separate proxy or build.
+app.mount('/studio', StaticFiles(directory=Path(__file__).parent / 'static' / 'studio',
+                                 html=True), name='studio')
