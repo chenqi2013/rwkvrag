@@ -35,6 +35,10 @@
         </div>
       </section>
       <section class="composer">
+        <div class="composer-summary">
+          <span id="input-summary"></span>
+          <button id="edit-input" class="tab" aria-expanded="false">编辑问题与来源</button>
+        </div>
         <div class="options settings">
           <label
             >检索范围
@@ -50,7 +54,7 @@
               placeholder="沿用服务配置；域名用逗号分隔"
               aria-label="限定网络来源域名" /></label
           ><span id="input-hint" class="hint"
-            >每行一个问题，最多 16 个同时提交</span
+            >每行一个问题，最多 32 个同时提交</span
           >
         </div>
         <fieldset id="knowledge-bases"><legend>选择知识库</legend></fieldset>
@@ -70,6 +74,7 @@
         <aside id="parallel-panel">
           <div class="section-heading">
             <strong>同时进行</strong><span id="batch-count">准备开始</span>
+            <button id="overview" class="tab" aria-pressed="false">并行总览</button>
           </div>
           <div id="runs" aria-label="本轮问题"></div>
           <div class="legend"><i></i> 每个问题，独立阅读与回答</div>

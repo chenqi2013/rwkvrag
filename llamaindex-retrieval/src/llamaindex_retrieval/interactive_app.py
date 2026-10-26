@@ -55,6 +55,18 @@ def digest(value):
     return hashlib.sha256(value.encode()).hexdigest()
 
 
+def question_urls(question):
+    """Literal user-specified URLs, independent of model-generated search queries."""
+    urls = []
+    brackets = {')': '(', ']': '[', '}': '{', '）': '（', '】': '【'}
+    for url in re.findall(r'https?://[^\s<>"“”，；。]+', question, flags=re.IGNORECASE):
+        url = url.rstrip('.,;!?:')
+        while url and url[-1] in brackets and url.count(url[-1]) > url.count(brackets[url[-1]]):
+            url = url[:-1].rstrip('.,;!?:')
+        urls.append(url)
+    return list(dict.fromkeys(urls))
+
+
 def answer_opening(text, limit=120):
     """First sentence of a previous answer, citation marks removed; for pronoun resolution only."""
     if not text:
@@ -287,6 +299,16 @@ class Trial:
                     document_id=h.document_id, title=h.metadata['title'], source='web',
                     uri=h.metadata['uri'], score=0, snippet=h.text, metadata=h.metadata) for h in hits]
 
+        async def fetch_urls(urls):
+            domains = (payload.web_include_domains if payload.web_include_domains is not None
+                       else self.config.get('flat_web_include_domains'))
+            hits, trace = await self.web.fetch_urls(urls, include_domains=domains or None)
+            receipts.append({'channel': 'web', 'action': 'extract', 'requested_urls': list(urls),
+                             'include_domains': domains, 'trace': trace})
+            return [SourceItem(id='W' + digest(h.metadata['uri'] + '\0' + h.text)[:16],
+                    document_id=h.document_id, title=h.metadata['title'], source='web',
+                    uri=h.metadata['uri'], score=0, snippet=h.text, metadata=h.metadata) for h in hits]
+
         async def select_files(entities, queries, publish):
             chosen, mode = interactive_flat.title_candidates(catalog, entities, queries,
                 **self.config.get('flat_title_options', {}))
@@ -305,6 +327,7 @@ class Trial:
             channels.append('web')
         observations = job.setdefault('execution_events', []) if self.config.get('live_progress') else None
         result = await interactive_flat.answer(model, payload.question, channels=channels, search=search,
+            requested_urls=question_urls(payload.question), fetch_urls=fetch_urls,
             select_files=select_files, history=history, previous_sources=previous,
             progress=lambda text: job.update(phase=text),
             observe=observations.append if observations is not None else None,

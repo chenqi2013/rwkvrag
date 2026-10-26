@@ -348,7 +348,7 @@ class NativeRWKVClient:
             call_id=str(uuid4()), stage=stage, model=self.model, http=[],
             messages=deepcopy(messages), evidence_ids=list(evidence_ids),
             started_at=datetime.now(timezone.utc).isoformat(), status="pending",
-            raw_text=None, finish_reason=None, completion_attempted=False,
+            raw_text=None, finish_reason=None, stop_reason=None, completion_attempted=False,
         )
         if self.runtime_observation is not None:
             record["runtime_observation"] = deepcopy(self.runtime_observation)
@@ -461,6 +461,7 @@ class NativeRWKVClient:
                         raise _ProtocolError("completion must return exactly one choice")
                     choice = choices[0]
                     record["finish_reason"] = choice.get("finish_reason")
+                    record["stop_reason"] = choice.get("stop_reason")
                     record["raw_text"] = choice.get("text")
                     if isinstance(choice.get("text"), str):
                         raw_text = choice["text"]

@@ -6,6 +6,7 @@ const $ = (s) => document.querySelector(s),
     return n;
   };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const MAX_QUESTIONS = 32;
 const sceneInfo = {
   two: [
     "ORIGINAL SOURCES · SIDE BY SIDE",
@@ -88,6 +89,17 @@ function summaries(r) {
     active: starts.length - ends.length,
   };
 }
+function setOverview(enabled) {
+  document.body.classList.toggle("overview", enabled);
+  document.body.classList.remove("editing-input");
+  $("#edit-input").setAttribute("aria-expanded", "false");
+  $("#edit-input").textContent = "编辑问题与来源";
+  $("#input-summary").textContent = runs.length
+    ? `${runs.length} 个问题 · 点击问题查看完整答案与原文`
+    : "选择来源，每行输入一个问题";
+  $("#overview").setAttribute("aria-pressed", String(enabled));
+  $("#overview").textContent = enabled ? "查看单题" : "并行总览";
+}
 function renderCards() {
   const box = $("#runs");
   box.replaceChildren();
@@ -97,9 +109,10 @@ function renderCards() {
       "run" +
         (r === active ? " active" : "") +
         (r.finished ? " finished" : "") +
-        (r.error ? " failed" : ""),
+        (r.error || (r.finished && r.job?.status !== "completed") ? " failed" : ""),
     );
     card.dataset.jobId = r.job?.id || "";
+    card.title = r.question;
     const head = el("div", "run-head");
     head.append(
       el("span", "", "问题 " + (runs.indexOf(r) + 1)),
@@ -110,7 +123,9 @@ function renderCards() {
           ? r.job?.status === "completed"
             ? "已返回"
             : "未完成"
-          : "运行中",
+          : r.job?.status === "queued"
+            ? "等待处理"
+            : r.job ? "运行中" : "提交中",
       ),
     );
     card.append(head, el("h3", "", r.question));
@@ -129,8 +144,17 @@ function renderCards() {
         (r.wall ?? (performance.now() - r.start) / 1000).toFixed(2) + " s",
       ),
     );
+    const stages = el("div", "run-stages");
+    for (const [name, status, note] of stateFor(r)) {
+      const stage = el("span", status);
+      stage.title = `${name}：${note}`;
+      stage.setAttribute("aria-label", stage.title);
+      stages.append(stage);
+    }
+    card.append(stages);
     card.onclick = () => {
       active = r;
+      setOverview(false);
       view = r.request?.retrieval_mode === "web" ? "web" : "knowledge_base";
       renderCards();
       renderDetail();
@@ -138,7 +162,7 @@ function renderCards() {
     box.append(card);
   }
   $("#batch-count").textContent =
-    `${runs.filter((r) => r.finished).length} / ${runs.length} 已返回`;
+    `${runs.filter((r) => r.finished).length} / ${runs.length} 已结束`;
 }
 function stateFor(r) {
   const es = events(r),
@@ -542,8 +566,9 @@ $("#send").onclick = async () => {
     .value.split("\n")
     .map((s) => s.trim())
     .filter(Boolean);
-  if (!questions.length || questions.length > 16) {
-    $("#phase").textContent = "请输入 1 至 16 行问题";
+  if (!questions.length || questions.length > MAX_QUESTIONS) {
+    setOverview(false);
+    $("#phase").textContent = `请输入 1 至 ${MAX_QUESTIONS} 行问题`;
     return;
   }
   const mode = $("#retrieval-mode").value,
@@ -588,6 +613,7 @@ $("#send").onclick = async () => {
     "parallel",
     runs.length > 1 || scene === "parallel",
   );
+  setOverview(runs.length > 8);
   readiness();
   renderCards();
   renderDetail();
@@ -599,6 +625,14 @@ $("#send").onclick = async () => {
     job_ids: runs.map((r) => r.job?.id),
   });
   readiness();
+};
+$("#overview").onclick = () => {
+  setOverview(!document.body.classList.contains("overview"));
+};
+$("#edit-input").onclick = () => {
+  const expanded = document.body.classList.toggle("editing-input");
+  $("#edit-input").setAttribute("aria-expanded", String(expanded));
+  $("#edit-input").textContent = expanded ? "收起输入" : "编辑问题与来源";
 };
 $("#view-all").onclick = () => {
   view = "all";

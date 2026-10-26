@@ -26,6 +26,43 @@ def response(data):
     return httpx.Response(200, json={"code": 0, "message": "success", "data": data})
 
 
+async def test_explicit_url_extraction_is_exact_scoped_and_replayable(tmp_path, monkeypatch):
+    calls = []
+
+    def handler(request):
+        assert request.url.path == '/v1/extract'
+        url = json.loads(request.content)['url']
+        calls.append(url)
+        return response({'url': url, 'content': 'Original project documentation.\nConditions.'})
+
+    install(monkeypatch, handler)
+    urls = ['https://github.com/a/one', 'https://elsewhere.example/two']
+    config = settings(tmp_path)
+    adapter = WebSearchAdapter(config, replay={'mode': 'record', 'store': tmp_path / 'captures'})
+    hits, trace = await adapter.fetch_urls(urls, include_domains=['github.com'])
+    assert calls == [urls[0]] and len(hits) == 1
+    assert hits[0].metadata['uri'] == urls[0] and hits[0].metadata['search_snippet'] == ''
+    assert trace['requested_urls'] == urls and trace['action'] == 'extract'
+    assert {'url': urls[1], 'status': 'filtered'} in trace['url_results']
+    monkeypatch.setattr(direct_web, '_client', lambda: (_ for _ in ()).throw(AssertionError('network')))
+    replay = WebSearchAdapter(config, replay={'mode': 'replay', 'store': tmp_path / 'captures'})
+    assert (await replay.fetch_urls(urls, include_domains=['github.com']))[0] == hits
+    with pytest.raises(direct_web.WebProviderError, match='web_replay_miss'):
+        await replay.search('', full_snapshot=True, include_domains=['github.com'])
+
+
+async def test_failed_direct_url_retains_failure_without_creating_evidence(tmp_path, monkeypatch):
+    def handler(request):
+        assert request.url.path == '/v1/extract'
+        return httpx.Response(500, json={'error': 'unavailable'})
+
+    install(monkeypatch, handler)
+    url = 'https://github.com/a/unavailable'
+    hits, trace = await WebSearchAdapter(settings(tmp_path)).fetch_urls([url])
+    assert hits == [] and trace['snapshots'] == []
+    assert trace['url_results'] == [{'url': url, 'status': 'failed', 'error': 'web_upstream_http_500'}]
+
+
 async def test_search_extract_record_and_replay_preserve_original_bytes(tmp_path, monkeypatch):
     search_raw = b'{ "code":0,"data":{"results":[{"url":"https://example.org/a",' \
                  b'"title":"A","snippet":"short summary","content":"decorated summary"}]}}\n'

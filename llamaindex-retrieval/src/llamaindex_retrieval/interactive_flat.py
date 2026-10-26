@@ -9,10 +9,13 @@ is passed between calls or between conversation turns.
 import ast
 import asyncio
 from copy import deepcopy
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
+from decimal import Decimal, InvalidOperation
 from difflib import SequenceMatcher
 import html
 import json
+import math
+import operator
 from pathlib import PurePath
 import re
 from time import monotonic
@@ -20,11 +23,12 @@ from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
 from llama_index.core import Document
+from jsonschema import Draft202012Validator, ValidationError
 
 from .interactive_sources import add_sources, digest, gather, obj, unique_object
 from .verbatim_chunking import packed_verbatim_nodes
 
-PROTOCOL = 'interactive-flat-quotes-v3'
+PROTOCOL = 'interactive-flat-quotes-v8'
 CLEANING = 'markdown-links-images-v1'
 WEEKDAYS = '一二三四五六日'
 RELATIONS = ['新问题', '追问', '更正']
@@ -33,7 +37,7 @@ PLAN = ('判断用户这一轮是新问题、追问还是更正，relation写“
         '或省略了所问对象时是追问；原话自己写明了一个与前几轮无关的对象时是新问题。'
         'question写完整的问题：追问和更正要把指代换成前几轮中的具体对象（例如具体型号或版本号），question中不能再出现“它”“这个”等指代；'
         '新问题不受前几轮影响。needs列出用户实际问到的内容，通常1到3项；用户要求分别说明几个对象或比较几个方面时，'
-        '每个对象或方面各列一项，最多4项。每项写text和user_words，'
+        '每个独立要求各列一项，最多8项。不要把多个独立要求压成笼统一项。每项写text和user_words，'
         'user_words必须从“用户本轮原话”中原样照抄一段文字，表示这一项来自原话的哪里。'
         'aspects写回答时值得补充的相关方面，例如时间、条件、背景、对比，最多4项，可以为空。'
         'queries写1到2条互补的检索句，每条都写出要查的对象；问到今天、最新等时写明具体日期或年份。'
@@ -49,23 +53,27 @@ READ = ('只从上面各份资料“正文开始”到“正文结束”之间�
         '只摘抄确实在说所问对象的内容，名称不同的其他对象不要摘抄。仍须检查每份资料的每个信息项；'
         'answer_quotes和detail_quotes都为空的条目不要输出，全部没有相关引文时只输出{"items":[]}。'
         '只输出紧凑的单行JSON，不换行、不缩进。')
-FINAL = ('依据上面摘抄的原文回答问题。answer用一两句话直接回答用户所问；points逐条写出原文中与问题相关的其他要点，'
-         '例如时间、数值、条件、原因、对比、适用范围和各来源说法的差异，原文充分时写3到6条。每条要点用中文自己的话概括一个与问题直接相关的事实，'
+FINAL = ('依据上面摘抄的原文回答问题。answer先直接回答用户所问；按用户要求的篇幅与结构组织，长文请求可以分段充分说明；points逐条写出原文中与问题相关的其他要点，'
+         '例如时间、数值、条件、原因、对比、适用范围和各来源说法的差异，原文充分时写3到8条。每条要点用中文自己的话概括一个与问题直接相关的事实，'
          '与answer和其他要点的内容都不相同，句末标注来源编号；不要照抄整段外文原文，不写与所问对象无关的内容；'
-         '问“最新”时以版本号最大或日期最晚的为准；要点用中文写，不照抄外文段落，不写“原文没有提供……”这类说明；'
+         '问“最新”时先区分稳定版、预览版及计划，再在同类中按原文时间判断；抓取时间不是发布日期。'
+         '逐一核对用户的要求，对每个对象保留其版本、日期、条件与数值的对应关系，不能交换来源。要点用中文写，不照抄外文段落；'
          '有“本次理解的假设”时，answer开头先写明按哪种理解回答；'
          '比较类问题先分别写出每个对象对应的数值或特点并标注来源，再给出比较结论，结论中的数值必须与这些数值一致；'
          '某个对象没有原文时说明无法比较，不能用别的对象代替；'
          '“不支持”“没有”“未发布”这类否定也必须有原文明确写出，原文没有提到时写未知，不能写成否定；'
          '原文后〔〕中是代码计算的日期判断，以它为准；'
          'unknown写没有任何原文支持的信息项，全部有支持时为空字符串。'
-         '每个事实后用[1]、[2]这样的来源编号标注。数值照原文写出单位和计量基准，例如“每100美元”。'
+         '每个事实后用[1]、[2]这样的来源编号标注。代码或类型表达式中的方括号保持原样，并用反引号包住代码。数值照原文写出单位和计量基准，例如“每100美元”。'
          '几条原文说法不同时，先看是否指同一对象、同一版本、同一时间：不同版本或不同时间的不是冲突，以最新的为准并写出版本或时间；'
          '同一对象同一时间却说法不同时，写出各来源的说法并说明不一致。原文说的对象与所问对象名称不一致时，不能当作所问对象的事实；'
          '原文数值对应的指标与所问指标不同时（例如问中间价、原文是牌价），不能作为answer，可在要点中写明它是哪种指标。'
          '找不到所问对象本身的原文时，answer写未知，points只能写原文中关于所问对象本身的内容，没有就让points为空。'
-         '只用摘抄原文中的内容，不补充常识，不重复同一句话，不复制资料标题或“今天是”这类说明。引用标有搜索摘要的原文时注明（据搜索摘要）。')
-CALC = ('回答问题需要用上面原文中的数字做计算。为每个需要计算的结果写label和expression：expression只用阿拉伯数字和+ - * / 括号，'
+         '事实只用摘抄原文中的内容；问题明确给定的假设和数值可用于计算，须说明“按题设”，不能把题设说成来源已证实的事实。'
+         '可依据所选原文与题设推导比较或计算结论，写清依据、条件和计算过程；原文不必直接写出推导后的结果。'
+         '不补充常识，不重复同一句话，不复制资料标题或“今天是”这类说明。引用标有搜索摘要的原文时注明（据搜索摘要）。')
+CALC = ('回答问题需要用上面原文中的数字做计算。为每个需要计算的结果写label和expression：expression可用阿拉伯数字、科学计数法、+ - * / **和括号，'
+        '以及单参数函数sqrt（平方根）、log或ln（自然对数）、log10（常用对数）、exp（自然指数）、abs（绝对值）。**表示乘方。'
         '数字必须是原文或问题中出现的数字（单位换算系数也必须出现在原文或问题中），形式如“单价*人数+另一单价”，用上面原文中的实际数字代入。'
         '只写确实需要计算的结果，原文已直接给出的数字不用写。不要写计算结果，代码会计算。')
 REVIEW = ('对照上面的原文检查这个回答，只找确实存在的以下问题：' + '；'.join(f'{i}. {k}' for i, k in enumerate(ISSUES, 1)) +
@@ -75,10 +83,11 @@ IMAGE = re.compile(r'!\[[^\]]*\]\([^)]*\)')
 LINK = re.compile(r'\[([^\]]*)\]\((?:[^()]|\([^)]*\))*\)')
 JUNK_LINE = re.compile(r'^\s*(?:javascript:\S*|https?://\S+|\[\s*\]|[-*•|]\s*)\s*$')
 EMPHASIS = re.compile(r'\*\*|__|(?<!\w)\*(?=\S)|(?<=\S)\*(?!\w)')
-POINT_PATTERN = r'^[^\[\]\n]{4,300}(\[[0-9]{1,2}\])+[。]?$'
+POINT_PATTERN = r'^[^\n]{4,300}(\[[0-9]{1,2}\])+[。]?$'
 POWERS = {'100', '1000', '10000', '100000000'}
 BENIGN = {'duplicate_source_title_changed', 'windows_limited', 'quotes_limited'}
 CITATION = re.compile(r'\[(\d{1,3})\]')
+CODE_TEXT = re.compile(r'(?<!`)(`+)(?!`)[\s\S]*?(?<!`)\1(?!`)')
 CLAUSE = re.compile(r'[，。；;！？!?]')
 QUOTE_MARKS = '「」『』“”"\'‘’《》 '
 
@@ -110,8 +119,9 @@ def relative_day(moment, today):
 
 
 def _project(text, keep):
-    positions = [i for i, char in enumerate(text) if keep(char)]
-    return positions, ''.join(text[i] for i in positions).lower()
+    projected = [(i, folded) for i, char in enumerate(text) if keep(char)
+                 for folded in char.lower()]
+    return [i for i, _ in projected], ''.join(char for _, char in projected)
 
 
 def bind_quote(text, quote):
@@ -146,17 +156,18 @@ def _normal(text):
 
 
 def name_present(entity, text):
-    """Literal check that an object name occurs: whole name, or for long names a 60% contiguous part."""
-    name, text = _normal(entity), _normal(text)
+    """Literal retrieval/diagnostic match only; never an object-identity decision."""
+    name = _normal(entity)
+    positions, compact = _project(text, str.isalnum)
     if not name:
         return True
-    if name in text:
-        return True
-    size = max(4, -(-len(name) * 3 // 5))
-    # Short names (brand + generic word, e.g. "栖桐冻干猫粮") must match whole; long names may drop a
-    # qualifier ("西安…"), and a window that is mostly a model code (e.g. "magicbookpro16") also counts.
-    return any(name[i:i + size] in text for i in range(len(name) - size + 1)
-               if len(name) >= 8 or sum(c.isascii() and c.isalnum() for c in name[i:i + size]) >= 4)
+    def ascii_word(char):
+        return char.isascii() and char.isalnum()
+    return any(not (ascii_word(name[0]) and positions[hit.start()]
+                    and ascii_word(text[positions[hit.start()] - 1]))
+               and not (ascii_word(name[-1]) and positions[hit.end() - 1] + 1 < len(text)
+                        and ascii_word(text[positions[hit.end() - 1] + 1]))
+               for hit in re.finditer(re.escape(name), compact.lower()))
 
 
 CN_DIGITS = {'零': 0, '〇': 0, '一': 1, '二': 2, '两': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9}
@@ -180,25 +191,80 @@ def cn_to_int(text):
 
 def numeric_view(text):
     """Digits as written plus Chinese numerals converted, thousands separators removed."""
-    text = re.sub(r'(?<=\d)[,，\s](?=\d{3})', '', text)
+    text = re.sub(r'(?<![\d.])\d{1,3}(?:[,，]\d{3})+(?!\d)',
+                  lambda m: m.group().replace(',', '').replace('，', ''), text)
     return text + ' ' + ' '.join(str(cn_to_int(m)) for m in CN_NUMBER.findall(text))
 
 
+def numeric_values(text):
+    """Compare complete numeric literals, including equivalent scientific notation."""
+    values = set()
+    for n in re.findall(r'(?<![\d.])(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?(?![\d.])', numeric_view(text)):
+        try:
+            values.add(decimal_literal(n))
+        except ValueError:
+            # An unusable number in a document must not abort all calculations.
+            continue
+    return values
+
+
+def decimal_literal(text):
+    """Bind the original token, before Python rounds a floating-point constant."""
+    if len(text) > 128 or not re.fullmatch(r'(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?', text):
+        raise ValueError('unsupported numeric literal')
+    try:
+        value = Decimal(text)
+    except InvalidOperation as error:
+        raise ValueError('numeric literal out of range') from error
+    if not value.is_finite() or abs(value.as_tuple().exponent) > 10000:
+        raise ValueError('numeric literal out of range')
+    return value
+
+
 def evaluate(expression):
-    """Arithmetic on literal numbers only: + - * / and parentheses."""
+    """Bounded numeric AST; the model alone chooses the formula and operands."""
+    if len(expression) > 512:
+        raise ValueError('expression too long')
     tree = ast.parse(expression.replace('×', '*').replace('÷', '/'), mode='eval')
-    def walk(node):
+    if sum(1 for _ in ast.walk(tree)) > 128:
+        raise ValueError('expression too complex')
+    operations = {ast.Add: operator.add, ast.Sub: operator.sub,
+                  ast.Mult: operator.mul, ast.Div: operator.truediv, ast.Pow: operator.pow}
+    functions = {'sqrt': math.sqrt, 'log': math.log, 'ln': math.log,
+                 'log10': math.log10, 'exp': math.exp, 'abs': abs}
+    def bounded(value):
+        if type(value) is int:
+            if value.bit_length() > 4096:
+                raise ValueError('integer result too large')
+        elif type(value) is not float or not math.isfinite(value):
+            raise ValueError('result is not a finite real number')
+        return value
+    def walk(node, depth=0):
+        if depth > 32:
+            raise ValueError('expression too deep')
+        def child(node):
+            return walk(node, depth + 1)
         if isinstance(node, ast.Expression):
-            return walk(node.body)
+            return child(node.body)
         if isinstance(node, ast.Constant) and type(node.value) in (int, float):
-            return node.value
-        if isinstance(node, ast.BinOp) and type(node.op) in (ast.Add, ast.Sub, ast.Mult, ast.Div):
-            a, b = walk(node.left), walk(node.right)
-            return {ast.Add: a + b, ast.Sub: a - b, ast.Mult: a * b}.get(type(node.op)) if type(node.op) is not ast.Div else a / b
-        if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub):
-            return -walk(node.operand)
+            return bounded(node.value)
+        if isinstance(node, ast.BinOp) and type(node.op) in operations:
+            a, b = child(node.left), child(node.right)
+            if isinstance(node.op, ast.Pow) and abs(b) > 1024:
+                raise ValueError('exponent out of range')
+            return bounded(operations[type(node.op)](a, b))
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.USub, ast.UAdd)):
+            return bounded(-child(node.operand) if isinstance(node.op, ast.USub) else child(node.operand))
+        if (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+                and node.func.id in functions and len(node.args) == 1 and not node.keywords):
+            return bounded(functions[node.func.id](child(node.args[0])))
         raise ValueError('unsupported expression')
     return walk(tree)
+
+
+def citation_numbers(text):
+    """Inline/fenced code brackets denote code, not evidence references."""
+    return CITATION.findall(CODE_TEXT.sub('', text))
 
 
 RANGE = re.compile(r'(\d{1,2})月(\d{1,2})日\s*(?:至|到|-|—|~|～)\s*(次年)?(\d{1,2})月(\d{1,2})日')
@@ -254,7 +320,8 @@ class Flat:
                  deadline_seconds=180, acquisition_timeout=70, final_reserve_seconds=50,
                  final_quote_limit=40, per_need_limit=12, final_frequency_penalty=0.3,
                  supplement=True, review=True, kb_window_chars=6000, kb_max_windows=40,
-                 read_window_batch=2, retry_repeated_points=True, observe=None):
+                 read_window_batch=2, retry_repeated_points=True, observe=None,
+                 requested_urls=(), fetch_urls=None):
         if (not set(channels) <= {'knowledge_base', 'web'} or not 400 <= window_chars <= 24000
                 or not 0 <= window_overlap < window_chars // 2 or max_windows_per_source < 1
                 or not 1 <= snippet_batch <= 8 or not 0 < final_reserve_seconds < deadline_seconds
@@ -263,6 +330,7 @@ class Flat:
             raise ValueError('invalid flat pipeline options')
         self.model, self.original_question, self.question = model, question, question
         self.channels, self.search, self.select_files = list(dict.fromkeys(channels)), search, select_files
+        self.requested_urls, self.fetch_urls = list(requested_urls), fetch_urls
         self.progress, self.history = progress, list(history)[-3:]
         self.previous_sources = list(previous_sources)
         self.zone = ZoneInfo(timezone_name)
@@ -343,15 +411,24 @@ class Flat:
         metrics = f"\n所问指标：{'、'.join(self.metrics)}（原文是其他指标的数值时不能当作所问指标）" if self.metrics else ''
         extra = f"\n值得补充的方面：{'、'.join(self.aspects)}" if aspects and self.aspects else ''
         assumed = f"\n本次理解的假设（回答开头要写明）：{'；'.join(self.assumptions)}" if self.assumptions else ''
-        return f'{self.today_line()}\n{self.calendar_line()}\n问题：{self.question}{objects}{metrics}{assumed}\n信息项：\n{needs}{extra}'
+        original = f'用户本轮原话：{self.original_question}\n' if self.original_question != self.question else ''
+        return f'{self.today_line()}\n{self.calendar_line()}\n{original}问题：{self.question}{objects}{metrics}{assumed}\n信息项：\n{needs}{extra}'
 
     def header(self, source):
         meta = source.metadata
         place = '网页 ' + (urlsplit(source.uri or '').hostname or '') if source.source == 'web' else '上传资料'
         parts = [source.title[:120], place]
+        published_value = meta.get('published_date') or meta.get('published_at') or ''
+        published = local_time(published_value, self.zone)
+        publication = f'{published:%Y-%m-%d}（{relative_day(published, self.today)}）' if published else '未知'
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}', published_value):
+            try:
+                publication = date.fromisoformat(published_value).isoformat() + '（原文日期，未提供时刻）'
+            except ValueError:
+                pass
+        if source.source == 'web' or published_value:
+            parts.append('发布：' + publication)
         if source.source == 'web':
-            published = local_time(meta.get('published_date') or '', self.zone)
-            parts.append('发布：' + (f'{published:%Y-%m-%d}（{relative_day(published, self.today)}）' if published else '未知'))
             fetched = local_time(meta.get('retrieved_at') or '', self.zone)
             if fetched:
                 parts.append(f'抓取：{fetched:%Y-%m-%d %H:%M}（{relative_day(fetched, self.today)}）')
@@ -360,11 +437,8 @@ class Flat:
         return '｜'.join(parts)
 
     def short_header(self, source):
-        if source.source != 'web':
-            return f'{source.title[:80]}（上传资料）'
-        fetched = local_time(source.metadata.get('retrieved_at') or '', self.zone)
-        when = f'，抓取于{relative_day(fetched, self.today)}' if fetched else ''
-        return f"{source.title[:80]}（网页 {urlsplit(source.uri or '').hostname or ''}{when}）"
+        # Publication and retrieval are different observations; preserve both for the Writer.
+        return self.header(source) + (f'｜URL：{source.uri}' if source.uri else '')
 
     async def call(self, stage, prompt, properties, limit, evidence=(), frequency_penalty=0.0, presence_penalty=0.0):
         self.call_sequence += 1
@@ -382,6 +456,7 @@ class Flat:
                       error_type=type(error).__name__)
             raise
         event = {'stage': stage, 'status': result.status, 'raw_text': result.raw_text,
+                 'transport_status': result.status,
                  'raw_sha256': digest(result.raw_text or ''), 'parsed': None, 'trace': result.trace,
                  'finished_ms': (monotonic() - self.started) * 1000}
         if result.status == 'completed':
@@ -389,9 +464,11 @@ class Flat:
                 value = json.loads(result.raw_text, object_pairs_hook=unique_object)
                 if not isinstance(value, dict) or set(value) != set(properties):
                     raise ValueError('invalid fields')
+                Draft202012Validator(obj(properties)).validate(value)
                 event['parsed'] = value
-            except (ValueError, TypeError) as error:
+            except (ValueError, TypeError, ValidationError) as error:
                 event['validation_error'] = str(error)
+                event['status'] = 'invalid_output'
         self.emit('call_finished', operation=operation, stage=stage, evidence_ids=list(evidence),
                   status=event['status'], valid_output=event['parsed'] is not None)
         return event
@@ -417,13 +494,13 @@ class Flat:
         need = obj({'text': text, 'user_words': text})
         self.plan_event = await self.call('plan', prompt, {
             'relation': {'type': 'string', 'enum': RELATIONS},
-            'question': {'type': 'string', 'minLength': 1, 'maxLength': 400},
-            'needs': {'type': 'array', 'items': need, 'minItems': 1, 'maxItems': 4},
+            'question': {'type': 'string', 'minLength': 1, 'maxLength': 1600},
+            'needs': {'type': 'array', 'items': need, 'minItems': 1, 'maxItems': 8},
             'aspects': {**strings, 'maxItems': 4},
             'queries': {**strings, 'minItems': 1, 'maxItems': 2},
             'entities': {**strings, 'maxItems': 8}, 'metrics': {**strings, 'maxItems': 4},
             'names': {**strings, 'maxItems': 6}, 'assumptions': {**strings, 'maxItems': 3},
-            'calculation': {'type': 'boolean'}}, 600)
+            'calculation': {'type': 'boolean'}}, 900)
         value = self.plan_event['parsed']
         if value is None or any(not isinstance(value[k], list) for k in ('needs', 'aspects', 'queries', 'entities', 'metrics', 'names', 'assumptions')):
             self.plan_event['parsed'] = None
@@ -443,7 +520,7 @@ class Flat:
             # Structural fallback: the user's own message is the single need.
             self.need_bindings.append({'text': self.original_question.strip(), 'user_words': self.original_question,
                                        'span': {'start': 0, 'end': len(self.original_question), 'match': 'whole_message'}})
-        self.needs = list(dict.fromkeys(b['text'] for b in self.need_bindings))[:4]
+        self.needs = list(dict.fromkeys(b['text'] for b in self.need_bindings))[:8]
         self.aspects = list(dict.fromkeys(a.strip() for a in value['aspects'] if a.strip()))[:4]
         self.queries = list(dict.fromkeys(q.strip() for q in value['queries'] if q.strip()))[:2]
         self.entities = list(dict.fromkeys(e.strip() for e in value['entities'] if e.strip()))
@@ -451,9 +528,6 @@ class Flat:
         # Only names that occur in the user's turn or the history are literal-checked.
         context = self.original_question + ''.join(t.get('question', '') + ''.join(t.get('entities') or []) for t in self.history)
         self.names = [n.strip() for n in value['names'] if n.strip() and (name_present(n, context) or n.strip() in self.entities)]
-        if not self.names:
-            # Structural fallback: entities written literally in the user's message are names to check.
-            self.names = [e for e in self.entities if len(_normal(e)) >= 2 and _normal(e) in _normal(self.original_question)]
         # Names written in the code's own date lines are date references, not objects.
         dates = _normal(self.today_line() + self.calendar_line())
         relative = ('今天', '昨天', '明天', '后天', '本周', '这周', '上周', '最近', '本月', '上个月', '今年', '去年')
@@ -563,9 +637,15 @@ class Flat:
         prompt = '\n\n'.join(parts) + f'\n\n{self.ask_block()}\n\n{READ}'
         def quotes(count, size):
             return {'type': 'array', 'maxItems': count, 'items': {'type': 'string', 'minLength': 2, 'maxLength': size}}
+        # A complete sentence can be longer than 240/360 characters. Bound the field
+        # by material actually supplied, not a cap that forces cuts inside a quote.
+        quote_size = max(len(self.views[s.id]['body'][w[0]:w[1]]) if w else 0
+                         for s, w, _ in segments)
+        quote_size = max(quote_size, *(len(self.views[s.id]['snippet']) if include else 0
+                                      for s, _, include in segments), 2)
         item = obj({'source': {'type': 'integer', 'enum': list(range(1, len(segments) + 1))},
                     'need': {'type': 'integer', 'enum': list(range(1, len(self.needs) + 1))},
-                    'answer_quotes': quotes(3, 240), 'detail_quotes': quotes(5, 360)})
+                    'answer_quotes': quotes(3, quote_size), 'detail_quotes': quotes(5, quote_size)})
         ids = [s.id for s, _, _ in segments]
         properties = {'items': {'type': 'array', 'items': item, 'maxItems': len(self.needs) * len(segments)}}
         if len(segments) > 1 and any(window is not None for _, window, _ in segments):
@@ -602,7 +682,24 @@ class Flat:
         self.reads.append(event)
         if event['parsed'] is None:
             self.errors.append({'stage': 'read', 'status': event['status'], 'source_ids': ids})
-            return
+            if event['status'] not in {'invalid_output', 'length'}:
+                return
+            # Regenerate independently; never repair or partially admit the failed raw text.
+            retry_prompt = ('格式要求：重新完整输出紧凑JSON，必须闭合所有引号和括号。'
+                            '只摘直接相关的原文，不重复引文。\n\n' + prompt)
+            try:
+                async with asyncio.timeout_at(self.reading_deadline):
+                    retry = await self.call('read', retry_prompt, properties, 1400, evidence=ids)
+            except TimeoutError:
+                self.errors.append({'stage': 'read', 'status': 'deadline', 'source_ids': ids})
+                return
+            retry.update(source_ids=ids, windows=[w for _, w, _ in segments], quote_ids=[],
+                         retry_of=event['raw_sha256'])
+            self.reads.append(retry)
+            if retry['parsed'] is None:
+                self.errors.append({'stage': 'read', 'status': retry['status'], 'source_ids': ids})
+                return
+            event = retry
         self.emit('binding_started', source_ids=ids)
         for row in event['parsed']['items'] if isinstance(event['parsed']['items'], list) else []:
             if (not isinstance(row, dict) or row.get('need') not in range(1, len(self.needs) + 1)
@@ -670,13 +767,16 @@ class Flat:
         return False
 
     async def acquire(self, queries, round_name):
-        async def one(query):
+        async def one(query, urls=None):
             receipt = {'round': round_name, 'channel': 'web', 'query': query, 'status': 'pending'}
+            if urls is not None:
+                receipt.update(requested_urls=urls, action='extract')
             self.acquisition.append(receipt)
             self.emit('acquisition_started', **receipt)
             try:
                 async with asyncio.timeout(self.acquisition_timeout):
-                    for source in await self.search(query):
+                    sources = await self.fetch_urls(urls) if urls is not None else await self.search(query)
+                    for source in sources:
                         await self.publish(source)
                 receipt['status'] = 'completed'
             except asyncio.CancelledError:
@@ -705,7 +805,12 @@ class Flat:
                 self.errors.append({'stage': 'acquire', **receipt})
             finally:
                 self.emit('acquisition_finished', **receipt)
-        jobs = [one(q) for q in queries] if 'web' in self.channels else []
+        jobs = []
+        if 'web' in self.channels:
+            if round_name == 'initial' and self.requested_urls and self.fetch_urls is not None:
+                jobs.append(one('', self.requested_urls))
+            else:
+                jobs.extend(one(q) for q in queries)
         if 'knowledge_base' in self.channels and round_name == 'initial':
             jobs.append(files())
         await gather(jobs)
@@ -771,29 +876,35 @@ class Flat:
         return blocks, numbers, [q['id'] for q in chosen]
 
     async def calculate(self):
-        """Model writes expressions from quoted numbers; code checks the numbers are quoted and computes."""
-        self.progress('依据原文数字计算')
+        """Model writes expressions; code checks literals against evidence/question and computes."""
+        self.progress('依据原文与题设数字计算')
         row = obj({'label': {'type': 'string', 'minLength': 1, 'maxLength': 80},
-                   'expression': {'type': 'string', 'minLength': 1, 'maxLength': 120}})
+                   'expression': {'type': 'string', 'minLength': 1, 'maxLength': 512}})
         self.calc_event = await self.call('calc', f'{self.materials}\n\n{self.ask_block(aspects=False)}\n\n{CALC}',
-            {'calculations': {'type': 'array', 'items': row, 'maxItems': 4}}, 400)
-        allowed = numeric_view(self.materials + self.original_question + self.question)
+            {'calculations': {'type': 'array', 'items': row, 'maxItems': 8}}, 800)
+        allowed = numeric_values(self.materials + '\n' + self.original_question + '\n' + self.question)
         lines = []
         for item in (self.calc_event['parsed'] or {}).get('calculations') or []:
             expression = (item.get('expression') or '').strip() if isinstance(item, dict) else ''
             entry = {'label': item.get('label') if isinstance(item, dict) else None, 'expression': expression}
             try:
-                literals = re.findall(r'\d+(?:\.\d+)?', expression)
-                if not re.search(r'[-+*/×÷]', expression.lstrip('-')):
+                normalized = expression.replace('×', '*').replace('÷', '/')
+                tree = ast.parse(normalized, mode='eval')
+                literals = [decimal_literal(ast.get_source_segment(normalized, node)) for node in ast.walk(tree)
+                            if isinstance(node, ast.Constant) and type(node.value) in (int, float)]
+                if not re.search(r'[-+*/×÷]|\b(?:sqrt|log|ln|log10|exp|abs)\s*\(', expression.lstrip('-')):
                     raise ValueError('no operation')
                 # Small integers are counts from the question (两个、三人); other numbers must be quoted.
-                if not literals or any(n not in allowed and not (n.isdigit() and (int(n) <= 12 or n in POWERS))
+                if not literals or any(n not in allowed
+                                       and not (n == n.to_integral_value() and (n <= 12 or n in {Decimal(p) for p in POWERS}))
                                        for n in literals):
                     raise ValueError('number not in quoted material or question')
                 value = evaluate(expression)
-                entry['result'] = round(value, 4) if isinstance(value, float) else value
-                lines.append(f"{entry['label']}：{expression} = {entry['result']:g}")
-            except (ValueError, SyntaxError, ZeroDivisionError, TypeError) as error:
+                entry['result'] = value
+                # Default :g keeps six significant digits and changes large byte counts.
+                # Give the Writer the same result retained in the calculation record.
+                lines.append(f"{entry['label']}：{expression} = {entry['result']}")
+            except (ValueError, SyntaxError, ZeroDivisionError, TypeError, OverflowError) as error:
                 entry['error'] = str(error)
             self.calculations.append(entry)
         if lines:
@@ -808,31 +919,19 @@ class Flat:
         self.materials = '以下是从各资料中原样摘抄的原文：\n\n' + '\n\n'.join(blocks)
         if self.calculation:
             await self.calculate()
-        if len(self.names) >= 2:
-            # Comparison: code lists, per asked name, which numbered sources literally mention it.
-            sources = {s.id: s for s in self.sources}
-            rows = []
-            for name in self.names:
-                hits = [n for n, sid in numbers.items() if any(
-                    name_present(name, q['text']) or name_present(name, sources[sid].title)
-                    for q in self.quotes.values() if q['source_id'] == sid and q['id'] in ids)]
-                rows.append(f"{name}：{'来源' + '、'.join(f'[{n}]' for n in hits) if hits else '摘抄中没有写明它的原文'}")
-            self.materials += '\n\n所问对象与写明它的来源（代码按名称统计）：\n' + '\n'.join(rows)
         self.progress('依据摘抄原文生成回答')
         # Enough quoted material requires points; thin material may answer in one sentence.
         missing = self.missing_needs()
-        absent = getattr(self, 'name_absent', [])
-        gone = ('\n以下对象在本次获取的所有资料中都没有出现，关于它们只能写未知，不能写出任何数值或特点：' + '、'.join(absent)) if absent else ''
-        # Points are required only when quoted material exists for every need and every asked object.
-        least = 2 if len(ids) >= 4 and not missing and not absent else 0
-        gap = ('\n以下信息项没有找到直接写明所问对象的原文，只能写未知：' + '、'.join(self.needs[i - 1] for i in missing)) if missing else ''
-        prompt = f'{self.materials}\n\n{self.ask_block()}{gap}{gone}\n\n{FINAL}'
-        schema = {'answer': {'type': 'string', 'minLength': 1, 'maxLength': 600},
-                  'points': {'type': 'array', 'minItems': least, 'maxItems': 6,
+        least = 2 if len(ids) >= 4 and not missing else 0
+        gap = ('\n阅读阶段尚未选出直接回答句的信息项：' + '、'.join(self.needs[i - 1] for i in missing)
+               + '。这不是事实缺失的判定。请检查所选原文和题设是否足以推导或计算；依据不足才写未知。') if missing else ''
+        prompt = f'{self.materials}\n\n{self.ask_block()}{gap}\n\n{FINAL}'
+        schema = {'answer': {'type': 'string', 'minLength': 1, 'maxLength': 4000},
+                  'points': {'type': 'array', 'minItems': least, 'maxItems': 8,
                              # Each point ends with its source numbers; the numbers are checked in code.
                              'items': {'type': 'string', 'pattern': POINT_PATTERN}},
-                  'unknown': {'type': 'string', 'maxLength': 300}}
-        self.final_event = await self.call('final', prompt, schema, 1600, evidence=ids,
+                  'unknown': {'type': 'string', 'maxLength': 800}}
+        self.final_event = await self.call('final', prompt, schema, 2048, evidence=ids,
                                            frequency_penalty=self.final_frequency_penalty)
         self.final_attempts = [self.final_event]
         repeated = bool(self.final_event['parsed'] and repeated_points(self.final_event['parsed']))
@@ -843,7 +942,7 @@ class Flat:
         if repeated and self.retry_repeated_points:
             # Code never deletes model sentences; a repeated answer gets one new, separately traced call.
             self.progress('回答要点重复，重新生成一次')
-            retry = await self.call('final', prompt, schema, 1600, evidence=ids,
+            retry = await self.call('final', prompt, schema, 2048, evidence=ids,
                                     frequency_penalty=1.0, presence_penalty=0.6)
             retry['retry_of'] = self.final_event['raw_sha256']
             self.final_attempts.append(retry)
@@ -868,7 +967,7 @@ class Flat:
                      'evidence': {'type': 'string', 'maxLength': 300},
                      'answer_quote': {'type': 'string', 'maxLength': 200}})
         self.review_event = await self.call('review',
-            f'{self.materials}\n\n{self.today_line()}\n问题：{self.question}\n回答：\n{answer}\n\n{REVIEW}',
+            f'{self.materials}\n\n{self.ask_block(aspects=False)}\n回答：\n{answer}\n\n{REVIEW}',
             {'issues': {'type': 'array', 'items': issue, 'maxItems': 4}}, 700, evidence=self.final_event['quote_ids'])
 
     async def run(self):
@@ -901,21 +1000,15 @@ class Flat:
         self.timeline['reading_done_ms'] = (monotonic() - self.started) * 1000
         self.emit('reading_finished', source_count=len(self.sources), read_calls=len(self.reads),
                   bound_quotes=len(self.quotes), unbound_quotes=len(self.unbound))
-        if not self.quotes:
+        if not self.quotes and not self.calculation:
             return
         material = ' '.join(s.title + ' ' + v['body'] + ' ' + v['snippet']
                             for s in self.sources if (v := self.views.get(s.id)))
         self.name_absent = [n for n in self.names if not name_present(n, material)]
-        if self.names and len(self.name_absent) == len(self.names):
-            # No fetched page literally names any asked object: the object was not found,
-            # so quotes about similarly named objects never become an answer.
-            self.errors.append({'stage': 'final', 'status': 'no_direct_quote', 'names_absent': self.name_absent})
-            return
-        if len(self.missing_needs()) == len(self.needs):
-            # No sentence directly answers any need (often a fictional object matched to a similar one):
-            # no answer is generated, so detail quotes about other objects never become an answer.
-            self.errors.append({'stage': 'final', 'status': 'no_direct_quote'})
-            return
+        # Literal absence is an audit observation, not proof of a different object.
+        # The Reader and Writer decide identity from the original evidence.
+        # A selected definition/condition can support a derived answer. Direct-quote
+        # coverage is diagnostic; the model decides whether the premises suffice.
         try:
             async with asyncio.timeout_at(self.deadline):
                 await self.answer()
@@ -971,8 +1064,8 @@ class Flat:
         if parsed:
             text = event['display_text']
             numbers = event['numbers']
-            cited = list(dict.fromkeys(n for n in CITATION.findall(text) if n in numbers))
-            invalid = sorted(set(CITATION.findall(text)) - set(numbers))
+            cited = list(dict.fromkeys(n for n in citation_numbers(text) if n in numbers))
+            invalid = sorted(set(citation_numbers(text)) - set(numbers))
             used = [numbers[n] for n in cited]
             snippet_only = any(q['section'] == 'snippet' and q['source_id'] in used
                                for q in self.quotes.values() if q['id'] in event['quote_ids'])
@@ -990,7 +1083,7 @@ class Flat:
             kind = 'error' if failures and not self.quotes else ('unverified' if event else 'not_found')
             no_direct = any(e.get('status') == 'no_direct_quote' for e in self.errors)
             text = (event or {}).get('raw_text') or (
-                '本次检索没有找到直接写明所问对象的原文，无法回答；找到的资料说的是其他对象。' if no_direct
+                '本次阅读没有选出直接回答所问信息的原文，暂无法依据资料回答。' if no_direct
                 else '本次检索未找到能回答问题的原文。' if not failures
                 else '本次资料获取或阅读未完成，暂无法依据资料回答。')
             answer = {'answer': text, 'sources': [], 'generation': {'protocol': PROTOCOL,

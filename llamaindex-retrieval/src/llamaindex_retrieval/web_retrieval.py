@@ -68,12 +68,25 @@ class WebSearchAdapter:
         trace["configured_state_sha256"] = self.settings.web_router_state_sha256
         return trace
 
-    async def search(self, query, *, full_snapshot=False, include_domains=None, case_id=None):
+    async def fetch_urls(self, urls, *, include_domains=None, case_id=None):
+        """Fetch the user's exact URLs; their literal content remains the source of facts."""
+        return await self.search('', full_snapshot=True, include_domains=include_domains,
+                                 case_id=case_id, source_urls=urls)
+
+    async def search(self, query, *, full_snapshot=False, include_domains=None, case_id=None,
+                     source_urls=None):
         # Explicit unified-core acquisition: split/rank the full returned snapshot
         # before reading. Default path remains byte-compatible with the baseline.
         request = {"action": "search", "query": query,
             "max_results": self.settings.web_search_results,
             "material_characters": None if full_snapshot else self.settings.web_search_material_characters}
+        if source_urls is not None:
+            from .direct_web import _public_url
+            if (not source_urls or len(source_urls) > 8
+                    or any(_public_url(url) is None for url in source_urls)):
+                raise ValueError('invalid_direct_source_urls')
+            request.update(action='extract', urls=list(dict.fromkeys(source_urls)),
+                           max_results=len(set(source_urls)))
         if include_domains is not None:
             request['include_domains'] = include_domains
         if self.replay.mode == 'record':
@@ -81,6 +94,8 @@ class WebSearchAdapter:
         provider_options = ({'extract_timeout': float(self.settings.web_anysearch_extract_timeout),
                              'search_timeout': float(self.settings.web_search_timeout)}
                             if self.settings.web_search_provider == 'anysearch' else None)
+        if source_urls is not None:
+            provider_options = {**(provider_options or {}), 'action': 'extract', 'urls': request['urls']}
         key = self.replay.key(self.settings.web_search_provider, query, include_domains,
                               request['max_results'], full_snapshot, provider_options=provider_options)
         payload, replay = await self.replay.execute(key, lambda: self._execute(request, self.settings.web_search_timeout),
@@ -131,9 +146,11 @@ class WebSearchAdapter:
             snapshots.append({"id": identity, "url": url, "text": snapshot,
                               "sha256": sha(snapshot), "retrieved_at": item["retrieved_at"]})
         return hits, {"status": "completed", "query": query, "provider": payload["provider"],
+            **({'requested_urls': request['urls'], 'action': 'extract'} if source_urls is not None else {}),
             "source_hashes": payload["source_hashes"], "snapshots": snapshots,
             "material_selections": material_selections,
             "returned": len(hits), **({'web_replay': replay} if replay else {}),
+            **({'url_results': payload['url_results']} if 'url_results' in payload else {}),
             **({'provider_options': provider_options, 'domain_filter': payload['domain_filter']}
                if provider_options is not None else {})}
 

@@ -1,5 +1,6 @@
 """Flat quote pipeline: structural binding, grouping, history and review with a fake model."""
 import json
+import pytest
 
 from llamaindex_retrieval import interactive_flat as flat
 from llamaindex_retrieval.native_rwkv import NativeRWKVResult
@@ -21,13 +22,14 @@ class Model:
         self.names = ['雾岭']
         self.metrics = []
         self.assumptions, self.calculation, self.calcs = [], False, []
+        self.resolved_question = '雾岭最新版本主题'
         self.needs = needs or [{'text': '最新版本主题', 'user_words': '最新版本主题'}]
 
     async def complete(self, messages, **kwargs):
         prompt = messages[0]['content']
         self.prompts.append((prompt, kwargs))
         if prompt.rstrip().endswith(flat.PLAN):
-            value = {'relation': self.relation, 'question': '雾岭最新版本主题', 'needs': self.needs,
+            value = {'relation': self.relation, 'question': self.resolved_question, 'needs': self.needs,
                      'aspects': ['上线时间'], 'queries': ['雾岭 最新版本'], 'entities': ['雾岭'], 'metrics': self.metrics, 'names': self.names,
                      'assumptions': self.assumptions, 'calculation': self.calculation}
         elif prompt.rstrip().endswith(flat.READ):
@@ -94,7 +96,8 @@ async def test_answer_and_detail_quotes_bind_and_review_runs_without_changing_an
     read_prompt, final_prompt = model.prompts[1][0], model.prompts[2][0]
     assert read_prompt.index('正文开始') < read_prompt.index('问题：') < read_prompt.index(flat.READ)
     assert '值得补充的方面：上线时间' in read_prompt and 'sha256' not in read_prompt
-    assert '今天是2026年10月22日（星期四，北京时间09:00），昨天是10月21日（星期三），明天是10月23日（星期五），后天是10月24日（星期六）。' in final_prompt and '抓取于提问当天' in final_prompt
+    assert '今天是2026年10月22日（星期四，北京时间09:00），昨天是10月21日（星期三），明天是10月23日（星期五），后天是10月24日（星期六）。' in final_prompt
+    assert '发布：未知｜抓取：2026-10-22 07:30（提问当天）' in final_prompt
 
 
 async def test_numeric_lookup_does_not_add_arithmetic_against_the_model_plan():
@@ -329,27 +332,56 @@ async def test_optional_repetition_diagnostic_keeps_first_answer_without_regener
     assert result['answer']['generation']['answer_modified'] is False
 
 
-async def test_no_direct_quote_for_any_need_skips_answer():
+async def test_detail_evidence_reaches_writer_without_forcing_an_unknown_answer():
     model = Model(answer_quotes=[], final='未知。')
     result = await run(model, [web()], supplement=False)
-    assert not any(p.rstrip().endswith(flat.FINAL) for p, _ in model.prompts)
-    assert result['response_type'] == 'not_found' and '其他对象' in result['display_text']
+    assert any(p.rstrip().endswith(flat.FINAL) for p, _ in model.prompts)
+    assert result['display_text'] == model.final
+    assert '3.1版本于10月1日上线' in model.final_prompt
+    assert '这不是事实缺失的判定' in model.final_prompt
 
 
-def test_name_present_whole_or_long_part_only():
+async def test_question_assumptions_allow_requested_calculation_without_read_quotes():
+    model = Model(answer_quotes=[], detail_quotes=[], final='按题设，相加为30，相减为10。',
+                  needs=[{'text': '计算', 'user_words': '计算'}])
+    model.resolved_question = '求计算结果'
+    model.calculation = True
+    model.calcs = [
+        {'label': '相加', 'expression': '20+10'},
+        {'label': '相减', 'expression': '20-10'},
+        {'label': '相乘', 'expression': '20*10'},
+        {'label': '相除', 'expression': '20/10'},
+        {'label': '平方', 'expression': '10*10'},
+    ]
+    result = await run(model, [web()], question='按题设20和10计算加减乘除以及10的平方',
+                       supplement=False, review=False)
+    assert [row['result'] for row in result['calculations']] == [30, 10, 200, 2, 100]
+    assert result['graph']['spans'] == []
+    assert result['display_text'] == model.final
+    assert any(p.rstrip().endswith(flat.CALC) for p, _ in model.prompts)
+    assert '按题设' in model.final_prompt
+    assert result['needs'] == ['计算'] and result['dropped_needs'] == []
+    original = '用户本轮原话：按题设20和10计算加减乘除以及10的平方'
+    assert original in model.final_prompt
+    assert all(original in p for p, _ in model.prompts if p.rstrip().endswith(flat.CALC))
+
+
+def test_name_present_is_literal_and_does_not_identify_objects_by_partial_names():
     assert flat.name_present('雾岭', '雾岭官网')
     assert not flat.name_present('星河电视S9', '三星 S9 85英寸 4K电视')
-    assert flat.name_present('荣耀MagicBook Pro 16 2026', 'MagicBook Pro 16 搭载酷睿Ultra')
+    assert not flat.name_present('荣耀MagicBook Pro 16 2026', 'MagicBook Pro 16 搭载酷睿Ultra')
     assert not flat.name_present('日元', '港元兑人民币')
 
 
-async def test_object_named_nowhere_in_material_gets_no_answer():
+async def test_name_absence_is_diagnostic_and_model_decides_unknown():
     source = web(text='三星S9电视屏幕尺寸为85英寸。').model_copy(update={'title': '三星电视参数'})
-    model = Model(answer_quotes=['三星S9电视屏幕尺寸为85英寸'], detail_quotes=[])
+    model = Model(answer_quotes=['三星S9电视屏幕尺寸为85英寸'], detail_quotes=[],
+                  final='无法确认星河电视S9的屏幕参数。')
     model.names = ['星河电视S9']
     result = await run(model, [source], question='星河电视S9屏幕多大', supplement=False)
-    assert result['name_absent_quotes'] == ['星河电视S9'] and result['response_type'] == 'not_found'
-    assert not any(p.rstrip().endswith(flat.FINAL) for p, _ in model.prompts)
+    assert result['name_absent_quotes'] == ['星河电视S9']
+    assert result['display_text'] == model.final
+    assert any(p.rstrip().endswith(flat.FINAL) for p, _ in model.prompts)
 
 
 async def test_one_present_name_or_date_words_do_not_block_answer():
@@ -382,18 +414,19 @@ async def test_numbers_absent_from_quotes_are_listed_without_changing_answer():
     assert '2025年' in result['display_text'] and result['response_type'] == 'unverified'
 
 
-async def test_comparison_lists_which_sources_name_each_object():
+async def test_comparison_does_not_supply_code_guessed_object_source_mapping():
     model = Model()
     model.names = ['雾岭', '星落']
     await run(model, [web()], question='雾岭和星落哪个版本新')
-    assert '所问对象与写明它的来源（代码按名称统计）：\n雾岭：来源[1]\n星落：摘抄中没有写明它的原文' in model.final_prompt
+    assert '[1] 雾岭官网' in model.final_prompt
+    assert '代码按名称统计' not in model.final_prompt
 
 
 def test_chinese_numerals_and_safe_arithmetic():
     assert flat.cn_to_int('五千四百六十四') == 5464 and flat.cn_to_int('三万') == 30000
     assert '5464' in flat.numeric_view('長五千四百六十四公里')
     assert flat.evaluate('190*2+95') == 475 and flat.evaluate('1318/350') == 1318 / 350
-    for bad in ('__import__("os")', '2**10', 'a+1'):
+    for bad in ('__import__("os")', '2**100000', 'a+1'):
         try:
             flat.evaluate(bad)
             raise AssertionError(bad)
@@ -411,6 +444,18 @@ async def test_calculation_uses_only_quoted_numbers_and_code_result():
     rows = {c['label']: c for c in result['calculations']}
     assert rows['两大一小']['result'] == 475 and 'error' in rows['编造'] and rows['原样']['error'] == 'no operation'
     assert '两大一小：190*2+95 = 475' in model.final_prompt and '200*3' not in model.final_prompt
+
+
+async def test_calculation_preserves_exact_large_count_in_writer_input():
+    question = '按题设48块每块12 MiB，另有220 MB；1 MiB=1048576字节，1 MB=1000000字节。计算总字节。'
+    model = Model(answer_quotes=[], detail_quotes=[], final='按题设共823979776字节。',
+                  needs=[{'text': '总字节', 'user_words': '总字节'}])
+    model.calculation = True
+    model.calcs = [{'label': '总字节', 'expression': '48*12*1048576+220*1000000'}]
+    result = await run(model, [], question=question)
+    assert result['calculations'][0]['result'] == 823979776
+    assert '总字节：48*12*1048576+220*1000000 = 823979776' in model.final_prompt
+    assert '8.2398e+08' not in model.final_prompt
 
 
 def test_calendar_line_week_and_last_friday():
@@ -434,10 +479,10 @@ async def test_quote_attributed_to_wrong_batched_source_still_binds():
     assert [q['source_id'] for q in result['graph']['spans']] == ['W2'] and result['graph']['unbound_quotes'] == []
 
 
-def test_partial_name_keeps_head_or_model_code():
+def test_partial_name_does_not_merge_numbered_objects_or_generic_words():
     assert not flat.name_present('栖桐冻干猫粮', 'Go Raw冻干猫粮召回')
-    assert flat.name_present('荣耀MagicBook Pro 16 2026', 'MagicBook Pro 16 搭载酷睿Ultra')
-    assert flat.name_present('西安秦始皇帝陵博物院', '秦始皇帝陵博物院开放时间')
+    assert not flat.name_present('Artemis III', 'Artemis II')
+    assert not flat.name_present('Blue Moon', 'a journey around the Moon')
 
 
 async def test_generic_names_dropped_and_follow_up_inherits_names():
@@ -449,14 +494,17 @@ async def test_generic_names_dropped_and_follow_up_inherits_names():
     model.names = []
     history = [{'question': '朴茗扫地机是谁做的', 'entities': ['朴茗扫地机'], 'names': ['朴茗扫地机']}]
     result = await run(model, [web()], question='它的吸力多少', history=history)
-    assert result['names'] == ['朴茗扫地机'] and result['response_type'] == 'not_found'
+    assert result['names'] == ['朴茗扫地机']
+    assert result['name_absent_quotes'] == ['朴茗扫地机']
+    assert any(p.rstrip().endswith(flat.FINAL) for p, _ in model.prompts)
 
 
-async def test_partly_absent_comparison_lists_absent_object():
+async def test_partly_absent_comparison_does_not_turn_literal_absence_into_a_fact():
     model = Model()
     model.names = ['雾岭', '翊岑E7']
     await run(model, [web()], question='雾岭和翊岑E7哪个新')
-    assert '都没有出现，关于它们只能写未知，不能写出任何数值或特点：翊岑E7' in model.final_prompt
+    assert '都没有出现，关于它们只能写未知' not in model.final_prompt
+    assert '某个对象没有原文时说明无法比较' in model.final_prompt
 
 
 def test_final_quotes_rotate_across_sources():
@@ -525,3 +573,81 @@ async def test_live_observations_report_cancelled_acquisition_as_cancelled():
         pass
     finish = [e for e in events if e['kind'] == 'acquisition_finished']
     assert len(finish) == 1 and finish[0]['status'] == 'cancelled'
+
+
+def test_scientific_arithmetic_and_rejected_executable_ast():
+    import math
+    assert flat.evaluate('sqrt(3**2+4**2)') == 5
+    assert flat.evaluate('ln(exp(2))+log10(100)+abs(-3)') == pytest.approx(7)
+    assert flat.evaluate('6.67430e-11*2e5') == pytest.approx(1.33486e-5)
+    assert flat.evaluate('2**-3') == .125
+    for expression in ('sqrt(-1)', '(-1)**.5', 'log(0)', 'exp(1000)', '1e309+1',
+                       'True+1', 'sqrt(x=4)', 'sqrt(4,9)', 'math.sqrt(4)',
+                       'open("x")', '[1][0]', '9**9**9', '1/0'):
+        with pytest.raises((ValueError, SyntaxError, OverflowError, ZeroDivisionError)):
+            flat.evaluate(expression)
+    with pytest.raises(ValueError):
+        flat.evaluate('1+' * 100 + '1')
+    assert math.isfinite(flat.evaluate('10**100'))
+
+
+def test_code_brackets_allowed_without_becoming_source_references():
+    from jsonschema import Draft202012Validator
+    schema = {'type': 'string', 'pattern': flat.POINT_PATTERN}
+    for point in ('安装命令是 `pip install httpx[cli]`。[1]',
+                  '类型为 `list[int]`，索引示例为 `items[0]`。[1][2]'):
+        Draft202012Validator(schema).validate(point)
+    assert flat.citation_numbers('代码 `items[7]` 与 `httpx[cli]`。[1][2]') == ['1', '2']
+    assert flat.citation_numbers('```python\na[9]\n```\n说明。[3]') == ['3']
+    with pytest.raises(Exception):
+        Draft202012Validator(schema).validate('安装 `httpx[cli]` 没有来源')
+
+
+def test_numeric_literals_do_not_merge_dates_or_match_substrings():
+    from decimal import Decimal
+    assert '15,2026' in flat.numeric_view('October 15,2026')
+    assert '15 2026' in flat.numeric_view('October 15 2026')
+    assert Decimal('1234567.89') in flat.numeric_values('1,234,567.89')
+    assert Decimal('1e-6') in flat.numeric_values('0.000001')
+    assert Decimal('123') not in flat.numeric_values('91234')
+
+
+async def test_scientific_calculation_preserves_small_result_and_rejects_unquoted_operand():
+    question = '按题设0.000001与16，计算平方根与乘积。另有91234不是123。'
+    model = Model(answer_quotes=[], detail_quotes=[], final='按题设计算。',
+                  needs=[{'text': '计算', 'user_words': '计算'}])
+    model.calculation = True
+    model.calcs = [{'label': '平方根', 'expression': 'sqrt(16)'},
+                   {'label': '小值', 'expression': '1e-6*16'},
+                   {'label': '非法数', 'expression': '456*2'},
+                   {'label': '非有限', 'expression': 'exp(1000)'}]
+    result = await run(model, [], question=question)
+    rows = {c['label']: c for c in result['calculations']}
+    assert rows['平方根']['result'] == 4
+    assert rows['小值']['result'] == 0.000016
+    assert '1.6e-05' in model.final_prompt
+    assert 'error' in rows['非法数'] and 'error' in rows['非有限']
+    assert '456*2 =' not in model.final_prompt
+
+
+def test_numeric_overflow_text_is_ignored_and_variable_backtick_spans_are_code():
+    from decimal import Decimal
+    assert flat.numeric_values('1e999999999999999999999 然后16') == {Decimal(16)}
+    assert flat.citation_numbers('使用 ``items[7] 与 `内容` ``。[1]') == ['1']
+    assert flat.citation_numbers('````python\nx[8]\n```\n````\n来源[2]') == ['2']
+    assert flat.citation_numbers('未闭合 `items[7]，来源[1]') == ['7', '1']
+
+
+async def test_calculation_checks_exact_float_literal_before_binary_rounding():
+    for offered, expression, accepted in [
+        ('0.10000000000000001', '0.10000000000000001*2', True),
+        ('0.1', '0.10000000000000001*2', False),
+        ('91234', '123*2', False),
+    ]:
+        question = f'按题设{offered}乘2。另一个无效值1e999999999999999999999忽略。'
+        model = Model(answer_quotes=[], detail_quotes=[], final='按题设计算。',
+                      needs=[{'text': '乘2', 'user_words': '乘2'}])
+        model.calculation = True
+        model.calcs = [{'label': '乘积', 'expression': expression}]
+        result = await run(model, [], question=question)
+        assert ('result' in result['calculations'][0]) is accepted

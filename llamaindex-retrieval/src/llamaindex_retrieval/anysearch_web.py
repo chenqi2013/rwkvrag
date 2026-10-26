@@ -107,10 +107,14 @@ async def _search(request, settings, guard, key):
     count = request["max_results"]
     captures = [] if request.get("capture_provider_payload") else None
     hits = []
+    url_results = []
     async with direct_web._client() as client:
-        data = await _post(client, "search", {"query": request["query"],
-                           "max_results": count, "format": "json"}, settings, guard, key, captures)
-        results = data.get("results")
+        if request.get('action') == 'extract':
+            results = [{'url': url, 'title': url} for url in request['urls']]
+        else:
+            data = await _post(client, "search", {"query": request["query"],
+                               "max_results": count, "format": "json"}, settings, guard, key, captures)
+            results = data.get("results")
         if not isinstance(results, list):
             raise WebProviderError("web_upstream_results_not_array")
         candidates = []
@@ -119,6 +123,8 @@ async def _search(request, settings, guard, key):
                 continue
             url = direct_web._public_url(item.get("url"))
             if not url or not _allowed(url, request.get("include_domains")):
+                if request.get('action') == 'extract':
+                    url_results.append({'url': item.get('url'), 'status': 'filtered'})
                 continue
             # Search content can be a decorated snippet, so only /extract can
             # establish fetched status. Preserve every supplied character.
@@ -156,6 +162,9 @@ async def _search(request, settings, guard, key):
             pages = await asyncio.gather(*(extract(url) for url, _, _ in candidates))
         for (url, title, snippet), (full, error) in zip(candidates, pages):
             snapshot = full or snippet
+            url_results.append({'url': url,
+                                'status': 'fetched' if full else 'snippet_only' if snippet else 'failed',
+                                'error': error or ('' if full else 'web_anysearch_extract_empty')})
             text = snapshot[:request["material_characters"]]
             if not text.strip():
                 continue
@@ -169,6 +178,7 @@ async def _search(request, settings, guard, key):
             if len(hits) >= count:
                 break
     result = {"provider": "anysearch", "hits": hits,
+              "url_results": url_results,
               "domain_filter": "returned_urls" if request.get("include_domains") else "none",
               "source_hashes": {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                                 for p in (Path(__file__), Path(direct_web.__file__))}}

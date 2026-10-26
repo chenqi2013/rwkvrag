@@ -267,6 +267,11 @@ async def _search(request, settings, guard=None):
 
 
 async def execute(request, settings, guard=None):
+    if request.get('action') == 'extract':
+        if settings.web_search_provider != 'anysearch':
+            raise WebProviderError('web_direct_url_provider_unsupported')
+        from .anysearch_web import search
+        return await search(request, settings, guard)
     if request.get("action") == "route":
         return await _route(request, settings)
     if request.get("action") == "search":

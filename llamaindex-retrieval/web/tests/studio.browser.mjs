@@ -51,7 +51,8 @@ const requests = [],
   jobs = new Map(),
   errors = [];
 let state = { web: true, ready: true, events: true },
-  next = 0;
+  next = 0,
+  finishAfterRequests = 0;
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, "http://localhost");
@@ -106,7 +107,7 @@ const server = http.createServer(async (req, res) => {
       job = jobs.get(id);
     if (job) {
       job.polls++;
-      const finished = job.polls > 1,
+      const finished = job.polls > 1 && requests.length >= finishAfterRequests,
         failed = job.body.question === "fail";
       const events = state.events
         ? [
@@ -239,6 +240,41 @@ try {
   console.log(
     "PASS parallel requests, scopes, unchanged text, source binding, repeat batch and failure states",
   );
+
+  // Completion is held until all 24 submissions arrive: a serial implementation
+  // cannot finish this batch. Fixtures prove UI behavior, not model throughput.
+  const beforeBatch = requests.length;
+  finishAfterRequests = beforeBatch + 24;
+  await submit(Array.from({ length: 24 }, (_, i) => `比较项目 ${i + 1} 的安装条件、能力与适用边界`).join("\n"));
+  assert.equal(requests.length, finishAfterRequests);
+  assert.equal(new Set(await page.locator("#runs .run").evaluateAll(
+    (cards) => cards.map((card) => card.dataset.jobId),
+  )).size, 24);
+  assert.equal(await page.locator("body.overview").count(), 1);
+  assert.equal(await page.locator(".detail").isVisible(), false);
+  assert.equal(await page.locator("#runs .run").count(), 24);
+  await page.setViewportSize({ width: 3840, height: 2160 });
+  assert.equal(await page.locator("#runs").evaluate((grid) =>
+    getComputedStyle(grid).gridTemplateColumns.split(" ").length), 6);
+  assert.equal(await page.evaluate(() =>
+    document.querySelector("#runs .run:last-child").getBoundingClientRect().bottom <= innerHeight), true);
+  if (process.env.STUDIO_SCREENSHOT_PATH)
+    await page.screenshot({ path: process.env.STUDIO_SCREENSHOT_PATH, fullPage: true });
+  await page.locator("#runs .run").nth(23).click();
+  assert.equal(await page.locator("body.overview").count(), 0);
+  assert.match(await page.locator("#detail-question").textContent(), /项目 24/);
+  assert.equal(await page.locator("#answer").textContent(), original);
+  await page.locator("#overview").click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true);
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.locator("#edit-input").click();
+  await page.locator("#question").fill(Array(33).fill("超量问题").join("\n"));
+  await page.locator("#send").click();
+  assert.equal(requests.length, finishAfterRequests);
+  assert.equal(await page.locator("#phase").textContent(), "请输入 1 至 32 行问题");
+  finishAfterRequests = 0;
+  console.log("PASS 24 concurrent submissions, 4K overview, full answer navigation, mobile layout and batch limit");
 
   state = { web: false, ready: true, events: false };
   await open();

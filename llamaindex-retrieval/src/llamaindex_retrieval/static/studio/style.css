@@ -626,6 +626,29 @@ body.parallel .step small {
 .finished .run-head {
   color: #35815b;
 }
+.failed .run-head {
+  color: #a14a30;
+}
+.run-stages {
+  display: flex;
+  gap: 3px;
+  margin-top: 12px;
+}
+.run-stages span {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: #eaeaec;
+}
+.run-stages .active {
+  background: #e6a43b;
+}
+.run-stages .done {
+  background: #6b9b7d;
+}
+.run-stages .bad {
+  background: #be6d50;
+}
 #runs {
   max-height: 570px;
   overflow: auto;
@@ -815,7 +838,65 @@ button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
+body.overview .detail {
+  display: none;
+}
+.composer-summary {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 13px;
+}
+body.overview .composer-summary {
+  display: flex;
+}
+body.overview:not(.editing-input) .composer .settings,
+body.overview:not(.editing-input) .composer fieldset,
+body.overview:not(.editing-input) .composer .input-row {
+  display: none;
+}
+body.overview #parallel-panel {
+  width: 100%;
+}
+body.overview #parallel-panel .section-heading {
+  justify-content: flex-start;
+}
+body.overview #overview {
+  margin-left: auto;
+}
+body.overview #runs {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+  max-height: none;
+  overflow: visible;
+}
+body.overview .run {
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  padding: 14px;
+}
+body.overview .run h3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 50px;
+}
+body.overview .run-head {
+  font-size: 10px;
+}
+@media (max-width: 1450px) {
+  body.overview #runs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
 @media (max-width: 850px) {
+  body.overview #runs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .settings input {
     width: 190px;
   }
