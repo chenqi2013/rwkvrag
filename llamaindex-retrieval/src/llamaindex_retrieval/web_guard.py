@@ -40,8 +40,11 @@ def retry_after_seconds(value: str | None, *, now: float) -> float | None:
 class WebProviderGuard:
     def __init__(self, path: Path | None, *, min_interval: float = 1.0,
                  auth_cooldown: float = 86400.0, rate_cooldown: float = 60.0,
-                 lease_seconds: float = 50.0):
+                 lease_seconds: float = 50.0, parallel: int = 1):
+        if type(parallel) is not int or not 1 <= parallel <= 16:
+            raise ValueError("invalid provider parallelism")
         self.path = Path(path) if path else None
+        self.parallel = parallel
         self.min_interval = min_interval
         self.auth_cooldown = auth_cooldown
         self.rate_cooldown = rate_cooldown
@@ -99,30 +102,38 @@ class WebProviderGuard:
                 connection.execute("UPDATE provider_guard SET next_at=? WHERE identity=?",
                                    (next_at, identity))
 
-    async def reserve(self, identity: str):
+    def slots(self, identity: str) -> list[str]:
+        # Slot 0 keeps the historical row, so parallel=1 behaves exactly as before.
+        return [identity] + [f"{identity}#{k}" for k in range(1, self.parallel)]
+
+    async def reserve(self, identity: str) -> str:
+        """Lease one free request slot and return its identity for complete()."""
         while True:
-            now = time.time()
-            try:
-                if self.path:
-                    wait, status = await asyncio.to_thread(self._reserve_disk, identity, now)
-                else:
-                    async with self._lock:
-                        next_at, blocked_until, status = self._memory.get(identity, (0.0, 0.0, 0))
-                        if blocked_until > now:
-                            wait = 0.0
-                        elif next_at > now:
-                            wait, status = next_at - now, 0
-                        else:
-                            self._memory[identity] = (now + self.lease_seconds, 0.0, 0)
-                            wait = status = 0
-            except (OSError, sqlite3.Error) as exc:
-                raise WebGuardUnavailable("web_guard_unavailable") from exc
-            if status:
-                raise WebGuardBlocked(status)
-            if not wait:
-                return
+            waits = []
+            for slot in self.slots(identity):
+                now = time.time()
+                try:
+                    if self.path:
+                        wait, status = await asyncio.to_thread(self._reserve_disk, slot, now)
+                    else:
+                        async with self._lock:
+                            next_at, blocked_until, status = self._memory.get(slot, (0.0, 0.0, 0))
+                            if blocked_until > now:
+                                wait = 0.0
+                            elif next_at > now:
+                                wait, status = next_at - now, 0
+                            else:
+                                self._memory[slot] = (now + self.lease_seconds, 0.0, 0)
+                                wait = status = 0
+                except (OSError, sqlite3.Error) as exc:
+                    raise WebGuardUnavailable("web_guard_unavailable") from exc
+                if status:
+                    raise WebGuardBlocked(status)
+                if not wait:
+                    return slot
+                waits.append(wait)
             # Another worker may finish or block the credential before its lease ends.
-            await asyncio.sleep(min(wait, 0.25))
+            await asyncio.sleep(min(min(waits), 0.25))
 
     async def complete(self, identity: str):
         next_at = time.time() + self.min_interval
@@ -147,12 +158,14 @@ class WebProviderGuard:
         else:
             return
         until = now + seconds
+        base = identity.split("#", 1)[0]
         try:
-            if self.path:
-                await asyncio.to_thread(self._block_disk, identity, until, status)
-            else:
-                async with self._lock:
-                    next_at, blocked_until, _ = self._memory.get(identity, (0.0, 0.0, 0))
-                    self._memory[identity] = (next_at, max(blocked_until, until), status)
+            for slot in self.slots(base):
+                if self.path:
+                    await asyncio.to_thread(self._block_disk, slot, until, status)
+                else:
+                    async with self._lock:
+                        next_at, blocked_until, _ = self._memory.get(slot, (0.0, 0.0, 0))
+                        self._memory[slot] = (next_at, max(blocked_until, until), status)
         except (OSError, sqlite3.Error) as exc:
             raise WebGuardUnavailable("web_guard_unavailable") from exc

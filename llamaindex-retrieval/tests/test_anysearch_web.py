@@ -245,3 +245,46 @@ async def test_trial_meta_uses_selected_providers_credentials(tmp_path, monkeypa
     trial.settings.web_anysearch_api_key = type(trial.settings.web_anysearch_api_key)("")
     trial.settings.web_tavily_api_key = type(trial.settings.web_tavily_api_key)("irrelevant")
     assert (await interactive_app.meta())["web_configured"] is False
+
+
+async def test_parallel_guard_slots_extract_pages_concurrently(tmp_path, monkeypatch):
+    active, peak = [0], [0]
+
+    async def handler(request):
+        if request.url.path == "/v1/search":
+            return response({"results": [{"url": f"https://example.org/{i}", "snippet": f"s{i}"} for i in range(4)]})
+        active[0] += 1
+        peak[0] = max(peak[0], active[0])
+        await asyncio.sleep(0.2)
+        active[0] -= 1
+        url = json.loads(request.content)["url"]
+        return response({"url": url, "content": "page " + url[-1]})
+
+    install(monkeypatch, handler)
+    config = settings(tmp_path, web_search_results=4, web_provider_parallel=4)
+    hits, _ = await WebSearchAdapter(config).search("q", full_snapshot=True)
+    assert [h.text for h in hits] == ["page 0", "page 1", "page 2", "page 3"]
+    assert peak[0] > 1
+
+
+async def test_pool_rotates_past_quota_key_without_logging_keys(tmp_path, monkeypatch):
+    seen = []
+
+    def handler(request):
+        key = request.headers['Authorization'].split()[-1]
+        seen.append(key)
+        if key == 'k1':
+            return httpx.Response(402, text='quota')
+        if request.url.path == '/v1/search':
+            return response({'results': [{'url': 'https://example.org/a', 'snippet': 'a'}]})
+        return response({'url': 'https://example.org/a', 'content': 'page'})
+
+    install(monkeypatch, handler)
+    pool = tmp_path / 'pool.keys'
+    pool.write_text('k1\nk2\n')
+    pool.chmod(0o600)
+    config = Settings(_env_file=None, web_search_provider='anysearch', web_anysearch_api_key_pool_file=pool,
+                      web_min_interval_seconds=0, web_guard_path=tmp_path / 'guard.sqlite3')
+    hits, trace = await WebSearchAdapter(config).search('q', full_snapshot=True)
+    assert [h.text for h in hits] == ['page'] and seen[0] == 'k1' and set(seen[1:]) == {'k2'}
+    assert 'k1' not in json.dumps(trace) and 'k2' not in json.dumps(trace)

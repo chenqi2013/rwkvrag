@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>RWKV · 知识与世界，同步思考</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="?scene=two"
+        ><span class="brand-symbol">R</span><strong>RWKV</strong
+        ><span class="brand-caption">知识库 × 网络检索</span></a
+      >
+      <nav id="scenes">
+        <a href="?scene=two" data-scene="two">资料对比</a
+        ><a href="?scene=web" data-scene="web">实时网络</a
+        ><a href="?scene=parallel" data-scene="parallel">并行提问</a>
+      </nav>
+      <div id="readiness">连接中</div>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <div class="eyebrow" id="hero-kicker">RWKV · RESEARCH STUDIO</div>
+          <h1 id="hero-title">资料与问题，一起读懂。</h1>
+          <p id="hero-description">原文并排，逐步阅读，让比较有据可依。</p>
+        </div>
+        <div class="hero-meta">
+          <span class="live-dot"></span
+          ><span id="hero-caption">真实提问 · 实时生成</span>
+          <div class="hero-stat">
+            <b id="batch-time">—</b><span>秒 / 整批用时</span>
+          </div>
+        </div>
+      </section>
+      <section class="composer">
+        <div class="options settings">
+          <label
+            >检索范围
+            <select id="retrieval-mode">
+              <option value="hybrid">知识库 + 网络</option>
+              <option value="knowledge_base">知识库</option>
+              <option value="web">网络</option>
+            </select></label
+          ><label
+            >网络域名
+            <input
+              id="domains"
+              placeholder="沿用服务配置；域名用逗号分隔"
+              aria-label="限定网络来源域名" /></label
+          ><span id="input-hint" class="hint"
+            >每行一个问题，最多 16 个同时提交</span
+          >
+        </div>
+        <fieldset id="knowledge-bases"><legend>选择知识库</legend></fieldset>
+        <div class="input-row">
+          <textarea
+            id="question"
+            rows="3"
+            aria-label="提问内容"
+            placeholder="每行输入一个问题"
+          ></textarea
+          ><button id="send" disabled>
+            <span id="send-label">开始阅读</span><span class="arrow">↗</span>
+          </button>
+        </div>
+      </section>
+      <div class="workspace">
+        <aside id="parallel-panel">
+          <div class="section-heading">
+            <strong>同时进行</strong><span id="batch-count">准备开始</span>
+          </div>
+          <div id="runs" aria-label="本轮问题"></div>
+          <div class="legend"><i></i> 每个问题，独立阅读与回答</div>
+        </aside>
+        <section class="detail">
+          <div class="detail-heading">
+            <div>
+              <span id="detail-label" class="eyebrow">原文到答案</span>
+              <h2 id="detail-question">从原文出发。</h2>
+            </div>
+            <span id="phase" role="status">等待提问</span>
+          </div>
+          <div id="steps" class="steps"></div>
+          <div id="queries" class="query-line">提交后显示本次实际检索词。</div>
+          <div class="section-heading source-heading">
+            <strong id="source-title">论文原文 · 并排阅读</strong>
+            <div class="source-tabs">
+              <button id="view-all" class="tab">全部来源</button
+              ><button id="view-kb" class="tab active">
+                知识库 <b id="kb-count">0</b></button
+              ><button id="view-web" class="tab">
+                网络 <b id="web-count">0</b>
+              </button>
+            </div>
+            <span id="source-state">等待本次取材</span>
+          </div>
+          <div id="sources" class="sources"></div>
+          <section class="answer-section">
+            <div class="answer-heading">
+              <strong><span class="answer-symbol">✦</span> RWKV 回答</strong
+              ><span id="answer-state">以选中证据为依据</span>
+            </div>
+            <div id="answer" class="answer">
+              <span class="muted">答案将在这里实时生成。</span>
+            </div>
+            <div id="citations" class="citations"></div>
+          </section>
+        </section>
+      </div>
+      <footer>
+        <span>RWKV <b>Research Studio</b></span
+        ><span id="footer-note">原文可见 · 过程可见 · 引用可追溯</span
+        ><span>KNOWLEDGE. CONNECTED.</span>
+      </footer>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

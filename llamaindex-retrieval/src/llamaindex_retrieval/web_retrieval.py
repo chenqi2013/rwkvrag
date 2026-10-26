@@ -54,7 +54,8 @@ class WebSearchAdapter:
             min_interval=getattr(settings, "web_min_interval_seconds", 1.0),
             auth_cooldown=getattr(settings, "web_auth_cooldown_seconds", 86400.0),
             rate_cooldown=getattr(settings, "web_rate_cooldown_seconds", 60.0),
-            lease_seconds=getattr(settings, "web_search_timeout", 45) + 5)
+            lease_seconds=getattr(settings, "web_search_timeout", 45) + 5,
+            parallel=getattr(settings, "web_provider_parallel", 1))
 
     async def _execute(self, request, timeout):
         async with self.slots:

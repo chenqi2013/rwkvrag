@@ -8,6 +8,7 @@ truncation, answer cleanup, citation repair, or implicit state reuse in this mod
 from __future__ import annotations
 
 import asyncio
+from time import monotonic
 import base64
 from copy import deepcopy
 from dataclasses import dataclass
@@ -180,6 +181,7 @@ class NativeRWKVClient:
             raise ValueError("recorder must be callable")
         self._recorder = recorder
         self.runtime_observation = None
+        self._catalog_retry_at, self._catalog_error = 0.0, None
         self._headers = {"Content-Type": "application/json"}
         if api_key:
             self._headers["Authorization"] = f"Bearer {api_key}"
@@ -411,14 +413,29 @@ class NativeRWKVClient:
                 record["queue_ms"] = (acquired - started) * 1000
                 async with asyncio.timeout(self.timeout_seconds):
                     if self._local_tokenizer is not None:
-                        if self.runtime_observation is None:
-                            await self.verify_model_identity()
-                        record['runtime_observation'] = deepcopy(self.runtime_observation)
-                        matching = [m for m in self.runtime_observation['models']['response']['data']
-                                    if m.get('id') == self.model]
+                        if self.runtime_observation is None and monotonic() >= self._catalog_retry_at:
+                            try:
+                                await self.verify_model_identity()
+                            except (httpx.HTTPStatusError, httpx.RequestError) as error:
+                                if (isinstance(error, httpx.HTTPStatusError)
+                                        and error.response.status_code < 500):
+                                    raise
+                                # A catalog outage must not block generation: the served
+                                # model is still checked on every completion response.
+                                self._catalog_retry_at = monotonic() + 60
+                                self._catalog_error = (f'HTTP {error.response.status_code}'
+                                    if isinstance(error, httpx.HTTPStatusError) else type(error).__name__)
+                        if self.runtime_observation is not None:
+                            record['runtime_observation'] = deepcopy(self.runtime_observation)
+                            server_limit = next(m for m in self.runtime_observation['models']['response']['data']
+                                                if m.get('id') == self.model)['max_model_len']
+                        else:
+                            record['runtime_observation'] = {'catalog_status': 'unavailable',
+                                'error': self._catalog_error, 'context_limit': 'configured_window_only',
+                                'scope': 'served model checked from completion response only'}
+                            server_limit = self.context_window_tokens
                         tokens = self._local_tokenizer.encode(native.prompt)
-                        token_data = {'tokens': tokens, 'count': len(tokens),
-                                      'max_model_len': matching[0]['max_model_len']}
+                        token_data = {'tokens': tokens, 'count': len(tokens), 'max_model_len': server_limit}
                         record['local_tokenization'] = {'vocabulary_sha256': self._local_tokenizer.sha256,
                             'input_ids': tokens, 'server_ids_verified': False,
                             'scope': 'pinned CPU tokenizer; server IDs checked on completion'}

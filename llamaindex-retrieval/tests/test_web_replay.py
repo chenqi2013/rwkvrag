@@ -62,24 +62,27 @@ async def test_replay_miss_is_an_acquisition_failure_with_no_live_fallback(tmp_p
         raise AssertionError('network must never be used for replay misses')
 
     monkeypatch.setattr(direct_web, '_client', forbidden)
-    trial = interactive_app.Trial({'pipeline': 'needs', 'settings': {},
+    trial = interactive_app.Trial({'pipeline': 'flat', 'settings': {},
         'admin_base_url': 'http://localhost:1', 'records_dir': str(tmp_path / 'records'),
         'web_replay': {'mode': 'replay', 'store': str(tmp_path / 'empty')}})
     trial.knowledge_bases = AsyncMock(return_value=[])
-    monkeypatch.setattr(interactive_app.interactive_funnel, 'contextualize', AsyncMock(return_value=('q', {})))
 
-    async def answer(model, question, *, acquire, **kwargs):
-        assert await acquire('q', ['web']) == []
-        return {'answer': {}}
+    async def answer(model, question, *, search, **kwargs):
+        try:
+            await search('q')
+        except Exception as error:
+            return {'answer': {}, 'errors': [{'stage': 'acquire', 'error': getattr(error, 'safe_code', '')}],
+                    'resolved_question': 'q', 'relation': '新问题', 'telemetry': {},
+                    'acquisition_incomplete': True}
+        raise AssertionError('replay miss must fail')
 
-    monkeypatch.setattr(interactive_app.interactive_needs, 'answer', answer)
+    monkeypatch.setattr(interactive_app.interactive_flat, 'answer', answer)
     trial.web._execute = AsyncMock(side_effect=AssertionError('live search called'))
     job = {'id': 'a' * 32, 'question': 'q', 'status': 'queued'}
     try:
         await trial.run(job, interactive_app.Question(question='q', retrieval_mode='web'))
         saved = json.loads((tmp_path / 'records' / ('a' * 32 + '.json')).read_text())
-        assert saved['acquisition'][0]['status'] == 'failed'
-        assert saved['acquisition'][0]['error'] == 'web_replay_miss'
+        assert saved['result']['errors'] == [{'stage': 'acquire', 'error': 'web_replay_miss'}]
         assert saved['result']['acquisition_incomplete'] is True
         trial.web._execute.assert_not_awaited()
     finally:

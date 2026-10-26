@@ -39,10 +39,12 @@ class Settings(BaseSettings):
     web_tavily_api_key_file: Path | None = None
     web_anysearch_api_key: SecretStr = SecretStr("")
     web_anysearch_api_key_file: Path | None = None
+    web_anysearch_api_key_pool_file: Path | None = None
     web_anysearch_extract_timeout: float = Field(default=8, ge=0.01, le=30, allow_inf_nan=False)
     web_searxng_base_url: str = ""
     web_guard_path: Path | None = None
     web_min_interval_seconds: float = Field(default=1.0, ge=0, le=60)
+    web_provider_parallel: int = Field(default=1, ge=1, le=16)
     web_auth_cooldown_seconds: float = Field(default=86400, ge=1, le=86400)
     web_rate_cooldown_seconds: float = Field(default=60, ge=1, le=3600)
     web_router_base_url: str | None = None
@@ -115,7 +117,7 @@ class Settings(BaseSettings):
     native_request_timeout_seconds: float | None = Field(
         default=None, gt=0, le=3600, allow_inf_nan=False)
     native_context_window_tokens: int = Field(default=16384, ge=1024)
-    native_max_concurrency: int = Field(default=32, ge=1, le=256)
+    native_max_concurrency: int = Field(default=32, ge=1, le=1024)
     # Explicit material-only candidate; supplied originals are read in full.
     native_material_reading: Literal["direct", "question_documents_v1"] = "direct"
     native_document_read_concurrency: StrictInt = Field(default=32, ge=1, le=32)
