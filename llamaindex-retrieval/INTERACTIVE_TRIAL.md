@@ -29,15 +29,17 @@
 
 知识库ID须使用当前服务返回的实际ID。导入成功后替换当前卡片清单；有任务运行时不能导入。失败保留原卡片。空域名数组表示不限制域名。并行场景修改问题文字保留该卡片的来源设置，修改来源只影响该卡片下一次提交；已提交请求保留快照。其他两个场景使用整批输入，编辑导入文字会清除批次预设并恢复手选范围。
 
-## 唯一试用流程：flat v8
+## 唯一试用流程：flat v9
 
-`pipeline: "flat"` 使用 `interactive-flat-quotes-v8`：一次规划、取材与并行逐字摘抄、一次终答、可选独立核对。旧 parallel/lean/needs/funnel 试用流程已删除；并行提问是多个独立 flat 任务，不是恢复旧流程。
+`pipeline: "flat"` 使用 `interactive-flat-quotes-v9`：一次规划、取材与并行逐字摘抄、一次终答、可选独立核对。旧 parallel/lean/needs/funnel 试用流程已删除；并行提问是多个独立 flat 任务，不是恢复旧流程。
 
 模型决定本轮关系（新问题/追问/更正）、检索词、所问对象、信息项与是否计算。信息项必须能绑定用户原话。直接查找数值不自动触发算术。规划和阅读要求紧凑 JSON；阅读省略无引文的空条目，但仍须检查所有信息项。
 
-少量上传文件全部读取；超过 `flat_title_options.read_all_below` 时按文件标题与对象名字面匹配选择。使用已有解析快照的原文和哈希，连续正文按重叠窗口阅读。`max_windows_per_source` / `kb_max_windows` 是显式资源上限，超出会留下 `windows_limited` 诊断，不表示已经读完全部资料。
+少量上传文件全部读取；超过 `flat_title_options.read_all_below` 时按文件标题与对象名字面匹配选择。使用已有解析快照的原文和哈希，连续正文按重叠窗口阅读。用户通过 `web_source_urls` 指定的网页与上传资料共用 `kb_max_windows` 数量上限，网页窗口大小仍为 `window_chars`；搜索所得网页使用 `max_windows_per_source`。超出上限会留下 `windows_limited` 诊断，不表示已经读完全部资料。
 
 相邻同源窗口最多两窗合并。只有模型客户端提供无生成的实际 token 预算检查且完整输入/输出预算通过才合并；失败拆回完整窗口，不截掉文字。跨窗引文优先绑定完整引用，再绑定实际展示过的分句，不查未展示的间隙。
+
+阅读输出预算随本次信息项与资料窗口数量调整，范围为1400至4096 token。输出因长度结束时，独立重读可提高预算至原来的两倍，仍不超过4096；原始失败保留，未闭合的JSON不会被程序补齐或作为部分证据使用。
 
 阅读引文容量随实际展示材料长度变化，完整JSON须通过Schema校验。语法/类型失败或长度耗尽最多重读一次，两次独立调用及原输出均保留，不补写JSON。名称字面匹配用于检索和审计，不能替代模型对跨语言指代和事实支持的判断。
 
@@ -50,7 +52,9 @@ Writer 只接收选中的逐字引文，保留来源URL及发布时间/抓取时
 - 行为：`supplement`（true）、`review`（true）、`retry_repeated_points`（true）。
 - 可选输出契约：`read_require_assessment`（false）、`final_response_style`（`standard`）。
 
-`read_require_assessment: true`要求Reader至少输出一条资料与信息项的判断记录，两个引文数组仍可都为空；空记录不会变成证据，也不会因此调用Writer。此选项改变生成契约，需单独验证漏摘与误摘，不能由记录非空推断召回成功。`final_response_style: "concise"`让模型在`answer`中完整回答所有要求，`points`生成空数组，`unknown`仍使用字符串保留缺项；答案仍可分段，长度预算不变。它不删除已经生成的句子，也不替代事实核验。默认`standard`保持原有补充要点行为。
+`read_require_assessment: true`要求Reader至少输出一条资料与信息项的判断记录，两个引文数组仍可都为空；空记录不会变成证据。此选项改变生成契约，需单独验证漏摘与误摘，不能由记录非空推断召回成功。`final_response_style: "concise"`让模型在`answer`中完整回答所有要求，`points`生成空数组，`unknown`仍使用字符串保留缺项；答案仍可分段，长度预算不变。它不删除已经生成的句子，也不替代事实核验。默认`standard`允许补充与问题相关且不重复的要点。
+
+当前阶段提示集中在 `src/llamaindex_retrieval/flat_prompts.py`，协议为 `interactive-flat-quotes-v9`。准备训练数据时应绑定同版本提示、聊天模板及字段结构；保留原数据，通过另一个版本记录迁移。简短模式使用自己的提示，避免同时要求补充要点和生成空要点。只有计算阶段实际得到结果时才追加计算说明；普通来源事实不要求以“按题设”开头。训练完成后仍需分别验证阅读、终答和真实检索结果，不能以格式一致代替答案验收。
 
 `flat_title_options` 支持 `read_all_below`（12）与 `limit`（6）。Web 提取并发由 `web_provider_parallel` 和 `web_search_concurrency` 控制。`native_max_concurrency` 默认 32，可配置 1–1024；这只是调度上限，部署前须测量实际模型容量，并确认后端能隔离并发请求的 State。
 

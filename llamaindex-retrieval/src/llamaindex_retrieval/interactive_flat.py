@@ -25,67 +25,20 @@ from zoneinfo import ZoneInfo
 from llama_index.core import Document
 from jsonschema import Draft202012Validator, ValidationError
 
+from .flat_prompts import (
+    CALC, ISSUES, PLAN, READ, READ_ASSESSMENT, REVIEW,
+    CALC_FINAL as CALC_FINAL,
+    FINAL as FINAL,
+    FINAL_CONCISE as FINAL_CONCISE,
+    final_instruction,
+)
 from .interactive_sources import add_sources, digest, gather, obj, unique_object
 from .verbatim_chunking import packed_verbatim_nodes
 
-PROTOCOL = 'interactive-flat-quotes-v8'
+PROTOCOL = 'interactive-flat-quotes-v9'
 CLEANING = 'markdown-links-images-v1'
 WEEKDAYS = '一二三四五六日'
 RELATIONS = ['新问题', '追问', '更正']
-ISSUES = ['相反或不一致的原文没有提到', '数值单位或计量基准与原文不一致', '把其他对象的内容当作所问对象', '回答中有原文找不到的内容']
-PLAN = ('判断用户这一轮是新问题、追问还是更正，relation写“新问题”“追问”或“更正”：原话中有“它”“这个”“那”“呢”等指代、'
-        '或省略了所问对象时是追问；原话自己写明了一个与前几轮无关的对象时是新问题。'
-        'question写完整的问题：追问和更正要把指代换成前几轮中的具体对象（例如具体型号或版本号），question中不能再出现“它”“这个”等指代；'
-        '新问题不受前几轮影响。needs列出用户实际问到的内容，通常1到3项；用户要求分别说明几个对象或比较几个方面时，'
-        '每个独立要求各列一项，最多8项。不要把多个独立要求压成笼统一项。每项写text和user_words，'
-        'user_words必须从“用户本轮原话”中原样照抄一段文字，表示这一项来自原话的哪里。'
-        'aspects写回答时值得补充的相关方面，例如时间、条件、背景、对比，最多4项，可以为空。'
-        'queries写1到2条互补的检索句，每条都写出要查的对象；问到今天、最新等时写明具体日期或年份。'
-        'entities只写所问的具体对象名称（产品、型号、地点、机构、人物），比较类问题写出每个被比较的对象，追问时写前几轮中被指代的具体对象；'
-        'metrics写所问的数值指标，例如中间价、收盘价、续航里程、门票价格，没有就为空。'
-        'names只写entities中的专有名称（具体产品型号、公司机构、地名、人名），不写“新赛季”“总冠军”“大模型”这类泛称，没有就为空。'
-        'assumptions写你为理解问题所做的假设：名称可能指多种事物时写明按哪一种理解，问题依赖地区或版本而原话没说时写明按哪个理解，没有就为空。'
-        'calculation填true表示回答需要用找到的数字做计算（换算、求差、求和、相除等），直接查找已有数值时填false。'
-        '只输出紧凑的单行JSON，不换行、不缩进；字段内容简短准确，无需补充的列表写[]。不要回答问题。')
-READ = ('只从上面各份资料“正文开始”到“正文结束”之间的文字里摘抄。逐字照抄原文中连续的一段文字，不改写、不拼接、不总结，'
-        '不摘抄正文标记外由程序附加的资料标题、发布/抓取时间提示或信息项本身。正文内原有的标题、日期、版本记录和表格，只要直接对应问题就可以逐字摘抄。对每份资料的每个信息项：answer_quotes摘抄直接回答该项的句子，最多3句；'
-        'detail_quotes摘抄同一对象的相关细节，例如时间、数值和单位、条件、原因、背景、对比或不同说法，最多5段，每段可以是连续的两三句。'
-        '只摘抄确实在说所问对象的内容，名称不同的其他对象不要摘抄。仍须检查每份资料的每个信息项；'
-        'answer_quotes和detail_quotes都为空的条目不要输出，全部没有相关引文时只输出{"items":[]}。'
-        '只输出紧凑的单行JSON，不换行、不缩进。')
-READ_ASSESSMENT = READ.replace(
-    'answer_quotes和detail_quotes都为空的条目不要输出，全部没有相关引文时只输出{"items":[]}。',
-    'items至少输出一条资料与信息项的判断记录。相关引文填入answer_quotes和detail_quotes；'
-    '没有相关原文时，仍输出所检查的source和need，并将两个引文数组都写成[]，不得为填满记录而摘抄无关文字。')
-FINAL = ('依据上面摘抄的原文回答问题。answer先直接回答用户所问；按用户要求的篇幅与结构组织，长文请求可以分段充分说明；points逐条写出原文中与问题相关的其他要点，'
-         '例如时间、数值、条件、原因、对比、适用范围和各来源说法的差异，原文充分时写3到8条。每条要点用中文自己的话概括一个与问题直接相关的事实，'
-         '与answer和其他要点的内容都不相同，句末标注来源编号；不要照抄整段外文原文，不写与所问对象无关的内容；'
-         '问“最新”时先区分稳定版、预览版及计划，再在同类中按原文时间判断；抓取时间不是发布日期。'
-         '逐一核对用户的要求，对每个对象保留其版本、日期、条件与数值的对应关系，不能交换来源。要点用中文写，不照抄外文段落；'
-         '有“本次理解的假设”时，answer开头先写明按哪种理解回答；'
-         '比较类问题先分别写出每个对象对应的数值或特点并标注来源，再给出比较结论，结论中的数值必须与这些数值一致；'
-         '某个对象没有原文时说明无法比较，不能用别的对象代替；'
-         '“不支持”“没有”“未发布”这类否定也必须有原文明确写出，原文没有提到时写未知，不能写成否定；'
-         '原文后〔〕中是代码计算的日期判断，以它为准；'
-         'unknown写没有任何原文支持的信息项，全部有支持时为空字符串。'
-         '每个事实后用[1]、[2]这样的来源编号标注。代码或类型表达式中的方括号保持原样，并用反引号包住代码。数值照原文写出单位和计量基准，例如“每100美元”。'
-         '几条原文说法不同时，先看是否指同一对象、同一版本、同一时间：不同版本或不同时间的不是冲突，以最新的为准并写出版本或时间；'
-         '同一对象同一时间却说法不同时，写出各来源的说法并说明不一致。原文说的对象与所问对象名称不一致时，不能当作所问对象的事实；'
-         '原文数值对应的指标与所问指标不同时（例如问中间价、原文是牌价），不能作为answer，可在要点中写明它是哪种指标。'
-         '找不到所问对象本身的原文时，answer写未知，points只能写原文中关于所问对象本身的内容，没有就让points为空。'
-         '事实只用摘抄原文中的内容；问题明确给定的假设和数值可用于计算，须说明“按题设”，不能把题设说成来源已证实的事实。'
-         '可依据所选原文与题设推导比较或计算结论，写清依据、条件和计算过程；原文不必直接写出推导后的结果。'
-         '不补充常识，不重复同一句话，不复制资料标题或“今天是”这类说明。引用标有搜索摘要的原文时注明（据搜索摘要）。')
-FINAL_CONCISE = (FINAL + '本次使用集中回答格式：answer完整回答用户列出的每个问题，每个对象的事实分别标注正确来源；'
-                 '可在answer内分段，不必另添用户没有问的背景、性能、实验设置或其他要点。points固定为空数组[]，不要求补充条数。'
-                 'unknown仅写尚未回答且确实缺少依据的要求，已经回答的要求不得再列为未知；全部已回答时unknown写空字符串。')
-CALC = ('回答问题需要用上面原文中的数字做计算。为每个需要计算的结果写label和expression：expression可用阿拉伯数字、科学计数法、+ - * / **和括号，'
-        '以及单参数函数sqrt（平方根）、log或ln（自然对数）、log10（常用对数）、exp（自然指数）、abs（绝对值）。**表示乘方。'
-        '数字必须是原文或问题中出现的数字（单位换算系数也必须出现在原文或问题中），形式如“单价*人数+另一单价”，用上面原文中的实际数字代入。'
-        '只写确实需要计算的结果，原文已直接给出的数字不用写。不要写计算结果，代码会计算。')
-REVIEW = ('对照上面的原文检查这个回答，只找确实存在的以下问题：' + '；'.join(f'{i}. {k}' for i, k in enumerate(ISSUES, 1)) +
-          '。每条写kind、detail、相关来源编号sources，在answer_quote中逐字照抄回答里有问题的那一句，并在evidence中逐字照抄能证明这个问题的一句原文。'
-          '回答与原文一致的地方不是问题；日期、数值写法不同但意思相同不是问题。大多数回答没有问题，没有问题就让issues为空。不补充常识。')
 IMAGE = re.compile(r'!\[[^\]]*\]\([^)]*\)')
 LINK = re.compile(r'\[([^\]]*)\]\((?:[^()]|\([^)]*\))*\)')
 JUNK_LINE = re.compile(r'^\s*(?:javascript:\S*|https?://\S+|\[\s*\]|[-*•|]\s*)\s*$')
@@ -368,6 +321,7 @@ class Flat:
         self.assumptions, self.calculation, self.calc_event, self.calculations = [], False, None, []
         self.need_bindings, self.dropped_needs = [], []
         self.sources, self.views, self.errors, self.acquisition = [], {}, [], []
+        self.source_window_limits = {}
         self.reads, self.quotes, self.unbound = [], {}, []
         self.pending_snippets, self.flush_task = [], None
         self.tasks = set()
@@ -567,8 +521,9 @@ class Flat:
         return True
 
     # ---------- acquisition and reading ----------
-    async def publish(self, source):
+    async def publish(self, source, *, requested=False):
         count = len(self.sources)
+        previous_limit = self.source_window_limits.get(source.id)
         try:
             add_sources(self.sources, [source])
         except ValueError:
@@ -576,7 +531,13 @@ class Flat:
             self.errors.append({'stage': 'acquire', 'status': 'duplicate_source_title_changed', 'source_id': source.id})
             return
         if len(self.sources) == count:
-            return
+            if (not requested or source.source != 'web' or previous_limit is None
+                    or previous_limit >= self.kb_max_windows):
+                return
+            # A follow-up may already have scheduled the old cited page under
+            # the search limit. An explicit fetch can upgrade that same source,
+            # including canonical redirects, without reading its prefix twice.
+            source = next(s for s in self.sources if s.id == source.id)
         body = source.snippet if source.metadata.get('content_status') != 'snippet_only' else ''
         view = clean_markup(body) if source.source == 'web' else body
         snippet = source.metadata.get('search_snippet') if source.source == 'web' else None
@@ -590,6 +551,11 @@ class Flat:
         windows = []
         upload = source.source == 'knowledge_base'
         size, limit = (self.kb_window_chars, self.kb_max_windows) if upload else (self.window_chars, self.max_windows)
+        # A page explicitly supplied by the user is selected reading material,
+        # including a fetch that resolves to a different canonical URL. Preserve
+        # the web window size; only its count limit follows uploaded documents.
+        if source.source == 'web' and requested:
+            limit = self.kb_max_windows
         if view.strip():
             nodes = list(packed_verbatim_nodes(Document(text=view, id_=source.id), size,
                                                self.window_overlap, absorb_whitespace=True))
@@ -598,7 +564,11 @@ class Flat:
             self.errors.append({'stage': 'read', 'status': 'windows_limited', 'source_id': source.id,
                                 'windows': len(windows), 'read': limit})
             windows = windows[:limit]
-        self.emit('source_ready', source=source.model_dump(mode='json'),
+        self.source_window_limits[source.id] = limit
+        start = previous_limit or 0
+        if previous_limit is not None and len(windows) <= start:
+            return
+        self.emit('source_ready', source=source.model_dump(mode='json'), requested=requested,
                   reading_view=dict(self.views[source.id]), windows=[list(w) for w in windows])
         if not windows:
             if snippet:
@@ -612,7 +582,8 @@ class Flat:
         # Pack complete neighbouring windows only when the real model can
         # preflight the combined prompt and output budget without generation.
         batch_size = self.read_window_batch if callable(getattr(self.model, 'check_budget', None)) else 1
-        segments = [(source, window, index == 0 and bool(snippet)) for index, window in enumerate(windows)]
+        segments = [(source, window, index == 0 and bool(snippet))
+                    for index, window in enumerate(windows) if index >= start]
         for index in range(0, len(segments), batch_size):
             self.spawn(self.read(segments[index:index + batch_size]))
         self.progress(f'取材与阅读 · {len(self.sources)} 份资料 · 已读 {len(self.reads)}')
@@ -662,6 +633,10 @@ class Flat:
         properties = {'items': {'type': 'array', 'items': item, 'maxItems': len(self.needs) * len(segments)}}
         if self.read_require_assessment:
             properties['items']['minItems'] = 1
+        # Reserve for the actual source/need matrix, instead of giving eight
+        # needs the same completion budget as a single lookup. Whole-window
+        # preflight below uses this exact reservation before batching.
+        output_limit = min(4096, max(1400, 700 + 350 * len(self.needs) * len(segments)))
         if len(segments) > 1 and any(window is not None for _, window, _ in segments):
             check = {'source_ids': ids, 'windows': [window for _, window, _ in segments],
                      'prompt_sha256': digest(prompt), 'completion_attempted': False}
@@ -669,7 +644,7 @@ class Flat:
             try:
                 async with asyncio.timeout_at(self.reading_deadline):
                     budget = await self.model.check_budget([{'role': 'user', 'content': prompt}],
-                        structured_schema=obj(properties), max_tokens=1400,
+                        structured_schema=obj(properties), max_tokens=output_limit,
                         assistant_prefill='<think></think', temperature=0, seed=11,
                         stage='reader', evidence_ids=ids)
                 check.update(status=budget.status, trace=budget.trace)
@@ -688,7 +663,7 @@ class Flat:
                 return
         try:
             async with asyncio.timeout_at(self.reading_deadline):
-                event = await self.call('read', prompt, properties, 1400, evidence=ids)
+                event = await self.call('read', prompt, properties, output_limit, evidence=ids)
         except TimeoutError:
             self.errors.append({'stage': 'read', 'status': 'deadline', 'source_ids': ids})
             return
@@ -703,7 +678,8 @@ class Flat:
                             '只摘直接相关的原文，不重复引文。\n\n' + prompt)
             try:
                 async with asyncio.timeout_at(self.reading_deadline):
-                    retry = await self.call('read', retry_prompt, properties, 1400, evidence=ids)
+                    retry_limit = min(4096, output_limit * 2) if event['status'] == 'length' else output_limit
+                    retry = await self.call('read', retry_prompt, properties, retry_limit, evidence=ids)
             except TimeoutError:
                 self.errors.append({'stage': 'read', 'status': 'deadline', 'source_ids': ids})
                 return
@@ -791,7 +767,7 @@ class Flat:
                 async with asyncio.timeout(self.acquisition_timeout):
                     sources = await self.fetch_urls(urls) if urls is not None else await self.search(query)
                     for source in sources:
-                        await self.publish(source)
+                        await self.publish(source, requested=urls is not None)
                 receipt['status'] = 'completed'
             except asyncio.CancelledError:
                 receipt['status'] = 'cancelled'
@@ -934,16 +910,15 @@ class Flat:
         if self.calculation:
             await self.calculate()
         self.progress('依据摘抄原文生成回答')
-        # Enough quoted material requires points; thin material may answer in one sentence.
         missing = self.missing_needs()
         concise = self.final_response_style == 'concise'
-        least = 2 if len(ids) >= 4 and not missing and not concise else 0
         gap = ('\n阅读阶段尚未选出直接回答句的信息项：' + '、'.join(self.needs[i - 1] for i in missing)
-               + '。这不是事实缺失的判定。请检查所选原文和题设是否足以推导或计算；依据不足才写未知。') if missing else ''
-        instruction = FINAL_CONCISE if concise else FINAL
-        prompt = f'{self.materials}\n\n{self.ask_block()}{gap}\n\n{instruction}'
+               + '。这不是事实缺失的判定。请检查全部所选回答句和细节句是否已经包含该项依据；依据不足才写未知。') if missing else ''
+        instruction = final_instruction(concise=concise, has_calculations=(self.calculation
+                                        and any('result' in row for row in self.calculations)))
+        prompt = f'{self.materials}\n\n{self.ask_block(aspects=not concise)}{gap}\n\n{instruction}'
         schema = {'answer': {'type': 'string', 'minLength': 1, 'maxLength': 4000},
-                  'points': {'type': 'array', 'minItems': least, 'maxItems': 0 if concise else 8,
+                  'points': {'type': 'array', 'minItems': 0, 'maxItems': 0 if concise else 8,
                              # Each point ends with its source numbers; the numbers are checked in code.
                              'items': {'type': 'string', 'pattern': POINT_PATTERN}},
                   'unknown': {'type': 'string', 'maxLength': 800}}
