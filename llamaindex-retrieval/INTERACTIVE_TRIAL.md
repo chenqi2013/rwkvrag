@@ -5,7 +5,7 @@
 - `/studio/`：随 Python 包提供的展示页，无需单独构建。支持每行一个问题、最多 32 问同时提交、知识库与网络来源选择、实际执行步骤、原文并排、引用高亮和原始回答。超过 8 问自动进入并行总览，点击问题打开完整答案与原文，再用“并行总览”返回；阶段条只反映实际事件。提交数量不代表模型同时运行的序列数，实际吞吐和质量须另测。
 - `/admin/#/try`：原有 React 试用页，支持父任务追问与完整记录检查，需要构建前端。
 
-Studio 的每个问题都是独立任务，共用当前选择的检索范围和知识库；不会自动作为上一题的追问。页面不附带训练题、预期答案或演示原文。离开或刷新页面不表示后台任务已取消；没有浏览器持久化或自动重发。需要追问或取消指定任务时使用原有试用页/API。
+Studio 的每个问题都是独立任务，不会自动作为上一题的追问。手动输入的整批问题共用当前选择的检索范围和知识库；导入清单可为每题分别指定范围。页面不附带训练题、预期答案或演示原文。离开或刷新页面不表示后台任务已取消；没有浏览器持久化或自动重发。需要追问或取消指定任务时使用原有试用页/API。
 
 ## 操作示例：24题同时提问
 
@@ -17,6 +17,17 @@ Studio 的每个问题都是独立任务，共用当前选择的检索范围和�
 4. 点击任一问题查看完整回答和引用原文，用“并行总览”返回全部问题。需要修改问题时重新展开输入区。
 
 比较论文或项目时，先将资料接入知识库，或者在问题中给出提供方可以获取正文的公开页面URL。直接获取URL正文不等于导入整个GitHub仓库、Wiki或其所有链接；获取失败仍须检查记录。页面支持最多32个独立问题，实际同时执行的模型请求数由服务端配置及容量决定。
+
+也可点击“导入问题清单”，选择UTF-8 JSON文件。顶层为数组，每行仅包含以下四个字段：
+
+```json
+[
+  {"question": "比较知识库中的两份方案。", "retrieval_mode": "knowledge_base", "knowledge_base_ids": ["your-kb-id"], "web_include_domains": []},
+  {"question": "查看最近的官方发布公告。", "retrieval_mode": "web", "knowledge_base_ids": [], "web_include_domains": ["example.org"]}
+]
+```
+
+知识库ID须使用当前服务返回的实际ID。导入后展开范围清单逐题核对；空域名数组表示不限制域名。清单不接受答案字段。修改问题文字、检索方式或知识库选择会清除整批导入预设，后续提交重新使用可见设置；重新导入可恢复每题独立范围。问题卡片显示该次请求实际采用的范围。
 
 ## 唯一试用流程：flat v8
 
@@ -37,6 +48,9 @@ Writer 只接收选中的逐字引文，保留来源URL及发布时间/抓取时
 - 阅读：`window_chars`（2400）、`window_overlap`（200）、`max_windows_per_source`（4）、`kb_window_chars`（6000）、`kb_max_windows`（40）、`read_window_batch`（2）、`snippet_batch`（4）。
 - 资源：`deadline_seconds`（180）、`acquisition_timeout`（70）、`final_reserve_seconds`（50）、`final_quote_limit`（40）、`per_need_limit`（12）。
 - 行为：`supplement`（true）、`review`（true）、`retry_repeated_points`（true）。
+- 可选输出契约：`read_require_assessment`（false）、`final_response_style`（`standard`）。
+
+`read_require_assessment: true`要求Reader至少输出一条资料与信息项的判断记录，两个引文数组仍可都为空；空记录不会变成证据，也不会因此调用Writer。此选项改变生成契约，需单独验证漏摘与误摘，不能由记录非空推断召回成功。`final_response_style: "concise"`让模型在`answer`中完整回答所有要求，`points`生成空数组，`unknown`仍使用字符串保留缺项；答案仍可分段，长度预算不变。它不删除已经生成的句子，也不替代事实核验。默认`standard`保持原有补充要点行为。
 
 `flat_title_options` 支持 `read_all_below`（12）与 `limit`（6）。Web 提取并发由 `web_provider_parallel` 和 `web_search_concurrency` 控制。`native_max_concurrency` 默认 32，可配置 1–1024；这只是调度上限，部署前须测量实际模型容量，并确认后端能隔离并发请求的 State。
 

@@ -19,6 +19,7 @@ class Model:
         self.detail_quotes = detail_quotes if detail_quotes is not None else ['3.1版本于10月1日上线']
         self.final, self.relation, self.issues = final, relation, list(issues)
         self.points = []
+        self.unknowns = ''
         self.names = ['雾岭']
         self.metrics = []
         self.assumptions, self.calculation, self.calcs = [], False, []
@@ -32,11 +33,12 @@ class Model:
             value = {'relation': self.relation, 'question': self.resolved_question, 'needs': self.needs,
                      'aspects': ['上线时间'], 'queries': ['雾岭 最新版本'], 'entities': ['雾岭'], 'metrics': self.metrics, 'names': self.names,
                      'assumptions': self.assumptions, 'calculation': self.calculation}
-        elif prompt.rstrip().endswith(flat.READ):
+        elif prompt.rstrip().endswith((flat.READ, flat.READ_ASSESSMENT)):
             value = {'items': [{'source': 1, 'need': 1, 'answer_quotes': self.answer_quotes,
                                 'detail_quotes': self.detail_quotes}]}
-        elif prompt.rstrip().endswith(flat.FINAL):
-            value = {'answer': self.final, 'points': self.points, 'unknown': ''}
+        elif prompt.rstrip().endswith((flat.FINAL, flat.FINAL_CONCISE)):
+            unknown = self.unknowns if prompt.rstrip().endswith(flat.FINAL_CONCISE) else ''
+            value = {'answer': self.final, 'points': self.points, 'unknown': unknown}
             self.final_prompt = prompt
         elif prompt.rstrip().endswith(flat.CALC):
             value = {'calculations': self.calcs}
@@ -98,6 +100,73 @@ async def test_answer_and_detail_quotes_bind_and_review_runs_without_changing_an
     assert '值得补充的方面：上线时间' in read_prompt and 'sha256' not in read_prompt
     assert '今天是2026年10月22日（星期四，北京时间09:00），昨天是10月21日（星期三），明天是10月23日（星期五），后天是10月24日（星期六）。' in final_prompt
     assert '发布：未知｜抓取：2026-10-22 07:30（提问当天）' in final_prompt
+
+
+async def test_explicit_read_assessment_allows_no_evidence_without_calling_writer():
+    model = Model(answer_quotes=[], detail_quotes=[])
+    result = await run(model, [web()], read_require_assessment=True)
+    prompt, options = next((p, k) for p, k in model.prompts if p.endswith(flat.READ_ASSESSMENT))
+    schema = options['structured_schema']['properties']['items']
+    assert schema['minItems'] == 1
+    assert '并将两个引文数组都写成[]' in prompt
+    assert '全部没有相关引文时只输出' not in prompt
+    assert result['graph']['spans'] == []
+    assert result['response_type'] == 'not_found'
+    assert not any(p.endswith(flat.FINAL) for p, _ in model.prompts)
+
+
+async def test_explicit_read_assessment_keeps_verbatim_binding_and_original_answer():
+    model = Model(answer_quotes=['原文没有这句话'], detail_quotes=[])
+    rejected = await run(model, [web()], read_require_assessment=True)
+    assert rejected['graph']['spans'] == []
+    assert rejected['response_type'] == 'not_found'
+    model = Model()
+    accepted = await run(model, [web()], read_require_assessment=True)
+    assert accepted['display_text'] == model.final
+    assert {span['text'] for span in accepted['graph']['spans']} == set(model.answer_quotes + model.detail_quotes)
+
+
+@pytest.mark.parametrize('value', [1, 'true', None])
+async def test_explicit_read_assessment_rejects_non_boolean_options(value):
+    with pytest.raises(ValueError, match='invalid flat pipeline options'):
+        await run(Model(), [web()], read_require_assessment=value)
+
+
+async def test_concise_style_generates_complete_answer_without_forcing_extra_points():
+    model = Model(answer_quotes=['全新3.1版本「归港」现已推出！', '3.1版本于10月1日上线'],
+                  detail_quotes=['新增两个地图', '全新3.1版本'],
+                  final='主题为「归港」。[1]\n于10月1日上线。[1]')
+    result = await run(model, [web()], final_response_style='concise')
+    prompt, options = next((p, k) for p, k in model.prompts if p.endswith(flat.FINAL_CONCISE))
+    assert len(result['graph']['spans']) >= 4
+    assert options['structured_schema']['properties']['points']['minItems'] == 0
+    assert options['structured_schema']['properties']['points']['maxItems'] == 0
+    assert options['structured_schema']['properties']['answer']['maxLength'] == 4000
+    assert '完整回答用户列出的每个问题' in prompt
+    assert result['display_text'] == model.final
+    assert json.loads(result['answer']['answer'])['answer'] == model.final
+
+
+async def test_concise_style_preserves_each_actual_missing_requirement_in_raw_and_display():
+    model = Model()
+    model.unknowns = '发行价格缺少依据；地区限制缺少依据'
+    result = await run(model, [web()], final_response_style='concise')
+    assert json.loads(result['answer']['answer'])['unknown'] == model.unknowns
+    assert result['display_text'] == model.final + '\n未找到依据：发行价格缺少依据；地区限制缺少依据'
+
+
+async def test_concise_style_does_not_change_read_protocol_or_invent_missing_evidence():
+    model = Model(answer_quotes=[], detail_quotes=[])
+    result = await run(model, [web()], final_response_style='concise')
+    assert result['response_type'] == 'not_found'
+    assert any(p.endswith(flat.READ) for p, _ in model.prompts)
+    assert not any(p.endswith(flat.FINAL_CONCISE) for p, _ in model.prompts)
+
+
+@pytest.mark.parametrize('value', ['short', '', None, True])
+async def test_response_style_rejects_unknown_values(value):
+    with pytest.raises(ValueError, match='invalid flat pipeline options'):
+        await run(Model(), [web()], final_response_style=value)
 
 
 async def test_numeric_lookup_does_not_add_arithmetic_against_the_model_plan():

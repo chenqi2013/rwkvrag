@@ -848,14 +848,55 @@ body.overview .detail {
   color: var(--muted);
   font-size: 13px;
 }
-body.overview .composer-summary {
+body.has-runs .composer-summary {
   display: flex;
 }
-body.overview:not(.editing-input) .composer .settings,
-body.overview:not(.editing-input) .composer fieldset,
-body.overview:not(.editing-input) .composer .input-row {
+body.has-runs:not(.editing-input) .composer .settings,
+body.has-runs:not(.editing-input) .composer fieldset,
+body.has-runs:not(.editing-input) .composer .input-row {
   display: none;
 }
+.import-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin: 8px 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+.import-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #5b5348;
+}
+.import-control input {
+  max-width: 220px;
+  font: inherit;
+}
+#import-scopes {
+  margin: 10px 0;
+  font-size: 12px;
+}
+#import-scopes summary { cursor: pointer; color: #7c6745; }
+#scope-list { max-height: 210px; overflow: auto; padding-left: 26px; }
+#scope-list li { padding: 6px 4px; }
+#scope-list strong, #scope-list span { display: block; }
+#scope-list strong { font-weight: 500; }
+#scope-list span, .scope-description { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.scope-description { margin: 4px 0 0; overflow-wrap: anywhere; }
+.scope-description:empty { display: none; }
+.run-scope {
+  font-size: 9px;
+  color: #806c50;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 6px;
+}
+body.has-runs:not(.editing-input) #import-scopes { display: none; }
+body.has-runs:not(.editing-input) .import-control { display: none; }
 body.overview #parallel-panel {
   width: 100%;
 }

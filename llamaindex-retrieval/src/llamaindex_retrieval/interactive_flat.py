@@ -53,6 +53,10 @@ READ = ('只从上面各份资料“正文开始”到“正文结束”之间�
         '只摘抄确实在说所问对象的内容，名称不同的其他对象不要摘抄。仍须检查每份资料的每个信息项；'
         'answer_quotes和detail_quotes都为空的条目不要输出，全部没有相关引文时只输出{"items":[]}。'
         '只输出紧凑的单行JSON，不换行、不缩进。')
+READ_ASSESSMENT = READ.replace(
+    'answer_quotes和detail_quotes都为空的条目不要输出，全部没有相关引文时只输出{"items":[]}。',
+    'items至少输出一条资料与信息项的判断记录。相关引文填入answer_quotes和detail_quotes；'
+    '没有相关原文时，仍输出所检查的source和need，并将两个引文数组都写成[]，不得为填满记录而摘抄无关文字。')
 FINAL = ('依据上面摘抄的原文回答问题。answer先直接回答用户所问；按用户要求的篇幅与结构组织，长文请求可以分段充分说明；points逐条写出原文中与问题相关的其他要点，'
          '例如时间、数值、条件、原因、对比、适用范围和各来源说法的差异，原文充分时写3到8条。每条要点用中文自己的话概括一个与问题直接相关的事实，'
          '与answer和其他要点的内容都不相同，句末标注来源编号；不要照抄整段外文原文，不写与所问对象无关的内容；'
@@ -72,6 +76,9 @@ FINAL = ('依据上面摘抄的原文回答问题。answer先直接回答用户�
          '事实只用摘抄原文中的内容；问题明确给定的假设和数值可用于计算，须说明“按题设”，不能把题设说成来源已证实的事实。'
          '可依据所选原文与题设推导比较或计算结论，写清依据、条件和计算过程；原文不必直接写出推导后的结果。'
          '不补充常识，不重复同一句话，不复制资料标题或“今天是”这类说明。引用标有搜索摘要的原文时注明（据搜索摘要）。')
+FINAL_CONCISE = (FINAL + '本次使用集中回答格式：answer完整回答用户列出的每个问题，每个对象的事实分别标注正确来源；'
+                 '可在answer内分段，不必另添用户没有问的背景、性能、实验设置或其他要点。points固定为空数组[]，不要求补充条数。'
+                 'unknown仅写尚未回答且确实缺少依据的要求，已经回答的要求不得再列为未知；全部已回答时unknown写空字符串。')
 CALC = ('回答问题需要用上面原文中的数字做计算。为每个需要计算的结果写label和expression：expression可用阿拉伯数字、科学计数法、+ - * / **和括号，'
         '以及单参数函数sqrt（平方根）、log或ln（自然对数）、log10（常用对数）、exp（自然指数）、abs（绝对值）。**表示乘方。'
         '数字必须是原文或问题中出现的数字（单位换算系数也必须出现在原文或问题中），形式如“单价*人数+另一单价”，用上面原文中的实际数字代入。'
@@ -321,12 +328,14 @@ class Flat:
                  final_quote_limit=40, per_need_limit=12, final_frequency_penalty=0.3,
                  supplement=True, review=True, kb_window_chars=6000, kb_max_windows=40,
                  read_window_batch=2, retry_repeated_points=True, observe=None,
-                 requested_urls=(), fetch_urls=None):
+                 requested_urls=(), fetch_urls=None, read_require_assessment=False,
+                 final_response_style='standard'):
         if (not set(channels) <= {'knowledge_base', 'web'} or not 400 <= window_chars <= 24000
                 or not 0 <= window_overlap < window_chars // 2 or max_windows_per_source < 1
                 or not 1 <= snippet_batch <= 8 or not 0 < final_reserve_seconds < deadline_seconds
                 or type(read_window_batch) is not int or not 1 <= read_window_batch <= 2
-                or type(retry_repeated_points) is not bool):
+                or type(retry_repeated_points) is not bool or type(read_require_assessment) is not bool
+                or final_response_style not in ('standard', 'concise')):
             raise ValueError('invalid flat pipeline options')
         self.model, self.original_question, self.question = model, question, question
         self.channels, self.search, self.select_files = list(dict.fromkeys(channels)), search, select_files
@@ -343,6 +352,8 @@ class Flat:
         self.kb_window_chars, self.kb_max_windows = kb_window_chars, kb_max_windows
         self.max_windows, self.snippet_batch, self.snippet_batch_wait = max_windows_per_source, snippet_batch, snippet_batch_wait
         self.read_window_batch = read_window_batch
+        self.read_require_assessment = read_require_assessment
+        self.final_response_style = final_response_style
         self.retry_repeated_points = retry_repeated_points
         self.repetition_checks = []
         self.read_batch_checks = []
@@ -634,7 +645,8 @@ class Flat:
             if include_snippet:
                 lines.append('正文开始（搜索摘要，网页正文未核实）\n' + view['snippet'] + '\n正文结束')
             parts.append('\n'.join(lines))
-        prompt = '\n\n'.join(parts) + f'\n\n{self.ask_block()}\n\n{READ}'
+        instruction = READ_ASSESSMENT if self.read_require_assessment else READ
+        prompt = '\n\n'.join(parts) + f'\n\n{self.ask_block()}\n\n{instruction}'
         def quotes(count, size):
             return {'type': 'array', 'maxItems': count, 'items': {'type': 'string', 'minLength': 2, 'maxLength': size}}
         # A complete sentence can be longer than 240/360 characters. Bound the field
@@ -648,6 +660,8 @@ class Flat:
                     'answer_quotes': quotes(3, quote_size), 'detail_quotes': quotes(5, quote_size)})
         ids = [s.id for s, _, _ in segments]
         properties = {'items': {'type': 'array', 'items': item, 'maxItems': len(self.needs) * len(segments)}}
+        if self.read_require_assessment:
+            properties['items']['minItems'] = 1
         if len(segments) > 1 and any(window is not None for _, window, _ in segments):
             check = {'source_ids': ids, 'windows': [window for _, window, _ in segments],
                      'prompt_sha256': digest(prompt), 'completion_attempted': False}
@@ -922,12 +936,14 @@ class Flat:
         self.progress('依据摘抄原文生成回答')
         # Enough quoted material requires points; thin material may answer in one sentence.
         missing = self.missing_needs()
-        least = 2 if len(ids) >= 4 and not missing else 0
+        concise = self.final_response_style == 'concise'
+        least = 2 if len(ids) >= 4 and not missing and not concise else 0
         gap = ('\n阅读阶段尚未选出直接回答句的信息项：' + '、'.join(self.needs[i - 1] for i in missing)
                + '。这不是事实缺失的判定。请检查所选原文和题设是否足以推导或计算；依据不足才写未知。') if missing else ''
-        prompt = f'{self.materials}\n\n{self.ask_block()}{gap}\n\n{FINAL}'
+        instruction = FINAL_CONCISE if concise else FINAL
+        prompt = f'{self.materials}\n\n{self.ask_block()}{gap}\n\n{instruction}'
         schema = {'answer': {'type': 'string', 'minLength': 1, 'maxLength': 4000},
-                  'points': {'type': 'array', 'minItems': least, 'maxItems': 8,
+                  'points': {'type': 'array', 'minItems': least, 'maxItems': 0 if concise else 8,
                              # Each point ends with its source numbers; the numbers are checked in code.
                              'items': {'type': 'string', 'pattern': POINT_PATTERN}},
                   'unknown': {'type': 'string', 'maxLength': 800}}

@@ -39,6 +39,16 @@
           <span id="input-summary"></span>
           <button id="edit-input" class="tab" aria-expanded="false">编辑问题与来源</button>
         </div>
+        <div class="import-row">
+          <label class="import-control">导入问题清单 (JSON)
+            <input id="question-file" type="file" accept=".json,application/json" disabled />
+          </label>
+          <span id="import-status" role="status" aria-live="polite">可选：为每个问题单独指定检索模式、知识库与网络域名；不含答案。</span>
+        </div>
+        <details id="import-scopes" hidden>
+          <summary>查看每题资料范围</summary>
+          <ol id="scope-list"></ol>
+        </details>
         <div class="options settings">
           <label
             >检索范围
@@ -84,6 +94,7 @@
             <div>
               <span id="detail-label" class="eyebrow">原文到答案</span>
               <h2 id="detail-question">从原文出发。</h2>
+              <p id="detail-scope" class="scope-description"></p>
             </div>
             <span id="phase" role="status">等待提问</span>
           </div>

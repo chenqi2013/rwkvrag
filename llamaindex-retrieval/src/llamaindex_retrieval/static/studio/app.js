@@ -101,6 +101,7 @@ function setOverview(enabled) {
   $("#overview").textContent = enabled ? "查看单题" : "并行总览";
 }
 function renderCards() {
+  document.body.classList.toggle("has-runs", runs.length > 0);
   const box = $("#runs");
   box.replaceChildren();
   for (const r of runs) {
@@ -129,6 +130,9 @@ function renderCards() {
       ),
     );
     card.append(head, el("h3", "", r.question));
+    const scope = el("div", "run-scope", scopeDescription(r.request));
+    scope.title = scope.textContent;
+    card.append(scope);
     const stat = summaries(r);
     card.append(
       el(
@@ -445,6 +449,7 @@ function renderDetail() {
   const r = active;
   $("#detail-label").textContent = info[0];
   $("#detail-question").textContent = r?.question || "从原文出发。";
+  $("#detail-scope").textContent = r ? scopeDescription(r.request) : "";
   $("#phase").textContent = r?.job?.phase || "等待提问";
   $("#steps").replaceChildren(
     ...stateFor(r).map(([name, state, note]) => {
@@ -544,20 +549,126 @@ async function askOne(r) {
 }
 
 let serviceMeta = null;
+let importedRows = null, importRevision = 0, importProblem = false;
+const modeLabels = {
+  hybrid: "知识库 + 网络", knowledge_base: "知识库", web: "网络",
+};
+function scopeDescription(request) {
+  const names = (request.knowledge_base_ids || []).map((id) =>
+    serviceMeta?.knowledge_bases.find((kb) => kb.id === id)?.name || id,
+  );
+  const parts = [modeLabels[request.retrieval_mode]];
+  if (request.retrieval_mode !== "web")
+    parts.push(names.length ? names.join("、") : "未选择知识库");
+  if (request.retrieval_mode !== "knowledge_base")
+    parts.push(request.web_include_domains?.length
+      ? request.web_include_domains.join("、") : Object.hasOwn(request, "web_include_domains")
+        ? "未限定网络域名" : "域名沿用服务配置");
+  return parts.join(" · ");
+}
+function validDomains(domains) {
+  return domains.length <= 8 && domains.every((s) =>
+    typeof s === "string" && s.length <= 253 &&
+    /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/.test(s),
+  );
+}
+function validateImport(rows) {
+  if (!Array.isArray(rows) || !rows.length || rows.length > MAX_QUESTIONS)
+    throw Error(`清单必须是 1 至 ${MAX_QUESTIONS} 项 JSON 数组`);
+  if (!serviceMeta) throw Error("请等待服务连接后导入");
+  const keys = ["question", "retrieval_mode", "knowledge_base_ids", "web_include_domains"];
+  const known = new Set(serviceMeta.knowledge_bases.map((kb) => kb.id));
+  const questions = new Set();
+  return rows.map((row, i) => {
+    const fail = (message) => { throw Error(`第 ${i + 1} 项：${message}`); };
+    if (!row || typeof row !== "object" || Array.isArray(row) ||
+      Object.keys(row).length !== keys.length || !keys.every((k) => Object.hasOwn(row, k)))
+      fail("仅允许 question / retrieval_mode / knowledge_base_ids / web_include_domains 四个字段");
+    if (typeof row.question !== "string" || !row.question.trim() || row.question.length > 10000 || /[\r\n]/.test(row.question))
+      fail("问题须为非空单行文字，最多 10000 字符");
+    const question = row.question.trim();
+    if (questions.has(question)) fail("问题重复，请使用不同问题");
+    questions.add(question);
+    if (typeof row.retrieval_mode !== "string" || !Object.hasOwn(modeLabels, row.retrieval_mode))
+      fail("检索模式无效");
+    if (!Array.isArray(row.knowledge_base_ids) || row.knowledge_base_ids.some((id) => typeof id !== "string" || !known.has(id)) ||
+      new Set(row.knowledge_base_ids).size !== row.knowledge_base_ids.length)
+      fail("知识库 ID 不存在或重复");
+    if (row.retrieval_mode === "knowledge_base" && !row.knowledge_base_ids.length)
+      fail("知识库模式至少选择一份知识库");
+    if (!Array.isArray(row.web_include_domains) || row.web_include_domains.some((s) => typeof s !== "string"))
+      fail("网络域名须为数组");
+    const domains = row.web_include_domains.map((s) => s.toLowerCase().replace(/\.$/, ""));
+    if (!validDomains(domains) || new Set(domains).size !== domains.length)
+      fail("最多 8 个不同域名，不包含网址路径或搜索指令");
+    return {question, retrieval_mode: row.retrieval_mode,
+      knowledge_base_ids: [...row.knowledge_base_ids], web_include_domains: domains};
+  });
+}
+function clearImport(message) {
+  importedRows = null;
+  importProblem = false;
+  importRevision++;
+  $("#import-scopes").hidden = true;
+  $("#import-scopes").open = false;
+  $("#scope-list").replaceChildren();
+  $("#import-status").textContent = message;
+  readiness();
+}
+$("#question").addEventListener("input", () => {
+  if (importedRows) clearImport("输入已修改：已清除全部逐题预设范围；本次将使用上方手选来源。重新导入可恢复逐题范围。");
+  else {
+    importRevision++;
+    if (importProblem) clearImport("输入已修改：本次使用上方手选来源，逐题预设范围未启用。");
+  }
+});
+$("#question-file").addEventListener("change", async (event) => {
+  const file = event.target.files[0];
+  event.target.value = "";
+  if (!file) return;
+  clearImport("正在校验问题清单…");
+  importProblem = true;
+  readiness();
+  const revision = importRevision;
+  try {
+    if (file.size > 1024 * 1024) throw Error("清单不能大于 1 MB");
+    const rows = validateImport(JSON.parse(await file.text()));
+    if (revision !== importRevision) return;
+    importedRows = rows;
+    importProblem = false;
+    $("#question").value = rows.map((row) => row.question).join("\n");
+    $("#scope-list").replaceChildren(...rows.map((row) => {
+      const item = el("li");
+      item.append(el("strong", "", row.question), el("span", "", scopeDescription(row)));
+      return item;
+    }));
+    $("#import-scopes").hidden = false;
+    $("#import-status").textContent = `已载入 ${rows.length} 题及各自资料范围 · 上方手选来源暂不作用于清单；修改问题会清除预设范围。`;
+  } catch (error) {
+    if (revision !== importRevision) return;
+    importProblem = true;
+    $("#import-status").textContent = "导入失败：" + error.message + "。请重新导入，或修改输入后使用手选来源。";
+  }
+  readiness();
+});
 function selectedKBs() {
   return [...document.querySelectorAll("#knowledge-bases input:checked")].map(
     (n) => n.value,
   );
 }
 function readiness() {
-  const mode = $("#retrieval-mode").value;
+  const scopes = importedRows || [{retrieval_mode: $("#retrieval-mode").value, knowledge_base_ids: selectedKBs()}];
   const pending = runs.some((r) => !r.finished);
   const available = serviceMeta?.model_readiness === "available";
   $("#send").disabled =
     pending ||
+    importProblem ||
     !available ||
-    (mode !== "knowledge_base" && !serviceMeta?.web_configured) ||
-    (mode === "knowledge_base" && !selectedKBs().length);
+    scopes.some((row) => (row.retrieval_mode !== "knowledge_base" && !serviceMeta?.web_configured) ||
+      (row.retrieval_mode === "knowledge_base" && !row.knowledge_base_ids.length));
+  $("#question-file").disabled = pending || !serviceMeta;
+  for (const input of document.querySelectorAll(".settings input, .settings select, #knowledge-bases input"))
+    input.disabled = Boolean(importedRows);
   $("#readiness").textContent = available ? "● RWKV 已连接" : "连接未就绪";
   $("#readiness").classList.toggle("ready", available);
 }
@@ -580,35 +691,37 @@ $("#send").onclick = async () => {
         .filter(Boolean)
         .map((s) => s.toLowerCase().replace(/\.$/, ""))
     : [];
-  if (
-    domains.length > 8 ||
-    domains.some(
-      (s) =>
-        s.length > 253 ||
-        !/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/.test(s),
-    )
-  ) {
+  if (!importedRows && !validDomains(domains)) {
     $("#phase").textContent = "请输入最多 8 个域名，不包含网址路径或搜索指令";
     return;
   }
-  if (mode === "knowledge_base" && !ids.length) {
+  if (!importedRows && mode === "knowledge_base" && !ids.length) {
     $("#phase").textContent = "请选择知识库";
     return;
   }
-  batch = { start: performance.now(), count: questions.length };
-  runs = questions.map((question) => ({
-    question,
+  // Presets are explicit row scopes, never selected by question contents.
+  // Recheck the exact textarea rather than silently binding a changed question.
+  if (importedRows && $("#question").value !== importedRows.map((row) => row.question).join("\n")) {
+    clearImport("输入已改变：已清除逐题预设范围，请确认上方来源后重新提交。");
+    return;
+  }
+  const requests = importedRows || questions.map((question) => ({
+    question, retrieval_mode: mode, knowledge_base_ids: ids,
+    ...(domains.length ? {web_include_domains: domains} : {}),
+  }));
+  batch = { start: performance.now(), count: requests.length };
+  runs = requests.map((request) => ({
+    question: request.question,
     start: performance.now(),
     request: {
-      question,
-      retrieval_mode: mode,
-      knowledge_base_ids: ids,
+      ...request,
+      knowledge_base_ids: [...request.knowledge_base_ids],
+      ...(request.web_include_domains ? {web_include_domains: [...request.web_include_domains]} : {}),
       parent_job_id: null,
-      ...(domains.length ? { web_include_domains: domains } : {}),
     },
   }));
   active = runs[0];
-  view = mode === "web" ? "web" : "knowledge_base";
+  view = runs[0].request.retrieval_mode === "web" ? "web" : "knowledge_base";
   document.body.classList.toggle(
     "parallel",
     runs.length > 1 || scene === "parallel",
