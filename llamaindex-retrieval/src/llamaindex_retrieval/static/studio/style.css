@@ -929,6 +929,11 @@ body.overview .run h3 {
 body.overview .run-head {
   font-size: 10px;
 }
+@media (min-width: 1451px) {
+  body.overview #runs:not(:has(.run:nth-child(17))) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
 @media (max-width: 1450px) {
   body.overview #runs {
     grid-template-columns: repeat(4, minmax(0, 1fr));
