@@ -194,12 +194,13 @@ const url = `http://127.0.0.1:${server.address().port}/studio/`;
 const page = await context.newPage();
 page.on("pageerror", (e) => errors.push(String(e)));
 async function open() {
-  await page.goto(url);
+  await page.goto(url + "?scene=two");
   await page.waitForFunction(
     () => document.querySelector("#readiness").textContent !== "连接中",
   );
 }
 async function submit(text) {
+  if (!await page.locator("#question").isVisible()) await page.locator("#edit-input").click();
   await page.locator("#question").fill(text);
   await page.locator("#send").click();
   await page.waitForFunction(() => !document.querySelector("#send").disabled);
@@ -227,6 +228,7 @@ try {
   assert.equal(await page.locator("#detail-question").textContent(), "second");
   await submit("third");
   assert.equal(requests.length, 3); // A completed batch does not lock the input.
+  await page.locator("#edit-input").click();
   await page.locator("#domains").fill("example.org OR evil.org");
   await page.locator("#send").click();
   assert.equal(requests.length, 3);
@@ -305,6 +307,73 @@ try {
   console.log(
     "PASS unavailable model remains disabled; no browser or fixture errors",
   );
+
+  state = {web: true, ready: true, events: true};
+  await page.setViewportSize({width: 3840, height: 2160});
+  await page.goto(url + "?scene=parallel");
+  await page.waitForSelector(".chat-card");
+  assert.equal(await page.locator(".chat-input").count(), 16);
+  assert.equal(await page.locator("#question").isVisible(), false);
+  assert.equal(await page.locator("#chat-all").isDisabled(), true);
+  const card = (i) => page.locator(".chat-card").nth(i);
+  for (let i = 0; i < 16; i++) await card(i).locator(".chat-input").fill(`自然问题 ${i + 1}`);
+  await card(0).locator(".chat-input").press("Shift+Enter");
+  await card(0).locator(".chat-input").pressSequentially("second line");
+  await card(1).locator(".chat-source").click();
+  await page.locator("#chat-source-mode").selectOption("web");
+  await page.locator("#chat-source-domains").fill("EXAMPLE.org");
+  await page.locator("#chat-source-urls").fill("https://example.org/a\nhttps://example.org/b");
+  await page.locator("#chat-source-save").click();
+  const beforeChats = requests.length;
+  finishAfterRequests = beforeChats + 16;
+  await card(0).locator(".chat-input").press("Enter");
+  await page.waitForFunction(() => document.querySelector(".chat-input").disabled);
+  assert.equal(await card(1).locator(".chat-input").isDisabled(), false);
+  assert.equal(await card(1).locator(".chat-input").inputValue(), "自然问题 2");
+  await page.locator("#chat-all").click();
+  await page.waitForFunction(() => window.__rwkvLiveRuns.length === 16);
+  assert.equal(requests.length, beforeChats + 16);
+  assert.equal(requests[beforeChats].question, "自然问题 1\nsecond line");
+  assert.equal(requests[beforeChats + 1].question, "自然问题 2");
+  assert.deepEqual(requests[beforeChats + 1].web_source_urls, ["https://example.org/a", "https://example.org/b"]);
+  assert.deepEqual(requests[beforeChats + 1].web_include_domains, ["example.org"]);
+  assert.ok(requests.slice(beforeChats).every((r) => r.parent_job_id === null));
+  assert.equal(await card(0).locator(".chat-response").textContent(), original);
+  assert.equal(await card(0).locator(".chat-response img").count(), 0);
+  assert.equal(await page.locator("#runs").evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(" ").length), 4);
+  if (process.env.STUDIO_SCREENSHOT_PATH) await page.screenshot({path: process.env.STUDIO_SCREENSHOT_PATH});
+  const chatLayout = await page.locator("#runs").evaluate((n) => ({top: n.getBoundingClientRect().top, bottom: n.lastElementChild.getBoundingClientRect().bottom, height: innerHeight, cardHeight: n.lastElementChild.getBoundingClientRect().height}));
+  assert.ok(chatLayout.bottom <= chatLayout.height, JSON.stringify(chatLayout));
+  await card(1).locator(".run-open").click();
+  assert.equal(await page.locator("#answer").textContent(), original);
+  await page.locator("#overview").click();
+  const parent = await card(0).getAttribute("data-job-id");
+  await card(0).locator(".chat-input").fill("追问这一个");
+  await card(0).locator(".chat-send").click();
+  await page.waitForFunction(() => window.__rwkvLiveRuns.length === 17);
+  assert.equal(requests.at(-1).parent_job_id, parent);
+  assert.equal(await card(1).locator(".chat-question").textContent(), "自然问题 2");
+  await card(0).locator(".chat-new").click();
+  await card(0).locator(".chat-input").fill("fail");
+  await card(0).locator(".chat-send").click();
+  await page.waitForFunction(() => window.__rwkvLiveRuns.length === 18);
+  assert.equal(requests.at(-1).parent_job_id, null);
+  assert.equal(await card(0).locator(".chat-status").textContent(), "未完成");
+  const beforeImport = requests.length;
+  await page.locator("#question-file").setInputFiles({name: "questions.json", mimeType: "application/json", buffer: Buffer.from(JSON.stringify([
+    {question: "独立导入问题", retrieval_mode: "web", knowledge_base_ids: [], web_include_domains: ["example.org"], web_source_urls: ["https://example.org/one"]},
+    {question: "知识库问题", retrieval_mode: "knowledge_base", knowledge_base_ids: ["kb-1"], web_include_domains: []},
+  ]))});
+  await page.waitForFunction(() => document.querySelectorAll(".chat-card").length === 2);
+  await card(0).locator(".chat-input").fill("修改后仍保留此卡来源");
+  await page.locator("#chat-all").click();
+  await page.waitForFunction(() => window.__rwkvLiveRuns.length === 20);
+  assert.deepEqual(requests[beforeImport].web_source_urls, ["https://example.org/one"]);
+  assert.deepEqual(requests[beforeImport + 1].knowledge_base_ids, ["kb-1"]);
+  await page.setViewportSize({width: 390, height: 844});
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+  assert.deepEqual(errors, []);
+  console.log("PASS 16 independent chat inputs, Enter/Shift+Enter, overlapping submissions, source URLs, isolated followups, raw answers, atomic import and responsive grid");
 } finally {
   await browser.close();
   server.close();
