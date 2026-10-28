@@ -28,6 +28,7 @@ from jsonschema import Draft202012Validator, ValidationError
 from .flat_prompts import (
     CALC, ISSUES, PLAN, READ, READ_ASSESSMENT, REVIEW,
     CALC_FINAL as CALC_FINAL,
+    CALC_MISSING as CALC_MISSING,
     FINAL as FINAL,
     FINAL_CONCISE as FINAL_CONCISE,
     final_instruction,
@@ -35,7 +36,7 @@ from .flat_prompts import (
 from .interactive_sources import add_sources, digest, gather, obj, unique_object
 from .verbatim_chunking import packed_verbatim_nodes
 
-PROTOCOL = 'interactive-flat-quotes-v9'
+PROTOCOL = 'interactive-flat-quotes-v10'
 CLEANING = 'markdown-links-images-v1'
 WEEKDAYS = '一二三四五六日'
 RELATIONS = ['新问题', '追问', '更正']
@@ -282,13 +283,14 @@ class Flat:
                  supplement=True, review=True, kb_window_chars=6000, kb_max_windows=40,
                  read_window_batch=2, retry_repeated_points=True, observe=None,
                  requested_urls=(), fetch_urls=None, read_require_assessment=False,
-                 final_response_style='standard'):
+                 final_response_style='standard', window_selection='prefix'):
         if (not set(channels) <= {'knowledge_base', 'web'} or not 400 <= window_chars <= 24000
                 or not 0 <= window_overlap < window_chars // 2 or max_windows_per_source < 1
                 or not 1 <= snippet_batch <= 8 or not 0 < final_reserve_seconds < deadline_seconds
                 or type(read_window_batch) is not int or not 1 <= read_window_batch <= 2
                 or type(retry_repeated_points) is not bool or type(read_require_assessment) is not bool
-                or final_response_style not in ('standard', 'concise')):
+                or final_response_style not in ('standard', 'concise')
+                or window_selection not in ('prefix', 'literal_terms')):
             raise ValueError('invalid flat pipeline options')
         self.model, self.original_question, self.question = model, question, question
         self.channels, self.search, self.select_files = list(dict.fromkeys(channels)), search, select_files
@@ -307,6 +309,7 @@ class Flat:
         self.read_window_batch = read_window_batch
         self.read_require_assessment = read_require_assessment
         self.final_response_style = final_response_style
+        self.window_selection = window_selection
         self.retry_repeated_points = retry_repeated_points
         self.repetition_checks = []
         self.read_batch_checks = []
@@ -322,6 +325,7 @@ class Flat:
         self.need_bindings, self.dropped_needs = [], []
         self.sources, self.views, self.errors, self.acquisition = [], {}, [], []
         self.source_window_limits = {}
+        self.source_windows_read = {}
         self.reads, self.quotes, self.unbound = [], {}, []
         self.pending_snippets, self.flush_task = [], None
         self.tasks = set()
@@ -375,7 +379,7 @@ class Flat:
         objects = f"\n所问对象：{'、'.join(self.entities)}（原文说的是名称不同的其他对象时不能使用）" if self.entities else ''
         metrics = f"\n所问指标：{'、'.join(self.metrics)}（原文是其他指标的数值时不能当作所问指标）" if self.metrics else ''
         extra = f"\n值得补充的方面：{'、'.join(self.aspects)}" if aspects and self.aspects else ''
-        assumed = f"\n本次理解的假设（回答开头要写明）：{'；'.join(self.assumptions)}" if self.assumptions else ''
+        assumed = f"\n本次理解的假设：{'；'.join(self.assumptions)}" if self.assumptions else ''
         original = f'用户本轮原话：{self.original_question}\n' if self.original_question != self.question else ''
         return f'{self.today_line()}\n{self.calendar_line()}\n{original}问题：{self.question}{objects}{metrics}{assumed}\n信息项：\n{needs}{extra}'
 
@@ -561,12 +565,18 @@ class Flat:
                                                self.window_overlap, absorb_whitespace=True))
             windows = [(n.metadata['source_span']['start'], n.metadata['source_span']['end']) for n in nodes]
         if len(windows) > limit:
+            chosen = (self.select_windows(view, windows, limit) if self.window_selection == 'literal_terms'
+                      and previous_limit is None else list(range(limit)))
             self.errors.append({'stage': 'read', 'status': 'windows_limited', 'source_id': source.id,
-                                'windows': len(windows), 'read': limit})
-            windows = windows[:limit]
+                                'windows': len(windows), 'read': limit, 'selected_windows': chosen,
+                                'selection': self.window_selection})
+            windows = [windows[i] for i in chosen]
         self.source_window_limits[source.id] = limit
-        start = previous_limit or 0
-        if previous_limit is not None and len(windows) <= start:
+        # Track the windows actually read, so an upgrade after a non-prefix selection
+        # reads exactly the windows not yet read.
+        read_before = self.source_windows_read.get(source.id, set())
+        self.source_windows_read[source.id] = read_before | set(windows)
+        if previous_limit is not None and not set(windows) - read_before:
             return
         self.emit('source_ready', source=source.model_dump(mode='json'), requested=requested,
                   reading_view=dict(self.views[source.id]), windows=[list(w) for w in windows])
@@ -582,11 +592,23 @@ class Flat:
         # Pack complete neighbouring windows only when the real model can
         # preflight the combined prompt and output budget without generation.
         batch_size = self.read_window_batch if callable(getattr(self.model, 'check_budget', None)) else 1
-        segments = [(source, window, index == 0 and bool(snippet))
-                    for index, window in enumerate(windows) if index >= start]
+        segments = [(source, window, previous_limit is None and index == 0 and bool(snippet))
+                    for index, window in enumerate(windows) if window not in read_before]
         for index in range(0, len(segments), batch_size):
             self.spawn(self.read(segments[index:index + batch_size]))
         self.progress(f'取材与阅读 · {len(self.sources)} 份资料 · 已读 {len(self.reads)}')
+
+    def select_windows(self, view, windows, limit):
+        """Literal retrieval match only: keep the first window, then the windows naming the most
+        planned objects, metrics or query words; fill the rest in document order."""
+        terms = {t.strip() for t in [*self.entities, *self.names, *self.metrics,
+                                     *(word for query in self.queries for word in query.split())]
+                 if len(_normal(t)) >= 2}
+        scores = [sum(name_present(term, view[a:b]) for term in terms) for a, b in windows]
+        ranked = sorted(range(1, len(windows)), key=lambda i: (-scores[i], i))
+        chosen = [0] + [i for i in ranked if scores[i] > 0][:limit - 1]
+        chosen += [i for i in range(1, len(windows)) if i not in chosen][:limit - len(chosen)]
+        return sorted(chosen)
 
     def spawn(self, job):
         task = asyncio.create_task(job)
@@ -871,7 +893,8 @@ class Flat:
         row = obj({'label': {'type': 'string', 'minLength': 1, 'maxLength': 80},
                    'expression': {'type': 'string', 'minLength': 1, 'maxLength': 512}})
         self.calc_event = await self.call('calc', f'{self.materials}\n\n{self.ask_block(aspects=False)}\n\n{CALC}',
-            {'calculations': {'type': 'array', 'items': row, 'maxItems': 8}}, 800)
+            # Calculation runs only when the plan asked for it, so at least one expression is required.
+            {'calculations': {'type': 'array', 'items': row, 'minItems': 1, 'maxItems': 8}}, 800)
         allowed = numeric_values(self.materials + '\n' + self.original_question + '\n' + self.question)
         lines = []
         for item in (self.calc_event['parsed'] or {}).get('calculations') or []:
@@ -914,8 +937,9 @@ class Flat:
         concise = self.final_response_style == 'concise'
         gap = ('\n阅读阶段尚未选出直接回答句的信息项：' + '、'.join(self.needs[i - 1] for i in missing)
                + '。这不是事实缺失的判定。请检查全部所选回答句和细节句是否已经包含该项依据；依据不足才写未知。') if missing else ''
-        instruction = final_instruction(concise=concise, has_calculations=(self.calculation
-                                        and any('result' in row for row in self.calculations)))
+        computed = any('result' in row for row in self.calculations)
+        instruction = final_instruction(concise=concise, has_calculations=self.calculation and computed,
+                                        calculation_missing=self.calculation and not computed)
         prompt = f'{self.materials}\n\n{self.ask_block(aspects=not concise)}{gap}\n\n{instruction}'
         schema = {'answer': {'type': 'string', 'minLength': 1, 'maxLength': 4000},
                   'points': {'type': 'array', 'minItems': 0, 'maxItems': 0 if concise else 8,

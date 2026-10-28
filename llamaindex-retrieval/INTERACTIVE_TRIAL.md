@@ -54,7 +54,7 @@ Writer 只接收选中的逐字引文，保留来源URL及发布时间/抓取时
 
 `read_require_assessment: true`要求Reader至少输出一条资料与信息项的判断记录，两个引文数组仍可都为空；空记录不会变成证据。此选项改变生成契约，需单独验证漏摘与误摘，不能由记录非空推断召回成功。`final_response_style: "concise"`让模型在`answer`中完整回答所有要求，`points`生成空数组，`unknown`仍使用字符串保留缺项；答案仍可分段，长度预算不变。它不删除已经生成的句子，也不替代事实核验。默认`standard`允许补充与问题相关且不重复的要点。
 
-当前阶段提示集中在 `src/llamaindex_retrieval/flat_prompts.py`，协议为 `interactive-flat-quotes-v9`。准备训练数据时应绑定同版本提示、聊天模板及字段结构；保留原数据，通过另一个版本记录迁移。简短模式使用自己的提示，避免同时要求补充要点和生成空要点。只有计算阶段实际得到结果时才追加计算说明；普通来源事实不要求以“按题设”开头。训练完成后仍需分别验证阅读、终答和真实检索结果，不能以格式一致代替答案验收。
+当前阶段提示集中在 `src/llamaindex_retrieval/flat_prompts.py`，协议为 `interactive-flat-quotes-v10`。v10 保留 v9 的阅读契约（父 State 训练与 r6 实测所用；全 source×need 网格的 r7 已退步，不再引入）；假设行不再要求固定开头，规划要求计算时计算阶段至少列一条算式，没有可用计算结果时明确告知 Writer 不自行心算，简短模式逐条回答且不复述问题。可选 `window_selection: "literal_terms"`（默认 `prefix`）在搜索结果超过窗口上限时保留首窗口，其余优先读取字面出现所问对象、指标或检索词的窗口，需单独验证。准备训练数据时应绑定同版本提示、聊天模板及字段结构；保留原数据，通过另一个版本记录迁移。简短模式使用自己的提示，避免同时要求补充要点和生成空要点。只有计算阶段实际得到结果时才追加计算说明；普通来源事实不要求以“按题设”开头。训练完成后仍需分别验证阅读、终答和真实检索结果，不能以格式一致代替答案验收。
 
 `flat_title_options` 支持 `read_all_below`（12）与 `limit`（6）。Web 提取并发由 `web_provider_parallel` 和 `web_search_concurrency` 控制。`native_max_concurrency` 默认 32，可配置 1–1024；这只是调度上限，部署前须测量实际模型容量，并确认后端能隔离并发请求的 State。
 

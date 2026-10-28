@@ -142,7 +142,7 @@ async def test_concise_style_generates_complete_answer_without_forcing_extra_poi
     assert options['structured_schema']['properties']['points']['minItems'] == 0
     assert options['structured_schema']['properties']['points']['maxItems'] == 0
     assert options['structured_schema']['properties']['answer']['maxLength'] == 4000
-    assert '完整回答用户列出的每个问题' in prompt
+    assert '按用户提问的顺序回答每个要求' in prompt and '不复述问题原文' in prompt
     assert result['display_text'] == model.final
     assert json.loads(result['answer']['answer'])['answer'] == model.final
 

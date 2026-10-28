@@ -1,9 +1,14 @@
 """Versioned prompt contract shared by the flat runtime and dataset exports.
 
 Keep response styles separate; a training export must bind these exact strings.
+v10 keeps the v9 READ/READ_ASSESSMENT contract that the parent State was trained
+and measured on (r6). Changes: the assumption line no longer asks for a scripted
+opening, a requested calculation must list at least one expression and the Writer
+is told when no computed result exists, and concise answers do not restate each
+need. The r7 exhaustive source×need grid regressed and is not reintroduced.
 """
 
-PROMPT_VERSION = 'flat-prompts-v9'
+PROMPT_VERSION = 'flat-prompts-v10'
 
 ISSUES = ['相反或不一致的原文没有提到', '数值单位或计量基准与原文不一致', '把其他对象的内容当作所问对象', '回答中有原文找不到的内容']
 PLAN = ('判断用户这一轮是新问题、追问还是更正，relation写“新问题”“追问”或“更正”：原话中有“它”“这个”“那”“呢”等指代、'
@@ -42,33 +47,37 @@ FINAL_FACTS = (
     '原文后〔〕中的日期换算供判断时间使用，不是额外来源。'
     '事实使用上面实际出现的来源编号标注，每个编号单独放在方括号中；不能编造编号。'
     '代码和类型表达式放在反引号中，保留原有字符。引用搜索摘要时注明“据搜索摘要”。'
-    '若本次理解确实采用了未获证实的假设，写清该假设，不把它当来源事实。'
-    'unknown是字符串，只列缺少依据而不能回答的用户要求；全部已回答时写空字符串。'
+    '直接陈述事实，不要以“按……”“根据……”这类套话开头；有“本次理解的假设”时，用一句话说明采用的理解，不把它当来源事实。'
+    'unknown是字符串，只列缺少依据而不能回答的用户要求；已经回答的要求不要再列入，全部已回答时写空字符串。'
     '说明文字不要复述进答案，内容不重复，只输出紧凑JSON。')
 FINAL = (
     '依据上面摘抄的原文，用中文回答用户的全部问题。answer先直接回答，按用户要求的篇幅组织。'
     'points补充与所问问题直接相关、且answer中未写的事实，每条附来源编号；没有要补充的内容时为空数组。'
     + FINAL_FACTS)
 FINAL_CONCISE = (
-    '依据上面摘抄的原文，用中文简明回答用户的全部问题。answer完整回答用户列出的每个问题，可分行列出。'
-    '只写回答问题所需的事实与必要条件，不另添背景或重复原文。points固定为空数组。'
+    '依据上面摘抄的原文，用中文简明回答用户的全部问题。answer按用户提问的顺序回答每个要求；有多个要求时每个要求写一行，'
+    '只写该要求的答案和必要条件，不复述问题原文，不同要求之间不重复同一句话。不另添背景或重复原文。points固定为空数组。'
     + FINAL_FACTS)
 CALC_FINAL = (
     '本次已执行模型列出的计算。依据上面原文、用户给定条件和计算结果作答，写明必要的算式与单位；'
     '算式是否适用于问题仍须依据原文判断。采用用户明确假定的数值或条件时说明“按题设”；'
     '从资料直接查得的事实按来源陈述。计算所得结果无需原文直接写出，不能把此规则用于推断未说明的事实。')
+CALC_MISSING = (
+    '本次需要计算，但没有得到可用的代码计算结果。不要自行心算新的数值；需要计算才能得到的结果写入unknown，'
+    '原文直接给出的事实照常回答。')
 
 
-def final_instruction(*, concise, has_calculations=False):
+def final_instruction(*, concise, has_calculations=False, calculation_missing=False):
     """Use this same constructor for runtime calls and versioned training frames."""
-    calculation = CALC_FINAL + '\n' if has_calculations else ''
+    calculation = (CALC_FINAL + '\n' if has_calculations else
+                   CALC_MISSING + '\n' if calculation_missing else '')
     return calculation + (FINAL_CONCISE if concise else FINAL)
 
 
-CALC = ('回答问题需要用上面原文中的数字做计算。为每个需要计算的结果写label和expression：expression可用阿拉伯数字、科学计数法、+ - * / **和括号，'
+CALC = ('回答问题需要计算。为每个需要计算的结果写label和expression，至少写一条：expression可用阿拉伯数字、科学计数法、+ - * / **和括号，'
         '以及单参数函数sqrt（平方根）、log或ln（自然对数）、log10（常用对数）、exp（自然指数）、abs（绝对值）。**表示乘方。'
-        '数字必须是原文或问题中出现的数字（单位换算系数也必须出现在原文或问题中），形式如“单价*人数+另一单价”，用上面原文中的实际数字代入。'
-        '只写确实需要计算的结果，原文已直接给出的数字不用写。不要写计算结果，代码会计算。')
+        '数字必须是原文或问题中出现的数字（单位换算系数也必须出现在原文或问题中），形式如“单价*人数+另一单价”，代入实际数字；'
+        '一个结果依赖多个量时把用到的每个量都写进同一条expression。原文已直接给出的数字不用再算。不要写计算结果，代码会计算。')
 REVIEW = ('对照上面的原文检查这个回答，只找确实存在的以下问题：' + '；'.join(f'{i}. {k}' for i, k in enumerate(ISSUES, 1)) +
           '。每条写kind、detail、相关来源编号sources，在answer_quote中逐字照抄回答里有问题的那一句，并在evidence中逐字照抄能证明这个问题的一句原文。'
           '回答与原文一致的地方不是问题；日期、数值写法不同但意思相同不是问题。大多数回答没有问题，没有问题就让issues为空。不补充常识。')
