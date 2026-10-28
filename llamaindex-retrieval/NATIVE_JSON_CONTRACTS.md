@@ -30,7 +30,7 @@ vllm-rwkv 的 `/v1/completions` 接受顶层 `structured_outputs.json`。OpenAI 
 | 二值Reader | 唯一`answer`，只能为`YES`或`NO` |
 | Writer | 本版本不改写作协议，不施加JSON Schema |
 
-历史改写和Planner虽共享`planner`传输阶段，仍由各调用点**显式**传入不同Schema，不根据提示内容猜用途。普通链路可以单独选择既有`StructuredNativeRWKVClient`，不必启用typed funnel。Schema字段顺序保留，HTTP请求及trace记录完整约束；请求之间使用既有ContextVar隔离。
+历史改写和Planner虽共享`planner`传输阶段，仍由各调用点**显式**传入不同Schema，不根据提示内容猜用途。普通链路可以单独选择既有`StructuredNativeRWKVClient`，不必启用typed funnel。Schema字段顺序保留，HTTP请求及trace记录完整约束；请求之间使用既有ContextVar隔离。结构化completions发送 `stop: []`，由语法EOS结束，避免聊天分隔串提前截断JSON；普通非结构化请求继续使用聊天stop。输入未含 `✿` 时，包装器对自由字符串增加分隔符约束，原pattern以allOf保留，enum/const数据不改；输入含字面分隔符时允许原样引用。trace记录实际发送的Schema和stop。
 
 ## 显式配置
 

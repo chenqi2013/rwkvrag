@@ -17,7 +17,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 import httpx
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from .config import Settings
 from .interactive_sources import gather
@@ -26,6 +26,7 @@ from .model_client import model_client_options
 from .schemas import SourceItem
 from .structured_native import StructuredNativeRWKVClient
 from .web_retrieval import WebSearchAdapter
+from .direct_web import _public_url
 
 
 class Question(BaseModel):
@@ -36,7 +37,23 @@ class Question(BaseModel):
     retrieval_mode: Literal['knowledge_base', 'web', 'hybrid'] = 'hybrid'
     knowledge_base_ids: list[str] = Field(default_factory=list)
     web_include_domains: list[str] | None = Field(default=None, max_length=8)
+    web_source_urls: list[str] = Field(default_factory=list, max_length=8)
     pipeline: Literal['flat'] | None = None
+
+    @field_validator('web_source_urls')
+    @classmethod
+    def validate_web_urls(cls, urls):
+        if any(len(url) > 4096 or _public_url(url) is None for url in urls):
+            raise ValueError('source URLs must be public HTTP(S) URLs')
+        return list(dict.fromkeys(urls))
+
+    @model_validator(mode='after')
+    def validate_source_count(self):
+        if self.web_source_urls and self.retrieval_mode == 'knowledge_base':
+            raise ValueError('web source URLs require web or hybrid retrieval')
+        if len(set(self.web_source_urls + question_urls(self.question))) > 8:
+            raise ValueError('at most 8 source URLs per question')
+        return self
 
     @field_validator('web_include_domains')
     @classmethod
@@ -53,6 +70,18 @@ class Question(BaseModel):
 
 def digest(value):
     return hashlib.sha256(value.encode()).hexdigest()
+
+
+def question_urls(question):
+    """Literal user-specified URLs, independent of model-generated search queries."""
+    urls = []
+    brackets = {')': '(', ']': '[', '}': '{', '）': '（', '】': '【'}
+    for url in re.findall(r'https?://[^\s<>"“”，；。]+', question, flags=re.IGNORECASE):
+        url = url.rstrip('.,;!?:')
+        while url and url[-1] in brackets and url.count(url[-1]) > url.count(brackets[url[-1]]):
+            url = url[:-1].rstrip('.,;!?:')
+        urls.append(url)
+    return list(dict.fromkeys(urls))
 
 
 def answer_opening(text, limit=120):
@@ -287,6 +316,16 @@ class Trial:
                     document_id=h.document_id, title=h.metadata['title'], source='web',
                     uri=h.metadata['uri'], score=0, snippet=h.text, metadata=h.metadata) for h in hits]
 
+        async def fetch_urls(urls):
+            domains = (payload.web_include_domains if payload.web_include_domains is not None
+                       else self.config.get('flat_web_include_domains'))
+            hits, trace = await self.web.fetch_urls(urls, include_domains=domains or None)
+            receipts.append({'channel': 'web', 'action': 'extract', 'requested_urls': list(urls),
+                             'include_domains': domains, 'trace': trace})
+            return [SourceItem(id='W' + digest(h.metadata['uri'] + '\0' + h.text)[:16],
+                    document_id=h.document_id, title=h.metadata['title'], source='web',
+                    uri=h.metadata['uri'], score=0, snippet=h.text, metadata=h.metadata) for h in hits]
+
         async def select_files(entities, queries, publish):
             chosen, mode = interactive_flat.title_candidates(catalog, entities, queries,
                 **self.config.get('flat_title_options', {}))
@@ -305,6 +344,8 @@ class Trial:
             channels.append('web')
         observations = job.setdefault('execution_events', []) if self.config.get('live_progress') else None
         result = await interactive_flat.answer(model, payload.question, channels=channels, search=search,
+            requested_urls=list(dict.fromkeys(payload.web_source_urls + question_urls(payload.question))),
+            fetch_urls=fetch_urls,
             select_files=select_files, history=history, previous_sources=previous,
             progress=lambda text: job.update(phase=text),
             observe=observations.append if observations is not None else None,

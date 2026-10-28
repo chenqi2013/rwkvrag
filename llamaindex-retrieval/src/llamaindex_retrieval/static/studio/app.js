@@ -6,6 +6,7 @@ const $ = (s) => document.querySelector(s),
     return n;
   };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const MAX_QUESTIONS = 32;
 const sceneInfo = {
   two: [
     "ORIGINAL SOURCES · SIDE BY SIDE",
@@ -34,6 +35,7 @@ document.querySelector(`[data-scene="${scene}"]`)?.classList.add("active");
 $("#send-label").textContent =
   scene === "web" ? "联网搜索" : scene === "parallel" ? "同时提问" : "开始阅读";
 let runs = [],
+  chats = [],
   active = null,
   view = scene === "web" ? "web" : "knowledge_base",
   batch = null;
@@ -88,7 +90,25 @@ function summaries(r) {
     active: starts.length - ends.length,
   };
 }
+function setOverview(enabled) {
+  document.body.classList.toggle("overview", enabled);
+  document.body.classList.remove("editing-input");
+  $("#edit-input").setAttribute("aria-expanded", "false");
+  $("#edit-input").textContent = "编辑问题与来源";
+  $("#input-summary").textContent = runs.length
+    ? `${runs.length} 个问题 · 点击问题查看完整答案与原文`
+    : "选择来源，每行输入一个问题";
+  $("#overview").setAttribute("aria-pressed", String(enabled));
+  $("#overview").textContent = enabled ? "查看单题" : "并行总览";
+}
 function renderCards() {
+  if (scene === "parallel" && chats.length) {
+    for (const chat of chats) refreshChat(chat);
+    $("#batch-count").textContent = `${runs.filter((r) => r.finished).length} / ${runs.length} 已结束`;
+    readiness();
+    return;
+  }
+  document.body.classList.toggle("has-runs", runs.length > 0);
   const box = $("#runs");
   box.replaceChildren();
   for (const r of runs) {
@@ -97,9 +117,10 @@ function renderCards() {
       "run" +
         (r === active ? " active" : "") +
         (r.finished ? " finished" : "") +
-        (r.error ? " failed" : ""),
+        (r.error || (r.finished && r.job?.status !== "completed") ? " failed" : ""),
     );
     card.dataset.jobId = r.job?.id || "";
+    card.title = r.question;
     const head = el("div", "run-head");
     head.append(
       el("span", "", "问题 " + (runs.indexOf(r) + 1)),
@@ -110,10 +131,15 @@ function renderCards() {
           ? r.job?.status === "completed"
             ? "已返回"
             : "未完成"
-          : "运行中",
+          : r.job?.status === "queued"
+            ? "等待处理"
+            : r.job ? "运行中" : "提交中",
       ),
     );
     card.append(head, el("h3", "", r.question));
+    const scope = el("div", "run-scope", scopeDescription(r.request));
+    scope.title = scope.textContent;
+    card.append(scope);
     const stat = summaries(r);
     card.append(
       el(
@@ -129,8 +155,17 @@ function renderCards() {
         (r.wall ?? (performance.now() - r.start) / 1000).toFixed(2) + " s",
       ),
     );
+    const stages = el("div", "run-stages");
+    for (const [name, status, note] of stateFor(r)) {
+      const stage = el("span", status);
+      stage.title = `${name}：${note}`;
+      stage.setAttribute("aria-label", stage.title);
+      stages.append(stage);
+    }
+    card.append(stages);
     card.onclick = () => {
       active = r;
+      setOverview(false);
       view = r.request?.retrieval_mode === "web" ? "web" : "knowledge_base";
       renderCards();
       renderDetail();
@@ -138,7 +173,7 @@ function renderCards() {
     box.append(card);
   }
   $("#batch-count").textContent =
-    `${runs.filter((r) => r.finished).length} / ${runs.length} 已返回`;
+    `${runs.filter((r) => r.finished).length} / ${runs.length} 已结束`;
 }
 function stateFor(r) {
   const es = events(r),
@@ -421,6 +456,7 @@ function renderDetail() {
   const r = active;
   $("#detail-label").textContent = info[0];
   $("#detail-question").textContent = r?.question || "从原文出发。";
+  $("#detail-scope").textContent = r ? scopeDescription(r.request) : "";
   $("#phase").textContent = r?.job?.phase || "等待提问";
   $("#steps").replaceChildren(
     ...stateFor(r).map(([name, state, note]) => {
@@ -520,30 +556,160 @@ async function askOne(r) {
 }
 
 let serviceMeta = null;
+let importedRows = null, importRevision = 0, importProblem = false;
+const modeLabels = {
+  hybrid: "知识库 + 网络", knowledge_base: "知识库", web: "网络",
+};
+function scopeDescription(request) {
+  const names = (request.knowledge_base_ids || []).map((id) =>
+    serviceMeta?.knowledge_bases.find((kb) => kb.id === id)?.name || id,
+  );
+  const parts = [modeLabels[request.retrieval_mode]];
+  if (request.retrieval_mode !== "web")
+    parts.push(names.length ? names.join("、") : "未选择知识库");
+  if (request.retrieval_mode !== "knowledge_base")
+    parts.push(request.web_include_domains?.length
+      ? request.web_include_domains.join("、") : Object.hasOwn(request, "web_include_domains")
+        ? "未限定网络域名" : "域名沿用服务配置");
+  if (request.web_source_urls?.length) parts.push(`${request.web_source_urls.length} 个指定网页`);
+  return parts.join(" · ");
+}
+function validDomains(domains) {
+  return domains.length <= 8 && domains.every((s) =>
+    typeof s === "string" && s.length <= 253 &&
+    /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/.test(s),
+  );
+}
+function validateImport(rows) {
+  if (!Array.isArray(rows) || !rows.length || rows.length > MAX_QUESTIONS)
+    throw Error(`清单必须是 1 至 ${MAX_QUESTIONS} 项 JSON 数组`);
+  if (!serviceMeta) throw Error("请等待服务连接后导入");
+  const keys = ["question", "retrieval_mode", "knowledge_base_ids", "web_include_domains"];
+  const known = new Set(serviceMeta.knowledge_bases.map((kb) => kb.id));
+  const questions = new Set();
+  return rows.map((row, i) => {
+    const fail = (message) => { throw Error(`第 ${i + 1} 项：${message}`); };
+    if (!row || typeof row !== "object" || Array.isArray(row) ||
+      Object.keys(row).some((k) => ![...keys, "web_source_urls"].includes(k)) || !keys.every((k) => Object.hasOwn(row, k)))
+      fail("仅允许问题、检索模式、知识库、网络域名和可选网页地址字段");
+    if (typeof row.question !== "string" || !row.question.trim() || row.question.length > 10000 || (scene !== "parallel" && /[\r\n]/.test(row.question)))
+      fail("问题须为非空文字，最多 10000 字符；并行聊天支持换行");
+    const question = row.question.trim();
+    if (questions.has(question)) fail("问题重复，请使用不同问题");
+    questions.add(question);
+    if (typeof row.retrieval_mode !== "string" || !Object.hasOwn(modeLabels, row.retrieval_mode))
+      fail("检索模式无效");
+    if (!Array.isArray(row.knowledge_base_ids) || row.knowledge_base_ids.some((id) => typeof id !== "string" || !known.has(id)) ||
+      new Set(row.knowledge_base_ids).size !== row.knowledge_base_ids.length)
+      fail("知识库 ID 不存在或重复");
+    if (row.retrieval_mode === "knowledge_base" && !row.knowledge_base_ids.length)
+      fail("知识库模式至少选择一份知识库");
+    if (!Array.isArray(row.web_include_domains) || row.web_include_domains.some((s) => typeof s !== "string"))
+      fail("网络域名须为数组");
+    const domains = row.web_include_domains.map((s) => s.toLowerCase().replace(/\.$/, ""));
+    if (!validDomains(domains) || new Set(domains).size !== domains.length)
+      fail("最多 8 个不同域名，不包含网址路径或搜索指令");
+    const urls = Object.hasOwn(row, "web_source_urls") ? row.web_source_urls : [];
+    if (!validURLs(urls) || (row.retrieval_mode === "knowledge_base" && urls.length))
+      fail("网页地址须为最多 8 个 HTTP(S) 地址，并启用网络检索");
+    return {question, retrieval_mode: row.retrieval_mode,
+      knowledge_base_ids: [...row.knowledge_base_ids], web_include_domains: domains,
+      ...(Object.hasOwn(row, "web_source_urls") ? {web_source_urls: [...urls]} : {})};
+  });
+}
+function clearImport(message) {
+  importedRows = null;
+  importProblem = false;
+  importRevision++;
+  $("#import-scopes").hidden = true;
+  $("#import-scopes").open = false;
+  $("#scope-list").replaceChildren();
+  $("#import-status").textContent = message;
+  readiness();
+}
+$("#question").addEventListener("input", () => {
+  if (importedRows) clearImport("输入已修改：已清除全部逐题预设范围；本次将使用上方手选来源。重新导入可恢复逐题范围。");
+  else {
+    importRevision++;
+    if (importProblem) clearImport("输入已修改：本次使用上方手选来源，逐题预设范围未启用。");
+  }
+});
+$("#question-file").addEventListener("change", async (event) => {
+  const file = event.target.files[0];
+  event.target.value = "";
+  if (!file) return;
+  clearImport("正在校验问题清单…");
+  importProblem = true;
+  readiness();
+  const revision = importRevision;
+  try {
+    if (file.size > 1024 * 1024) throw Error("清单不能大于 1 MB");
+    const rows = validateImport(JSON.parse(await file.text()));
+    if (revision !== importRevision) return;
+    if (scene === "parallel") {
+      importProblem = false;
+      loadChats(rows);
+      $("#chat-notice").textContent = `已载入 ${rows.length} 个独立聊天；每张卡片可修改问题与来源。`;
+      readiness();
+      return;
+    }
+    importedRows = rows;
+    importProblem = false;
+    $("#question").value = rows.map((row) => row.question).join("\n");
+    $("#scope-list").replaceChildren(...rows.map((row) => {
+      const item = el("li");
+      item.append(el("strong", "", row.question), el("span", "", scopeDescription(row)));
+      return item;
+    }));
+    $("#import-scopes").hidden = false;
+    $("#import-status").textContent = `已载入 ${rows.length} 题及各自资料范围 · 上方手选来源暂不作用于清单；修改问题会清除预设范围。`;
+  } catch (error) {
+    if (revision !== importRevision) return;
+    importProblem = true;
+    $("#import-status").textContent = "导入失败：" + error.message + "。请重新导入，或修改输入后使用手选来源。";
+    if (scene === "parallel") {
+      importProblem = false; // Atomic import failure leaves existing chats usable.
+      $("#chat-notice").textContent = "导入失败：" + error.message + "。已有聊天保持原样。";
+    }
+  }
+  readiness();
+});
 function selectedKBs() {
   return [...document.querySelectorAll("#knowledge-bases input:checked")].map(
     (n) => n.value,
   );
 }
 function readiness() {
-  const mode = $("#retrieval-mode").value;
+  const scopes = importedRows || [{retrieval_mode: $("#retrieval-mode").value, knowledge_base_ids: selectedKBs()}];
   const pending = runs.some((r) => !r.finished);
   const available = serviceMeta?.model_readiness === "available";
   $("#send").disabled =
     pending ||
+    importProblem ||
     !available ||
-    (mode !== "knowledge_base" && !serviceMeta?.web_configured) ||
-    (mode === "knowledge_base" && !selectedKBs().length);
+    scopes.some((row) => (row.retrieval_mode !== "knowledge_base" && !serviceMeta?.web_configured) ||
+      (row.retrieval_mode === "knowledge_base" && !row.knowledge_base_ids.length));
+  $("#question-file").disabled = pending || !serviceMeta;
+  for (const input of document.querySelectorAll(".settings input, .settings select, #knowledge-bases input"))
+    input.disabled = Boolean(importedRows);
   $("#readiness").textContent = available ? "● RWKV 已连接" : "连接未就绪";
   $("#readiness").classList.toggle("ready", available);
+  if (scene === "parallel") {
+    const eligible = chats.filter((c) => c.draft.trim() && (!c.run || c.run.finished));
+    $("#chat-all").disabled = !available || !eligible.length || eligible.some((c) => chatProblem(c));
+    $("#chat-add").disabled = !serviceMeta || chats.length >= MAX_QUESTIONS;
+    $("#chat-import").disabled = !serviceMeta || pending;
+    for (const c of chats) c.nodes.send.disabled = !available || !c.draft.trim() || Boolean(c.run && !c.run.finished) || Boolean(chatProblem(c));
+  }
 }
 $("#send").onclick = async () => {
   const questions = $("#question")
     .value.split("\n")
     .map((s) => s.trim())
     .filter(Boolean);
-  if (!questions.length || questions.length > 16) {
-    $("#phase").textContent = "请输入 1 至 16 行问题";
+  if (!questions.length || questions.length > MAX_QUESTIONS) {
+    setOverview(false);
+    $("#phase").textContent = `请输入 1 至 ${MAX_QUESTIONS} 行问题`;
     return;
   }
   const mode = $("#retrieval-mode").value,
@@ -555,39 +721,42 @@ $("#send").onclick = async () => {
         .filter(Boolean)
         .map((s) => s.toLowerCase().replace(/\.$/, ""))
     : [];
-  if (
-    domains.length > 8 ||
-    domains.some(
-      (s) =>
-        s.length > 253 ||
-        !/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/.test(s),
-    )
-  ) {
+  if (!importedRows && !validDomains(domains)) {
     $("#phase").textContent = "请输入最多 8 个域名，不包含网址路径或搜索指令";
     return;
   }
-  if (mode === "knowledge_base" && !ids.length) {
+  if (!importedRows && mode === "knowledge_base" && !ids.length) {
     $("#phase").textContent = "请选择知识库";
     return;
   }
-  batch = { start: performance.now(), count: questions.length };
-  runs = questions.map((question) => ({
-    question,
+  // Presets are explicit row scopes, never selected by question contents.
+  // Recheck the exact textarea rather than silently binding a changed question.
+  if (importedRows && $("#question").value !== importedRows.map((row) => row.question).join("\n")) {
+    clearImport("输入已改变：已清除逐题预设范围，请确认上方来源后重新提交。");
+    return;
+  }
+  const requests = importedRows || questions.map((question) => ({
+    question, retrieval_mode: mode, knowledge_base_ids: ids,
+    ...(domains.length ? {web_include_domains: domains} : {}),
+  }));
+  batch = { start: performance.now(), count: requests.length };
+  runs = requests.map((request) => ({
+    question: request.question,
     start: performance.now(),
     request: {
-      question,
-      retrieval_mode: mode,
-      knowledge_base_ids: ids,
+      ...request,
+      knowledge_base_ids: [...request.knowledge_base_ids],
+      ...(request.web_include_domains ? {web_include_domains: [...request.web_include_domains]} : {}),
       parent_job_id: null,
-      ...(domains.length ? { web_include_domains: domains } : {}),
     },
   }));
   active = runs[0];
-  view = mode === "web" ? "web" : "knowledge_base";
+  view = runs[0].request.retrieval_mode === "web" ? "web" : "knowledge_base";
   document.body.classList.toggle(
     "parallel",
     runs.length > 1 || scene === "parallel",
   );
+  setOverview(runs.length > 8);
   readiness();
   renderCards();
   renderDetail();
@@ -599,6 +768,14 @@ $("#send").onclick = async () => {
     job_ids: runs.map((r) => r.job?.id),
   });
   readiness();
+};
+$("#overview").onclick = () => {
+  setOverview(!document.body.classList.contains("overview"));
+};
+$("#edit-input").onclick = () => {
+  const expanded = document.body.classList.toggle("editing-input");
+  $("#edit-input").setAttribute("aria-expanded", String(expanded));
+  $("#edit-input").textContent = expanded ? "收起输入" : "编辑问题与来源";
 };
 $("#view-all").onclick = () => {
   view = "all";
@@ -614,13 +791,210 @@ $("#view-web").onclick = () => {
 };
 $("#retrieval-mode").value = scene === "web" ? "web" : "hybrid";
 $("#retrieval-mode").onchange = readiness;
+
+function validURLs(urls) {
+  return Array.isArray(urls) && urls.length <= 8 && new Set(urls).size === urls.length && urls.every((value) => {
+    if (typeof value !== "string" || value.length > 4096 || /\s/.test(value)) return false;
+    try {
+      const url = new URL(value);
+      return ["http:", "https:"].includes(url.protocol) && Boolean(url.hostname) && !url.username && !url.password;
+    } catch { return false; }
+  });
+}
+function chatProblem(chat) {
+  const s = chat.scope;
+  if (chat.draft.length > 10000) return "问题最多 10000 字符";
+  if (s.retrieval_mode === "knowledge_base" && !s.knowledge_base_ids.length) return "请先选择知识库";
+  if (s.retrieval_mode !== "knowledge_base" && !serviceMeta?.web_configured) return "网络检索未连接，请选择知识库";
+  return "";
+}
+function showRun(r) {
+  active = r;
+  view = r.request.retrieval_mode === "web" ? "web" : "knowledge_base";
+  setOverview(false);
+  renderCards();
+  renderDetail();
+  document.querySelector(".detail-heading").scrollIntoView({block: "nearest"});
+}
+function makeChat(row = {}) {
+  const chat = {
+    draft: row.question || "", run: null, history: [],
+    scope: {
+      retrieval_mode: row.retrieval_mode || (serviceMeta.web_configured ? "hybrid" : "knowledge_base"),
+      knowledge_base_ids: [...(row.knowledge_base_ids || serviceMeta.default_knowledge_base_ids || [])],
+      ...(Object.hasOwn(row, "web_include_domains") ? {web_include_domains: [...row.web_include_domains]} : {}),
+      ...(row.web_source_urls ? {web_source_urls: [...row.web_source_urls]} : {}),
+    },
+  };
+  const card = el("article", "run chat-card"), head = el("div", "run-head"),
+    name = el("strong", "chat-name", `聊天 ${String(chats.length + 1).padStart(2, "0")}`),
+    status = el("span", "chat-status", "等待输入"),
+    source = el("button", "chat-source"),
+    transcript = el("div", "chat-transcript"),
+    question = el("div", "chat-question"),
+    response = el("div", "chat-response", "在下方输入问题，开始这段对话。"),
+    inputRow = el("div", "chat-input-row"),
+    input = el("textarea", "chat-input"), send = el("button", "chat-send", "↑"),
+    actions = el("div", "chat-actions"),
+    detail = el("button", "run-open tab", "过程与原文 ↗"),
+    reset = el("button", "chat-new tab", "新对话"),
+    history = el("select", "chat-history"),
+    time = el("span", "run-time", "—"), stages = el("div", "run-stages");
+  input.setAttribute("aria-label", name.textContent + "的输入框");
+  input.placeholder = "输入你的问题…";
+  input.rows = 2;
+  input.maxLength = 10000;
+  input.value = chat.draft;
+  send.setAttribute("aria-label", "发送" + name.textContent);
+  history.setAttribute("aria-label", name.textContent + "的历史轮次");
+  input.oninput = () => {chat.draft = input.value; importRevision++; readiness();};
+  input.onkeydown = (event) => {
+    if (event.key === "Enter" && !event.shiftKey && !event.isComposing && event.keyCode !== 229) {
+      event.preventDefault();
+      if (!send.disabled) startChats([chat]);
+    }
+  };
+  send.onclick = () => startChats([chat]);
+  source.onclick = () => openChatSources(chat);
+  detail.onclick = () => chat.run && showRun(chat.run);
+  reset.onclick = () => {
+    if (chat.run && !chat.run.finished) return;
+    chat.run = null;
+    runs = chats.map((c) => c.run).filter(Boolean);
+    refreshChat(chat);
+    readiness();
+    input.focus();
+  };
+  history.onchange = () => {
+    const r = chat.history.find((r) => r.job?.id === history.value);
+    if (r) showRun(r);
+  };
+  head.append(name, status);
+  transcript.append(question, response);
+  inputRow.append(input, send);
+  actions.append(detail, reset, history, time);
+  card.append(head, source, transcript, inputRow, actions, stages);
+  chat.nodes = {card, status, source, question, response, input, send, detail, reset, history, time, stages};
+  chats.push(chat);
+  $("#runs").append(card);
+  refreshChat(chat);
+  return chat;
+}
+function refreshChat(chat) {
+  const r = chat.run, n = chat.nodes, pending = Boolean(r && !r.finished);
+  n.card.dataset.jobId = r?.job?.id || "";
+  n.card.classList.toggle("active", Boolean(r && r === active));
+  n.card.classList.toggle("finished", Boolean(r?.finished));
+  n.card.classList.toggle("failed", Boolean(r?.error || (r?.finished && r.job?.status !== "completed")));
+  n.card.classList.toggle("has-message", Boolean(r));
+  n.status.textContent = r ? r.finished ? r.job?.status === "completed" ? "已返回" : "未完成" : r.job?.phase || "提交中" : "等待输入";
+  n.source.textContent = scopeDescription(chat.scope) + "  ⌄";
+  n.source.title = n.source.textContent;
+  n.source.disabled = pending;
+  n.input.disabled = pending;
+  n.input.placeholder = pending ? "这张卡片正在回答…" : r?.job?.status === "completed" ? "继续追问…" : "输入你的问题…";
+  n.question.textContent = r?.question || "";
+  n.question.title = r?.question || "";
+  n.response.textContent = r?.job?.result?.display_text || r?.error || (r?.finished ? "请求未完成，请查看过程。" : r ? `${r.job?.phase || "提交问题"} · ${summaries(r).sources} 份来源` : chatProblem(chat) || "在下方输入问题，开始这段对话。");
+  n.response.classList.toggle("waiting", !r?.job?.result?.display_text);
+  n.detail.disabled = !r;
+  n.reset.disabled = pending;
+  n.reset.hidden = !r;
+  n.time.textContent = r ? (r.wall ?? (performance.now() - r.start) / 1000).toFixed(2) + " s" : "—";
+  n.stages.replaceChildren(...stateFor(r).map(([name, status, note]) => {
+    const span = el("span", status);
+    span.title = `${name}：${note}`;
+    span.setAttribute("aria-label", span.title);
+    return span;
+  }));
+  if (n.history.options.length !== chat.history.length + 1) {
+    n.history.replaceChildren(new Option("历史", ""), ...chat.history.map((r, i) => new Option(`第 ${i + 1} 轮`, r.job?.id || "")));
+  }
+  n.history.hidden = chat.history.length < 2;
+}
+function loadChats(rows) {
+  chats = []; runs = []; active = null; batch = null;
+  $("#runs").replaceChildren();
+  for (const row of rows) makeChat(row);
+  $("#batch-time").textContent = "—";
+  setOverview(true);
+  renderCards(); renderDetail();
+}
+async function startChats(selected) {
+  // Snapshot only these cards. Other conversations keep their draft and parent.
+  const ready = selected.filter((c) => c.draft.trim() && (!c.run || c.run.finished));
+  if (!ready.length || serviceMeta?.model_readiness !== "available") return;
+  const problem = ready.map(chatProblem).find(Boolean);
+  if (problem) {$("#chat-notice").textContent = problem; return;}
+  importRevision++;
+  const ownBatch = {start: performance.now(), count: ready.length};
+  batch = ownBatch;
+  const submitted = ready.map((c) => {
+    const request = {question: c.draft.trim(), ...structuredClone(c.scope),
+      parent_job_id: c.run?.job?.status === "completed" ? c.run.job.id : null};
+    const r = {question: request.question, request, start: performance.now()};
+    c.run = r; c.history.push(r); c.draft = ""; c.nodes.input.value = "";
+    return r;
+  });
+  runs = chats.map((c) => c.run).filter(Boolean);
+  active = submitted[0];
+  $("#chat-notice").textContent = `${submitted.length} 个聊天已提交，各自独立检索与回答。`;
+  renderCards(); renderDetail(); readiness();
+  await Promise.all(submitted.map(askOne));
+  ownBatch.wall = (performance.now() - ownBatch.start) / 1000;
+  window.__rwkvBatches.push({count: ownBatch.count, wall_seconds: ownBatch.wall, job_ids: submitted.map((r) => r.job?.id)});
+  // Fill history IDs only after each response has a real server ID.
+  for (const c of ready) {
+    c.nodes.history.replaceChildren(new Option("历史", ""), ...c.history.map((r, i) => new Option(`第 ${i + 1} 轮`, r.job?.id || "")));
+  }
+  renderCards(); readiness();
+}
+let sourceChat = null;
+function openChatSources(chat) {
+  if (chat.run && !chat.run.finished) return;
+  sourceChat = chat;
+  $("#chat-source-title").textContent = chat.nodes.card.querySelector(".chat-name").textContent + " · 来源设置";
+  $("#chat-source-mode").value = chat.scope.retrieval_mode;
+  $("#chat-source-domains").value = (chat.scope.web_include_domains || []).join(", ");
+  $("#chat-source-urls").value = (chat.scope.web_source_urls || []).join("\n");
+  $("#chat-source-kbs").replaceChildren(el("legend", "", "知识库"));
+  for (const kb of serviceMeta.knowledge_bases) {
+    const label = el("label"), input = el("input");
+    input.type = "checkbox"; input.value = kb.id;
+    input.checked = chat.scope.knowledge_base_ids.includes(kb.id);
+    label.append(input, document.createTextNode(kb.name));
+    $("#chat-source-kbs").append(label);
+  }
+  $("#chat-source-error").textContent = "";
+  $("#chat-source-dialog").showModal();
+}
+$("#chat-source-close").onclick = () => $("#chat-source-dialog").close();
+$("#chat-source-form").onsubmit = (event) => {
+  event.preventDefault();
+  if (!sourceChat || (sourceChat.run && !sourceChat.run.finished)) return;
+  const domains = $("#chat-source-domains").value.trim().split(/[,，\s]+/).filter(Boolean).map((s) => s.toLowerCase().replace(/\.$/, ""));
+  const urls = $("#chat-source-urls").value.trim().split(/\s+/).filter(Boolean);
+  if (!validDomains(domains) || !validURLs(urls)) {$("#chat-source-error").textContent = "请输入最多 8 个域名与最多 8 个 HTTP(S) 网页地址。"; return;}
+  const scope = {retrieval_mode: $("#chat-source-mode").value,
+    knowledge_base_ids: [...document.querySelectorAll("#chat-source-kbs input:checked")].map((n) => n.value),
+    web_include_domains: [...new Set(domains)], web_source_urls: urls};
+  if (scope.retrieval_mode === "knowledge_base" && urls.length) {$("#chat-source-error").textContent = "填写网页时请选择“网络”或“知识库 + 网络”。"; return;}
+  sourceChat.scope = scope;
+  refreshChat(sourceChat); readiness(); importRevision++;
+  $("#chat-source-dialog").close();
+};
+$("#chat-all").onclick = () => startChats(chats);
+$("#chat-add").onclick = () => {
+  if (chats.length < MAX_QUESTIONS) {importRevision++; const c = makeChat(); readiness(); c.nodes.input.focus();}
+};
+$("#chat-import").onclick = () => $("#question-file").click();
 setInterval(() => {
   if (batch)
     $("#batch-time").textContent = (
       batch.wall ?? (performance.now() - batch.start) / 1000
     ).toFixed(2);
   document.querySelectorAll("#runs .run").forEach((n, i) => {
-    const r = runs[i];
+    const r = scene === "parallel" ? chats[i]?.run : runs[i];
     if (r)
       n.querySelector(".run-time").textContent =
         (r.wall ?? (performance.now() - r.start) / 1000).toFixed(2) + " s";
@@ -642,6 +1016,11 @@ try {
   }
   if (!serviceMeta.live_progress)
     $("#input-hint").textContent = "当前服务未开启阶段事件；完成后显示原始回答";
+  if (scene === "parallel") {
+    document.body.classList.add("chat-grid-mode");
+    $("#chat-toolbar").hidden = false;
+    loadChats(Array.from({length: 16}, () => ({})));
+  }
   readiness();
   renderDetail();
 } catch (e) {

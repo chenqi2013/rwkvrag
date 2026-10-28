@@ -34,7 +34,28 @@
           </div>
         </div>
       </section>
+      <section id="chat-toolbar" hidden aria-label="并行聊天操作">
+        <div><strong>独立聊天，同时进行</strong><span>Enter 发送 · Shift + Enter 换行</span></div>
+        <button id="chat-add" class="tab">＋ 添加聊天</button>
+        <button id="chat-import" class="tab">导入问题</button>
+        <button id="chat-all" disabled>全部运行 <span>↗</span></button>
+        <p id="chat-notice" role="status" aria-live="polite"></p>
+      </section>
       <section class="composer">
+        <div class="composer-summary">
+          <span id="input-summary"></span>
+          <button id="edit-input" class="tab" aria-expanded="false">编辑问题与来源</button>
+        </div>
+        <div class="import-row">
+          <label class="import-control">导入问题清单 (JSON)
+            <input id="question-file" type="file" accept=".json,application/json" disabled />
+          </label>
+          <span id="import-status" role="status" aria-live="polite">可选：为每个问题单独指定检索模式、知识库与网络域名；不含答案。</span>
+        </div>
+        <details id="import-scopes" hidden>
+          <summary>查看每题资料范围</summary>
+          <ol id="scope-list"></ol>
+        </details>
         <div class="options settings">
           <label
             >检索范围
@@ -50,7 +71,7 @@
               placeholder="沿用服务配置；域名用逗号分隔"
               aria-label="限定网络来源域名" /></label
           ><span id="input-hint" class="hint"
-            >每行一个问题，最多 16 个同时提交</span
+            >每行一个问题，最多 32 个同时提交</span
           >
         </div>
         <fieldset id="knowledge-bases"><legend>选择知识库</legend></fieldset>
@@ -70,6 +91,7 @@
         <aside id="parallel-panel">
           <div class="section-heading">
             <strong>同时进行</strong><span id="batch-count">准备开始</span>
+            <button id="overview" class="tab" aria-pressed="false">并行总览</button>
           </div>
           <div id="runs" aria-label="本轮问题"></div>
           <div class="legend"><i></i> 每个问题，独立阅读与回答</div>
@@ -79,6 +101,7 @@
             <div>
               <span id="detail-label" class="eyebrow">原文到答案</span>
               <h2 id="detail-question">从原文出发。</h2>
+              <p id="detail-scope" class="scope-description"></p>
             </div>
             <span id="phase" role="status">等待提问</span>
           </div>
@@ -115,6 +138,19 @@
         ><span>KNOWLEDGE. CONNECTED.</span>
       </footer>
     </main>
+    <dialog id="chat-source-dialog" aria-labelledby="chat-source-title">
+      <form id="chat-source-form">
+        <div class="dialog-heading"><h2 id="chat-source-title">本聊天的来源</h2><button type="button" id="chat-source-close" class="tab" aria-label="关闭来源设置">✕</button></div>
+        <p class="scope-description">选择已有知识库、联网搜索，或填写要阅读的网页。设置只作用于这一张卡片。</p>
+        <label>检索方式<select id="chat-source-mode"><option value="hybrid">知识库 + 网络</option><option value="knowledge_base">知识库</option><option value="web">网络</option></select></label>
+        <fieldset id="chat-source-kbs"><legend>知识库</legend></fieldset>
+        <label>网络来源域名（可选）<input id="chat-source-domains" placeholder="例如 example.org，多个域名用逗号分隔" /></label>
+        <label>要阅读的网页（可选，每行一个）<textarea id="chat-source-urls" rows="4" placeholder="https://example.org/article"></textarea></label>
+        <p class="scope-description">填写网页时直接读取这些地址；留空则由模型规划搜索。问题原话与来源分别提交。</p>
+        <p id="chat-source-error" role="alert"></p>
+        <button id="chat-source-save" type="submit">保存来源</button>
+      </form>
+    </dialog>
     <script type="module" src="./app.js"></script>
   </body>
 </html>

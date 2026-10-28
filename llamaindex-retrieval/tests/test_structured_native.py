@@ -12,6 +12,12 @@ from llamaindex_retrieval.structured_native import StructuredNativeRWKVClient
 from test_rwkv_pipeline import FakeIndex, hit
 
 
+async def test_invalid_messages_preserve_native_invalid_request_contract():
+    async with StructuredNativeRWKVClient(base_url='http://test/v1', model='test') as client:
+        result = await client.complete(None, structured_schema={'type': 'object'})
+    assert result.status == 'invalid_request'
+
+
 def test_concurrent_schemas_are_request_scoped_and_wire_matches_trace():
     seen=[]
     async def handle(request):
@@ -126,9 +132,12 @@ async def test_ordinary_history_plan_reader_have_distinct_wire_schemas_writer_st
     assert [list(c["structured_outputs"]["json"]["properties"]) for c in calls[:3]] == [
         ["question"], ["queries"], ["answer"]]
     assert "structured_outputs" not in calls[-1]
-    # The new profile changes the decoding contract, not prompt/State/model/budget.
-    assert [(p, {k: v for k, v in body.items() if k != "structured_outputs"})
-            for p, body in wire] == old_wire
+    # Structured requests use grammar EOS, without chat-string early stops.
+    assert all(c['stop'] == [] for c in calls[:3])
+    assert calls[-1]['stop'] == ['✿', '\nUser:', '\n### User']
+    assert [(p, {k: v for k, v in body.items() if k not in {'structured_outputs', 'stop'}})
+            for p, body in wire] == [(p, {k: v for k, v in body.items() if k != 'stop'})
+                                    for p, body in old_wire]
     for result in (constrained, baseline):
         assert result.answer == result.generation["raw_model_answer"] == writer
         assert result.generation["answer_modified"] is False
